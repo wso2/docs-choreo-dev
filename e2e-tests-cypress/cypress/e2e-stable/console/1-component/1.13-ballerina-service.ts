@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
@@ -25,9 +25,11 @@ after(() => {
 
 describe("Verify Ballerina service functionality", () => {
   const PROJECT_DESCRIPTION = "sample ballerina service scenario";
-  const ENDPOINT_NAME = "Readinglist";
+  const ENDPOINT_NAME = "Endpoint 8090";
   let project: Project;
   let component: Service;
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "greeting-service";
 
   it("Login to Console", () => {
     console.login();
@@ -37,19 +39,18 @@ describe("Verify Ballerina service functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify Ballerina service component creation", () => {
+  it("Creating a ballerina service from choreo samples", () => {
     project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/byor-service-app1",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((serviceComponent: Service) => {
-        project.visitComponent(serviceComponent.getName());
-        component = serviceComponent;
+      .createServiceComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.Ballerina,
+        repoName: REPO_NAME,
+        repoTestid: "greeting-service",
+        ENDPOINT_NAME,
+      })
+      .then((comp) => {
+        component = comp;
       });
   });
 
@@ -74,15 +75,15 @@ describe("Verify Ballerina service functionality", () => {
       .testConsole({
         env: Enums.Environment.DEVELOPMENT,
         endpoint: ENDPOINT_NAME,
-        resourcePath: "books",
+        resourcePath: "",
         method: "get",
-        parentComponentId: "operations-default-getBooks",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-get",
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
         expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 
@@ -91,15 +92,15 @@ describe("Verify Ballerina service functionality", () => {
       .testConsole({
         env: Enums.Environment.PRODUCTION,
         endpoint: ENDPOINT_NAME,
-        resourcePath: "books",
+        resourcePath: "",
         method: "get",
-        parentComponentId: "operations-default-getBooks",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-get",
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
         expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 
@@ -119,37 +120,37 @@ describe("Verify Ballerina service functionality", () => {
     component.promotePublicLevelAccessibility();
   });
 
-  it("Testing new version in Dev", () => {
+  it("Testing the component in Dev", () => {
     component
       .testConsole({
         env: Enums.Environment.DEVELOPMENT,
         endpoint: ENDPOINT_NAME,
-        resourcePath: "books",
+        resourcePath: "",
         method: "get",
-        parentComponentId: "operations-default-getBooks",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-get",
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
         expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 
-  it("Testing new version in Prod", () => {
+  it("Testing the component in Prod", () => {
     component
       .testConsole({
         env: Enums.Environment.PRODUCTION,
         endpoint: ENDPOINT_NAME,
-        resourcePath: "books",
+        resourcePath: "",
         method: "get",
-        parentComponentId: "operations-default-getBooks",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-get",
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
         expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 

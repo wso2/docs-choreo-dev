@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../commons/enums";
+import { BuildPacks, Enums } from "../../../commons/enums";
 import {
   MEDIUM_TIME,
   SHORT_TIME,
@@ -36,6 +36,7 @@ import { TestRunner } from "../component/test-runner-component";
 import { IntegrationComponentData } from "../../../interfaces/integration-component-data";
 import { Byoc } from "../component/byoc-component";
 import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
+import { _ServiceCreationWizard} from "../../ui-elements/wizards/service-creation-wizard";
 
 export interface RepoInfo {
   readonly url: string;
@@ -50,6 +51,15 @@ export interface ProxyInfo {
   readonly oasUrl?: string;
   readonly oasFilePath?: string;
   readonly isInternal?: boolean;
+}
+
+export interface ServiceInfo {
+  readonly displayName: string;
+  readonly repoUrl: string;
+  readonly buildPack: BuildPacks;
+  readonly repoName: string;
+  readonly repoTestid: string;
+  readonly ENDPOINT_NAME: string;
 }
 
 export interface WebAppInfo {
@@ -80,6 +90,7 @@ export class Project {
   description: string;
 
   private proxyCreationWizard = new _ProxyCreationWizard();
+  private serviceCreationWizard = new _ServiceCreationWizard();
 
   constructor(
     name: string,
@@ -353,6 +364,29 @@ export class Project {
     });
   }
 
+
+  createServiceComponentUI(serviceInfo: ServiceInfo) {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
+
+    const serviceName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterServiceDetails(
+      serviceName,
+      serviceInfo,
+      serviceInfo.repoUrl,
+      serviceInfo.repoName,
+      serviceInfo.repoTestid,
+      
+    );
+
+    return cy.url().then(() => {
+      return new Service(
+        serviceName,
+        serviceInfo.ENDPOINT_NAME,
+      );
+    });
+  }
+
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
@@ -601,6 +635,12 @@ export class Project {
     });
   }
 
+
+  
+
+
+
+
   verifyUsageInsights(
     env: Enums.Environment,
     options?: { expectedTraffic: number }
@@ -682,4 +722,5 @@ export class Project {
   private getAverageErrorRate() {
     return cy.get("main").find("span>span").eq(2).invoke("text");
   }
+
 }

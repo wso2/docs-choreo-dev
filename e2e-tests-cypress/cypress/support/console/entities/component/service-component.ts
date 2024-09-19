@@ -114,7 +114,7 @@ export class Service extends mixinBuild(
   }
 
   addVersion() {
-    this._addNewVersion(this, "feature", "1.1");
+    this._addNewVersion(this, "app-demo", "1.1");
   }
 
   publish() {

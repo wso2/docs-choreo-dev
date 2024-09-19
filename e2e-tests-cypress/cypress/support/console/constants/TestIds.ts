@@ -408,4 +408,16 @@ export namespace TestIds {
   export const onPremKeyDelete = '[data-testid="key-delete-btn"]';
   export const onPremKeyDeleteBtn = '[data-testid="delete-on-prem-key-delete-btn"]';
   export const closeDialog = '[data-testid="dialog-close-icon"]';
+  export const serviceBuildPack = '[data-cyid="component-template-microservices-card-action-area"]';
+  export const serviceGHUrlEntry = '[data-cyid="github-url"]';
+  export const serviceDisplayName = '[data-cyid="new-component-display-name"]';
+  export const ballerinaComponentCard = '[data-cyid="Ballerina-card-button"]';
+  export const projectDirectoryEdit = '[data-cyid="edit-button"]';
+  export const goComponentCard = '[data-cyid="Go-card-button"]';
+  export const miComponentCard = '[data-cyid="WSO2 MI-card-button"]';
+  export const repoSearchBox = '[data-cyid="project-directory-search-search-bar-input"]';
+  export const continueButton = '[data-cyid="Continue-button"]';
+  export const greetingBalServiceRepo = '[data-cyid="subPath-greeting-service"]';
+  export const serviceCreateButton = '[data-cyid="Create-button"]';
 }
+
