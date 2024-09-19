@@ -53,7 +53,9 @@ fi
 if [[ -z "${EXCLUDED_FILE_PATH}" ]]; then
   EXCLUDED_FILE_PATH=""
 fi
-
+if [[ -z "${ENTRA_APP_USAGE_URL}" ]]; then
+  ENTRA_APP_USAGE_URL=""
+fi
 
 az_login "$CLIENT_ID" "$CLIENT_SECRET" "$TENANT_ID"
 init_csv "Application ID, Application Name, Expired Date" "$OUTPUT_PATH"/expired_secrets.csv
