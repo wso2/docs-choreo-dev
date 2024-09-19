@@ -103,13 +103,16 @@ spec:
               name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - alert-notification-service
-              topologyKey: kubernetes.io/hostname
+      topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              choreo.component: alert-notification-service
+          maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: DoNotSchedule
+        - labelSelector:
+            matchLabels:
+              choreo.component: alert-notification-service
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway      
