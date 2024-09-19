@@ -37,6 +37,7 @@ import { IntegrationComponentData } from "../../../interfaces/integration-compon
 import { Byoc } from "../component/byoc-component";
 import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
 import { _ServiceCreationWizard} from "../../ui-elements/wizards/service-creation-wizard";
+import { _ManualTriggerCreationWizard } from "../../ui-elements/wizards/manualTrigger-creation-wizard";
 
 export interface RepoInfo {
   readonly url: string;
@@ -60,6 +61,15 @@ export interface ServiceInfo {
   readonly repoName: string;
   readonly repoTestid: string;
   readonly ENDPOINT_NAME: string;
+}
+
+export interface ManualTriggerInfo {
+  readonly displayName: string;
+  readonly repoUrl: string;
+  readonly buildPack: BuildPacks;
+  readonly repoName: string;
+  readonly repoTestid: string;
+  readonly languageVersion: string;
 }
 
 export interface WebAppInfo {
@@ -91,6 +101,7 @@ export class Project {
 
   private proxyCreationWizard = new _ProxyCreationWizard();
   private serviceCreationWizard = new _ServiceCreationWizard();
+  private manualTriggerCreationWizard = new _ManualTriggerCreationWizard();
 
   constructor(
     name: string,
@@ -386,6 +397,36 @@ export class Project {
       );
     });
   }
+
+  /////////////////////////
+
+  createManualTriggerUI(manualTriggerInfo: ManualTriggerInfo) {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
+
+    const manualTriggerName = Utils.generateComponentName();
+    this.manualTriggerCreationWizard.enterManualTriggerInfo(
+      manualTriggerName,
+      manualTriggerInfo,
+      manualTriggerInfo.repoUrl,
+      manualTriggerInfo.repoName,
+      manualTriggerInfo.repoTestid,
+      
+    );
+
+    return cy.url().then(() => {
+      return new ManualTrigger(
+        manualTriggerName,
+        //manualTriggerInfo.ENDPOINT_NAME,
+      );
+    });
+  }
+
+
+////////////////////
+
+
+
 
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,

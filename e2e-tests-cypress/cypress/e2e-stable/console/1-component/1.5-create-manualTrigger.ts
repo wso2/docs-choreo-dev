@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { ManualTrigger } from "../../../support/console/entities/component/manual-trigger-component";
@@ -22,9 +22,11 @@ after(() => {
 
 describe("Verify manual trigger creation functionality", () => {
   const PROJECT_DESCRIPTION = "Manual Trigger";
-  const LOG_MESSAGE = "Hello, how are you";
+  const LOG_MESSAGE = "Hello, World!";
   let project: Project;
   let component: ManualTrigger;
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "docker-hello-world-manual-task";
 
   it("Login to Console", () => {
     console.login();
@@ -34,17 +36,31 @@ describe("Verify manual trigger creation functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify Manual Trigger component creation", () => {
+
+  it("Creating a manual trigger from choreo samples", () => {
     project
-      .createManualTriggerComponent(Enums.Accessibility.EXTERNAL, {
-        url: "https://github.com/choreo-test-apps/manual-trigger",
-        branch: "main",
+      .createManualTriggerUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.Go,
+        repoName: REPO_NAME,
+        repoTestid: "subPath-docker-hello-world-manual-task",
+        languageVersion: "1.x",
       })
-      .then((comp: ManualTrigger) => {
-        project.visitComponent(comp.getName());
-        component = comp;
+      .then(() => {
       });
   });
+  // it("Verify Manual Trigger component creation", () => {
+  //   project
+  //     .createManualTriggerComponent(Enums.Accessibility.EXTERNAL, {
+  //       url: "https://github.com/choreo-test-apps/manual-trigger",
+  //       branch: "main",
+  //     })
+  //     .then((comp: ManualTrigger) => {
+  //       project.visitComponent(comp.getName());
+  //       component = comp;
+  //     });
+  // });
 
   it("Build the component", () => {
     component.build();
