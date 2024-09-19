@@ -187,5 +187,9 @@ INSERT INTO threshold(id,tier_id,threshold,billing_provider) values
 	(N'01ee8473-9bbf-1ae4-b8a5-bc3ea34ba246',N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'{"components": 0}','stripe'),
 	(N'85acb04d-c935-4c62-91c5-99837fa51985',N'41e29802-f4bb-456c-a92e-b14cca67c4bb',N'{"components": 5}','stripe'),
     (N'2982035b-2936-4604-a9f4-67b16c6135d3',N'ac5b54f5-d665-4515-ae17-95eac201ecaa',N'{"components": 0}','stripe'),
-    (N'cf2fe7ca-624d-4d9d-8963-1ea4ae5a04b4',N'3fa450c2-d47f-4fcb-9711-9727815cd0ee',N'{"components": 0}','stripe');
+    (N'cf2fe7ca-624d-4d9d-8963-1ea4ae5a04b4',N'3fa450c2-d47f-4fcb-9711-9727815cd0ee',N'{"components": 0}','stripe'),
+    (N'01ef74c3-e4ed-1a96-b720-4f010f9f2055',N'c971b211-bc44-4f35-90ad-4d62b313b466',N'{"components": 0}','aws'), 
+    (N'01ef74c3-e4ed-1a96-9b98-f03cb81c2fec',N'9819cdd6-d2df-47cb-8954-8c1a80cb06cc',N'{"components": 0}','aws'), 
+    (N'01ef74c3-a821-1b20-9035-de544eaf403a',N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'{"components": 0}','aws'), 
+    (N'01ef74c3-a821-1b20-9b8f-68548979e518',N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'{"components": 0}','aws');
 GO
