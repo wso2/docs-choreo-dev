@@ -111,7 +111,6 @@ If you no longer need a deployment track, you can delete it.
 
 
 
-Follow the steps below to delete a deployment track:
 
 **Prerequisites**:
 
