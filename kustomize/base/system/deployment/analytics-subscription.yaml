@@ -138,13 +138,16 @@ spec:
             nodePublishSecretRef:
               name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - analytics-subs
-              topologyKey: kubernetes.io/hostname
+      topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              choreo.component: analytics-subs
+          maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: DoNotSchedule
+        - labelSelector:
+            matchLabels:
+              choreo.component: analytics-subs
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway      
