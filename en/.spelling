@@ -697,6 +697,8 @@ headerName
 fooValue
 authzHeaderValue
 myResourcePath
+evictable
+defaultable
 develop-a-ballerina-graphql-api
 faq.md
 Moesif.md
