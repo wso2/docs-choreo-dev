@@ -11,7 +11,7 @@ The following are some of the cutting-edge capabilities of Choreo:
  - Efficient and effective development:
     - **Code in any language**: Develop applications in your team's preferred programming language, harnessing existing skill sets to build powerful polyglot APIs, services, events, tasks, and more.
     - **Native support for VS Code**: Seamlessly collaborate and manage code using VS Code in a feature-rich, visually-enhanced development environment.
-    - **Git repository integration**: Effortlessly connect to Git-based platforms like GitHub, Bitbucket, or GitLab to develop components, either by linking an existing repository or starting with an empty one and committing your source code later.
+    - **Git repository integration**: Effortlessly connect to Git-based platforms like GitHub, Bitbucket, or GitLab to develop components by linking an existing repository.
 
  - Seamless deployment:
     - **CI/CD**: Eliminate manual builds and unreliable deployments with Choreo's industry-standard CI/CD tooling, providing complete control and flexibility.
