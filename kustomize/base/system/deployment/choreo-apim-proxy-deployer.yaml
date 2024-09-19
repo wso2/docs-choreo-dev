@@ -105,4 +105,5 @@ spec:
               choreo.component: choreo-apim-proxy-deployer
           maxSkew: 1
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway      
+          whenUnsatisfiable: ScheduleAnyway
+      

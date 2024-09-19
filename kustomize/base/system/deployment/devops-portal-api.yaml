@@ -90,4 +90,4 @@ spec:
               choreo.component: devops-portal-api
           maxSkew: 1
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway      
+          whenUnsatisfiable: ScheduleAnyway

@@ -110,4 +110,4 @@ spec:
               choreo.component: cio-event-collector-service
           maxSkew: 1
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway      
+          whenUnsatisfiable: ScheduleAnyway

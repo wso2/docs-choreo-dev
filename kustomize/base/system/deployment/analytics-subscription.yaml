@@ -150,4 +150,5 @@ spec:
               choreo.component: analytics-subs
           maxSkew: 1
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway      
+          whenUnsatisfiable: ScheduleAnyway
+      

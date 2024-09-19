@@ -133,4 +133,4 @@ spec:
               choreo.component: telemetry-go
           maxSkew: 1
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway      
+          whenUnsatisfiable: ScheduleAnyway
