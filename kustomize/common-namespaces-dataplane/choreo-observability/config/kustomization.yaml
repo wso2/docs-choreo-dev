@@ -44,7 +44,8 @@ configMapGenerator:
   - name: cm-obsapi-v2
     behavior: create
     literals:
-      - PROMETHEUS_ADDRESS=http://thanos-querier:10902
+      - THANOS_ADDRESS=http://thanos-querier:10902
+      - PROMETHEUS_ADDRESS=http://prometheus:9090
   - name: sys-obsapi-cm
     behavior: create
     literals:
