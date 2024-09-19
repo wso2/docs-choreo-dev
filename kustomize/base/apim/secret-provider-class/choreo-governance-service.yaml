@@ -25,9 +25,8 @@ spec:
       data:
         - objectName: CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD
           key: CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD
-          # TODO: Replace the value with the key vault value created for Governance Service
-        - objectName: SUPER_ADMIN_PSWD
-          key: SUPER_ADMIN_PSWD
+        - objectName: APIM_SUPER_ADMIN_PASSWORD
+          key: APIM_SUPER_ADMIN_PASSWORD
   parameters:
     objects: |
       array:
@@ -39,5 +38,5 @@ spec:
         - |
           objectName: apim-super-admin-password
           objectType: secret
-          objectAlias: SUPER_ADMIN_PSWD
-          objectVersion: "{{.SUPER_ADMIN_PSWD}}"
+          objectAlias: APIM_SUPER_ADMIN_PASSWORD
+          objectVersion: "{{.APIM_SUPER_ADMIN_PASSWORD}}"
