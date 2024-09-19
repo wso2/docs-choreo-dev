@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { CustomDomainType, Enums } from "../../support/commons/enums";
+import { CustomDomainType, Enums, UsagePlan } from "../../support/commons/enums";
 import { console } from "../../support/console/console";
 import { Project } from "../../support/console/entities/project/project";
 import { Application } from "../../support/console/entities/application/application";
@@ -118,7 +118,7 @@ describe("Create and deploy a component to test developer portal with custom dom
   });
 
   it("Add subscription", () => {
-    application.addSubscription(proxy.getName());
+    application.addSubscription(proxy.getName(), UsagePlan.Bronze);
   });
 
   it("Delete a consumer application", () => {

@@ -1,4 +1,6 @@
-import { Enums } from "../../../commons/enums";
+import { Enums, UsagePlan } from "../../../commons/enums";
+import { VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { DEV_PORTAL_APIS_SEARCH_URL } from "../../../commons/urls";
 import { TestIds } from "../../constants/TestIds";
 
 export class Application {
@@ -25,14 +27,31 @@ export class Application {
     cy.get(TestIds.consumerKey).invoke("val").should("not.be.empty");
   }
 
-  addSubscription(apiName: string) {
+  addSubscription(apiName: string, plan: UsagePlan) {
     cy.get(TestIds.subscriptions).click();
-    cy.get(TestIds.createSubscription).click().wait(2000);
-    cy.get(TestIds.apiSubscriptionSearch).type(`${apiName} {enter}`);
-    cy.get(TestIds.addApiSubscription(apiName)).click();
-    cy.get(TestIds.subscriptionClose).click();
 
-    this.validateResubscribingApi(apiName);
+    cy.intercept({
+      method: "GET",
+      url: DEV_PORTAL_APIS_SEARCH_URL(),
+      times: 1,
+    }).as("getAllApis");
+
+    cy.get(TestIds.createSubscription).click();
+    cy.get(TestIds.devPortalBackdropLoader).should("not.exist");
+
+    cy.wait("@getAllApis", VERY_SHORT_TIME).then(() => {
+      cy.get(TestIds.apiSubscriptionSearch).should("be.visible").within(() => {
+        cy.getUnstable('button[title="Open"]').click();
+        cy.get('input[value="Select API"]').click().type(`${apiName}`);
+      });
+
+      cy.get("ul>li").contains(apiName).click();
+      cy.get(TestIds.subscriptionPolicyCard).contains(plan).click();
+
+      cy.contains("Add Subscription").click();
+
+      this.validateResubscribingApi(apiName);
+    });
   }
 
   addPermissionToApplication(permissionName: string) {
@@ -64,13 +83,25 @@ export class Application {
         apiName +
         " ,that has already subscribed "
     );
+
+    cy.intercept({
+      method: "GET",
+      url: DEV_PORTAL_APIS_SEARCH_URL(),
+      times: 1,
+    }).as("getAllApisForResubscribe");
+
     cy.get(TestIds.createSubscription).click();
-    cy.get(TestIds.apiSubscriptionSearch).should("be.visible");
     cy.get(TestIds.devPortalBackdropLoader).should("not.exist");
-    cy.log("Search API " + apiName + " to subscribe");
-    cy.get(TestIds.apiSubscriptionSearch).type(`${apiName} {enter}`);
-    cy.get(TestIds.devPortalBackdropLoader).should("not.exist");
-    cy.get(TestIds.addApiSubscription(apiName)).should("be.disabled");
-    cy.get(TestIds.subscriptionClose).click();
+
+    cy.wait("@getAllApisForResubscribe", VERY_SHORT_TIME).then(() => {
+      cy.get(TestIds.apiSubscriptionSearch).should("be.visible").within(() => {
+        cy.getUnstable('button[title="Open"]').click();
+        cy.get('input[value="Select API"]').click().type(`${apiName}`);
+      });
+
+      cy.contains("No options").click();
+      cy.get(TestIds.subscriptionPolicyCard).should("not.exist");
+      cy.contains("Add Subscription").should("be.disabled");
+    });
   }
 }

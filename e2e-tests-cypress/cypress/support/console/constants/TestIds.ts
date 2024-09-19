@@ -88,6 +88,7 @@ export namespace TestIds {
   export const refresh = '[data-cyid="refresh-button-button"]';
   export const notDeployed = '[data-cyid="card-body-not-deployed"]';
   export const deploymentFetchError = '[data-testid="deployment-fetch-error"]';
+  export const testDeploymentFetchError = '[data-testid="Test-error-fetching-deployment"]';
   export const promote = '[data-cyid="btn-promote-button"]';
   export const createVersion = '[data-cyid="create-version-button"]';
   export const createProxyVersion = '[data-cyid="btn-create-version-button"]';
@@ -206,6 +207,7 @@ export namespace TestIds {
   export const createSubscription = '[data-testid="create-subscription-btn"]';
   export const addApiSubscription = (apiName: string) =>
     `[data-testid="add-api-${apiName}"]`;
+  export const subscriptionPolicyCard = '[data-testid="subscription-policy-card"]';
   export const subscriptionClose =
     '[data-testid="subscription-dialog-close-btn"]';
   export const applicationList = (appName: string) =>
@@ -244,8 +246,7 @@ export namespace TestIds {
   export const deleteDialogOk = '[data-testid="delete-dialog-ok-button"]';
   export const applicationListEdit = (appName: string) =>
     `[data-testid="edit-btn-${appName}"]`;
-  export const apiSubscriptionSearch =
-    ".MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input";
+  export const apiSubscriptionSearch = '[data-testid="application.subscriptions.api.select.formcontrol"]';
   export const configSubmit = '[data-cyid="btn-submit-configform"]';
   export const runNow = '[data-cyid="run-now-split-group-button-button"]';
   export const runNowNotification = '[data-testid="snackbar-notification"]';
