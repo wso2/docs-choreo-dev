@@ -27,7 +27,7 @@ export const DEV_PORTAL_APIS_SEARCH_URL = (name?: string) => {
   if (name !== undefined) {
     return `${DEV_PORTAL_URL}/apis?query=display-name:${name}&*`;
   } else {
-    return `${DEV_PORTAL_URL}/apis?organizationId=*`;
+    return `${DEV_PORTAL_URL}/apis?*organizationId=*`;
   }
 };
 export const DEV_PORTAL_APP_TOKEN_GEN_URL =

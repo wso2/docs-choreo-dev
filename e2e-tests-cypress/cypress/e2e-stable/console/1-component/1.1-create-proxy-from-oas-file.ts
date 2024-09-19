@@ -150,7 +150,7 @@ describe("Create Proxy from OAS file", () => {
   });
 
   it("Add api subscription to application", () => {
-    application.addSubscription(proxy.getName());
+    application.addSubscription(proxy.getName(), UsagePlan.Bronze);
   });
 
   it("Add permissions to application", () => {

@@ -131,7 +131,7 @@ describe("API overview comment and rating scenario", () => {
   });
 
   it("Add subscription", () => {
-    application.addSubscription(proxy.getName());
+    application.addSubscription(proxy.getName(), UsagePlan.Bronze);
   });
 
   it("Delete a consumer application", () => {

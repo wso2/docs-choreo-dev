@@ -46,6 +46,7 @@ export class TestHelper {
   ) {
     this.selectCurl();
     Curl.selectCurlEnvironment(env);
+    this.retryIfError();
     Curl.selectMethod(httpMethod);
     if (pathParm != "") {
       Curl.enterPathParameter(pathParm);
@@ -229,5 +230,21 @@ export class TestHelper {
 
     this.expandSecondaryMenu(selector);
     cy.get(selector).click();
+  }
+  
+  private static retryIfError() {
+    for (let i = 0; i < 3; i++) {
+      cy.get("body").then((body) => {
+        if (body.find(TestIds.testDeploymentFetchError).length > 0) {
+          cy.get(TestIds.testDeploymentFetchError).within(() => {
+            cy.get("button").click();
+          });
+           
+          return;
+        } else {
+          cy.wait(2000, { log: false });
+        }
+      });
+    }
   }
 }
