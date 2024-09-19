@@ -236,8 +236,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 clientChoreoComponent);
-        clientDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, clientChoreoComponent,
-                environments);
+        clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, clientChoreoComponent,
+                environments, ComponentFlavour.BYOC);
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponent,
                 clientDeploymentStatusDTO);
     }
@@ -622,10 +622,9 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
 
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 deployedPublisherComponent);
-        Commit latestCommit = ComponentUtils.getLatestCommit(this, citrusClients, accessToken, deployedPublisherComponent);
 
-        ComponentDeploymentStatusDTO deployedPublisherComponentStatus =
-                ComponentUtils.validateComponentDeployment(this,citrusClients,accessToken,deployedPublisherComponent,latestCommit,environments,true);
+        ComponentDeploymentStatusDTO deployedPublisherComponentStatus = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, deployedPublisherComponent,
+                environments);
 
         if(deployedPublisherComponentStatus != null && !deployedPublisherComponentStatus.getDeploymentStatusV2().equals("ACTIVE")){
             throw new ValidationException("connections-publisher-component is not in active state");
