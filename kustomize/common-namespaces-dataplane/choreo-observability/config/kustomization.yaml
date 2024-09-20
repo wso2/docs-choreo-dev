@@ -32,7 +32,7 @@ configMapGenerator:
       - REQUEST_CLEANUP_INTERVAL="10m"
       - REQUEST_STALE_TOLERATION_PERIOD="10m"
       - REQUEST_LOG_INTERVAL="1m"
-      - DEBUG="true"
+      - DEBUG="false"
       - HEALTH_SERVER_HOST=":8080"
   - name: cm-obsapi
     behavior: create
