@@ -420,5 +420,8 @@ export namespace TestIds {
   export const continueButton = '[data-cyid="Continue-button"]';
   export const greetingBalServiceRepo = '[data-cyid="subPath-greeting-service"]';
   export const serviceCreateButton = '[data-cyid="Create-button"]';
+  export const HelloWorldGoManualTaskRepo = '[data-cyid="subPath-docker-hello-world-manual-task"]';
+  export const manualTriggerBuildPack = '[data-cyid="component-template-manualTrigger-card"]';
+  export const languageVersionDropDown = '[data-cyid="version-picker-select"]';
 }
 

@@ -34,6 +34,8 @@ export class _ManualTriggerCreationWizard {
     this.searchRepoName(repoName);
     this.selectRepo(repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
+    cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
+    cy.get("li").contains(manualTriggerInfo.languageVersion).click();
     cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
@@ -45,7 +47,9 @@ export class _ManualTriggerCreationWizard {
     cy.get(TestIds.serviceGHUrlEntry).should("be.visible").type(url);
   }
 
-  private handleBuildPackSelectionFromService(manualTriggerInfo: ManualTriggerInfo) {
+  private handleBuildPackSelectionFromService(
+    manualTriggerInfo: ManualTriggerInfo
+  ) {
     switch (manualTriggerInfo.buildPack) {
       case BuildPacks.Ballerina:
         cy.get(TestIds.ballerinaComponentCard).should("be.visible").click();
@@ -66,8 +70,6 @@ export class _ManualTriggerCreationWizard {
   }
 
   private selectRepo(testid: string) {
-    cy.get(TestIds.greetingBalServiceRepo).should("be.visible").click();
+    cy.get(TestIds.HelloWorldGoManualTaskRepo).should("be.visible").click();
   }
-
-  
 }

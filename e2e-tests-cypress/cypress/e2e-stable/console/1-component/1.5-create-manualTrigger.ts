@@ -15,6 +15,7 @@ import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { ManualTrigger } from "../../../support/console/entities/component/manual-trigger-component";
+import { createDefaultSteps } from "../../../support/commons/types";
 
 after(() => {
   console.logout();
@@ -36,7 +37,6 @@ describe("Verify manual trigger creation functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-
   it("Creating a manual trigger from choreo samples", () => {
     project
       .createManualTriggerUI({
@@ -47,20 +47,10 @@ describe("Verify manual trigger creation functionality", () => {
         repoTestid: "subPath-docker-hello-world-manual-task",
         languageVersion: "1.x",
       })
-      .then(() => {
+      .then((comp) => {
+        component = comp;
       });
   });
-  // it("Verify Manual Trigger component creation", () => {
-  //   project
-  //     .createManualTriggerComponent(Enums.Accessibility.EXTERNAL, {
-  //       url: "https://github.com/choreo-test-apps/manual-trigger",
-  //       branch: "main",
-  //     })
-  //     .then((comp: ManualTrigger) => {
-  //       project.visitComponent(comp.getName());
-  //       component = comp;
-  //     });
-  // });
 
   it("Build the component", () => {
     component.build();
@@ -71,7 +61,7 @@ describe("Verify manual trigger creation functionality", () => {
   });
 
   it("Verify component promotion to Prod", () => {
-    component.promoteToProd();
+    component.promoteToProdWithConfigs(createDefaultSteps(3));
   });
 
   it("Verify execution in dev", () => {

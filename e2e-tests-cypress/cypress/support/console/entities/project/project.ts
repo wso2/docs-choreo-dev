@@ -36,7 +36,7 @@ import { TestRunner } from "../component/test-runner-component";
 import { IntegrationComponentData } from "../../../interfaces/integration-component-data";
 import { Byoc } from "../component/byoc-component";
 import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
-import { _ServiceCreationWizard} from "../../ui-elements/wizards/service-creation-wizard";
+import { _ServiceCreationWizard } from "../../ui-elements/wizards/service-creation-wizard";
 import { _ManualTriggerCreationWizard } from "../../ui-elements/wizards/manualTrigger-creation-wizard";
 
 export interface RepoInfo {
@@ -375,7 +375,6 @@ export class Project {
     });
   }
 
-
   createServiceComponentUI(serviceInfo: ServiceInfo) {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
@@ -386,23 +385,17 @@ export class Project {
       serviceInfo,
       serviceInfo.repoUrl,
       serviceInfo.repoName,
-      serviceInfo.repoTestid,
-      
+      serviceInfo.repoTestid
     );
 
     return cy.url().then(() => {
-      return new Service(
-        serviceName,
-        serviceInfo.ENDPOINT_NAME,
-      );
+      return new Service(serviceName, serviceInfo.ENDPOINT_NAME);
     });
   }
 
-  /////////////////////////
-
   createManualTriggerUI(manualTriggerInfo: ManualTriggerInfo) {
     this.createComponentIfEmptyProject();
-    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
+    cy.get(TestIds.manualTriggerBuildPack).should("be.visible").click();
 
     const manualTriggerName = Utils.generateComponentName();
     this.manualTriggerCreationWizard.enterManualTriggerInfo(
@@ -410,23 +403,13 @@ export class Project {
       manualTriggerInfo,
       manualTriggerInfo.repoUrl,
       manualTriggerInfo.repoName,
-      manualTriggerInfo.repoTestid,
-      
+      manualTriggerInfo.repoTestid
     );
 
     return cy.url().then(() => {
-      return new ManualTrigger(
-        manualTriggerName,
-        //manualTriggerInfo.ENDPOINT_NAME,
-      );
+      return new ManualTrigger(manualTriggerName);
     });
   }
-
-
-////////////////////
-
-
-
 
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,
@@ -676,12 +659,6 @@ export class Project {
     });
   }
 
-
-  
-
-
-
-
   verifyUsageInsights(
     env: Enums.Environment,
     options?: { expectedTraffic: number }
@@ -763,5 +740,4 @@ export class Project {
   private getAverageErrorRate() {
     return cy.get("main").find("span>span").eq(2).invoke("text");
   }
-
 }
