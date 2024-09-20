@@ -24,7 +24,7 @@ export class _ComponentCreationWizard {
     repoUrl: string,
     repoName: string,
     repoTestid: string
-  ): string {
+  ) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
@@ -39,7 +39,7 @@ export class _ComponentCreationWizard {
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
 
-    return serviceInfo.displayName;
+    this.verifyComponentCreation(name);
   }
 
 
@@ -49,7 +49,7 @@ export class _ComponentCreationWizard {
     repoUrl: string,
     repoName: string,
     repoTestid: string
-  ): string {
+  ) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
@@ -66,7 +66,7 @@ export class _ComponentCreationWizard {
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
 
-    return manualTriggerInfo.displayName;
+    this.verifyComponentCreation(name);
   }
 
   private createFromGHUrl(url: string) {
@@ -101,5 +101,8 @@ export class _ComponentCreationWizard {
     cy.get(TestIds.HelloWorldGoManualTaskRepo).should("be.visible").click();
   }
 
+  private verifyComponentCreation(name: string) {
+    cy.get(TestIds.componentSelector, SHORT_TIME).should("be.visible").contains(name).should("be.visible");
+  }
   
 }
