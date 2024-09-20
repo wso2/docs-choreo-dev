@@ -207,6 +207,7 @@ configMapGenerator:
       - CICD_URL=http://dp-cicd
       - PROJECT_MANAGER_URL=http://dp-project-manager
       - CLOUD_MANAGER_URL=http://dp-cloud-manager
+      - PLATFORM_SERVICES_MANAGER_URL=http://platform-services-manager
       - PROXY_DEPLOYER_URL=http://choreo-apim-proxy-deployer:9095
       - ASB_DELETE_QUEUE_NAME=delete-manager
       - ASB_COMPONENT_DELETE_QUEUE_NAME=delete-manager
