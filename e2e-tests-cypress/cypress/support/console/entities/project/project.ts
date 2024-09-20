@@ -36,7 +36,7 @@ import { TestRunner } from "../component/test-runner-component";
 import { IntegrationComponentData } from "../../../interfaces/integration-component-data";
 import { Byoc } from "../component/byoc-component";
 import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
-import { _ServiceCreationWizard } from "../../ui-elements/wizards/component-creation-wizard";
+import { _ComponentCreationWizard } from "../../ui-elements/wizards/component-creation-wizard";
 
 export interface RepoInfo {
   readonly url: string;
@@ -99,7 +99,7 @@ export class Project {
   description: string;
 
   private proxyCreationWizard = new _ProxyCreationWizard();
-  private serviceCreationWizard = new _ServiceCreationWizard();
+  private serviceCreationWizard = new _ComponentCreationWizard();
  
   constructor(
     name: string,

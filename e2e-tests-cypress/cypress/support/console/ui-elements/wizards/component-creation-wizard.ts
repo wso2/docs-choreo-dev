@@ -16,7 +16,7 @@ import { TestIds } from "../../constants/TestIds";
 import { SHORT_TIME } from "../../../commons/timeouts";
 import { BuildPacks } from "../../../commons/enums";
 
-export class _ServiceCreationWizard {
+export class _ComponentCreationWizard {
   
   enterServiceInfo(
     name: string,
