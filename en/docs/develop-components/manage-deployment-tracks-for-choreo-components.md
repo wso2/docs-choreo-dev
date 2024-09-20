@@ -100,3 +100,27 @@ Following are the actions you need to take from a deployment track perspective t
 !!! tip
      - As a developer, you can strategically unlink and relink deployment tracks to effectively manage different versions of your services within Choreo.
      - You can create new deployment tracks for ongoing development branches like `dev` to ensure a continuous development and release cycle.
+
+## Delete a deployment track
+
+If you no longer need a deployment track, you can delete it.
+
+!!! note
+    If the component exposes an endpoint or proxy and you want to delete the last version in the major version range, the recommended approach is to retire that version first. This allows consumers to transition to the next major version and prevents a sudden break in their experience.
+    For example, if you have deployment tracks for v1.0 and v2.0, notify consumers to switch to v2.0 before deleting v1.0. Then, retire the APIs in v1.0 and proceed to delete the associated deployment track.
+
+
+
+
+**Prerequisites**:
+
+- At least 2 deployment tracks in a component.
+
+Follow the steps below to delete a deployment track:
+
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the **Component Listing** pane, click on the component for which you want to delete a deployment track.
+3. On the header of the component overview page, click the **Deployment Track** drop-down list.
+4. Click **+ View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
+5. Click the **Delete** icon corresponding to the deployment track you want to delete.
+6. Click **Delete** to confirm the deletion.
