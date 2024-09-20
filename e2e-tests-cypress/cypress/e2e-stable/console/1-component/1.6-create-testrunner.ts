@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { BuildPacks } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { TestRunner } from "../../../support/console/entities/component/test-runner-component";
 import { Project } from "../../../support/console/entities/project/project";
@@ -24,6 +25,8 @@ describe("Verify Test Runner Component functionality", () => {
 
   let project: Project;
   let runner: TestRunner;
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "test-runner-go";
 
   it("Login to Console", () => {
     console.login();
@@ -33,23 +36,41 @@ describe("Verify Test Runner Component functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify test runner component creation", () => {
+  it("Creating a Test Runner from choreo samples", () => {
     project
-      .createTestRunnerComponent(
-        {
-          url: "https://github.com/choreo-test-apps/buildPack-testrunner-Goapp",
-          branch: "main",
-        },
-        {
-          buildpackId: "F9E4820E-6284-11EE-8C99-0242AC120005",
-          languageVersion: "1.x",
-        }
-      )
-      .then((comp: TestRunner) => {
-        project.visitComponent(comp.getName());
+      .createTestRunnerUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.Go,
+        repoName: REPO_NAME,
+        repoTestid: "subPath-test-runner-go",
+        languageVersion: "1.x",
+      })
+      .then((comp) => {
         runner = comp;
       });
   });
+
+
+
+
+  // it("Verify test runner component creation", () => {
+  //   project
+  //     .createTestRunnerComponent(
+  //       {
+  //         url: "https://github.com/choreo-test-apps/buildPack-testrunner-Goapp",
+  //         branch: "main",
+  //       },
+  //       {
+  //         buildpackId: "F9E4820E-6284-11EE-8C99-0242AC120005",
+  //         languageVersion: "1.x",
+  //       }
+  //     )
+  //     .then((comp: TestRunner) => {
+  //       project.visitComponent(comp.getName());
+  //       runner = comp;
+  //     });
+  // });
 
   it("Build the component", () => {
     runner.build();

@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { ManualTriggerInfo, ServiceInfo } from "../../entities/project/project";
+import { ComponentInfo, ServiceInfo } from "../../entities/project/project";
 import { TestIds } from "../../constants/TestIds";
 import { SHORT_TIME } from "../../../commons/timeouts";
 import { BuildPacks } from "../../../commons/enums";
@@ -45,7 +45,7 @@ export class _ComponentCreationWizard {
 
   enterManualTriggerInfo(
     name: string,
-    manualTriggerInfo: ManualTriggerInfo,
+    manualTriggerInfo: ComponentInfo,
     repoUrl: string,
     repoName: string,
     repoTestid: string
@@ -89,6 +89,34 @@ export class _ComponentCreationWizard {
     }
   }
 
+  enterTestRunnerInfo(
+    name: string,
+    TestRunnerInfo: ComponentInfo,
+    repoUrl: string,
+    repoName: string,
+    repoTestid: string
+  ) {
+    cy.get(TestIds.serviceDisplayName)
+      .eq(0)
+      .within(() => cy.get("input").clear().type(name));
+
+    this.createFromGHUrl(repoUrl);
+    this.handleBuildPackSelectionFromService(TestRunnerInfo.buildPack);
+    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
+    this.searchRepoName(repoName);
+    this.selectRepoTestRunner(repoTestid);
+    cy.get(TestIds.continueButton).should("be.enabled").click();
+    cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
+    cy.get("li").contains(TestRunnerInfo.languageVersion).click();
+    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
+
+    this.verifyComponentCreation(name);
+  }
+
+
+
   private searchRepoName(repoSearchBox: string) {
     cy.get(TestIds.repoSearchBox).should("be.visible").type(repoSearchBox);
   }
@@ -99,6 +127,10 @@ export class _ComponentCreationWizard {
 
   private selectRepoManual(testid: string) {
     cy.get(TestIds.HelloWorldGoManualTaskRepo).should("be.visible").click();
+  }
+
+  private selectRepoTestRunner(testid: string) {
+    cy.get(TestIds.testRunnerGoRepo).should("be.visible").click();
   }
 
   private verifyComponentCreation(name: string) {

@@ -62,7 +62,7 @@ export interface ServiceInfo {
   readonly ENDPOINT_NAME: string;
 }
 
-export interface ManualTriggerInfo {
+export interface ComponentInfo {
   readonly displayName: string;
   readonly repoUrl: string;
   readonly buildPack: BuildPacks;
@@ -391,7 +391,7 @@ export class Project {
     });
   }
 
-  createManualTriggerUI(manualTriggerInfo: ManualTriggerInfo) {
+  createManualTriggerUI(manualTriggerInfo: ComponentInfo) {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.manualTriggerBuildPack).should("be.visible").click();
 
@@ -408,6 +408,29 @@ export class Project {
       return new ManualTrigger(manualTriggerName);
     });
   }
+
+  /////////////////////
+
+  createTestRunnerUI(componentInfo: ComponentInfo) {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.testRunnerBuildPack).should("be.visible").click();
+
+    const testRunnerName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterTestRunnerInfo(
+      testRunnerName,
+      componentInfo,
+      componentInfo.repoUrl,
+      componentInfo.repoName,
+      componentInfo.repoTestid
+    );
+
+    return cy.url().then(() => {
+      return new TestRunner(testRunnerName);
+    });
+  }
+
+/////////////////////
+
 
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,
