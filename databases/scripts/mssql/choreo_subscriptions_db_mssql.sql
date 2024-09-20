@@ -167,11 +167,11 @@ INSERT INTO tierV2 (id,name,description,is_paid,created_at,is_internal) VALUES
      (N'9819cdd6-d2df-47cb-8954-8c1a80cb06cc',N'Choreo Support',N'Choreo support plan with component based pricing',1,1667189541440,0),
 	 (N'4abe3757-86f6-47de-994f-f02fb0522e99',N'Enterprise',N'Tier for enterprise users with component based pricing',1,1667189541440,1),
      (N'41e29802-f4bb-456c-a92e-b14cca67c4bb',N'Developer',N'Developer Paid tier for users adding payment methods with component based pricing',1,1689683632,0),
-	 (N'c971b211-bc44-4f35-90ad-4d62b313b466',N'Pay As You Go',N'New PAYG tier for paid users with component based pricing',1,1689683632,0),
+	 (N'c971b211-bc44-4f35-90ad-4d62b313b466',N'Team',N'New PAYG tier for paid users with component based pricing',1,1689683632,0),
      (N'ac5b54f5-d665-4515-ae17-95eac201ecaa',N'Developer Infrastructure',N'Tier for infrastructure costs associated with Developer Paid users',1,1689683632,0),
-     (N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'Pay As You Go Infrastructure',N'Tier for infrastructure costs associated with new PAYG users',1,1689683632,0),
+     (N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'Team Infrastructure',N'Tier for infrastructure costs associated with new PAYG users',1,1689683632,0),
      (N'3fa450c2-d47f-4fcb-9711-9727815cd0ee',N'Developer Platform Services',N'Tier for platform services costs associated with Developer users',1,1689683632,0),
-     (N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'Pay As You Go Platform Services',N'Tier for platform services costs associated with PAYG users',1,1689683632,0);
+     (N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'Team Platform Services',N'Tier for platform services costs associated with PAYG users',1,1689683632,0);
 GO
 
 INSERT INTO threshold(id,tier_id,threshold,billing_provider) values
