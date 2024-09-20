@@ -11,13 +11,14 @@
  * associated services.
  */
 
-import { ServiceInfo } from "../../entities/project/project";
+import { ManualTriggerInfo, ServiceInfo } from "../../entities/project/project";
 import { TestIds } from "../../constants/TestIds";
 import { SHORT_TIME } from "../../../commons/timeouts";
 import { BuildPacks } from "../../../commons/enums";
 
 export class _ServiceCreationWizard {
-  enterServiceDetails(
+  
+  enterServiceInfo(
     name: string,
     serviceInfo: ServiceInfo,
     repoUrl: string,
@@ -29,7 +30,7 @@ export class _ServiceCreationWizard {
       .within(() => cy.get("input").clear().type(name));
 
     this.createFromGHUrl(repoUrl);
-    this.handleBuildPackSelectionFromService(serviceInfo);
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
     this.searchRepoName(repoName);
     this.selectRepo(repoTestid);
@@ -41,12 +42,39 @@ export class _ServiceCreationWizard {
     return serviceInfo.displayName;
   }
 
+
+  enterManualTriggerInfo(
+    name: string,
+    manualTriggerInfo: ManualTriggerInfo,
+    repoUrl: string,
+    repoName: string,
+    repoTestid: string
+  ): string {
+    cy.get(TestIds.serviceDisplayName)
+      .eq(0)
+      .within(() => cy.get("input").clear().type(name));
+
+    this.createFromGHUrl(repoUrl);
+    this.handleBuildPackSelectionFromService(manualTriggerInfo.buildPack);
+    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
+    this.searchRepoName(repoName);
+    this.selectRepoManual(repoTestid);
+    cy.get(TestIds.continueButton).should("be.enabled").click();
+    cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
+    cy.get("li").contains(manualTriggerInfo.languageVersion).click();
+    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
+
+    return manualTriggerInfo.displayName;
+  }
+
   private createFromGHUrl(url: string) {
     cy.get(TestIds.serviceGHUrlEntry).should("be.visible").type(url);
   }
 
-  private handleBuildPackSelectionFromService(serviceInfo: ServiceInfo) {
-    switch (serviceInfo.buildPack) {
+  private handleBuildPackSelectionFromService(buildPack: BuildPacks) {
+    switch (buildPack) {
       case BuildPacks.Ballerina:
         cy.get(TestIds.ballerinaComponentCard).should("be.visible").click();
         break;
@@ -67,6 +95,10 @@ export class _ServiceCreationWizard {
 
   private selectRepo(testid: string) {
     cy.get(TestIds.greetingBalServiceRepo).should("be.visible").click();
+  }
+
+  private selectRepoManual(testid: string) {
+    cy.get(TestIds.HelloWorldGoManualTaskRepo).should("be.visible").click();
   }
 
   

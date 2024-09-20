@@ -36,8 +36,7 @@ import { TestRunner } from "../component/test-runner-component";
 import { IntegrationComponentData } from "../../../interfaces/integration-component-data";
 import { Byoc } from "../component/byoc-component";
 import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
-import { _ServiceCreationWizard } from "../../ui-elements/wizards/service-creation-wizard";
-import { _ManualTriggerCreationWizard } from "../../ui-elements/wizards/manualTrigger-creation-wizard";
+import { _ServiceCreationWizard } from "../../ui-elements/wizards/component-creation-wizard";
 
 export interface RepoInfo {
   readonly url: string;
@@ -101,8 +100,7 @@ export class Project {
 
   private proxyCreationWizard = new _ProxyCreationWizard();
   private serviceCreationWizard = new _ServiceCreationWizard();
-  private manualTriggerCreationWizard = new _ManualTriggerCreationWizard();
-
+ 
   constructor(
     name: string,
     description: string,
@@ -380,7 +378,7 @@ export class Project {
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
 
     const serviceName = Utils.generateComponentName();
-    this.serviceCreationWizard.enterServiceDetails(
+    this.serviceCreationWizard.enterServiceInfo(
       serviceName,
       serviceInfo,
       serviceInfo.repoUrl,
@@ -398,7 +396,7 @@ export class Project {
     cy.get(TestIds.manualTriggerBuildPack).should("be.visible").click();
 
     const manualTriggerName = Utils.generateComponentName();
-    this.manualTriggerCreationWizard.enterManualTriggerInfo(
+    this.serviceCreationWizard.enterManualTriggerInfo(
       manualTriggerName,
       manualTriggerInfo,
       manualTriggerInfo.repoUrl,
