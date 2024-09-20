@@ -36,7 +36,7 @@ import { TestRunner } from "../component/test-runner-component";
 import { IntegrationComponentData } from "../../../interfaces/integration-component-data";
 import { Byoc } from "../component/byoc-component";
 import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
-import { _ServiceCreationWizard} from "../../ui-elements/wizards/service-creation-wizard";
+import { _ComponentCreationWizard } from "../../ui-elements/wizards/component-creation-wizard";
 
 export interface RepoInfo {
   readonly url: string;
@@ -60,6 +60,15 @@ export interface ServiceInfo {
   readonly repoName: string;
   readonly repoTestid: string;
   readonly ENDPOINT_NAME: string;
+}
+
+export interface ManualTriggerInfo {
+  readonly displayName: string;
+  readonly repoUrl: string;
+  readonly buildPack: BuildPacks;
+  readonly repoName: string;
+  readonly repoTestid: string;
+  readonly languageVersion: string;
 }
 
 export interface WebAppInfo {
@@ -90,8 +99,8 @@ export class Project {
   description: string;
 
   private proxyCreationWizard = new _ProxyCreationWizard();
-  private serviceCreationWizard = new _ServiceCreationWizard();
-
+  private serviceCreationWizard = new _ComponentCreationWizard();
+ 
   constructor(
     name: string,
     description: string,
@@ -364,26 +373,39 @@ export class Project {
     });
   }
 
-
   createServiceComponentUI(serviceInfo: ServiceInfo) {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
 
     const serviceName = Utils.generateComponentName();
-    this.serviceCreationWizard.enterServiceDetails(
+    this.serviceCreationWizard.enterServiceInfo(
       serviceName,
       serviceInfo,
       serviceInfo.repoUrl,
       serviceInfo.repoName,
-      serviceInfo.repoTestid,
-      
+      serviceInfo.repoTestid
     );
 
     return cy.url().then(() => {
-      return new Service(
-        serviceName,
-        serviceInfo.ENDPOINT_NAME,
-      );
+      return new Service(serviceName, serviceInfo.ENDPOINT_NAME);
+    });
+  }
+
+  createManualTriggerUI(manualTriggerInfo: ManualTriggerInfo) {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.manualTriggerBuildPack).should("be.visible").click();
+
+    const manualTriggerName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterManualTriggerInfo(
+      manualTriggerName,
+      manualTriggerInfo,
+      manualTriggerInfo.repoUrl,
+      manualTriggerInfo.repoName,
+      manualTriggerInfo.repoTestid
+    );
+
+    return cy.url().then(() => {
+      return new ManualTrigger(manualTriggerName);
     });
   }
 
@@ -635,12 +657,6 @@ export class Project {
     });
   }
 
-
-  
-
-
-
-
   verifyUsageInsights(
     env: Enums.Environment,
     options?: { expectedTraffic: number }
@@ -722,5 +738,4 @@ export class Project {
   private getAverageErrorRate() {
     return cy.get("main").find("span>span").eq(2).invoke("text");
   }
-
 }
