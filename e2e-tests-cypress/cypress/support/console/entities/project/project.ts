@@ -373,7 +373,7 @@ export class Project {
     });
   }
 
-  createServiceComponentUI(serviceInfo: ServiceInfo) {
+  createServiceComponentUI(serviceInfo: ServiceInfo): Cypress.Chainable<Service> {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
 
@@ -386,12 +386,10 @@ export class Project {
       serviceInfo.repoTestid
     );
 
-    return cy.url().then(() => {
-      return new Service(serviceName, serviceInfo.ENDPOINT_NAME);
-    });
+    return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
   }
 
-  createManualTriggerUI(manualTriggerInfo: ComponentInfo) {
+  createManualTriggerUI(manualTriggerInfo: ComponentInfo): Cypress.Chainable<ManualTrigger> {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.manualTriggerBuildPack).should("be.visible").click();
 
@@ -404,12 +402,11 @@ export class Project {
       manualTriggerInfo.repoTestid
     );
 
-    return cy.url().then(() => {
-      return new ManualTrigger(manualTriggerName);
-    });
+    return cy.wrap(new ManualTrigger(manualTriggerName));
   }
 
   /////////////////////
+
 
   createTestRunnerUI(componentInfo: ComponentInfo) {
     this.createComponentIfEmptyProject();
