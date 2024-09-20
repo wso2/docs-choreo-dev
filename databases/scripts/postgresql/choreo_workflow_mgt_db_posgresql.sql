@@ -31,6 +31,7 @@ CREATE TABLE org_workflow_config (
 -- Create workflow_instance table
 CREATE TABLE workflow_instance (
     id VARCHAR(36) PRIMARY KEY,
+    description VARCHAR(255) NOT NULL DEFAULT '',
     org_workflow_config_id VARCHAR(36) NOT NULL REFERENCES org_workflow_config(id),
     org_id VARCHAR(36) NOT NULL,
     resource VARCHAR(255) NOT NULL,
