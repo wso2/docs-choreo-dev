@@ -128,6 +128,7 @@ nav:
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
+      - Source Configuration Descriptor: develop-components/source-configuration-descriptor.md
   - Choreo-Managed Databases and Caches: 
           - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
           - PostgreSQL:  manage-databases-and-caches/choreo-managed-postgresql-databases.md
