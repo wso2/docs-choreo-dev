@@ -28,7 +28,7 @@ The following topics walk you through the container configuration changes you ca
 ### Update resource requests and limits
 
 !!! info "Note"
-    The capability to update resource requests and limits is only available in the paid tier.
+    The capability to update resource requests and limits is only available in in paid pricing plans.
 
 To update resource requests and limits, move the corresponding slider to a required position. A resource request cannot be less than its corresponding limit.
 
