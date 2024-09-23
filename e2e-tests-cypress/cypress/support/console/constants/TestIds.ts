@@ -424,5 +424,7 @@ export namespace TestIds {
   export const HelloWorldGoManualTaskRepo = '[data-cyid="subPath-docker-hello-world-manual-task"]';
   export const manualTriggerBuildPack = '[data-cyid="component-template-manualTrigger-card"]';
   export const languageVersionDropDown = '[data-cyid="version-picker-select"]';
+  export const testRunnerBuildPack = '[data-cyid="component-template-testRunnerComponent-card"]';
+  export const testRunnerGoRepo = '[data-cyid="subPath-test-runner-go"]';
 }
 
