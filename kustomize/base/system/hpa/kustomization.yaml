@@ -6,7 +6,6 @@ resources:
   - app-service.yaml
   - audit-logging.yaml
   - telemetry-go.yaml
-  - negotiator.yaml
   - connectords.yaml
   - platform-services-manager.yaml
   - analytics-subscription.yaml
