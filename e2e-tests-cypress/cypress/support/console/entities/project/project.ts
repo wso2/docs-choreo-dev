@@ -405,9 +405,6 @@ export class Project {
     return cy.wrap(new ManualTrigger(manualTriggerName));
   }
 
-  /////////////////////
-
-
   createTestRunnerUI(componentInfo: ComponentInfo) {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.testRunnerBuildPack).should("be.visible").click();
@@ -425,9 +422,6 @@ export class Project {
       return new TestRunner(testRunnerName);
     });
   }
-
-/////////////////////
-
 
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,

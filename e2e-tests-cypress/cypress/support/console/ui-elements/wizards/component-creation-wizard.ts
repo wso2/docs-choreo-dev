@@ -115,8 +115,6 @@ export class _ComponentCreationWizard {
     this.verifyComponentCreation(name);
   }
 
-
-
   private searchRepoName(repoSearchBox: string) {
     cy.get(TestIds.repoSearchBox).should("be.visible").type(repoSearchBox);
   }

@@ -51,27 +51,6 @@ describe("Verify Test Runner Component functionality", () => {
       });
   });
 
-
-
-
-  // it("Verify test runner component creation", () => {
-  //   project
-  //     .createTestRunnerComponent(
-  //       {
-  //         url: "https://github.com/choreo-test-apps/buildPack-testrunner-Goapp",
-  //         branch: "main",
-  //       },
-  //       {
-  //         buildpackId: "F9E4820E-6284-11EE-8C99-0242AC120005",
-  //         languageVersion: "1.x",
-  //       }
-  //     )
-  //     .then((comp: TestRunner) => {
-  //       project.visitComponent(comp.getName());
-  //       runner = comp;
-  //     });
-  // });
-
   it("Build the component", () => {
     runner.build();
   });
