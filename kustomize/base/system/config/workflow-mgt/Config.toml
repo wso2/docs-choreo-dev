@@ -1,6 +1,7 @@
 [workflow_mgt_service]
 healthPort = 9050
 servicePort = 9082
+workflowMgtPermission = "{{.WORKFLOW_MGT_PERMISSION}}"
 
 [workflow_mgt_service.db]
 host = "{{.DB_HOST}}"
