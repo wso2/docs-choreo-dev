@@ -991,6 +991,7 @@ configMapGenerator:
       - DB_NAME={{.DB_NAME}}
       - DB_USERNAME={{.DB_USERNAME}}
       - DB_PASSWORD_FILE={{.DB_PASSWORD_FILE}}
+      - DB_SSL_MODE={{.DB_SSL_MODE | default "allow"}}
   - name: env-log-controller
     behavior: create
     literals:
