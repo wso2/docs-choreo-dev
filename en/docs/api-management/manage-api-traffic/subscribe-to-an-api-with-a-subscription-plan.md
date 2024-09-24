@@ -16,7 +16,8 @@ To subscribe to an API with a subscription plan, follow the steps given below:
 
 8. If the selected subscription plan requires approval, your subscription will be shown as "Pending" until it is approved by an organization admin or the API publisher.
 
-> **Note:** Some subscription plans may require approval before they can be used. In such cases, your subscription will remain in a pending state until the necessary approval is granted.
+!!! note
+    Subscription plans can be set to require approval. When enabled, an **API Publisher** or **Administrator** must approve subscription requests before they can be used. To configure this setting, see [Configuring Subscription Approval](./configure-subscription-approval.md).
 
 To verify that the subscription plan works as expected, follow the steps given below:
 
