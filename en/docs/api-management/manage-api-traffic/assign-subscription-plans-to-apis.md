@@ -16,6 +16,5 @@ To assign subscription plans to an API, follow the steps given below:
     ![Enable toggle](../../assets/img/api-management/manage-api-traffic/enable-toggle.png)
 
 5. Click **Save**.
-<!-- TODO: Add a new screenshot showing the subscription plans assigned to an API -->
 
 When an API has subscription plans assigned to it, API consumers can select the plan that best fits their requirements during the subscription process. For details, see [Subscribe to an API with a Subscription Plan](./subscribe-to-an-api-with-a-subscription-plan.md)
