@@ -1,4 +1,4 @@
-# Configure Approval
+# Review Approval Requests
 
 This guide explains how to review, approve, or reject approval requests for various types of resources in Choreo.
 
@@ -12,10 +12,8 @@ This guide explains how to review, approve, or reject approval requests for vari
 6. In the approval request details pane, click **Approve**.
 7. In the approval request details pane, click **Reject**.
 
-![Approve subscription](../../assets/img/api-management/manage-api-traffic/add-subscription.png)
+![Approve subscription](../../assets/img/api-management/manage-api-traffic/review-subscription-approval.png)
 
 ## Types of approval requests
 
-Choreo supports various types of approval requests, including:
-
-1. Subscription Request Approval: For API subscription plans that require approval.
+1. [Subscription Approval](../api-management/manage-api-traffic/configure-subscription-approval.md)

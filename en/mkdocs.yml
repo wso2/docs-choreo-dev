@@ -200,7 +200,7 @@ nav:
           - Configure Asgardeo as an External IdP: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
           - Configure Azure as an External IdP: administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md
       - Create API Subscription Plans: administer/create-api-subscription-plans.md 
-      - Configure Approval: administer/configure-approval.md
+      - Review Approval Requests: administer/review-approval-requests.md
       - Configure a User Store with the Built-In Identity Provider: administer/configure-a-user-store-with-built-in-idp.md
       - Developer Portal:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
