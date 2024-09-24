@@ -426,5 +426,6 @@ export namespace TestIds {
   export const languageVersionDropDown = '[data-cyid="version-picker-select"]';
   export const testRunnerBuildPack = '[data-cyid="component-template-testRunnerComponent-card"]';
   export const testRunnerGoRepo = '[data-cyid="subPath-test-runner-go"]';
+  export const mIServiceRepo = '[data-cyid="subPath-hello-world-mi"]';
 }
 

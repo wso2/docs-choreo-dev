@@ -100,7 +100,7 @@ export class Project {
 
   private proxyCreationWizard = new _ProxyCreationWizard();
   private serviceCreationWizard = new _ComponentCreationWizard();
- 
+
   constructor(
     name: string,
     description: string,
@@ -373,7 +373,9 @@ export class Project {
     });
   }
 
-  createServiceComponentUI(serviceInfo: ServiceInfo): Cypress.Chainable<Service> {
+  createServiceComponentUI(
+    serviceInfo: ServiceInfo
+  ): Cypress.Chainable<Service> {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
 
@@ -389,7 +391,9 @@ export class Project {
     return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
   }
 
-  createManualTriggerUI(manualTriggerInfo: ComponentInfo): Cypress.Chainable<ManualTrigger> {
+  createManualTriggerUI(
+    manualTriggerInfo: ComponentInfo
+  ): Cypress.Chainable<ManualTrigger> {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.manualTriggerBuildPack).should("be.visible").click();
 
@@ -421,6 +425,24 @@ export class Project {
     return cy.url().then(() => {
       return new TestRunner(testRunnerName);
     });
+  }
+
+  createMIServiceComponentUI(
+    serviceInfo: ServiceInfo
+  ): Cypress.Chainable<Service> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
+
+    const serviceName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterMIServiceInfo(
+      serviceName,
+      serviceInfo,
+      serviceInfo.repoUrl,
+      serviceInfo.repoName,
+      serviceInfo.repoTestid
+    );
+
+    return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
   }
 
   createManualTriggerComponent(
