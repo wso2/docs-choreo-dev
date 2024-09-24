@@ -1,20 +1,18 @@
-The source configuration file allows users to define component configurations with fine-grained control. Endpoint and connection configurations can be defined through the source configuration file (`component.yaml`). These configurations are expected from the user, as they cannot be automatically inferred from the source code.
+Configure service endpoints and connections through the Choreo source configuration YAML file (`component.yaml`). Choreo expects the `component.yaml` file to ensure the necessary configurations for initializing endpoints and connections, as these configurations cannot be automatically inferred from the user source code. 
+
+The source configuration file must be committed to the user's repository and placed in the `.choreo` folder at the root of the project directory. This ensures the ability to version the configuration files alongside repository commits, enabling better tracking and management of configurations.
 
 !!! note
-    - Choreo prioritizes configuration files in the following order: `component.yaml` takes precedence, followed by `component-config.yaml`, and lastly `endpoints.yaml`.
-    - File schema is validated during the `Source Configuration Validation` step of the component build pipeline.
+    -  The `component-config.yaml` and `endpoints.yaml` files will eventually be deprecated. For more details, refer to the Migration Guides for [component-config.yaml](http://www.google.com) and [endpoints.yaml](http://www.google.com).
+    - Choreo prioritizes configuration files in the following order: `component.yaml` takes the highest precedence, followed by `component-config.yaml`, and then `endpoints.yaml`.
 
-### Component Configuration Descriptor
-#### component.yaml (Recommended)
 
-The new component configuration descriptor `(component.yaml)` simplifies and enhances the configuration of components within Choreo, providing a cleaner and organized schema structure for `endpoints` and `dependencies` for better readability, reducing complexity, and adopting a descriptor-based approach. Versioned schema ensures backward compatibility providing a seamless transition.
 
-#### What's new with `component.yaml`?
+## component.yaml 
 
-- **Multiple Network Visibilities**: Support for defining multiple network visibilities for endpoints, allowing fine-grained access control.
-- **Display Name and Name (Unique Identifier)**: Ability to assign a display name and unique identifier to endpoints for better management.
+The `component.yaml` descriptor-based approach simplifies and streamlines overall endpoint and connection configuration management. The use of versioned schemas ensures backward compatibility, providing a seamless transition for future updates.
 
-The `component.yaml` file has a defined structure and includes the following elements:
+The `component.yaml` file allows the following root-level fields for defining configurations:
 
 | Field                | Required     | Description                                                             |
 |----------------------|--------------|-------------------------------------------------------------------------|
@@ -23,10 +21,10 @@ The `component.yaml` file has a defined structure and includes the following ele
 | **dependencies**     | Optional     | The list of dependency configurations.                                  |
 
 #### Endpoint configurations (`endpoints`)
-In the `endpoints` configuration section, you can specify multiple service endpoint configurations. Each endpoint must have a unique name and expected field as defined in the schema overview. Newly introduces `endpoints.service` section is to define user service endpoint details.
+In the `endpoints` configuration section, you can define multiple service endpoint configurations. Each endpoint must have a unique name and the required fields as specified in the schema overview.
 
 !!! tip "Why have a unique name?"
-       When defining multiple endpoints, the `endpoint.name` is appended to the Choreo-generated URL. Choosing a clear and descriptive name ensures that it is easily recognizable and readable within the endpoint URL.
+       When defining multiple endpoints, the `endpoint.name` is appended to the Choreo-generated URL. Choosing a clear and concise name ensures that the endpoint is easily recognizable and readable within the URL. Avoid overly lengthy names to maintain clarity.
        
 
 | Field                | Required     | Description                                                                      |
@@ -42,9 +40,9 @@ In the `endpoints` configuration section, you can specify multiple service endpo
 
 #### Dependency configurations (`dependencies`)
 
-In the `dependencies` configuration section, you can specify multiple service connection configurations under `dependencies.serviceReferences`. Use the service references generated in the Internal Marketplace when creating a service connection. To copy the [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/), see the developer guide that is available when you create a connection.
+In the `dependencies` configuration section, you can define multiple service connection configurations under `dependencies.serviceReferences`. Use the service references generated in the Internal Marketplace when creating a service connection. For instructions on copying [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/), refer to the developer guide available during the connection creation process.
 
-he `serviceReferences` schema has a specific structure and contains the following details:
+The `dependencies.serviceReferences` schema expects following fields:
 
 | Field                | Required     | Description                                                                      |
 |----------------------|--------------|----------------------------------------------------------------------------------|
@@ -62,6 +60,14 @@ he `serviceReferences` schema has a specific structure and contains the followin
 ```bash
 <build-context-path>/.choreo/component.yaml
 ```
+
+!!! note
+    - For components built using **Buildpacks**, replace `build-context-path` with the `<project-directory>`. 
+    For example, `<project-directory>/.choreo/component.yaml`.
+    - For components built using **Docker**, replace `build-context-path` with the `<docker-context-path>`. 
+    For example, `<docker-context-path>/.choreo/component.yaml`.
+
+**File content**:
 
 ``` yaml
 # +required The configuration file schema version
@@ -112,111 +118,20 @@ endpoints:
             to: SERVICE_URL
 ```
 
-### Migration Guide
+## Migration Guide 
+### component-config.yaml
 
-For users currently using component-config.yaml or endpoints.yaml, transitioning to component.yaml is straightforward. The new schema retains backward compatibility while improving clarity. All legacy configurations will continue to work (will be deprecated eventually), but the use of component.yaml is strongly encouraged for new features and improvements.
+!!! info "Migrate to component.yaml"
+    Endpoint configurations under the `spec.inbound` section should be moved to the `endpoints ` section, and dependency configurations under the `spec.outbound` section should be moved to the `dependencies` section.
 
+    - Copy the value of `spec.inbound.context` to `endpoints.service.basePath`.
+    - Copy the value of `spec.inbound.port` to `endpoints.service.port`.
+    - Copy the value of `spec.inbound.networkVisibility` to `endpoints.networkVisibilities`.
+    - Add the `schemaVersion` field to component.yaml and remove `apiVersion` and `kind` fields.
 
-=== "component-config.yaml"
-    Inbound and Outbound configurations in component-config.yaml file needs to moved under endpoints and dependencies sections.
+The `component-config.yaml` file complements and enhances the existing endpoint configuration process. It allows you to define how your service's endpoints (inbound connections) are exposed and how your service connects to external services or components (outbound connections).
 
-    - The `spec.inbound.context` value should be copied to `endpoints.service.basePath`
-    - The `spec.inbound.port` value should be copied to `endpoints.service.port`
-    - Move `serviceReferences` section to `dependencies` section.
-
-    Below is a sample of the migrated schema from `component-config.yaml` to `component.yaml`:
-    <table style="font-size: 0.8rem">
-      <tr>
-        <td>
-          ```yaml
-          apiVersion: core.choreo.dev/v1beta1
-          kind: ComponentConfig
-          spec:
-            inbound:
-              - name: Greeting Service
-                port: 9090
-                type: REST
-                networkVisibility: Public
-                context: /greeting
-                schemaFilePath: greeting_openapi.yaml
-            outbound:
-              serviceReferences:
-                - name: choreo:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
-                  connectionConfig: 19d2648b-d29c-4452-afdd-1b9311e81412
-                  env:
-                    - from: ServiceURL
-                      to: SERVICE_URL
-          ```
-        </td>
-        <td>
-          ```yaml
-          schemaVersion: 0.9
-          endpoints:
-            - name: greeting-service
-              displayName: Greeting Service
-              service:
-                basePath: /greeting
-                port: 9090
-              type: REST
-              networkVisibilities: 
-                - Public
-              schemaFilePath: greeting_openapi.yaml
-          dependencies:
-            serviceReferences:
-              - name: choreo:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
-                connectionConfig: 19d2648b-d29c-4452-afdd-1b9311e81412
-                env:
-                  - from: ServiceURL
-                    to: SERVICE_URL
-          ```
-        </td>
-      </tr>
-    </table>
-
-=== "endpoints.yaml"
-
-    - `endpoints.context` value should be copied to `endpoints.service.basePath`
-    - `endpoints.port` value should be copied to `endpoints.service.port`
-
-    Given below is a sample on migrated schema from component-config.yaml to component.yaml:
-    <table style="font-size: 0.8rem">
-      <tr>
-        <td>
-          ```yaml
-          version: 0.1
-          endpoints:
-          - name: Greeting Service
-            port: 9090
-            type: REST
-            networkVisibility: Organization
-            context: /greeting
-            schemaFilePath: greeting_openapi.yaml
-          ```
-        </td>
-        <td>
-          ```yaml
-          schemaVersion: 0.9
-          endpoints:
-            - name: greeting-service
-              displayName: Greeting Service
-              service:
-                basePath: /greeting
-                port: 9090
-              type: REST
-              networkVisibilities: 
-                - Organization
-              schemaFilePath: greeting_openapi.yaml
-          ```
-        </td>
-      </tr>
-    </table>
-
-### Component Configuration Kind 
-#### component-config.yaml (Deprecated)
-
-The `component-config.yaml` file extends the capabilities of `endpoints.yaml` by providing advanced inbound and outbound connection configurations. It enhances the existing endpoint configuration process by allowing you to define how your service's endpoints (inbound connections) are exposed and how your service connects to external services or components (outbound connections).
-
-The `component-config.yaml` file has a defined structure and includes the following elements:
+The `component-config.yaml` file allows the following root-level fields for defining configurations:
 
 | Field                | Required     | Description                                                                           |
 |----------------------|--------------|---------------------------------------------------------------------------------------|
@@ -224,7 +139,6 @@ The `component-config.yaml` file has a defined structure and includes the follow
 | **kind**             | Required     | The resource type of the file defaults to `ComponentConfig`.                          |
 | **spec.inbound**     | Optional     | The list of inbound connection configurations.                                        |
 | **spec.outbound**    | Optional     | The list of outbound connection configurations.                                       |
-
 
 
 #### Inbound connection configurations (`spec.inbound`)
@@ -235,7 +149,7 @@ In the `spec.inbound` configuration section, you can specify endpoints to set up
 
 In the `spec.outbound` section, you can define `serviceReferences`. To define `serviceReferences`, you can use the service references generated in the Internal Marketplace when creating a service connection. To copy the [outbound connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing-services/#sharing-and-reusing-services), see the inline developer guide that is available when you create a connection.
 
-The `serviceReferences` schema has a specific structure and contains the following details:
+The `serviceReferences` schema expects following fields:
 
 | Field                | Required     | Description                                                                      |
 |----------------------|--------------|----------------------------------------------------------------------------------|
@@ -250,14 +164,8 @@ The `serviceReferences` schema has a specific structure and contains the followi
 **File location**:
 
 ```bash
-<docker-build-context-path>/.choreo/component-config.yaml
+<build-context-path>/.choreo/component-config.yaml
 ```
-
-!!! note
-    - For components built using the **Ballerina** buildpack, you must replace `docker-build-context-path` with the `component-root`. 
-    For example, `<component-root>/.choreo/component-config.yaml`.
-    - For components built using the **WSO2 MI** buildpack, you must replace `docker-build-context-path` with the `<Project Path>`. 
-    For example, `<Project Path>/.choreo/component-config.yaml`.
 
 **File content**:
 
@@ -300,13 +208,19 @@ spec:
             to: SERVICE_URL
 ```
 
+### endpoints.yaml
 
-### Endpoint Configuration Descriptor
-#### endpoints.yaml (Deprecated)
+!!! info "Migrate to component.yaml"
+    Endpoint configurations should be moved to the `endpoints ` section.
 
-The `endpoints.yaml` configuration file is used to defined endpoint details needed for Choreo service components.
+    - Copy the value of `context` to `endpoints.service.basePath`.
+    - Copy the value of `port` to `endpoints.service.port`.
+    - Copy the value of `networkVisibility` to `endpoints.networkVisibilities`.
+    - Add the `schemaVersion` field to component.yaml and remove `version` field.
 
-The `endpoints.yaml` file has a specific structure and contains the following details:
+The `endpoints.yaml` configuration file allows users to define configurations for multiple endpoints necessary for Choreo service components. This schema is essential for identifying the context, port binding, network exposure level, and other attributes required to generate a Choreo endpoint.
+
+The `endpoints.yaml` file allows the following root-level fields for defining configurations:
 
 | Field                | Required     | Description                                                                      |
 |----------------------|--------------|----------------------------------------------------------------------------------|
@@ -318,20 +232,11 @@ The `endpoints.yaml` file has a specific structure and contains the following de
 | **context**          | Required     | The context (base path) of the API that Choreo exposes via this endpoint.        |
 | **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, and **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, this field should be a relative path to the component root or Docker context.|
 
-#### Sample endpoints.yaml
-
 **File location**:
 
 ```bash
-<docker-build-context-path>/.choreo/endpoints.yaml
+<build-context-path>/.choreo/endpoints.yaml
 ```
-
-!!! note
-    - For components built with Ballerina buildpack `docker-build-context-path` should be replaced with `component-root`. 
-    For example: `<component-root>/.choreo/endpoints.yaml`
-
-    - For components built with WSO2 MI buildpack `docker-build-context-path` should be replaced with `<Project Path>`. 
-    For example: `<Project Path>/.choreo/endpoints.yaml`
 
 **File content**:
 
