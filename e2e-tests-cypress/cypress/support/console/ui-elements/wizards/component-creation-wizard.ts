@@ -115,6 +115,31 @@ export class _ComponentCreationWizard {
     this.verifyComponentCreation(name);
   }
 
+
+  enterMIServiceInfo(
+    name: string,
+    serviceInfo: ServiceInfo,
+    repoUrl: string,
+    repoName: string,
+    repoTestid: string
+  ) {
+    cy.get(TestIds.serviceDisplayName)
+      .eq(0)
+      .within(() => cy.get("input").clear().type(name));
+
+    this.createFromGHUrl(repoUrl);
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
+    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
+    this.searchRepoName(repoName);
+    this.selectRepoMIService(repoTestid);
+    cy.get(TestIds.continueButton).should("be.enabled").click();
+    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
+
+    this.verifyComponentCreation(name);
+  }
+
   private searchRepoName(repoSearchBox: string) {
     cy.get(TestIds.repoSearchBox).should("be.visible").type(repoSearchBox);
   }
@@ -129,6 +154,10 @@ export class _ComponentCreationWizard {
 
   private selectRepoTestRunner(testid: string) {
     cy.get(TestIds.testRunnerGoRepo).should("be.visible").click();
+  }
+
+  private selectRepoMIService(testid: string) {
+    cy.get(TestIds.mIServiceRepo).should("be.visible").click();
   }
 
   private verifyComponentCreation(name: string) {
