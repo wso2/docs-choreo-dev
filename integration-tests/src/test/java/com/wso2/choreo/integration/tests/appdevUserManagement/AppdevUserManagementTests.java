@@ -29,10 +29,13 @@ import com.wso2.choreo.integration.models.appdevUserManagement.CreateUserStoreRe
 import com.wso2.choreo.integration.models.appdevUserManagement.UserStore;
 import com.wso2.choreo.integration.models.appdevUserManagement.UsersListResponseDTO;
 import com.wso2.choreo.integration.models.environments.Environment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.LinkedMultiValueMap;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -47,6 +50,23 @@ public class AppdevUserManagementTests extends TestNGCitrusSpringSupport {
 
     String devEnvironmentId;
     String createdUserStoreId;
+
+    private static final Logger log = LogManager.getLogger(AppdevUserManagementTests.class);
+
+    @BeforeClass
+    public void cleanup_AppdevUserManagementTests() throws Exception {
+        List<UserStore> userStores = AppdevUserManagementUtils.getAllUserStores();
+
+        if (userStores != null && !userStores.isEmpty()) {
+            for (UserStore userStore : userStores) {
+                try {
+                    AppdevUserManagementUtils.deleteUserStore(userStore.getUserStoreId());
+                } catch (Exception e) {
+                    log.error("Error occurred while deleting user store: " + userStore.getUserStoreId(), e);
+                }
+            }
+        }
+    }
 
     @Test()
     @CitrusTest
