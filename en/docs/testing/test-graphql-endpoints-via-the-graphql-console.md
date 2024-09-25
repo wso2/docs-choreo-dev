@@ -15,11 +15,11 @@ Follow the steps below to test a GraphQL endpoint via the GraphQL Console:
 5. Select the required endpoint from the **Endpoint** list.
 
     !!! note
-        - The **Network Visibility** of an endpoint is set in the **endpoints.yaml**. You can set it to **Public**, **Organization**, or **Project**.
-        - If you have set the **Network Visibility** of the endpoint in the **endpoints.yaml** to **Public**, continue with step 7. 
-        - If you have set the **Network Visibility** of the endpoint in the **endpoints.yaml** to **Organization**, the GraphQL endpoint will not be invokable from outside the organization. In this instance, for testing purposes, Choreo allows you to generate a temporay test URL that will be active for 15 minutes. Execute step 6 to generate the temporary URL. 
+        - The **Network Visibilities** of an endpoint are set in the **component.yaml**. You can set any combination of **Public**, **Organization**, or **Project**.
+        - If you have set the **Network Visibilities** of the endpoint in the **component.yaml** to **Public**, continue with step 7. 
+        - If you have set the **Network Visibilities** of the endpoint in the **component.yaml** to **Organization**, the GraphQL endpoint will not be invokable from outside the organization. In this instance, for testing purposes, Choreo allows you to generate a temporay test URL that will be active for 15 minutes. Execute step 6 to generate the temporary URL. 
         
-6. If the **Network Visibility** of the endpoint is set to **Organization**, click on **Generate URL** to generate a temporary test URL that will be active for 15 minutes. Else, skip this step. 
+6. If the **Network Visibilities** of the endpoint contains **Organization**, click on **Generate URL** to generate a temporary test URL that will be active for 15 minutes. Else, skip this step. 
 
     !!! note
         The temporay test URL will be available **only for 15 minutes** and it will get expired after. You can deactivate the test URL by clicking on the **Deactivate URL** button.
