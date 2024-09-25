@@ -624,6 +624,19 @@ CREATE TABLE [dbo].[organization](
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
+/****** Object:  Table [dbo].[organization_verification]    Script Date: 25/9/2024 5:33:08 AM ******/
+CREATE TABLE [dbo].[organization_verification]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [org_id] [int] NOT NULL,
+    [status] [varchar](50) NOT NULL,
+    [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT organization_verification_org_id_fk FOREIGN KEY (org_id) REFERENCES organization(id) ON DELETE CASCADE,
+    CONSTRAINT unique_organization_verification_org_id UNIQUE(org_id)
+    CONSTRAINT [organization_verification_chk_status] CHECK ([status] IN ('VERIFIED', 'NON-VERIFIED'))
+)
 /****** Object:  Table [dbo].[organization_user_mapping]    Script Date: 9/7/2021 5:33:08 AM ******/
     SET ANSI_NULLS ON
     GO
@@ -1468,6 +1481,20 @@ END
 GO
 ALTER TABLE [dbo].[organization] ENABLE TRIGGER [organization_UpdateTimeTrigger]
     GO
+/****** Object:  Trigger [dbo].[organization_verification_UpdateTimeTrigger]    Script Date: 25/9/2024 5:33:08 AM ******/
+CREATE TRIGGER [dbo].[organization_verification_UpdateTimeTrigger] ON [dbo].[organization_verification]
+    FOR INSERT, UPDATE AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE tble
+    SET updated_at = GETDATE()
+    FROM [organization_verification] AS tble
+    INNER JOIN inserted AS i
+    ON tble.id = i.id;
+END
+GO
+ALTER TABLE [dbo].[organization_verification] ENABLE TRIGGER [organization_verification_UpdateTimeTrigger]
+GO
 /****** Object:  Trigger [dbo].[organization_user_mapping_UpdateTimeTrigger]    Script Date: 9/7/2021 5:33:08 AM ******/
     SET ANSI_NULLS ON
     GO
