@@ -15,8 +15,6 @@ configMapGenerator:
       - REDIS_PORT="6380"
       - REDIS_PWD_FILE_PATH="/etc/secrets/OAUTH_AGENT_REDIS_PWD"
       - REDIS_DB="5"
-      - SECONDARY_REDIS_PORT="6380"
-      - SECONDARY_REDIS_DB="5"
   - name: env-dp-mizzen-agent
     behavior: create
     literals:
