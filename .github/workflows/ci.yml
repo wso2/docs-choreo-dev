@@ -46,4 +46,4 @@ jobs:
           pip install mkdocs-open-in-new-tab==1.0.3
       - run: mkdocs gh-deploy --config-file en/mkdocs.yml --force
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CHOREO_AI_DOCS_PAT }}
