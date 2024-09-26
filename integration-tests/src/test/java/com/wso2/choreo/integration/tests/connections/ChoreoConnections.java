@@ -181,8 +181,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         servicePublisherComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 publicEndpointServiceComponent);
-        publicEndpointServiceDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
-                publicEndpointServiceComponent, servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
+        publicEndpointServiceDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken,
+                publicEndpointServiceComponent, servicePublisherComponentEnvironments);
         SVC_COMPONENT_SERVICE_NAME = publicEndpointServiceComponent.getName();
     }
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
@@ -236,8 +236,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 clientChoreoComponent);
-        clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, clientChoreoComponent,
-                environments, ComponentFlavour.BYOC);
+        clientDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, clientChoreoComponent,
+                environments);
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponent,
                 clientDeploymentStatusDTO);
     }
@@ -602,7 +602,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     }
 
     //create a connection to service component which was previously deployed
-    @Test()
+    @Test(dependsOnMethods = {"deployServiceConsumerComponent_TestChoreoConnections"})
     @CitrusTest
     public void createConnectionToDeployedService_TestChoreoConnections() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
