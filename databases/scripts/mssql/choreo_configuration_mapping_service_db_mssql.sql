@@ -21,6 +21,7 @@ CREATE TABLE configuration_mappings (
   [project_uuid] [nvarchar](50) NOT NULL,
   [component_uuid] [nvarchar](50) NOT NULL,
   [env_template_id] [nvarchar](50) NOT NULL,
+  [is_schema_based] [smallint] NOT NULL DEFAULT 0,
   [deployment_track_id] [nvarchar](50) NOT NULL,
   [internal_group_id] [nvarchar](50) NULL,
   [created_at] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
