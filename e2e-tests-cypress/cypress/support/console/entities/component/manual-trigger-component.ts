@@ -29,8 +29,8 @@ export class ManualTrigger extends mixinBuild(
     this._build(this);
   }
 
-  deployToDevWithoutSplitButton() {
-    this._deployTask(this, createDefaultSteps(2));
+  deployToDevWithoutSplitButton(numberOfSteps: number = 2) {
+    this._deployTask(this, createDefaultSteps(numberOfSteps));
   }
 
   deployToDevWithConfigs(configs: ConfigEntryStep[]) {

@@ -59,7 +59,7 @@ describe("Verify Reusable Manual Trigger creation functionality", () => {
   });
 
   it("Deploying to Dev", () => {
-    component.deployToDevWithoutSplitButton();
+    component.deployToDevWithoutSplitButton(1);
   });
 
   it("Verify component promotion to Prod", () => {
