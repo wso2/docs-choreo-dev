@@ -32,6 +32,8 @@ governance-service:
   endpoints:
     apimBasePath: "https://choreo-am-service:9443/api/am/publisher/v2/apis"
     linterServiceBasePath: "http://choreo-linter-service:8080/linter-service"
+    appService: "app-service:8080"
+    projectManager: "http://dp-project-manager:80"
   apim:
     superAdminUserName: {{.APIM_SUPER_ADMIN_USERNAME}}
     superAdminPassword: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_SUPER_ADMIN_PASSWORD)"
