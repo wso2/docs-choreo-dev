@@ -1,6 +1,8 @@
 [cp.proxyDeployer.config]
 maxRevisions = 20
 resourceRegistryBasePath="http://resource-registry:9090/resource-registry"
+workflowBasePath = "http://workflow-mgt:9082/workflow-mgt/v1"
+enableWorkflowValidation = {{.ENABLE_WORKFLOW_VALIDATION | default false}}
 
 dbUser = "choreo_proxy_deployer_db_user"
 
