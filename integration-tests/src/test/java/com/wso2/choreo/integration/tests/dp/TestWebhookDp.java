@@ -101,8 +101,9 @@ public class TestWebhookDp extends TestBase {
     @CitrusTest
     public void componentDeployment_CreateDeployInvokeWebhook(DataProviderWrapper dp) throws Exception {
         ChoreoComponent testComponent = dp.getChoreoComponent();
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, testComponent,
-                dp.getEnvironments());
+        BalConfig balConfigs = BalConfig.builder().isRequired(true).configKeyName("config.webhookSecret").valueType("string").valueOrSource("abcd").build();
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken, testComponent,
+                dp.getEnvironments(), ComponentFlavour.STANDARD, balConfigs);
         dp.setDeploymentStatusDTO(statusDTO);
     }
 

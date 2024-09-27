@@ -66,7 +66,7 @@ public class ConfigManagement {
 
         // Update configurations
         runner.$(repeatOnError()
-                .until("i = 3")
+                .until("i = 10")
                 .index("i")
                 .autoSleep(30000)
                 .actions(
