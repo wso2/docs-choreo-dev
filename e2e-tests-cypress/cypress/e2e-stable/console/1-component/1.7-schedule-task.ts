@@ -11,11 +11,12 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { ScheduleTrigger } from "../../../support/console/entities/component/schedule-trigger-component";
 import { SHORT_TIME } from "../../../support/commons/timeouts";
+import { createDefaultSteps } from "../../../support/commons/types";
 
 after(() => {
   console.logout();
@@ -23,9 +24,11 @@ after(() => {
 
 describe("Create Schedule Trigger", () => {
   const PROJECT_DESCRIPTION = "Schedule Trigger Test Project";
-  const MATCHING_STRING = "Hello, User";
+  const MATCHING_STRING = "Hello, World!";
   let project: Project;
   let component: ScheduleTrigger;
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "docker-hello-world-manual-task";
 
   it("Login to Console", () => {
     console.login();
@@ -35,14 +38,18 @@ describe("Create Schedule Trigger", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify Schedule Trigger component creation", () => {
+
+  it("Creating a Schedule trigger from choreo samples", () => {
     project
-      .createScheduleTriggerComponent(Enums.Accessibility.EXTERNAL, {
-        url: "https://github.com/choreo-test-apps/schedule-trigger",
-        branch: "main",
+      .createScheduleTriggerUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.Go,
+        repoName: REPO_NAME,
+        repoTestid: "subPath-docker-hello-world-manual-task",
+        languageVersion: "1.x",
       })
-      .then((comp: ScheduleTrigger) => {
-        project.visitComponent(comp.getName());
+      .then((comp) => {
         component = comp;
       });
   });
@@ -56,7 +63,7 @@ describe("Create Schedule Trigger", () => {
   });
 
   it("Verify component promotion to Prod", () => {
-    component.promoteProd();
+    component.promoteToProdWithConfigs(createDefaultSteps(3));
   });
 
   it("Verify dev env logs", () => {
@@ -80,3 +87,5 @@ describe("Create Schedule Trigger", () => {
     component.stopPromotion();
   });
 });
+
+

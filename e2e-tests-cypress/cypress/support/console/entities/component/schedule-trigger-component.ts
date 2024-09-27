@@ -16,7 +16,7 @@ import { mixinBuild } from "../../features/component-build/build";
 import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { mixinExecute } from "../../features/execute/execute";
 import { Enums } from "../../../commons/enums";
-import { createDefaultSteps } from "../../../commons/types";
+import { ConfigEntryStep, createDefaultSteps } from "../../../commons/types";
 
 export class ScheduleTrigger extends mixinBuild(
   mixinExecute(mixinServiceDeploy(Component))
@@ -30,11 +30,15 @@ export class ScheduleTrigger extends mixinBuild(
   }
 
   deployToDev() {
-    this._deployTask(this, createDefaultSteps(2));
+    this._deployTask(this, createDefaultSteps(3));
   }
 
   promoteProd() {
     this._promoteTask(this);
+  }
+
+  promoteToProdWithConfigs(configs: ConfigEntryStep[]) {
+    this._promoteTask(this, configs);
   }
 
   verifyObservabilityMetricsLogs(
