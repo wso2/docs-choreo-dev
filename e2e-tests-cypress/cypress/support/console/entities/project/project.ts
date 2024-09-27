@@ -463,6 +463,24 @@ export class Project {
     return cy.wrap(new ScheduleTrigger(scheduleTriggerName));
   }
 
+  createGQLServiceComponentUI(
+    serviceInfo: ServiceInfo
+  ): Cypress.Chainable<Service> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
+
+    const serviceName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterGQLServiceInfo(
+      serviceName,
+      serviceInfo,
+      serviceInfo.repoUrl,
+      serviceInfo.repoName,
+      serviceInfo.repoTestid
+    );
+
+    return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
+  }
+
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,

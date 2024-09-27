@@ -12,7 +12,7 @@
  */
 
 import { console } from "../../../support/console/console";
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
 
@@ -22,10 +22,12 @@ describe(`Graphql GQL service functionality`, () => {
   const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
   const TEST_MUTATION = 'mutation{createUser(name:"John")}';
   const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
-  const ENDPOINT_NAME = "GraphQL Greet";
+  const ENDPOINT_NAME = "Greeting GraphQL";
 
   let project: Project;
   let component: Service;
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "graphql-service";
 
   it("Login to Console", () => {
     console.login();
@@ -35,19 +37,19 @@ describe(`Graphql GQL service functionality`, () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify GraphQL component creation", () => {
+
+  it("Creating a GraphQL service from choreo samples", () => {
     project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/gql-service",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((serviceComponent: Service) => {
-        project.visitComponent(serviceComponent.getName());
-        component = serviceComponent;
+      .createGQLServiceComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.Ballerina,
+        repoName: REPO_NAME,
+        repoTestid: "subPath-graphql-service",
+        ENDPOINT_NAME,
+      })
+      .then((comp) => {
+        component = comp;
       });
   });
 
