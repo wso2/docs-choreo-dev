@@ -445,6 +445,24 @@ export class Project {
     return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
   }
 
+  createScheduleTriggerUI(
+    scheduleTriggerInfo: ComponentInfo
+  ): Cypress.Chainable<ScheduleTrigger> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.scheduleTriggerBuildPack).should("be.visible").click();
+
+    const scheduleTriggerName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterManualTriggerInfo(
+      scheduleTriggerName,
+      scheduleTriggerInfo,
+      scheduleTriggerInfo.repoUrl,
+      scheduleTriggerInfo.repoName,
+      scheduleTriggerInfo.repoTestid
+    );
+
+    return cy.wrap(new ScheduleTrigger(scheduleTriggerName));
+  }
+
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,
