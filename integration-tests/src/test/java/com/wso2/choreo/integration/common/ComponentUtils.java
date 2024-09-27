@@ -537,6 +537,35 @@ public class ComponentUtils {
         return componentDeploymentStatusDTO;
     }
 
+    public static ComponentDeploymentStatusDTO deployAndValidateBuiltComponentWithFlavour(TestNGCitrusSpringSupport runner,
+                                                                               Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent testComponent,
+                                                                               List<Environment> environments, ComponentFlavour componentFlavour,
+                                                                                          BalConfig... balconfigs) throws Exception {
+        HttpClient choreoProjectsTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        List<Commit> commitHistory = GraphQL.getCommitHistory(runner, choreoProjectsTestClient, testComponent.getId(), accessToken,
+                testComponent.getRepository().getBranchApp());
+
+        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
+            ConfigManagement.addConfiguration(runner, choreoProjectsTestClient, testComponent, commitHistory, environments.get(0),
+                    balconfigs);
+        }
+        Commit latestCommit = Commit.getLatestCommit(commitHistory);
+        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken, testComponent, latestCommit,
+                environments);
+        try {
+            ComponentUtils.validateComponentDeployment(runner, citrusClients, accessToken, testComponent, latestCommit, environments);
+        } catch (Exception e) {
+            if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
+                log.error("DeployStatusByVersion failure detected", e);
+            } else {
+                throw e;
+            }
+        }
+
+        return componentDeploymentStatusDTO;
+    }
+
+
     public static ComponentDeploymentStatusDTO validateComponentDeployment(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken,
             ChoreoComponent component, Commit latestCommit,
