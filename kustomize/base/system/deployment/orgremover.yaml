@@ -78,6 +78,9 @@ spec:
             - name: config
               mountPath: /organization-remover.yaml
               subPath: organization-remover.yaml
+            - name: config
+              mountPath: /org-service/organization-remover.yaml
+              subPath: organization-remover.yaml
           resources:
             limits:
               cpu: 150m
