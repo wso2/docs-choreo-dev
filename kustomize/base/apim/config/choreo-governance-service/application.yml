@@ -30,7 +30,7 @@ governance-service:
   feature-flags:
     disableDatabaseConnection: {{.DISABLE_DATABASE_CONNECTION | default true}}
   endpoints:
-    apimBasePath: "https://choreo-am-service:9443/api/am/publisher/v2/apis"
+    apimBasePath: "https://choreo-am-service:9443/api/am/publisher/v2"
     linterServiceBasePath: "http://choreo-linter-service:8080/linter-service"
     appService: {{.APP_SERVICE_BASE_URL}}
     projectManager: {{.PROJECT_MANAGER_BASE_URL}}
