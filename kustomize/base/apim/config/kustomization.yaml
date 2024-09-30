@@ -67,8 +67,8 @@ configMapGenerator:
   - name: cm-app-gateway-oauth-agent
     behavior: create
     literals:
-      - ENC_KEY_FILE_PATH="/etc/secrets/OAUTH_AGENT_ENC_KEY"
+      - ENC_KEY_FILE_PATH="/etc/agent-secrets/OAUTH_AGENT_ENC_KEY"
       - REDIS_PORT="6380"
-      - REDIS_PWD_FILE_PATH="/etc/secrets/REDIS_PASSWORD"
+      - REDIS_PWD_FILE_PATH="/etc/agent-secrets/REDIS_PASSWORD"
       - REDIS_DB="1"
-      - PAT_CLIENT_SECRET_FILE_PATH="/etc/secrets/PAT_CLIENT_SECRET"
+      - PAT_CLIENT_SECRET_FILE_PATH="/etc/agent-secrets/PAT_CLIENT_SECRET"
