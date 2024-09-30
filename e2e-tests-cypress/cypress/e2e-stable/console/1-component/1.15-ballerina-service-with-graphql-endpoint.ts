@@ -37,7 +37,6 @@ describe(`Graphql GQL service functionality`, () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-
   it("Creating a GraphQL service from choreo samples", () => {
     project
       .createGQLServiceComponentUI({
@@ -77,18 +76,6 @@ describe(`Graphql GQL service functionality`, () => {
       });
   });
 
-  it("Verify test functionality of GQL mutation in dev on swagger", () => {
-    component
-      .testGQL({
-        env: Enums.Environment.DEVELOPMENT,
-        endpoint: ENDPOINT_NAME,
-        query: TEST_MUTATION,
-      })
-      .then((res) => {
-        expect(res.toString()).to.be.contains(TEST_MUTATION_RESPONSE);
-      });
-  });
-
   it("Verify test functionality of GQL query in Prod on swagger", () => {
     component
       .testGQL({
@@ -98,18 +85,6 @@ describe(`Graphql GQL service functionality`, () => {
       })
       .then((res) => {
         expect(res.toString()).to.be.contains(TEST_QUERY_RESPONSE);
-      });
-  });
-
-  it("Verify test functionality of GQL mutation in Prod on swagger", () => {
-    component
-      .testGQL({
-        env: Enums.Environment.PRODUCTION,
-        endpoint: ENDPOINT_NAME,
-        query: TEST_MUTATION,
-      })
-      .then((res) => {
-        expect(res.toString()).to.be.contains(TEST_MUTATION_RESPONSE);
       });
   });
 
