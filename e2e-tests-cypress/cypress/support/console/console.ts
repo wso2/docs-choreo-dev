@@ -374,20 +374,18 @@ class Console {
           cy.get("input").click().clear().type(domainName);
         });
 
-      cy.get(TestIds.domainTable).within(() => {
-        cy.get("tbody").then((tbody) => {
+        cy.get(TestIds.domainTable).get("tbody").then((tbody) => {
           if (tbody.find(TestIds.noDataAvailable).length == 0) {
             cy.contains("td", domainName).should("be.visible");
             interception.response?.body.forEach((domain) => {
               if (domain.name === domainName) {
                 this.deleteSelectedDomain(domain.id);
+              } else {
+                throw new Error("Domain not found");
               }
             });
-            // Refresh the page to get the updated domain list since we doing the deletion through an API call
-            cy.reload();
           }
         });
-      });
     });
 
     cy.get(TestIds.domainTable).should("be.visible");
@@ -431,18 +429,18 @@ class Console {
           cy.get("input").click().clear().type(domainName);
         });
 
-      cy.get(TestIds.domainTable).within(() => {
-        cy.contains("td", domainName).should("be.visible");
-        interception.response?.body.forEach((domain) => {
-          if (domain.name === domainName) {
-            this.deleteSelectedDomain(domain.id);
-          } else {
-            throw new Error("Domain not found");
+        cy.get(TestIds.domainTable).get("tbody").then((tbody) => {
+          if (tbody.find(TestIds.noDataAvailable).length == 0) {
+            cy.contains("td", domainName).should("be.visible");
+            interception.response?.body.forEach((domain) => {
+              if (domain.name === domainName) {
+                this.deleteSelectedDomain(domain.id);
+              } else {
+                throw new Error("Domain not found");
+              }
+            });
           }
         });
-        // Refresh the page to get the updated domain list since we doing the deletion through an API call
-        cy.reload();
-      });
     });
   }
 
@@ -513,7 +511,11 @@ class Console {
   private deleteSelectedDomain(id: string) {
     // Cypress is having a problem with locating the delete confirmation button in the popup
     // So, we are using an API call to delete the domain as a workaround
-    Utils.sendDeleteRequest(`${DOMAIN_URL_MGT}/${id}`, AUTH_HEADER2());
+    Utils.sendDeleteRequest(`${DOMAIN_URL_MGT}/${id}`, AUTH_HEADER2()).then((response) => {
+      if (response.status !== 200) {
+        throw new Error("Failed to delete domain");
+      }
+    });
   }
 
   createNewProject(description: string): Project {
