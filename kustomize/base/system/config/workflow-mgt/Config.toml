@@ -9,6 +9,11 @@ port = 5432
 user = "{{.DB_USER}}"
 database = 'choreo_workflow_mgt_db'
 
+[workflow_mgt_service.event_publisher]
+enableEventPublish = {{.ENABLE_EVENT_PUBLISH | default false}}
+websubhubUrl = "{{.WEBSUBHUB_URL}}"
+topic = "{{.WEBSUBHUB_TOPIC}}"
+
 [workflow_mgt_service.rpc_app_service]
 appServiceHost = "http://app-service:8080"
 
