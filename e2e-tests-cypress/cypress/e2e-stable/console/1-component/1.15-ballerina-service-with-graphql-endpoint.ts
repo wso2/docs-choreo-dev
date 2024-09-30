@@ -20,8 +20,6 @@ describe(`Graphql GQL service functionality`, () => {
   const PROJECT_DESCRIPTION = "ballerina service with graphql endpoint";
   const TEST_QUERY = '{greeting(name:"John")}';
   const TEST_QUERY_RESPONSE = 'greeting": "Hello, John';
-  const TEST_MUTATION = 'mutation{createUser(name:"John")}';
-  const TEST_MUTATION_RESPONSE = 'createUser": "User created with name: John';
   const ENDPOINT_NAME = "Greeting GraphQL";
 
   let project: Project;
