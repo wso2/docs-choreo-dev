@@ -29,10 +29,10 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/cio-incident-configurator:latest
           resources:
             limits:
-              cpu: 800m
+              cpu: 500m
               memory: 600Mi
             requests:
-              cpu: 300m
+              cpu: 200m
               memory: 400Mi
           envFrom:
             - configMapRef:
@@ -101,16 +101,16 @@ spec:
               name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: sa-choreo-default
-            topologySpreadConstraints:
-              - labelSelector:
-                  matchLabels:
-                    choreo.component: cio-incident-configurator
-                maxSkew: 1
-                topologyKey: topology.kubernetes.io/zone
-                whenUnsatisfiable: DoNotSchedule
-              - labelSelector:
-                  matchLabels:
-                    choreo.component: cio-incident-configurator
-                maxSkew: 1
-                topologyKey: kubernetes.io/hostname
-                whenUnsatisfiable: ScheduleAnyway
+      topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              choreo.component: cio-incident-configurator
+          maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: DoNotSchedule
+        - labelSelector:
+            matchLabels:
+              choreo.component: cio-incident-configurator
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
