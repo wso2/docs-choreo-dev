@@ -55,6 +55,8 @@ passUserTokenForProjectManager = {{.PASS_USER_TOKEN_FOR_PROJECT_MANAGER}}
 enableResolverExecutionTimeLogger = {{.ENABLE_RESOLVER_EXECUTION_TIME_LOGGER | default false}}
 choreoOrgManagePermission = "{{.CHOREO_ORG_MANAGE_PERMISSION}}"
 maxHeaderSize = {{.MAX_HEADER_SIZE | default 65536}}
+workflowManagementServiceUrl = "http://workflow-mgt:9082"
+enableWorkflowApprovalValidation = {{.ENABLE_WORKFLOW_APPROVAL_VALIDATION | default false}}
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
