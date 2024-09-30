@@ -248,7 +248,7 @@ WSO2 MI buildpack is where you can deploy integrations developed with WSO2 Micro
 This is the most flexible method to define endpoints. You can configure the endpoint details with the `component.yaml` configuration file. Place this file in the .choreo directory in the project path of the component. 
 If the Micro Integrator project has inbound endpoints, you can expose them via different endpoints using the `component.yaml`
 
-    See [Understanding the source configuration file](../develop-components/source-configuration-descriptor.md) to learn about the `component.yaml` file.
+    See [Understanding the source configuration file](../develop-components/manage-component-source-configurations.md) to learn about the `component.yaml` file.
 
 2. **Auto generating endpoints**
 If `component.yaml` is not provided and if the source Micro Integrator project has APIs, Choreo scans the project and generates the API endpoints. If the project has few APIs, an endpoint will be generated for each API. The visibility of this auto-generated endpoint is set to `Public` by default. You can change the visibility in the deployment flow.
@@ -257,7 +257,7 @@ If `component.yaml` is not provided and if the source Micro Integrator project h
 If `component.yaml` is not provided and if the source Micro Integrator project doesn't have APIs, Choreo generates a default endpoint which will expose the default micro integrator port (8290) with `Public` visibility and wildcard context.
 
 !!! note
-    If you are currently using `component-config.yaml` or `endpoints.yaml` configuration files, please refer to the [source configuration references](../develop-components/source-configuration-descriptor.md) for comprehensive guidance on migrating to the recommended `component.yaml` configuration file.
+    If you are currently using `component-config.yaml` or `endpoints.yaml` configuration files, please refer to the [source configuration references](../develop-components/manage-component-source-configurations.md) for comprehensive guidance on migrating to the recommended `component.yaml` configuration file.
 
 ## Explore Choreo examples on GitHub
 

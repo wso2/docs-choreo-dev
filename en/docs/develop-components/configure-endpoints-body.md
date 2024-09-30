@@ -20,7 +20,7 @@ The method of defining endpoints depends on the buildpack. For buildpacks other 
 
 When you build a service component using any other buildpacks(Java, Python, NodeJS, Ruby, PHP, Go, Dockerfile, etc) other than Ballerina and WSO2 MI, you can configure the endpoint details with the `component.yaml` source configuration file. You must place this file inside the `.choreo` directory at the build context path and commit it to the source repository.
 
-See [Understanding the source configuration file](/choreo/docs/develop-components/source-configuration-descriptor/) to learn about the `component.yaml` file.
+See [Understanding the source configuration file](../develop-components/manage-component-source-configurations.md) to learn about the `component.yaml` file.
 
 ### Configure endpoints with the Ballerina buildpack
 
@@ -29,7 +29,7 @@ When you create a service component with the `Ballerina buildpack`, Choreo autom
 !!! note
     Automatic endpoint generation is not supported for dynamic endpoint parameters such as variable ports. Therefore, you must use an `component.yaml` file to define dynamic endpoint parameters.
 
-See [Understanding the source configuration file](/choreo/docs/develop-components/source-configuration-descriptor/) to learn about the `component.yaml` file.
+See [Understanding the source configuration file](../develop-components/manage-component-source-configurations.md) to learn about the `component.yaml` file.
 
 ## Expose endpoints as managed APIs
 
