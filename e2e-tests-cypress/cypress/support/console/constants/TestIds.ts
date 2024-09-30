@@ -428,5 +428,6 @@ export namespace TestIds {
   export const testRunnerGoRepo = '[data-cyid="subPath-test-runner-go"]';
   export const mIServiceRepo = '[data-cyid="subPath-hello-world-mi"]';
   export const scheduleTriggerBuildPack = '[data-cyid="component-template-scheduleTask-card"]';
+  export const gqlServiceRepo = '[data-cyid="subPath-graphql-service"]';
 }
 
