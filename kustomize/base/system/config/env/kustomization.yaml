@@ -992,6 +992,13 @@ configMapGenerator:
       - DB_USERNAME={{.DB_USERNAME | default "choreo_api_key_svc_db_user"}}
       - DB_PASSWORD_FILE={{.DB_PASSWORD_FILE | default "/mnt/csi/secret-api-key-svc-db/CHOREO_API_KEY_SVC_DB_PASSWORD"}}
       - DB_SSL_MODE={{.DB_SSL_MODE | default "require"}}
+  - name: env-app-gateway-oauth-agent
+    behavior: create
+    literals:
+      - REDIS_HOST="{{.REDIS_HOST | default ""}}"
+      - PAT_CLIENT_ID="{{.PAT_CLIENT_ID | default ""}}"
+      - PAT_CLIENT_TOKEN_EP="{{.PAT_CLIENT_TOKEN_EP | default ""}}"
+      - PAT_TOKEN_TTL_BUFFER="{{.PAT_TOKEN_TTL_BUFFER | default "10"}}"
   - name: env-log-controller
     behavior: create
     literals:

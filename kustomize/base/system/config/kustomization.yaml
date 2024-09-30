@@ -521,6 +521,14 @@ configMapGenerator:
       - UM_DATABASE_USERNAME="choreo_app_dev_user_mgt_db_user"
       - UM_DATABASE_PASSWORD_FILE=UM_DB_PASSWORD
       - UM_AUTHORIZATION_HEADER_NAME="x-jwt-assertion"
+  - name: cm-app-gateway-oauth-agent
+    behavior: create
+    literals:
+      - ENC_KEY_FILE_PATH="/etc/secrets/OAUTH_AGENT_ENC_KEY"
+      - REDIS_PORT="6380"
+      - REDIS_PWD_FILE_PATH="/etc/secrets/REDIS_PASSWORD"
+      - REDIS_DB="1"
+      - PAT_CLIENT_SECRET_FILE_PATH="/etc/secrets/PAT_CLIENT_SECRET"
   - name: cm-files-appdev-user-mgt
     behavior: create
     files:
