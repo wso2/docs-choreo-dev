@@ -118,7 +118,7 @@ describe("Create and deploy a component to test developer portal with custom dom
   });
 
   it("Add subscription", () => {
-    application.addSubscription(proxy.getName(), UsagePlan.Bronze);
+    application.addSubscription(proxy.getName(), UsagePlan.Unlimited);
   });
 
   it("Delete a consumer application", () => {
