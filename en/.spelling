@@ -92,6 +92,7 @@ build-your-first-cloud-native-application-with-choreo
 expose-a-service-as-a-managed-api
 build-your-first-integration
 configure-a-user-store-with-built-in-idp
+configure-approvals-for-choreo-workflows
 assign-subscription-plans-to-apis
 devops-and-ci-cd
 autoscale-component-replicas
