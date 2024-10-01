@@ -62,13 +62,6 @@ spec:
               name: mgw-common-cert-vol
               readOnly: true
               subPath: mg.pem
-#            - mountPath: /home/wso2/security/keystore/global-adapter.key
-#              name: secret-cc-ga-keystore
-#              readOnly: true
-#              subPath: GLOBAL_ADAPTER_KEYSTORE_KEY
-#            - mountPath: /home/wso2/security/keystore/global-adapter.pem
-#              name: global-adapter-keystore-vol
-#              subPath: global-adapter.pem
             - mountPath: /home/wso2/security/truststore/controlplane.pem
               name: mgw-adapter-truststore-vol
               readOnly: true
@@ -79,18 +72,9 @@ spec:
               subPath: mg.pem
             - mountPath: /home/wso2/conf
               name: global-adapter-config
-#            - name: secret-mgw
-#              mountPath: /mnt/csi/secret-mgw
-#              readOnly: true
-#            - name: secret-redis
-#              mountPath: /mnt/csi/secret-redis
-#              readOnly: true
             - name: secret-cc-ga-credentials
               mountPath: /mnt/csi/secret-cc-ga-credentials
               readOnly: true
-#            - name: secret-asb
-#              mountPath: /mnt/csi/secret-asb
-#              readOnly: true
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
               readOnly: true
@@ -112,21 +96,10 @@ spec:
             - secretRef:
                 name: secret-redis
           env:
-#            - name: GLOBAL_ADAPTER_PRIVATE_KEY_PATH
-#              value: /home/wso2/security/keystore/global-adapter.key
-#            - name: GLOBAL_ADAPTER_PUBLIC_CERT_PATH
-#              value: /home/wso2/security/keystore/global-adapter.pem
             - name: ADAPTER_PRIVATE_KEY_PATH
               value: "/home/wso2/security/keystore/mg.key"
             - name: ADAPTER_PUBLIC_CERT_PATH
               value: "/home/wso2/security/keystore/mg.pem"
-#            - name: GLOBAL_ADAPTER_SERVER_NAME
-#              value: global-adapter
-#            - name: ga_admin_pwd
-#              valueFrom:
-#                secretKeyRef:
-#                  key: GLOBAL_ADAPTER_ADMIN_PASSWORD
-#                  name: secret-cc-ga-credentials
             - name: ga_db_pwd
               valueFrom:
                 secretKeyRef:
@@ -142,15 +115,6 @@ spec:
                 secretKeyRef:
                   key: MOESIF_MS_AUTH_PWD
                   name: secret-mgw-analytics
-#            - name: ASB_CONNECTION_STRING
-#              valueFrom:
-#                secretKeyRef:
-#                  name: secret-asb
-#                  key: ASB_CONNECTION_STRING
-#            - name: PARTITION_CHECK_NAMESPACE
-#              valueFrom:
-#                fieldRef:
-#                  fieldPath: metadata.namespace
           resources:
             requests:
               memory: "1000Mi"
@@ -178,9 +142,6 @@ spec:
       volumes:
         - name: log-volume
           emptyDir: {}
-#        - name: global-adapter-keystore-vol
-#          configMap:
-#            name: global-adapter-keystore-vol
         - name: global-adapter-config
           configMap:
             name: cc-common-private-global-adapter-conf
@@ -206,22 +167,6 @@ spec:
               secretProviderClass: secret-mgw-analytics
             nodePublishSecretRef:
               name: csi-secret-store-azure
-#        - name: secret-mgw
-#          csi:
-#            driver: secrets-store.csi.k8s.io
-#            readOnly: true
-#            volumeAttributes:
-#              secretProviderClass: secret-mgw
-#            nodePublishSecretRef:
-#              name: csi-secret-store-azure
-#        - name: secret-cc-ga-keystore
-#          csi:
-#            driver: secrets-store.csi.k8s.io
-#            readOnly: true
-#            volumeAttributes:
-#              secretProviderClass: secret-cc-ga-keystore
-#            nodePublishSecretRef:
-#              name: csi-secret-store-azure
         - name: secret-cc-ga-credentials
           csi:
             driver: secrets-store.csi.k8s.io
@@ -230,22 +175,6 @@ spec:
               secretProviderClass: secret-cc-ga-credentials
             nodePublishSecretRef:
               name: csi-secret-store-azure
-#        - name: secret-redis
-#          csi:
-#            driver: secrets-store.csi.k8s.io
-#            readOnly: true
-#            volumeAttributes:
-#              secretProviderClass: secret-redis
-#            nodePublishSecretRef:
-#              name: csi-secret-store-azure
-#        - name: secret-asb
-#          csi:
-#            driver: secrets-store.csi.k8s.io
-#            readOnly: true
-#            volumeAttributes:
-#              secretProviderClass: secret-asb
-#            nodePublishSecretRef:
-#              name: csi-secret-store-azure
         - name: secret-apim
           csi:
             driver: secrets-store.csi.k8s.io
