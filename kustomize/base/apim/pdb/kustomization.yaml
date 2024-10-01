@@ -5,3 +5,4 @@ resources:
   - config-deployer-service.yaml
   - choreo-governance-service.yaml
   - choreo-linter-service.yaml
+  - choreo-connect-common-private-global-adapter.yaml
