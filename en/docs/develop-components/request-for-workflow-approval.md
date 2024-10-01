@@ -8,14 +8,12 @@ The approach to request approval can vary depending on the workflow.
 
 ## Request approval for environment promotion
 
-Follow these steps to request approval to promote a component from the development environment to production. 
-
 **Prerequisites**:
 
 - Ensure you have a component created, built, and deployed to the development environment.
 - Ensure that an approval is configured for the environment promotion workflow.
 
-Let's get started.
+To request approval to promote a component from the development environment to production, follow these steps:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component you want to deploy. This takes you to the overview page of the component.
