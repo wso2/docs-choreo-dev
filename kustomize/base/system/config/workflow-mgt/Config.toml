@@ -1,6 +1,8 @@
 [workflow_mgt_service]
 healthPort = 9050
 servicePort = 9082
+
+[workflow_mgt_service.interceptors]
 workflowMgtPermission = "{{.WORKFLOW_MGT_PERMISSION}}"
 
 [workflow_mgt_service.db]
