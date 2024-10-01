@@ -697,6 +697,11 @@ headerName
 fooValue
 authzHeaderValue
 myResourcePath
+schemaVersion
+displayName
+basePath
+networkVisibilities
+component.yaml
 develop-a-ballerina-graphql-api
 faq.md
 Moesif.md
