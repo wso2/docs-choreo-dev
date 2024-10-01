@@ -56,6 +56,7 @@ export interface ProxyInfo {
 export interface ServiceInfo {
   readonly displayName: string;
   readonly repoUrl: string;
+  readonly branch?: string;
   readonly buildPack: BuildPacks;
   readonly repoName: string;
   readonly repoTestid: string;
@@ -440,6 +441,21 @@ export class Project {
       serviceInfo.repoUrl,
       serviceInfo.repoName,
       serviceInfo.repoTestid
+    );
+
+    return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
+  }
+
+  createMIServiceEndpointComponentUI(
+    serviceInfo: ServiceInfo
+  ): Cypress.Chainable<Service> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
+
+    const serviceName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterMIEndpointServiceInfo(
+      serviceName,
+      serviceInfo
     );
 
     return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));

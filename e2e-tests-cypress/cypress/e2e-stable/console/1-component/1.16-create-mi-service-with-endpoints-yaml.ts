@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
 import { createDefaultSteps } from "../../../support/commons/types";
 import { console } from "../../../support/console/console";
@@ -20,9 +20,12 @@ import { Project } from "../../../support/console/entities/project/project";
 
 describe("Verify MI service with endpoint.yaml functionality", () => {
   const PROJECT_DESCRIPTION = "MI Service with endpoint.yaml component";
-  const MATCHING_STRING = "Hello Integration";
+  const MATCHING_STRING = "World";
   const ENDPOINT_NAME = "HelloWorld";
-  const RESOURCE_NAME = "message";
+  const RESOURCE_NAME = "";
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "hello-world-mi";
+  const BRANCH = "choreo-test-mi-endpoints-yaml";
 
   let project: Project;
   let service: Service;
@@ -35,19 +38,19 @@ describe("Verify MI service with endpoint.yaml functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify MI service component creation", () => {
+  it("Creating a MI service from choreo samples", () => {
     project
-      .createMIServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/synaps-api-project-sample",
-          branch: "with-endpoints-yaml",
-        },
-        ENDPOINT_NAME
-      )
-      .then((miServiceComponent: Service) => {
-        project.visitComponent(miServiceComponent.getName());
-        service = miServiceComponent;
+      .createMIServiceEndpointComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        branch: BRANCH,
+        buildPack: BuildPacks.MI,
+        repoName: REPO_NAME,
+        repoTestid: "subPath-hello-world-mi",
+        ENDPOINT_NAME,
+      })
+      .then((comp) => {
+        service = comp;
       });
   });
 
@@ -60,7 +63,7 @@ describe("Verify MI service with endpoint.yaml functionality", () => {
   });
 
   it("Verifying component promotion to Prod", () => {
-    service.promotePublicLevelAccessibility(createDefaultSteps(1), false);
+    service.promotePublicLevelAccessibility(createDefaultSteps(2), false);
   });
 
   it("Testing the component in Dev", () => {
