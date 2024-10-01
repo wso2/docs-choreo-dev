@@ -36,6 +36,10 @@ describe("Create and deploy a component to test developer portal with custom dom
     console.login();
   });
 
+  it("Add or replace a developer portal custom domain", () => {
+    console.addOrReplaceCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
+  });
+
   it("Creating a project", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
@@ -68,10 +72,6 @@ describe("Create and deploy a component to test developer portal with custom dom
 
   it("Publish proxy", () => {
     proxy.publish();
-  });
-
-  it("Add or replace a developer portal custom domain", () => {
-    console.addOrReplaceCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
   });
 
   it("Login to devportal custom domain", () => {

@@ -41,7 +41,7 @@ export class Application {
 
     cy.wait("@getAllApis", VERY_SHORT_TIME).then(() => {
       cy.get(TestIds.apiSubscriptionSearch).should("be.visible").within(() => {
-        cy.getUnstable('button[title="Open"]').click();
+        cy.get('button[title="Open"]').should("be.visible").click();
         cy.get('input[value="Select API"]').click().type(`${apiName}`);
       });
 
@@ -95,7 +95,7 @@ export class Application {
 
     cy.wait("@getAllApisForResubscribe", VERY_SHORT_TIME).then(() => {
       cy.get(TestIds.apiSubscriptionSearch).should("be.visible").within(() => {
-        cy.getUnstable('button[title="Open"]').click();
+        cy.get('button[title="Open"]').should("be.visible").click();
         cy.get('input[value="Select API"]').click().type(`${apiName}`);
       });
 
