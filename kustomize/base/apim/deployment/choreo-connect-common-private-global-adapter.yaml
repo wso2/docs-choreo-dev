@@ -66,10 +66,6 @@ spec:
               name: mgw-adapter-truststore-vol
               readOnly: true
               subPath: controlplane.pem
-            - mountPath: /home/wso2/security/truststore/local-adapter.pem
-              name: mgw-common-cert-vol
-              readOnly: true
-              subPath: mg.pem
             - mountPath: /home/wso2/conf
               name: global-adapter-config
             - name: secret-cc-ga-credentials
@@ -92,14 +88,8 @@ spec:
                 - "NET_RAW"
           envFrom:
             - configMapRef:
-                name: cm-feature-flags
-            - secretRef:
-                name: secret-redis
+                name: env-common-private-ga
           env:
-            - name: ADAPTER_PRIVATE_KEY_PATH
-              value: "/home/wso2/security/keystore/mg.key"
-            - name: ADAPTER_PUBLIC_CERT_PATH
-              value: "/home/wso2/security/keystore/mg.pem"
             - name: ga_db_pwd
               valueFrom:
                 secretKeyRef:
