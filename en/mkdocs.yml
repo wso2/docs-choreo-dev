@@ -127,6 +127,7 @@ nav:
           - Use a Connection in Your Web Application: develop-components/sharing-and-reusing/use-a-connection-in-your-web-application.md
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
+      - Request for Workflow Approval: develop-components/request-for-workflow-approval.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
   - Choreo-Managed Databases and Caches: 
           - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
@@ -200,6 +201,8 @@ nav:
           - Configure Asgardeo as an External IdP: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
           - Configure Azure as an External IdP: administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md
       - Create API Subscription Plans: administer/create-api-subscription-plans.md 
+      - Configure Approvals for Choreo Workflows: administer/configure-approvals-for-choreo-workflows.md
+      - Review Workflow Approval Requests: administer/review-workflow-approval-requests.md 
       - Configure a User Store with the Built-In Identity Provider: administer/configure-a-user-store-with-built-in-idp.md
       - Developer Portal:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
