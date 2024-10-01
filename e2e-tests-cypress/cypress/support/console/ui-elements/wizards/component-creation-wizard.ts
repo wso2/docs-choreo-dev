@@ -17,7 +17,6 @@ import { SHORT_TIME } from "../../../commons/timeouts";
 import { BuildPacks } from "../../../commons/enums";
 
 export class _ComponentCreationWizard {
-  
   enterServiceInfo(
     name: string,
     serviceInfo: ServiceInfo,
@@ -41,7 +40,6 @@ export class _ComponentCreationWizard {
 
     this.verifyComponentCreation(name);
   }
-
 
   enterManualTriggerInfo(
     name: string,
@@ -115,7 +113,6 @@ export class _ComponentCreationWizard {
     this.verifyComponentCreation(name);
   }
 
-
   enterMIServiceInfo(
     name: string,
     serviceInfo: ServiceInfo,
@@ -132,6 +129,31 @@ export class _ComponentCreationWizard {
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
     this.searchRepoName(repoName);
     this.selectRepoMIService(repoTestid);
+    cy.get(TestIds.continueButton).should("be.enabled").click();
+    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
+
+    this.verifyComponentCreation(name);
+  }
+
+  enterMIEndpointServiceInfo(name: string, serviceInfo: ServiceInfo) {
+    cy.get(TestIds.serviceDisplayName)
+      .eq(0)
+      .within(() => cy.get("input").clear().type(name));
+
+    this.createFromGHUrl(serviceInfo.repoUrl);
+
+    cy.get(".MuiAutocomplete-endAdornment > .MuiButtonBase-root").click();
+    cy.wait(4000);
+    if (serviceInfo.branch !== undefined) {
+      cy.get("li").contains(serviceInfo.branch).click();
+    }
+
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
+    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
+    this.searchRepoName(serviceInfo.repoName);
+    this.selectRepoMIService(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
     cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
     cy.get(TestIds.backdropLoader).should("not.exist");
@@ -189,7 +211,9 @@ export class _ComponentCreationWizard {
   }
 
   private verifyComponentCreation(name: string) {
-    cy.get(TestIds.componentSelector, SHORT_TIME).should("be.visible").contains(name).should("be.visible");
+    cy.get(TestIds.componentSelector, SHORT_TIME)
+      .should("be.visible")
+      .contains(name)
+      .should("be.visible");
   }
-  
 }
