@@ -133,7 +133,7 @@ VALUES('API_SUBSCRIPTION_CREATION', 'API Subscription Creation','Create an API s
             "dataType": "string",
             "required": true,
             "extractfrom": "applicationInfo.applicationName"
-        }
+        },
         "apiName": {
             "displayName": "API name",
             "dataType": "string",
@@ -171,7 +171,7 @@ VALUES('API_SUBSCRIPTION_UPDATE', 'API Subscription Update','Update an existing 
             "dataType": "string",
             "required": true,
             "extractfrom": "applicationInfo.applicationName"
-        }
+        },
         "apiName": {
             "displayName": "API name",
             "dataType": "string",
