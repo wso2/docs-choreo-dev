@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { WebApp } from "../../../support/console/entities/component/webapp-component";
 import { Service } from "../../../support/console/entities/component/service-component";
 import {
@@ -40,9 +40,12 @@ describe("Create Web App", () => {
   };
 
   const BACKEND_SERVICE_PROJECT_NAME = "Default Project";
-  const BACKEND_SERVICE_ENDPOINT_NAME = "Readinglist";
+  //const BACKEND_SERVICE_ENDPOINT_NAME = "Readinglist";
+  const ENDPOINT_NAME = "Readinglist";
   const BACKEND_SERVICE_COMPONENT_NAME = "managedauthbackend";
   const BACKEND_CONNECTION_NAME = "Managed Auth BE Connection";
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "reading-list-app";
 
   const backendServiceRepoInfo: RepoInfo = {
     url: "https://github.com/choreo-test-apps/choreo-examples",
@@ -82,6 +85,13 @@ describe("Create Web App", () => {
       });
     });
   }
+
+  function enterBuildPackInfo() {
+    cy.get('[data-cyid="command"]').eq(0).type('npm install && npm run build');
+    cy.get('[data-cyid="command"]').eq(1).type('dist');
+    cy.get('[data-cyid="command"]').eq(2).type('18');
+  }
+
 
   function verifyLogin() {
     cy.get("[data-cyid=welcome-msg-box]").contains("john1@acme.org");
@@ -123,26 +133,55 @@ describe("Create Web App", () => {
     project = console.searchProject(BACKEND_SERVICE_PROJECT_NAME);
   });
 
-  it("Create backend service if not exists", () => {
+
+  it("Creating a WebApp component from choreo samples", () => {
     project.isComponentExists(BACKEND_SERVICE_COMPONENT_NAME).then((isExists) => {
-      if (!isExists) {
+      if (isExists) {
         project
-          .createServiceComponent(
-            Enums.Accessibility.EXTERNAL,
-            backendServiceRepoInfo,
-            BACKEND_SERVICE_ENDPOINT_NAME,
-            BACKEND_SERVICE_COMPONENT_NAME
+          .createWebAppServiceComponentUI(
+            {
+              displayName: "",
+              repoUrl: REPO_URL,
+              buildPack: BuildPacks.WEBAPP,
+              repoName: REPO_NAME,
+              repoTestid: "subPath-reading-list-app",
+              ENDPOINT_NAME,
+            },
+            enterBuildPackInfo // Pass the function as the second argument
           )
-          .then((serviceComponent: Service) => {
-            project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
-            service = serviceComponent;
+          .then((comp) => {
+            service = comp;
           });
       } else {
         project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
-        service = new Service(BACKEND_SERVICE_COMPONENT_NAME, BACKEND_SERVICE_ENDPOINT_NAME);
+        service = new Service(BACKEND_SERVICE_COMPONENT_NAME, ENDPOINT_NAME);
       }
     });
   });
+  
+  
+
+  // it("Create backend service if not exists", () => {
+   //  project.isComponentExists(BACKEND_SERVICE_COMPONENT_NAME).then((isExists) => {
+   //   if (!isExists) {
+  //       project
+  //         .createServiceComponent(
+  //           Enums.Accessibility.EXTERNAL,
+  //           backendServiceRepoInfo,
+  //           BACKEND_SERVICE_ENDPOINT_NAME,
+  //           BACKEND_SERVICE_COMPONENT_NAME
+  //         )
+  //         .then((serviceComponent: Service) => {
+  //           project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
+  //           service = serviceComponent;
+  //         });
+  //     } else {
+  //       project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
+  //       service = new Service(BACKEND_SERVICE_COMPONENT_NAME, BACKEND_SERVICE_ENDPOINT_NAME);
+  //     }
+  //   });
+  // });
+
 
   it("Build backend service if not built previously", () => {
     service.isSuccessfulBuildExists().then((isExists) => {

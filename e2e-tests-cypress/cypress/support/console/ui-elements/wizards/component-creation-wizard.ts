@@ -84,6 +84,10 @@ export class _ComponentCreationWizard {
       case BuildPacks.MI:
         cy.get(TestIds.miComponentCard).should("be.visible").click();
         break;
+
+      case BuildPacks.WEBAPP:
+          cy.get(TestIds.reactBuildPack).should("be.visible").click();
+          break;  
     }
   }
 
@@ -162,6 +166,29 @@ export class _ComponentCreationWizard {
     this.verifyComponentCreation(name);
   }
 
+ 
+  enterWebAppServiceInfo(name: string, serviceInfo: ServiceInfo, enterBuildPackInfo: () => void) {
+    cy.get(TestIds.serviceDisplayName)
+      .eq(0)
+      .within(() => cy.get("input").clear().type(name));
+
+    this.createFromGHUrl(serviceInfo.repoUrl);
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
+    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
+    this.searchRepoName(serviceInfo.repoName);
+    
+     
+
+    this.selectRepoWebAppService(serviceInfo.repoTestid);
+    enterBuildPackInfo(); 
+    cy.get(TestIds.continueButton).should("be.enabled").click();
+    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
+
+    this.verifyComponentCreation(name);
+  }
+
   enterGQLServiceInfo(
     name: string,
     serviceInfo: ServiceInfo,
@@ -204,6 +231,10 @@ export class _ComponentCreationWizard {
 
   private selectRepoMIService(testid: string) {
     cy.get(TestIds.mIServiceRepo).should("be.visible").click();
+  }
+
+  private selectRepoWebAppService(testid: string) {
+    cy.get(TestIds.webAppServiceRepo).should("be.visible").click();
   }
 
   private selectRepoGQLService(testid: string) {

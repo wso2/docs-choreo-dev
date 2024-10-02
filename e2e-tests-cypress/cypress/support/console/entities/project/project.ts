@@ -497,6 +497,32 @@ export class Project {
     return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
   }
 
+  /////////////////////
+
+  createWebAppServiceComponentUI(
+    serviceInfo: ServiceInfo ,  enterBuildPackInfo: () => void
+  ): Cypress.Chainable<Service> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.webAppComponentCard).should("be.visible").click();
+
+    const serviceName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterWebAppServiceInfo(
+      serviceName,
+      serviceInfo,
+      enterBuildPackInfo,
+    );
+
+    return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
+  }
+
+
+  ///////////////////
+
+
+
+
+
+
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,
     repoInfo: RepoInfo,

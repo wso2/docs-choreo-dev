@@ -429,5 +429,9 @@ export namespace TestIds {
   export const mIServiceRepo = '[data-cyid="subPath-hello-world-mi"]';
   export const scheduleTriggerBuildPack = '[data-cyid="component-template-scheduleTask-card"]';
   export const gqlServiceRepo = '[data-cyid="subPath-graphql-service"]';
+  export const webAppComponentCard = '[data-cyid="component-template-webApp-card"]';
+  export const reactBuildPack = '[data-cyid="React-card-button"]';
+  export const webAppServiceRepo = '[data-cyid="subPath-reading-list-app"]';
+  export const webAppServiceAuthRepo = '[data-cyid="subPath-reading-list-app/reading-list-front-end-with-managed-auth"]';
 }
 
