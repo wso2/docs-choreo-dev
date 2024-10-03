@@ -9,6 +9,8 @@ spec:
       data:
         - objectName: CHOREO_WORKFLOW_MGT_DB_PASSWORD
           key: CHOREO_WORKFLOW_MGT_DB_PASSWORD
+        - objectName: APIM_CLIENT_SECRET
+          key: APIM_CLIENT_SECRET
   parameters:
     objects: |
       array:
@@ -17,3 +19,8 @@ spec:
           objectType: secret
           objectAlias: CHOREO_WORKFLOW_MGT_DB_PASSWORD
           objectVersion: "{{.CHOREO_WORKFLOW_MGT_DB_PASSWORD}}"
+        - |
+          objectName: choreo-workflow-mgt-apim-client-secret
+          objectType: secret
+          objectAlias: APIM_CLIENT_SECRET
+          objectVersion: "{{.APIM_CLIENT_SECRET}}"
