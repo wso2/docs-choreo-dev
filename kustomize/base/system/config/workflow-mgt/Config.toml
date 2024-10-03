@@ -23,6 +23,9 @@ appServiceHost = "http://app-service:8080"
 notificationService = "http://alert-notification-service:9090"
 consoleHostname = "{{.CONSOLE_HOSTNAME}}"
 
+[workflow_mgt_service.project_mgt_service]
+projectManagerEndpoint = "http://dp-project-manager:80/api/v1"
+
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
 format="json"
