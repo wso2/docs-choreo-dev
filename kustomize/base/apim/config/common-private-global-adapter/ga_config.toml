@@ -10,7 +10,7 @@ enabled = true
 
 # Control plane's connection details
 [controlPlane]
-  serviceUrl = "https://choreo-am-service:9443/"
+  serviceUrl = "http://choreo-am-service:9763"
   username = "{{.CONTROLPLANE_USERNAME}}"
   password = "$env{cp_admin_pwd}"
 
