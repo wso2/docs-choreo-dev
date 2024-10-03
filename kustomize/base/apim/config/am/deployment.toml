@@ -638,6 +638,6 @@ client_id="{{.PAT_CLIENT_ID}}"
 pat_service_url="{{.API_KEY_SERVICE_ENDPOINT_URL}}"
 
 [choreo.workflowMgtService]
-endpoint_url = {{.WORKFLOW_MGT_ENDPOINT_URL | default ""}}
+endpoint_url = "{{.WORKFLOW_MGT_ENDPOINT_URL | default ""}}"
 max_retries = "3"
 retry_delay = "1000"
