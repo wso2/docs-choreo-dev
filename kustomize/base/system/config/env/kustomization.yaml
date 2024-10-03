@@ -357,6 +357,7 @@ configMapGenerator:
       - APIM_USER_FOR_OAUTH_APP_CREATION={{.APIM_USER_FOR_OAUTH_APP_CREATION | default ""}}
       - EU_DATA_PLANE_ID={{.EU_DATA_PLANE_ID | default ""}}
       - CILIUM_EGRESS_POLICY_ENABLED={{.CILIUM_EGRESS_POLICY_ENABLED | default "false"}}
+      - BUILD_STS_URL_FROM_DEFAULT_DOMAIN_ENABLED={{.BUILD_STS_URL_FROM_DEFAULT_DOMAIN_ENABLED | default "false"}}
   - name: env-dp-helmhub
     behavior: create
     literals:
@@ -784,6 +785,7 @@ configMapGenerator:
       - REACT_APP_ENABLE_QUICK_DEPLOY_SAMPLES_FEATURE={{.REACT_APP_ENABLE_QUICK_DEPLOY_SAMPLES_FEATURE | default "false"}}
       - REACT_APP_GH_PROXY_ENABLED_ORGS={{.REACT_APP_GH_PROXY_ENABLED_ORGS | default ""}}
       - REACT_APP_ENABLE_MULTI_VISIBILITY_SUPPORT={{.REACT_APP_ENABLE_MULTI_VISIBILITY_SUPPORT | default "false"}}
+      - REACT_APP_ENABLE_BUILD_STS_URL_FROM_DEFAULT_DOMAIN={{.REACT_APP_ENABLE_BUILD_STS_URL_FROM_DEFAULT_DOMAIN | default "false"}}
   - name: env-dp-mizzen
     behavior: create
     literals:
