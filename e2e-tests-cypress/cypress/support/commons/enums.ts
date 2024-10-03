@@ -133,4 +133,5 @@ export enum BuildPacks {
   Ballerina = "Ballerina",
   Go = "Go",
   MI = "MI",
+  WEBAPP = "WebApp"
 }
