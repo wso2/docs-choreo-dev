@@ -16,42 +16,18 @@ import { WebApp } from "../../../support/console/entities/component/webapp-compo
 import { Service } from "../../../support/console/entities/component/service-component";
 import {
   Project,
-  RepoInfo,
-  WebAppInfo,
 } from "../../../support/console/entities/project/project";
 import { console } from "../../../support/console/console";
 
 
 describe("Create Web App", () => {
   const WEB_APP_PROJECT_DESCRIPTION = "Web App";
-
-  const webAppRepoInfo: RepoInfo = {
-    url: "https://github.com/choreo-test-apps/choreo-examples",
-    branch: "main",
-    dockerContext:
-      "cloud-native-app-developer/reading-list-front-end-with-managed-auth",
-  };
-
-  const webAppInfo: WebAppInfo = {
-    webAppType: "React",
-    webAppBuildCommand: "npm install && npm run build",
-    webAppPackageManagerVersion: "18",
-    webAppOutputDirectory: "dist",
-  };
-
   const BACKEND_SERVICE_PROJECT_NAME = "Default Project";
-  //const BACKEND_SERVICE_ENDPOINT_NAME = "Readinglist";
   const ENDPOINT_NAME = "Readinglist";
   const BACKEND_SERVICE_COMPONENT_NAME = "managedauthbackend";
   const BACKEND_CONNECTION_NAME = "Managed Auth BE Connection";
   const REPO_URL = "https://github.com/wso2/choreo-samples";
   const REPO_NAME = "reading-list-app";
-
-  const backendServiceRepoInfo: RepoInfo = {
-    url: "https://github.com/choreo-test-apps/choreo-examples",
-    branch: "main",
-    subPath: "cloud-native-app-developer/reading-list-service",
-  };
 
   let project: Project;
   let webApp: WebApp;
@@ -91,7 +67,6 @@ describe("Create Web App", () => {
     cy.get('[data-cyid="command"]').eq(1).type('dist');
     cy.get('[data-cyid="command"]').eq(2).type('18');
   }
-
 
   function verifyLogin() {
     cy.get("[data-cyid=welcome-msg-box]").contains("john1@acme.org");
@@ -134,21 +109,18 @@ describe("Create Web App", () => {
   });
 
 
-  it("Creating a WebApp component from choreo samples", () => {
+  it("Creating a backend ballerina service from choreo samples", () => {
     project.isComponentExists(BACKEND_SERVICE_COMPONENT_NAME).then((isExists) => {
-      if (isExists) {
+      if (!isExists) {
         project
-          .createWebAppServiceComponentUI(
-            {
-              displayName: "",
-              repoUrl: REPO_URL,
-              buildPack: BuildPacks.WEBAPP,
-              repoName: REPO_NAME,
-              repoTestid: "subPath-reading-list-app",
-              ENDPOINT_NAME,
-            },
-            enterBuildPackInfo // Pass the function as the second argument
-          )
+          .createServiceComponentUI({
+            displayName: "",
+            repoUrl: REPO_URL,
+            buildPack: BuildPacks.Ballerina,
+            repoName: REPO_NAME,
+            repoTestid: "greeting-service",
+            ENDPOINT_NAME,
+          })
           .then((comp) => {
             service = comp;
           });
@@ -159,29 +131,6 @@ describe("Create Web App", () => {
     });
   });
   
-  
-
-  // it("Create backend service if not exists", () => {
-   //  project.isComponentExists(BACKEND_SERVICE_COMPONENT_NAME).then((isExists) => {
-   //   if (!isExists) {
-  //       project
-  //         .createServiceComponent(
-  //           Enums.Accessibility.EXTERNAL,
-  //           backendServiceRepoInfo,
-  //           BACKEND_SERVICE_ENDPOINT_NAME,
-  //           BACKEND_SERVICE_COMPONENT_NAME
-  //         )
-  //         .then((serviceComponent: Service) => {
-  //           project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
-  //           service = serviceComponent;
-  //         });
-  //     } else {
-  //       project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
-  //       service = new Service(BACKEND_SERVICE_COMPONENT_NAME, BACKEND_SERVICE_ENDPOINT_NAME);
-  //     }
-  //   });
-  // });
-
 
   it("Build backend service if not built previously", () => {
     service.isSuccessfulBuildExists().then((isExists) => {
@@ -221,13 +170,24 @@ describe("Create Web App", () => {
     project = console.createNewProject(WEB_APP_PROJECT_DESCRIPTION);
   });
 
-  it("Creating a Web App", () => {
-    project
-      .createWebAppComponent(Enums.Accessibility.EXTERNAL, webAppRepoInfo, webAppInfo)
-      .then((app: WebApp) => {
-        project.visitComponent(app.getName());
-        webApp = app;
-      });
+  it("Creating a WebApp component from choreo samples", () => {
+    project.createWebAppServiceComponentUI(
+      {
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.WEBAPP,
+        repoName: REPO_NAME,
+        repoTestid: "subPath-reading-list-app",
+        ENDPOINT_NAME,
+      },
+      enterBuildPackInfo
+    ).then((comp) => {
+      webApp = comp;
+    });
+  });
+
+  it("Build the Web App", () => {
+    webApp.build();
   });
 
   it("Create a connection to backend service", () => {
@@ -235,10 +195,6 @@ describe("Create Web App", () => {
     webApp.copyConnectionUrl(BACKEND_CONNECTION_NAME).then((url: string) => {
       connectionUrl = url;
     });
-  });
-
-  it("Build the Web App", () => {
-    webApp.build();
   });
 
   it("Deploying to Dev", () => {

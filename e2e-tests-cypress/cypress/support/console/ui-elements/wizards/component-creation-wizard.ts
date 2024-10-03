@@ -177,11 +177,11 @@ export class _ComponentCreationWizard {
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
     this.searchRepoName(serviceInfo.repoName);
     
-     
-
     this.selectRepoWebAppService(serviceInfo.repoTestid);
-    enterBuildPackInfo(); 
+    this.selectSubRepoWebAppService(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
+    enterBuildPackInfo(); 
+    
     cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
@@ -235,6 +235,10 @@ export class _ComponentCreationWizard {
 
   private selectRepoWebAppService(testid: string) {
     cy.get(TestIds.webAppServiceRepo).should("be.visible").click();
+  }
+
+  private selectSubRepoWebAppService(testid: string) {
+    cy.get(TestIds.webAppServiceAuthRepo).should("be.visible").click();
   }
 
   private selectRepoGQLService(testid: string) {
