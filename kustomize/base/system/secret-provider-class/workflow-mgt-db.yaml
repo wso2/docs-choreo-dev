@@ -20,7 +20,7 @@ spec:
           objectAlias: CHOREO_WORKFLOW_MGT_DB_PASSWORD
           objectVersion: "{{.CHOREO_WORKFLOW_MGT_DB_PASSWORD}}"
         - |
-          objectName: choreo-workflow-mgt-apim-client-secret
+          objectName: proxy-deployer-apim-secret
           objectType: secret
           objectAlias: APIM_CLIENT_SECRET
           objectVersion: "{{.APIM_CLIENT_SECRET}}"
