@@ -97,4 +97,4 @@ The reistered third party services can be discovered via the Internal Marketplac
 
 ## Consuming a Third Party Service
 
-A third party service can be consumed via a Connection. For information on consuming a third party service, see [Consume a Third Party Service](../develop-components/sharing-and-reusing/create-a-connection.md#create-a-connection-to-a-third-party-service).
+A third party service can be consumed via a Connection. For information on consuming a third party service, see [Create a Connection to a Third Party Service](../develop-components/sharing-and-reusing/create-a-connection.md#create-a-connection-to-a-third-party-service).
