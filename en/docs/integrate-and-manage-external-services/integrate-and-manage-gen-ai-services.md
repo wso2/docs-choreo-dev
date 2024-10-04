@@ -4,13 +4,14 @@ Generative AI (GenAI) services leverage advanced machine learning models to crea
 
 Choreo enables seamless integration with GenAI services, allowing you to incorporate these capabilities within your applications.
 
-## Register a GenAI service in Choreo
+## Register a GenAI service
 
 To use a GenAI service in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing you to consume it via a Connection.
 
 You can register a GenAI service at two levels:
- - Organization level: This makes the service accessible from any project within the organization.
- - Project level: This restricts the service to a specific project.
+
+  - Organization level: This makes the service accessible from any project within the organization.
+  - Project level: This restricts the service to a specific project.
 
 ### Prerequisites
 
