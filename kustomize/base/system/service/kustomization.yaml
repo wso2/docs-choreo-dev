@@ -2,6 +2,7 @@ resources:
   - alert-notification-service.yaml
   - alert-configuration-service.yaml
   - analytics-subscription.yaml
+  - api-key-service.yaml
   - api-server.yaml
   - app-service.yaml
   - audit-logging.yaml

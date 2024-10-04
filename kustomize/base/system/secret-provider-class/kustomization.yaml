@@ -16,6 +16,7 @@ resources:
   - ai-storage-table.yaml
   - alert-configuration-service.yaml
   - alert-notification-service.yaml
+  - api-key-service.yaml
   - api-manager.yaml
   - apim-service.yaml
   - app-db.yaml
