@@ -1,6 +1,6 @@
 # Integrate and Manage Generative AI Services
 
-Generative AI (GenAI) services leverage advanced machine learning models to create original content or data such as text, images, music, or code, by identifying and learning patterns from existing data. Powered by deep neural networks and other machine learning models, these services can generate human-like outputs in various formats. This versatility makes GenAI ideal for tasks such as content creation, image generation, conversation automation, etc. 
+Generative AI (GenAI) services leverage advanced machine learning models to create original content such as text, images, music, or code, by identifying and learning patterns from existing data. Powered by deep neural networks and other machine learning models, these services can generate human-like outputs in various formats. This versatility makes GenAI ideal for tasks such as content creation, image generation, conversation automation, etc. 
 
 Choreo enables seamless integration with GenAI services, allowing you to incorporate these capabilities within your applications.
 
@@ -17,12 +17,12 @@ You can register a GenAI service at two levels:
 Before registering a GenAI service, obtain the following details from the service provider:
  - API key.
  - Service URL.
- - Other necessary parameters. For example, client credentials, etc.
+ - Other necessary parameters. For example, client credentials.
 
 To register a GenAI service, follow these steps:
 
 !!! note 
-     Ensure you register the service at an appropriate level depending on the service usage. If the service must be shared among multiple projects, register it at the organization level. Otherwise, register it at the project level.
+     Ensure that you register the service at the appropriate level depending on the usage. If the service must be shared among multiple projects, register it at the organization level. Otherwise, register it at the project level.
 
 ### Step 1: Select a service provider
 
@@ -37,7 +37,7 @@ To register a GenAI service, follow these steps:
 
 ### Step 2: Provide service details
 
-1. Under **Register Service**, Enter the following details for the service:
+1. Under **Register Service**, enter the following details for the service:
     - A **Name** and **Version**.
     - The **Service URL**.
 
