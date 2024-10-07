@@ -89,7 +89,7 @@ For details on managing third-party services, see [Manage third-party service](#
 
 The third-party services you register are discoverable via the Internal Marketplace to consume via a Connection.
 
-For details on consuming a third-party service via a connection, see [Create a Connection](../develop-components/sharing-and-reusing/create-a-connection.md).
+For details on consuming a third-party service via a connection, see [Create a Connection](../develop-components/sharing-and-reusing/create-a-connection.md#create-a-connection-to-an-external-service).
 
 ## Manage third-party services
 

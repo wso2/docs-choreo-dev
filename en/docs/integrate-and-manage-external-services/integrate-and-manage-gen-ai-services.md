@@ -61,7 +61,7 @@ If you want to remove the service from the Internal Marketplace, see [Remove a G
 
 The GenAI services you register are discoverable via the Internal Marketplace for you to consume via a Connection.
 
-For details on consuming a GenAI service via a connection, see [Create a Connection](../develop-components/sharing-and-reusing/create-a-connection.md).
+For details on consuming a GenAI service via a connection, see [Create a Connection](../develop-components/sharing-and-reusing/create-a-connection.md#create-a-connection-to-an-external-service).
 
 ## Manage GenAI services
 
