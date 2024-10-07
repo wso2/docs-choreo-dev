@@ -137,6 +137,8 @@ nav:
           - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
           - Choreo-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
+  - Integrate and Manage External Services:
+      - Integrate and Manage Third Party Services: third-party-services/third-party-services.md
   - Authentication and Authorization:
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
