@@ -1,89 +1,124 @@
-# Integrate and Manage Third-Party Services 
+# Integrate and Manage Third-Party Services
 
-## Overview
+Third-party services are external applications, platforms, or APIs you can integrate with your system to enhance its functionality, extend capabilities, or provide specialized features. These services are developed and maintained by external entities, providing expertise in specific domains outside your application's core focus.
 
-Third-party services are external applications, platforms, or APIs that integrate with your primary system to enhance its functionality, extend its capabilities, or provide specialized features. These services, developed and maintained by separate entities, offer expertise in specific domains that may not be core to your main application.
+The following topics walk you through the steps to seamlessly register, manage, and consume third-party services, adhering to API-first principles.
 
-Choreo enables seamless integration with external services, such as APIs, applications, and other resources, allowing you to leverage their functionality and data within your own applications. To connect to a third-party service, you must first register it with Choreo. Once registered, these services become discoverable via the Internal Marketplace, where you can search, browse, and select the services you want to integrate with your components.
+## Register a third-party service in Choreo
 
-Third-party services are consumed through Connections, which provide a standardized way to interact with external resources.
-
-## Register a Third-Party Service
+To use a third-party service in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing you to consume it via a Connection.
 
 You can register a third-party service at two levels:
 
-1. Organization level: This option allows you to share the service across all projects in the organization.
-2. Project level: This option restricts the service usage to components within a specific project.
+  - Organization level: This makes the service accessible from any project within the organization.
+  - Project level: This restricts the service to a specific project.
 
-Choreo supports the following service types:
-
-- REST APIs
-- GraphQL APIs
-- Asynchronous APIs
-- SOAP
-- gRPC
-
-Follow these steps to register a third-party service:
+Choreo allows you to register the following third-party service types:
+  
+  - REST APIs
+  - GraphQL APIs
+  - Asynchronous APIs
+  - SOAP
+  - gRPC
 
 ### Prerequisites
 
-Before registering a third-party service, ensure you have obtained the necessary parameters for the service. These may include the URL, authentication credentials, and other configurations required to access the service. These parameters are specific to each third-party service and are typically provided by the service provider.
+Before registering a third-party service, obtain the following details from the service provider:
 
-### Step 1: Provide General Service Details
+ - API specification. For example, OpenAPI or GraphQL schema.
+ - Service URL.
+ - Other necessary parameters. For example, client credentials, API keys, etc.
 
-1. Sign in to the Choreo Console at https://console.choreo.dev/.
-2. From the Organization home page, click on the project where you want to register the third-party service. (Skip this step if registering at the Organization level.)
-3. In the left navigation menu, click **Dependencies**, then **Third Party Services**.
-4. Click the **Register** button on the Third Party Services page.
-5. Enter the service name, version, and summary.
-6. Upload the API definition file (.yaml) for the third-party service.
-7. Verify the service type.
-8. Click the **Define Endpoints** button to proceed to the next step.
+To register a third-party service, follow these steps:
 
-### Step 2: Define Service Endpoints
+!!! note 
+     Ensure you register the service at an appropriate level depending on the service usage. If the service must be shared among multiple projects, register it at the organization level. Otherwise, register it at the project level.
 
-1. In the Define New Endpoint section, provide a name for the endpoint.
-2. Enter the URL of the third-party service.
-3. In the Additional Parameters section, define any other parameters required to access the third-party service (e.g., API Key, Authorization Token). Check the **Secret** checkbox for parameters that should be kept confidential.
+### Step 1: Provide basic details
 
-    !!! info
-        Parameter names are shared across all endpoints of the service.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. Follow one of these steps depending on your requirement:
+    - To register a third-party service at the organization level, go to the Choreo Console header and select your organization from the **Organization** list. 
+    - To register a third-party service at the project level, go to the Choreo Console header and select your project from the **Project** list. 
+3. In the left navigation menu, click **Dependencies** and then click **Third-Party Services**.
+4. Click **+ Register**.
+5. Provide details for the service:
+    - Enter a **Name** and **Version**.
+    - Upload the service definition file. This automatically detects the service type.
+    - Verify the **Service Type**.
+6. Click **Define Endpoints**.
 
-4. Select the **Allowed Environments** for the endpoint. This determines which Choreo environments can use the endpoint.
-5. Click the **OK** button to add the endpoint.
-6. For multiple endpoints, click the **Add Endpoint** button to add more.
-7. Click the **Register** button to complete the registration process.
+Now you are ready to define endpoints for the service.
+
+### Step 2: Define service endpoints
+
+An endpoint is a set of parameters required to connect to a service. The required parameters are service URL, API key header, etc.
+These parameters provide the necessary information for a client application to interact with the service.
+
+To define service endpoints, follow these steps:
+
+1. Under **Define New Endpoint**, 
+    - Enter a **Name** for the endpoint.
+    - Enter the **Endpoint URL**.
+
+2. Under **Additional Parameters**, add any other parameters required to connect to the service. 
+   For example, API key, authorization token, etc.
+
+    !!! note 
+         - If you want to keep a parameter confidential, select the **Secret** checkbox.
+         - If there are multiple endpoints, the parameter names will be the same for all the endpoints.
+
+3. Select the environments where the endpoint should be accessible.
+
+    !!! note 
+         Service consumers can create connections to the endpoint only from the selected environments.
+
+4. Click **OK**.
+
+5. If you want to add more endpoints, click **+ New Endpoint** and repeat steps 1 to 4.
+
+6. Click **Register**.
+
+When you define all required parameter values for at least one endpoint, the service will be automatically listed in the Internal Marketplace. Otherwise, you must [add the service to the Internal Marketplace](#add-a-third-party-service-to-the-internal-marketplace) after providing the endpoint values.
+
+If you want to remove a third-party service from the Internal Marketplace, see [Remove a third-party service from the Internal Marketplace](#remove-a-third-party-service-from-the-internal-marketplace).
+ 
+For details on managing third-party services, see [Manage third-party service](#manage-third-party-services).
+
+## Discover third-party services
+
+The third-party services you register are discoverable via the Internal Marketplace to consume via a Connection.
+
+For details on consuming a third-party service via a connection, see [Create a Connection](../develop-components/sharing-and-reusing/create-a-connection.md).
+
+## Manage third-party services
+
+When you create a third-party service, it gets listed in the **Third-Party Services** list. 
+
+### View or update third-party service details
+
+To view or update a third-party service, follow these steps.
+
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the left navigation menu, click **Dependencies** and then click **Third-Party Services**. This lists all the third-party services you have created.
+3. Click on a service to view or update its details.
+    - **General Details**: Displays service metadata. For example, the service name, overview, labels, etc. 
+    - **Service Definition**: Displays the service definition. To update the definition, click **Upload** and select the new definition file.
+    - **Endpoints**: Displays service endpoint details. You can add, modify, or delete service endpoints.
+
+### Add a third-party service to the Internal Marketplace
 
 !!! info
-    The service is automatically added to the marketplace when all required parameter values are provided for at least one endpoint. Otherwise, you'll need to manually add the service to the marketplace after providing the endpoint values.
+    To add a third-party service to the Internal Marketplace, you must provide all required parameters for at least one endpoint.
 
-## Manage Third-Party Services
+1. In the Choreo Console left navigation menu, click **Dependencies** and then click **Third-Party Services**.
+2. Click on the service you want to add to the Internal Marketplace.
+3. Click **Add to Marketplace**.
 
-Registered third-party services are listed on the **Dependencies > Third Party Services** page. Click on a service to view its details.
+### Remove a third-party service from the Internal Marketplace
 
-### Viewing Service Details
+1. In the Choreo Console left navigation menu, click **Dependencies** and then click **Third-Party Services**.
+2. Click on the service you want to remove from the Internal Marketplace.
+3. Click **Remove from Marketplace**.
 
-The service details page displays the following information:
-
-- General Details: Service name, summary, overview, and labels.
-- Service Definition: View or edit the service definition. For REST APIs, a Swagger UI is displayed; for other service types, the text content is shown. To edit the definition, click the **Upload** button and select a new definition file.
-- Endpoints: Add, modify, or delete endpoints.
-
-### Add the Service to the Internal Marketplace
-
-Click the **Add to Marketplace** button to make the service available in the Internal Marketplace.
-
-!!! info
-    A service can only be added to the Internal Marketplace if all required parameters are provided for at least one endpoint.
-
-### Remove the Service from the Internal Marketplace
-
-To remove a service from the Internal Marketplace, click the **Remove from Marketplace** button. This action makes the service undiscoverable and unconsumable via a Connection, but existing connections will continue to function as before.
-
-## Discovering Third-Party Services
-
-Registered third-party services can be discovered through the Internal Marketplace.
-
-## Consuming a Third-Party Service
-
-Third-party services are consumed via Connections. For detailed information on consuming a third-party service, refer to [Create a Connection to a Third-Party Service](../develop-components/sharing-and-reusing/create-a-connection.md#create-a-connection-to-a-third-party-service).
+This removes the service from the Internal Marketplace. Therefore, the service will not be available to consume via a Connection. However, the connections created before removal will continue to work as expected.
