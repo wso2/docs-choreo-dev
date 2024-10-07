@@ -44,6 +44,5 @@ CREATE TABLE ga_api_partition (
 CREATE TABLE pdp_la_credentials (
     id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     organization_uuid NVARCHAR(50) NOT NULL UNIQUE,
-    username VARCHAR(255) NOT NULL UNIQUE,
     password NVARCHAR(255) NOT NULL
 );
