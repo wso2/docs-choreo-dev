@@ -41,6 +41,30 @@ export class _ComponentCreationWizard {
     this.verifyComponentCreation(name);
   }
 
+  enterServiceToServiceInfo(
+    name: string,
+    serviceInfo: ServiceInfo,
+  ) {
+    cy.get(TestIds.serviceDisplayName)
+      .eq(0)
+      .within(() => cy.get("input").clear().type(name));
+
+    this.createFromGHUrl(serviceInfo.repoUrl);
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
+    if (serviceInfo.branch !== undefined)  {
+      this.selectServiceToServiceRepo(serviceInfo.branch);
+    }
+    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
+    this.searchRepoName(serviceInfo.repoName);
+    this.selectRepo(serviceInfo.repoTestid);
+    cy.get(TestIds.continueButton).should("be.enabled").click();
+    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
+
+    this.verifyComponentCreation(name);
+  }
+
   enterManualTriggerInfo(
     name: string,
     manualTriggerInfo: ComponentInfo,
@@ -219,6 +243,12 @@ export class _ComponentCreationWizard {
 
   private selectRepo(testid: string) {
     cy.get(TestIds.greetingBalServiceRepo).should("be.visible").click();
+  }
+
+  private selectServiceToServiceRepo(branch:string) {
+    cy.get('.MuiAutocomplete-endAdornment > .MuiButtonBase-root').click();
+    cy.get('.MuiAutocomplete-popper [role="option"]').contains(branch).click();
+   // cy.get('#org-repo-option-5 > .MuiBox-root').click();
   }
 
   private selectRepoManual(testid: string) {

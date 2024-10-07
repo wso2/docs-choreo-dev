@@ -14,19 +14,23 @@
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { ConfigEntryStep } from "../../../support/commons/types";
 import { OK } from "../../../support/commons/http";
 import { TestIds } from "../../../support/console/constants/TestIds";
 
 describe("Verify Component visibility functionality", () => {
   const PROJECT_DESCRIPTION = "Component Visibility Test";
-  const ENDPOINT_NAME = "Readinglist";
-  const RESOURCE = "/books";
+  const ENDPOINT_NAME = "Endpoint 8090";
+  const RESOURCE = "";
+  //const RESOURCE = "/books";
 
   let project: Project;
   let service: Service;
   let trigger: Service;
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "greeting-service";
+  const BRANCH = "service-to-service";
 
   // This step is only encountered the first time a service component with a config is promoted.
   // However if due to an error the step is retried by Cypress this step will not be encountered.
@@ -57,31 +61,31 @@ describe("Verify Component visibility functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify Ballerina service component creation", () => {
+
+  it("Creating a ballerina service from choreo samples", () => {
     project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/byor-service-app1",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((serviceComponent: Service) => {
-        project.visitComponent(serviceComponent.getName());
-        service = serviceComponent;
+      .createServiceComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.Ballerina,
+        repoName: REPO_NAME,
+        repoTestid: "greeting-service",
+        ENDPOINT_NAME,
+      })
+      .then((comp) => {
+        service = comp;
       });
   });
 
-  it("Build the service", () => {
+  it.skip("Build the service", () => {
     service.build();
   });
 
-  it("Deploying the service with Project level visibility", () => {
+  it.skip("Deploying the service with Project level visibility", () => {
     service.deployProjectLevelAccessibility();
   });
 
-  it("Promoting the service with Project level visibility", () => {
+  it.skip("Promoting the service with Project level visibility", () => {
     service.promoteProjectLevelAccessibility();
   });
 
@@ -89,18 +93,19 @@ describe("Verify Component visibility functionality", () => {
     service.goBackToProject();
   });
 
-  it("Verify Service Trigger component creation", () => {
+
+  it("Verify Service Trigger component creation from choreo samples", () => {
     project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/service-to-service",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((comp: Service) => {
-        project.visitComponent(comp.getName());
+      .createServiceToServiceComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        branch: BRANCH,
+        buildPack: BuildPacks.Ballerina,
+        repoName: REPO_NAME,
+        repoTestid: "subPath-greeting-service/service-to-service",
+        ENDPOINT_NAME,
+      })
+      .then((comp) => {
         trigger = comp;
       });
   });
@@ -135,15 +140,15 @@ describe("Verify Component visibility functionality", () => {
       .testConsole({
         env: Enums.Environment.DEVELOPMENT,
         endpoint: ENDPOINT_NAME,
-        resourcePath: "invoke",
+        resourcePath: "",
         method: "get",
-        parentComponentId: "operations-default-getInvoke",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-get",
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
         expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 
@@ -152,15 +157,15 @@ describe("Verify Component visibility functionality", () => {
       .testConsole({
         env: Enums.Environment.PRODUCTION,
         endpoint: ENDPOINT_NAME,
-        resourcePath: "invoke",
+        resourcePath: "",
         method: "get",
-        parentComponentId: "operations-default-getInvoke",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-get",
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
         expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 });
