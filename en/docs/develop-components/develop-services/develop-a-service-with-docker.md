@@ -33,12 +33,12 @@ It is important to understand the purpose of the key files in the sample service
 !!! note 
     The specified file paths are relative to `<sample-repository-dir>/greeting-service-go`
 
-|**Filepath**             |**Description**                                                               |
-|-------------------------|------------------------------------------------------------------------------|
-| `main.go`               | The Go-based greeter service code.                                           |
-| `Dockerfile`            | The Dockerfile to build the container image of the application.              |
-| `.choreo/endpoints.yaml`| Choreo-specific configuration that provides information about how Choreo exposes the service.|
-| `openapi.yaml`          | The OpenAPI contract of the greeter service. This is required to publish the service as a managed API. This `openapi.yaml` file is referenced by the `.choreo/endpoints.yaml` file.|
+|**Filepath**               |**Description**                                                               |
+|---------------------------|------------------------------------------------------------------------------|
+| `main.go`                 | The Go-based greeter service code.                                           |
+| `Dockerfile`              | The Dockerfile to build the container image of the application.              |
+|`.choreo/component.yaml` &nbsp;| Choreo-specific configuration that provides information about how Choreo exposes the service.|
+| `openapi.yaml`            | The OpenAPI contract of the greeter service. This is required to publish the service as a managed API. This `openapi.yaml` file is referenced by the `.choreo/component.yaml` file.|
 
 Let's get started!
 
@@ -48,9 +48,9 @@ In Choreo, you can expose your services via endpoints.
 
 You are going to run the greeter service on port 9090. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
-To configure the endpoint details of a containerized component, Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory. Be sure to place the `.choreo` directory at the root of the Docker build context path.
+To configure the endpoint details of a containerized component, Choreo looks for an `component.yaml` file inside the `.choreo` directory. Be sure to place the `.choreo` directory at the root of the Docker build context path.
 
-In the greeter sample, the `endpoints.yaml` file is in the `greeting-service-go/.choreo/` directory. 
+In the greeter sample, the `component.yaml` file is in the `greeting-service-go/.choreo/` directory. 
 
 ## Step 1: Create a service component from a Dockerfile
 

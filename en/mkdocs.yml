@@ -127,7 +127,10 @@ nav:
           - Use a Connection in Your Web Application: develop-components/sharing-and-reusing/use-a-connection-in-your-web-application.md
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
+      - Manage Component Source Configurations: develop-components/manage-component-source-configurations.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
+  - Integrate and Manage External Services: 
+      - Integrate and Manage Generative AI Services: integrate-and-manage-external-services/integrate-and-manage-gen-ai-services.md
   - Choreo-Managed Databases and Caches: 
           - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
           - PostgreSQL:  manage-databases-and-caches/choreo-managed-postgresql-databases.md
