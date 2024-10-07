@@ -161,7 +161,7 @@ It is important to understand the purpose of the key files in the sample service
 |-------------------------|-----------------------------------------------------------------|
 | `service.bal`           | The reading list service code written in the Ballerina language.|
 | `Ballerina.toml`        | The Ballerina configuration file.                               |
-| `.choreo/endpoints.yaml`| The configuration file with endpoint details.                   |
+| `.choreo/component.yaml`| The configuration file with endpoint details.                   |
 
 ## Step 1: Create a service component 
 
