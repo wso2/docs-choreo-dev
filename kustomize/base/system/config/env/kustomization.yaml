@@ -445,6 +445,7 @@ configMapGenerator:
       - ENABLE_SAVING_REPO_VISIBILITY_STATE={{.ENABLE_SAVING_REPO_VISIBILITY_STATE | default "false"}}
       - APIM_SERVICE_URL={{.APIM_SERVICE_URL}}
       - PROXY_BUILD_WF_FILE_PATH={{.PROXY_BUILD_WF_FILE_PATH | default ".github/workflows/proxy-build-v1.0.yml"}}
+      - ENABLE_DOCKERHUB_USER_ROTATION={{.ENABLE_DOCKERHUB_USER_ROTATION | default "false"}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
