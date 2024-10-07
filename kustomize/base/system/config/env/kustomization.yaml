@@ -997,6 +997,7 @@ configMapGenerator:
       - DB_USERNAME={{.DB_USERNAME | default "choreo_api_key_svc_db_user"}}
       - DB_PASSWORD_FILE={{.DB_PASSWORD_FILE | default "/mnt/csi/secret-api-key-svc/CHOREO_API_KEY_SVC_DB_PASSWORD"}}
       - DB_SSL_MODE={{.DB_SSL_MODE | default "require"}}
+      - OAUTH_AGENT_BASE_URL={{.OAUTH_AGENT_BASE_URL | default ""}}
   - name: env-log-controller
     behavior: create
     literals:
