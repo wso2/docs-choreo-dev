@@ -40,7 +40,7 @@ Choreo organizes the service content into four tabs. The four tabs contain infor
 - **API definition**: Includes the API definition for the service, extracted from the `component.yaml` file in the user repository. If an API definition is not provided, this tab will be empty.
 
     !!! note
-        If you are are currently using the `component-config.yaml` or `endpoints.yaml` configuration files, see [Manage Component Source Configurations](../develop-components/manage-component-source-configurations.md) for instructions on migrating to the recommended `component.yaml` configuration file.
+        If you are are currently using the `component-config.yaml` or `endpoints.yaml` configuration files, see the respective [migration guide](../develop-components/manage-component-source-configurations.md#migration-guide) for instructions on migrating to the recommended `component.yaml` configuration file.
 
 - **How to use**: Includes instructions on how to use the selected service. This includes instructions on [creating a connection](../develop-components/sharing-and-reusing/create-a-connection.md).
 
