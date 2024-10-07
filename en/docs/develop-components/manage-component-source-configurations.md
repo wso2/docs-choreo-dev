@@ -270,4 +270,4 @@ To migrate from the `endpoints.yaml` file to the `component.yaml` file, do the f
 - Move endpoint configurations from the `endpoints.yaml` file to the `endpoints` section in the `component.yaml` file.
     - Copy the value of `context` to `endpoints.service.basePath`.
     - Copy the value of `port` to `endpoints.service.port`.
-    - Copy the value of `networkVisibility` to `endpoints.networkVisibilities`..
+    - Copy the value of `networkVisibility` to `endpoints.networkVisibilities`.
