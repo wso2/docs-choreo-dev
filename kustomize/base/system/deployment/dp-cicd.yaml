@@ -43,6 +43,8 @@ spec:
                 name: env-dp-cicd
             - configMapRef:
                 name: cm-dp-cicd
+            - secretRef:
+                name: secret-dp-cicd-docker-hub-users
           env:
             - name: DOCKER_REGISTRY_PAT
               valueFrom:
@@ -120,6 +122,9 @@ spec:
             - name: secret-dp-cicd
               mountPath: "/mnt/csi/secret-dp-cicd"
               readOnly: true
+            - name: secret-dp-cicd-docker-hub-users
+              mountPath: /mnt/csi/secret-dp-cicd-docker-hub-users
+              readOnly: true
       volumes:
         - name: secret-dp-cicd
           csi:
@@ -127,6 +132,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-dp-cicd
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-dp-cicd-docker-hub-users
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-cicd-docker-hub-users
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
