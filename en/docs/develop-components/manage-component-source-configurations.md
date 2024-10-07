@@ -6,8 +6,8 @@ The source configuration file must be committed to your repository within the `.
 
 !!! note
     -  The `component-config.yaml` and `endpoints.yaml` files will eventually be deprecated and replaced by the `component.yaml` file. 
-        - For details on how you can migrate from to the `component.yaml` file from the `component-config.yaml` file, see [Migrate from the `component-config.yaml`](#migrate-from-the-component-configyaml-file).
-        - For details on how you can migrate from to the `component.yaml` file from the `endpoints.yaml` file, see [Migrate from the `endpoints.yaml`](#migrate-from-the-endpointsyaml-file).
+        - For details on how you can migrate to the `component.yaml` file from the `component-config.yaml` file, see [Migrate from the `component-config.yaml`](#migrate-from-the-component-configyaml-file).
+        - For details on how you can migrate to the `component.yaml` file from the `endpoints.yaml` file, see [Migrate from the `endpoints.yaml`](#migrate-from-the-endpointsyaml-file).
     - Choreo prioritizes configuration files in the following order: `component.yaml` takes the highest precedence, followed by `component-config.yaml`, and then `endpoints.yaml`.
 
 ## Overview of the `component.yaml` file 
@@ -40,22 +40,20 @@ endpoints:
     # +required Service section has the user service endpoint details
     service:
       # +optional Base path of the API that gets exposed via the endpoint.
-      # This is mandatory if the endpoint type is set to REST or GraphQL.
+      # This is mandatory if the endpoint type is set to REST, GraphQL or WS.
       basePath: /greeting-service
       # +required Numeric port value that gets exposed via the endpoint
       port: 9090
     # +required Type of traffic that the endpoint is accepting.
-    # Allowed values: REST, GraphQL, GRPC, TCP, UDP.
+    # Allowed values: REST, GraphQL, GRPC, TCP, UDP, WS.
     type: REST
     # +optional Network level visibilities of the endpoint.
-    # Takes priority over networkVisibility if defined. 
     # Accepted values: Project|Organization|Public(Default).
     networkVisibilities: 
       - Public
       - Organization
-    # +optional The path to the schema definition file.
-    # Defaults to wildcard route if not specified.
-    # This is only applicable to REST endpoint types.
+    # +optional Path to the schema definition file. Defaults to wild card route if not provided
+    # This is only applicable to REST and WS endpoint types.
     # The path should be relative to the docker context.
     schemaFilePath: openapi.yaml
   
@@ -135,21 +133,22 @@ kind: ComponentConfig
 spec:
   # +optional Incoming connection details for the component (AKA endpoints).
   inbound:
-    # +required Unique name for the endpoint. (This name will be used when generating the managed API)
+    # +required Unique name for the endpoint.
+    # This name will be used when generating the managed API
     - name: Greeting Service
       # +required Numeric port value that gets exposed via the endpoint
       port: 9090
-      # +required Type of traffic that the endpoint is accepting. For example: REST, GraphQL, etc.
-      # Allowed values: REST, GraphQL, GRPC, TCP, UDP.
+      # +required Type of traffic that the endpoint is accepting.
+      # Allowed values: REST, GraphQL, GRPC, TCP, UDP, WS.
       type: REST
       # +optional Network level visibility of the endpoint. Defaults to Public
       # Accepted values: Project|Organization|Public.
       networkVisibility: Public
       # +optional Context (base path) of the API that gets exposed via the endpoint.
-      # This is mandatory if the endpoint type is set to REST or GraphQL.
+      # This is mandatory if the endpoint type is set to REST, GraphQL or WS.
       context: /greeting
       # +optional The path to the schema definition file. Defaults to wildcard route if not specified.
-      # This is only applicable to REST endpoint types.
+      # This is only applicable to REST and WS endpoint types.
       # The path should be relative to the Docker context.
       schemaFilePath: greeting_openapi.yaml
   # +optional Outgoing connection details for the component.
@@ -181,11 +180,11 @@ You can define the following root-level configurations via the `component-config
 
 #### Inbound connection configurations (`spec.inbound`)
 
-In the `spec.inbound` configuration section, you can specify endpoints to set up inbound connections. To specify endpoints, you can follow the existing endpoints schema structure. For details on the endpoints schema structure, see the [endpoints schema documentation](#learn-the-endpointsyaml-file).
+In the `spec.inbound` configuration section, you can specify endpoints to set up inbound connections. To specify endpoints, you can follow the existing endpoints schema structure. For details on the endpoints schema structure, see the [endpoints schema documentation](#overview-of-the-endpointsyaml-file).
 
 #### Outbound connection configurations (`spec.outbound`)
 
-In the `spec.outbound` section, you can define `serviceReferences`. To define `serviceReferences`, you can use the service references generated in the Internal Marketplace when creating a service connection. To copy the [outbound connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing-services/#sharing-and-reusing-services), see the inline developer guide displayed when you create a connection.
+In the `spec.outbound` section, you can define `serviceReferences`. To define `serviceReferences`, you can use the service references generated in the Internal Marketplace when creating a service connection. To copy the [outbound connection configurations](../sharing-and-reusing/use-a-connection-in-your-service/#use-a-connection-in-your-service), see the inline developer guide displayed when you create a connection.
 
 You must include the following configurations in the `serviceReferences` schema:
 
@@ -213,21 +212,22 @@ version: 0.1
 
 # +required List of endpoints to create
 endpoints:
-  # +required Unique name for the endpoint. (This name will be used when generating the managed API)
+  # +required Unique name for the endpoint.
+  # This name will be used when generating the managed API
 - name: Greeting Service
   # +required Numeric port value that gets exposed via this endpoint
   port: 9090
-  # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
-  # Allowed values: REST, GraphQL, GRPC, UDP, TCP
+  # +required Type of the traffic this endpoint is accepting.
+  # Allowed values: REST, GraphQL, GRPC, UDP, TCP, WS.
   type: REST
   # +optional Network level visibility of this endpoint. Defaults to Public
   # Accepted values: Project|Organization|Public.
   networkVisibility: Project
   # +optional Context (base path) of the API that is exposed via this endpoint.
-  # This is mandatory if the endpoint type is set to REST or GraphQL.
+  # This is mandatory if the endpoint type is set to REST, GraphQL or WS.
   context: /greeting
   # +optional Path to the schema definition file. Defaults to wild card route if not provided
-  # This is only applicable to REST endpoint types.
+  # This is only applicable to REST and WS endpoint types.
   # The path should be relative to the docker context.
   schemaFilePath: greeting_openapi.yaml
 ```
@@ -241,7 +241,7 @@ You can define the following root-level configurations via the `endpoints.yaml` 
 | **version**          | Required     | The version of the `endpoints.yaml` file.                                           |
 | **name**             | Required     | A unique name for the endpoint, which Choreo will use to generate the managed API.|
 | **port**             | Required     | The numeric port value that gets exposed via this endpoint.                      |
-| **type**             | Required     | The type of traffic this endpoint accepts, such as `REST`, `GraphQL`, `gRPC`, `UDP`or `TCP`. Currently, the MI preset supports only the `REST` type.                                         |
+| **type**             | Required     | The type of traffic this endpoint accepts, such as `REST`, `GraphQL`, `gRPC`, `WS`, `UDP`, or `TCP`. Currently, the MI preset supports only the `REST` type.                                         |
 | **networkVisibility**| Required     | The network level visibility of this endpoint, which defaults to `Public` if not specified. Accepted values are `Project`, `Organization`, or `Public`.|
 | **context**          | Required     | The context (base path) of the API that Choreo exposes via this endpoint.        |
 | **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, and **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, this field should be a relative path to the component root or Docker context.|
@@ -254,20 +254,20 @@ With the upcoming deprecation of the `component-config.yaml` file and the `endpo
 
 To migrate from the `component-config.yaml` file to the `component.yaml` file, do the following:
 
-- Move endpoint configurations from the `spec.inbound` section in the `component-config.yaml` file to the `endpoints` section in the `component.yaml` file.
+- Add the `schemaVersion` in the `component.yaml` and omit `apiVersion` and `kind`.
+- Move endpoint configurations from the `spec.inbound` section to the `endpoints` section in the `component.yaml` file.
     - Copy the value of `spec.inbound.context` to `endpoints.service.basePath`.
     - Copy the value of `spec.inbound.port` to `endpoints.service.port`.
     - Copy the value of `spec.inbound.networkVisibility` to `endpoints.networkVisibilities`.
 
-- Move dependency configurations from the `spec.outbound` section in the `component-config.yaml` file to the `dependencies` section in the `component.yaml` file. 
-- Add the `schemaVersion` in the `component.yaml` and omit `apiVersion` and `kind`.
+- Move dependency configurations from the `spec.outbound` section to the `dependencies` section in the `component.yaml` file. 
 
 ### Migrate from the `endpoints.yaml` file
 
 To migrate from the `endpoints.yaml` file to the `component.yaml` file, do the following:
 
+- Add the `schemaVersion` in the `component.yaml` and omit `version`.
 - Move endpoint configurations from the `endpoints.yaml` file to the `endpoints` section in the `component.yaml` file.
     - Copy the value of `context` to `endpoints.service.basePath`.
     - Copy the value of `port` to `endpoints.service.port`.
-    - Copy the value of `networkVisibility` to `endpoints.networkVisibilities`.
-- Copy the value of `version` to `schemaVersion`.
+    - Copy the value of `networkVisibility` to `endpoints.networkVisibilities`..
