@@ -9,9 +9,9 @@ spec:
     - secretName: usage-handler-service-tls
       type: kubernetes.io/tls
       data:
-        - objectName: USAGE_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE
+        - objectName: usage-service-ingress-tls-certificate-keystore
           key: tls.key
-        - objectName: USAGE_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE
+        - objectName: usage-service-ingress-tls-certificate-keystore
           key: tls.crt
   parameters:
     objects: |

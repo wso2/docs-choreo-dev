@@ -9,9 +9,9 @@ spec:
     - secretName: crypto-key-service-tls
       type: kubernetes.io/tls
       data:
-        - objectName: CRYPTO_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE
+        - objectName: cryptoservice-ingress-tls-certificate-keystore
           key: tls.key
-        - objectName: CRYPTO_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE
+        - objectName: cryptoservice-ingress-tls-certificate-keystore
           key: tls.crt
   parameters:
     objects: |
