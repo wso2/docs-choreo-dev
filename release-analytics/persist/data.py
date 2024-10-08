@@ -57,3 +57,22 @@ class ReleasePromotion:
             "source_env": self.source_env,
             "dest_env": self.dest_env
         }
+
+@dataclass
+class DeployedComponent:
+    build_number: str
+    choreo_env: str
+    component_name: str
+    image: str
+    time_stamp: datetime
+    tag: str
+
+    def get_as_row(self):
+        return {
+            "build_number": self.build_number,
+            "choreo_env": self.choreo_env,
+            "component_name": self.component_name,
+            "image": self.image,
+            "time_stamp": self.time_stamp.strftime("%Y-%m-%dT%H:%M:%S"),
+            "tag": self.tag
+        }

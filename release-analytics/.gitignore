@@ -6,6 +6,9 @@ __pycache__/
 # GCloud Gen Credentials
 credentials.json
 
+# Downloaded files
+output/
+
 # Environments
 .env
 .venv

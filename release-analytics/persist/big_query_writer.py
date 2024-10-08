@@ -46,10 +46,17 @@ class BigQueryWriter:
 
         self._insert_data(table, rows)
 
+    def insert_deployed_component_data(self, rows):
+        table = f"{BigQueryWriter.project}.{BigQueryWriter.dataset}.DEPLOYED_COMPONENT"
+
+        self._insert_data(table, rows)
+
     def _insert_data(self, table, rows):
         if len(rows) == 0:
             print(f"No rows present to insert into {table}")
             sys.exit(1)
+
+        print(f"Inserting {len(rows)} rows into {table}")
 
         errors = self.client.insert_rows_json(table, rows)
 

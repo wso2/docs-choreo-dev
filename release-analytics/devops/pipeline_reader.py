@@ -13,11 +13,18 @@
 
 import os
 import sys
+import requests
 from datetime import datetime, timedelta, timezone
+from tempfile import TemporaryFile
+from zipfile import ZipFile
 from azure.devops.credentials import BasicAuthentication
 from azure.devops.connection import Connection
 from config.config_reader import ConfigGroup, ConfigReader
 
+COMPONENT_ARTIFACT = "output"
+COMPONENT_DIRECTORY = "component-info"
+CP_COMPONENT_CSV = "cp-component-info.csv"
+DP_COMPONENT_CSV = "dp-component-info.csv"
 
 class PipelineReader:
     url = ConfigReader().get_config(ConfigGroup.DEVOPS, "url")
@@ -71,12 +78,12 @@ class PipelineReader:
                 #print("=============================================\n")
                 #print("Returned Test Result {} \n".format(result))
                 #print("=============================================\n")
-                tests.append(dict(test_type = run.name, 
-                                    test_function = result.test_case.name,
-                                    outcome = result.outcome,
-                                    error_msg = result.error_message,
-                                    stack_trace = result.stack_trace
-                                    ))
+                tests.append(dict(test_type = self._map_test_type(run),
+                                  test_function = result.test_case.name,
+                                  outcome = result.outcome,
+                                  error_msg = result.error_message,
+                                  stack_trace = result.stack_trace
+                                  ))
 
         test_results["tests"] = tests
 
@@ -111,11 +118,10 @@ class PipelineReader:
         def_obj = self._get_definition()
 
         try:
-            for build in build_client.get_builds(self.project, definitions=[def_obj.id],
-                                                 build_ids=[build_id]):
+            for build in build_client.get_builds(self.project, build_ids=[build_id]):
                 return build  # There will only a single match
         except Exception as e:
-            print("_get_build_by_number() raised error: {}".format(e))
+            print("_get_build_by_id() raised error: {}".format(e))
             sys.exit(1)
 
     def _get_latest_pipeline_build(self):
@@ -206,4 +212,62 @@ class PipelineReader:
             print("_get_failed_test_results_by_run() raised error: {}".format(e))
             sys.exit(1)
 
+    def download_component_artifact(self, build_id):
+        stream = self._get_component_filestream(build_id)
 
+        try:
+            with TemporaryFile() as f:
+                for i in stream:
+                    f.write(i)
+                f.seek(0)
+                zf = ZipFile(f)
+                zf.extractall(path=".")
+        except Exception as e:
+            print("download_component_artifact() raised error: {}".format(e))
+            sys.exit(1)
+
+    def _get_component_filestream(self, build_id):
+        client = self.conn.clients.get_build_client()
+
+        try:
+            stream = client.get_artifact_content_zip(self.project, build_id, artifact_name=COMPONENT_ARTIFACT)
+            if stream:
+                return stream
+            else:
+                print("Artifact NOT found")
+                sys.exit(1)
+        except Exception as e:
+            if "TF400813" in e.message: # Handle https://github.com/microsoft/azure-devops-python-api/issues/316
+                info = self._get_component_file_info(build_id)
+                stream = requests.get(info.resource.download_url, auth=("", os.environ['AZURE_DEVOPS_PAT']))
+                return stream
+            else:
+                print("get_component_file() raised error: {}".format(e))
+                sys.exit(1)
+
+    def _get_component_file_info(self, build_id):
+        client = self.conn.clients.get_build_client()
+
+        try:
+            info = client.get_artifact(self.project, build_id, artifact_name=COMPONENT_ARTIFACT)
+            if info:
+                return info
+            else:
+                print("Artifact NOT found")
+                sys.exit(1)
+        except Exception as e:
+            print("get_artifacts() raised error: {}".format(e))
+            sys.exit(1)
+
+
+    @staticmethod
+    def _map_test_type(test_run):
+        if "IntegrationTests" == test_run.name:
+            return "int"
+        elif "PDPIntegrationTests" == test_run.name:
+            return "pdp"
+        elif "SecurityIntegrationTests" in test_run.name:
+            return "sec"
+        else:
+            print("_map_test_type() Unrecognized test type: {}".format(test_run.name))
+            sys.exit(1)
