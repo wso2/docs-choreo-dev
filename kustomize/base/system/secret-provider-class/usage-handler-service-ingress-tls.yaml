@@ -1,7 +1,7 @@
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
-  name: tls-secret-usage-handler-service
+  name: usage-service-ingress-tls-secret
   labels:
     app: metered-usage-handler-service
 spec:
@@ -19,5 +19,4 @@ spec:
         - |
           objectName: usage-service-INGRESS-TLS-CERTIFICATE-KEYSTORE
           objectType: secret
-          objectAlias: USAGE_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE
           objectVersion: "{{.USAGE_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE}}"
