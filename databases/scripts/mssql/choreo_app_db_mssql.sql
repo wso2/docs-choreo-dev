@@ -2114,14 +2114,12 @@ GO
 ALTER TABLE org_activity ADD [org_uuid] [nvarchar](255), [org_handle] [nvarchar](255);
 GO
 UPDATE org_activity SET org_uuid = o.uuid, org_handle = o.handle FROM org_activity a JOIN organization o ON a.org_id = o.id;
-UPDATE org_activity SET marked_for_deletion = NULL;
 -- Verify no entries are listed for below query
 SELECT * FROM org_activity WHERE org_id IS NOT NULL and org_uuid IS NULL;
 
 -- Add necessary unique & not null contraints 
 ALTER TABLE org_activity ALTER COLUMN org_uuid nvarchar(255) NOT NULL;
 ALTER TABLE org_activity ALTER COLUMN org_handle nvarchar(255) NOT NULL;
-ALTER TABLE org_activity ALTER COLUMN marked_for_deletion BIT NULL;
 ALTER TABLE org_activity ADD CONSTRAINT unique_org_uuid UNIQUE (org_uuid);
 ALTER TABLE org_activity ADD CONSTRAINT unique_org_handle UNIQUE (org_handle);
 
