@@ -17,6 +17,6 @@ spec:
     objects: |
       array:
         - |
-          objectName: cryptoservice-INGRESS-TLS-CERTIFICATE-KEYSTORE
+          objectName: cryptoservice-ingress-tls-certificate-keystore
           objectType: secret
           objectVersion: "{{.CRYPTO_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE}}"
