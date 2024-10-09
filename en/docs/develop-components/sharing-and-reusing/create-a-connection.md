@@ -18,7 +18,7 @@ To create a connection to a service or a database, follow the step-by-step instr
         - **Component Connection**: Select an organization, a project in that organization, and a component in the selected project. 
 
     2. In the left navigation menu, click **Dependencies**  and then **Connections**. This page lists all the existing connections.
-    3. Click **+Create**. This opens the marketplace view where you can browse and search for services or databases.
+    3. Click **+Create**. This opens the Marketplace view where you can browse and search for services or databases.
     4. Click the **Services** tab. You can search and apply filters to efficiently find a service.
     5. Click on the service you want to connect to. 
     6. Enter a name and a description for the connection and then click **Next**. This displays the **Service URL** for both development and production environments. 
@@ -44,7 +44,7 @@ To create a connection to a service or a database, follow the step-by-step instr
     <h2Prerequisites</h2>
 
      - Create a Choreo-managed database. For details, see [Choreo-Managed Databases and Caches](../../manage-databases-and-caches/choreo-managed-databases-and-caches.md).
-     - Add the database to the Internal marketplace. For details, see 
+     - Add the database to the Marketplace. For details, see 
 
     Follow these steps to create a connection to a Choreo-managed database:
 
@@ -54,7 +54,7 @@ To create a connection to a service or a database, follow the step-by-step instr
         - **Component Connection**: Select an organization, a project in that organization, and a component in the selected project. 
 
     2. In the left navigation menu, click **Dependencies**  and then **Connections**. This page lists all the existing connections.
-    3. Click **+Create**. This opens the marketplace view where you can browse and search for services or databases.
+    3. Click **+Create**. This opens the Marketplace view where you can browse and search for services or databases.
     4. Click the **Databases** tab. You can search and apply filters to efficiently find a database.
     5. Click on the database you want to connect to. 
     6. To create the connection, follow these steps:
