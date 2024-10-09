@@ -15,20 +15,20 @@ import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
 import { Proxy } from "../../../support/console/entities/component/proxy-component";
-import { BuildPacks, Enums } from "../../../support/commons/enums";
+import { BuildPacks, EndpointAccessibility, Enums } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
 
 describe("Verify Component visibility functionality", () => {
   const PROJECT_DESCRIPTION = "Component Visibility Test";
-  const ENDPOINT_NAME = "Endpoint 8090";
+  const ENDPOINT_NAME = "Hello";
   const REPO_URL = "https://github.com/wso2/choreo-samples";
-  const REPO_NAME = "greeting-service";
+  const REPO_NAME = "hello-world";
 
   let project: Project;
   let service: Service;
   let proxy: Proxy;
 
-  const OPERATION_USERS = "users";
+  const OPERATION = "greeting";
 
   it("Login to Console", () => {
     console.login();
@@ -45,7 +45,7 @@ describe("Verify Component visibility functionality", () => {
         repoUrl: REPO_URL,
         buildPack: BuildPacks.Ballerina,
         repoName: REPO_NAME,
-        repoTestid: "greeting-service",
+        repoTestid: REPO_NAME,
         ENDPOINT_NAME,
       })
       .then((comp) => {
@@ -73,7 +73,7 @@ describe("Verify Component visibility functionality", () => {
     project
       .createProxyComponent({
         version: "1.0",
-        endpointUrl: service.getDevEndpointUrl(),
+        endpointUrl: service.getDevEndpointUrl(EndpointAccessibility.Project),
       })
       .then((comp) => {
         proxy = comp;
@@ -86,7 +86,7 @@ describe("Verify Component visibility functionality", () => {
 
   it("Add resource to proxy", () => {
     proxy.addResources([
-      { path: OPERATION_USERS, verbs: [Enums.HTTPMethod.GET] },
+      { path: OPERATION, verbs: [Enums.HTTPMethod.GET] },
     ]);
   });
 
@@ -100,17 +100,19 @@ describe("Verify Component visibility functionality", () => {
 
   it("Verify test functionality using Swagger UI in Dev", () => {
     proxy
-      .testSwaggerConsole(Enums.Environment.DEVELOPMENT, OPERATION_USERS)
+      .testSwaggerConsole(Enums.Environment.DEVELOPMENT, OPERATION)
       .then((res) => {
         expect(res.statusCode).to.be.equal(OK.toString());
+        expect(res.response).to.contain("Hello, World!");
       });
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
     proxy
-      .testSwaggerConsole(Enums.Environment.PRODUCTION, OPERATION_USERS)
+      .testSwaggerConsole(Enums.Environment.PRODUCTION, OPERATION)
       .then((res) => {
         expect(res.statusCode).to.be.equal(OK.toString());
+        expect(res.response).to.contain("Hello, World!");
       });
   });
 });

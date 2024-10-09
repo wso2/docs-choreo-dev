@@ -75,7 +75,7 @@ export namespace TestIds {
   export const executeDeploy =
     '[data-cyid="direct-deploy-option-split-group-button-button"]';
   export const endpointVisibility = (visibility: EndpointAccessibility) =>
-    `[data-testid="${visibility}-visibility-option"]`;
+    `[data-cyid="${visibility}-visibility-option-check-box"]`;
   export const endpointSubmit = '[data-cyid="endpoint-submit-btn-button"]';
   export const stop = '[data-testid="btn-stop"]';
   export const reDeploy = '[data-cyid="btn-redeploy-button"]';
@@ -419,7 +419,7 @@ export namespace TestIds {
   export const miComponentCard = '[data-cyid="WSO2 MI-card-button"]';
   export const repoSearchBox = '[data-cyid="project-directory-search-search-bar-input"]';
   export const continueButton = '[data-cyid="Continue-button"]';
-  export const greetingBalServiceRepo = '[data-cyid="subPath-greeting-service"]';
+  export const repoSubPath = (subPath: string) => `[data-cyid="subPath-${subPath}"]`;
   export const serviceCreateButton = '[data-cyid="Create-button"]';
   export const HelloWorldGoManualTaskRepo = '[data-cyid="subPath-docker-hello-world-manual-task"]';
   export const manualTriggerBuildPack = '[data-cyid="component-template-manualTrigger-card"]';
