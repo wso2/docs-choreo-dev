@@ -74,10 +74,9 @@ public class TestBYOCDp extends TestBase {
     @Test(dependsOnMethods = {"createComponent_TestBYOCDp"}, dataProvider = "dps")
     @CitrusTest
     public void deployComponent_TestBYOCDp(DataProviderWrapper dp) throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, dp.getChoreoComponent(),
+                dp.getEnvironments());
         dp.setDeploymentStatusDTO(statusDTO);
-        SleepUtil.sleep(30);
     }
 
     @Test(dependsOnMethods = {"deployComponent_TestBYOCDp"}, dataProvider = "dps")
