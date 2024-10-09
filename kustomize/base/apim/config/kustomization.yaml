@@ -9,6 +9,10 @@ configMapGenerator:
     behavior: create
     files:
       - private-global-adapter/log_config.toml
+  - name: env-common-private-ga
+    behavior: create
+    literals:
+      - moesif_ms_url={{.MOESIF_MS_URL}}
   - name: env-private-ga
     behavior: create
     literals:
@@ -33,6 +37,11 @@ configMapGenerator:
     behavior: create
     files:
       - devportal/devportal.config.js
+  - name: cc-common-private-global-adapter-conf
+    behavior: create
+    files:
+      - common-private-global-adapter/ga_config.toml
+      - common-private-global-adapter/log_config.toml
   - name: cc-global-adapter-conf-v2
     behavior: create
     files:
