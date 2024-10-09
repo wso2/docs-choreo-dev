@@ -72,10 +72,9 @@ public class TestBuildpackDp extends TestBase {
     @Test(dependsOnMethods = {"createComponent_TestBuildpackDp"}, dataProvider = "dps")
     @CitrusTest
     public void deployComponent_TestBuildpackDp(DataProviderWrapper dp) throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BUILDPACK);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, dp.getChoreoComponent(),
+                dp.getEnvironments());
         dp.setDeploymentStatusDTO(statusDTO);
-        SleepUtil.sleep(30);
     }
 
     @Test(dependsOnMethods = {"deployComponent_TestBuildpackDp"}, dataProvider = "dps")
