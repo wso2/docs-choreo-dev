@@ -41,7 +41,7 @@ To create a connection to a service or a database, follow the step-by-step instr
 
 === "Create a connection to a database"
 
-    <h2Prerequisites</h2>
+    **Prerequisites**:
 
      - Create a Choreo-managed database. For details, see [Choreo-Managed Databases and Caches](../../manage-databases-and-caches/choreo-managed-databases-and-caches.md).
      - Add the database to the Marketplace. For details, see 
