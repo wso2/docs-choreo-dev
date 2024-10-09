@@ -12,7 +12,7 @@
  */
 
 import { cyGet } from "../../../commons/cy";
-import { Enums } from "../../../commons/enums";
+import { EndpointAccessibility, Enums } from "../../../commons/enums";
 import path from "path";
 import {
   MEDIUM_TIME,
@@ -42,8 +42,10 @@ export class Component {
   protected componentUrl: string = "";
   protected devPortalUrl: string = "";
 
+  private devEndpointUrls: Map<EndpointAccessibility, string> = new Map();
   private devEndpointUrl: string = "";
 
+  private prodEndpointUrls: Map<EndpointAccessibility, string> = new Map();
   private prodEndpointUrl: string = "";
 
   private devPortalMenu = new DevPortalLeftMenu();
@@ -91,20 +93,40 @@ export class Component {
     this.devPortalUrl = url;
   }
 
-  getDevEndpointUrl(): string {
-    return this.devEndpointUrl;
+  getDevEndpointUrl(endpointVisibility?: EndpointAccessibility): string {
+    if (endpointVisibility === undefined) {
+      return this.devEndpointUrl;
+    }
+
+    let url = this.devEndpointUrls.get(endpointVisibility);
+
+    if (url === undefined) {
+      throw new Error("Dev endpoint URL is not defined for " + endpointVisibility + " visibility");
+    }
+
+    return url;
   }
 
-  setDevEndpointUrl(url: string) {
-    this.devEndpointUrl = url;
+  setDevEndpointUrl(endpointVisibility: EndpointAccessibility, url: string) {
+    this.devEndpointUrls.set(endpointVisibility, url);
   }
 
-  getProdEndpointUrl(): string {
-    return this.prodEndpointUrl;
+  getProdEndpointUrl(endpointVisibility?: EndpointAccessibility): string {
+    if (endpointVisibility === undefined) {
+      return this.prodEndpointUrl;
+    }
+
+    let url = this.prodEndpointUrls.get(endpointVisibility);
+
+    if (url === undefined) {
+      throw new Error("Prod endpoint URL is not defined for " + endpointVisibility + " visibility");
+    }
+
+    return url;
   }
 
-  setProdEndpointUrl(url: string) {
-    this.prodEndpointUrl = url;
+  setProdEndpointUrl(endpointVisibility: EndpointAccessibility, url: string) {
+    this.prodEndpointUrls.set(endpointVisibility, url);
   }
 
   generateCredentials_DevPortal(

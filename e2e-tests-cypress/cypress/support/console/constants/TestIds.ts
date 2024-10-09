@@ -75,7 +75,7 @@ export namespace TestIds {
   export const executeDeploy =
     '[data-cyid="direct-deploy-option-split-group-button-button"]';
   export const endpointVisibility = (visibility: EndpointAccessibility) =>
-    `[data-testid="${visibility}-visibility-option"]`;
+    `[data-cyid="${visibility}-visibility-option-check-box"]`;
   export const endpointSubmit = '[data-cyid="endpoint-submit-btn-button"]';
   export const stop = '[data-testid="btn-stop"]';
   export const reDeploy = '[data-cyid="btn-redeploy-button"]';
