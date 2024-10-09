@@ -5,7 +5,7 @@ When you create a Choreo-managed database or cache, you have the option to add i
 !!! note 
      To add a Choreo-managed database or cache to the Marketplace, you must register at least one credential for it.
 
-## Step 1: Register database or cache credentials
+## Step 1: Register credentials
 
 When you create a database or cache server, you get super admin credentials by default. You can use these credentials to create new user credentials. The steps to create new user credentials depend on the type of database or cache you are using.
 
