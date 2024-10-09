@@ -14,40 +14,21 @@
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
-import { Enums } from "../../../support/commons/enums";
-import { ConfigEntryStep } from "../../../support/commons/types";
+import { Proxy } from "../../../support/console/entities/component/proxy-component";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
-import { TestIds } from "../../../support/console/constants/TestIds";
 
 describe("Verify Component visibility functionality", () => {
   const PROJECT_DESCRIPTION = "Component Visibility Test";
-  const ENDPOINT_NAME = "Readinglist";
-  const RESOURCE = "/books";
+  const ENDPOINT_NAME = "Endpoint 8090";
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "greeting-service";
 
   let project: Project;
   let service: Service;
-  let trigger: Service;
+  let proxy: Proxy;
 
-  // This step is only encountered the first time a service component with a config is promoted.
-  // However if due to an error the step is retried by Cypress this step will not be encountered.
-  // Therefore this is handled as an optional step.
-  function useDeployConfigsIfPrompted() {
-    cy.contains(/^Step/).should("be.visible");
-    cy.get("body").then((body) => {
-      if (body.find(TestIds.nextButton).length > 0) {
-        cy.get(TestIds.nextButton).click();
-      }
-    });
-  }
-
-  function addConfiguration(args: string[] | undefined) {
-    if (args === undefined || args.length === 0) {
-      throw new Error("args is undefined or empty");
-    }
-    cy.get('[data-cyid="invoke_url"]>input').type(args[0]);
-    cy.get('[data-cyid="invoke_resource"]>input').type(args[1]);
-    cy.get('[data-cyid="btn-submit-configform"]').click();
-  }
+  const OPERATION_USERS = "users";
 
   it("Login to Console", () => {
     console.login();
@@ -57,19 +38,18 @@ describe("Verify Component visibility functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify Ballerina service component creation", () => {
+  it("Creating a ballerina service from choreo samples", () => {
     project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/byor-service-app1",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((serviceComponent: Service) => {
-        project.visitComponent(serviceComponent.getName());
-        service = serviceComponent;
+      .createServiceComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.Ballerina,
+        repoName: REPO_NAME,
+        repoTestid: "greeting-service",
+        ENDPOINT_NAME,
+      })
+      .then((comp) => {
+        service = comp;
       });
   });
 
@@ -89,78 +69,48 @@ describe("Verify Component visibility functionality", () => {
     service.goBackToProject();
   });
 
-  it("Verify Service Trigger component creation", () => {
+  it("Creating a proxy from scratch", () => {
     project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/service-to-service",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((comp: Service) => {
-        project.visitComponent(comp.getName());
-        trigger = comp;
+      .createProxyComponent({
+        version: "1.0",
+        endpointUrl: service.getDevEndpointUrl(),
+      })
+      .then((comp) => {
+        proxy = comp;
       });
   });
 
-  it("Build the trigger", () => {
-    trigger.build();
+  it("Remove default resources", () => {
+    proxy.removeDefaultResources();
   });
 
-  it("Deploying the trigger", () => {
-    const devServiceConfigs: string[] = [];
-    devServiceConfigs.push(service.getDevEndpointUrl());
-    devServiceConfigs.push(RESOURCE);
-
-    trigger.deployPublicLevelAccessibilityWithConfigs([
-      new ConfigEntryStep(addConfiguration, devServiceConfigs),
+  it("Add resource to proxy", () => {
+    proxy.addResources([
+      { path: OPERATION_USERS, verbs: [Enums.HTTPMethod.GET] },
     ]);
   });
 
-  it("Promote the trigger", () => {
-    const prodServiceConfigs: string[] = [];
-    prodServiceConfigs.push(service.getProdEndpointUrl());
-    prodServiceConfigs.push(RESOURCE);
-
-    trigger.promotePublicLevelAccessibility([
-      new ConfigEntryStep(useDeployConfigsIfPrompted),
-      new ConfigEntryStep(addConfiguration, prodServiceConfigs),
-    ]);
+  it("Deploy proxy", () => {
+    proxy.deploy();
   });
 
-  it("Invoke trigger in Dev", () => {
-    trigger
-      .testConsole({
-        env: Enums.Environment.DEVELOPMENT,
-        endpoint: ENDPOINT_NAME,
-        resourcePath: "invoke",
-        method: "get",
-        parentComponentId: "operations-default-getInvoke",
-      })
+  it("Promote proxy", () => {
+    proxy.promote();
+  });
+
+  it("Verify test functionality using Swagger UI in Dev", () => {
+    proxy
+      .testSwaggerConsole(Enums.Environment.DEVELOPMENT, OPERATION_USERS)
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
-        expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.statusCode).to.be.equal(OK.toString());
       });
   });
 
-  it("Invoke trigger in Prod", () => {
-    trigger
-      .testConsole({
-        env: Enums.Environment.PRODUCTION,
-        endpoint: ENDPOINT_NAME,
-        resourcePath: "invoke",
-        method: "get",
-        parentComponentId: "operations-default-getInvoke",
-      })
+  it("Verify test functionality using Swagger UI in Prod", () => {
+    proxy
+      .testSwaggerConsole(Enums.Environment.PRODUCTION, OPERATION_USERS)
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
-        expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.statusCode).to.be.equal(OK.toString());
       });
   });
 });
