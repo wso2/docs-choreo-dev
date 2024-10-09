@@ -274,7 +274,8 @@ configMapGenerator:
       - CONFIG_MAPPING_SERVICE_URL="http://configuration-service:8084"
       - CONNECTION_SERVICE_URL="http://connection-service:9000"
       - CUSTOM_URL_MANAGER_URL="http://choreo-url-management:9090/url-mgt"
-      - JOB_TTL_SECONDS_AFTER_FINISHED=86400
+      - JOB_TTL_SECONDS_AFTER_FINISHED=360
+      - CRONJOB_SUCCESSFUL_JOBS_HISTORY_LIMIT=2
   - name: cm-console-next
     behavior: create
     literals:
