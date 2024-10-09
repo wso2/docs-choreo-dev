@@ -1,9 +1,9 @@
 # Add Choreo-Managed Databases and Caches to the Marketplace
 
-When you create a Choreo-managed database or cache, you have the option to add it to the Internal Marketplace, making it available for consumption through a connection.
+When you create a Choreo-managed database or cache, you have the option to add it to the Marketplace, making it available for consumption through a connection.
 
 !!! note 
-     To add a Choreo-managed database or cache to the Internal Marketplace, you must register at least one credential for it.
+     To add a Choreo-managed database or cache to the Marketplace, you must register at least one credential for it.
 
 ## Step 1: Register database or cache credentials
 
@@ -24,10 +24,10 @@ To register credentials for a database, follow these steps:
     - If you want to use the default super admin credentials, select **Add Super Admin Credentials** and specify appropriate values for each of the fields.
 8. Click **Save**.
 
-## Step 2: Add the database or cache to the Internal Marketplace
+## Step 2: Add the database or cache to the Marketplace
 
-- On the **Databases** tab, click +Add corresponding to the database you want to add to the Internal Marketplace. 
+- On the **Databases** tab, click +Add corresponding to the database you want to add to the Marketplace. 
 
-Once the database is added to the Internal Marketplace, it can be consumed via a connection. For details on creating a connection to a Choreo-managed database, see [Create a connection to a database](../develop-components/sharing-and-reusing/create-a-connection.md).
+Once the database is added to the Marketplace, it can be consumed via a connection. For details on creating a connection to a Choreo-managed database, see [Create a connection to a database](../develop-components/sharing-and-reusing/create-a-connection.md).
 
 For details on using a database connection in your component, see [Use a Database Connection in Your Component](../develop-components/sharing-and-reusing/use-a-database-connection-in-your-component.md).
