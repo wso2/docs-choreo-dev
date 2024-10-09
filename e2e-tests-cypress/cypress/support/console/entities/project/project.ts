@@ -392,22 +392,6 @@ export class Project {
     return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
   }
 
-
-  createServiceToServiceComponentUI(
-    serviceInfo: ServiceInfo
-  ): Cypress.Chainable<Service> {
-    this.createComponentIfEmptyProject();
-    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
-
-    const serviceName = Utils.generateComponentName();
-    this.serviceCreationWizard.enterServiceToServiceInfo(
-      serviceName,
-      serviceInfo
-    );
-
-    return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
-  }
-
   createManualTriggerUI(
     manualTriggerInfo: ComponentInfo
   ): Cypress.Chainable<ManualTrigger> {
