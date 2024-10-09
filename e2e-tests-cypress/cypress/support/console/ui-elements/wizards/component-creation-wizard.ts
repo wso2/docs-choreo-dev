@@ -218,7 +218,7 @@ export class _ComponentCreationWizard {
   }
 
   private selectRepo(testid: string) {
-    cy.get(TestIds.greetingBalServiceRepo).should("be.visible").click();
+    cy.get(TestIds.repoSubPath(testid)).should("be.visible").click();
   }
 
   private selectRepoManual(testid: string) {

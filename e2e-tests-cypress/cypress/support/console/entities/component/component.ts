@@ -95,13 +95,17 @@ export class Component {
 
   getDevEndpointUrl(endpointVisibility?: EndpointAccessibility): string {
     if (endpointVisibility === undefined) {
+      if (this.devEndpointUrl === "") {
+        throw new Error("Either deployment has not occured OR Dev endpoint URL has not been set");
+      }
+
       return this.devEndpointUrl;
     }
 
     let url = this.devEndpointUrls.get(endpointVisibility);
 
     if (url === undefined) {
-      throw new Error("Dev endpoint URL is not defined for " + endpointVisibility + " visibility");
+      throw new Error("Either deployment has not occured OR Dev endpoint URL is not set for " + endpointVisibility + " visibility");
     }
 
     return url;
@@ -113,13 +117,17 @@ export class Component {
 
   getProdEndpointUrl(endpointVisibility?: EndpointAccessibility): string {
     if (endpointVisibility === undefined) {
+      if (this.prodEndpointUrl === "") {
+        throw new Error("Either promotion has not occured OR Prod endpoint URL has not been set");
+      }
+      
       return this.prodEndpointUrl;
     }
 
     let url = this.prodEndpointUrls.get(endpointVisibility);
 
     if (url === undefined) {
-      throw new Error("Prod endpoint URL is not defined for " + endpointVisibility + " visibility");
+      throw new Error("Either promotion has not occured OR Prod endpoint URL is not set for " + endpointVisibility + " visibility");
     }
 
     return url;
