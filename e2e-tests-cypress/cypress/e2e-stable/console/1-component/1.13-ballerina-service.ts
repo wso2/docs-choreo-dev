@@ -55,23 +55,23 @@ describe("Verify Ballerina service functionality", () => {
       });
   });
 
-  it.skip("Build the component", () => {
+  it("Build the component", () => {
     component.build();
   });
 
-  it.skip("Deploying the component with Project level visibility", () => {
+  it("Deploying the component with Project level visibility", () => {
     component.deployProjectLevelAccessibility();
   });
 
-  it.skip("Deploying the component with Public level visibility", () => {
+  it("Deploying the component with Public level visibility", () => {
     component.deployPublicLevelAccessibility();
   });
 
-  it.skip("Verifying component promotion to Prod", () => {
+  it("Verifying component promotion to Prod", () => {
     component.promotePublicLevelAccessibility();
   });
 
-  it.skip("Testing the component in Dev", () => {
+  it("Testing the component in Dev", () => {
     component
       .testConsole({
         env: Enums.Environment.DEVELOPMENT,
@@ -88,7 +88,7 @@ describe("Verify Ballerina service functionality", () => {
       });
   });
 
-  it.skip("Testing the component in Prod", () => {
+  it("Testing the component in Prod", () => {
     component
       .testConsole({
         env: Enums.Environment.PRODUCTION,
@@ -105,23 +105,23 @@ describe("Verify Ballerina service functionality", () => {
       });
   });
 
-  it.skip("Adding a new version", () => {
+  it("Adding a new version", () => {
     component.addVersion();
   });
 
-  it.skip("Build the new version", () => {
+  it("Build the new version", () => {
     component.build();
   });
 
-  it.skip("Deploying the new version", () => {
+  it("Deploying the new version", () => {
     component.deployPublicLevelAccessibility();
   });
 
-  it.skip("Promote new version to Prod", () => {
+  it("Promote new version to Prod", () => {
     component.promotePublicLevelAccessibility();
   });
 
-  it.skip("Testing the component in Dev", () => {
+  it("Testing the component in Dev", () => {
     component
       .testConsole({
         env: Enums.Environment.DEVELOPMENT,
@@ -138,7 +138,7 @@ describe("Verify Ballerina service functionality", () => {
       });
   });
 
-  it.skip("Testing the component in Prod", () => {
+  it("Testing the component in Prod", () => {
     component
       .testConsole({
         env: Enums.Environment.PRODUCTION,
@@ -155,15 +155,15 @@ describe("Verify Ballerina service functionality", () => {
       });
   });
 
-  it.skip("Updating the usage plans", () => {
+  it("Updating the usage plans", () => {
     component.updateUsagePlans([UsagePlan.Gold, UsagePlan.Bronze]);
   });
 
-  it.skip("Enabling CORS", () => {
+  it("Enabling CORS", () => {
     component.enableCors(Enums.Environment.DEVELOPMENT);
   });
 
-  it.skip("Publishing the component", () => {
+  it("Publishing the component", () => {
     component.publish();
   });
 
