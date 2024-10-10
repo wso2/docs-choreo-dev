@@ -33,6 +33,8 @@ To integrate another service into your application, follow the steps below:
             to: <YOUR_ENV_VARIABLE_NAME_HERE>
           - from: TokenURL
             to: <YOUR_ENV_VARIABLE_NAME_HERE>
+          - from: ChoreoAPIKey
+            to: <YOUR_ENV_VARIABLE_NAME_HERE>
 
     ```
 
@@ -58,6 +60,7 @@ To integrate another service into your application, follow the steps below:
       | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
       | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
       | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+      | ChoreoAPIKey   | string     | API Key of the Choreo service         | false         | true         |
 
 
 ### Step 2: Read configurations within the application
@@ -110,11 +113,44 @@ As the service URL you can use the URL that you resolved in [step 2](#step-2-rea
     ``` java
     const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
         headers: {
-          'Authorization': `Bearer ${accessToken}`
+          'Authorization': `Bearer ${accessToken}`,
+          'Choreo-API-Key': `${ChoreoAPIKey}`
         }
     });
     ```
 
     !!! note
         If you want to consume a Choreo service at the project visibility level, you don't need to obtain a token. You can directly invoke the service using the resolved URL.
-        
+
+### Configure resiliency for the connection
+
+To ensure your service remains robust and responsive when consuming other Choreo services through connections, you can configure resiliency patterns. Currently, Choreo supports the retry for connections, which you can configure through the Choreo console.
+
+#### Configuring Retry
+
+To configure retry for your connection, follow these steps:
+
+1. Enable retry toggle button
+2. Tweak the retry parameters
+3. Save the configurations
+
+    !!! note
+        For the retry feature to work, you need to send the `Choreo-API-Key` header with the request.
+        Please refer to [step 1](#step-1-add-connection-configurations) on how to obtain the Choreo API key.
+
+#### Retry Configuration Parameters
+
+- **Retry count**: Specifies how many times Choreo should attempt to retry the request if it fails. For example, setting this to 3 means Choreo will make up to 3 additional attempts after the initial failure.
+
+- **Retry Backoff Interval (ms)**: Defines a base value for the exponential backoff time delay between retry attempts. This helps to prevent overwhelming the target service with immediate repeated requests.
+
+- **Timeout Per Retry (s)**: Sets a maximum duration for each retry attempt. If a retry attempt doesn't receive a response within this time, it's considered a failure. For example, setting this to 30 means each retry will wait up to 30 seconds for a response before timing out.
+
+- **Condition**: Allows you to specify under what circumstances a retry should be attempted. Choreo supports the following retry conditions. You can select one or multiple conditions.
+
+  - **5xx**: Retry on any 5xx response code, or if the upstream server does not respond at all (disconnect/reset/read timeout) (This includes connect-failure and refused-stream).
+  - **gateway-error**: Retry only on 502, 503, or 504 response codes.
+  - **reset**: Retry when the upstream server does not respond at all (disconnect/reset/read timeout).
+  - **connect-failure**: Retry on connection failures to the upstream server (connect timeout, etc.).
+  - **retriable-4xx**: Retry on retriable 4xx response codes. Currently, this only includes 409 responses.
+  - **refused-stream**: Retry if the upstream server resets the stream with a REFUSED_STREAM error code.
