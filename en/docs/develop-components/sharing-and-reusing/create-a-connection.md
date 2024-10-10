@@ -44,7 +44,7 @@ To create a connection to a service or a database, follow the step-by-step instr
     Prerequisites:
 
      - Create a Choreo-managed database. For details, see [Choreo-Managed Databases and Caches](../../manage-databases-and-caches/choreo-managed-databases-and-caches.md).
-     - Add the database to the Marketplace. For details, see 
+     - Add the database to the Marketplace. For details, see [Add Choreo-Managed Databases and Caches to the Marketplace](../../manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md).
 
     Follow these steps to create a connection to a Choreo-managed database:
 
