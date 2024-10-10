@@ -26,16 +26,6 @@ spec:
           objectAlias: DP_STS_CLIENT_SECRET_ENCRYPTION_KEY
           objectVersion: 23fbbda5993446228d70524d533dc2fa
         - |
-          objectName: choreo-sts-default-private-signing-key
-          objectType: secret
-          objectAlias: CHOREO_STS_DEFAULT_PRIVATE_SIGNING_KEY
-          objectVersion: 50ff2d94960a45939e8884cff379cfe8
-        - |
-          objectName: choreo-sts-default-signing-key-certificate
-          objectType: secret
-          objectAlias: CHOREO_STS_DEFAULT_SIGNING_KEY_CERTIFICATE
-          objectVersion: 90b4f429cb7d44b2aa43b5b45aace3df
-        - |
           objectName: redis-cluster-password-tmp
           objectType: secret
           objectAlias: CHOREO_STS_REDIS_PASSWORD
