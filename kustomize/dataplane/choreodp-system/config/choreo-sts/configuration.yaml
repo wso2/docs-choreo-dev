@@ -1,0 +1,36 @@
+client:
+  clientSecretEncryptionKeyFile: {{.CLIENT_SECRET_ENCRYPTION_KEY_FILE}}
+  tokenSettings:
+    authCodeValidity: {{.AUTH_CODE_VALIDITY}}
+    userTokenValidity: {{.USER_TOKEN_VALIDITY}}
+    refreshTokenValidity: {{.REFRESH_TOKEN_VALIDITY}}
+    applicationTokenValidity: {{.APPLICATION_TOKEN_VALIDITY}}
+management:
+  dataplaneIdentifier: {{.DATAPLANE_IDENTIFIER}}
+redis:
+  username: {{.REDIS_USERNAME}}
+  passwordFile: {{.REDIS_PASSWORD_FILE}}
+  nodes:
+   - {{.REDIS_NODE}}
+  client:
+    commandTimeout: {{.REDIS_COMMAND_TIMEOUT}}
+    shutdownTimeout: {{.REDIS_SHUTDOWN_TIMEOUT}}
+    maxIdleSize: {{.REDIS_MAX_IDLE_SIZE}}
+    maxSize: {{.REDIS_MAX_SIZE}}
+    minIdleSize: {{.REDIS_MIN_IDLE_SIZE}}
+    readWriteTimeout: {{.REDIS_READ_WRITE_TIMEOUT}}
+    maxWaitTime: {{.REDIS_MAX_WAIT_TIME}}
+    testOnBorrow: {{.REDIS_TEST_ON_BORROW}}
+    testOnReturn: {{.REDIS_TEST_ON_RETURN}}
+    lifoEnabled: {{.REDIS_LIFO_ENABLED}}
+    evictionTimeout: {{.REDIS_EVICTION_TIMEOUT}}
+services:
+  userMgtService:
+    url: {{.USER_MGT_SERVICE_URL}}
+  authzService:
+    url: {{.AUTHZ_SERVICE_URL}}
+  kvResolverService:
+    url: {{.KV_RESOLVER_SERVICE_URL}}
+httpClient:
+  maxTotal: {{.HTTP_CLIENT_MAX_TOTAL}}
+  defaultMaxPerRoute: {{.HTTP_CLIENT_DEFAULT_MAX_PER_ROUTE}}

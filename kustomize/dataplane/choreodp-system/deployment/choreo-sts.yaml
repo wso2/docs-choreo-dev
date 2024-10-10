@@ -1,0 +1,113 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC. and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: choreo-sts
+  name: choreo-sts
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      choreo.component: choreo-sts
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-sts
+        antiaffinity: choreo-sts
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreosts
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sts:latest
+          ports:
+            - containerPort: 9000
+              name: service-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 60
+            periodSeconds: 60
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /health
+          resources:
+            limits:
+              cpu: 750m
+              memory: 3Gi
+            requests:
+              cpu: 350m
+              memory: 2Gi
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: choreo-sts-tmp-files
+              mountPath: /tmp
+            - name: choreo-sts-config
+              mountPath: /home/wso2/config
+            - name: secret-choreo-sts
+              mountPath: "/mnt/csi/secret-choreo-sts/client-secret-encryption-key.txt"
+              subPath: "DP_STS_CLIENT_SECRET_ENCRYPTION_KEY"
+              readOnly: true
+            - name: secret-choreo-sts
+              mountPath: "/mnt/csi/secret-choreo-sts/redis-password.txt"
+              subPath: "CHOREO_STS_REDIS_PASSWORD"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: choreo-sts-tmp-files
+          emptyDir: {}
+        - name: choreo-sts-config
+          configMap:
+            name: cm-files-choreo-sts
+        - name: secret-choreo-sts
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-choreo-sts
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-sts
+              topologyKey: kubernetes.io/hostname

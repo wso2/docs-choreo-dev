@@ -1,0 +1,42 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC. and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-choreo-sts
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "false"
+    tenantId: da76d684-740f-4d94-8717-9d5fb21dd1f9
+    keyVaultName: dev-csi-64
+    objects: |
+      array:
+        - |
+          objectName: dp-sts-client-secret-encryption-key
+          objectType: secret
+          objectAlias: DP_STS_CLIENT_SECRET_ENCRYPTION_KEY
+          objectVersion: 23fbbda5993446228d70524d533dc2fa
+        - |
+          objectName: choreo-sts-default-private-signing-key
+          objectType: secret
+          objectAlias: CHOREO_STS_DEFAULT_PRIVATE_SIGNING_KEY
+          objectVersion: 50ff2d94960a45939e8884cff379cfe8
+        - |
+          objectName: choreo-sts-default-signing-key-certificate
+          objectType: secret
+          objectAlias: CHOREO_STS_DEFAULT_SIGNING_KEY_CERTIFICATE
+          objectVersion: 90b4f429cb7d44b2aa43b5b45aace3df
+        - |
+          objectName: redis-cluster-password-tmp
+          objectType: secret
+          objectAlias: CHOREO_STS_REDIS_PASSWORD
+          objectVersion: 867489a5286b41d5b6963a896f0e3760
