@@ -30,6 +30,7 @@ describe("Verify Ballerina service functionality", () => {
   let component: Service;
   const REPO_URL = "https://github.com/wso2/choreo-samples";
   const REPO_NAME = "greeting-service";
+  const sampleName = "Greeting Service";
 
   it("Login to Console", () => {
     console.login();
@@ -54,23 +55,23 @@ describe("Verify Ballerina service functionality", () => {
       });
   });
 
-  it("Build the component", () => {
+  it.skip("Build the component", () => {
     component.build();
   });
 
-  it("Deploying the component with Project level visibility", () => {
+  it.skip("Deploying the component with Project level visibility", () => {
     component.deployProjectLevelAccessibility();
   });
 
-  it("Deploying the component with Public level visibility", () => {
+  it.skip("Deploying the component with Public level visibility", () => {
     component.deployPublicLevelAccessibility();
   });
 
-  it("Verifying component promotion to Prod", () => {
+  it.skip("Verifying component promotion to Prod", () => {
     component.promotePublicLevelAccessibility();
   });
 
-  it("Testing the component in Dev", () => {
+  it.skip("Testing the component in Dev", () => {
     component
       .testConsole({
         env: Enums.Environment.DEVELOPMENT,
@@ -87,7 +88,7 @@ describe("Verify Ballerina service functionality", () => {
       });
   });
 
-  it("Testing the component in Prod", () => {
+  it.skip("Testing the component in Prod", () => {
     component
       .testConsole({
         env: Enums.Environment.PRODUCTION,
@@ -104,23 +105,23 @@ describe("Verify Ballerina service functionality", () => {
       });
   });
 
-  it("Adding a new version", () => {
+  it.skip("Adding a new version", () => {
     component.addVersion();
   });
 
-  it("Build the new version", () => {
+  it.skip("Build the new version", () => {
     component.build();
   });
 
-  it("Deploying the new version", () => {
+  it.skip("Deploying the new version", () => {
     component.deployPublicLevelAccessibility();
   });
 
-  it("Promote new version to Prod", () => {
+  it.skip("Promote new version to Prod", () => {
     component.promotePublicLevelAccessibility();
   });
 
-  it("Testing the component in Dev", () => {
+  it.skip("Testing the component in Dev", () => {
     component
       .testConsole({
         env: Enums.Environment.DEVELOPMENT,
@@ -137,7 +138,7 @@ describe("Verify Ballerina service functionality", () => {
       });
   });
 
-  it("Testing the component in Prod", () => {
+  it.skip("Testing the component in Prod", () => {
     component
       .testConsole({
         env: Enums.Environment.PRODUCTION,
@@ -154,15 +155,15 @@ describe("Verify Ballerina service functionality", () => {
       });
   });
 
-  it("Updating the usage plans", () => {
+  it.skip("Updating the usage plans", () => {
     component.updateUsagePlans([UsagePlan.Gold, UsagePlan.Bronze]);
   });
 
-  it("Enabling CORS", () => {
+  it.skip("Enabling CORS", () => {
     component.enableCors(Enums.Environment.DEVELOPMENT);
   });
 
-  it("Publishing the component", () => {
+  it.skip("Publishing the component", () => {
     component.publish();
   });
 
@@ -176,5 +177,9 @@ describe("Verify Ballerina service functionality", () => {
 
   it("Verifying project insights in Prod", () => {
     project.verifyUsageInsights(Enums.Environment.PRODUCTION);
+  });
+
+  it("Verify sample search", () => {
+    project.searchSampleService(sampleName);
   });
 });

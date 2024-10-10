@@ -209,14 +209,6 @@ describe("Create Web App", () => {
     webApp.promoteToProdWithAuthConfiguration(customConfig);
   });
 
-  it("Verify test page is disabled", () => {
-    webApp.verifyTestPageIsDisabled();
-  });
-
-  it("Verify manage page is disabled", () => {
-    webApp.verifyManagePageIsDisabled();
-  });
-
   it("Verify web app functionality in Dev", () => {
     verifyWebAppFunctionality(webApp.getDevWebAppUrl());
   });

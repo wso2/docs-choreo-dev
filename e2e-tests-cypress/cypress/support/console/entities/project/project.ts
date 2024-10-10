@@ -37,6 +37,7 @@ import { IntegrationComponentData } from "../../../interfaces/integration-compon
 import { Byoc } from "../component/byoc-component";
 import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
 import { _ComponentCreationWizard } from "../../ui-elements/wizards/component-creation-wizard";
+import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 
 export interface RepoInfo {
   readonly url: string;
@@ -101,6 +102,7 @@ export class Project {
 
   private proxyCreationWizard = new _ProxyCreationWizard();
   private serviceCreationWizard = new _ComponentCreationWizard();
+  private sideMenu = new ServiceLeftMenu();
 
   constructor(
     name: string,
@@ -255,6 +257,7 @@ export class Project {
 
   searchSampleService(searchString: string) {
     this.createComponentIfEmptyProject();
+    this.sideMenu.navigateToOverview();
     cy.get(TestIds.viewAllSamples).scrollIntoView().click();
     cy.get(TestIds.trySample).should("be.visible").click();
     cy.get(TestIds.sampleSearch).should("be.visible").type(searchString);

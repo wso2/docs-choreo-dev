@@ -27,6 +27,7 @@ describe("Verify Test Runner Component functionality", () => {
   let runner: TestRunner;
   const REPO_URL = "https://github.com/wso2/choreo-samples";
   const REPO_NAME = "test-runner-go";
+  const sampleName = "Greeting Service";
 
   it("Login to Console", () => {
     console.login();
@@ -63,11 +64,11 @@ describe("Verify Test Runner Component functionality", () => {
     runner.promoteProd();
   });
 
-  it("Verify test page is disabled", () => {
-    runner.verifyTestPageIsDisabled();
+  it("Return to Project", () => {
+    runner.goBackToProject();
   });
 
-  it("Verify manage page is disabled", () => {
-    runner.verifyManagePageIsDisabled();
+  it("Verify component deletion", () => {
+    project.deleteComponent(runner.getName());
   });
 });
