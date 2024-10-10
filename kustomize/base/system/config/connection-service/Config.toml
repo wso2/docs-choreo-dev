@@ -23,6 +23,9 @@ dbUser = "{{.CONNECTION_DB_USER}}"
 instanceBasedAuthzEnabled = {{.INSTANCE_BASED_AUTHZ_ENABLED | default false}}
 secretManagerEndpoint = "http://dp-secret-manager:80/api/v1"
 platformServicesManagerEndpoint = "http://platform-services-manager:80"
+enableEventPublish = {{.ENABLE_EVENT_PUBLISH | default false}}
+websubHubUrl = "{{.WEBSUB_HUB_URL}}"
+websubHubTopic = "{{.WEBSUB_HUB_TOPIC}}"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
