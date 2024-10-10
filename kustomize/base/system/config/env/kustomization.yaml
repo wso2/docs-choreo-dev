@@ -432,7 +432,7 @@ configMapGenerator:
       - DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW={{.DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW}}
       - DISABLE_BALLERINA_OBSERVABILITY={{.DISABLE_BALLERINA_OBSERVABILITY | default "false"}}
       - CHOREO_MANAGED_BUILDPACK_LIFECYCLE_IMAGE={{.CHOREO_MANAGED_BUILDPACK_LIFECYCLE_IMAGE | default "choreocontrolplane.azurecr.io/buildpacksio/lifecycle:0.19.6"}}
-      - GOOGLE_BUILDPACK_LIFECYCLE_IMAGE={{.GOOGLE_BUILDPACK_LIFECYCLE_IMAGE | default "choreocontrolplane.azurecr.io/buildpacksio/lifecycle:0.17.3"}}
+      - GOOGLE_BUILDPACK_LIFECYCLE_IMAGE={{.GOOGLE_BUILDPACK_LIFECYCLE_IMAGE | default "choreocontrolplane.azurecr.io/buildpacksio/lifecycle:0.20.2"}}
       - GOOGLE_BUILDPACK_RUN_IMAGE={{.GOOGLE_BUILDPACK_RUN_IMAGE | default "choreocontrolplane.azurecr.io/buildpacks/google-22/run:2941124e39ef19f49aabac4257daf5f652805e81"}}
       - CHOREO_MANAGED_BUILDPACK_RUN_IMAGE={{.CHOREO_MANAGED_BUILDPACK_RUN_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/stacks/alpine/run:0.2.44"}}
       - DISABLE_MI_CREATE_APP_WORKFLOW={{.DISABLE_MI_CREATE_APP_WORKFLOW | default "false"}}
