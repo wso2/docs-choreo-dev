@@ -3,14 +3,8 @@ Configuration:
     Console:
       name: Console
       target: SYSTEM_OUT
-      JsonLayout:
-        complete: true
-        compact: true
-        eventEol: true
-        properties: true
-        stacktraceAsString: true
-        includeNullDelimiter: true
-        includeTimeMillis: true
+      JsonTemplateLayout:
+        eventTemplateUri: "classpath:json-log-layout.json"
   Loggers:
     Root:
       level: info

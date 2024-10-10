@@ -51,3 +51,4 @@ configMapGenerator:
       - choreo-sts/configuration.yaml
       - choreo-sts/application.properties
       - choreo-sts/log4j2.yaml
+      - choreo-sts/json-log-layout.json
