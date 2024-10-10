@@ -41,7 +41,7 @@ To create a connection to a service or a database, follow the step-by-step instr
 
 === "Create a connection to a database"
 
-    **Prerequisites**:
+    Prerequisites:
 
      - Create a Choreo-managed database. For details, see [Choreo-Managed Databases and Caches](../../manage-databases-and-caches/choreo-managed-databases-and-caches.md).
      - Add the database to the Marketplace. For details, see 
@@ -58,9 +58,14 @@ To create a connection to a service or a database, follow the step-by-step instr
     4. Click the **Databases** tab. You can search and apply filters to efficiently find a database.
     5. Click on the database you want to connect to. 
     6. To create the connection, follow these steps:
-       1. Enter a name and description.
-       2. Under **Environment Configuration**, select credentials for each environment.
-       3. Click **Create**.  
+    
+        1. Enter a name and description.
+        2. Under **Environment Configuration**, select credentials for each environment.
+
+            !!! note
+                 By default, the selected database is applied to all environments. To use different databases for specific environments, select the appropriate database and provide the corresponding credentials for each environment.
+
+        3. Click **Create**.  
     
     This creates the connection and displays the database connection details for each environment, along with an inline guide on how to use the connection in your component. 
     
