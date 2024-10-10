@@ -26,7 +26,7 @@ To register credentials for a database, follow these steps:
 
 ## Step 2: Add the database or cache to the Marketplace
 
-- On the **Databases** tab, click +Add corresponding to the database you want to add to the Marketplace. 
+- On the **Databases** tab, click +Add to Marketplace corresponding to the database you want to add to the Marketplace. 
 
 Once the database is added to the Marketplace, it can be consumed via a connection. For details on creating a connection to a Choreo-managed database, see [Create a connection to a database](../develop-components/sharing-and-reusing/create-a-connection.md).
 
