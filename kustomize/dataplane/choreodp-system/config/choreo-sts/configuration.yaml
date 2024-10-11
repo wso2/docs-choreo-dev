@@ -31,6 +31,8 @@ services:
     url: {{.AUTHZ_SERVICE_URL}}
   kvResolverService:
     url: {{.KV_RESOLVER_SERVICE_URL}}
+  legacyTokenService:
+    url: {{.LEGACY_TOKEN_SERVICE_URL}}
 httpClient:
   maxTotal: {{.HTTP_CLIENT_MAX_TOTAL | default 100}}
   defaultMaxPerRoute: {{.HTTP_CLIENT_DEFAULT_MAX_PER_ROUTE | default 10}}
