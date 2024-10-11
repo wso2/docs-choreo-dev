@@ -53,15 +53,15 @@ To consume a Choreo-managed database via a connection, follow these steps:
       |--------------|---------|----------------------------------------------------------------------|---------------|--------------|
       | HostName     | string  | The hostname of the database server where the database resides.      | false         | false        |
       | Port         | string  | The port number on which the database server listens for connections.| false         | false        |
-      | Username     | string  | The username for database access.                                    | false         | false        |
-      | Password     | string  | The password for database access.                                    | false         | true         |
+      | Username     | string  | The username for database access.                                    | false         | true         |
+      | Password     | string  | The password for database access.                                    | false         | false        |
       | DatabaseName | string  | The name of the database to connect.                                 | false         | false        |
 
 ### Step 2: Read configurations within the application
 
 Once you add the connection configuration snippet, you can read the configurations within your application. The steps to follow depend on the programming language you are using.
 
-The following is a sample code snippet in JavaScript:
+The following is a sample code snippet in Ballerina:
 
 ``` java
 const hostName = process.env.HOST_NAME;
