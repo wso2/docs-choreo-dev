@@ -2,7 +2,7 @@
 
 Connections in Choreo enable seamless integration between components and external services or resources. Connections provide a simple and uniform approach to integrating with services and resources.
 
-To consume a service, whether deployed in Choreo or registered as an external service, you need to create a connection to that service.
+To consume a service deployed in Choreo, you need to create a connection to that service.
 
 ## Create a connection to a Choreo service
 
@@ -18,14 +18,6 @@ Follow these steps to create a connection to a service deployed in Choreo:
 4. Click on the service you want to connect to. 
 5. Enter a name and a description for the connection and then click **Next**. This displays the **Service URL** for both development and production environments. 
 6. Click **Create**.
-
-## Create a connection to an external service
-
-Follow these steps to create a connection to an external service:
-
-1. Follow steps 1–4 from the previous section.
-2. Expand the **Environment to Endpoint** section and verify the service endpoints assigned to the Choreo environments.
-3. Click **Create**.
 
 For step-by-step instructions on using a connection in your service, see [Use a Connection in Your Service](./use-a-connection-in-your-service.md).
 
