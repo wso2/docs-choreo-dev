@@ -22,7 +22,7 @@ spec:
         - objectName: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
           key: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
         - objectName: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
-          key: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET   
+          key: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
   parameters:
     objects: |
       array:
@@ -65,4 +65,4 @@ spec:
           objectName: dp-cicd-github-runner-app-opaque-client-secret
           objectType: secret
           objectAlias: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
-          objectVersion: "{{.CHOREO_GITHUB_RUNNER_APP_OPAQUE_CLIENT_SECRET}}"  
+          objectVersion: "{{.CHOREO_GITHUB_RUNNER_APP_OPAQUE_CLIENT_SECRET}}"
