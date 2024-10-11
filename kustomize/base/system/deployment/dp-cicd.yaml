@@ -79,6 +79,11 @@ spec:
                 secretKeyRef:
                   key: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
                   name: secret-dp-cicd
+            - name: CHOREO_GITHUB_RUNNER_APP_OPAQUE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
+                  name: secret-dp-cicd      
             - name: BUILDPACKS_BUILDER_IMAGE
               valueFrom:
                 configMapKeyRef:
