@@ -21,6 +21,8 @@ spec:
           key: DOCKER_REGISTRY_PAT
         - objectName: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
           key: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
+        - objectName: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
+          key: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET   
   parameters:
     objects: |
       array:
