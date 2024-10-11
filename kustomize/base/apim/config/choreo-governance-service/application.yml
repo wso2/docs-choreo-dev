@@ -37,3 +37,5 @@ governance-service:
   apim:
     superAdminUserName: {{.APIM_SUPER_ADMIN_USERNAME}}
     superAdminPassword: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_SUPER_ADMIN_PASSWORD)"
+  default-rulesets:
+    filePath: "/home/wso2/resources/default-rulesets"
