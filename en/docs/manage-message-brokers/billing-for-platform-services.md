@@ -1,4 +1,4 @@
-# Billing for Platform Services (Databases and Caches)
+# Billing for Platform Services (Kafka Services)
 
 Any platform services you create within your Choreo Organization will be included in your current Choreo subscription. The quantity included will vary depending on the service plan of the resources you create.
 
