@@ -624,9 +624,10 @@ public class GraphQL extends ControlPlaneAPI {
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
         AtomicReference<ChoreoProject> project = new AtomicReference<>();
         runner.variable("isProjectCreationSuccess", false);
-        runner.$(repeat()
+        runner.$(repeatOnError()
                 .until("(i = 5) or ( ${isProjectCreationSuccess} = true )")
                 .index("i")
+                .autoSleep(5000)
                 .actions(
                         http()
                                 .client(client)

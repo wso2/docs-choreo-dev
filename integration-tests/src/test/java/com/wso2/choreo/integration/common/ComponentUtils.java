@@ -1042,6 +1042,7 @@ public class ComponentUtils {
                                 .client(invokeUrl)
                                 .receive()
                                 .response(HttpStatus.OK)
+                                .timeout(5000)
                                 .message()
                                 .type(MessageType.JSON)
                                 .body(expectedResponse)));
