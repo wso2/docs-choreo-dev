@@ -95,10 +95,6 @@ export class Component {
 
   getDevEndpointUrl(endpointVisibility?: EndpointAccessibility): string {
     if (endpointVisibility === undefined) {
-      if (this.devEndpointUrl === "") {
-        throw new Error("Either deployment has not occured OR Dev endpoint URL has not been set");
-      }
-
       return this.devEndpointUrl;
     }
 
@@ -117,10 +113,6 @@ export class Component {
 
   getProdEndpointUrl(endpointVisibility?: EndpointAccessibility): string {
     if (endpointVisibility === undefined) {
-      if (this.prodEndpointUrl === "") {
-        throw new Error("Either promotion has not occured OR Prod endpoint URL has not been set");
-      }
-      
       return this.prodEndpointUrl;
     }
 
