@@ -13,7 +13,7 @@
 
 import { ComponentInfo, ServiceInfo } from "../../entities/project/project";
 import { TestIds } from "../../constants/TestIds";
-import { SHORT_TIME } from "../../../commons/timeouts";
+import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { BuildPacks } from "../../../commons/enums";
 
 export class _ComponentCreationWizard {
@@ -34,7 +34,7 @@ export class _ComponentCreationWizard {
     this.searchRepoName(repoName);
     this.selectRepo(repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
-    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
+    cy.get(TestIds.serviceCreateButton, VERY_SHORT_TIME).should("be.enabled").eq(1).click();
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
 
