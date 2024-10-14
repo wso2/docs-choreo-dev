@@ -112,6 +112,11 @@ class PipelineReader:
         return promotion_data
 
 
+    def get_build_number(self, build_id):
+        build = self._get_build_by_id(build_id)
+        return build.build_number
+
+
     def _get_build_by_id(self, build_id):
         build_client = self.conn.clients.get_build_client()
 
