@@ -4,9 +4,6 @@ Kafka on Choreo offers fully managed, distributed message broker services across
 
 ## Create a Choreo-managed Kafka service
 
-!!! note "Kafka service billing"
-     Billing for Kafka services you create within your Choreo organization will be included in your current Choreo subscription. The pricing will vary depending on the service plan of the resources you create. For details, see [Choreo Platform Services Billing](../references/choreo-platform-services-billing.md).
-
 Follow the steps below to create a Choreo-managed Kafka service:
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev).
