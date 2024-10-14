@@ -85,11 +85,13 @@ def capture_deployed_component_info(build_id, env):
 
     cp_table = extract_component_data("./{}/{}".format(COMPONENT_ARTIFACT, CP_COMPONENT_CSV))
 
-    _insert_component_data(build_id, time_stamp, cp_table)
+    build_number = pipeline.get_build_number(build_id)
+
+    _insert_component_data(build_number, time_stamp, cp_table)
 
     dp_table = extract_component_data("./{}/{}".format(COMPONENT_ARTIFACT, DP_COMPONENT_CSV))
 
-    _insert_component_data(build_id, time_stamp, dp_table)
+    _insert_component_data(build_number, time_stamp, dp_table)
 
 
 def _unzip_csv_files():
@@ -103,12 +105,12 @@ def _unzip_csv_files():
         print("_unzip_csv_files() raised error: {}".format(e))
         sys.exit(1)
 
-def _insert_component_data(build_id, time_stamp, table):
+def _insert_component_data(build_number, time_stamp, table):
     values = []
 
     for row in table:
         deployed_component = DeployedComponent(
-            build_number=build_id,
+            build_number=build_number,
             choreo_env=row["environment_name"],
             component_name=row["component_name"],
             image=row["image"],
