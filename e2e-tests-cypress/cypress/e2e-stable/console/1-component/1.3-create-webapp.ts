@@ -155,11 +155,11 @@ describe("Create Web App", () => {
     service.deployPublicLevelAccessibility();
   });
 
-  it.skip("Promote backend service to Prod", () => {
+  it("Promote backend service to Prod", () => {
     service.promotePublicLevelAccessibility();
   });
 
-  it.skip("Add users for E2E tests", () => {
+  it("Add users for E2E tests", () => {
     console.addUserStore("users.csv", Enums.Environment.DEVELOPMENT);
     console.addUserStore("users.csv", Enums.Environment.PRODUCTION);
   });
@@ -184,7 +184,7 @@ describe("Create Web App", () => {
     });
   });
 
-  it.skip("Build the Web App", () => {
+  it("Build the Web App", () => {
     webApp.build();
   });
 
