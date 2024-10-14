@@ -33,7 +33,7 @@ By default, Kafka services accept traffic from the internet. However, if you wan
 
 The following are sample Golang code blocks to help you configure producer and consumer programs. The samples assume the certificates are in the same directory as the code. If you keep the certificates in a dedicated directory, you must specify the full path to the directory.
 
-To produce and consume Kafka messages, you must first [create a topic](./configura-a-kafka-service.md#create-a-kafka-topic). If you already have a topic, you can use it in the sample.
+To produce and consume Kafka messages, you must first [create a topic](./configure-a-kafka-service.md#create-a-kafka-topic). If you already have a topic, you can use it in the sample.
 
 
 === "Producer"
