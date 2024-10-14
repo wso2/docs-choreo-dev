@@ -30,8 +30,8 @@ export class ComponentTestPage {
   }
 
   static selectEndpoint(endpoint: string) {
-    cy.get(TestIds.endpointSelector).scrollIntoView();
-    cy.get(TestIds.endpointSelector).should("be.visible").click();
+    cy.get(TestIds.endpointSelector).eq(0).scrollIntoView();
+    cy.get(TestIds.endpointSelector).eq(0).should("be.visible").click();
     cy.get("#endpoint-label-popup")
       .should("be.visible")
       .contains(endpoint)

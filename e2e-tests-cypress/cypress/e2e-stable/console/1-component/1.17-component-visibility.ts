@@ -14,21 +14,45 @@
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
-import { Proxy } from "../../../support/console/entities/component/proxy-component";
 import { BuildPacks, EndpointAccessibility, Enums } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
+import { ConfigEntryStep } from "../../../support/commons/types";
+import { TestIds } from "../../../support/console/constants/TestIds";
+import { Utils } from "../../../support/commons/utils";
 
 describe("Verify Component visibility functionality", () => {
   const PROJECT_DESCRIPTION = "Component Visibility Test";
-  const ENDPOINT_NAME = "Hello";
+  const PROJECT_EXPOSED_ENDPOINT_NAME = "Endpoint 8090";
+  const PUBLIC_EXPOSED_ENDPOINT_NAME = "Endpoint 9090";
   const REPO_URL = "https://github.com/wso2/choreo-samples";
-  const REPO_NAME = "hello-world";
+  const PROJECT_EXPOSED_REPO_NAME = "greeting-service";
+  const PUBLIC_EXPOSED_REPO_NAME = "dynamic-endpoint-passthrough";
 
   let project: Project;
-  let service: Service;
-  let proxy: Proxy;
+  let projectExposedService: Service;
+  let publicExposedService: Service;
 
   const OPERATION = "greeting";
+
+  // This step is only encountered the first time a service component with a config is promoted.
+  // However if due to an error the step is retried by Cypress this step will not be encountered.
+  // Therefore this is handled as an optional step.
+  function useDeployConfigsIfPrompted() {
+    cy.contains(/^Step/).should("be.visible");
+    cy.get("body").then((body) => {
+      if (body.find(TestIds.nextButton).length > 0) {
+        cy.get(TestIds.nextButton).click();
+      }
+    });
+  }
+
+  function addConfiguration(args: string[] | undefined) {
+    if (args === undefined || args.length === 0) {
+      throw new Error("args is undefined or empty");
+    }
+    cy.get('[data-cyid="invoke_url"]>input').type(args[0]);
+    cy.get('[data-cyid="btn-submit-configform"]').click();
+  }
 
   it("Login to Console", () => {
     console.login();
@@ -44,75 +68,102 @@ describe("Verify Component visibility functionality", () => {
         displayName: "",
         repoUrl: REPO_URL,
         buildPack: BuildPacks.Ballerina,
-        repoName: REPO_NAME,
-        repoTestid: REPO_NAME,
-        ENDPOINT_NAME,
+        repoName: PROJECT_EXPOSED_REPO_NAME,
+        repoTestid: PROJECT_EXPOSED_REPO_NAME,
+        ENDPOINT_NAME: PROJECT_EXPOSED_ENDPOINT_NAME,
       })
       .then((comp) => {
-        service = comp;
+        projectExposedService = comp;
       });
   });
 
-  it("Build the service", () => {
-    service.build();
+  it("Build the service with Project level visibility", () => {
+    projectExposedService.build();
   });
 
   it("Deploying the service with Project level visibility", () => {
-    service.deployProjectLevelAccessibility();
+    projectExposedService.deployProjectLevelAccessibility();
   });
 
   it("Promoting the service with Project level visibility", () => {
-    service.promoteProjectLevelAccessibility();
+    projectExposedService.promoteProjectLevelAccessibility();
   });
 
   it("Return to Project", () => {
-    service.goBackToProject();
+    projectExposedService.goBackToProject();
   });
 
-  it("Creating a proxy from scratch", () => {
+  it("Creating passthrough ballerina service", () => {
     project
-      .createProxyComponent({
-        version: "1.0",
-        endpointUrl: service.getDevEndpointUrl(EndpointAccessibility.Project),
-      })
+    .createServiceComponentUI({
+      displayName: "",
+      repoUrl: REPO_URL,
+      buildPack: BuildPacks.Ballerina,
+      repoName: PUBLIC_EXPOSED_REPO_NAME,
+      repoTestid: PUBLIC_EXPOSED_REPO_NAME,
+      ENDPOINT_NAME: PUBLIC_EXPOSED_ENDPOINT_NAME,
+    })
       .then((comp) => {
-        proxy = comp;
+        publicExposedService = comp;
       });
   });
 
-  it("Remove default resources", () => {
-    proxy.removeDefaultResources();
+  it("Build the service with Public level visibility", () => {
+    publicExposedService.build();
   });
 
-  it("Add resource to proxy", () => {
-    proxy.addResources([
-      { path: OPERATION, verbs: [Enums.HTTPMethod.GET] },
+  it("Deploy the service with Public level visibility", () => {
+    const devServiceConfigs: string[] = [];
+    const url = Utils.replaceTrailingSlash(projectExposedService.getDevEndpointUrl(EndpointAccessibility.Project));
+    devServiceConfigs.push(url);
+
+    publicExposedService.deployPublicLevelAccessibilityWithConfigs([
+      new ConfigEntryStep(addConfiguration, devServiceConfigs),
     ]);
   });
 
-  it("Deploy proxy", () => {
-    proxy.deploy();
-  });
+  it("Promote the service with Public level visibility", () => {
+    const prodServiceConfigs: string[] = [];
+    const url = Utils.replaceTrailingSlash(projectExposedService.getProdEndpointUrl(EndpointAccessibility.Project));
+    prodServiceConfigs.push(url);
 
-  it("Promote proxy", () => {
-    proxy.promote();
+    publicExposedService.promotePublicLevelAccessibility([
+      new ConfigEntryStep(useDeployConfigsIfPrompted),
+      new ConfigEntryStep(addConfiguration, prodServiceConfigs),
+    ]);
   });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
-    proxy
-      .testSwaggerConsole(Enums.Environment.DEVELOPMENT, OPERATION)
+    publicExposedService
+      .testConsole({
+        env: Enums.Environment.DEVELOPMENT,
+        endpoint: PUBLIC_EXPOSED_ENDPOINT_NAME,
+        resourcePath: OPERATION,
+        method: "get",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-getGreeting"
+      })
       .then((res) => {
         expect(res.statusCode).to.be.equal(OK.toString());
-        expect(res.response).to.contain("Hello, World!");
+        expect(res.response).to.contain("User");
       });
   });
 
   it("Verify test functionality using Swagger UI in Prod", () => {
-    proxy
-      .testSwaggerConsole(Enums.Environment.PRODUCTION, OPERATION)
-      .then((res) => {
-        expect(res.statusCode).to.be.equal(OK.toString());
-        expect(res.response).to.contain("Hello, World!");
-      });
+    publicExposedService
+    .testConsole({
+      env: Enums.Environment.PRODUCTION,
+      endpoint: PUBLIC_EXPOSED_ENDPOINT_NAME,
+      resourcePath: OPERATION,
+      method: "get",
+      key: "name",
+      value: "User",
+      parentComponentId: "operations-default-getGreeting"
+    })
+    .then((res) => {
+      expect(res.statusCode).to.be.equal(OK.toString());
+      expect(res.response).to.contain("User");
+    });
   });
 });

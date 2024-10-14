@@ -101,6 +101,10 @@ export class Utils {
     return text.replace(/(\r\n|\n|\r)/gm, "");
   }
   
+  static replaceTrailingSlash(text: string) : string {
+    return text.replace(/\/$/, "");
+  }
+
   /**
    * Create name for on-prem key.
    *
