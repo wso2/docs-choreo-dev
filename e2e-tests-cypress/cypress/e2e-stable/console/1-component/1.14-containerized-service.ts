@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { Project } from "../../../support/console/entities/project/project";
 import { console } from "../../../support/console/console";
 import { OK } from "../../../support/commons/http";
@@ -33,6 +33,8 @@ describe("Verify containerized service functionality", () => {
   const SECRET_VALUE = "secret-value";
   const MOUNT_PATH = "/app/configs/config.json";
   const CONFIG_FILE = '{\n\t"name": "testUser"';
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "greeting-service-go";
 
   let project: Project;
   let byoc: Service;
@@ -70,22 +72,18 @@ describe("Verify containerized service functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify containerized service component creation", () => {
+
+  it("Creating a containerized service from choreo samples", () => {
     project
-      .createByocServiceComponent(
-        {
-          url: "https://github.com/choreo-test-apps/byoc-service-app",
-          branch: "main",
-        },
-        {
-          dockerfilePath: "Dockerfile",
-          dockerContext: "",
-        },
-        "",
-        ENDPOINT_NAME
-      )
-      .then((comp: Service) => {
-        project.visitComponent(comp.getName());
+      .createContainerizedServiceComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.DOCKER,
+        repoName: REPO_NAME,
+        repoTestid: REPO_NAME,
+        ENDPOINT_NAME,
+      })
+      .then((comp) => {
         byoc = comp;
       });
   });
