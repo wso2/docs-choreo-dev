@@ -108,7 +108,6 @@ describe("Create Web App", () => {
     project = console.searchProject(BACKEND_SERVICE_PROJECT_NAME);
   });
 
-
   it("Creating a backend ballerina service from choreo samples", () => {
     project.isComponentExists(BACKEND_SERVICE_COMPONENT_NAME).then((isExists) => {
       if (!isExists) {
@@ -130,7 +129,6 @@ describe("Create Web App", () => {
       }
     });
   });
-  
 
   it("Build backend service if not built previously", () => {
     service.isSuccessfulBuildExists().then((isExists) => {
