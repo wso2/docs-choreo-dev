@@ -12,26 +12,25 @@ Follow the steps below to create a Choreo-managed Kafka service:
 4. Click **+ Create**.
 5. Specify a display name for the Kafka service and click **Next**.
 6. Select your preferred cloud provider from AWS, Azure, GCP, or Digital Ocean.
-    - The cloud provider is used to provision the computing and storage infrastructure for your Kafka service.
-    - There is no functional difference between Kafka services created on different cloud providers, apart from changes to service plans and associated costs.
-7. Select the region for your Kafka service.
+    - The cloud provider provisions the computing and storage infrastructure for your Kafka service.
+    - There is no functional difference between Kafka services across providers except for variations in service plans and associated costs.
+7. Select a region for your Kafka service.
     - Available regions depend on the selected cloud provider. Choreo currently supports US, EU, and AU regions across all providers.
-8. Select the service plan.
-    - Service plans vary in the dedicated CPU, memory (RAM), storage space allocated for your Kafka server, the backup retention periods, and high-availability configurations for production use cases.
-9. Click **Create**. This creates the Kafka service and takes you to the **Service Overview** page.
+8. Select a service plan.
+    - Service plans differ based on the allocation of CPU, memory (RAM), and storage for your Kafka server, as well as backup retention periods and high-availability options suited for production environments.
+9. Click **Create**. This creates the Kafka service and takes you to the **Overview** tab on the service details page.
 
 ## Connect to your Choreo-managed Kafka service
 
-To connect to your Choreo-managed Kafka service, use the connection parameters available on the **Service Overview** page. Choreo secures Kafka connections via client certificate authentication.
+To connect to your Choreo-managed Kafka service, use the connection parameters from the **Overview** tab on the service details page. Choreo secures Kafka connections via client certificate authentication.
 
-To connect the Kafka service using producer and consumer programs, you must configure them with the provided credentials and connection parameters.
+To use the Kafka service with producer and consumer programs, you must configure them with the provided credentials and connection parameters.
 
 By default, Kafka services accept traffic from the internet. However, if you want to restrict access to specific IP addresses or CIDR blocks, you can configure the necessary advanced settings.
 
 The following are sample code blocks in [Go](https://go.dev/) to help you configure producer and consumer programs. The samples assume the certificates are in the same directory as the code. If you keep the certificates in a dedicated directory, you must specify the full path to the directory.
 
-To produce and consume Kafka messages, you must first [create a topic](./configure-a-kafka-service.md#create-a-kafka-topic). If you already have a topic, you can use it in the sample.
-
+To produce or consume Kafka messages, you must first [create a topic](./configure-a-kafka-service.md#create-a-kafka-topic). If you already have a topic, you can use it in the sample code.
 
 === "Producer"
     
