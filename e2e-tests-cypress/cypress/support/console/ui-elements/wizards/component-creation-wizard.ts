@@ -229,7 +229,7 @@ export class _ComponentCreationWizard {
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
     this.searchRepoName(serviceInfo.repoName);
-    this.selectRepoContainerizedService(serviceInfo.repoTestid);
+    this.selectRepo(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(1).click();
     this.searchDockerFile("Dockerfile");
@@ -279,10 +279,6 @@ export class _ComponentCreationWizard {
 
   private selectRepoGQLService(testid: string) {
     cy.get(TestIds.gqlServiceRepo).should("be.visible").click();
-  }
-
-  private selectRepoContainerizedService(testid: string) {
-    cy.get(TestIds.repoSubPath(testid)).should("be.visible").click();
   }
 
   private verifyComponentCreation(name: string) {
