@@ -436,6 +436,7 @@ export namespace TestIds {
   export const containerizedBuildPack = '[data-cyid="Docker-card-button"]';
   export const dockerSearchBox = '[data-cyid="project-directory-search-search-bar"]';
   export const dockerFileSelect = '[data-cyid="subPath-greeting-service-go/Dockerfile"]';
+  export const connectionServiceCard = '[data-cyid="choreo-service-card-button"]';
 }
 
 

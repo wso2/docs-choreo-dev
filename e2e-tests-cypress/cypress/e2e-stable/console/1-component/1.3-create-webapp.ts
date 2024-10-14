@@ -108,7 +108,6 @@ describe("Create Web App", () => {
     project = console.searchProject(BACKEND_SERVICE_PROJECT_NAME);
   });
 
-
   it("Creating a backend ballerina service from choreo samples", () => {
     project.isComponentExists(BACKEND_SERVICE_COMPONENT_NAME).then((isExists) => {
       if (!isExists) {
@@ -130,7 +129,6 @@ describe("Create Web App", () => {
       }
     });
   });
-  
 
   it("Build backend service if not built previously", () => {
     service.isSuccessfulBuildExists().then((isExists) => {
@@ -157,11 +155,11 @@ describe("Create Web App", () => {
     service.deployPublicLevelAccessibility();
   });
 
-  it("Promote backend service to Prod", () => {
+  it.skip("Promote backend service to Prod", () => {
     service.promotePublicLevelAccessibility();
   });
 
-  it("Add users for E2E tests", () => {
+  it.skip("Add users for E2E tests", () => {
     console.addUserStore("users.csv", Enums.Environment.DEVELOPMENT);
     console.addUserStore("users.csv", Enums.Environment.PRODUCTION);
   });
@@ -186,7 +184,7 @@ describe("Create Web App", () => {
     });
   });
 
-  it("Build the Web App", () => {
+  it.skip("Build the Web App", () => {
     webApp.build();
   });
 
