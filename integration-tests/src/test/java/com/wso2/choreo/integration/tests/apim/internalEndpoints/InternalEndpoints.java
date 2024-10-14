@@ -84,8 +84,8 @@ public class InternalEndpoints extends TestNGCitrusSpringSupport {
         }
 
         if(deployedServiceComponentStatus == null){
-            deployedServiceComponentStatus = ComponentUtils.deployComponent(this, citrusClients, accessToken,
-                    serviceComponent,serviceComponentEnvironments, ComponentFlavour.BYOC);
+            deployedServiceComponentStatus = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken,
+                    serviceComponent,serviceComponentEnvironments);
         }
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, serviceComponent,
                 deployedServiceComponentStatus);
