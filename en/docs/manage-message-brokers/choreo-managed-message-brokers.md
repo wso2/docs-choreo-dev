@@ -1,10 +1,12 @@
 # Choreo Managed Message Brokers
 
-Choreo enables you to create fully managed Apache Kafka services across major cloud providers (AWS, Azure, GCP, and DigitalOcean). These Kafka instances are seamlessly integrated with your Choreo components, providing robust and scalable messaging capabilities for building real-time data pipelines and event-driven applications. Choreo offers multiple Kafka service plans, ranging from small instances suitable for development and testing, to production-ready clusters with advanced features like automatic backups, high availability multi nodes with partitioning.
+Choreo allows you to create Apache Kafka services across major cloud providers (AWS, Azure, GCP, and DigitalOcean) as Choreo-managed platform services for your message brokering needs. These fully managed Kafka instances can seamlessly integrate with Choreo components, providing scalable messaging for real-time data pipelines and event-driven applications. Choreo offers multiple Kafka service plans, ranging from lightweight instances for development purposes to production-grade clusters with automatic backups, high-availability multi-nodes, and partitioning.
 
 ## Apache Kafka on Choreo
 
-Apache Kafka is an open-source distributed event streaming platform used for building real-time data pipelines and streaming applications. You can create Kafka services on Choreo as fully managed, scalable message brokers, ideal for handling large volumes of event-driven data.
+Apache Kafka is an open-source platform for real-time event streaming and handling large-scale, event-driven data. You can create Kafka services on Choreo as fully-managed, scalable, message brokers, ideal for handling large volumes of event-driven data.
 
-- [Create an Apache Kafka Server on Choreo](./choreo-managed-kafka-servers.md)
+!!! note "Billing for Kafka services"
+     Kafka service billing will be included in your Choreo subscription, with pricing varying based on the service plan of the resources you create. For more details, see [Choreo Platform Services Billing](../references/choreo-platform-services-billing.md).
 
+- [Create a Choreo-managed Kafka service](./create-choreo-managed-kafka-services.md)
