@@ -415,8 +415,8 @@ configMapGenerator:
       - ENABLE_ASYNC_OPERATIONS={{.ENABLE_ASYNC_OPERATIONS}}
       - ASYNC_REPO_CREATION_RETRY_CONFIG="eyJpbml0aWFsRGVsYXkiOiAyLCJwcm9ncmVzc2lvbkZhY3RvciI6IDIuMCwibWF4RGVsYXkiOiAxODAwLCJjb3VudCI6IDIwfQo="
       - MI_BUILDPACKS_ENABLED_TEST_ORGS={{.MI_BUILDPACKS_ENABLED_TEST_ORGS}}
-      - BD_CMV={{.BD_CMV | default "v1.1.32"}}
-      - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.32.yml"}}
+      - BD_CMV={{.BD_CMV | default "v1.1.34"}}
+      - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.34.yml"}}
       - BD_BYORV={{.BD_BYORV | default "v1.1.38"}}
       - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.38.yml"}}
       - BD_BYOCV={{.BD_BYOCV | default "v1.0.29"}}
