@@ -10,8 +10,8 @@ permissions to publish data to BigQuery.
 
 The following **environment variables** should be set in the pipeline to declare the credentials associated with the above.
 
-- `GCLOUD_ACCOUNT_INFO`: The service account key file content as a base64 encoded string of the GC project.
-- `AZURE_DEVOPS_PAT`: The Azure DevOps Personal Access Token.
+- `RELEASE_ANALYTICS_GCLOUD_ACCOUNT_INFO`: The service account key file content as a base64 encoded string of the GC project.
+- `RELEASE_ANALYTICS_AZURE_DEVOPS_PAT`: The Azure DevOps Personal Access Token.
 
 ## Default configuration
 The default configuration for this CLI is defined in the `release-analytics/config/config.yaml` file. The configs are
