@@ -2,11 +2,13 @@
 
 Connections in Choreo provide a simple and uniform approach to seamlessly integrate components with services or resources.
 
-Choreo allows you to create connections to services deployed in Choreo and to Choreo-managed databases.
+Choreo allows you to create connections to services deployed in Choreo or registered as external services. It also allows you to create connections to any Choreo-managed database.
 
 To create a connection to a service or a database, follow the step-by-step instructions in the respective tab:
 
 === "Create a connection to a service"
+
+    <h2>Create a connection to a Choreo service</h2>
 
     Follow these steps to create a connection to a service deployed in Choreo:
 
@@ -23,10 +25,18 @@ To create a connection to a service or a database, follow the step-by-step instr
     7. Click **Create**.
    
     This creates the connection and displays its details for each environment, along with an inline guide on how to use the connection in your component. 
-    
-    For step-by-step instructions on using a connection in your service, see [Use a Connection in Your Service](./use-a-connection-in-your-service.md).
 
-    For step-by-step instructions on using a connection in your web application, see [Use a Connection in Your Web Application](./use-a-connection-in-your-web-application.md).
+    <h2>Create a connection to an external service</h2>
+
+    Follow these steps to create a connection to an external service:
+
+    1. Follow steps 1–5 from the previous section.
+    2. Expand the **Environment to Endpoint** section and verify the service endpoints assigned to the Choreo environments.
+    3. Click **Create**.
+
+      For step-by-step instructions on using a connection in your service, see [Use a Connection in Your Service](./use-a-connection-in-your-service.md).
+
+      For step-by-step instructions on using a connection in your web application, see [Use a Connection in Your Web Application](./use-a-connection-in-your-web-application.md).
 
 
 === "Create a connection to a database"
