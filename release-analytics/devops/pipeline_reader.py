@@ -19,7 +19,7 @@ from tempfile import TemporaryFile
 from zipfile import ZipFile
 from azure.devops.credentials import BasicAuthentication
 from azure.devops.connection import Connection
-from config.config_reader import ConfigGroup, ConfigReader
+from config.config_reader import ConfigGroup, ConfigReader, get_azure_devops_pat
 
 COMPONENT_ARTIFACT = "output"
 COMPONENT_DIRECTORY = "component-info"
@@ -45,11 +45,7 @@ class PipelineReader:
             print(f"Unrecognized env: {env} specified")
             sys.exit(1)
 
-        try:
-            auth_token = os.environ['AZURE_DEVOPS_PAT']
-        except KeyError:
-            print("You must first set the AZURE_DEVOPS_PAT environment variable")
-            sys.exit(1)
+        auth_token = get_azure_devops_pat()
 
         self.conn = Connection(base_url=PipelineReader.url,
                     creds=BasicAuthentication('', auth_token),
@@ -244,7 +240,7 @@ class PipelineReader:
         except Exception as e:
             if "TF400813" in e.message: # Handle https://github.com/microsoft/azure-devops-python-api/issues/316
                 info = self._get_component_file_info(build_id)
-                stream = requests.get(info.resource.download_url, auth=("", os.environ['AZURE_DEVOPS_PAT']))
+                stream = requests.get(info.resource.download_url, auth=("", get_azure_devops_pat()))
                 return stream
             else:
                 print("get_component_file() raised error: {}".format(e))

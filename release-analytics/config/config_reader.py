@@ -13,6 +13,11 @@
 
 #!/usr/bin/python3
 
+import base64
+import binascii
+import json
+import os
+import sys
 from enum import StrEnum
 import yaml
 
@@ -20,6 +25,26 @@ import yaml
 class ConfigGroup(StrEnum):
     DEVOPS = "devops"
     BIGQUERY = "bigquery"
+
+
+def get_gcloud_account_info():
+    try:
+        gcloud_var: str = os.environ['RELEASE_ANALYTICS_GCLOUD_ACCOUNT_INFO']
+        return json.loads(base64.b64decode(gcloud_var).decode("utf-8"))
+    except KeyError:
+        print("You must first set the RELEASE_ANALYTICS_GCLOUD_ACCOUNT_INFO environment variable")
+        sys.exit(1)
+    except binascii.Error:
+        print("Error when decoding GCloud credentials")
+        sys.exit(1)
+
+def get_azure_devops_pat():
+    try:
+        return os.environ['RELEASE_ANALYTICS_AZURE_DEVOPS_PAT']
+    except KeyError:
+        print("You must first set the RELEASE_ANALYTICS_AZURE_DEVOPS_PAT environment variable")
+        sys.exit(1)
+
 
 
 class ConfigReader(object):

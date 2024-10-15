@@ -10,14 +10,11 @@
  * entered into with WSO2 governing the purchase of this software and any
  * associated services.
 """
-import base64
-import binascii
-import json
-import os
+
 import sys
 from google.cloud import bigquery
 from google.oauth2 import service_account
-from config.config_reader import ConfigReader, ConfigGroup
+from config.config_reader import ConfigReader, ConfigGroup, get_gcloud_account_info
 
 class BigQueryWriter:
     scopes = ConfigReader().get_config(ConfigGroup.BIGQUERY, "scopes")
@@ -25,11 +22,7 @@ class BigQueryWriter:
     dataset = ConfigReader().get_config(ConfigGroup.BIGQUERY, "dataset")
 
     def __init__(self):
-        try:
-            account_info = json.loads(base64.b64decode(os.environ['GCLOUD_ACCOUNT_INFO']).decode("utf-8"))
-        except binascii.Error:
-            print("Error when decoding GCloud credentials")
-            sys.exit(1)
+        account_info = get_gcloud_account_info()
 
         credentials = service_account.Credentials.from_service_account_info(account_info, scopes=BigQueryWriter.scopes)
         self.client = bigquery.Client(project=BigQueryWriter.project, credentials=credentials)
