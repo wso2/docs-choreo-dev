@@ -11,7 +11,7 @@
 
 import unittest
 
-from config.config_reader import get_gcloud_account_info, get_azure_devops_pat
+from config.config_reader import get_gcloud_account_info, get_azure_devops_pat, ConfigReader, ConfigGroup
 
 
 class MyTestCase(unittest.TestCase):
@@ -25,6 +25,13 @@ class MyTestCase(unittest.TestCase):
         self.assertIsNotNone(pat)
         self.assertNotEqual(len(pat), 0)
 
+    def test_read_devops_config(self):
+        reader = ConfigReader()
+        self.assertEqual(reader.get_config(ConfigGroup.DEVOPS, "url"), "https://dev.azure.com/choreo-devops")
+
+    def test_read_bigquery_config(self):
+        reader = ConfigReader()
+        self.assertEqual(reader.get_config(ConfigGroup.BIGQUERY, "dataset"), "release_data")
 
 if __name__ == '__main__':
     unittest.main()
