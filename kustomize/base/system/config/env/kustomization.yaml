@@ -452,6 +452,7 @@ configMapGenerator:
       - PROXY_BUILD_WF_FILE_PATH={{.PROXY_BUILD_WF_FILE_PATH | default ".github/workflows/proxy-build-v1.0.yml"}}
       - ENABLE_DOCKERHUB_USER_ROTATION={{.ENABLE_DOCKERHUB_USER_ROTATION | default "false"}}
       - CP_GW_URL={{.CP_GW_URL | default ""}}
+      - AZURE_CONTAINER_REGISTRY_USERNAME={{.AZURE_CONTAINER_REGISTRY_USERNAME}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
