@@ -16,7 +16,6 @@
 # Used this approach instead of looping `"${SCRIPTS_DIR}"/*.sql` otherwise order should be
 # maintained in files by prefixing 1, 2, 3.
 declare -a DB_SCRIPTS=(
-  "choreo_program_db_mssql.sql"
   "choreo_perf_db_mssql.sql"
   "choreo_apim_db_mssql.sql"
   "choreo_apim_shared_db_mssql.sql"

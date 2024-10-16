@@ -138,10 +138,6 @@ configMapGenerator:
       - METRICS_EVENTHUB_NAME={{.METRICS_EVENTHUB_NAME}}
       - TRACES_EVENTHUB_NAME={{.TRACES_EVENTHUB_NAME}}
       - REDIS_HOST={{.REDIS_HOST}}
-  - name: env-choreo-program-db
-    behavior: create
-    literals:
-      - CHOREO_DB_HOST={{.CHOREO_DB_HOST}}
   - name: env-obsmanager
     behavior: create
     literals:

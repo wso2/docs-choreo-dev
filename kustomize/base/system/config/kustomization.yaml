@@ -45,14 +45,6 @@ configMapGenerator:
       - REDIS_PORT=6380
       - REDIS_SSL=true
       - REDIS_DATABASE=3
-  - name: cm-choreo-program-db
-    behavior: create
-    literals:
-      - CHOREO_DB_NAME=choreo_program_db
-      - CHOREO_DB_MAX_POOL=50
-      - CHOREO_DB_PORT=1433
-      - CHOREO_DB_USERNAME=choreo_program_db_user
-      - CHOREO_DB_DRIVER=sqlserver
   - name: cm-obsmanager
     behavior: create
     literals:
