@@ -2,4 +2,7 @@ resources:
   - ../../base/apim/certificates
   - ../../base/apim/secret-provider-class
 
+patchesStrategicMerge:
+  - delete-secret-provider-oauth-agent.yaml
+
 namespace: choreo-apim
