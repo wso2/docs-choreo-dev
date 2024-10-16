@@ -361,6 +361,8 @@ configMapGenerator:
       - EU_DATA_PLANE_ID={{.EU_DATA_PLANE_ID | default ""}}
       - CILIUM_EGRESS_POLICY_ENABLED={{.CILIUM_EGRESS_POLICY_ENABLED | default "false"}}
       - BUILD_STS_URL_FROM_DEFAULT_DOMAIN_ENABLED={{.BUILD_STS_URL_FROM_DEFAULT_DOMAIN_ENABLED | default "false"}}
+      - STS_MANAGEMENT_SERVICE_ENABLED={{.STS_MANAGEMENT_SERVICE_ENABLED | default "false"}}
+      - CHOREO_STS_MGT_URL=http://sts-mgt-service:3000/api/v1/sts-proxy
   - name: env-dp-helmhub
     behavior: create
     literals:
