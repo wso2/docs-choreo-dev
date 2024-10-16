@@ -10,4 +10,4 @@ Service components encapsulate business logic and provide standardized interface
 
 With the help of the service component, developers can quickly create APIs and microservices, making it easier to implement and manage complex software systems. Service components can also be integrated with other Choreo components, that acts as message processors, connectors, and data sources, etc to create powerful end-to-end solutions.
 
-{% include "../configure-endpoints-body.md" %}
+You can expose a service to other components through endpoints. For details on configuring endpoints, see [Configure Endpoints](../configure-endpoints.md).

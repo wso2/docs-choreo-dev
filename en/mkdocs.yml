@@ -125,6 +125,7 @@ nav:
           - Create a Connection: develop-components/sharing-and-reusing/create-a-connection.md
           - Use a Connection in Your Service: develop-components/sharing-and-reusing/use-a-connection-in-your-service.md
           - Use a Connection in Your Web Application: develop-components/sharing-and-reusing/use-a-connection-in-your-web-application.md
+          - Use a Database Connection in Your Component: develop-components/sharing-and-reusing/use-a-database-connection-in-your-component.md
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
       - Manage Component Source Configurations: develop-components/manage-component-source-configurations.md
@@ -134,6 +135,7 @@ nav:
           - PostgreSQL:  manage-databases-and-caches/choreo-managed-postgresql-databases.md
           - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
           - Choreo-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
+          - Add Choreo-Managed Databases and Caches to the Marketplace: manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Authentication and Authorization:
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
