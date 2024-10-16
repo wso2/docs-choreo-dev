@@ -10,7 +10,7 @@ resources:
   - choreo-platform-svc-cost-collector.yaml
   - choreo-weekly-execution-cleaner.yaml
   - platform-service-manager-cronjob.yaml
-  - platform-service-manager-free-trial-cleanup-cronjob.yaml
+  - platform-service-manager-resource-cleaner.yaml
   - platform-service-manager-stats-reporter.yaml
   - dp-rudder-deploy-history-cleanup-task.yaml
   - choreo-k8s-cronjob-timezone-migrator.yaml
