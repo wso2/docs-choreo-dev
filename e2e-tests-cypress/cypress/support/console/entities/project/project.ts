@@ -386,10 +386,7 @@ export class Project {
     const serviceName = Utils.generateComponentName();
     this.serviceCreationWizard.enterServiceInfo(
       serviceName,
-      serviceInfo,
-      serviceInfo.repoUrl,
-      serviceInfo.repoName,
-      serviceInfo.repoTestid
+      serviceInfo
     );
 
     return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
@@ -404,10 +401,7 @@ export class Project {
     const manualTriggerName = Utils.generateComponentName();
     this.serviceCreationWizard.enterManualTriggerInfo(
       manualTriggerName,
-      manualTriggerInfo,
-      manualTriggerInfo.repoUrl,
-      manualTriggerInfo.repoName,
-      manualTriggerInfo.repoTestid
+      manualTriggerInfo
     );
 
     return cy.wrap(new ManualTrigger(manualTriggerName));
@@ -420,10 +414,7 @@ export class Project {
     const testRunnerName = Utils.generateComponentName();
     this.serviceCreationWizard.enterTestRunnerInfo(
       testRunnerName,
-      componentInfo,
-      componentInfo.repoUrl,
-      componentInfo.repoName,
-      componentInfo.repoTestid
+      componentInfo
     );
 
     return cy.url().then(() => {
@@ -440,10 +431,7 @@ export class Project {
     const serviceName = Utils.generateComponentName();
     this.serviceCreationWizard.enterMIServiceInfo(
       serviceName,
-      serviceInfo,
-      serviceInfo.repoUrl,
-      serviceInfo.repoName,
-      serviceInfo.repoTestid
+      serviceInfo
     );
 
     return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
@@ -473,10 +461,7 @@ export class Project {
     const scheduleTriggerName = Utils.generateComponentName();
     this.serviceCreationWizard.enterManualTriggerInfo(
       scheduleTriggerName,
-      scheduleTriggerInfo,
-      scheduleTriggerInfo.repoUrl,
-      scheduleTriggerInfo.repoName,
-      scheduleTriggerInfo.repoTestid
+      scheduleTriggerInfo
     );
 
     return cy.wrap(new ScheduleTrigger(scheduleTriggerName));
@@ -491,10 +476,7 @@ export class Project {
     const serviceName = Utils.generateComponentName();
     this.serviceCreationWizard.enterGQLServiceInfo(
       serviceName,
-      serviceInfo,
-      serviceInfo.repoUrl,
-      serviceInfo.repoName,
-      serviceInfo.repoTestid
+      serviceInfo
     );
 
     return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
