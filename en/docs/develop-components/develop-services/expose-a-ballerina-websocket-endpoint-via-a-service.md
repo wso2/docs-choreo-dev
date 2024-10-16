@@ -1,12 +1,12 @@
-# Expose a Ballerina WebSocket Endpoint via a Service
+# Expose a NodeJS WebSocket Endpoint via a Service
 
-Choreo allows you to create and deploy applications in your preferred programming language, offering a seamless platform for building dynamic and scalable solutions. This guide walks you through the steps to deploy a WebSocket service using the Ballerina language. No prior knowledge of the Ballerina language is required to follow this guide.
+Choreo allows you to create and deploy applications in your preferred programming language, offering a seamless platform for building dynamic and scalable solutions. This guide walks you through the steps to deploy a WebSocket service using the NodeJS buildpack.
 
 WebSockets provide real-time, two-way communication between a client and server over a persistent TCP connection. This makes WebSocket APIs ideal for applications that require real-time updates.
 
 In this guide, you will:
 
-- Build a simple WebSocket service using a sample implementation in Ballerina.
+- Build a simple WebSocket service using a sample implementation in NodeJS.
 - Deploy the service in Choreo, allowing any WebSocket client application to establish a connection and exchange real-time messages with your service.
 
 ## Prerequisites
@@ -26,20 +26,19 @@ Let's get started!
 
 ## Learn the repository file structure
 
-It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the Ballerina chat service.
+It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the NodeJS chat Application.
 
 !!! note
-    The following file paths are relative to the path `<sample-repository-dir>/chat-service-websocket`.
+    The following file paths are relative to the path `<sample-repository-dir>/websocket-chat-app/websocket-chat-service-nodejs`.
 
-|Filepath                 | Description                                                     |
-|-------------------------|-----------------------------------------------------------------|
-| `service.bal`           | The chat service code written in the Ballerina language.        |
-| `Ballerina.toml`        | The Ballerina configuration file.                               |
-| `.choreo/endpoints.yaml`| The configuration file with endpoint details.                   |
+|Filepath                        | Description                                                     |
+|--------------------------------|-----------------------------------------------------------------|
+| `server.js`                    | The NodeJS chat service.                                        |
+| `.choreo/component-config.yaml`| The configuration file with endpoint details.                   |
 
 ## Step 1: Create a service component 
 
-To create a Ballerina service component, follow these steps:
+To create a NodeJS service component, follow these steps:
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
@@ -51,8 +50,8 @@ To create a Ballerina service component, follow these steps:
 
     | **Field**                 | **Value**               |
     |---------------------------|-------------------------|
-    | **Component Display Name**| `Ballerina Chat Service`|
-    | **Component Name**        | `ballerina-chat-service`|
+    | **Component Display Name**| `NodeJS Chat Service`.  |
+    | **Component Name**        | `nodejs-chat-service`.  |
     | **Description**           | Manage a Chat service   |
     
 5. Click the **GitHub** tab.
@@ -81,7 +80,7 @@ To create a Ballerina service component, follow these steps:
     
     | **Field**                      | **Value**                 |
     |--------------------------------|---------------------------|
-    | **Ballerina Project Directory**| `chat-service-websocket`  |
+    | **Ballerina Project Directory**| `websocket-chat-app/websocket-chat-service-nodejs`  |
 
 10. Click **Create**. This creates the component and takes you to the **Overview** page of the component.
 
