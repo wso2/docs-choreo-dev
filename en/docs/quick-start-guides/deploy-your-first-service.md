@@ -35,8 +35,8 @@ Let's familiarize ourselves with the key files in this sample application. The b
 |Filepath               |Description                                                                   |
 |-----------------------|------------------------------------------------------------------------------|
 |app.mjs	            |The Node.js (JavaScript) based service code.|
-|.choreo/endpoints.yaml	|Choreo-specific configuration that provides information about how Choreo exposes the service.|
-|openapi.yaml	        |OpenAPI contract of the service. This is required to publish our service as a managed API. This openapi.yaml file is referenced by the .choreo/endpoints.yaml.|
+|.choreo/component.yaml	|Choreo-specific configuration that provides information about how Choreo exposes the service.|
+|openapi.yaml	        |OpenAPI contract of the service. This is required to publish our service as a managed API. This openapi.yaml file is referenced by the .choreo/component.yaml.|
 
 Let's get started!
 

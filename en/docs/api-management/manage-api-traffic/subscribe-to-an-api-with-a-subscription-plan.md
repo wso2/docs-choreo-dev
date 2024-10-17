@@ -1,6 +1,6 @@
 # Subscribe to an API with a Subscription Plan
 
-If an API has subscription plans assigned to it, API consumer can select the subscription plan that best fits their requirement at the time of subscribing to the API.
+If an API has subscription plans assigned to it, API consumers can select the subscription plan that best fits their requirements at the time of subscribing to the API.
 
 To subscribe to an API with a subscription plan, follow the steps given below:
 
