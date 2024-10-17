@@ -71,7 +71,7 @@ configMapGenerator:
     literals:
       - REDIS_HOST="{{.REDIS_HOST | default ""}}"
       - PAT_CLIENT_ID="{{.PAT_CLIENT_ID | default ""}}"
-      - PAT_CLIENT_TOKEN_EP="{{.PAT_CLIENT_TOKEN_EP | default ""}}"
+      - PAT_CLIENT_TOKEN_EP="{{.PAT_CLIENT_TOKEN_EP | default "http://choreo-am-service:9763/oauth2/token"}}"
       - PAT_TOKEN_TTL_BUFFER="{{.PAT_TOKEN_TTL_BUFFER | default "10"}}"
   - name: cm-app-gateway-oauth-agent
     behavior: create
