@@ -20,7 +20,7 @@ In this guide, you will:
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample WebSocket service](https://github.com/wso2/choreo-samples/tree/main/chat-service-websocket) implementation for this guide.
+- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample WebSocket service](https://github.com/wso2/choreo-samples/tree/main/websocket-chat-app) implementation for this guide.
 
 Let's get started!
 
