@@ -459,6 +459,8 @@ mTLS
 OpenSSL
 namespaces
 GitLab
+DatabaseName
+mysql2
 roadmap
 Subprocessor
 subprocessors
