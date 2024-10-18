@@ -151,10 +151,9 @@ To configure retry for your connection, follow these steps:
 
 - **Condition**: The conditions under which retries are triggered. Choreo supports the following options, and you can select one or more:
 
-  - **5xx**: Retry on any 5xx response code or when the upstream server fails to respond (disconnect/reset/read timeout). This includes connection failures and refused-stream errors.
-  - **gateway-error**: Retry only on 502, 503, or 504 response codes.
-  - **reset**: Retry when the upstream server does not respond (disconnect/reset/read timeout).
-  - **connect-failure**: Retry on connection failures to the upstream server, such as connection timeouts.
-  - **retriable-4xx**: Retry on retriable 4xx response codes. Currently limited to 409 responses.
-  - **refused-stream**: Retry if the upstream server resets the stream with a `REFUSED_STREAM` error code.
-
+    - **5xx**: Retry on any 5xx response code or when the upstream server fails to respond (disconnect/reset/read timeout). This includes connection failures and refused-stream errors.
+    - **gateway-error**: Retry only on 502, 503, or 504 response codes.
+    - **reset**: Retry when the upstream server does not respond (disconnect/reset/read timeout).
+    - **connect-failure**: Retry on connection failures to the upstream server, such as connection timeouts.
+    - **retriable-4xx**: Retry on retriable 4xx response codes. Currently limited to 409 responses.
+    - **refused-stream**: Retry if the upstream server resets the stream with a `REFUSED_STREAM` error code.
