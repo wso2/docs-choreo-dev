@@ -460,6 +460,8 @@ mTLS
 OpenSSL
 namespaces
 GitLab
+DatabaseName
+mysql2
 roadmap
 Subprocessor
 subprocessors
@@ -698,6 +700,11 @@ headerName
 fooValue
 authzHeaderValue
 myResourcePath
+schemaVersion
+displayName
+basePath
+networkVisibilities
+component.yaml
 develop-a-ballerina-graphql-api
 faq.md
 Moesif.md
@@ -978,6 +985,7 @@ submodules
 submodule
 unpublish
 unpublishing
+GenAI
  - docs/administer/customize-the-developer-portal.md
 cInlineImage-threeQuarter
  - docs/develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md
