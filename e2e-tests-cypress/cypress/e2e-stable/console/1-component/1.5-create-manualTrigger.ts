@@ -44,7 +44,7 @@ describe("Verify manual trigger creation functionality", () => {
         repoUrl: REPO_URL,
         buildPack: BuildPacks.Go,
         repoName: REPO_NAME,
-        repoTestid: "subPath-docker-hello-world-manual-task",
+        repoTestid: REPO_NAME,
         languageVersion: "1.x",
       })
       .then((comp) => {

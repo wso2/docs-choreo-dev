@@ -44,7 +44,7 @@ describe("Verify Test Runner Component functionality", () => {
         repoUrl: REPO_URL,
         buildPack: BuildPacks.Go,
         repoName: REPO_NAME,
-        repoTestid: "subPath-test-runner-go",
+        repoTestid: REPO_NAME,
         languageVersion: "1.x",
       })
       .then((comp) => {

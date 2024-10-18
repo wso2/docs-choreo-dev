@@ -175,7 +175,7 @@ describe("Create Web App", () => {
         repoUrl: REPO_URL,
         buildPack: BuildPacks.WEBAPP,
         repoName: REPO_NAME,
-        repoTestid: "subPath-reading-list-app",
+        repoTestid: REPO_NAME,
         ENDPOINT_NAME,
       },
       enterBuildPackInfo

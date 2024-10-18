@@ -42,7 +42,7 @@ describe("Verify MI service component functionality", () => {
         repoUrl: REPO_URL,
         buildPack: BuildPacks.MI,
         repoName: REPO_NAME,
-        repoTestid: "subPath-hello-world-mi",
+        repoTestid: REPO_NAME,
         ENDPOINT_NAME,
       })
       .then((comp) => {

@@ -42,7 +42,7 @@ describe(`Graphql GQL service functionality`, () => {
         repoUrl: REPO_URL,
         buildPack: BuildPacks.Ballerina,
         repoName: REPO_NAME,
-        repoTestid: "subPath-graphql-service",
+        repoTestid: REPO_NAME,
         ENDPOINT_NAME,
       })
       .then((comp) => {

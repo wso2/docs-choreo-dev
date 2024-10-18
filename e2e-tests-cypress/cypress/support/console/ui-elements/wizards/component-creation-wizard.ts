@@ -17,10 +17,7 @@ import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { BuildPacks } from "../../../commons/enums";
 
 export class _ComponentCreationWizard {
-  enterServiceInfo(
-    name: string,
-    serviceInfo: ServiceInfo,
-  ) {
+  enterServiceInfo(name: string, serviceInfo: ServiceInfo) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
@@ -31,17 +28,17 @@ export class _ComponentCreationWizard {
     this.searchRepoName(serviceInfo.repoName);
     this.selectRepo(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
-    cy.get(TestIds.serviceCreateButton, VERY_SHORT_TIME).should("be.enabled").eq(1).click();
+    cy.get(TestIds.serviceCreateButton, VERY_SHORT_TIME)
+      .should("be.enabled")
+      .eq(1)
+      .click();
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
 
     this.verifyComponentCreation(name);
   }
 
-  enterManualTriggerInfo(
-    name: string,
-    manualTriggerInfo: ComponentInfo,
-  ) {
+  enterManualTriggerInfo(name: string, manualTriggerInfo: ComponentInfo) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
@@ -50,7 +47,7 @@ export class _ComponentCreationWizard {
     this.handleBuildPackSelectionFromService(manualTriggerInfo.buildPack);
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
     this.searchRepoName(manualTriggerInfo.repoName);
-    this.selectRepoManual(manualTriggerInfo.repoTestid);
+    this.selectRepo(manualTriggerInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
     cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
     cy.get("li").contains(manualTriggerInfo.languageVersion).click();
@@ -89,10 +86,7 @@ export class _ComponentCreationWizard {
     }
   }
 
-  enterTestRunnerInfo(
-    name: string,
-    TestRunnerInfo: ComponentInfo,
-  ) {
+  enterTestRunnerInfo(name: string, TestRunnerInfo: ComponentInfo) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
@@ -101,7 +95,7 @@ export class _ComponentCreationWizard {
     this.handleBuildPackSelectionFromService(TestRunnerInfo.buildPack);
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
     this.searchRepoName(TestRunnerInfo.repoName);
-    this.selectRepoTestRunner(TestRunnerInfo.repoTestid);
+    this.selectRepo(TestRunnerInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
     cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
     cy.get("li").contains(TestRunnerInfo.languageVersion).click();
@@ -112,10 +106,7 @@ export class _ComponentCreationWizard {
     this.verifyComponentCreation(name);
   }
 
-  enterMIServiceInfo(
-    name: string,
-    serviceInfo: ServiceInfo,
-  ) {
+  enterMIServiceInfo(name: string, serviceInfo: ServiceInfo) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
@@ -124,7 +115,7 @@ export class _ComponentCreationWizard {
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
     this.searchRepoName(serviceInfo.repoName);
-    this.selectRepoMIService(serviceInfo.repoTestid);
+    this.selectRepo(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
     cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
     cy.get(TestIds.backdropLoader).should("not.exist");
@@ -149,7 +140,7 @@ export class _ComponentCreationWizard {
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
     this.searchRepoName(serviceInfo.repoName);
-    this.selectRepoMIService(serviceInfo.repoTestid);
+    this.selectRepo(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
     cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
     cy.get(TestIds.backdropLoader).should("not.exist");
@@ -171,23 +162,17 @@ export class _ComponentCreationWizard {
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
     this.searchRepoName(serviceInfo.repoName);
-
-    this.selectRepoWebAppService(serviceInfo.repoTestid);
+    this.selectRepo(serviceInfo.repoTestid);
     this.selectSubRepoWebAppService(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
     enterBuildPackInfo();
-
     cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-
     this.verifyComponentCreation(name);
   }
 
-  enterGQLServiceInfo(
-    name: string,
-    serviceInfo: ServiceInfo,
-  ) {
+  enterGQLServiceInfo(name: string, serviceInfo: ServiceInfo) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
@@ -196,7 +181,7 @@ export class _ComponentCreationWizard {
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
     this.searchRepoName(serviceInfo.repoName);
-    this.selectRepoGQLService(serviceInfo.repoTestid);
+    this.selectRepo(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
     cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
     cy.get(TestIds.backdropLoader).should("not.exist");
@@ -242,28 +227,8 @@ export class _ComponentCreationWizard {
     cy.get(TestIds.repoSubPath(testid)).should("be.visible").click();
   }
 
-  private selectRepoManual(testid: string) {
-    cy.get(TestIds.HelloWorldGoManualTaskRepo).should("be.visible").click();
-  }
-
-  private selectRepoTestRunner(testid: string) {
-    cy.get(TestIds.testRunnerGoRepo).should("be.visible").click();
-  }
-
-  private selectRepoMIService(testid: string) {
-    cy.get(TestIds.mIServiceRepo).should("be.visible").click();
-  }
-
-  private selectRepoWebAppService(testid: string) {
-    cy.get(TestIds.webAppServiceRepo).should("be.visible").click();
-  }
-
   private selectSubRepoWebAppService(testid: string) {
     cy.get(TestIds.webAppServiceAuthRepo).should("be.visible").click();
-  }
-
-  private selectRepoGQLService(testid: string) {
-    cy.get(TestIds.gqlServiceRepo).should("be.visible").click();
   }
 
   private verifyComponentCreation(name: string) {
