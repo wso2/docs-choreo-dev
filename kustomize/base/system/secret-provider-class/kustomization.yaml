@@ -62,7 +62,6 @@ resources:
   - log-controller.yaml
   - testbase-db.yaml
   - telemetry.yaml
-  - program-db.yaml
   - redis.yaml
   - service-now.yaml
   - subscriptions.yaml
