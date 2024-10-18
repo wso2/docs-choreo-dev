@@ -26,6 +26,8 @@ platformServicesManagerEndpoint = "http://platform-services-manager:80"
 enableEventPublish = {{.ENABLE_EVENT_PUBLISH | default false}}
 websubHubUrl = "{{.WEBSUB_HUB_URL}}"
 websubHubTopic = "{{.WEBSUB_HUB_TOPIC}}"
+enableSTSManagementService = {{.ENABLE_STS_MANAGEMENT_SERVICE | default false}}
+choreoStsMgtServiceUrl = "http://sts-mgt-service:3000/api/v1/sts-proxy"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
