@@ -343,11 +343,8 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
           });
       }
 
-      cy.contains("span", "Endpoint Details")
-        .parent()
-        .siblings()
-        .first()
-        .click();
+      // Close right drawer
+      cy.get(TestIds.rightDrawerButton).eq(1).click();
     }
 
     private waitTillReadyToDeploy() {
