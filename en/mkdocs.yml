@@ -135,14 +135,12 @@ nav:
           - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
           - Choreo-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
-  - Choreo-Managed Message Brokers:
+  - Choreo-Managed Message Brokers: 
       - Overview: manage-message-brokers/choreo-managed-message-brokers.md
-      - Kafka: 
-         - Create Kafka Server: manage-message-brokers/choreo-managed-kafka-servers.md
-         - Kafka Topics: manage-message-brokers/choreo-manage-kafka-topics.md
-         - Service Users and Access Control List: manage-message-brokers/choreo-manage-kafka-acl.md
-         - Monitor the Kafka Service: manage-message-brokers/choreo-manage-kafka-monitor.md
-      - Billing: manage-message-brokers/billing-for-platform-services.md
+      - Kafka:  
+          - Create Choreo-Managed Kafka Services: manage-message-brokers/create-choreo-managed-kafka-services.md
+          - Configure a Kafka Service: manage-message-brokers/configure-a-kafka-service.md
+          - Monitor a Kafka Service: manage-message-brokers/monitor-a-kafka-service.md         
   - Authentication and Authorization:
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
@@ -220,6 +218,8 @@ nav:
       - Troubleshoot Choreo: references/troubleshoot-choreo.md
       - Private Data Plane Security Levels: references/private-data-plane-security-levels.md
       - Private Data Plane Management Models: references/private-data-plane-management-models.md
+      - Choreo Platform Services Billing: references/choreo-platform-services-billing.md
+      
 # Extensions
 # Extensions
 markdown_extensions:
