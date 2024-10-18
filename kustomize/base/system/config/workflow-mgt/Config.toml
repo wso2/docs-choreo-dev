@@ -31,7 +31,7 @@ consoleHostname = "{{.CONSOLE_HOSTNAME}}"
 projectManagerEndpoint = "http://dp-project-manager:80/api/v1"
 
 [workflow_mgt_service.authorization_service]
-authServiceHost = "http://app-dev-authorization-service:9090"
+authServiceHost = "{{.AUTH_SERVICE_HOST | default ""}}"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
