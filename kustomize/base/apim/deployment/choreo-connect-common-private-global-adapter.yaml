@@ -74,6 +74,9 @@ spec:
             - name: secret-apim
               mountPath: /mnt/csi/secret-apim
               readOnly: true
+            - name: secret-mgw-analytics
+              mountPath: /mnt/csi/secret-mgw-analytics
+              readOnly: true
             - name: log-volume
               mountPath: logs
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-common-private-global-adapter:latest
