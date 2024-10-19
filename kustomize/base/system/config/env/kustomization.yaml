@@ -453,6 +453,7 @@ configMapGenerator:
       - PROXY_BUILD_WF_FILE_PATH={{.PROXY_BUILD_WF_FILE_PATH | default ".github/workflows/proxy-build-v1.0.yml"}}
       - ENABLE_DOCKERHUB_USER_ROTATION={{.ENABLE_DOCKERHUB_USER_ROTATION | default "false"}}
       - CP_GW_URL={{.CP_GW_URL | default ""}}
+      - PROXY_DEPLOYER_URL={{.PROXY_DEPLOYER_URL}}
       - TRAFFIC_ROUTING_PROXY_DISABLED={{.TRAFFIC_ROUTING_PROXY_DISABLED | default "false"}}
   - name: env-dp-cloud-manager
     behavior: create
