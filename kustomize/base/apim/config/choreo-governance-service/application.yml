@@ -39,3 +39,8 @@ governance-service:
     superAdminPassword: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_SUPER_ADMIN_PASSWORD)"
   default-rulesets:
     filePath: "/home/wso2/resources/default-rulesets"
+  security:
+    privilegedClients:
+      - clientId: "{{.GITHUB_RUNNER_APP_CLIENT_ID}}"
+        name: GitHub Runner App
+    organizationIdHeader: "x-organization-id"
