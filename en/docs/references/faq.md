@@ -589,6 +589,19 @@ The build configurations required for existing buildpacks are as follows:
             n/a
          </td>
       </tr>
+      <tr>
+        <td>API proxy</td>
+        <td>n/a</td>
+        <td>
+            <ul>
+               <li>version: Api version in the form vX.X</li>
+               <li>context: Context for the API url</li>
+               <li>schemaFilePath: Open API specification file path relative to the component directory</li>
+               <li>endpointUrl: Target Endpoint url for the proxy</li>
+               <li>accessibility: Mode of the access for the API(internal|external)</li>
+            </ul>
+        </td>
+      </tr>
    </tbody>
 </table>
 
