@@ -150,10 +150,10 @@ You can start by using a basic plan or contact us for an Enterprise support plan
 ### Q: I want to upgrade from PAYG to an Enterprise subscription. Will there be an outage during the upgrade?
 No, there are no outages when upgrading a plan.
 
-## Tooling
+## Choreo CLI
 
 ### Q: How do I uninstall the CLI?
-Unless you downloaded the binary directly, you can uninstall the CLI by deleting the `.choreo` directory in your 
+If you didn't download the binary directly, you can uninstall the CLI by deleting the `.choreo` directory in the 
 home directory of your operating system.
 
 ### Q: How do I update the CLI?
@@ -176,8 +176,8 @@ You can get help with a specific command by running the following command:
 choreo <command> --help
 ```
 
-### Q: What are the build configurations required when creation of components using the CLI?
-You can configure the component build configurations based on the component type as follows:
+### Q: What are the build configurations required when creating components using the CLI?
+You can configure the component build configurations depending on the component type as follows:
 
 ```sh
 choreo create component <name> --project <name> --build-configs='key1=value1,key2=value2'
@@ -254,11 +254,19 @@ The build configurations required for existing buildpacks are as follows:
       </tr>
       <tr>
          <td>Ballerina</td>
-         <td>n/a</td>
+         <td>
+            <ul style="list-style-type:none">
+               <li>Not Applicable</li>
+            <ul> 
+         </td>
       </tr>
       <tr>
          <td>WSO2 MI</td>
-         <td>n/a</td>
+                  <td>
+            <ul style="list-style-type:none">
+               <li>Not Applicable</li>
+            <ul> 
+         </td>
       </tr>
       <tr>
          <td>.Net</td>
@@ -334,7 +342,11 @@ The build configurations required for existing buildpacks are as follows:
       </tr>
       <tr>
          <td>Static website</td>
-         <td>n/a</td>
+                  <td>
+            <ul style="list-style-type:none">
+               <li>Not Applicable</li>
+            <ul> 
+         </td>
       </tr>
       <tr>
          <td>React</td>
@@ -426,13 +438,17 @@ The build configurations required for existing buildpacks are as follows:
       <tr>
          <td>Ballerina</td>
          <td>
-            n/a
+            <ul style="list-style-type:none">
+               <li>Not Applicable</li>
+            <ul> 
          </td>
       </tr>
       <tr>
          <td>WSO2 MI</td>
          <td>
-            n/a
+            <ul style="list-style-type:none">
+               <li>Not Applicable</li>
+            <ul> 
          </td>
       </tr>
       <tr>
@@ -503,13 +519,17 @@ The build configurations required for existing buildpacks are as follows:
       <tr>
          <td>Ballerina</td>
          <td>
-            n/a
+            <ul style="list-style-type:none">
+               <li>Not Applicable</li>
+            <ul> 
          </td>
       </tr>
       <tr>
          <td>WSO2 MI</td>
          <td>
-            n/a
+            <ul style="list-style-type:none">
+               <li>Not Applicable</li>
+            <ul> 
          </td>
       </tr>
       <tr>
@@ -580,13 +600,17 @@ The build configurations required for existing buildpacks are as follows:
       <tr>
          <td>Ballerina</td>
          <td>
-            n/a
+            <ul >
+               <li style="list-style-type:none">Not Applicable</li>
+            <ul> 
          </td>
       </tr>
       <tr>
          <td>WSO2 MI</td>
          <td>
-            n/a
+            <ul >
+               <li style="list-style-type:none; padding: 0;">Not Applicable</li>
+            <ul> 
          </td>
       </tr>
       <tr>
@@ -603,5 +627,7 @@ The build configurations required for existing buildpacks are as follows:
         </td>
       </tr>
    </tbody>
+</table>
+
 </table>
 

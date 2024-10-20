@@ -234,7 +234,7 @@ To build the web application, follow the steps given below:
 
 ### Step 6.4: Configure and deploy the web application
 
-In this step, you will configure managed authentication, create a user to access the web application, and then deploy the web application.
+In this step, you will configure managed authentication, create a user to access the web application, and then deploy the web application. For more information on Choreo's managed authentication capability, see the [Managed Authentication](../authentication-and-authorization/secure-web-applications-with-managed-authentication.md) documentation.
 
 To configure managed authentication, follow the steps given below:
 
@@ -274,8 +274,7 @@ To create a user to access the **readingListApp** application, follow the steps 
 2. To proceed with creating a user with the populated username and password, click **Create**. Make sure you copy the populated username and password to use when you test the front-end application.
 
     !!! tip
-         - You can create multiple users to test your front-end application.
-         - You cannot change the username and password of the demo user.
+         - By default, your test user base consists of a demo user. For instructions on how to modify the test user base, see [Configure a User Store with the Built-In Identity Provider](../administer/configure-a-user-store-with-built-in-idp.md).
 
 Now, you can deploy the web application.
 
