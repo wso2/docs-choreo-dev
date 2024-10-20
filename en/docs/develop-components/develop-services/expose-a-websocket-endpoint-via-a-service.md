@@ -78,13 +78,13 @@ To create a NodeJS service component, follow these steps:
 8. Select **Ballerina** as the buildpack.
 9. Enter the following information:
     
-    | **Field**                      | **Value**                 |
-    |--------------------------------|---------------------------|
-    | **Ballerina Project Directory**| `websocket-chat-app/websocket-chat-service-nodejs`  |
+    | **Field**                      | **Value**                                           |
+    |--------------------------------|-----------------------------------------------------|
+    | **NodeJS Project Directory**   | `websocket-chat-app/websocket-chat-service-nodejs`  |
 
 10. Click **Create**. This creates the component and takes you to the **Overview** page of the component.
 
-You have successfully created a service component that exposes a WebSocket API written in the Ballerina language. Next, let's build and deploy the service.
+You have successfully created a service component that provides a WebSocket API built with NodeJS. The next step is to proceed with building and deploying the service.
 
 ## Step 2: Build and deploy
 
