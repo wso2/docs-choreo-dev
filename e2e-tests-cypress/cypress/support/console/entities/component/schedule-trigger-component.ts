@@ -29,8 +29,8 @@ export class ScheduleTrigger extends mixinBuild(
     this._build(this);
   }
 
-  deployToDev() {
-    this._deployTask(this, createDefaultSteps(3));
+  deployToDev(numberOfSteps: number = 3) {
+    this._deployTask(this, createDefaultSteps(numberOfSteps));
   }
 
   promoteProd() {
