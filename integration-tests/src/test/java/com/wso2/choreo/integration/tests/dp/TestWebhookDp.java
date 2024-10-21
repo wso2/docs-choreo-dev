@@ -5,6 +5,7 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentFlavour;
@@ -91,6 +92,10 @@ public class TestWebhookDp extends TestBase {
 
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
+        dto.setComponentId(choreoComponent.getId());
+        dto.setLatestVersionId(choreoComponent.getLatestApiVersion().getId());
+        String runId = GraphQL.getRunId(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
+        Component.waitForComponentBuildDeployComplete(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), choreoComponent.getId(), runId, 50);
         Assert.assertNotNull(choreoComponent.getId());
 
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
