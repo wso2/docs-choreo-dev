@@ -87,13 +87,13 @@ public class TestBallerinaServiceDp extends TestBase {
         dp.setDeploymentStatusDTO(statusDTO);
     }
 
-   @Test(dependsOnMethods = {"deployComponent_TestBallerinaServiceDp"}, dataProvider = "dps")
+    @Test(dependsOnMethods = {"deployComponent_TestBallerinaServiceDp"}, dataProvider = "dps")
     @CitrusTest
     public void invokeAPIDev_TestBallerinaServiceDp(DataProviderWrapper dp) throws Exception {
        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken, dp.getChoreoComponent(),
                dp.getDeploymentStatusDTO(), dp.getEnvironments());
-        ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), API_INVOCATION_REQUEST_URI,
-                REST_API_EXPECTED_RESPONSE);
+        ComponentUtils.invokeApiGETWithBackoffRetries(this, invokeData.getRight().getApikey(), invokeData.getLeft(), API_INVOCATION_REQUEST_URI,
+                REST_API_EXPECTED_RESPONSE, 2, 3);
     }
 
     @Test(dependsOnMethods = {"invokeAPIDev_TestBallerinaServiceDp"}, dataProvider = "dps")
@@ -110,8 +110,8 @@ public class TestBallerinaServiceDp extends TestBase {
         for (ComponentDeploymentStatusDTO statusDTO : dp.getPromoteStatusDTO()) {
             Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken, dp.getChoreoComponent(),
                     statusDTO, dp.getEnvironments());
-            ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), API_INVOCATION_REQUEST_URI,
-                    REST_API_EXPECTED_RESPONSE);
+            ComponentUtils.invokeApiGETWithBackoffRetries(this, invokeData.getRight().getApikey(), invokeData.getLeft(), API_INVOCATION_REQUEST_URI,
+                    REST_API_EXPECTED_RESPONSE, 2, 3);
         }
     }
 

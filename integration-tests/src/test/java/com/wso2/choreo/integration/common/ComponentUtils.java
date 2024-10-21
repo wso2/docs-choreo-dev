@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.common;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.TestCaseFailedException;
 import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
@@ -1042,12 +1043,58 @@ public class ComponentUtils {
                                 .client(invokeUrl)
                                 .receive()
                                 .response(HttpStatus.OK)
-                                .timeout(5000)
                                 .message()
                                 .type(MessageType.JSON)
                                 .body(expectedResponse)));
+    }
 
-        TimeUnit.SECONDS.sleep(2);
+    /**
+     * Invoke API GET with validation with backoff retries when test failed
+     *
+     * @param runner             Test action runner
+     * @param apiKey             API Key
+     * @param invokeUrl          Invoke URL
+     * @param resource           API Resource
+     * @param expectedResponse   Expected response
+     * @param backOffFactor      Liner Backoff Factor
+     * @param maxNumberOfRetries Maximum Number of Retries
+     */
+    public static void invokeApiGETWithBackoffRetries(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
+                                    String expectedResponse, int backOffFactor, int maxNumberOfRetries) throws Exception {
+        int retryNumber = 0;
+        boolean shouldRetry;
+        do {
+            try {
+                runner.$(repeatOnError()
+                        .until("i = 3") //Reduced repeats based on response since manual backoff handles retries
+                        .index("i")
+                        .autoSleep(30000)
+                        .actions((http()
+                                        .client(invokeUrl)
+                                        .send()
+                                        .get(resource)
+                                        .message()
+                                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                                        .header("API-Key", apiKey)),
+                                http()
+                                        .client(invokeUrl)
+                                        .receive()
+                                        .response(HttpStatus.OK)
+                                        .message()
+                                        .type(MessageType.JSON)
+                                        .body(expectedResponse)));
+                shouldRetry = false;
+            } catch (TestCaseFailedException e) {
+                retryNumber++;
+                shouldRetry = retryNumber < maxNumberOfRetries;
+                if (retryNumber == maxNumberOfRetries) {
+                    throw new RuntimeException("Couldn't invoke url : " + invokeUrl + " resource : " + resource, e);
+                } else {
+                    //Using a linear backoff instead of exponential backoff to reduce the impact on test suite runtime
+                    TimeUnit.SECONDS.sleep((long) backOffFactor * retryNumber);
+                }
+            }
+        } while (shouldRetry);
     }
 
     /**
