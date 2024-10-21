@@ -1576,6 +1576,8 @@ public class ComponentUtils {
                 if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
                     isRateLimitExceeded = true;
                     break;
+                } else if (dev.getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
+                    throw new RuntimeException("API token for invokeURL : " + invokeURL + " is unauthorized");
                 }
                 Thread.sleep(500);
             }
