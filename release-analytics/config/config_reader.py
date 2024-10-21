@@ -40,7 +40,11 @@ def get_gcloud_account_info():
 
 def get_azure_devops_pat():
     try:
-        return os.environ['RELEASE_ANALYTICS_AZURE_DEVOPS_PAT']
+        pat: str = os.environ['RELEASE_ANALYTICS_AZURE_DEVOPS_PAT']
+        print("Length of PAT: ", len(pat))
+        pat = pat.strip()
+        print("Length of PAT after strip: ", len(pat))
+        return pat
     except KeyError:
         print("You must first set the RELEASE_ANALYTICS_AZURE_DEVOPS_PAT environment variable")
         sys.exit(1)
