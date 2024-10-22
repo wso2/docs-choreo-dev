@@ -709,6 +709,11 @@ basePath
 networkVisibilities
 component.yaml
 develop-a-ballerina-graphql-api
+choreo-managed-message-brokers
+create-choreo-managed-kafka-services
+configure-a-kafka-service
+monitor-a-kafka-service
+choreo-platform-services-billing
 faq.md
 Moesif.md
 integrate-choreo-with-moesif
