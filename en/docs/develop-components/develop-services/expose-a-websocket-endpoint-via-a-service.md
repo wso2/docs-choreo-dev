@@ -113,3 +113,12 @@ To deploy the service, follow these steps:
         Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
 
 Once you have successfully deployed your service, you can [test](../../testing/test-websocket-endpoints-via-the-websocket-console.md), [manage](../../api-management/lifecycle-management.md), and observe it like any other component type in Choreo.
+
+    !!! note
+        There are clients (especially browsers) that do not allow you to add headers to the WebSocket handshake. In such cases, you can send the access token or API Key required for WebSocket API invocation within the sec-websocket-protocol header, along with any specified subprotocols.
+
+        Example of the sec-websocket-protocol header:
+        `sec-websocket-protocol: choreo-oauth2-key, {access token}, subprotocols`
+
+        When including the API Key in this manner, ensure that you replace `choreo-oauth2-key` with `choreo-internal-API-Key`.
+
