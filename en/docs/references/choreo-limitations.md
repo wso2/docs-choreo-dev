@@ -12,6 +12,8 @@ Below are key limitations when working with APIs in Choreo:
 | URL size                            |  2 KB                                                                                         |
 | Request header                      | <ul><li>Request Headers total: 40 KB</li><li>Max Single Request header: 10 KB</li></ul>       |
 | Total request duration              | <ul><li>Minimum: 10 seconds</li><li>Default: 1 minute</li><li>Maximum: 5 minutes</li></ul>             |
+| Maximum Connection Duration (WebSocket APIs)  |  15  minutes                                                                                        |
+| Connection Idle Timeout (WebSocket APIs)                            |  5 minutes                                                                                         |
 | Size for API Definition (OpenAPI document)| 10 Mb                                                                                  |
 | Number of APIs for PDP                 | 1000 API deployments                                                                     |
 | Number of APIs per organization (free tier)                 | 5 APIs for free users                                                                    |
