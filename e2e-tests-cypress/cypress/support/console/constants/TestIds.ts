@@ -304,7 +304,8 @@ export namespace TestIds {
     '[data-cyid="key-value-card-add-new-secret-check-box"]';
   export const nextButton = '[data-testid="btn-next"]';
   export const fileMount = '[data-cyid="file-mount-upload-button"]';
-  export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
+  export const addNewConfigs = '[data-cyid="promote-selector-default-configs"]';
+  export const copyConfigs = '[data-cyid="promote-selector-copy-configs"]';
   export const componentSearchBox =
     '[data-cyid="component-listing-auto-forcused-search-search-field"]';
   export const searchDomain =
