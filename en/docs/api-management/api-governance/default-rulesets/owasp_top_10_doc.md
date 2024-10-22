@@ -63,12 +63,6 @@ Using short-lived access tokens is a good practice, and when using OAuth 2 this 
 
 ---
 
-### ❌ owasp:api2:2023-write-restricted
-
-All write operations (POST, PUT, PATCH, DELETE) must be secured by at least one security scheme. Security schemes are defined in the `securityScheme` section then referenced in the `security` key at the global or operation levels.
-
----
-
 ### ❌ owasp:api4:2023-rate-limit
 
 Define proper rate limiting to avoid attackers overloading the API. There are many ways to implement rate-limiting, but most of them involve using HTTP headers, and there are two popular ways to do that:
@@ -115,12 +109,6 @@ Integers should be limited to mitigate resource exhaustion attacks. Specifying w
 
 ---
 
-### ❌ owasp:api5:2023-admin-security-unique
-
-
-
----
-
 ### ❌ owasp:api8:2023-define-cors-origin
 
 Setting up CORS headers will control which websites can make browser-based HTTP requests to your API, using either the wildcard "*" to allow any origin, or "null" to disable any origin. Alternatively you can use "Access-Control-Allow-Origin: https://example.com" to indicate that only requests originating from the specified domain (https://example.com) are allowed to access its resources.
@@ -154,12 +142,6 @@ Servers are required to use vendor extension x-internal set to true or false to 
 ### ❌ owasp:api9:2023-inventory-environment
 
 Make it clear which servers are expected to run as which environment to avoid unexpected problems, exposing test data to the public, or letting bad actors bypass security measures to get to production-like environments.
-
----
-
-### ⚠️ owasp:api2:2023-read-restricted
-
-Read operations (GET, HEAD) should be secured by at least one security scheme. Security schemes are defined in the `securityScheme` section then referenced in the `security` key at the global or operation levels.
 
 ---
 
