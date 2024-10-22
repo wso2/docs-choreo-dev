@@ -41,7 +41,6 @@ def get_gcloud_account_info():
 def get_azure_devops_pat():
     try:
         pat: str = os.environ['RELEASE_ANALYTICS_AZURE_DEVOPS_PAT']
-        print("PAT: ", pat)
         print("Length of PAT: ", len(pat))
         pat = pat.strip()
         print("Length of PAT after strip: ", len(pat))
