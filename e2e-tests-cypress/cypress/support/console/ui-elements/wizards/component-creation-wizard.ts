@@ -28,14 +28,7 @@ export class _ComponentCreationWizard {
     this.searchRepoName(serviceInfo.repoName);
     this.selectRepo(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
-    cy.get(TestIds.serviceCreateButton, VERY_SHORT_TIME)
-      .should("be.enabled")
-      .eq(1)
-      .click();
-    cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-
-    this.verifyComponentCreation(name);
+    this.createComponent(name);
   }
 
   enterManualTriggerInfo(name: string, manualTriggerInfo: ComponentInfo) {
@@ -51,11 +44,7 @@ export class _ComponentCreationWizard {
     cy.get(TestIds.continueButton).should("be.enabled").click();
     cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
     cy.get("li").contains(manualTriggerInfo.languageVersion).click();
-    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
-    cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-
-    this.verifyComponentCreation(name);
+    this.createComponent(name);
   }
 
   private createFromGHUrl(url: string) {
@@ -99,11 +88,7 @@ export class _ComponentCreationWizard {
     cy.get(TestIds.continueButton).should("be.enabled").click();
     cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
     cy.get("li").contains(TestRunnerInfo.languageVersion).click();
-    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
-    cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-
-    this.verifyComponentCreation(name);
+    this.createComponent(name);
   }
 
   enterMIServiceInfo(name: string, serviceInfo: ServiceInfo) {
@@ -117,11 +102,7 @@ export class _ComponentCreationWizard {
     this.searchRepoName(serviceInfo.repoName);
     this.selectRepo(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
-    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
-    cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-
-    this.verifyComponentCreation(name);
+    this.createComponent(name);
   }
 
   enterMIEndpointServiceInfo(name: string, serviceInfo: ServiceInfo) {
@@ -142,11 +123,7 @@ export class _ComponentCreationWizard {
     this.searchRepoName(serviceInfo.repoName);
     this.selectRepo(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
-    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
-    cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-
-    this.verifyComponentCreation(name);
+    this.createComponent(name);
   }
 
   enterWebAppServiceInfo(
@@ -166,10 +143,7 @@ export class _ComponentCreationWizard {
     this.selectSubRepoWebAppService(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
     enterBuildPackInfo();
-    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
-    cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-    this.verifyComponentCreation(name);
+    this.createComponent(name);
   }
 
   enterGQLServiceInfo(name: string, serviceInfo: ServiceInfo) {
@@ -183,11 +157,7 @@ export class _ComponentCreationWizard {
     this.searchRepoName(serviceInfo.repoName);
     this.selectRepo(serviceInfo.repoTestid);
     cy.get(TestIds.continueButton).should("be.enabled").click();
-    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
-    cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-
-    this.verifyComponentCreation(name);
+    this.createComponent(name);
   }
 
   enterContainerizedServiceInfo(name: string, serviceInfo: ServiceInfo) {
@@ -204,11 +174,7 @@ export class _ComponentCreationWizard {
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(1).click();
     this.searchDockerFile("Dockerfile");
     cy.get(TestIds.continueButton).should("be.enabled").click();
-    cy.get(TestIds.serviceCreateButton).should("be.enabled").eq(1).click();
-    cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
-
-    this.verifyComponentCreation(name);
+    this.createComponent(name);
   }
 
   private searchRepoName(repoSearchBox: string) {
@@ -229,6 +195,17 @@ export class _ComponentCreationWizard {
 
   private selectSubRepoWebAppService(testid: string) {
     cy.get(TestIds.webAppServiceAuthRepo).should("be.visible").click();
+  }
+
+  private createComponent(name: string) {
+    cy.get(TestIds.serviceCreateButton, VERY_SHORT_TIME)
+      .eq(1)
+      .should("be.enabled")
+      .click();
+    cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
+
+    this.verifyComponentCreation(name);
   }
 
   private verifyComponentCreation(name: string) {
