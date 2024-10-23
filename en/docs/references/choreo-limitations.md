@@ -8,19 +8,19 @@ Below are key limitations when working with APIs in Choreo:
 
 |Resource                             |  Limit                                                                                      |
 |-------------------------------------|---------------------------------------------------------------------------------------------|
-| Maximum request payload             |  10 MB                                                                                       |
-| URL size                            |  2 KB                                                                                         |
-| Request header                      | <ul><li>Request Headers total: 40 KB</li><li>Max Single Request header: 10 KB</li></ul>       |
-| Total request duration              | <ul><li>Minimum: 10 seconds</li><li>Default: 1 minute</li><li>Maximum: 5 minutes</li></ul>             |
-| Maximum Connection Duration (WebSocket APIs)  |  15  minutes                                                                                        |
-| Connection Idle Timeout (WebSocket APIs)                            |  5 minutes                                                                                         |
-| Size for API Definition (OpenAPI document)| 10 Mb                                                                                  |
+| Maximum request payload             |  10 MB                                                                                      |
+| URL size                            |  2 KB                                                                                       |
+| Request header                      | <ul><li>Request Headers total: 40 KB</li><li>Max Single Request header: 10 KB</li></ul>     |
+| Total request duration              | <ul><li>Minimum: 10 seconds</li><li>Default: 1 minute</li><li>Maximum: 5 minutes</li></ul>  |
+| Maximum connection duration (WebSocket APIs)  |  15  minutes                                                                      |
+| Connection idle timeout (WebSocket APIs)                            |  5 minutes                                                  |
+| Size for API definition (OpenAPI document)| 10 Mb                                                                                 |
 | Number of APIs for PDP                 | 1000 API deployments                                                                     |
-| Number of APIs per organization (free tier)                 | 5 APIs for free users                                                                    |
-| Number of Developer Portal applications per organization (free tier)  | 10 applications for free users                                                          |
+| Number of APIs per organization (free tier)                 | 5 APIs for free users                                               |
+| Number of Developer Portal applications per organization (free tier)  | 10 applications for free users                            |
 
 
-## Choreo Cloud Data Plane limits
+## Choreo cloud data plane limits
 
 Below are key limitations when working with web applications in the Choreo cloud data plane:
 
