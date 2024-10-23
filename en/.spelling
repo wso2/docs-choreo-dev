@@ -701,7 +701,7 @@ authzHeaderValue
 myResourcePath
 WebSocket
 WebSockets
-expose-a-websocket-endpoint-via-a-service
+expose-a-nodejs-websocket-endpoint-via-a-service
 test-websocket-endpoints-via-the-websocket-console
 schemaVersion
 displayName
