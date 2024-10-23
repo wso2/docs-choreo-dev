@@ -20,7 +20,7 @@ In this guide, you will:
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample WebSocket service](https://github.com/wso2/choreo-samples/tree/main/chat-service-websocket) implementation for this guide.
+- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample WebSocket service](https://github.com/wso2/choreo-samples/tree/main/websocket-chat-app) implementation for this guide.
 
 Let's get started!
 
@@ -44,16 +44,16 @@ To create a NodeJS service component, follow these steps:
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
 4. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
-    
+
     !!! info
          In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
     | **Field**                 | **Value**               |
     |---------------------------|-------------------------|
-    | **Component Display Name**| `NodeJS Chat Service`.  |
-    | **Component Name**        | `nodejs-chat-service`.  |
-    | **Description**           | Manage a Chat service   |
-    
+    | **Component Display Name**| `NodeJS Chat Service`   |
+    | **Component Name**        | `nodejs-chat-service`   |
+    | **Description**           | Manage a chat service   |
+
 5. Click the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
@@ -75,16 +75,16 @@ To create a NodeJS service component, follow these steps:
     | **GitHub Repository**   | **`choreo-samples`**    |
     | **Branch**              | **`main`**              |
 
-8. Select **Ballerina** as the buildpack.
+8. Select **NodeJS** as the buildpack.
 9. Enter the following information:
-    
-    | **Field**                      | **Value**                 |
-    |--------------------------------|---------------------------|
-    | **Ballerina Project Directory**| `websocket-chat-app/websocket-chat-service-nodejs`  |
+
+    | **Field**                      | **Value**                                           |
+    |--------------------------------|-----------------------------------------------------|
+    | **NodeJS Project Directory**   | `websocket-chat-app/websocket-chat-service-nodejs`  |
 
 10. Click **Create**. This creates the component and takes you to the **Overview** page of the component.
 
-You have successfully created a service component that exposes a WebSocket API written in the Ballerina language. Next, let's build and deploy the service.
+You have successfully created a service component that provides a WebSocket API built with NodeJS. The next step is to proceed with building and deploying the service.
 
 ## Step 2: Build and deploy
 
@@ -105,7 +105,7 @@ To build the service, follow these steps:
 To deploy the service, follow these steps: 
 
 1. In the left navigation menu, click **Deploy**.
-2. On the **Set Up** card, click **Configure &  Deploy**.
+2. On the **Set Up** card, click **Configure & Deploy**.
 3. In the **Configurations** pane that opens, click **Next** to skip the configuration.
 4. Review the **Endpoint Details** and click **Deploy**.
 
@@ -113,3 +113,10 @@ To deploy the service, follow these steps:
         Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
 
 Once you have successfully deployed your service, you can [test](../../testing/test-websocket-endpoints-via-the-websocket-console.md), [manage](../../api-management/lifecycle-management.md), and observe it like any other component type in Choreo.
+
+!!! note
+     Some clients, such as certain browsers, may not support adding headers to the WebSocket handshake. In these cases, you can include the access token or API key required for WebSocket API invocation within the `sec-websocket-protocolheader`, along with any specified subprotocols.
+
+     For example: `sec-websocket-protocol: choreo-oauth2-key, {access token}, subprotocols`
+
+     If you are using an API key, replace `choreo-oauth2-key` with `choreo-internal-API-key`.
