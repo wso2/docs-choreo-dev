@@ -50,9 +50,9 @@ To create a NodeJS service component, follow these steps:
 
     | **Field**                 | **Value**               |
     |---------------------------|-------------------------|
-    | **Component Display Name**| `NodeJS Chat Service`.  |
-    | **Component Name**        | `nodejs-chat-service`.  |
-    | **Description**           | Manage a Chat service   |
+    | **Component Display Name**| `NodeJS Chat Service`   |
+    | **Component Name**        | `nodejs-chat-service`   |
+    | **Description**           | Manage a chat service   |
     
 5. Click the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -75,7 +75,7 @@ To create a NodeJS service component, follow these steps:
     | **GitHub Repository**   | **`choreo-samples`**    |
     | **Branch**              | **`main`**              |
 
-8. Select **Ballerina** as the buildpack.
+8. Select **NodeJS** as the buildpack.
 9. Enter the following information:
     
     | **Field**                      | **Value**                                           |
@@ -105,7 +105,7 @@ To build the service, follow these steps:
 To deploy the service, follow these steps: 
 
 1. In the left navigation menu, click **Deploy**.
-2. On the **Set Up** card, click **Configure &  Deploy**.
+2. On the **Set Up** card, click **Configure & Deploy**.
 3. In the **Configurations** pane that opens, click **Next** to skip the configuration.
 4. Review the **Endpoint Details** and click **Deploy**.
 
@@ -114,11 +114,9 @@ To deploy the service, follow these steps:
 
 Once you have successfully deployed your service, you can [test](../../testing/test-websocket-endpoints-via-the-websocket-console.md), [manage](../../api-management/lifecycle-management.md), and observe it like any other component type in Choreo.
 
-    !!! note
-        There are clients (especially browsers) that do not allow you to add headers to the WebSocket handshake. In such cases, you can send the access token or API Key required for WebSocket API invocation within the sec-websocket-protocol header, along with any specified subprotocols.
+!!! note
+     Some clients, such as certain browsers, may not support adding headers to the WebSocket handshake. In these cases, you can include the access token or API key required for WebSocket API invocation within the `sec-websocket-protocolheader`, along with any specified subprotocols.
 
-        Example of the sec-websocket-protocol header:
-        `sec-websocket-protocol: choreo-oauth2-key, {access token}, subprotocols`
+     For example: `sec-websocket-protocol: choreo-oauth2-key, {access token}, subprotocols`
 
-        When including the API Key in this manner, ensure that you replace `choreo-oauth2-key` with `choreo-internal-API-Key`.
-
+     If you are using an API key, replace `choreo-oauth2-key` with `choreo-internal-API-key`.
