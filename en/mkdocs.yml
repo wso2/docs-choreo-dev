@@ -104,6 +104,7 @@ nav:
           - Expose a UDP Server via a Service: develop-components/develop-services/expose-a-udp-server-via-a-service.md
           - Expose a Ballerina GraphQL Endpoint via a Service: develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service.md
           - Expose a Prism-Based Mock Server Using an OpenAPI Specification: develop-components/develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification.md
+          - Expose a WebSocket Endpoint via a NodeJS Service: develop-components/develop-services/expose-a-nodejs-websocket-endpoint-via-a-service.md
       - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop Web Applications: 
           - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
@@ -168,6 +169,7 @@ nav:
   - Testing: 
       - Test REST Endpoints via the OpenAPI Console: testing/test-rest-endpoints-via-the-openapi-console.md
       - Test GraphQL Endpoints via the GraphQL Console: testing/test-graphql-endpoints-via-the-graphql-console.md
+      - Test WebSocket Endpoints via the WebSocket Console: testing/test-websocket-endpoints-via-the-websocket-console.md
       - Test APIs with cURL: testing/test-apis-with-curl.md
       - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
       - Test Components with Test Runner: testing/test-components-with-test-runner.md
