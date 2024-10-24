@@ -76,9 +76,7 @@ To deploy the service, follow these steps:
 
 1. In the left navigation menu, click **Deploy**.
 2. On the **Set Up** card, click **Configure &  Deploy**.
-3. In the **Environment Configurations** pane that opens, click **Next** to skip the configuration.
-4. In the **File Mount** pane, click **Next** to skip the configuration.
-5. Review the **Endpoint Details** and click **Deploy**.
+3. Review the **Endpoint Details** and click **Deploy**.
 
     !!! note
         Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
