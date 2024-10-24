@@ -1,0 +1,3740 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Choreo Learning Portal">
+      
+      
+        <meta name="author" content="WSO2">
+      
+      
+        <link rel="canonical" href="https://wso2.com/choreo/docs/develop-components/develop-an-api-proxy/">
+      
+      
+        <link rel="prev" href="../develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification/">
+      
+      
+        <link rel="next" href="../develop-web-applications/build-and-deploy-a-single-page-web-application/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>Develop an API Proxy - </title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Added the font from google fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
+        <style>:root{--md-text-font:"Montserrat";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/lib/highlightjs/styles/vs.min.css">
+    
+      <link rel="stylesheet" href="../../assets/css/blue-palette-alt2.css">
+    
+      <link rel="stylesheet" href="../../assets/css/choreotheme.css">
+    
+      <link rel="stylesheet" href="../../assets/lib/json-formatter/json-formatter.css">
+    
+      <link rel="stylesheet" href="../../assets/css/config-catalog.css">
+    
+      <link rel="stylesheet" href="../../assets/lib/fontawesome-free-6.3.0-web/css/all.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+    <link rel="stylesheet" href="https://unpkg.com/highlightjs/styles/vs.css" />
+<!-- scripts -->
+<script type="text/javascript" src="../../assets/lib/highlightjs/highlight.min.js"></script>
+<script type="text/javascript" src="../../assets/lib/highlightjs/ballerina.min.js"></script>
+<script type="text/javascript">
+	hljs.highlightAll();
+</script>
+   <!-- Google Tag Manager -->
+   <script>
+    (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+       'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.setAttributeNode(d.createAttribute('data-ot-ignore'));
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-PSTXMT');
+   </script>
+   <!-- End Google Tag Manager -->
+
+   <!-- CookiePro cookie consent notice start -->
+   <script src="https://cookie-cdn.cookiepro.com/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="486163bc-a8c5-40d8-b185-c707cc718a23" ></script>
+   <script src="https://wso2.com//sites/all/themes/wso2_d7/js/cookie-revoke.js"></script>
+
+   <!-- CookiePro cookies consent notice end -->
+   
+  </script>
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#develop-an-api-proxy" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+
+<!-- Add announcement here, including arbitrary HTML -->
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="" class="md-header__button md-logo" aria-label="" data-md-component="logo">
+      
+  <img src="../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Develop an API Proxy
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_3" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_3">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+    <label class="md-search__overlay" for="__search"></label>
+    <div class="md-search__inner" role="search">
+      <form class="md-search__form" name="search" id="search">
+        <input type="text" class="md-search__input" name="query" id="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+        <label class="md-search__icon md-icon" for="__search">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        </label>
+        <nav class="md-search__options" aria-label="Search">
+          
+          <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          </button>
+        </nav>
+        
+      </form>
+      <div class="md-search__output" id="dropDownSearchResults">
+        <div class="md-search__scrollwrap" data-md-scrollfix>
+          <div class="md-search-result" data-md-component="search-result">
+            <div class="md-search-result__meta">
+              Initializing search
+            </div>
+           
+            <ol class="md-search-result__list" role="presentation"></ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    
+      <div class="md-header__source">
+        <div class="row" style="width: 10rem;">
+  <div style="display: block; float: left; width: 49%;">
+     <a class="md-source" data-md-component="source" href="https://discord.com/invite/wso2">
+    <div class="md-source__icon md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541ZM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241Zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241Z"/></svg>  
+    </div>
+    <label>Get Help</label>
+  </a>
+</div> 
+<div style="width:49%; float: right; display: block;;">
+  <a class="md-source" data-md-component="source" href="https://console.choreo.dev/login/">
+    <div class="md-source__icon md-icon">
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 224 165" style="enable-background:new 0 0 224 165;" xml:space="preserve">
+   <style type="text/css">
+     .st0{fill:#545CEC;}
+   </style>
+   <g>
+     <path class="st0" d="M223.42,34.79c-0.78-18.82-16.29-33.84-35.31-33.84H95.69L94.2,0.98C75.37,1.76,60.35,17.27,60.35,36.29
+       l0,40.77l-22.44,0l-0.84-0.03c-5.28-0.4-9.33-4.55-9.33-9.48l0.01-30.38c6.43-3.05,10.87-9.61,10.87-17.19
+       c0-10.51-8.52-19.03-19.03-19.03S0.55,9.47,0.55,19.98c0,7.59,4.44,14.14,10.87,17.19l0.01,30.53l0.03,1.16
+       c0.62,13.79,12.29,24.67,26.46,24.67l22.44,0l0,35.19l0.03,1.49c0.78,18.82,16.29,33.84,35.31,33.84h92.42l1.49-0.03
+       c18.82-0.78,33.84-16.29,33.84-35.31V36.29L223.42,34.79z M207.14,128.71l-0.03,1.16c-0.6,9.97-8.87,17.87-18.99,17.87H95.69
+       l-1.16-0.03c-9.97-0.6-17.87-8.87-17.87-18.99V36.29l0.03-1.16c0.6-9.97,8.87-17.87,18.99-17.87h92.42
+       c10.51,0,19.03,8.52,19.03,19.03V128.71z"/>
+     <path class="st0" d="M143.71,44.44c9.54,0,17.53,2.32,24.04,6.95c6.51,4.63,10.58,9.9,12.2,15.87c-2.36,3.34-4.31,5.22-5.86,5.64
+       c-1.72,0.47-4.68-0.08-8.86-1.64c-1.11-3.58-3.62-6.67-7.54-9.34c-3.92-2.67-8.51-4-13.76-4c-7.25,0-13.17,2.39-17.75,7.09
+       c-4.59,4.7-6.88,10.46-6.88,17.27c0,6.67,2.29,12.43,6.88,17.27c4.59,4.84,10.5,7.23,17.68,7.23c5.25,0,9.84-1.26,13.76-3.79
+       c3.92-2.53,6.44-5.55,7.54-9.13c3.74-1.15,6.44-1.5,8.09-1.07c1.62,0.43,3.83,2.07,6.63,4.93c-1.63,5.83-5.62,11.02-12.06,15.66
+       c-5.94,4.28-13.2,6.58-21.79,6.91l-2.17,0.04v0.21c-11.47,0-21.01-3.65-28.63-10.95c-7.62-7.3-11.39-16.36-11.39-27.17
+       s3.77-19.87,11.32-27.1C122.71,48.09,132.25,44.44,143.71,44.44z"/>
+   </g>
+   </svg>       
+      </div>
+      <label>Try Choreo</label>
+    </a>
+  </div>  
+</div>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="" class="md-nav__button md-logo" aria-label="" data-md-component="logo">
+      
+  <img src="../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
+
+    </a>
+    
+  </label>
+  
+    <div class="md-nav__source">
+      <div class="row" style="width: 10rem;">
+  <div style="display: block; float: left; width: 49%;">
+     <a class="md-source" data-md-component="source" href="https://discord.com/invite/wso2">
+    <div class="md-source__icon md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541ZM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241Zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241Z"/></svg>  
+    </div>
+    <label>Get Help</label>
+  </a>
+</div> 
+<div style="width:49%; float: right; display: block;;">
+  <a class="md-source" data-md-component="source" href="https://console.choreo.dev/login/">
+    <div class="md-source__icon md-icon">
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 224 165" style="enable-background:new 0 0 224 165;" xml:space="preserve">
+   <style type="text/css">
+     .st0{fill:#545CEC;}
+   </style>
+   <g>
+     <path class="st0" d="M223.42,34.79c-0.78-18.82-16.29-33.84-35.31-33.84H95.69L94.2,0.98C75.37,1.76,60.35,17.27,60.35,36.29
+       l0,40.77l-22.44,0l-0.84-0.03c-5.28-0.4-9.33-4.55-9.33-9.48l0.01-30.38c6.43-3.05,10.87-9.61,10.87-17.19
+       c0-10.51-8.52-19.03-19.03-19.03S0.55,9.47,0.55,19.98c0,7.59,4.44,14.14,10.87,17.19l0.01,30.53l0.03,1.16
+       c0.62,13.79,12.29,24.67,26.46,24.67l22.44,0l0,35.19l0.03,1.49c0.78,18.82,16.29,33.84,35.31,33.84h92.42l1.49-0.03
+       c18.82-0.78,33.84-16.29,33.84-35.31V36.29L223.42,34.79z M207.14,128.71l-0.03,1.16c-0.6,9.97-8.87,17.87-18.99,17.87H95.69
+       l-1.16-0.03c-9.97-0.6-17.87-8.87-17.87-18.99V36.29l0.03-1.16c0.6-9.97,8.87-17.87,18.99-17.87h92.42
+       c10.51,0,19.03,8.52,19.03,19.03V128.71z"/>
+     <path class="st0" d="M143.71,44.44c9.54,0,17.53,2.32,24.04,6.95c6.51,4.63,10.58,9.9,12.2,15.87c-2.36,3.34-4.31,5.22-5.86,5.64
+       c-1.72,0.47-4.68-0.08-8.86-1.64c-1.11-3.58-3.62-6.67-7.54-9.34c-3.92-2.67-8.51-4-13.76-4c-7.25,0-13.17,2.39-17.75,7.09
+       c-4.59,4.7-6.88,10.46-6.88,17.27c0,6.67,2.29,12.43,6.88,17.27c4.59,4.84,10.5,7.23,17.68,7.23c5.25,0,9.84-1.26,13.76-3.79
+       c3.92-2.53,6.44-5.55,7.54-9.13c3.74-1.15,6.44-1.5,8.09-1.07c1.62,0.43,3.83,2.07,6.63,4.93c-1.63,5.83-5.62,11.02-12.06,15.66
+       c-5.94,4.28-13.2,6.58-21.79,6.91l-2.17,0.04v0.21c-11.47,0-21.01-3.65-28.63-10.95c-7.62-7.3-11.39-16.36-11.39-27.17
+       s3.77-19.87,11.32-27.1C122.71,48.09,132.25,44.44,143.71,44.44z"/>
+   </g>
+   </svg>       
+      </div>
+      <label>Try Choreo</label>
+    </a>
+  </div>  
+</div>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../what-is-choreo/" class="md-nav__link">
+        What is Choreo?
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Quick Start Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Quick Start Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start-guides/deploy-your-first-service/" class="md-nav__link">
+        Deploy Your First Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start-guides/deploy-your-first-static-web-application/" class="md-nav__link">
+        Deploy Your First Static Web Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/" class="md-nav__link">
+        Deploy a Web Application that Consumes a Backend Service
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/expose-a-service-as-a-managed-api/" class="md-nav__link">
+        Expose a Service as a Managed API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/secure-an-api-with-role-based-access-control/" class="md-nav__link">
+        Secure an API with Role-Based Access Control
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Choreo Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Choreo Concepts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
+        Resource Hierarchy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/organization/" class="md-nav__link">
+        Organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/project/" class="md-nav__link">
+        Project
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/component/" class="md-nav__link">
+        Component
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/endpoint/" class="md-nav__link">
+        Endpoint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/ci-cd/" class="md-nav__link">
+        CI/CD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/deployment-tracks/" class="md-nav__link">
+        Deployment Tracks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/connections/" class="md-nav__link">
+        Connections
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/data-planes/" class="md-nav__link">
+        Data Planes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/environments/" class="md-nav__link">
+        Environments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
+        Choreo Marketplace
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Develop Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Develop Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+          Develop Services
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          Develop Services
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-services/service-component-overview/" class="md-nav__link">
+        Service Component Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-services/develop-a-service/" class="md-nav__link">
+        Develop a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-services/develop-a-service-with-docker/" class="md-nav__link">
+        Develop a service with Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-services/develop-a-ballerina-service/" class="md-nav__link">
+        Develop a Ballerina Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-services/expose-a-grpc-endpoint-via-a-service/" class="md-nav__link">
+        Expose a gRPC Endpoint via a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-services/expose-a-tcp-server-via-a-service/" class="md-nav__link">
+        Expose a TCP Server via a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-services/expose-a-udp-server-via-a-service/" class="md-nav__link">
+        Expose a UDP Server via a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-services/expose-a-ballerina-graphql-endpoint-via-a-service/" class="md-nav__link">
+        Expose a Ballerina GraphQL Endpoint via a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification/" class="md-nav__link">
+        Expose a Prism-Based Mock Server Using an OpenAPI Specification
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Develop an API Proxy
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Develop an API Proxy
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-create-an-api-proxy" class="md-nav__link">
+    Step 1: Create an API proxy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-define-resources-for-the-api-proxy" class="md-nav__link">
+    Step 2: Define resources for the API proxy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-deploy-the-api-proxy" class="md-nav__link">
+    Step 3: Deploy the API proxy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-test-the-api-proxy" class="md-nav__link">
+    Step 3: Test the API proxy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-manage-the-api-proxy" class="md-nav__link">
+    Step 4: Manage the API proxy
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Manage the API proxy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-41-apply-a-rate-limiting-level-to-the-api-proxy" class="md-nav__link">
+    Step 4.1: Apply a rate limiting level to the API proxy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-42-publish-the-api-proxy" class="md-nav__link">
+    Step 4.2: Publish the API proxy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-invoke-the-api" class="md-nav__link">
+    Step 5: Invoke the API
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+          Develop Web Applications
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Develop Web Applications
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-web-applications/build-and-deploy-a-single-page-web-application/" class="md-nav__link">
+        Build and Deploy a Single-Page Web Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-web-applications/develop-web-applications-locally-with-managed-authentication/" class="md-nav__link">
+        Develop Web Applications Locally with Choreo’s Managed Authentication
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-a-webhook/" class="md-nav__link">
+        Develop a Webhook
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+          Develop Integrations
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Develop Integrations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-integrations/develop-an-integration-with-integration-studio/" class="md-nav__link">
+        Develop an Integration with Integration Studio
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-integrations/develop-an-event-handler/" class="md-nav__link">
+        Develop an Event Handler
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-integrations/develop-a-scheduled-task/" class="md-nav__link">
+        Develop a Scheduled Task
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-integrations/develop-a-manual-task/" class="md-nav__link">
+        Develop a Manual Task
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+          Work with the Micro Integrator Runtime
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_6">
+          <span class="md-nav__icon md-icon"></span>
+          Work with the Micro Integrator Runtime
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../work-with-the-micro-integrator-runtime-in-choreo/" class="md-nav__link">
+        Get Started with the Micro Integrator Runtime
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manage-the-micro-integrator-runtime-version-in-your-integration-project/" class="md-nav__link">
+        Manage the Micro Integrator Runtime Version in Your Integration Project
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-components-with-git/" class="md-nav__link">
+        Develop Components With Git
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bring-your-own-image/" class="md-nav__link">
+        Bring Your Own Image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploy-an-application-with-buildpacks/" class="md-nav__link">
+        Deploy an Application with Buildpacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploy-a-containerized-application/" class="md-nav__link">
+        Deploy a Containerized Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_11" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+          Share and Reuse Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_11">
+          <span class="md-nav__icon md-icon"></span>
+          Share and Reuse Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sharing-and-reusing/create-a-connection/" class="md-nav__link">
+        Create a Connection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sharing-and-reusing/use-a-connection-in-your-service/" class="md-nav__link">
+        Use a Connection in Your Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sharing-and-reusing/use-a-connection-in-your-web-application/" class="md-nav__link">
+        Use a Connection in Your Web Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sharing-and-reusing/use-a-database-connection-in-your-component/" class="md-nav__link">
+        Use a Database Connection in Your Component
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manage-deployment-tracks-for-choreo-components/" class="md-nav__link">
+        Manage Deployment Tracks for Choreo Components
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configure-endpoints/" class="md-nav__link">
+        Configure Endpoints
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manage-component-source-configurations/" class="md-nav__link">
+        Manage Component Source Configurations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../develop-components-using-vs-code/" class="md-nav__link">
+        Develop Components Using VS Code
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Integrate and Manage External Services
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Integrate and Manage External Services
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../integrate-and-manage-external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
+        Integrate and Manage Third-Party Services
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../integrate-and-manage-external-services/integrate-and-manage-gen-ai-services/" class="md-nav__link">
+        Integrate and Manage Generative AI Services
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          Choreo-Managed Databases and Caches
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Choreo-Managed Databases and Caches
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/choreo-managed-databases-and-caches/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/choreo-managed-postgresql-databases/" class="md-nav__link">
+        PostgreSQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/choreo-managed-mysql-databases/" class="md-nav__link">
+        MySQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/choreo-managed-caches/" class="md-nav__link">
+        Choreo-Managed Cache
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
+        Add Choreo-Managed Databases and Caches to the Marketplace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/billing-for-platform-services/" class="md-nav__link">
+        Billing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+          Choreo-Managed Message Brokers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Choreo-Managed Message Brokers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9_2" id="__nav_9_2_label" tabindex="0">
+          Kafka
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_9_2">
+          <span class="md-nav__icon md-icon"></span>
+          Kafka
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
+        Create Choreo-Managed Kafka Services
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-message-brokers/configure-a-kafka-service/" class="md-nav__link">
+        Configure a Kafka Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-message-brokers/monitor-a-kafka-service/" class="md-nav__link">
+        Monitor a Kafka Service
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+          Authentication and Authorization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          Authentication and Authorization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/secure-api-access-with-asgardeo/" class="md-nav__link">
+        Secure API Access with Asgardeo
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/secure-api-access-with-azure-ad/" class="md-nav__link">
+        Secure API Access with Azure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/secure-web-applications-with-managed-authentication/" class="md-nav__link">
+        Secure Web Applications with Managed Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service/" class="md-nav__link">
+        Test Secure API Access with Choreo Built-In Security Token Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/pass-end-user-attributes-to-upstream-services/" class="md-nav__link">
+        Pass End-User Attributes to Upstream Services
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/configure-mutual-tls-between-components/" class="md-nav__link">
+        Configure Mutual TLS Between Components
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls/" class="md-nav__link">
+        Secure Communication Between the Choreo Gateway and Your Backend with Mutual TLS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+          DevOps and CI/CD
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          DevOps and CI/CD
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/manage-configurations-and-secrets/" class="md-nav__link">
+        Manage Configurations and Secrets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/view-runtime-details/" class="md-nav__link">
+        View Runtime Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/configure-container-resources-commands-and-arguments/" class="md-nav__link">
+        Configure Container Resources, Commands, and Arguments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/set-up-health-checks/" class="md-nav__link">
+        Set Up Health Checks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11_5" id="__nav_11_5_label" tabindex="0">
+          Autoscale
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_11_5">
+          <span class="md-nav__icon md-icon"></span>
+          Autoscale
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/autoscale/autoscale-component-replicas/" class="md-nav__link">
+        Autoscale Component Replicas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero/" class="md-nav__link">
+        Autoscale Components with Scale-to-Zero
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/configure-storage/" class="md-nav__link">
+        Configure Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/manage-environments/" class="md-nav__link">
+        Manage Environments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane/" class="md-nav__link">
+        Configure VPNs on the Choreo Cloud Data Plane
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_12" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+          Testing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Testing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/test-rest-endpoints-via-the-openapi-console/" class="md-nav__link">
+        Test REST Endpoints via the OpenAPI Console
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/test-graphql-endpoints-via-the-graphql-console/" class="md-nav__link">
+        Test GraphQL Endpoints via the GraphQL Console
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/test-apis-with-curl/" class="md-nav__link">
+        Test APIs with cURL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/test-apis-with-choreo-apichat/" class="md-nav__link">
+        Test APIs with Choreo API Chat
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/test-components-with-test-runner/" class="md-nav__link">
+        Test Components with Test Runner
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_13" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+          Consuming Services
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_13">
+          <span class="md-nav__icon md-icon"></span>
+          Consuming Services
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consuming-services/consuming-a-sevice/" class="md-nav__link">
+        Consume a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consuming-services/manage-application/" class="md-nav__link">
+        Manage Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consuming-services/share-applications/" class="md-nav__link">
+        Share Applications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consuming-services/manage-subscription/" class="md-nav__link">
+        Manage Subscription
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consuming-services/generate-an-access-token/" class="md-nav__link">
+        Generate an Access Token
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_14" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+          API Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          API Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/lifecycle-management/" class="md-nav__link">
+        Lifecycle Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/documents/" class="md-nav__link">
+        Documents
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/api-rate-limiting/" class="md-nav__link">
+        API Rate Limiting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/api-policies/" class="md-nav__link">
+        API Policies
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/control-api-visibility/" class="md-nav__link">
+        Control API Visibility
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_14_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_14_6" id="__nav_14_6_label" tabindex="0">
+          Manage API Traffic
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_14_6">
+          <span class="md-nav__icon md-icon"></span>
+          Manage API Traffic
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/manage-api-traffic/assign-subscription-plans-to-apis/" class="md-nav__link">
+        Assign Subscription Plans to APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan/" class="md-nav__link">
+        Subscribe to an API with a Subscription Plan
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/rename-api-display-name/" class="md-nav__link">
+        Rename API Display Name
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_15" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+          Monitoring and Insights
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          Monitoring and Insights
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../monitoring-and-insights/observability-overview/" class="md-nav__link">
+        Observability Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_15_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15_2" id="__nav_15_2_label" tabindex="0">
+          Delivery Insights
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_15_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_15_2">
+          <span class="md-nav__icon md-icon"></span>
+          Delivery Insights
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../monitoring-and-insights/delivery-insights/configure-dora-metrics/" class="md-nav__link">
+        Configure DORA Metrics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../monitoring-and-insights/delivery-insights/view-dora-metrics/" class="md-nav__link">
+        View DORA Metrics
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_15_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15_3" id="__nav_15_3_label" tabindex="0">
+          Usage Insights
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_15_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_15_3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage Insights
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../monitoring-and-insights/insights-overview/" class="md-nav__link">
+        Insights Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../monitoring-and-insights/alerts/configure-alerts/" class="md-nav__link">
+        Configure Alerts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../monitoring-and-insights/generate-custom-reports/" class="md-nav__link">
+        Generate Custom Reports
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../monitoring-and-insights/view-logs/" class="md-nav__link">
+        View Logs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_15_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15_5" id="__nav_15_5_label" tabindex="0">
+          Work with the Choreo Insights API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_15_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_15_5">
+          <span class="md-nav__icon md-icon"></span>
+          Work with the Choreo Insights API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api/" class="md-nav__link">
+        Access the Choreo Insights API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api/" class="md-nav__link">
+        Choreo Insights API
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../monitoring-and-insights/integrate-choreo-with-moesif/" class="md-nav__link">
+        Integrate Choreo with Moesif
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_16" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+          Choreo CLI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_16">
+          <span class="md-nav__icon md-icon"></span>
+          Choreo CLI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-cli/choreo-cli-overview/" class="md-nav__link">
+        Choreo CLI Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-cli/get-started-with-the-choreo-cli/" class="md-nav__link">
+        Get Started with the Choreo CLI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_17" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="0">
+          Administer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_17">
+          <span class="md-nav__icon md-icon"></span>
+          Administer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/control-access-in-the-choreo-console/" class="md-nav__link">
+        Control Access in the Choreo Console
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-a-custom-domain-for-your-organization/" class="md-nav__link">
+        Configure a Custom Domain for Your Organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-enterprise-login/" class="md-nav__link">
+        Configure Enterprise Login
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_17_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17_4" id="__nav_17_4_label" tabindex="0">
+          Configure an External IdP
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_17_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_17_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configure an External IdP
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/" class="md-nav__link">
+        Configure Asgardeo as an External IdP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp/" class="md-nav__link">
+        Configure Azure as an External IdP
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/create-api-subscription-plans/" class="md-nav__link">
+        Create API Subscription Plans
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-a-user-store-with-built-in-idp/" class="md-nav__link">
+        Configure a User Store with the Built-In Identity Provider
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_17_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17_7" id="__nav_17_7_label" tabindex="0">
+          Developer Portal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_17_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_17_7">
+          <span class="md-nav__icon md-icon"></span>
+          Developer Portal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/customize-the-developer-portal/" class="md-nav__link">
+        Customize the Developer Portal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-self-sign-up/" class="md-nav__link">
+        Configure Self-Sign-Up
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/manage-members-of-an-organization/" class="md-nav__link">
+        Manage Members of an Organization
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_18" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+          References
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_18">
+          <span class="md-nav__icon md-icon"></span>
+          References
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/choreo-limitations/" class="md-nav__link">
+        Choreo Limitations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/troubleshoot-choreo/" class="md-nav__link">
+        Troubleshoot Choreo
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/private-data-plane-security-levels/" class="md-nav__link">
+        Private Data Plane Security Levels
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/private-data-plane-management-models/" class="md-nav__link">
+        Private Data Plane Management Models
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/choreo-platform-services-billing/" class="md-nav__link">
+        Choreo Platform Services Billing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-create-an-api-proxy" class="md-nav__link">
+    Step 1: Create an API proxy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-define-resources-for-the-api-proxy" class="md-nav__link">
+    Step 2: Define resources for the API proxy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-deploy-the-api-proxy" class="md-nav__link">
+    Step 3: Deploy the API proxy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-test-the-api-proxy" class="md-nav__link">
+    Step 3: Test the API proxy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-manage-the-api-proxy" class="md-nav__link">
+    Step 4: Manage the API proxy
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Manage the API proxy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-41-apply-a-rate-limiting-level-to-the-api-proxy" class="md-nav__link">
+    Step 4.1: Apply a rate limiting level to the API proxy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-42-publish-the-api-proxy" class="md-nav__link">
+    Step 4.2: Publish the API proxy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-invoke-the-api" class="md-nav__link">
+    Step 5: Invoke the API
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/develop-components/develop-an-api-proxy.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/wso2/docs-choreo-dev/raw/dev/en/docs/develop-components/develop-an-api-proxy.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="develop-an-api-proxy">Develop an API Proxy<a class="headerlink" href="#develop-an-api-proxy" title="Permanent link">&para;</a></h1>
+<p>An API proxy acts as an intermediary between an existing API and Choreo, intercepting all requests made to the API. It also functions as a managed API, which allows you to apply essential API management features such as security policies and rate limiting.</p>
+<p>In this guide, you will:</p>
+<ul>
+<li>Create an API proxy component to expose an existing API.</li>
+<li>Deploy the API proxy.</li>
+<li>Test the API proxy to verify its functionality.</li>
+<li>Manage the API.</li>
+<li>Consume the API.</li>
+</ul>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Before you try out this guide, complete the following:</p>
+<ul>
+<li>
+<p>If you are signing in to the Choreo Console for the first time, create an organization as follows:</p>
+<ol>
+<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a>, and sign in using your preferred method.</li>
+<li>Enter a unique organization name. For example, <code>Stark Industries</code>.</li>
+<li>Read and accept the privacy policy and terms of use.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>This creates the organization and opens the <strong>Project Home</strong> page of the default project created for you.</p>
+</li>
+</ul>
+<h2 id="step-1-create-an-api-proxy">Step 1: Create an API proxy<a class="headerlink" href="#step-1-create-an-api-proxy" title="Permanent link">&para;</a></h2>
+<p>To create an API proxy, you can either upload an OpenAPI specification or provide an OpenAPI specification URL. In this guide, you will specify a URL to an OpenAPI definition of a sample API.</p>
+<p>Follow the steps given below:</p>
+<ol>
+<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in. This opens the project home page.</li>
+<li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
+<li>Click the <strong>API Proxy</strong> card.
+   This opens the <strong>Create an API Proxy</strong> pane, where you can upload an OpenAPI definition or provide the URL of an OpenAPI. In this guide, you will define resources manually. Therefore, click <strong>Skip Source</strong> to proceed.</li>
+<li>
+<p>Specify the values given in the following table as API proxy details:</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>In the <strong>Name</strong> field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Display Name</strong></td>
+<td><code>HR API</code></td>
+</tr>
+<tr>
+<td><strong>Name</strong></td>
+<td><code>hr-api</code></td>
+</tr>
+<tr>
+<td><strong>Context</strong></td>
+<td><code>abc-hr</code></td>
+</tr>
+<tr>
+<td><strong>Version</strong></td>
+<td><code>1.0</code></td>
+</tr>
+<tr>
+<td><strong>Target</strong></td>
+<td><code>https://samples.choreoapps.dev/company/hr</code></td>
+</tr>
+<tr>
+<td><strong>Access Mode</strong></td>
+<td><strong>External</strong></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+</ol>
+<p>This creates the API proxy component and takes you to the <strong>Overview</strong> page. Now you can proceed to define resources for the API proxy.</p>
+<h2 id="step-2-define-resources-for-the-api-proxy">Step 2: Define resources for the API proxy<a class="headerlink" href="#step-2-define-resources-for-the-api-proxy" title="Permanent link">&para;</a></h2>
+<p>To add a new resource that can retrieve a department by the department ID, follow the steps given below:</p>
+<ol>
+<li>In the left navigation menu, click <strong>Develop</strong> and then click <strong>Resources</strong>.</li>
+<li>Select <strong>GET</strong> as the <strong>HTTP Verb</strong> and enter <code>/department/{departmentId}</code> as the <strong>URI Pattern</strong>.</li>
+<li>Click <strong>+</strong> to add the resource.</li>
+<li>
+<p>Click to expand the added resource and specify appropriate values for the <strong>Operation ID</strong> and <strong>Description</strong> fields. You can specify the values given in the following table:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Operation ID</strong></td>
+<td><code>findDepartment</code></td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td><code>Find a department by department ID</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>To remove the five default resources that start with <code>/*</code>, click the delete icon corresponding to each resource. This marks the resources for deletion.</p>
+</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<h2 id="step-3-deploy-the-api-proxy">Step 3: Deploy the API proxy<a class="headerlink" href="#step-3-deploy-the-api-proxy" title="Permanent link">&para;</a></h2>
+<p>To deploy the API proxy to the development environment, follow the steps given below:</p>
+<ol>
+<li>
+<p>In the left navigation menu, click <strong>Deploy</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Build Area</strong> card, click <strong>Configure &amp; Deploy</strong>. This opens the <strong>Configure &amp; Deploy</strong> pane, where you can select the API access mode depending on how you want the API to be accessible. Here, you can  select <strong>External</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Deploy</strong>. The <strong>Development</strong> card indicates the <strong>Deployment Status</strong> as <strong>Active</strong> when the API proxy is successfully deployed.</p>
+</li>
+</ol>
+<p>Now you are ready to test the API proxy.</p>
+<h2 id="step-3-test-the-api-proxy">Step 3: Test the API proxy<a class="headerlink" href="#step-3-test-the-api-proxy" title="Permanent link">&para;</a></h2>
+<p>Choreo allows you to test your API proxy using either the <a href="../../testing/test-rest-endpoints-via-the-openapi-console/">integrated OpenAPI Console</a> or <a href="../../testing/test-apis-with-curl/">cURL</a>.</p>
+<p>In this guide, you will use the OpenAPI Console to test the API proxy. </p>
+<p>Follow the steps given below:</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip<p>Choreo enables OAuth 2.0 to secure APIs by default. Therefore, you need an access token to invoke an API.</p>
+<ul>
+<li>Choreo automatically generates a key to test the API via the OpenAPI Console. To view the key, click the show key icon in the <strong>Security Header</strong> field.</li>
+<li>Choreo allows you to disable security for an entire API or a specific API resource for testing purposes. If you want to disable security, follow these steps:<ol>
+<li>In the left navigation menu, click <strong>Deploy</strong>.</li>
+<li>Go to the <strong>Build Area</strong> card and click <strong>Security Settings</strong>.</li>
+<li>In the <strong>Security Settings</strong> pane, perform one of the following actions depending on your requirement:<ul>
+<li>To disable security for the entire API, clear the <strong>OAuth2</strong> checkbox.</li>
+<li>To disable security for a specific API resource, go to the <strong>Permissions</strong> section, click to expand the relevant resource and then turn off the <strong>Security</strong> toggle.</li>
+</ul>
+</li>
+<li>Click <strong>Apply</strong>.</li>
+</ol>
+</li>
+</ul>
+</p>
+</div>
+<ol>
+<li>
+<p>In the left navigation menu, click <strong>Test</strong> and then click <strong>OpenAPI Console</strong>.</p>
+</li>
+<li>
+<p>Select <strong>Development</strong> from the environment drop-down list.</p>
+</li>
+<li>
+<p>Expand the <code>GET /department/{departmentId}</code> resource and click <strong>Try it Out</strong> to test it.</p>
+</li>
+<li>
+<p>Enter <code>1</code> as the <strong>departmentId</strong> and click <strong>Execute</strong>. You will see a response similar to the following:</p>
+<p><a class="glightbox" href="../../assets/img/develop-components/develop-a-rest-api-proxy/rest-api-proxy-response.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="API proxy response" class="cInlineImage-full" src="../../assets/img/develop-components/develop-a-rest-api-proxy/rest-api-proxy-response.png" /></a></p>
+</li>
+</ol>
+<p>This indicates that your API proxy is working as expected.</p>
+<h2 id="step-4-manage-the-api-proxy">Step 4: Manage the API proxy<a class="headerlink" href="#step-4-manage-the-api-proxy" title="Permanent link">&para;</a></h2>
+<p>Now that you have a tested API proxy, you can publish it and make it available for application developers to consume. Depending on your requirement, you can apply security, throttling, and other settings to the API before you publish it.</p>
+<p>In this guide, you will apply rate limiting to the  API and publish it.</p>
+<h3 id="step-41-apply-a-rate-limiting-level-to-the-api-proxy">Step 4.1: Apply a rate limiting level to the API proxy<a class="headerlink" href="#step-41-apply-a-rate-limiting-level-to-the-api-proxy" title="Permanent link">&para;</a></h3>
+<p>To apply a rate limiting level to the API, follow the steps given below:</p>
+<ol>
+<li>In the left navigation menu, click <strong>Deploy</strong>.</li>
+<li>Go to the required environment card and click the setting icon corresponding to <strong>API Configuration</strong>.</li>
+<li>In the <strong>API Configuration</strong> pane that opens, click <strong>Rate Limiting</strong> to expand the section.</li>
+<li>Select <strong>API Level</strong> as the <strong>Rate Limiting Level</strong>.</li>
+<li>Specify appropriate values for the <strong>Request Limit</strong> and <strong>Time Unit</strong> fields. In this guide, you can proceed with the default values.
+   This applies a rate-limiting policy to the entire API. If necessary, you can also apply rate limits at the operation level. For more information, see <a href="../../api-management/api-rate-limiting/">API Rate Limiting</a>. </li>
+<li>Click <strong>Apply</strong>. This applies the rate limiting level to the API proxy and redeploys it. </li>
+</ol>
+<h3 id="step-42-publish-the-api-proxy">Step 4.2: Publish the API proxy<a class="headerlink" href="#step-42-publish-the-api-proxy" title="Permanent link">&para;</a></h3>
+<p>To publish the API proxy to the Choreo Developer Portal, follow the steps given below:</p>
+<ol>
+<li>In the left navigation menu, click <strong>Lifecycle</strong> under <strong>Manage</strong>. This takes you to the <strong>Lifecycle</strong> page where you can see the different lifecycle stages the API can be in. You can see that the current lifecycle stage is <strong>Created</strong>.</li>
+<li>Click <strong>Publish</strong>. </li>
+<li>In the <strong>Publish API</strong> dialog that opens, click <strong>Confirm</strong> to proceed publishing the API with the specified display name. If you want to change the display name, make the necessary changes and then click <strong>Confirm</strong>. This changes the API lifecycle state to <strong>Published</strong>. </li>
+</ol>
+<h2 id="step-5-invoke-the-api">Step 5: Invoke the API<a class="headerlink" href="#step-5-invoke-the-api" title="Permanent link">&para;</a></h2>
+<p>To generate credentials for the published API and to invoke it via the Choreo Developer Portal, follow the steps below:</p>
+<ol>
+<li>
+<p>To open the published API in the Choreo Developer Portal via the <strong>Lifecycle</strong> page, click <strong>Go to Devportal</strong>. This takes you to the <code>HR API</code> in the Choreo Developer Portal.</p>
+</li>
+<li>
+<p>To generate credentials to test the API, follow the steps given below:</p>
+<ol>
+<li>In the Developer Portal left navigation menu, click <strong>Production</strong> under <strong>Credentials</strong>.</li>
+<li>
+<p>Click <strong>Generate Credentials</strong>. Choreo generates new tokens and populates the <strong>Consumer Key</strong> and <strong>Consumer Secret</strong> fields.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you want to test the API via an API test tool or through code, click <strong>Generate Access Token</strong> and copy the test token that is displayed. Alternatively, click <strong>cURL</strong> and copy the generated cURL command to use via a cURL client. You do not need to generate an access token if you are testing the API via the <strong>Try Out</strong> capability in the Choreo Developer Portal.</p>
+</div>
+</li>
+</ol>
+</li>
+<li>
+<p>To invoke a resource via the <strong>Try Out</strong> capability in the Choreo Developer Portal, follow the steps given below:</p>
+<ol>
+<li>In the Developer Portal left navigation menu, click <strong>Try Out</strong>.</li>
+<li>In the <strong>Endpoint</strong> list, select <strong>Development</strong> as the environment to try out the API.</li>
+<li>To generate an access token to try out the API, click <strong>Get Test Key</strong>. This populates the <strong>Access Token</strong> field with a test key.</li>
+<li>Expand the <code>GET /department/{departmentId}</code> resource and click <strong>Try it out</strong>.</li>
+<li>
+<p>Enter <code>1</code> as the <strong>departmentId</strong> and click <strong>Execute</strong>. You will see a response similar to the following:</p>
+<p><a class="glightbox" href="../../assets/img/develop-components/develop-a-rest-api-proxy/try-out-response.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Try out response" class="cInlineImage-full" src="../../assets/img/develop-components/develop-a-rest-api-proxy/try-out-response.png" /></a></p>
+</li>
+</ol>
+</li>
+</ol>
+<p>Now, you have gained hands-on experience creating, deploying, testing, and publishing an API proxy using Choreo API Manager.</p>
+<p>To learn more about the API management capabilities supported by Choreo API Manager, see <a href="../../api-management/lifecycle-management/">API Management</a>.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+      
+        <footer class="md-footer">
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Expose a Prism-Based Mock Server Using an OpenAPI Specification" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Previous
+                </span>
+                Expose a Prism-Based Mock Server Using an OpenAPI Specification
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../develop-web-applications/build-and-deploy-a-single-page-web-application/" class="md-footer__link md-footer__link--next" aria-label="Next: Build and Deploy a Single-Page Web Application" rel="next">
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Next
+                </span>
+                Build and Deploy a Single-Page Web Application
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="footer-copyright-right">
+    <div class="footer-copyright-top">
+      Copyright &copy; <a href="https://wso2.com/">WSO2</a> LLC (2023-2024)
+    </div>
+    <div class="footer-copyright-bottom">
+      Content licensed under <a href="https://creativecommons.org/licenses/by/4.0">CC By 4.0.</a> | Sample code
+      licensed under <a href="http://www.apache.org/licenses/">Apache 2.0</a>.
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.path", "navigation.top", "content.code.copy", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+        <script src="../../assets/lib/json-formatter/json-formatter.umd.js"></script>
+      
+        <script src="../../assets/lib/highlightjs/highlight.min.js"></script>
+      
+        <script src="../../assets/js/choreotheme.js"></script>
+      
+        <script src="../../js/open_in_new_tab.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

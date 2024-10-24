@@ -1,0 +1,3895 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Choreo Learning Portal">
+      
+      
+        <meta name="author" content="WSO2">
+      
+      
+        <link rel="canonical" href="https://wso2.com/choreo/docs/monitoring-and-insights/insights-overview/">
+      
+      
+        <link rel="prev" href="../delivery-insights/view-dora-metrics/">
+      
+      
+        <link rel="next" href="../alerts/configure-alerts/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>Insights Overview - </title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Added the font from google fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
+        <style>:root{--md-text-font:"Montserrat";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/lib/highlightjs/styles/vs.min.css">
+    
+      <link rel="stylesheet" href="../../assets/css/blue-palette-alt2.css">
+    
+      <link rel="stylesheet" href="../../assets/css/choreotheme.css">
+    
+      <link rel="stylesheet" href="../../assets/lib/json-formatter/json-formatter.css">
+    
+      <link rel="stylesheet" href="../../assets/css/config-catalog.css">
+    
+      <link rel="stylesheet" href="../../assets/lib/fontawesome-free-6.3.0-web/css/all.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+    <link rel="stylesheet" href="https://unpkg.com/highlightjs/styles/vs.css" />
+<!-- scripts -->
+<script type="text/javascript" src="../../assets/lib/highlightjs/highlight.min.js"></script>
+<script type="text/javascript" src="../../assets/lib/highlightjs/ballerina.min.js"></script>
+<script type="text/javascript">
+	hljs.highlightAll();
+</script>
+   <!-- Google Tag Manager -->
+   <script>
+    (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+       'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.setAttributeNode(d.createAttribute('data-ot-ignore'));
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-PSTXMT');
+   </script>
+   <!-- End Google Tag Manager -->
+
+   <!-- CookiePro cookie consent notice start -->
+   <script src="https://cookie-cdn.cookiepro.com/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="486163bc-a8c5-40d8-b185-c707cc718a23" ></script>
+   <script src="https://wso2.com//sites/all/themes/wso2_d7/js/cookie-revoke.js"></script>
+
+   <!-- CookiePro cookies consent notice end -->
+   
+  </script>
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#insights-overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+
+<!-- Add announcement here, including arbitrary HTML -->
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="" class="md-header__button md-logo" aria-label="" data-md-component="logo">
+      
+  <img src="../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Insights Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_3" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_3">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+    <label class="md-search__overlay" for="__search"></label>
+    <div class="md-search__inner" role="search">
+      <form class="md-search__form" name="search" id="search">
+        <input type="text" class="md-search__input" name="query" id="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+        <label class="md-search__icon md-icon" for="__search">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        </label>
+        <nav class="md-search__options" aria-label="Search">
+          
+          <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          </button>
+        </nav>
+        
+      </form>
+      <div class="md-search__output" id="dropDownSearchResults">
+        <div class="md-search__scrollwrap" data-md-scrollfix>
+          <div class="md-search-result" data-md-component="search-result">
+            <div class="md-search-result__meta">
+              Initializing search
+            </div>
+           
+            <ol class="md-search-result__list" role="presentation"></ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    
+      <div class="md-header__source">
+        <div class="row" style="width: 10rem;">
+  <div style="display: block; float: left; width: 49%;">
+     <a class="md-source" data-md-component="source" href="https://discord.com/invite/wso2">
+    <div class="md-source__icon md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541ZM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241Zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241Z"/></svg>  
+    </div>
+    <label>Get Help</label>
+  </a>
+</div> 
+<div style="width:49%; float: right; display: block;;">
+  <a class="md-source" data-md-component="source" href="https://console.choreo.dev/login/">
+    <div class="md-source__icon md-icon">
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 224 165" style="enable-background:new 0 0 224 165;" xml:space="preserve">
+   <style type="text/css">
+     .st0{fill:#545CEC;}
+   </style>
+   <g>
+     <path class="st0" d="M223.42,34.79c-0.78-18.82-16.29-33.84-35.31-33.84H95.69L94.2,0.98C75.37,1.76,60.35,17.27,60.35,36.29
+       l0,40.77l-22.44,0l-0.84-0.03c-5.28-0.4-9.33-4.55-9.33-9.48l0.01-30.38c6.43-3.05,10.87-9.61,10.87-17.19
+       c0-10.51-8.52-19.03-19.03-19.03S0.55,9.47,0.55,19.98c0,7.59,4.44,14.14,10.87,17.19l0.01,30.53l0.03,1.16
+       c0.62,13.79,12.29,24.67,26.46,24.67l22.44,0l0,35.19l0.03,1.49c0.78,18.82,16.29,33.84,35.31,33.84h92.42l1.49-0.03
+       c18.82-0.78,33.84-16.29,33.84-35.31V36.29L223.42,34.79z M207.14,128.71l-0.03,1.16c-0.6,9.97-8.87,17.87-18.99,17.87H95.69
+       l-1.16-0.03c-9.97-0.6-17.87-8.87-17.87-18.99V36.29l0.03-1.16c0.6-9.97,8.87-17.87,18.99-17.87h92.42
+       c10.51,0,19.03,8.52,19.03,19.03V128.71z"/>
+     <path class="st0" d="M143.71,44.44c9.54,0,17.53,2.32,24.04,6.95c6.51,4.63,10.58,9.9,12.2,15.87c-2.36,3.34-4.31,5.22-5.86,5.64
+       c-1.72,0.47-4.68-0.08-8.86-1.64c-1.11-3.58-3.62-6.67-7.54-9.34c-3.92-2.67-8.51-4-13.76-4c-7.25,0-13.17,2.39-17.75,7.09
+       c-4.59,4.7-6.88,10.46-6.88,17.27c0,6.67,2.29,12.43,6.88,17.27c4.59,4.84,10.5,7.23,17.68,7.23c5.25,0,9.84-1.26,13.76-3.79
+       c3.92-2.53,6.44-5.55,7.54-9.13c3.74-1.15,6.44-1.5,8.09-1.07c1.62,0.43,3.83,2.07,6.63,4.93c-1.63,5.83-5.62,11.02-12.06,15.66
+       c-5.94,4.28-13.2,6.58-21.79,6.91l-2.17,0.04v0.21c-11.47,0-21.01-3.65-28.63-10.95c-7.62-7.3-11.39-16.36-11.39-27.17
+       s3.77-19.87,11.32-27.1C122.71,48.09,132.25,44.44,143.71,44.44z"/>
+   </g>
+   </svg>       
+      </div>
+      <label>Try Choreo</label>
+    </a>
+  </div>  
+</div>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="" class="md-nav__button md-logo" aria-label="" data-md-component="logo">
+      
+  <img src="../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
+
+    </a>
+    
+  </label>
+  
+    <div class="md-nav__source">
+      <div class="row" style="width: 10rem;">
+  <div style="display: block; float: left; width: 49%;">
+     <a class="md-source" data-md-component="source" href="https://discord.com/invite/wso2">
+    <div class="md-source__icon md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541ZM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241Zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241Z"/></svg>  
+    </div>
+    <label>Get Help</label>
+  </a>
+</div> 
+<div style="width:49%; float: right; display: block;;">
+  <a class="md-source" data-md-component="source" href="https://console.choreo.dev/login/">
+    <div class="md-source__icon md-icon">
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 224 165" style="enable-background:new 0 0 224 165;" xml:space="preserve">
+   <style type="text/css">
+     .st0{fill:#545CEC;}
+   </style>
+   <g>
+     <path class="st0" d="M223.42,34.79c-0.78-18.82-16.29-33.84-35.31-33.84H95.69L94.2,0.98C75.37,1.76,60.35,17.27,60.35,36.29
+       l0,40.77l-22.44,0l-0.84-0.03c-5.28-0.4-9.33-4.55-9.33-9.48l0.01-30.38c6.43-3.05,10.87-9.61,10.87-17.19
+       c0-10.51-8.52-19.03-19.03-19.03S0.55,9.47,0.55,19.98c0,7.59,4.44,14.14,10.87,17.19l0.01,30.53l0.03,1.16
+       c0.62,13.79,12.29,24.67,26.46,24.67l22.44,0l0,35.19l0.03,1.49c0.78,18.82,16.29,33.84,35.31,33.84h92.42l1.49-0.03
+       c18.82-0.78,33.84-16.29,33.84-35.31V36.29L223.42,34.79z M207.14,128.71l-0.03,1.16c-0.6,9.97-8.87,17.87-18.99,17.87H95.69
+       l-1.16-0.03c-9.97-0.6-17.87-8.87-17.87-18.99V36.29l0.03-1.16c0.6-9.97,8.87-17.87,18.99-17.87h92.42
+       c10.51,0,19.03,8.52,19.03,19.03V128.71z"/>
+     <path class="st0" d="M143.71,44.44c9.54,0,17.53,2.32,24.04,6.95c6.51,4.63,10.58,9.9,12.2,15.87c-2.36,3.34-4.31,5.22-5.86,5.64
+       c-1.72,0.47-4.68-0.08-8.86-1.64c-1.11-3.58-3.62-6.67-7.54-9.34c-3.92-2.67-8.51-4-13.76-4c-7.25,0-13.17,2.39-17.75,7.09
+       c-4.59,4.7-6.88,10.46-6.88,17.27c0,6.67,2.29,12.43,6.88,17.27c4.59,4.84,10.5,7.23,17.68,7.23c5.25,0,9.84-1.26,13.76-3.79
+       c3.92-2.53,6.44-5.55,7.54-9.13c3.74-1.15,6.44-1.5,8.09-1.07c1.62,0.43,3.83,2.07,6.63,4.93c-1.63,5.83-5.62,11.02-12.06,15.66
+       c-5.94,4.28-13.2,6.58-21.79,6.91l-2.17,0.04v0.21c-11.47,0-21.01-3.65-28.63-10.95c-7.62-7.3-11.39-16.36-11.39-27.17
+       s3.77-19.87,11.32-27.1C122.71,48.09,132.25,44.44,143.71,44.44z"/>
+   </g>
+   </svg>       
+      </div>
+      <label>Try Choreo</label>
+    </a>
+  </div>  
+</div>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../what-is-choreo/" class="md-nav__link">
+        What is Choreo?
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Quick Start Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Quick Start Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start-guides/deploy-your-first-service/" class="md-nav__link">
+        Deploy Your First Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start-guides/deploy-your-first-static-web-application/" class="md-nav__link">
+        Deploy Your First Static Web Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/" class="md-nav__link">
+        Deploy a Web Application that Consumes a Backend Service
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/expose-a-service-as-a-managed-api/" class="md-nav__link">
+        Expose a Service as a Managed API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/secure-an-api-with-role-based-access-control/" class="md-nav__link">
+        Secure an API with Role-Based Access Control
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Choreo Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Choreo Concepts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
+        Resource Hierarchy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/organization/" class="md-nav__link">
+        Organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/project/" class="md-nav__link">
+        Project
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/component/" class="md-nav__link">
+        Component
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/endpoint/" class="md-nav__link">
+        Endpoint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/ci-cd/" class="md-nav__link">
+        CI/CD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/deployment-tracks/" class="md-nav__link">
+        Deployment Tracks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/connections/" class="md-nav__link">
+        Connections
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/data-planes/" class="md-nav__link">
+        Data Planes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/environments/" class="md-nav__link">
+        Environments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
+        Choreo Marketplace
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Develop Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Develop Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+          Develop Services
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          Develop Services
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-services/service-component-overview/" class="md-nav__link">
+        Service Component Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-services/develop-a-service/" class="md-nav__link">
+        Develop a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-services/develop-a-service-with-docker/" class="md-nav__link">
+        Develop a service with Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-services/develop-a-ballerina-service/" class="md-nav__link">
+        Develop a Ballerina Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-services/expose-a-grpc-endpoint-via-a-service/" class="md-nav__link">
+        Expose a gRPC Endpoint via a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-services/expose-a-tcp-server-via-a-service/" class="md-nav__link">
+        Expose a TCP Server via a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-services/expose-a-udp-server-via-a-service/" class="md-nav__link">
+        Expose a UDP Server via a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service/" class="md-nav__link">
+        Expose a Ballerina GraphQL Endpoint via a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification/" class="md-nav__link">
+        Expose a Prism-Based Mock Server Using an OpenAPI Specification
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-an-api-proxy/" class="md-nav__link">
+        Develop an API Proxy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+          Develop Web Applications
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Develop Web Applications
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application/" class="md-nav__link">
+        Build and Deploy a Single-Page Web Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication/" class="md-nav__link">
+        Develop Web Applications Locally with Choreo’s Managed Authentication
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-a-webhook/" class="md-nav__link">
+        Develop a Webhook
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+          Develop Integrations
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Develop Integrations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-integrations/develop-an-integration-with-integration-studio/" class="md-nav__link">
+        Develop an Integration with Integration Studio
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-integrations/develop-an-event-handler/" class="md-nav__link">
+        Develop an Event Handler
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-integrations/develop-a-scheduled-task/" class="md-nav__link">
+        Develop a Scheduled Task
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-integrations/develop-a-manual-task/" class="md-nav__link">
+        Develop a Manual Task
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+          Work with the Micro Integrator Runtime
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_6">
+          <span class="md-nav__icon md-icon"></span>
+          Work with the Micro Integrator Runtime
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/work-with-the-micro-integrator-runtime-in-choreo/" class="md-nav__link">
+        Get Started with the Micro Integrator Runtime
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project/" class="md-nav__link">
+        Manage the Micro Integrator Runtime Version in Your Integration Project
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-components-with-git/" class="md-nav__link">
+        Develop Components With Git
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/bring-your-own-image/" class="md-nav__link">
+        Bring Your Own Image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/deploy-an-application-with-buildpacks/" class="md-nav__link">
+        Deploy an Application with Buildpacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/deploy-a-containerized-application/" class="md-nav__link">
+        Deploy a Containerized Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_11" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+          Share and Reuse Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_11">
+          <span class="md-nav__icon md-icon"></span>
+          Share and Reuse Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/sharing-and-reusing/create-a-connection/" class="md-nav__link">
+        Create a Connection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/sharing-and-reusing/use-a-connection-in-your-service/" class="md-nav__link">
+        Use a Connection in Your Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/sharing-and-reusing/use-a-connection-in-your-web-application/" class="md-nav__link">
+        Use a Connection in Your Web Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/sharing-and-reusing/use-a-database-connection-in-your-component/" class="md-nav__link">
+        Use a Database Connection in Your Component
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/manage-deployment-tracks-for-choreo-components/" class="md-nav__link">
+        Manage Deployment Tracks for Choreo Components
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/configure-endpoints/" class="md-nav__link">
+        Configure Endpoints
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/manage-component-source-configurations/" class="md-nav__link">
+        Manage Component Source Configurations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components/develop-components-using-vs-code/" class="md-nav__link">
+        Develop Components Using VS Code
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Integrate and Manage External Services
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Integrate and Manage External Services
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../integrate-and-manage-external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
+        Integrate and Manage Third-Party Services
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../integrate-and-manage-external-services/integrate-and-manage-gen-ai-services/" class="md-nav__link">
+        Integrate and Manage Generative AI Services
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          Choreo-Managed Databases and Caches
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Choreo-Managed Databases and Caches
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/choreo-managed-databases-and-caches/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/choreo-managed-postgresql-databases/" class="md-nav__link">
+        PostgreSQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/choreo-managed-mysql-databases/" class="md-nav__link">
+        MySQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/choreo-managed-caches/" class="md-nav__link">
+        Choreo-Managed Cache
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
+        Add Choreo-Managed Databases and Caches to the Marketplace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-databases-and-caches/billing-for-platform-services/" class="md-nav__link">
+        Billing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+          Choreo-Managed Message Brokers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Choreo-Managed Message Brokers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9_2" id="__nav_9_2_label" tabindex="0">
+          Kafka
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_9_2">
+          <span class="md-nav__icon md-icon"></span>
+          Kafka
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
+        Create Choreo-Managed Kafka Services
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-message-brokers/configure-a-kafka-service/" class="md-nav__link">
+        Configure a Kafka Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-message-brokers/monitor-a-kafka-service/" class="md-nav__link">
+        Monitor a Kafka Service
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+          Authentication and Authorization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          Authentication and Authorization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/secure-api-access-with-asgardeo/" class="md-nav__link">
+        Secure API Access with Asgardeo
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/secure-api-access-with-azure-ad/" class="md-nav__link">
+        Secure API Access with Azure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/secure-web-applications-with-managed-authentication/" class="md-nav__link">
+        Secure Web Applications with Managed Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service/" class="md-nav__link">
+        Test Secure API Access with Choreo Built-In Security Token Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/pass-end-user-attributes-to-upstream-services/" class="md-nav__link">
+        Pass End-User Attributes to Upstream Services
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/configure-mutual-tls-between-components/" class="md-nav__link">
+        Configure Mutual TLS Between Components
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls/" class="md-nav__link">
+        Secure Communication Between the Choreo Gateway and Your Backend with Mutual TLS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+          DevOps and CI/CD
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          DevOps and CI/CD
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/manage-configurations-and-secrets/" class="md-nav__link">
+        Manage Configurations and Secrets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/view-runtime-details/" class="md-nav__link">
+        View Runtime Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/configure-container-resources-commands-and-arguments/" class="md-nav__link">
+        Configure Container Resources, Commands, and Arguments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/set-up-health-checks/" class="md-nav__link">
+        Set Up Health Checks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11_5" id="__nav_11_5_label" tabindex="0">
+          Autoscale
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_11_5">
+          <span class="md-nav__icon md-icon"></span>
+          Autoscale
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/autoscale/autoscale-component-replicas/" class="md-nav__link">
+        Autoscale Component Replicas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero/" class="md-nav__link">
+        Autoscale Components with Scale-to-Zero
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/configure-storage/" class="md-nav__link">
+        Configure Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/manage-environments/" class="md-nav__link">
+        Manage Environments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane/" class="md-nav__link">
+        Configure VPNs on the Choreo Cloud Data Plane
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_12" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+          Testing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Testing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/test-rest-endpoints-via-the-openapi-console/" class="md-nav__link">
+        Test REST Endpoints via the OpenAPI Console
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/test-graphql-endpoints-via-the-graphql-console/" class="md-nav__link">
+        Test GraphQL Endpoints via the GraphQL Console
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/test-apis-with-curl/" class="md-nav__link">
+        Test APIs with cURL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/test-apis-with-choreo-apichat/" class="md-nav__link">
+        Test APIs with Choreo API Chat
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/test-components-with-test-runner/" class="md-nav__link">
+        Test Components with Test Runner
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_13" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+          Consuming Services
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_13">
+          <span class="md-nav__icon md-icon"></span>
+          Consuming Services
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consuming-services/consuming-a-sevice/" class="md-nav__link">
+        Consume a Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consuming-services/manage-application/" class="md-nav__link">
+        Manage Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consuming-services/share-applications/" class="md-nav__link">
+        Share Applications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consuming-services/manage-subscription/" class="md-nav__link">
+        Manage Subscription
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consuming-services/generate-an-access-token/" class="md-nav__link">
+        Generate an Access Token
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_14" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+          API Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          API Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/lifecycle-management/" class="md-nav__link">
+        Lifecycle Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/documents/" class="md-nav__link">
+        Documents
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/api-rate-limiting/" class="md-nav__link">
+        API Rate Limiting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/api-policies/" class="md-nav__link">
+        API Policies
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/control-api-visibility/" class="md-nav__link">
+        Control API Visibility
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_14_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_14_6" id="__nav_14_6_label" tabindex="0">
+          Manage API Traffic
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_14_6">
+          <span class="md-nav__icon md-icon"></span>
+          Manage API Traffic
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/manage-api-traffic/assign-subscription-plans-to-apis/" class="md-nav__link">
+        Assign Subscription Plans to APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan/" class="md-nav__link">
+        Subscribe to an API with a Subscription Plan
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-management/rename-api-display-name/" class="md-nav__link">
+        Rename API Display Name
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+          Monitoring and Insights
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          Monitoring and Insights
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../observability-overview/" class="md-nav__link">
+        Observability Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_15_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15_2" id="__nav_15_2_label" tabindex="0">
+          Delivery Insights
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_15_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_15_2">
+          <span class="md-nav__icon md-icon"></span>
+          Delivery Insights
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../delivery-insights/configure-dora-metrics/" class="md-nav__link">
+        Configure DORA Metrics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../delivery-insights/view-dora-metrics/" class="md-nav__link">
+        View DORA Metrics
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15_3" id="__nav_15_3_label" tabindex="0">
+          Usage Insights
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_15_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_15_3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage Insights
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Insights Overview
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Insights Overview
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#view-insights" class="md-nav__link">
+    View insights
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analyze-statistics" class="md-nav__link">
+    Analyze statistics
+  </a>
+  
+    <nav class="md-nav" aria-label="Analyze statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traffic" class="md-nav__link">
+    Traffic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    Errors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#latency" class="md-nav__link">
+    Latency
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cache" class="md-nav__link">
+    Cache
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#devices" class="md-nav__link">
+    Devices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerts" class="md-nav__link">
+    Alerts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reports" class="md-nav__link">
+    Reports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#geo-map" class="md-nav__link">
+    Geo Map
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../alerts/configure-alerts/" class="md-nav__link">
+        Configure Alerts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generate-custom-reports/" class="md-nav__link">
+        Generate Custom Reports
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../view-logs/" class="md-nav__link">
+        View Logs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_15_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15_5" id="__nav_15_5_label" tabindex="0">
+          Work with the Choreo Insights API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_15_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_15_5">
+          <span class="md-nav__icon md-icon"></span>
+          Work with the Choreo Insights API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../work-with-choreo-insights-api/access-the-choreo-insights-api/" class="md-nav__link">
+        Access the Choreo Insights API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../work-with-choreo-insights-api/choreo-insights-api/" class="md-nav__link">
+        Choreo Insights API
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integrate-choreo-with-moesif/" class="md-nav__link">
+        Integrate Choreo with Moesif
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_16" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+          Choreo CLI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_16">
+          <span class="md-nav__icon md-icon"></span>
+          Choreo CLI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-cli/choreo-cli-overview/" class="md-nav__link">
+        Choreo CLI Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-cli/get-started-with-the-choreo-cli/" class="md-nav__link">
+        Get Started with the Choreo CLI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_17" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="0">
+          Administer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_17">
+          <span class="md-nav__icon md-icon"></span>
+          Administer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/control-access-in-the-choreo-console/" class="md-nav__link">
+        Control Access in the Choreo Console
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-a-custom-domain-for-your-organization/" class="md-nav__link">
+        Configure a Custom Domain for Your Organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-enterprise-login/" class="md-nav__link">
+        Configure Enterprise Login
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_17_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17_4" id="__nav_17_4_label" tabindex="0">
+          Configure an External IdP
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_17_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_17_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configure an External IdP
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/" class="md-nav__link">
+        Configure Asgardeo as an External IdP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp/" class="md-nav__link">
+        Configure Azure as an External IdP
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/create-api-subscription-plans/" class="md-nav__link">
+        Create API Subscription Plans
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-a-user-store-with-built-in-idp/" class="md-nav__link">
+        Configure a User Store with the Built-In Identity Provider
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_17_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_17_7" id="__nav_17_7_label" tabindex="0">
+          Developer Portal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_17_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_17_7">
+          <span class="md-nav__icon md-icon"></span>
+          Developer Portal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/customize-the-developer-portal/" class="md-nav__link">
+        Customize the Developer Portal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/configure-self-sign-up/" class="md-nav__link">
+        Configure Self-Sign-Up
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administer/manage-members-of-an-organization/" class="md-nav__link">
+        Manage Members of an Organization
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_18" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+          References
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_18">
+          <span class="md-nav__icon md-icon"></span>
+          References
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/choreo-limitations/" class="md-nav__link">
+        Choreo Limitations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/troubleshoot-choreo/" class="md-nav__link">
+        Troubleshoot Choreo
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/private-data-plane-security-levels/" class="md-nav__link">
+        Private Data Plane Security Levels
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/private-data-plane-management-models/" class="md-nav__link">
+        Private Data Plane Management Models
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/choreo-platform-services-billing/" class="md-nav__link">
+        Choreo Platform Services Billing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#view-insights" class="md-nav__link">
+    View insights
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analyze-statistics" class="md-nav__link">
+    Analyze statistics
+  </a>
+  
+    <nav class="md-nav" aria-label="Analyze statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traffic" class="md-nav__link">
+    Traffic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    Errors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#latency" class="md-nav__link">
+    Latency
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cache" class="md-nav__link">
+    Cache
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#devices" class="md-nav__link">
+    Devices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerts" class="md-nav__link">
+    Alerts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reports" class="md-nav__link">
+    Reports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#geo-map" class="md-nav__link">
+    Geo Map
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/monitoring-and-insights/insights-overview.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/wso2/docs-choreo-dev/raw/dev/en/docs/monitoring-and-insights/insights-overview.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="insights-overview">Insights Overview<a class="headerlink" href="#insights-overview" title="Permanent link">&para;</a></h1>
+<p>Choreo provides comprehensive insights into APIs created within both the on-premises API Manager and the Choreo platform. Choreo insights provide a range of metrics, including API traffic, error rates, and latency, allowing you to monitor and optimize API performance effectively.</p>
+<p>With Choreo insights, you can:</p>
+<ul>
+<li><strong>Analyze API traffic</strong>: Monitor the volume of requests and responses to understand usage patterns.</li>
+<li><strong>Track errors</strong>: Identify and analyze errors to improve API reliability.</li>
+<li><strong>Monitor latency</strong>: Measure and optimize the response times of your APIs.</li>
+<li><strong>Generate reports</strong>: Generate detailed reports to keep stakeholders informed and support data-driven decision-making.</li>
+<li><strong>Configure alerts</strong>: Set up alerts for specific events or thresholds to proactively manage API performance.</li>
+<li><strong>Obtain granular insights</strong>: Obtain detailed information on a per-application, per-API, and per-user basis for more targeted analysis.</li>
+<li><strong>Drill down into data</strong>: Dive deeper into data to perform root cause analysis.</li>
+</ul>
+<p>By leveraging these insights, businesses can make informed decisions to enhance their API strategies and drive their digital transformation initiatives forward.</p>
+<h2 id="view-insights">View insights<a class="headerlink" href="#view-insights" title="Permanent link">&para;</a></h2>
+<p>To view usage insights, go to the <a href="https://console.choreo.dev/">Choreo Console</a> and click <strong>Usage Insights</strong> in the left navigation menu.</p>
+<p>If you are viewing insights on the Choreo platform at the organization level, note the following:</p>
+<ul>
+<li><strong>Permission-based access</strong>: Signed-in users can only view insights for components or projects that they have permission to access.</li>
+<li><strong>Data exclusion</strong>: Insights exclude data from components you cannot access and the data related to deleted components.</li>
+<li><strong>Comprehensive view permission</strong>: To view insights for all components, including deleted ones, across the organization regardless of project visibility, you must have the <code>View Organization Insights</code> permission under <code>OBSERVABILITY-MANAGEMENT</code> with the mapping level defined at the <code>Organization</code> level.</li>
+<li><strong>Admin role</strong>: Users with the admin role have the <code>View Organization Insights</code> permission by default and can view organization-wide insights.</li>
+<li><strong>Configuring permissions</strong>: For detailed steps on configuring permissions, see <a href="/choreo/docs/administer/control-access-in-the-choreo-console/">Control Access in the Choreo Console</a>.</li>
+</ul>
+<p>By ensuring proper permissions are set, organizations can manage access to insights effectively while maintaining data security and relevance.</p>
+<h2 id="analyze-statistics">Analyze statistics<a class="headerlink" href="#analyze-statistics" title="Permanent link">&para;</a></h2>
+<p>Once you access the <strong>Usage Insights</strong> page, you can access the following subpages.</p>
+<h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
+<p>The <strong>Overview</strong> page gives you a quick overview of the system status.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/overview.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Overview" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/overview.png" /></a></p>
+<p>The information displayed is as follows:</p>
+<ul>
+<li>
+<p><strong>Total Traffic</strong></p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/overview-page-total-traffic.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Total traffic" class="cInlineImage-small" src="../../assets/img/monitoring-and-insights/api-insights/overview-page-total-traffic.png" /></a></p>
+<p>This widget displays the total traffic of the selected environment received during a given time interval. Both successful requests and failed requests are displayed. To investigate further, you can click the arrow icon on the bottom right corner of the widget to open the <a href="#traffic"><strong>Traffic</strong></a> page.</p>
+</li>
+<li>
+<p><strong>Error Request Count</strong></p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/overview-page-error-request-count.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Error request count" class="cInlineImage-small" src="../../assets/img/monitoring-and-insights/api-insights/overview-page-error-request-count.png" /></a></p>
+<p>This widget displays the total number of requests that have resulted in errors in your selected environment during the selected time range.</p>
+</li>
+<li>
+<p><strong>Average Error Rate</strong></p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/overview-page-error-rate.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Average error rate" class="cInlineImage-small" src="../../assets/img/monitoring-and-insights/api-insights/overview-page-error-rate.png" /></a></p>
+<p>This widget displays the average error rate (i.e., error count/total request count) of the selected environment for a given time interval. You can use this widget as an indicator to understand the health of the system. If the error rate is high, you can investigate further by clicking the arrow on the bottom right of the widget and opening the <a href="#errors"><strong>Errors</strong></a> page.</p>
+</li>
+<li>
+<p><strong>95<sup>th</sup> Percentile Latency</strong></p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/overview-page-latency.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="95th percentile latency" class="cInlineImage-small" src="../../assets/img/monitoring-and-insights/api-insights/overview-page-latency.png" /></a></p>
+<p>This widget displays the 95<sup>th</sup> percentile of all API latencies in your selected environment for the given time interval. You can use this widget to know whether the complete system operates under given SLAs. This metric provides the first indication of slow APIs. To investigate further, you can click the arrow on the bottom right of the widget to open the <a href="#latency"><strong>Latency</strong></a> page where you can further analyze the latency.</p>
+</li>
+<li>
+<p><strong>API Request Summary</strong></p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/overview-page-timeline.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="API request summary" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/overview-page-timeline.png" /></a></p>
+<p>This chart displays the total successful requests, the total requests that have resulted in errors, and the latency in a timeline. The y-axis on the left displays the request count and the error count. The x-axis shows time, and the y-axis on the right shows the latency in milliseconds. The granularity of the data points is decided based on the time range you have selected. The tooltip provides the exact value of all three metrics accurately.</p>
+</li>
+</ul>
+<h3 id="traffic">Traffic<a class="headerlink" href="#traffic" title="Permanent link">&para;</a></h3>
+<p>The <strong>Traffic</strong> page shows information related to the traffic that goes through your API management deployments. This includes API usage, application usage, resource usage, etc. You can use this page to investigate the usage of APIs and applications, traffic patterns, etc.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/traffic-page-full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Traffic" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/traffic-page-full.png" /></a></p>
+<p>You can filter the information displayed in the widgets as follows:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Filtering Option</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>By API</strong></td>
+<td>In the <strong>API</strong> field, you can select one or more APIs for which you want to view analytics. <strong>All</strong> is selected by default. Once you select an API, you can further filter by a specific application that uses the selected API via the <strong>Application</strong> field described below.</td>
+</tr>
+<tr>
+<td><strong>By Application</strong></td>
+<td>In the <strong>Application</strong> field, you can select the applications for which you want to view analytics. <strong>All</strong> is selected by default. The available applications are all the applications that have subscribed to one or more of the APIs you selected in the <strong>API</strong> field.</td>
+</tr>
+</tbody>
+</table>
+<p>You can view the following information for the APIs you have selected using the above filtering criteria:</p>
+<ul>
+<li>
+<p><strong>API Usage Over Time</strong></p>
+<p>This timeline shows the count of API hits for the APIs for the filtered APIs. If multiple APIs are selected, the timeline shows each API in a separate line with a legend separating each line. You can also zoom in on a selected time range by selecting that area in the chart. To restore to the original view use the <strong>Zoom out</strong> button on the top right-hand corner of the plot.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/api-usage-timeline.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="API usage over time" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/api-usage-timeline.png" /></a></p>
+</li>
+<li>
+<p><strong>API Usage By Application</strong></p>
+<p>This widget shows the per-application breakdown of requests for the APIs you selected. You can use the pie chart view or the line chart view. You can switch between the two views using the small icon at the upper-right corner of the widget.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/usage-by-application.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="API usage by application" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/api-insights/usage-by-application.png" /></a></p>
+</li>
+<li>
+<p><strong>API Usage By Target</strong></p>
+<p>This widget shows the per-backend breakdown of requests for the APIs you selected. This information is useful when multiple APIs share the same backend that has traffic restrictions. You can use these stats to scale your backends proactively. You can switch between the two views using the small icon at the upper-right corner of the widget.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/usage-by-target.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="API usage by target" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/api-insights/usage-by-target.png" /></a></p>
+</li>
+<li>
+<p><strong>API Resource Usage</strong></p>
+<p>This table shows a resource-level breakdown of API traffic. Each row represents an API resource and it shows the API name, resource path, API method, and the hit count for that combination.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/resource-usage.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="API resource usage" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/resource-usage.png" /></a></p>
+</li>
+</ul>
+<h3 id="errors">Errors<a class="headerlink" href="#errors" title="Permanent link">&para;</a></h3>
+<p>The <strong>Errors</strong> page shows information related to erroneous API calls that are received by your system. The errors are categorized based on the error type. You can further drill down using the error subtypes. Use this page as the starting point for debugging any API errors.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/error-page-full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Error statistics" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/error-page-full.png" /></a></p>
+<p>You can filter the information displayed in the widgets as follows:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Filtering Option</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>By API</strong></td>
+<td>In the <strong>API</strong> field, select the APIs for which you want to view analytics. By default, all APIs are selected. You can select one or multiple APIs from this selector and view the aggregated result.</td>
+</tr>
+<tr>
+<td><strong>By Category</strong></td>
+<td>The <strong>Category</strong> field is displayed when you click <strong>Category</strong> in the upper right corner of the page. In this field, you can select one or all of the following error categories:<br/><strong>Authentication</strong>: Any kind of authentication error falls into this category including expired/missing/invalid credentials.<br/><strong>Target Connectivity</strong>: Any kind of back-end error falls into this category including connection time-outs/other back-end errors (for example, 4xx and 5xx status codes).<br/><strong>Throttling</strong>: Any request that fails due to rate-limiting falls into this category including application throttling/subscription throttling.<br/><strong>Other</strong>: All other errors fall into this category including mediation errors/resource not found errors.</td>
+</tr>
+<tr>
+<td><strong>By Status Code</strong></td>
+<td>The <strong>Status Code</strong> field is displayed when you click <strong>Status Code</strong> in the upper right corner of the page. In this field, you can select all or any available HTTP status code categories (4xx, 5xx, etc.). These status codes represent the response status of the API Gateway.</td>
+</tr>
+</tbody>
+</table>
+<h4>Viewing errors by category</h4>
+<p>The following widgets are available for monitoring errors when you have selected <strong>Category</strong> in the upper-right corner of the page.</p>
+<ul>
+<li>
+<p>This graph shows the error by category over time for the selected period. Apply the required filters as explained above to select the APIs and the error categories to which this content applies. When you select multiple APIs, the error count is grouped by category.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/error-category-graph.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Errors by category graph" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/error-category-graph.png" /></a></p>
+</li>
+<li>
+<p>This table provides further information about the errors such as application details and the error reason. For some authentication errors, the application name is not available. You can use this table to get more concrete information about the errors related to your APIs and then start the problem identification.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/error-category-table.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Errors by category table" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/error-category-table.png" /></a></p>
+</li>
+</ul>
+<h4>Viewing errors by status code</h4>
+<p>The following widgets are available for monitoring errors when you select <strong>Status Code</strong> in the upper-right corner of the page.</p>
+<ul>
+<li>
+<p><strong>Errors by Status Code</strong></p>
+<p>This graph shows the distribution of HTTP status codes received for errors over time for the selected period. Apply the required filters as explained above to select the APIs and status code groups to which this content applies. When you select multiple APIs, the error count is grouped by the status code.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/error-by-status-code.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Errors by status code" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/error-by-status-code.png" /></a></p>
+</li>
+<li>
+<p><strong>Target Errors by Status Code</strong></p>
+<p>This graph shows the distribution of target errors that have occurred during the selected time interval by HTTP status code. Apply the required filters as explained in the table above to view the APIs and status code groups to which this content applies. If you select multiple APIs, the widget groups the target error count by the status code.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/target-error-by-status-code.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Target errors by status code" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/target-error-by-status-code.png" /></a></p>
+</li>
+<li>
+<p><strong>Errors</strong></p>
+<p>The Errors heat map shows the HTTP response codes of errors sent to the client by the API Gateway. Each row displays the number of times the system returned each status code for the selected APIs. The cell color is red for higher numbers and white for lower numbers. If required, you can further filter the results by the error code groups you identified with the <strong>Errors by Status Code</strong> graph.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/error-heatmap.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Errors" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/error-heatmap.png" /></a></p>
+</li>
+<li>
+<p><strong>Target Errors</strong></p>
+<p>The Target errors heat map shows the HTTP response codes of errors that the API Gateway received from the backend. Each row displays the number of times the system returned each status code for the selected APIs. The cell color is red for higher numbers and white for lower numbers. If required, you can further filter the results by the error code groups you identified with the <strong>Target Errors by Status Code</strong> graph.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/target-error-heatmap.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Target errors" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/target-error-heatmap.png" /></a></p>
+</li>
+</ul>
+<h3 id="latency">Latency<a class="headerlink" href="#latency" title="Permanent link">&para;</a></h3>
+<p>The <strong>Latency</strong> page shows information related to the latency of API calls within the API management deployment. You can view a summary of the slowest APIs and then drill down into the API view for further analysis. Use this page as a starting point to debug API slowness.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/latency-page-full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Latency" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/latency-page-full.png" /></a></p>
+<p>The information displayed is as follows:</p>
+<ul>
+<li>
+<p><strong>Top 10 Slowest APIs</strong></p>
+<p>This widget allows you to identify the slowest APIs of the API management system at a glance. Since these are the APIs that contribute to the higher 95<sup>th</sup> percentile of the system, improving these APIs lowers the 95<sup>th</sup> percentile of latency in the API Management deployments.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/slowest-apis.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Slowest APIs" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/slowest-apis.png" /></a></p>
+</li>
+<li>
+<p><strong>Latencies By Category</strong></p>
+<p>This widget allows you to further drill down details in the above chart. Use the API selector in this widget to select the slow API you identified in the earlier step and then analyze further. Use the charts available in the widget to view the 95<sup>th</sup> percentile and the median latency over the selected period of the following:</p>
+<ul>
+<li>Backend</li>
+<li>Request mediation</li>
+<li>Response mediation</li>
+</ul>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/latency-by-category.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Latencies by category" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/latency-by-category.png" /></a></p>
+</li>
+</ul>
+<p>You can use these charts to further drill down and analyze whether the latency occurs in the backend, request mediation, or response mediation. Also, because you can see both the median and 95<sup>th</sup> percentile, you can easily identify whether the slowness is occurring in each request or whether it is intermittent.</p>
+<h3 id="cache">Cache<a class="headerlink" href="#cache" title="Permanent link">&para;</a></h3>
+<p>The <strong>Cache</strong> page shows statistics that indicate the efficiency with which response caching is carried out for the requests sent to your APIs.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/cache-page-full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Cache statistics" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/cache-page-full.png" /></a></p>
+<p>The page displays the following statistics:</p>
+<ul>
+<li>
+<p><strong>Cache Hit Percentage</strong></p>
+<p>This graph shows the percentage of requests the system has handled via the response cache over time and the total hits over time. This information allows you to assess how efficiently the backend handles API requests. For example, if the cache hit rate is low, it may indicate that the backend generates the same response each time a specific request is sent instead of returning the response via the cache. In such a scenario, there is scope to improve performance via response caching.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/cache-statistics.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Cache hit percentage" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/cache-statistics.png" /></a></p>
+</li>
+<li>
+<p><strong>Latency</strong></p>
+<p>This section shows the total latency reported during the same time interval applied to the <strong>Cache Hit Percentage</strong> graph above.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/cache-latency.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Cache hits and misses" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/cache-latency.png" /></a></p>
+</li>
+</ul>
+<h3 id="devices">Devices<a class="headerlink" href="#devices" title="Permanent link">&para;</a></h3>
+<p>The <strong>Devices</strong> page displays information about operating systems and HTTP agents that end users use to invoke the APIs. You can use this page to get an idea of the distribution of your user base and improve your APIs to match the audience.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/devices-page-full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Device statistics" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/devices-page-full.png" /></a></p>
+<p>To filter the information displayed on this page by API, select the required API(s) in the <strong>API</strong> field. <strong>All</strong> is selected by default.</p>
+<p>The information displayed is as follows:</p>
+<ul>
+<li>
+<p><strong>Top Platforms</strong></p>
+<p>This chart shows the breakdown of the API clients by the operating system. The pie chart only shows platforms with a significant amount of requests. Other platforms are grouped under the <strong>Other</strong> category.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/top-platforms.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Top platforms" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/api-insights/top-platforms.png" /></a></p>
+</li>
+<li>
+<p><strong>Top User Agents</strong></p>
+<p>This chart shows the breakdown of the API clients by user-agent. The pie chart only shows user agents with a significant amount of requests. Other platforms are grouped under the <strong>Other</strong> category.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/top-user-agents.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Top user agents" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/api-insights/top-user-agents.png" /></a></p>
+</li>
+</ul>
+<h3 id="alerts">Alerts<a class="headerlink" href="#alerts" title="Permanent link">&para;</a></h3>
+<p>The <strong>Alerts</strong> page shows information related to business alerts issued by Choreo for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies in your published APIs. See the topics given below to get details of the available widgets and understand how to use them effectively.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/alerts-page-full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Alerts statistics" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/alerts-page-full.png" /></a></p>
+<p><strong>Prerequisites</strong></p>
+<p>To use this page, be sure to configure alerts and have API invocations that trigger alerts. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Alerts are retained only for a week.</p>
+</div>
+<ul>
+<li>
+<p><strong>Alert Summary</strong></p>
+<p>This table lists each alert generated during the selected time interval. The message of the alert can be viewed by expanding the arrow icon on the details column. The drop-downs can be used to filter alerts based on the alert type and API.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/alert-summary.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Alert summary" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/alert-summary.png" /></a></p>
+</li>
+<li>
+<p><strong>Top APIs by Alert Count</strong></p>
+<p>This shows a pie chart and a table to visualize the alert distribution during the selected time interval.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/top-apis-by-alert-count.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Top APIs by alert count" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/top-apis-by-alert-count.png" /></a></p>
+</li>
+</ul>
+<h3 id="reports">Reports<a class="headerlink" href="#reports" title="Permanent link">&para;</a></h3>
+<p>The <strong>Reports</strong> page allows you to download monthly usage reports for your system. There are preconfigured reports with system-wide statistics, and a custom report generator to generate reports based on a subset of APIs/applications.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/report-page-full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Report page" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/report-page-full.png" /></a></p>
+<h4>Download custom reports</h4>
+<p>This widget allows you to generate a custom report for the statistics that have been generated up to now and download it.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/custom-report.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Custom report download" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/custom-report.png" /></a></p>
+<p>To generate a custom report, follow the steps below:</p>
+<ol>
+<li>
+<p>In the <strong>API</strong> field, select one or more APIs for which you want to generate the report. If required, you can select all the APIs by selecting <strong>All</strong>.</p>
+</li>
+<li>
+<p>If you need to further filter the content printed in the report, select one or more applications in the <strong>Application</strong> field. By default, all the applications that have subscribed to one or more of the selected APIs are selected.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you want to filter the report content by the API consumer instead of the application, click on the toggle switch to the right of the <strong>Application</strong> field, and then select the required consumer. Only consumers who have subscribed to one or more of the selected APIs are displayed in the list. You can either select one or all of them.</p>
+</div>
+</li>
+<li>
+<p>Select the required year and the month in the <strong>Year</strong> and <strong>Month</strong> fields to specify the time interval for which you want to generate the report.</p>
+</li>
+<li>
+<p>Click <strong>Download</strong>, and select the required format.</p>
+</li>
+</ol>
+<p>The report is downloaded in the specified format. The following is a sample report generated in PDF format.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/custom-report-sample.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Sample report" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/api-insights/custom-report-sample.png" /></a></p>
+<p>The contents of the report are as follows.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Item</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Generated Time</strong></td>
+<td>The date and the time the report was generated.</td>
+</tr>
+<tr>
+<td><strong>Organization</strong></td>
+<td>The organization to which the report applies. Each report always applies to a specific organization.</td>
+</tr>
+<tr>
+<td><strong>Environment</strong></td>
+<td>The environment to which the report applies. Each report always applies to a specific environment.</td>
+</tr>
+<tr>
+<td><strong>Tenant</strong></td>
+<td>The tenant to which the report applies. Each report always applies to a specific tenant.</td>
+</tr>
+<tr>
+<td><strong>Reporting period</strong></td>
+<td>The time interval for which the report is generated.</td>
+</tr>
+<tr>
+<td><strong>Total request count</strong></td>
+<td>The total request count received by all selected APIs during the report time interval.</td>
+</tr>
+</tbody>
+</table>
+<p>The table in the report contains the following rows.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Item</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>API</strong></td>
+<td>The name of the API.</td>
+</tr>
+<tr>
+<td><strong>Application</strong></td>
+<td>The name of the application. The name of the subscriber is also provided within brackets.</td>
+</tr>
+<tr>
+<td><strong>Usage</strong></td>
+<td>The usage count.</td>
+</tr>
+</tbody>
+</table>
+<h4>Download pregenerated reports</h4>
+<p>These widgets allow you to download monthly reports for the last three months.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/configured-report.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Pre-generated reports" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/api-insights/configured-report.png" /></a></p>
+<p>To download a pregenerated report, click <strong>Download</strong> for the relevant month and then click on the required format.</p>
+<h3 id="geo-map">Geo Map<a class="headerlink" href="#geo-map" title="Permanent link">&para;</a></h3>
+<p>The <strong>Geo Map</strong> page allows you to see a geographical representation of your API usage. You can use this page to make business decisions such as identifying growing regions, analyzing the impact of a region-specific marketing campaign, etc.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/geomap-page-full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Geo Map page" class="cInlineImage-full" src="../../assets/img/monitoring-and-insights/api-insights/geomap-page-full.png" /></a></p>
+<p>To filter the information displayed on this page by API, select the required API(s) in the <strong>API</strong> field. The default value is <strong>All</strong>.</p>
+<p>This heat map highlights the countries with the appropriate color based on the hit count. It uses a relative color scale to depict the highest hit count to the lowest non-zero hit count.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/geomap-hit-count-scale.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Geo Map Hit Scale" class="cInlineImage-xsmall" src="../../assets/img/monitoring-and-insights/api-insights/geomap-hit-count-scale.png" /></a></p>
+<h4>Viewing the number of requests by country</h4>
+<p>You can hold the pointer over the highlighted countries to view the country name and the total number of hits from that location. You can also use the mouse to zoom the map or pan it. Optionally, you can download geo-map data in a tabular format using the PDF or CSV download options by clicking <a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/insights-download-report.svg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="download" src="../../assets/img/monitoring-and-insights/api-insights/insights-download-report.svg" /></a> on the top right corner.</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/api-insights/geomap-requests-by-country.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Geo Map by country" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/api-insights/geomap-requests-by-country.png" /></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>Currently, this feature is only available for on-premises environments.</li>
+<li>The geo-map page utilizes the IP address of the incoming request to derive the geolocation. The actual source IP address can be replaced if there are intermediate hosts between the client and the gateway node. Therefore, the reverse proxy or the load balancer fronting the gateway node must add the <code>x-forwarded-for</code> header to each request to preserve the source IP address. If you do not configure this correctly, the <strong>Geo Map</strong> page will not show any data. To test this, you can manually add an <code>x-forwarded-for</code> header to the request.</li>
+</ul>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+      
+        <footer class="md-footer">
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../delivery-insights/view-dora-metrics/" class="md-footer__link md-footer__link--prev" aria-label="Previous: View DORA Metrics" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Previous
+                </span>
+                View DORA Metrics
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../alerts/configure-alerts/" class="md-footer__link md-footer__link--next" aria-label="Next: Configure Alerts" rel="next">
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Next
+                </span>
+                Configure Alerts
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="footer-copyright-right">
+    <div class="footer-copyright-top">
+      Copyright &copy; <a href="https://wso2.com/">WSO2</a> LLC (2023-2024)
+    </div>
+    <div class="footer-copyright-bottom">
+      Content licensed under <a href="https://creativecommons.org/licenses/by/4.0">CC By 4.0.</a> | Sample code
+      licensed under <a href="http://www.apache.org/licenses/">Apache 2.0</a>.
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.path", "navigation.top", "content.code.copy", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+        <script src="../../assets/lib/json-formatter/json-formatter.umd.js"></script>
+      
+        <script src="../../assets/lib/highlightjs/highlight.min.js"></script>
+      
+        <script src="../../assets/js/choreotheme.js"></script>
+      
+        <script src="../../js/open_in_new_tab.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
