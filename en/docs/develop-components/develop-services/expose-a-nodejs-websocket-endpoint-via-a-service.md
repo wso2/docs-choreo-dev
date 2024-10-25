@@ -119,4 +119,4 @@ Once you have successfully deployed your service, you can [test](../../testing/t
 
      For example: `sec-websocket-protocol: choreo-oauth2-token, {access token}, subprotocols`
 
-     If you are using an API key, replace `choreo-oauth2-token` with `choreo-internal-api-key`.
+     If you are using an API key, replace `choreo-oauth2-token` with `choreo-api-key`.
