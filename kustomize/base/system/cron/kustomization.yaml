@@ -14,3 +14,4 @@ resources:
   - platform-service-manager-stats-reporter.yaml
   - dp-rudder-deploy-history-cleanup-task.yaml
   - choreo-k8s-cronjob-timezone-migrator.yaml
+  - dp-rudder-webapp-deployment-hour-enforcer.yaml
