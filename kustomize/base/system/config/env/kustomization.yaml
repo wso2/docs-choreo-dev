@@ -1012,6 +1012,9 @@ configMapGenerator:
       - DB_PASSWORD_FILE={{.DB_PASSWORD_FILE | default "/mnt/csi/secret-api-key-svc/CHOREO_API_KEY_SVC_DB_PASSWORD"}}
       - DB_SSL_MODE={{.DB_SSL_MODE | default "require"}}
       - OAUTH_AGENT_BASE_URL={{.OAUTH_AGENT_BASE_URL | default ""}}
+      - MIZZEN_BASE_URL={{.MIZZEN_BASE_URL | default "http://dp-mizzen"}}
+      - CLOUD_MANAGER_BASE_URL={{.CLOUD_MANAGER_BASE_URL | default "http://dp-cloud-manager"}}
+      - DP_OAUTH_AGENT_BASE_URL={{.DP_OAUTH_AGENT_BASE_URL | default "http://app-gateway-oauth-agent:8080"}}
   - name: env-log-controller
     behavior: create
     literals:
