@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: dp-rudder-webapp-deployment-hour-enforcer-cronjob
+  name: dp-rudder-webapp-deployment-hour-enforcer
 spec:
   schedule: "0 * * * *"
   concurrencyPolicy: Replace
