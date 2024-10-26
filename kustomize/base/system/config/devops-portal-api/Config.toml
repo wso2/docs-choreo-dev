@@ -27,3 +27,4 @@ includeJWTHeader = {{.INCLUDE_JWT_HEADER | default false}}
 enableEventPublish= {{.ENABLE_EVENT_PUBLISH | default false}}
 websubhubUrl = "{{.WEBSUBHUB_URL | default ""}}"
 topic= "{{.WEBSUBHUB_TOPIC | default ""}}"
+feature_flag_appdev_sts={{.FEATURE_FLAG_APPDEV_STS | default false}}
