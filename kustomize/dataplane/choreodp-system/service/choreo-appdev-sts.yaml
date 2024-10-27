@@ -12,8 +12,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    choreo.component: choreo-sts
-  name: choreo-sts
+    choreo.component: choreo-appdev-sts
+  name: choreo-appdev-sts
 spec:
   ports:
     - name: service-port
@@ -21,4 +21,4 @@ spec:
       targetPort: service-port
       protocol: TCP
   selector:
-    choreo.component: choreo-sts
+    choreo.component: choreo-appdev-sts

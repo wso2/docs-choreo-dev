@@ -45,10 +45,10 @@ configMapGenerator:
     literals:
       - REDIS_HOST="{{.REDIS_HOST}}"
       - SECRET_RESOLVER_GET_ENDPOINT="{{.SECRET_RESOLVER_GET_ENDPOINT}}"
-  - name: cm-files-choreo-sts
+  - name: cm-files-choreo-appdev-sts
     behavior: create
     files:
-      - choreo-sts/configuration.yaml
-      - choreo-sts/application.properties
-      - choreo-sts/log4j2.yaml
-      - choreo-sts/json-log-layout.json
+      - choreo-appdev-sts/configuration.yaml
+      - choreo-appdev-sts/application.properties
+      - choreo-appdev-sts/log4j2.yaml
+      - choreo-appdev-sts/json-log-layout.json

@@ -23,7 +23,7 @@
     "field": "name"
   },
   "context": {
-    "$resolver": "map",
+    "$resolver": "mdc",
     "stringified": true
   },
   "message": {

@@ -1,15 +1,15 @@
 client:
-  clientSecretEncryptionKeyFile: {{.CLIENT_SECRET_ENCRYPTION_KEY_FILE | "/mnt/csi/secret-choreo-sts/client-secret-encryption-key.txt"}}
+  clientSecretEncryptionKeyFile: {{.CLIENT_SECRET_ENCRYPTION_KEY_FILE}}
   tokenSettings:
     authCodeValidity: {{.AUTH_CODE_VALIDITY | default 5}}
     userTokenValidity: {{.USER_TOKEN_VALIDITY | default 1440}}
     refreshTokenValidity: {{.REFRESH_TOKEN_VALIDITY | default 10080}}
-    applicationTokenValidity: {{.APPLICATION_TOKEN_VALIDITY | default 1440}}
+    applicationTokenValidity: {{.APPLICATION_TOKEN_VALIDITY | default 360}}
 management:
   dataplaneIdentifier: {{.DATAPLANE_IDENTIFIER}}
 redis:
   username: {{.REDIS_USERNAME | default "default"}}
-  passwordFile: {{.REDIS_PASSWORD_FILE | default "/mnt/csi/secret-choreo-sts/redis-password.txt"}}
+  passwordFile: {{.REDIS_PASSWORD_FILE}}
   nodes:
    - {{.REDIS_NODE | default "redis-cluster-headless.redis.svc.cluster.local:6379"}}
   client:
@@ -33,6 +33,10 @@ services:
     url: {{.KV_RESOLVER_SERVICE_URL}}
   legacyTokenService:
     url: {{.LEGACY_TOKEN_SERVICE_URL}}
+  controlPlaneTokenService:
+    url: {{.CONTROL_PLANE_TOKEN_SERVICE_URL}}
+    consumerKey: {{.CONTROL_PLANE_TOKEN_SERVICE_CONSUMER_KEY}}
+    consumerSecret: {{.CONTROL_PLANE_TOKEN_SERVICE_CONSUMER_SECRET}}
 httpClient:
   maxTotal: {{.HTTP_CLIENT_MAX_TOTAL | default 100}}
   defaultMaxPerRoute: {{.HTTP_CLIENT_DEFAULT_MAX_PER_ROUTE | default 10}}

@@ -1,4 +1,4 @@
 resources:
   - app-gateway-oauth-agent.yaml
   - dp-kv-resolver.yaml
-  - choreo-sts.yaml
+  - choreo-appdev-sts.yaml

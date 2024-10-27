@@ -11,16 +11,16 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: choreo-sts
+  name: choreo-appdev-sts
   labels:
-    choreo.component: choreo-sts
+    choreo.component: choreo-appdev-sts
 spec:
   maxReplicas: 3
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: choreo-sts
+    name: choreo-appdev-sts
   metrics:
     - type: Resource
       resource:

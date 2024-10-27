@@ -14,7 +14,7 @@ resources:
   - dp-kv-resolver.yaml
   - dp-mizzen-agent.yaml
   - metered-usage-handler.yaml
-  - choreo-sts.yaml
+  - choreo-appdev-sts.yaml
 
 patches:
   - path: patch.json
