@@ -26,4 +26,4 @@ To configure an approval for a workflow, follow these steps:
 
 7. Click **Save**. This configures and enables approval for the workflow. 
 
-Once you configure an approval for a workflow, developers must [submit a request to use the workflow](../develop-components/request-for-workflow-approval.md). An authorized assignee must [review and approve the request](./review-workflow-approval-requests.md) for a developer to use the workflow.
+Once you configure an approval for a workflow, developers must [submit a request for approval to use the workflow](../develop-components/request-for-workflow-approval.md). An authorized assignee must then [review and approve the request](./review-workflow-approval-requests.md) for a developer to proceed with the task related to the workflow.
