@@ -11,7 +11,7 @@ redis:
   username: {{.REDIS_USERNAME | default "default"}}
   passwordFile: {{.REDIS_PASSWORD_FILE}}
   nodes:
-   - {{.REDIS_NODE | default "redis-cluster-headless.redis.svc.cluster.local:6379"}}
+    - {{.REDIS_NODE | default "redis-cluster-headless.redis.svc.cluster.local:6379"}}
   client:
     commandTimeout: {{.REDIS_COMMAND_TIMEOUT | default 2000}}
     shutdownTimeout: {{.REDIS_SHUTDOWN_TIMEOUT | default 2000}}
