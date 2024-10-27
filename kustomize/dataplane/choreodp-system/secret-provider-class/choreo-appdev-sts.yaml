@@ -24,9 +24,14 @@ spec:
           objectName: dp-sts-client-secret-encryption-key
           objectType: secret
           objectAlias: DP_STS_CLIENT_SECRET_ENCRYPTION_KEY
-          objectVersion: "{{.CHOREO_STS_CLIENT_SECRET_ENCRYPTION_KEY}}"
+          objectVersion: "{{.DP_STS_CLIENT_SECRET_ENCRYPTION_KEY_VERSION}}"
         - |
           objectName: redis-cluster-password-tmp
           objectType: secret
           objectAlias: CHOREO_STS_REDIS_PASSWORD
-          objectVersion: "{{.CHOREO_STS_REDIS_PASSWORD}}"
+          objectVersion: "{{.CHOREO_STS_REDIS_PASSWORD_VERSION}}"
+        - |
+          objectName: app-dev-sts-app-client-secret
+          objectType: secret
+          objectAlias: APP_DEV_STS_APP_CLIENT_SECRET
+          objectVersion: "{{.APP_DEV_STS_APP_CLIENT_SECRET_VERSION}}"
