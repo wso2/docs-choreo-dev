@@ -66,11 +66,11 @@ spec:
               path: /healthz/liveness
           resources:
             limits:
-              cpu: 500m
-              memory: 500Mi
+              cpu: 1000m
+              memory: 1000Mi
             requests:
-              cpu: 250m
-              memory: 300Mi
+              cpu: 1000m
+              memory: 1000Mi
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 10500
