@@ -1,11 +1,18 @@
 # Review Workflow Approval Requests
 
-In Choreo, administrators can [configure approvals for workflows](./configure-approvals-for-choreo-workflows.md) and designate authorized assignees to review approval requests.
+In Choreo, administrators can [configure approvals for workflows](./configure-approvals-for-choreo-workflows.md) and assign specific users as approvers.
+
+To review and approve workflows, a user must have one of the following permissions:
+
+  - **WORKFLOW-MANAGEMENT**: Grants access to view and approve workflow requests across the organization.
+  - **PROJECT-MANAGEMENT**: Grants access to view and approve workflow requests within a specific project.
 
 If you are assigned as an authorized reviewer for a particular workflow approval request, you will receive an email notification whenever a [request is submitted for approval](../develop-components/request-for-workflow-approval.md). The email will include a summary of the request and a link to the **Approvals** page in the Choreo Console, where you can review the details and either approve or reject the request.
 
 !!! note 
-     - Other members configured as approvers within your organization will also receive the notification and may have already reviewed the request. In such cases, you will not be able to review it again.
+     - Workflow approvals are managed at the project level. If a role is assigned in a project context, only members of the user group bound to that role within the specific project will receive notifications for requests made in that project. For example, if you are assigned the project manager role for project A, you will only be notified of workflow requests within project A.
+     - Users with organization-level permission will receive notifications for all workflow requests across any project in the organization.
+     - Other members configured as approvers within your organization will also receive notifications for workflow requests and may have already reviewed a request. In such cases, you will not be able to review the same request again.
      - Approval requests are made on behalf of the team, so once approved, any authorized team member can use the workflow.
 
 ## View workflow approval requests
