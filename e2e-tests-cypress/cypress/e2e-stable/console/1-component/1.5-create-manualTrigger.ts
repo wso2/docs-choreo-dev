@@ -29,6 +29,10 @@ describe("Verify manual trigger creation functionality", () => {
   const REPO_URL = "https://github.com/wso2/choreo-samples";
   const REPO_NAME = "docker-hello-world-manual-task";
 
+  function enterCustomInfo() {
+    cy.get("li").contains("1.x").click();
+  }
+
   it("Login to Console", () => {
     console.login();
   });
@@ -43,10 +47,9 @@ describe("Verify manual trigger creation functionality", () => {
         displayName: "",
         repoUrl: REPO_URL,
         buildPack: BuildPacks.Go,
-        repoName: REPO_NAME,
-        repoTestid: REPO_NAME,
-        languageVersion: "1.x",
-      })
+        directoryInfo: { directoryName: REPO_NAME, directoryTestid: REPO_NAME }
+      }, 
+      enterCustomInfo)
       .then((comp) => {
         component = comp;
       });

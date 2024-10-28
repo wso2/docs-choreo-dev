@@ -433,8 +433,6 @@ export namespace TestIds {
   export const gqlServiceRepo = '[data-cyid="subPath-graphql-service"]';
   export const webAppComponentCard = '[data-cyid="component-template-webApp-card"]';
   export const reactBuildPack = '[data-cyid="React-card-button"]';
-  export const webAppServiceRepo = '[data-cyid="subPath-reading-list-app"]';
-  export const webAppServiceAuthRepo = '[data-cyid="subPath-reading-list-app/reading-list-front-end-with-managed-auth"]';
   export const containerizedBuildPack = '[data-cyid="Docker-card-button"]';
   export const dockerSearchBox = '[data-cyid="project-directory-search-search-bar"]';
   export const dockerFileSelect = '[data-cyid="subPath-greeting-service-go/Dockerfile"]';

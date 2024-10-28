@@ -11,39 +11,33 @@
  * associated services.
  */
 
-import { ComponentInfo, ServiceInfo } from "../../entities/project/project";
+import { ComponentInfo, DirectoryInfo } from "../../entities/project/project";
 import { TestIds } from "../../constants/TestIds";
 import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { BuildPacks } from "../../../commons/enums";
 
 export class _ComponentCreationWizard {
-  enterServiceInfo(name: string, serviceInfo: ServiceInfo) {
+  enterServiceInfo(name: string, serviceInfo: ComponentInfo) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
 
     this.createFromGHUrl(serviceInfo.repoUrl);
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
-    this.searchRepoName(serviceInfo.repoName);
-    this.selectRepo(serviceInfo.repoTestid);
-    cy.get(TestIds.continueButton).should("be.enabled").click();
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
     this.createComponent(name);
   }
 
-  enterManualTriggerInfo(name: string, manualTriggerInfo: ComponentInfo) {
+  enterTriggerInfo(name: string, manualTriggerInfo: ComponentInfo, enterCustomInfo: () => void) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
 
     this.createFromGHUrl(manualTriggerInfo.repoUrl);
     this.handleBuildPackSelectionFromService(manualTriggerInfo.buildPack);
-    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
-    this.searchRepoName(manualTriggerInfo.repoName);
-    this.selectRepo(manualTriggerInfo.repoTestid);
-    cy.get(TestIds.continueButton).should("be.enabled").click();
+    this.selectProjectDirectory(manualTriggerInfo.directoryInfo);
     cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
-    cy.get("li").contains(manualTriggerInfo.languageVersion).click();
+    enterCustomInfo();
     this.createComponent(name);
   }
 
@@ -75,37 +69,31 @@ export class _ComponentCreationWizard {
     }
   }
 
-  enterTestRunnerInfo(name: string, TestRunnerInfo: ComponentInfo) {
+  enterTestRunnerInfo(name: string, testRunnerInfo: ComponentInfo, enterCustomInfo: () => void) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
 
-    this.createFromGHUrl(TestRunnerInfo.repoUrl);
-    this.handleBuildPackSelectionFromService(TestRunnerInfo.buildPack);
-    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
-    this.searchRepoName(TestRunnerInfo.repoName);
-    this.selectRepo(TestRunnerInfo.repoTestid);
-    cy.get(TestIds.continueButton).should("be.enabled").click();
+    this.createFromGHUrl(testRunnerInfo.repoUrl);
+    this.handleBuildPackSelectionFromService(testRunnerInfo.buildPack);
+    this.selectProjectDirectory(testRunnerInfo.directoryInfo);
     cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
-    cy.get("li").contains(TestRunnerInfo.languageVersion).click();
+    enterCustomInfo();
     this.createComponent(name);
   }
 
-  enterMIServiceInfo(name: string, serviceInfo: ServiceInfo) {
+  enterMIServiceInfo(name: string, serviceInfo: ComponentInfo) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
 
     this.createFromGHUrl(serviceInfo.repoUrl);
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
-    this.searchRepoName(serviceInfo.repoName);
-    this.selectRepo(serviceInfo.repoTestid);
-    cy.get(TestIds.continueButton).should("be.enabled").click();
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
     this.createComponent(name);
   }
 
-  enterMIEndpointServiceInfo(name: string, serviceInfo: ServiceInfo) {
+  enterMIEndpointServiceInfo(name: string, serviceInfo: ComponentInfo) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
@@ -119,16 +107,13 @@ export class _ComponentCreationWizard {
     }
 
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
-    this.searchRepoName(serviceInfo.repoName);
-    this.selectRepo(serviceInfo.repoTestid);
-    cy.get(TestIds.continueButton).should("be.enabled").click();
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
     this.createComponent(name);
   }
 
   enterWebAppServiceInfo(
     name: string,
-    serviceInfo: ServiceInfo,
+    serviceInfo: ComponentInfo,
     enterBuildPackInfo: () => void
   ) {
     cy.get(TestIds.serviceDisplayName)
@@ -137,48 +122,35 @@ export class _ComponentCreationWizard {
 
     this.createFromGHUrl(serviceInfo.repoUrl);
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
-    this.searchRepoName(serviceInfo.repoName);
-    this.selectRepo(serviceInfo.repoTestid);
-    this.selectSubRepoWebAppService(serviceInfo.repoTestid);
-    cy.get(TestIds.continueButton).should("be.enabled").click();
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
     enterBuildPackInfo();
     this.createComponent(name);
   }
 
-  enterGQLServiceInfo(name: string, serviceInfo: ServiceInfo) {
+  enterGQLServiceInfo(name: string, serviceInfo: ComponentInfo) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
 
     this.createFromGHUrl(serviceInfo.repoUrl);
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
-    this.searchRepoName(serviceInfo.repoName);
-    this.selectRepo(serviceInfo.repoTestid);
-    cy.get(TestIds.continueButton).should("be.enabled").click();
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
     this.createComponent(name);
   }
 
-  enterContainerizedServiceInfo(name: string, serviceInfo: ServiceInfo) {
+  enterContainerizedServiceInfo(name: string, serviceInfo: ComponentInfo) {
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
 
     this.createFromGHUrl(serviceInfo.repoUrl);
     this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(0).click();
-    this.searchRepoName(serviceInfo.repoName);
-    this.selectRepo(serviceInfo.repoTestid);
-    cy.get(TestIds.continueButton).should("be.enabled").click();
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
+
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(1).click();
     this.searchDockerFile("Dockerfile");
     cy.get(TestIds.continueButton).should("be.enabled").click();
     this.createComponent(name);
-  }
-
-  private searchRepoName(repoSearchBox: string) {
-    cy.get(TestIds.repoSearchBox).should("be.visible").type(repoSearchBox);
   }
 
   private searchDockerFile(dockerSearchBox: string) {
@@ -189,12 +161,20 @@ export class _ComponentCreationWizard {
       .click();
   }
 
-  private selectRepo(testid: string) {
-    cy.get(TestIds.repoSubPath(testid)).should("be.visible").click();
-  }
+  private selectProjectDirectory(directoryInfo?: DirectoryInfo) {
+    if (directoryInfo !== undefined) {
+      cy.get(TestIds.projectDirectoryEdit).should("be.enabled").eq(0).click();
+      cy.get(TestIds.repoSearchBox).should("be.visible").type(directoryInfo.directoryName);
 
-  private selectSubRepoWebAppService(testid: string) {
-    cy.get(TestIds.webAppServiceAuthRepo).should("be.visible").click();
+      if (directoryInfo.subDirectories !== undefined) {
+        for (const subDirectory of directoryInfo.subDirectories) {
+          cy.get(TestIds.repoSubPath(subDirectory)).should("be.visible").click();
+        }
+      }
+
+      cy.get(TestIds.repoSubPath(directoryInfo.directoryTestid)).should("be.visible").click();
+      cy.get(TestIds.continueButton).should("be.enabled").click();
+    }
   }
 
   private createComponent(name: string) {

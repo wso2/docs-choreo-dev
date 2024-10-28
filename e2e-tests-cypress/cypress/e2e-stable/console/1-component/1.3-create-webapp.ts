@@ -27,7 +27,10 @@ describe("Create Web App", () => {
   const BACKEND_SERVICE_COMPONENT_NAME = "managedauthbackend";
   const BACKEND_CONNECTION_NAME = "Managed Auth BE Connection";
   const REPO_URL = "https://github.com/wso2/choreo-samples";
-  const REPO_NAME = "reading-list-app";
+  const DIRECTORY_NAME = "reading-list-app";
+  const SUB_DIRECTORY = [DIRECTORY_NAME];
+  const BACKEND_SUB_DIRECTORY_ID = `${DIRECTORY_NAME}/reading-list-service`
+  const WEB_APP_SUB_DIRECTORY_ID = `${DIRECTORY_NAME}/reading-list-front-end-with-managed-auth`
 
   let project: Project;
   let webApp: WebApp;
@@ -116,10 +119,10 @@ describe("Create Web App", () => {
             displayName: "",
             repoUrl: REPO_URL,
             buildPack: BuildPacks.Ballerina,
-            repoName: REPO_NAME,
-            repoTestid: "greeting-service",
-            ENDPOINT_NAME,
-          })
+            directoryInfo: { directoryName: DIRECTORY_NAME, subDirectories: SUB_DIRECTORY, directoryTestid: BACKEND_SUB_DIRECTORY_ID },
+          }, 
+          ENDPOINT_NAME, 
+          BACKEND_SERVICE_COMPONENT_NAME)
           .then((comp) => {
             service = comp;
           });
@@ -174,9 +177,7 @@ describe("Create Web App", () => {
         displayName: "",
         repoUrl: REPO_URL,
         buildPack: BuildPacks.WEBAPP,
-        repoName: REPO_NAME,
-        repoTestid: REPO_NAME,
-        ENDPOINT_NAME,
+        directoryInfo: { directoryName: DIRECTORY_NAME, subDirectories: SUB_DIRECTORY, directoryTestid: WEB_APP_SUB_DIRECTORY_ID },
       },
       enterBuildPackInfo
     ).then((comp) => {

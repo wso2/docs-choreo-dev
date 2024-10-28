@@ -41,10 +41,9 @@ describe(`Graphql GQL service functionality`, () => {
         displayName: "",
         repoUrl: REPO_URL,
         buildPack: BuildPacks.Ballerina,
-        repoName: REPO_NAME,
-        repoTestid: REPO_NAME,
-        ENDPOINT_NAME,
-      })
+        directoryInfo: { directoryName: REPO_NAME, directoryTestid: REPO_NAME }
+      }, 
+      ENDPOINT_NAME)
       .then((comp) => {
         component = comp;
       });
