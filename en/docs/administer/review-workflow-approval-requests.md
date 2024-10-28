@@ -5,7 +5,7 @@ In Choreo, administrators can [configure approvals for workflows](./configure-ap
 If you are assigned as an authorized reviewer for a particular workflow approval request, you will receive an email notification whenever a [request is submitted for approval](../develop-components/request-for-workflow-approval.md). The email will include a summary of the request and a link to the **Approvals** page in the Choreo Console, where you can review the details and either approve or reject the request.
 
 !!! note 
-     - Other members in the organization may also receive the same notification and might have already reviewed the request. In such cases, you will not be able to review it again.
+     - Other members configured as approvers within your organization will also receive the notification and may have already reviewed the request. In such cases, you will not be able to review it again.
      - Approval requests are made on behalf of the team, so once approved, any authorized team member can use the workflow.
 
 ## View workflow approval requests
