@@ -194,7 +194,7 @@ VALUES('API_SUBSCRIPTION_UPDATE', 'API Subscription Update','Update an existing 
 
 INSERT INTO public.workflow_definition
 (id, "name", description, approver_types, approver_permission, execute_upon_approval, allow_parallel_requests, request_format_schema)
-VALUES('API_SUBSCRIPTION', 'API Subscription', 'Create or update an API subscription with a given plan', 'ROLE,USER', 'choreo:workflow_subscription_approve', true, false,
+VALUES('API_SUBSCRIPTION', 'API Subscription', 'Creation or update of an API subscription with a specified plan', 'ROLE,USER', 'choreo:workflow_subscription_approve', true, false,
     '{
         "subscriptionPolicy": {
             "displayName": "Subscription Plan",
