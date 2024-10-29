@@ -459,6 +459,8 @@ mTLS
 OpenSSL
 namespaces
 GitLab
+DatabaseName
+mysql2
 roadmap
 Subprocessor
 subprocessors
@@ -699,7 +701,17 @@ authzHeaderValue
 myResourcePath
 evictable
 defaultable
+schemaVersion
+displayName
+basePath
+networkVisibilities
+component.yaml
 develop-a-ballerina-graphql-api
+choreo-managed-message-brokers
+create-choreo-managed-kafka-services
+configure-a-kafka-service
+monitor-a-kafka-service
+choreo-platform-services-billing
 faq.md
 Moesif.md
 integrate-choreo-with-moesif
@@ -979,6 +991,7 @@ submodules
 submodule
 unpublish
 unpublishing
+GenAI
  - docs/administer/customize-the-developer-portal.md
 cInlineImage-threeQuarter
  - docs/develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md
