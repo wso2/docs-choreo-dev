@@ -139,12 +139,12 @@ Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as envir
                 // Load environment variables
                 serviceURI := os.Getenv("SERVICE_URI")
                 if serviceURI == "" {
-                    log.Fatalln("SERVICE_URI is not set")
+                    log.Fatalln("service uri is not set")
                 }
 
                 topicName := os.Getenv("TOPIC_NAME")
                 if topicName == "" {
-                    log.Fatalln("TOPIC_NAME is not set")
+                    log.Fatalln("topic name is not set")
                 }
 
                 // Load certificates and configure TLS
