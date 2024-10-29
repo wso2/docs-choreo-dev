@@ -28,12 +28,6 @@ spec:
         - name: sts-mgt-service
           image: choreocontrolplane.azurecr.io/choreoipaas/sts-mgt-service:latest
           imagePullPolicy: Always
-          env:
-            - name: APIM_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: secret-sts-mgt-service
-                  key: APIM_REST_API_CONSUMER_SECRET
           ports:
             - containerPort: 3000
               name: service-port
