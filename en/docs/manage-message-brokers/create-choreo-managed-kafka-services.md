@@ -61,6 +61,7 @@ Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as envir
                 "github.com/segmentio/kafka-go"
             )
 
+            // loadPEMFromFile reads a PEM file from the specified file path.
             func loadPEMFromFile(filePath string) ([]byte, error) {
                 data, err := os.ReadFile(filePath)
                 if err != nil {
@@ -69,34 +70,39 @@ Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as envir
                 return data, nil
             }
 
-            func main() {
+            // loadCertificates loads the necessary certificates for TLS configuration.
+            func loadCertificates() (tls.Certificate, *x509.CertPool, error) {
                 serviceCert, err := loadPEMFromFile("/service.cert")
                 if err != nil {
-                    log.Fatalf("Failed to load SERVICE_CERT: %s", err)
+                    return tls.Certificate{}, nil, fmt.Errorf("failed to load service cert: %v", err)
                 }
 
                 serviceKey, err := loadPEMFromFile("/service.key")
                 if err != nil {
-                    log.Fatalf("Failed to load SERVICE_KEY: %s", err)
+                    return tls.Certificate{}, nil, fmt.Errorf("failed to load service key: %v", err)
                 }
 
                 caCert, err := loadPEMFromFile("/ca.pem")
                 if err != nil {
-                    log.Fatalf("Failed to load CA_CERT: %s", err)
+                    return tls.Certificate{}, nil, fmt.Errorf("failed to load ca cert: %v", err)
                 }
 
                 keypair, err := tls.X509KeyPair(serviceCert, serviceKey)
                 if err != nil {
-                    log.Fatalf("Failed to load access key and/or access certificate: %s", err)
+                    return tls.Certificate{}, nil, fmt.Errorf("failed to load key and cert: %v", err)
                 }
 
                 caCertPool := x509.NewCertPool()
-                ok := caCertPool.AppendCertsFromPEM(caCert)
-                if !ok {
-                    log.Fatalf("Failed to parse CA certificate from environment variable")
+                if !caCertPool.AppendCertsFromPEM(caCert) {
+                    return tls.Certificate{}, nil, fmt.Errorf("failed to append ca cert")
                 }
 
-                dialer := &kafka.Dialer{
+                return keypair, caCertPool, nil
+            }
+
+            // createKafkaDialer initializes a Kafka dialer with the provided certificates and CA pool.
+            func createKafkaDialer(keypair tls.Certificate, caCertPool *x509.CertPool) *kafka.Dialer {
+                return &kafka.Dialer{
                     Timeout:   10 * time.Second,
                     DualStack: true,
                     TLS: &tls.Config{
@@ -104,32 +110,64 @@ Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as envir
                         RootCAs:      caCertPool,
                     },
                 }
+            }
 
-                serviceURI := os.Getenv("SERVICE_URI")
-                if serviceURI == "" {
-                    fmt.Println("Environment variable 'SERVICE_URI' not set")
-                }
-
-                topicName := os.Getenv("TOPIC_NAME")
-                if topicName == "" {
-                    fmt.Println("Environment variable 'TOPIC_NAME' not set")
-                }
-
-                producer := kafka.NewWriter(kafka.WriterConfig{
+            // setupKafkaProducer initializes and returns a Kafka producer.
+            func setupKafkaProducer(dialer *kafka.Dialer, serviceURI, topicName string) *kafka.Writer {
+                return kafka.NewWriter(kafka.WriterConfig{
                     Brokers: []string{serviceURI},
                     Topic:   topicName,
                     Dialer:  dialer,
                 })
+            }
 
-                for i := 0; i < 100; i++ {
-                    message := fmt.Sprint("Hello from Go using SSL ", i+1, "!")
-                    producer.WriteMessages(context.Background(), kafka.Message{Value: []byte(message)})
-                    log.Printf("Message sent: " + message)
+            // sendMessages sends a specified number of messages to the Kafka topic.
+            func sendMessages(producer *kafka.Writer, count int) {
+                for i := 0; i < count; i++ {
+                    message := fmt.Sprintf("Hello from Go using SSL %d!", i+1)
+                    err := producer.WriteMessages(context.Background(), kafka.Message{Value: []byte(message)})
+                    if err != nil {
+                        log.Printf("failed to send message: %v", err)
+                    } else {
+                        log.Printf("message sent: %s", message)
+                    }
                     time.Sleep(time.Second)
                 }
-
-                defer producer.Close()
             }
+
+            func main() {
+                // Load environment variables
+                serviceURI := os.Getenv("SERVICE_URI")
+                if serviceURI == "" {
+                    log.Fatalln("SERVICE_URI is not set")
+                }
+
+                topicName := os.Getenv("TOPIC_NAME")
+                if topicName == "" {
+                    log.Fatalln("TOPIC_NAME is not set")
+                }
+
+                // Load certificates and configure TLS
+                keypair, caCertPool, err := loadCertificates()
+                if err != nil {
+                    log.Fatalf("failed to load certificates: %v", err)
+                }
+
+                // Create Kafka dialer
+                dialer := createKafkaDialer(keypair, caCertPool)
+
+                // Set up Kafka producer
+                producer := setupKafkaProducer(dialer, serviceURI, topicName)
+                defer func() {
+                    if err := producer.Close(); err != nil {
+                        log.Printf("failed to close producer: %v", err)
+                    }
+                }()
+
+                // Send messages
+                sendMessages(producer, 100)
+            }
+
 
 
         
@@ -151,6 +189,7 @@ Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as envir
                 "github.com/segmentio/kafka-go"
             )
 
+            // loadPEMFromFile reads a PEM file from the specified file path.
             func loadPEMFromFile(filePath string) ([]byte, error) {
                 data, err := os.ReadFile(filePath)
                 if err != nil {
@@ -159,32 +198,39 @@ Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as envir
                 return data, nil
             }
 
-            func main() {
+            // loadCertificates loads the necessary certificates for TLS configuration.
+            func loadCertificates() (tls.Certificate, *x509.CertPool, error) {
                 serviceCert, err := loadPEMFromFile("/service.cert")
                 if err != nil {
-                    log.Fatalf("Failed to load SERVICE_CERT: %s", err)
+                    return tls.Certificate{}, nil, fmt.Errorf("failed to load service cert: %v", err)
                 }
+
                 serviceKey, err := loadPEMFromFile("/service.key")
                 if err != nil {
-                    log.Fatalf("Failed to load SERVICE_KEY: %s", err)
+                    return tls.Certificate{}, nil, fmt.Errorf("failed to load service key: %v", err)
                 }
+
                 caCert, err := loadPEMFromFile("/ca.pem")
                 if err != nil {
-                    log.Fatalf("Failed to load CA_CERT: %s", err)
+                    return tls.Certificate{}, nil, fmt.Errorf("failed to load ca cert: %v", err)
                 }
 
                 keypair, err := tls.X509KeyPair(serviceCert, serviceKey)
                 if err != nil {
-                    log.Fatalf("Failed to load access key and/or access certificate: %s", err)
+                    return tls.Certificate{}, nil, fmt.Errorf("failed to load key and cert: %v", err)
                 }
 
                 caCertPool := x509.NewCertPool()
-                ok := caCertPool.AppendCertsFromPEM(caCert)
-                if !ok {
-                    log.Fatalf("Failed to parse CA certificate from environment variable")
+                if !caCertPool.AppendCertsFromPEM(caCert) {
+                    return tls.Certificate{}, nil, fmt.Errorf("failed to append ca cert")
                 }
 
-                dialer := &kafka.Dialer{
+                return keypair, caCertPool, nil
+            }
+
+            // createKafkaDialer initializes a Kafka dialer with the provided certificates and CA pool.
+            func createKafkaDialer(keypair tls.Certificate, caCertPool *x509.CertPool) *kafka.Dialer {
+                return &kafka.Dialer{
                     Timeout:   10 * time.Second,
                     DualStack: true,
                     TLS: &tls.Config{
@@ -192,30 +238,59 @@ Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as envir
                         RootCAs:      caCertPool,
                     },
                 }
+            }
 
-                serviceURI := os.Getenv("SERVICE_URI")
-                if serviceURI == "" {
-                    fmt.Println("Environment variable 'SERVICE_URI' not set")
-                }
-                topicName := os.Getenv("TOPIC_NAME")
-                if topicName == "" {
-                    fmt.Println("Environment variable 'TOPIC_NAME' not set")
-                }
-
-                consumer := kafka.NewReader(kafka.ReaderConfig{
+            // setupKafkaConsumer initializes and returns a Kafka consumer.
+            func setupKafkaConsumer(dialer *kafka.Dialer, serviceURI, topicName string) *kafka.Reader {
+                return kafka.NewReader(kafka.ReaderConfig{
                     Brokers: []string{serviceURI},
                     Topic:   topicName,
                     Dialer:  dialer,
                 })
-                defer consumer.Close()
+            }
 
+            // consumeMessages continuously reads messages from the Kafka topic.
+            func consumeMessages(consumer *kafka.Reader) {
                 for {
-                    message, err := consumer.ReadMessage(context.Background())
+                    msg, err := consumer.ReadMessage(context.Background())
                     if err != nil {
-                        log.Printf("Could not read message: %s", err)
-                    } else {
-                        log.Printf("Got message using SSL: %s", message.Value)
+                        log.Printf("could not read message: %v", err)
+                        continue
                     }
+                    log.Printf("received: %s", msg.Value)
                 }
+            }
+
+            func main() {
+                // Load environment variables
+                serviceURI := os.Getenv("SERVICE_URI")
+                if serviceURI == "" {
+                    log.Fatalln("service uri is not set")
+                }
+
+                topicName := os.Getenv("TOPIC_NAME")
+                if topicName == "" {
+                    log.Fatalln("topic name is not set")
+                }
+
+                // Load certificates and configure TLS
+                keypair, caCertPool, err := loadCertificates()
+                if err != nil {
+                    log.Fatalf("failed to load certificates: %v", err)
+                }
+
+                // Create Kafka dialer
+                dialer := createKafkaDialer(keypair, caCertPool)
+
+                // Set up Kafka consumer
+                consumer := setupKafkaConsumer(dialer, serviceURI, topicName)
+                defer func() {
+                    if err := consumer.Close(); err != nil {
+                        log.Printf("failed to close consumer: %v", err)
+                    }
+                }()
+
+                // Consume messages
+                consumeMessages(consumer)
             }
 
