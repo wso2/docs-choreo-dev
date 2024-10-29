@@ -87,7 +87,7 @@ spec:
               subPath: "CHOREO_STS_REDIS_PASSWORD"
               readOnly: true
             - name: choreo-appdev-sts-secrets
-              mountPath: "/mnt/csi/secret-choreo-sts/cp-consumer-secret.txt"
+              mountPath: "/mnt/csi/choreo-appdev-sts-secrets/cp-consumer-secret.txt"
               subPath: "APP_DEV_STS_APP_CLIENT_SECRET"
               readOnly: true
       restartPolicy: Always
