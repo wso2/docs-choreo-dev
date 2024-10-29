@@ -40,6 +40,7 @@ configMapGenerator:
       - CHOREO_JWT_AUDIENCE="{{.CHOREO_JWT_AUDIENCE}}"
       - METERED_USAGE_SERVICE_URL="{{.METERED_USAGE_SERVICE_URL}}"
       - CLIENT_TRUSTSTORE_PATH="{{.CLIENT_TRUSTSTORE_PATH}}"
+      - INFRACOST_COLLECTOR_CLUSTER_ID="{{.INFRACOST_COLLECTOR_CLUSTER_ID}}"
   - name: env-app-gateway-oauth-agent
     behavior: create
     literals:
