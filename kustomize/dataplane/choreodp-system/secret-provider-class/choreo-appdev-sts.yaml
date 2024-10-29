@@ -13,16 +13,6 @@ kind: SecretProviderClass
 metadata:
   name: choreo-appdev-sts-secrets
 spec:
-  secretObjects:
-    - secretName: choreo-appdev-sts-secrets
-      type: Opaque
-      data:
-        - objectName: DP_STS_CLIENT_SECRET_ENCRYPTION_KEY
-          key: DP_STS_CLIENT_SECRET_ENCRYPTION_KEY
-        - objectName: CHOREO_STS_REDIS_PASSWORD
-          key: CHOREO_STS_REDIS_PASSWORD
-        - objectName: APP_DEV_STS_APP_CLIENT_SECRET
-          key: APP_DEV_STS_APP_CLIENT_SECRET
   parameters:
     objects: |
       array:
