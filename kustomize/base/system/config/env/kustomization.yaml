@@ -1056,6 +1056,7 @@ configMapGenerator:
       - DB_NAME=choreo_sts_mgt_svc_db
       - DB_SSL_MODE=require
       - APIM_CLIENT_KEY={{.APIM_CLIENT_KEY}}
+      - APIM_CLIENT_SECRET_FILE=//mnt/csi/secret-sts-mgt-svc/APIM_REST_API_CONSUMER_SECRET
       - APIM_SERVICE_URL=http://choreo-am-service.dev-choreo-apim:9763
       - MIZZEN_SERVICE_URL=http://dp-mizzen:80
       - CHOREO_STS_SERVICE_URL=http://choreo-sts:9000

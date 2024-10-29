@@ -4,7 +4,6 @@ metadata:
   labels:
     choreo.component: sts-mgt-service
   name: sts-mgt-service
-  namespace: choreo-system
 spec:
   maxReplicas: 8
   minReplicas: 2

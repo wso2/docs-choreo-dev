@@ -6,7 +6,6 @@ metadata:
   labels:
     choreo.component: sts-mgt-service
   name: sts-mgt-service
-  namespace: choreo-system
 spec:
   replicas: 1
   selector:
