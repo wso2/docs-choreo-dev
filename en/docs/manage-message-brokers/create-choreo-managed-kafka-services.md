@@ -24,13 +24,25 @@ Follow the steps below to create a Choreo-managed Kafka service:
 
 To connect to your Choreo-managed Kafka service, use the connection parameters from the **Overview** tab on the service details page. Choreo secures Kafka connections via client certificate authentication.
 
+![Kafka Service Overview ](../../assets/img/platform-services/message-broker-overview.png)
+
 To use the Kafka service with producer and consumer programs, you must configure them with the provided credentials and connection parameters.
 
 By default, Kafka services accept traffic from the internet. However, if you want to restrict access to specific IP addresses or CIDR blocks, you can configure the necessary advanced settings.
 
-The following are sample code blocks in [Go](https://go.dev/) to help you configure producer and consumer programs. The samples assume the certificates are in the same directory as the code. If you keep the certificates in a dedicated directory, you must specify the full path to the directory.
+To use the Kafka service in producer and consumer programs, configure the required values as Configs and Secrets in Choreo. These values, available on the service overview page, include key configurations such as the access key, access certificate, CA certificate, and service URI. Before producing or consuming Kafka messages, make sure to [create a topic](./configure-a-kafka-service.md#create-a-kafka-topic). If a topic already exists, you can proceed.
 
-To produce or consume Kafka messages, you must first [create a topic](./configure-a-kafka-service.md#create-a-kafka-topic). If you already have a topic, you can use it in the sample code.
+### Setting Up Configs and Secrets
+
+Begin by creating two Choreo components: one for the producer and another for the consumer program. Refer to the sample [Go](https://go.dev/) code below for implementing the producer and consumer. Then, define the required [Configs and Secrets](https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/) at the component level for each.
+
+You can configure service.key, service.cert, and ca.pem using file mounts. The example below illustrates creating a file mount for the CA certificate; follow the same steps for the other files.
+
+![Set CA Certificate](../../assets/img/platform-services/ca-cert.png)
+
+Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as environment variables. For instance, you can define them as shown in the following example.
+
+![Set Env Variables ](../../assets/img/platform-services/env-variables.png)
 
 === "Producer"
     
@@ -42,30 +54,46 @@ To produce or consume Kafka messages, you must first [create a topic](./configur
                 "crypto/tls"
                 "crypto/x509"
                 "fmt"
-                "io/ioutil"
                 "log"
+                "os"
                 "time"
 
                 "github.com/segmentio/kafka-go"
             )
 
-            func main() {
-                TOPIC_NAME := "TOPIC_NAME"
-
-                keypair, err := tls.LoadX509KeyPair("service.cert", "service.key")
+            func loadPEMFromFile(filePath string) ([]byte, error) {
+                data, err := os.ReadFile(filePath)
                 if err != nil {
-                    log.Fatalf("Failed to load access key and/or access certificate: %s", err)
+                    return nil, fmt.Errorf("failed to read file %s: %w", filePath, err)
+                }
+                return data, nil
+            }
+
+            func main() {
+                serviceCert, err := loadPEMFromFile("/service.cert")
+                if err != nil {
+                    log.Fatalf("Failed to load SERVICE_CERT: %s", err)
                 }
 
-                caCert, err := ioutil.ReadFile("ca.pem")
+                serviceKey, err := loadPEMFromFile("/service.key")
                 if err != nil {
-                    log.Fatalf("Failed to read CA certificate file: %s", err)
+                    log.Fatalf("Failed to load SERVICE_KEY: %s", err)
+                }
+
+                caCert, err := loadPEMFromFile("/ca.pem")
+                if err != nil {
+                    log.Fatalf("Failed to load CA_CERT: %s", err)
+                }
+
+                keypair, err := tls.X509KeyPair(serviceCert, serviceKey)
+                if err != nil {
+                    log.Fatalf("Failed to load access key and/or access certificate: %s", err)
                 }
 
                 caCertPool := x509.NewCertPool()
                 ok := caCertPool.AppendCertsFromPEM(caCert)
                 if !ok {
-                    log.Fatalf("Failed to parse CA certificate file: %s", err)
+                    log.Fatalf("Failed to parse CA certificate from environment variable")
                 }
 
                 dialer := &kafka.Dialer{
@@ -77,14 +105,22 @@ To produce or consume Kafka messages, you must first [create a topic](./configur
                     },
                 }
 
-                // init producer
+                serviceURI := os.Getenv("SERVICE_URI")
+                if serviceURI == "" {
+                    fmt.Println("Environment variable 'SERVICE_URI' not set")
+                }
+
+                topicName := os.Getenv("TOPIC_NAME")
+                if topicName == "" {
+                    fmt.Println("Environment variable 'TOPIC_NAME' not set")
+                }
+
                 producer := kafka.NewWriter(kafka.WriterConfig{
-                    Brokers: []string{"kafka-48aafe1c-c389-4eb6-9285-2dd121f6fbce-check1717655554-chor.l.aivencloud.com:16364"},
-                    Topic:   TOPIC_NAME,
+                    Brokers: []string{serviceURI},
+                    Topic:   topicName,
                     Dialer:  dialer,
                 })
 
-                // produce 100 messages
                 for i := 0; i < 100; i++ {
                     message := fmt.Sprint("Hello from Go using SSL ", i+1, "!")
                     producer.WriteMessages(context.Background(), kafka.Message{Value: []byte(message)})
@@ -92,8 +128,9 @@ To produce or consume Kafka messages, you must first [create a topic](./configur
                     time.Sleep(time.Second)
                 }
 
-                producer.Close()
+                defer producer.Close()
             }
+
 
         
 
@@ -106,30 +143,45 @@ To produce or consume Kafka messages, you must first [create a topic](./configur
                 "context"
                 "crypto/tls"
                 "crypto/x509"
-                "io/ioutil"
+                "fmt"
                 "log"
+                "os"
                 "time"
 
                 "github.com/segmentio/kafka-go"
             )
 
-            func main() {
-                TOPIC_NAME := "TOPIC_NAME"
-
-                keypair, err := tls.LoadX509KeyPair("service.cert", "service.key")
+            func loadPEMFromFile(filePath string) ([]byte, error) {
+                data, err := os.ReadFile(filePath)
                 if err != nil {
-                    log.Fatalf("Failed to load access key and/or access certificate: %s", err)
+                    return nil, fmt.Errorf("failed to read file %s: %w", filePath, err)
+                }
+                return data, nil
+            }
+
+            func main() {
+                serviceCert, err := loadPEMFromFile("/service.cert")
+                if err != nil {
+                    log.Fatalf("Failed to load SERVICE_CERT: %s", err)
+                }
+                serviceKey, err := loadPEMFromFile("/service.key")
+                if err != nil {
+                    log.Fatalf("Failed to load SERVICE_KEY: %s", err)
+                }
+                caCert, err := loadPEMFromFile("/ca.pem")
+                if err != nil {
+                    log.Fatalf("Failed to load CA_CERT: %s", err)
                 }
 
-                caCert, err := ioutil.ReadFile("ca.pem")
+                keypair, err := tls.X509KeyPair(serviceCert, serviceKey)
                 if err != nil {
-                    log.Fatalf("Failed to read CA certificate file: %s", err)
+                    log.Fatalf("Failed to load access key and/or access certificate: %s", err)
                 }
 
                 caCertPool := x509.NewCertPool()
                 ok := caCertPool.AppendCertsFromPEM(caCert)
                 if !ok {
-                    log.Fatalf("Failed to parse CA certificate file: %s", err)
+                    log.Fatalf("Failed to parse CA certificate from environment variable")
                 }
 
                 dialer := &kafka.Dialer{
@@ -141,16 +193,24 @@ To produce or consume Kafka messages, you must first [create a topic](./configur
                     },
                 }
 
-                // init consumer
+                serviceURI := os.Getenv("SERVICE_URI")
+                if serviceURI == "" {
+                    fmt.Println("Environment variable 'SERVICE_URI' not set")
+                }
+                topicName := os.Getenv("TOPIC_NAME")
+                if topicName == "" {
+                    fmt.Println("Environment variable 'TOPIC_NAME' not set")
+                }
+
                 consumer := kafka.NewReader(kafka.ReaderConfig{
-                    Brokers: []string{"kafka-48aafe1c-c389-4eb6-9285-2dd121f6fbce-check1717655554-chor.l.aivencloud.com:16364"},
-                    Topic:   TOPIC_NAME,
+                    Brokers: []string{serviceURI},
+                    Topic:   topicName,
                     Dialer:  dialer,
                 })
+                defer consumer.Close()
 
                 for {
                     message, err := consumer.ReadMessage(context.Background())
-
                     if err != nil {
                         log.Printf("Could not read message: %s", err)
                     } else {
@@ -158,3 +218,4 @@ To produce or consume Kafka messages, you must first [create a topic](./configur
                     }
                 }
             }
+
