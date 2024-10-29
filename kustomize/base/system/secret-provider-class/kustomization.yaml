@@ -82,6 +82,7 @@ resources:
   - choreo-platform-services-manager.yaml
   - workflow-mgt-db.yaml
   - choreo-aws-marketplace-client.yaml
+  - sts-mgt-service.yaml
 
 patches:
   - path: patch.json
