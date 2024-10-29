@@ -1051,7 +1051,7 @@ configMapGenerator:
       - PORT=3000
       - DB_HOST={{.DB_HOST}}
       - DB_PORT=5432
-      - DB_USERNAME={{.DB_USERNAME}}
+      - DB_USERNAME=choreo_sts_mgt_svc_db_user
       - DB_PASSWORD_FILE=/mnt/csi/secret-sts-mgt-svc/CHOREO_STS_MGT_DB_PASSWORD
       - DB_NAME=choreo_sts_mgt_svc_db
       - DB_SSL_MODE=require
