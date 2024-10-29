@@ -9,7 +9,7 @@ management:
   dataplaneIdentifier: {{.DATAPLANE_IDENTIFIER}}
 redis:
   username: {{.REDIS_USERNAME | default "default"}}
-  passwordFile: {{/REDIS_PASSWORD_FILE | default "/mnt/csi/choreo-appdev-sts-secrets/redis-password.txt"}}
+  passwordFile: {{.REDIS_PASSWORD_FILE | default "/mnt/csi/choreo-appdev-sts-secrets/redis-password.txt"}}
   nodes:
     - {{.REDIS_NODE | default "redis-cluster-headless.redis.svc.cluster.local:6379"}}
   client:
