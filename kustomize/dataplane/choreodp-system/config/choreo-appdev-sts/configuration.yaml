@@ -30,7 +30,7 @@ services:
   authzService:
     url: {{.AUTHZ_SERVICE_URL}}
   kvResolverService:
-    url: {{.KV_RESOLVER_SERVICE_URL}}
+    url: {{.KV_RESOLVER_SERVICE_URL | default "http://dp-kv-resolver.svc.cluster.local:80"}}
   legacyTokenService:
     url: {{.LEGACY_TOKEN_SERVICE_URL}}
   controlPlaneTokenService:
