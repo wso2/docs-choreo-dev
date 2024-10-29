@@ -82,6 +82,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -106,6 +108,8 @@ public class ComponentUtils {
 
     private static final String timestampRegexMatch = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}Z|\\d{2}.\\d{2}Z|\\d{2}.\\d{3}Z|\\d{2}.\\d{4}Z|\\d{2}.\\d{5}Z|\\d{2}.\\d{6}Z|\\d{2}.\\d{7}Z)";
     private static final String APIS_ENDPOINT = Constant.APIS_ENDPOINT;
+    private static final Logger log = LogManager.getLogger(ComponentUtils.class);
+
 
     private static final int MAX_DEPLOY_RETRY_COUNT = 5;
 
@@ -1092,6 +1096,7 @@ public class ComponentUtils {
                 } else {
                     //Using a linear backoff instead of exponential backoff to reduce the impact on test suite runtime
                     TimeUnit.SECONDS.sleep((long) backOffFactor * retryNumber);
+                    log.debug(". Retry #{} for URL {} since invoke failed : {}", retryNumber, invokeUrl.concat(resource), e);
                 }
             }
         } while (shouldRetry);
@@ -1395,6 +1400,7 @@ public class ComponentUtils {
             Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent choreoComponent, Environment env)
             throws Exception {
+        SleepUtil.sleep(60); //Wait for some time to publish latest metrics to adx
         DPObsApiService.getProjectMetrics(runner, citrusDPClients, accessToken,
                 project, choreoComponent, env, true);
     }
@@ -1403,6 +1409,7 @@ public class ComponentUtils {
             Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoComponent choreoComponent, Environment env, ChoreoProject project)
             throws Exception {
+        SleepUtil.sleep(60); //Wait for some time to publish latest metrics to adx
         DPObsApiService.getComponentAppMetrics(runner, citrusDPClients, accessToken,
                 choreoComponent, env, project);
     }
