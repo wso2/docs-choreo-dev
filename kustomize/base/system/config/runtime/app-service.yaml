@@ -149,6 +149,76 @@ defaultRoles:
     permissions:
       - all
   roles:
+    - name: Project Admin
+      handle: project-admin
+      description: Users who have full access at the project level
+      tags:
+        - project-admin
+      permissions:
+        - apim:publisher_settings
+        - apim:api_manage
+        - apim:tier_manage
+        - apim:subscription_manage
+        - apim:dcr:app_manage
+        - apim:api_publish
+        - apim:api_view
+        - apim:tier_view
+        - apim:api_generate_key
+        - apim:document_manage
+        - apim:api_settings
+        - apim:subscription_view
+        - apim:prod_key_manage
+        - apim:sand_key_manage
+        - apim:subscribe
+        - apim:app_manage
+        - apim:sub_manage
+        - apim:app_import_export
+        - apim:api_key
+        - urn:choreocontrolplane:environments:view_prod
+        - urn:choreocontrolplane:environments:view_dev
+        - urn:choreocontrolplane:choreo:deployment_manage
+        - urn:choreocontrolplane:choreodevopsportalapi:deployment_view
+        - urn:choreocontrolplane:choreodevopsportalapi:deployment_manage
+        - urn:choreocontrolplane:choreodevopsportalapi:component_manage
+        - urn:choreocontrolplane:componentutils:component_file_view
+        - urn:choreocontrolplane:componentutils:component_trigger
+        - urn:choreocontrolplane:componentutils:component_manage
+        - urn:choreocontrolplane:componentsmanagement:component_trigger
+        - urn:choreocontrolplane:componentsmanagement:component_create
+        - urn:choreocontrolplane:componentsmanagement:component_config_view
+        - urn:choreocontrolplane:componentsmanagement:component_logs_view
+        - urn:choreocontrolplane:componentsmanagement:component_init_view
+        - urn:choreocontrolplane:componentsmanagement:component_file_view
+        - urn:choreocontrolplane:componentsmanagement:component_manage
+        - urn:choreocontrolplane:configmanagement:global_config_manage
+        - urn:choreocontrolplane:configmanagement:global_config_view
+        - urn:choreocontrolplane:configmanagement:global_config_create
+        - urn:choreocontrolplane:configmanagement:global_config_delete
+        - urn:choreocontrolplane:configmanagement:global_config_update
+        - urn:choreocontrolplane:configmanagement:config_manage
+        - urn:choreocontrolplane:configmanagement:config_view
+        - urn:choreocontrolplane:configmanagement:config_create
+        - urn:choreocontrolplane:configmanagement:config_delete
+        - urn:choreocontrolplane:customdomainapi:custom_domain_view
+        - choreo:non_prod_env_manage
+        - choreo:prod_env_manage
+        - choreo:log_view_non_prod
+        - choreo:log_view_prod
+        - choreo:project_view
+        - choreo:project_manage
+        - choreo:component_manage
+        - choreo:domain_view
+        - choreo:url_mapping_manage
+        - choreo:url_mapping_view
+        - urn:choreocontrolplane:usermanagement:permission_view
+        - urn:choreocontrolplane:usermanagement:role_mapping_view
+        - urn:choreocontrolplane:usermanagement:role_mapping_create
+        - urn:choreocontrolplane:usermanagement:role_mapping_update
+        - urn:choreocontrolplane:usermanagement:role_mapping_delete
+        - urn:choreocontrolplane:usermanagement:role_mapping_manage
+        - urn:choreocontrolplane:usermanagement:role_view
+        - choreo:workflow_component_promotion_approve
+        - choreo:workflow_subscription_approve
     - name: Developer
       handle: developer
       description: Users who develop, deploy, and manage cloud-native applications at scale.
