@@ -33,7 +33,7 @@ services:
     url: {{.KV_RESOLVER_SERVICE_URL | default "http://dp-kv-resolver.svc.cluster.local:80"}}
   legacyTokenService:
     url: {{.LEGACY_TOKEN_SERVICE_URL}}
-    rewriteUrls:
+    rewritePaths:
       - from: "/.well-known/openid-configuration"
         to: "/api/am/appdev/v1/sts/.well-known/openid-configuration"
       - from: "/connect/logout"
