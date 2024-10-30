@@ -59,6 +59,16 @@ To integrate another service into your application, click the appropriate tab be
           | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
           | TokenURL       | string     | Token URL of the STS                  | false         | false        |
 
+    ### Step 2: Read configurations within the application
+
+    Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+
+    The following is a sample code snippet in NodeJS:
+
+    ``` java
+    const serviceURL = process.env.CHOREO_<CONNECTION_NAME>_SERVICEURL;
+    ```
+
 === "Component.yaml file (v1.0)"
 
     !!! note
@@ -108,6 +118,17 @@ To integrate another service into your application, click the appropriate tab be
           | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
           | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
           | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+
+    ### Step 2: Read configurations within the application
+
+    Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+
+    The following is a sample code snippet in NodeJS:
+
+    ``` java
+    const serviceURL = process.env.SVC_URL;
+    ```
+
 
 === "Component-config.yaml file"
 
@@ -159,16 +180,17 @@ To integrate another service into your application, click the appropriate tab be
           | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
           | TokenURL       | string     | Token URL of the STS                  | false         | false        |
 
+    ### Step 2: Read configurations within the application
 
-### Step 2: Read configurations within the application
+    Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
 
-Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+    The following is a sample code snippet in NodeJS:
 
-The following is a sample code snippet in NodeJS:
+    ``` java
+    const serviceURL = process.env.SVC_URL;
+    ```
 
-``` java
-const serviceURL = process.env.SVC_URL;
-```
+
 
 ### Step 3: Acquire an OAuth 2.0 access token
 
