@@ -27,6 +27,7 @@ websubHubUrl = "{{.WEBSUB_HUB_URL}}"
 websubHubTopic = "{{.WEBSUB_HUB_TOPIC}}"
 enableSTSManagementService = {{.ENABLE_STS_MANAGEMENT_SERVICE | default false}}
 choreoStsMgtServiceUrl = "http://sts-mgt-service:3000/api/v1/sts-proxy"
+apiKeyServiceEndpoint = "http://api-key-service:8080/api/v1"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
