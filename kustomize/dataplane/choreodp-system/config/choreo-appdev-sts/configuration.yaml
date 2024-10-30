@@ -34,10 +34,10 @@ services:
   legacyTokenService:
     url: {{.LEGACY_TOKEN_SERVICE_URL}}
     rewriteUrls:
-    - from: "/.well-known/openid-configuration"
-      to: "/api/am/appdev/v1/sts/.well-known/openid-configuration"
-    - from: "/connect/logout"
-      to: "/oidc/logout"
+      - from: "/.well-known/openid-configuration"
+        to: "/api/am/appdev/v1/sts/.well-known/openid-configuration"
+      - from: "/connect/logout"
+        to: "/oidc/logout"
   controlPlaneTokenService:
     url: {{.CONTROL_PLANE_TOKEN_SERVICE_URL}}
     consumerKey: {{.CONTROL_PLANE_TOKEN_SERVICE_CONSUMER_KEY}}
