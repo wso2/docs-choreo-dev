@@ -90,7 +90,7 @@ Click the respective tab for details depending on the identity provider you want
 
      1. In the **Overview** page of the component, under **Authentication Configurations**, click **Configure** corresponding to the environment for which you want to configure an identity provider.
      2. In the **Identity Provider** list, select your identity provider.
-     3. Paste the **Client ID** and **Client Secret** of the OIDC/OAuth2.0 application you created in your external identity provider.
+     3. Paste the **Client ID** of the OIDC/OAuth2.0 application you created in your external identity provider.
      4. Click **Add Keys**.
 
 ## Step 3: Connect the external consumer to a service deployed in Choreo 
