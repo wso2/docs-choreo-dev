@@ -81,10 +81,7 @@ Click the respective tab for details depending on the identity provider you want
      **Step 2.1: Create and configure an OIDC/OAuth2.0 application in the external identity provider**
 
      1. Create an OIDC/OAuth2.0 application in your external identity provider.
-     2. Configure the OIDC/OAuth2.0 application as follows:
-
-         1. Set `Code` and `Refresh Token` as allowed grant types.
-         2. Specify the access token type as JWT.
+     2. Configure the OIDC/OAuth2.0 application accordingly. (The access token type should be configured as JWT)
 
      **Step 2.2: Link the OIDC/OAuth2.0 application to the Choreo component**
 
