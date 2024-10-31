@@ -28,7 +28,7 @@ Follow the steps below to create a Choreo-managed Kafka service:
 
 To connect to your Choreo-managed Kafka service, use the connection parameters from the **Overview** tab on the service details page. Choreo secures Kafka connections via client certificate authentication.
 
-![Kafka Service Overview ](../../assets/img/platform-services/message-broker-overview.png)
+![Kafka Service Overview ](../../assets/img/platform-services/kafka-service-overview.png)
 
 To use the Kafka service with producer and consumer programs, you must configure them with the provided credentials and connection parameters.
 
@@ -42,11 +42,11 @@ Begin by creating two Choreo components: one for the producer and another for th
 
 You can configure service.key, service.cert, and ca.pem using file mounts. The example below illustrates creating a file mount for the CA certificate; follow the same steps for the other files.
 
-![Set CA certificate](../../assets/img/platform-services/ca-cert.png)
+![Set CA certificate](../../assets/img/platform-services/set-ca-certificate.png)
 
 Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as environment variables. For instance, you can define them as shown in the following example.
 
-![Set environment variables ](../../assets/img/platform-services/env-variables.png)
+![Set environment variables ](../../assets/img/platform-services/set-environment-variables.png)
 
 === "Producer"
     
