@@ -88,6 +88,7 @@ liveness
 readingListApp
 ORGANIZATION_ID
 Petstore
+approvers
 build-your-first-cloud-native-application-with-choreo
 expose-a-service-as-a-managed-api
 build-your-first-integration
