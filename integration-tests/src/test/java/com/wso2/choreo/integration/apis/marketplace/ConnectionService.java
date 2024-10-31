@@ -17,9 +17,11 @@ import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.github.GitHub;
@@ -48,6 +50,7 @@ import org.springframework.http.MediaType;
 import org.testng.Assert;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -393,4 +396,78 @@ public class ConnectionService extends ControlPlaneAPI {
             connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
         }
     }
+
+    public static CommonResource FindDatabase(Map<Endpoints, HttpClient> citrusClients, TestNGCitrusSpringSupport runner, String accessToken, String databaseServerId,
+                                          String datbaseName) throws IOException {
+        HttpClient marketplaceServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        List<CommonResource> databases = MarketplaceService.searchForDatabase(runner,
+                marketplaceServiceClient, accessToken, databaseServerId, datbaseName);
+        return databases.get(0);
+    }
+
+    public static void CreateChoreoDatabaseConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                      DatabaseConnectionCreateRequest connectionReq) throws IOException {
+        String createChoreoConnectionURI = CONTEXT.concat("/configurations/service-configs/choreo-database-connections");
+        String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
+        runner.variable("isConnectionCreationSuccess", false);
+        runner.$(repeatOnError()
+                .until("(i = 5) or ( ${isConnectionCreationSuccess} = true )")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(createChoreoConnectionURI)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestPayload),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.CREATED)
+                                .validate((message, context) -> {
+                                            int code = (int) message.getHeader(HTTP_STATUS_CODE);
+                                            if (code != HttpStatus.CREATED.value()) {
+                                                throw new ValidationException("Connection creation failed with status code: " + code);
+                                            }
+
+                                        }
+                                )));
+    }
+
+    public static String createAndUseDatabaseConnection(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
+                                                String requestedServiceName, String requestedServiceVisibility, String projectId,
+                                                String clientChoreoComponentId, List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
+                                                List<com.wso2.choreo.integration.models.environments.Environment> servicePublisherComponentEnvironments,
+                                                String repoName, String... branchName) throws IOException {
+
+        ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,runner,accessToken,requestedServiceName,requestedServiceVisibility.toLowerCase(),"");
+        ConnectionCreateRequest connectionCreationReq= ConnectionService.createComponentLevelConnectionCreationReq(clientComponentEnvironments,projectId,clientChoreoComponentId,requestedServiceVisibility,serviceFound);
+        HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String serviceId = serviceFound.getServiceId();
+        String connectionId = ConnectionService.createChoreoConnection(runner, httpClient,
+                accessToken, connectionCreationReq,true,servicePublisherComponentEnvironments.subList(0,1),false);
+
+        //update component-config.yaml file
+        //Let's consume service using public visibility
+        String serviceIdentifier = MarketplaceService.getChoreoServiceIdentifier(runner,
+                httpClient, accessToken, serviceId, ServiceVisibility.PUBLIC);
+        Map<String, String> params = new HashMap<>();
+        params.put("serviceIdentifier", serviceIdentifier);
+        params.put("connectionId", connectionId);
+        String updatedComponentConfigFileContent = MessageUtils.generateStringFromTemplate(
+                "templates/marketplace/component-config.mustache", params);
+        String encodedFileContent = Base64.getEncoder().
+                encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
+        Response mergeCodeResp = GitHub.mergeNewCode(repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent,branchName);
+        if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
+            throw new ValidationException("Error while update component-config.yaml file" + mergeCodeResp.getRes());
+        }
+        return connectionId;
+    }
+
+
 }

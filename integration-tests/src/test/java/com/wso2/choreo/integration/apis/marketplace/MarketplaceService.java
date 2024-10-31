@@ -18,12 +18,20 @@ import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.models.marketplace.CommonResource;
 import com.wso2.choreo.integration.models.marketplace.ServiceInfo;
 import com.wso2.choreo.integration.models.marketplace.ServiceVisibility;
+import com.wso2.choreo.integration.models.platformServices.DatabaseServer;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -116,5 +124,43 @@ public class MarketplaceService {
                 )
         );
         return serviceIdentifier.get();
+    }
+
+    public static List<CommonResource> searchForDatabase(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                      String databaseServerId, String databaseName) throws IOException {
+
+        String customFilter = "resourceDetails.databaseServerId=".concat(databaseServerId).concat("&name=").concat(databaseName);
+        customFilter = URLEncoder.encode(customFilter, StandardCharsets.UTF_8);
+        String resourceUri = CONTEXT.concat("/databases?customFilter=").concat(customFilter);
+
+        AtomicReference<List<CommonResource>> databases = new AtomicReference<>();
+        runner.$(http()
+                .client(client)
+                .send()
+                .get(resourceUri)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http().client(client)
+                .receive()
+                .response(HttpStatus.OK)
+                .message()
+                .validate((message, context) -> {
+                            try {
+                                JsonObject jsonObject = JsonParser.parseString((String) message.getPayload()).getAsJsonObject();
+                                JsonArray dataArray = jsonObject.getAsJsonArray("data");
+                                ObjectMapper mapper = new ObjectMapper();
+                                List<CommonResource> commonResources = mapper.readValue(
+                                        dataArray.toString(), new TypeReference<List<CommonResource>>() {}
+                                );
+                                databases.set(commonResources);
+                            } catch (JsonProcessingException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                )
+        );
+        return databases.get();
     }
 }
