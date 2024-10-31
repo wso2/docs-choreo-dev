@@ -33,7 +33,7 @@ To create an external consumer component, follow the steps given below:
    
 ## Step 2: Manage authentication for the external consumer
 
-You can configure the external consumer to work with the Choreo built-in identity provider, Asgardeo, or any external identity provider that supports OIDC/OAuth2.0.
+You can configure the external consumer to work with the Choreo built-in identity provider or any external identity provider that supports OIDC/OAuth2.0.
 
 Click the respective tab for details depending on the identity provider you want to configure: 
 
