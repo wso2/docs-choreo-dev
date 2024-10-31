@@ -2,8 +2,8 @@
 
 Kafka on Choreo offers fully managed, distributed message broker services across AWS, Azure, GCP, and DigitalOcean. These services are designed to handle high-throughput, fault-tolerant data streaming use cases such as real-time analytics, event sourcing, and log aggregation.
 
-!!! note "Billing for Kafka services"
-     - Kafka services are only supported for paid users on Choreo.
+!!! info "Note"
+     - Kafka service creation is available only for paid Choreo users.
      - Kafka service billing will be included in your Choreo subscription, with pricing varying based on the service plan of the resources you create. For more details, see [Choreo Platform Services Billing](../references/choreo-platform-services-billing.md).
 
 ## Create a Choreo-managed Kafka service
@@ -28,25 +28,29 @@ Follow the steps below to create a Choreo-managed Kafka service:
 
 To connect to your Choreo-managed Kafka service, use the connection parameters from the **Overview** tab on the service details page. Choreo secures Kafka connections via client certificate authentication.
 
-![Kafka Service Overview ](../../assets/img/platform-services/message-broker-overview.png)
+![Kafka service overview ](../assets/img/platform-services/kafka-service-overview.png)
 
-To use the Kafka service with producer and consumer programs, you must configure them with the provided credentials and connection parameters.
+To use the Kafka service with producer and consumer applications, you must configure them with the provided credentials and connection parameters.
 
 By default, Kafka services accept traffic from the internet. However, if you want to restrict access to specific IP addresses or CIDR blocks, you can configure the necessary advanced settings.
 
-To use the Kafka service in producer and consumer programs, configure the required values as Configs and Secrets in Choreo. These values, available on the service overview page, include key configurations such as the access key, access certificate, CA certificate, and service URI. Before producing or consuming Kafka messages, make sure to [create a topic](./configure-a-kafka-service.md#create-a-kafka-topic). If a topic already exists, you can proceed.
+To use the Kafka service in producer and consumer applications, you must add the required parameters as configurations and secrets in Choreo. You can obtain the parameter values from the **Overview** tab on the service details page and include key configurations such as the access key, access certificate, CA certificate, and service URI. Ensure you [create a topic](./configure-a-kafka-service.md#create-a-kafka-topic) before producing or consuming Kafka messages. If a topic already exists, you can proceed.
 
-### Setting up configs and secrets
+### Set up configurations and secrets
 
-Begin by creating two Choreo components: one for the producer and another for the consumer program. Refer to the sample [Go](https://go.dev/) code below for implementing the producer and consumer. Then, define the required [Configs and Secrets](https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/) at the component level for each.
+Follow these steps to set up required configurations and secrets:
 
-You can configure service.key, service.cert, and ca.pem using file mounts. The example below illustrates creating a file mount for the CA certificate; follow the same steps for the other files.
+1. Create two Choreo components. One for the producer and another for the consumer application. For a producer and consumer implementation in [Go](https://go.dev/), see [sample implementation](#sample-implementation)
+2. Define the required [configurations and secrets](https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/) at the component level for each.
+   You can configure the `service.key`, `service.cert`, and `ca.pem` using file mounts. The following [sample implementation](#sample-implementation) uses a file mount for the CA certificate. You can follow the same approach for the other files.
 
-![Set CA certificate](../../assets/img/platform-services/ca-cert.png)
+    ![Set CA certificate](../assets/img/platform-services/set-ca-certificate.png)
 
-Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as environment variables. For instance, you can define them as shown in the following example.
+3. Set other configurations, such as `TOPIC_NAME` and `SERVICE_URI` as environment variables. You can define these as shown in the following [sample implementation](#sample-implementation).
 
-![Set environment variables ](../../assets/img/platform-services/env-variables.png)
+    ![Set environment variables](../assets/img/platform-services/set-environment-variables.png)
+
+### Sample implementation
 
 === "Producer"
     
@@ -173,9 +177,6 @@ Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as envir
             }
 
 
-
-        
-
 === "Consumer"
         
     
@@ -297,4 +298,3 @@ Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as envir
                 // Consume messages
                 consumeMessages(consumer)
             }
-
