@@ -174,32 +174,32 @@ defaultRoles:
         - apim:sub_manage
         - apim:app_import_export
         - apim:api_key
-        - urn:choreocontrolplane:environments:view_prod
-        - urn:choreocontrolplane:environments:view_dev
-        - urn:choreocontrolplane:choreo:deployment_manage
-        - urn:choreocontrolplane:choreodevopsportalapi:deployment_view
-        - urn:choreocontrolplane:choreodevopsportalapi:deployment_manage
-        - urn:choreocontrolplane:choreodevopsportalapi:component_manage
-        - urn:choreocontrolplane:componentutils:component_file_view
-        - urn:choreocontrolplane:componentutils:component_trigger
-        - urn:choreocontrolplane:componentutils:component_manage
-        - urn:choreocontrolplane:componentsmanagement:component_trigger
-        - urn:choreocontrolplane:componentsmanagement:component_create
-        - urn:choreocontrolplane:componentsmanagement:component_config_view
-        - urn:choreocontrolplane:componentsmanagement:component_logs_view
-        - urn:choreocontrolplane:componentsmanagement:component_init_view
-        - urn:choreocontrolplane:componentsmanagement:component_file_view
-        - urn:choreocontrolplane:componentsmanagement:component_manage
-        - urn:choreocontrolplane:configmanagement:global_config_manage
-        - urn:choreocontrolplane:configmanagement:global_config_view
-        - urn:choreocontrolplane:configmanagement:global_config_create
-        - urn:choreocontrolplane:configmanagement:global_config_delete
-        - urn:choreocontrolplane:configmanagement:global_config_update
-        - urn:choreocontrolplane:configmanagement:config_manage
-        - urn:choreocontrolplane:configmanagement:config_view
-        - urn:choreocontrolplane:configmanagement:config_create
-        - urn:choreocontrolplane:configmanagement:config_delete
-        - urn:choreocontrolplane:customdomainapi:custom_domain_view
+        - environments:view_prod
+        - environments:view_dev
+        - choreo:deployment_manage
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_MANAGE}}
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_COMPONENT_MANAGE}}
+        - {{.PERMISSION_COMPONENT_FILE_VIEW}}
+        - {{.PERMISSION_COMPONENT_TRIGGER}}
+        - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
+        - {{.PERMISSION_COMPONENT_TRIGGER}}
+        - {{.PERMISSION_COMPONENT_CREATE}}
+        - {{.PERMISSION_COMPONENT_CONFIG_VIEW}}
+        - {{.PERMISSION_COMPONENT_LOGS_VIEW}}
+        - {{.PERMISSION_COMPONENT_INIT_VIEW}}
+        - {{.PERMISSION_COMPONENT_FILE_VIEW}}
+        - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_MANAGE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
+        - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_UPDATE}}
+        - {{.PERMISSION_CONFIG_MANAGE}}
+        - {{.PERMISSION_CONFIG_VIEW}}
+        - {{.PERMISSION_CONFIG_CREATE}}
+        - {{.PERMISSION_CONFIG_DELETE}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_VIEW}}
         - choreo:non_prod_env_manage
         - choreo:prod_env_manage
         - choreo:log_view_non_prod
@@ -210,13 +210,13 @@ defaultRoles:
         - choreo:domain_view
         - choreo:url_mapping_manage
         - choreo:url_mapping_view
-        - urn:choreocontrolplane:usermanagement:permission_view
-        - urn:choreocontrolplane:usermanagement:role_mapping_view
-        - urn:choreocontrolplane:usermanagement:role_mapping_create
-        - urn:choreocontrolplane:usermanagement:role_mapping_update
-        - urn:choreocontrolplane:usermanagement:role_mapping_delete
-        - urn:choreocontrolplane:usermanagement:role_mapping_manage
-        - urn:choreocontrolplane:usermanagement:role_view
+        - {{.PERMISSION_USER_MANAGEMENT_PERMISSION_VIEW}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_VIEW}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_CREATE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_UPDATE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_DELETE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_MANAGE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_VIEW}}
         - choreo:workflow_component_promotion_approve
         - choreo:workflow_subscription_approve
     - name: Developer
