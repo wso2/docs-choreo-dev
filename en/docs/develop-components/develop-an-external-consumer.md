@@ -33,7 +33,7 @@ To create an external consumer component, follow the steps given below:
    
 ## Step 2: Manage authentication for the external consumer
 
-You can configure the external consumer to work with the Choreo built-in identity provider or any external identity provider that supports OIDC/OAuth2.0.
+You can configure the external consumer to work with the Choreo built-in identity provider or any external identity provider that supports OIDC/OAuth 2.0.
 
 Click the respective tab for details depending on the identity provider you want to configure: 
 
@@ -53,16 +53,16 @@ Click the respective tab for details depending on the identity provider you want
 
 === "An external identity provider"
 
-     **Step 2.1: Create and configure an OIDC/OAuth2.0 application in the external identity provider**
+     **Step 2.1: Create and configure an OIDC/OAuth 2.0 application in the external identity provider**
 
-     1. Create an OIDC/OAuth2.0 application in your external identity provider.
-     2. Configure the OIDC/OAuth2.0 application accordingly. (The access token type should be configured as JWT)
+     1. Create an OIDC/OAuth 2.0 application in your external identity provider.
+     2. Configure the OIDC/OAuth 2.0 application accordingly. (The access token type should be configured as JWT)
 
-     **Step 2.2: Link the OIDC/OAuth2.0 application to the Choreo component**
+     **Step 2.2: Link the OIDC/OAuth 2.0 application to the Choreo component**
 
      3. In the **Overview** page of the component, under **Authentication Configurations**, click **Configure** corresponding to the environment for which you want to configure an identity provider.
      4. In the **Identity Provider** list, select your identity provider.
-     5. Paste the **Client ID** of the OIDC/OAuth2.0 application you created in your external identity provider.
+     5. Paste the **Client ID** of the OIDC/OAuth 2.0 application you created in your external identity provider.
      6. Click **Add Keys**.
 
 ## Step 3: Connect the external consumer to a service deployed in Choreo 
