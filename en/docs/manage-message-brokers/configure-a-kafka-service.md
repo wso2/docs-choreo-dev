@@ -2,7 +2,7 @@
 
 After creating a Kafka service, you can create topics, configure advanced settings, and manage access to ensure secure and efficient message processing.
 
-## Create a Kafka Topic
+## Create a Kafka topic
 
 Kafka topics are logical channels used to organize and transfer messages between producers and consumers. They form the core of Kafka's architecture, enabling data streams to be written and read. Kafka topics can also be partitioned to improve scalability and fault tolerance.
 
