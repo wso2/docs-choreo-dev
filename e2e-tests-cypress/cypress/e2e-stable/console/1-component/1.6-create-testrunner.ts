@@ -29,6 +29,10 @@ describe("Verify Test Runner Component functionality", () => {
   const REPO_NAME = "test-runner-go";
   const sampleName = "Greeting Service";
 
+  function enterCustomInfo() {
+    cy.get("li").contains("1.x").click();
+  }
+
   it("Login to Console", () => {
     console.login();
   });
@@ -43,10 +47,9 @@ describe("Verify Test Runner Component functionality", () => {
         displayName: "",
         repoUrl: REPO_URL,
         buildPack: BuildPacks.Go,
-        repoName: REPO_NAME,
-        repoTestid: REPO_NAME,
-        languageVersion: "1.x",
-      })
+        directoryInfo: { directoryName: REPO_NAME, directoryTestid: REPO_NAME }
+      }, 
+      enterCustomInfo)
       .then((comp) => {
         runner = comp;
       });

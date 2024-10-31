@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.wso2.choreo.integration.apis.component.Component;
+import com.wso2.choreo.integration.apis.graphql.GraphQL;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -85,6 +88,10 @@ public class ManagedAuthenticationUtils {
         GraphqlDTO dto = ComponentUtils.createWebappComponentRequest(componentName, project, webAppsConfig);
         ChoreoComponent component = ComponentUtils.createComponent(runner, citrusClients, accessToken,
                 dto, ComponentFlavour.WEBAPP);
+        dto.setComponentId(component.getId());
+        dto.setLatestVersionId(component.getLatestApiVersion().getId());
+        String runId = GraphQL.getRunId(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
+        Component.waitForComponentBuildDeployComplete(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), component.getId(), runId, 50);
         Assert.assertNotNull(component);
         return component;
     }
@@ -103,7 +110,7 @@ public class ManagedAuthenticationUtils {
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component, 
             List<Environment> componentEnvironments) throws Exception {
     
-        return ComponentUtils.deployComponent(runner, citrusClients, accessToken, component, componentEnvironments, 
+        return ComponentUtils.deployComponent(runner, citrusClients, accessToken, component, componentEnvironments,
             ComponentFlavour.WEBAPP);
     }
 

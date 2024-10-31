@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.common;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.TestCaseFailedException;
 import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
@@ -81,6 +82,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -105,6 +108,8 @@ public class ComponentUtils {
 
     private static final String timestampRegexMatch = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}Z|\\d{2}.\\d{2}Z|\\d{2}.\\d{3}Z|\\d{2}.\\d{4}Z|\\d{2}.\\d{5}Z|\\d{2}.\\d{6}Z|\\d{2}.\\d{7}Z)";
     private static final String APIS_ENDPOINT = Constant.APIS_ENDPOINT;
+    private static final Logger log = LogManager.getLogger(ComponentUtils.class);
+
 
     private static final int MAX_DEPLOY_RETRY_COUNT = 5;
 
@@ -1042,12 +1047,59 @@ public class ComponentUtils {
                                 .client(invokeUrl)
                                 .receive()
                                 .response(HttpStatus.OK)
-                                .timeout(5000)
                                 .message()
                                 .type(MessageType.JSON)
                                 .body(expectedResponse)));
+    }
 
-        TimeUnit.SECONDS.sleep(2);
+    /**
+     * Invoke API GET with validation with backoff retries when test failed
+     *
+     * @param runner             Test action runner
+     * @param apiKey             API Key
+     * @param invokeUrl          Invoke URL
+     * @param resource           API Resource
+     * @param expectedResponse   Expected response
+     * @param backOffFactor      Liner Backoff Factor
+     * @param maxNumberOfRetries Maximum Number of Retries
+     */
+    public static void invokeApiGETWithBackoffRetries(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
+                                    String expectedResponse, int backOffFactor, int maxNumberOfRetries) throws Exception {
+        int retryNumber = 0;
+        boolean shouldRetry;
+        do {
+            try {
+                runner.$(repeatOnError()
+                        .until("i = 3") //Reduced repeats based on response since manual backoff handles retries
+                        .index("i")
+                        .autoSleep(30000)
+                        .actions((http()
+                                        .client(invokeUrl)
+                                        .send()
+                                        .get(resource)
+                                        .message()
+                                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                                        .header("API-Key", apiKey)),
+                                http()
+                                        .client(invokeUrl)
+                                        .receive()
+                                        .response(HttpStatus.OK)
+                                        .message()
+                                        .type(MessageType.JSON)
+                                        .body(expectedResponse)));
+                shouldRetry = false;
+            } catch (TestCaseFailedException e) {
+                retryNumber++;
+                shouldRetry = retryNumber < maxNumberOfRetries;
+                if (retryNumber == maxNumberOfRetries) {
+                    throw new RuntimeException("Couldn't invoke url : " + invokeUrl + " resource : " + resource, e);
+                } else {
+                    //Using a linear backoff instead of exponential backoff to reduce the impact on test suite runtime
+                    TimeUnit.SECONDS.sleep((long) backOffFactor * retryNumber);
+                    log.debug(". Retry #{} for URL {} since invoke failed : {}", retryNumber, invokeUrl.concat(resource), e);
+                }
+            }
+        } while (shouldRetry);
     }
 
     /**
@@ -1348,6 +1400,7 @@ public class ComponentUtils {
             Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent choreoComponent, Environment env)
             throws Exception {
+        SleepUtil.sleep(60); //Wait for some time to publish latest metrics to adx
         DPObsApiService.getProjectMetrics(runner, citrusDPClients, accessToken,
                 project, choreoComponent, env, true);
     }
@@ -1356,6 +1409,7 @@ public class ComponentUtils {
             Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoComponent choreoComponent, Environment env, ChoreoProject project)
             throws Exception {
+        SleepUtil.sleep(60); //Wait for some time to publish latest metrics to adx
         DPObsApiService.getComponentAppMetrics(runner, citrusDPClients, accessToken,
                 choreoComponent, env, project);
     }
@@ -1529,6 +1583,8 @@ public class ComponentUtils {
                 if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
                     isRateLimitExceeded = true;
                     break;
+                } else if (dev.getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
+                    throw new RuntimeException("API token for invokeURL : " + invokeURL + " is unauthorized");
                 }
                 Thread.sleep(500);
             }

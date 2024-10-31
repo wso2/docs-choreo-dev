@@ -1,0 +1,21 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-sts-mgt-service
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "false"
+    tenantId: "da76d684-740f-4d94-8717-9d5fb21dd1f9"
+    objects: |
+      array:
+        - |
+          objectName: apim-REST-API-CONSUMER-SECRET
+          objectType: secret
+          objectAlias: APIM_REST_API_CONSUMER_SECRET
+          objectVersion: "{{.APIM_REST_API_CONSUMER_SECRET}}"
+        - |
+          objectName: choreo-sts-mgt-svc-db-postgresql-password
+          objectType: secret
+          objectAlias: CHOREO_STS_MGT_DB_PASSWORD
+          objectVersion: "{{.CHOREO_STS_MGT_DB_PASSWORD}}"

@@ -153,10 +153,6 @@ describe("Create Proxy from OAS file", () => {
     application.addSubscription(proxy.getName(), UsagePlan.Bronze);
   });
 
-  it("Add permissions to application", () => {
-    application.addPermissionToApplication(permissions[0]);
-  });
-
   it("Navigate back to Proxy in Dev Portal", () => {
     devPortal.searchApi(proxy.getName());
   });

@@ -29,6 +29,7 @@ governance-service:
       abandonWhenPercentageFull: 50
   feature-flags:
     disableDatabaseConnection: {{.DISABLE_DATABASE_CONNECTION | default true}}
+    validateRulesetContent: {{.VALIDATE_RULESET_CONTENT | default false}}
   endpoints:
     apimBasePath: "https://choreo-am-service:9443/api/am/publisher/v2"
     linterServiceBasePath: "http://choreo-linter-service:8080/linter-service"
