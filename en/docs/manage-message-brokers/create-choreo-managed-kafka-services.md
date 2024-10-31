@@ -2,6 +2,10 @@
 
 Kafka on Choreo offers fully managed, distributed message broker services across AWS, Azure, GCP, and DigitalOcean. These services are designed to handle high-throughput, fault-tolerant data streaming use cases such as real-time analytics, event sourcing, and log aggregation.
 
+!!! note "Billing for Kafka services"
+     - Kafka services are only supported for paid users on Choreo.
+     - Kafka service billing will be included in your Choreo subscription, with pricing varying based on the service plan of the resources you create. For more details, see [Choreo Platform Services Billing](../references/choreo-platform-services-billing.md).
+
 ## Create a Choreo-managed Kafka service
 
 Follow the steps below to create a Choreo-managed Kafka service:

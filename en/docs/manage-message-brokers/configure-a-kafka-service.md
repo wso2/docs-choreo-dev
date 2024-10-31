@@ -1,6 +1,6 @@
 # Configure a Kafka Service
 
-After creating a Kafka service, you can create topics, configure advanced settings, and manage access to ensure secure and efficient message processing. 
+After creating a Kafka service, you can create topics, configure advanced settings, and manage access to ensure secure and efficient message processing.
 
 ## Create a Kafka Topic
 
