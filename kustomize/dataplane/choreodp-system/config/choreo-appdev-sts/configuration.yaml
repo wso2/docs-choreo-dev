@@ -39,6 +39,7 @@ services:
       - from: "/connect/logout"
         to: "/oidc/logout"
   controlPlaneTokenService:
+    enable: {{.CONTROL_PLANE_TOKEN_SERVICE_ENABLE | default false}}
     url: {{.CONTROL_PLANE_TOKEN_SERVICE_URL}}
     consumerKey: {{.CONTROL_PLANE_TOKEN_SERVICE_CONSUMER_KEY}}
     consumerSecret: {{.CONTROL_PLANE_TOKEN_SERVICE_CONSUMER_SECRET | default "/mnt/csi/choreo-appdev-sts-secrets/cp-consumer-secret.txt"}}
