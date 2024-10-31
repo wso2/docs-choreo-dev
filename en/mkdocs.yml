@@ -129,7 +129,7 @@ nav:
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
       - Manage Component Source Configurations: develop-components/manage-component-source-configurations.md
-      - Request for Workflow Approval: develop-components/request-for-workflow-approval.md
+      - Submit and Manage Workflow Approval Requests: develop-components/submit-and-manage-workflow-approval-requests.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
   - Integrate and Manage External Services: 
       - Integrate and Manage Third-Party Services: integrate-and-manage-external-services/integrate-and-manage-third-party-services.md
