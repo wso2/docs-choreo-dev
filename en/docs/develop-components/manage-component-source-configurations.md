@@ -39,8 +39,7 @@ endpoints:
     displayName: Go Greeter Sample
     # +required Service section has the user service endpoint details
     service:
-      # +optional Base path of the API that gets exposed via the endpoint.
-      # This is mandatory if the endpoint type is set to REST or GraphQL.
+      # +optional Context (base path) of the API that gets exposed via the endpoint.
       basePath: /greeting-service
       # +required Numeric port value that gets exposed via the endpoint
       port: 9090
