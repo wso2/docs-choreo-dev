@@ -4,27 +4,25 @@ Choreo allows you to configure approval processes for specific workflows within 
 
 Choreo currently allows you to configure approvals for environment promotion workflows, with support for API subscription approvals coming soon.
 
-## Configure Approvers for a workflow
-
 To configure an approval process for a workflow, follow these steps:
 
 !!! note
-     - You must have administrator privileges in Choreo to configure an approval for a workflow.
-     - Administrators can define roles and assignees responsible for reviewing and approving requests associated with each workflow.
+     - You must have administrator privileges in Choreo to configure workflow approvals.
+     - Administrators can designate specific roles and assignees to review and respond to requests associated with each workflow.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console header, go to the **Organization** list and select your organization.
 3. In the left navigation menu, click **Settings**. This opens the organization-level settings page.
 4. Click the **Workflows** tab.
 5. Click the edit icon corresponding to the workflow for which you want to configure an approval.
-6. In the **Configure Workflow** dialog that opens, select roles and assignees responsible for approving the workflow.
-    - In the **Roles** field, select one or more roles depending on your preference. Any user assigned to these roles can review and approve requests.
+6. In the **Configure Workflow** dialog that opens, select roles and assignees to review and respond to workflow approval requests.
+
+    - In the **Roles** field, select one or more roles depending on your preference. Any user assigned to these roles can review and respond to requests.
     - In the **Assignees** field, select specific users who can review and approve workflow requests. Assignees can be any Choreo user, even if they are not assigned to a selected role.
-    !!! note
-        - Currently we do not validate if roles and assinees specified are having required permissions to review and approve requests. So even if they receive
-          email notification, they might not be able to review if [required permissions] (./Grant permissions for approvers) are not configured.
-7. Click **Save**. This configures and enables approval for the workflow.
 
-Once you configure an approval for a workflow, developers must [submit a request for approval to use the workflow](../develop-components/request-for-workflow-approval.md). An authorized assignee must then [review and approve the request](./review-workflow-approval-requests.md) for a developer to proceed with the task related to the workflow. Depending on the workflow, the requested change will get applied to Choreo as soon as manager approves.
+    !!! info "Important"
+         Currently, there is no validation to ensure that the specified roles and assignees have the necessary permissions to review and respond to requests. If the [required permissions](./review-workflow-approval-requests.md#permissions-to-review-and-respond-to-approval-requests) are not correctly configured, some users may receive email notifications but will be unable to review the requests.
+         
+7. Click **Save**. This configures and enables the approval process for the workflow.
 
-## Grant permissions for approvers
+Once you configure an approval process for a workflow, developers must [submit a request for approval to use the workflow](../develop-components/submit-and-manage-workflow-approval-requests.md). An authorized assignee must then [review and approve the request](./review-workflow-approval-requests.md) for a developer to proceed with the task related to the workflow. Depending on the workflow, there can be tasks where the execution may occur automatically upon approval.
