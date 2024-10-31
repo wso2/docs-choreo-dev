@@ -12,7 +12,7 @@ You can consume a Choreo-deployed service within another service. Consuming conn
 
 ### Step 1: Add connection configurations
 
-To integrate another service into your application, click the appropriate tab below based on your current configuration file version and follow the step-by-step instructions:
+To integrate another service into your application, click the appropriate tab below based on your current configuration file and follow the step-by-step instructions:
 
 === "Component.yaml file"
   
@@ -61,7 +61,7 @@ To integrate another service into your application, click the appropriate tab be
           | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
           | TokenURL       | string     | Token URL of the STS                  | false         | false        |
 
-    <h3> Step 2: Read configurations within the application </h3>
+    ### Step 2: Read configurations within the application
 
     Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
 
@@ -122,7 +122,7 @@ To integrate another service into your application, click the appropriate tab be
           | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
           | TokenURL       | string     | Token URL of the STS                  | false         | false        |
 
-    ### Step 2: Read configurations within the application
+    <h3> Step 2: Read configurations within the application </h3>
 
     Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
 
