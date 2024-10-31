@@ -215,7 +215,6 @@ export namespace TestIds {
   export const applicationList = (appName: string) =>
     `[data-testid="application-list-${appName}"]`;
   export const applicationEdit = '[data-testid="appliation-edit-btn"]';
-  export const permissionsField = '[data-testid="autocomplete-textfield"]';
   export const apiBar = '[data-testid="apis-appbar-btn"]';
   export const apiSearch = "#outlined-search-bar-api-listing";
   export const apiCard = (apiName: string) =>
