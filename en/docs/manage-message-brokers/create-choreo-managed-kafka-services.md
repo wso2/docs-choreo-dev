@@ -32,17 +32,17 @@ By default, Kafka services accept traffic from the internet. However, if you wan
 
 To use the Kafka service in producer and consumer programs, configure the required values as Configs and Secrets in Choreo. These values, available on the service overview page, include key configurations such as the access key, access certificate, CA certificate, and service URI. Before producing or consuming Kafka messages, make sure to [create a topic](./configure-a-kafka-service.md#create-a-kafka-topic). If a topic already exists, you can proceed.
 
-### Setting Up Configs and Secrets
+### Setting up configs and secrets
 
 Begin by creating two Choreo components: one for the producer and another for the consumer program. Refer to the sample [Go](https://go.dev/) code below for implementing the producer and consumer. Then, define the required [Configs and Secrets](https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/) at the component level for each.
 
 You can configure service.key, service.cert, and ca.pem using file mounts. The example below illustrates creating a file mount for the CA certificate; follow the same steps for the other files.
 
-![Set CA Certificate](../../assets/img/platform-services/ca-cert.png)
+![Set CA certificate](../../assets/img/platform-services/ca-cert.png)
 
 Other configurations, such as TOPIC_NAME and SERVICE_URI, should be set as environment variables. For instance, you can define them as shown in the following example.
 
-![Set Env Variables ](../../assets/img/platform-services/env-variables.png)
+![Set environment variables ](../../assets/img/platform-services/env-variables.png)
 
 === "Producer"
     
