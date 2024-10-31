@@ -12,63 +12,127 @@ You can consume a Choreo-deployed service within another service. Consuming conn
 
 ### Step 1: Add connection configurations
 
-To integrate another service into your application, follow the steps below:
+To integrate another service into your application, click the appropriate tab below based on your current configuration file and follow the step-by-step instructions:
 
-1. Copy and paste the snippet from the in-line developer guide into the `component-config` file under the `spec` section.
+=== "Component.yaml file"
+  
+    1. Copy and paste the snippet from the in-line developer guide into the `component.yaml` file.
+      
+        The following is a sample snippet:
 
-    The following is a sample snippet:
+        ``` yaml
 
-    ``` yaml
+        dependencies:
+            serviceReferences:
+            - name: <SERVICE_NAME>
+              connectionConfig: <CONNECTION_ID>
+              env:
+              - from: ServiceURL
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ConsumerKey
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ConsumerSecret
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: TokenURL
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
 
-    outbound:
-        serviceReferences:
-        - name: <SERVICE_NAME>
-          connectionConfig: <CONNECTION_ID>
-          env:
-          - from: ServiceURL
-            to: <YOUR_ENV_VARIABLE_NAME_HERE>
-          - from: ConsumerKey
-            to: <YOUR_ENV_VARIABLE_NAME_HERE>
-          - from: ConsumerSecret
-            to: <YOUR_ENV_VARIABLE_NAME_HERE>
-          - from: TokenURL
-            to: <YOUR_ENV_VARIABLE_NAME_HERE>
+        ```
 
+          | Field            | Description                                                 |
+          |------------------|-------------------------------------------------------------|
+          | name             | The name of the service you are connecting to.              |
+          | connectionConfig | The unique connection identifier for the connection.        |
+          | env              | The environment variable mapping.                           |
+          | from             | The key of the configuration entry.                         |
+          | to               | The environment variable name to which Choreo will inject the value of the key.|
+
+
+    2. Replace `<YOUR_ENV_VARIABLE_NAME_HERE>` with an appropriate environment variable name of your choice. If you have previously added a service reference section under `dependencies`, append this as another item under `serviceReferences`. 
+
+          Upon deploying the component, Choreo automatically creates a subscription if applicable and populates the specified environment variables with actual values.
+
+
+          The following table provides details on the configuration keys associated with the connection:
+
+          | Name           |  Type      |  Description                          |Optional       | Sensitive    |
+          |----------------|------------|---------------------------------------|---------------|--------------|
+          | ServiceURL     | string     | Service URL of the Choreo service     | false         | false        |
+          | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
+          | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
+          | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+
+    ### Step 2: Read configurations within the application
+
+    Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+
+    The following is a sample code snippet in NodeJS:
+
+    ``` java
+    const serviceURL = process.env.SVC_URL;
     ```
 
-      | Field            | Description                                                 |
-      |------------------|-------------------------------------------------------------|
-      | Name             | The name of the service you are connecting to.              |
-      | ConnectionConfig | The unique connection identifier for the connection.        |
-      | env              | The environment variable mapping.                           |
-      | from             | The key of the configuration entry.                         |
-      | to               | The environment variable name to which Choreo will inject the value of the key.|
+
+=== "Component-config.yaml file"
+
+    !!! note
+        This `component-config.yaml` is a legacy configuration format. For new projects, we recommend using `component.yaml` for improved usability and features.
+
+    1. Copy and paste the snippet from the in-line developer guide into the `component-config` file under the `spec` section.
+
+        The following is a sample snippet:
+
+        ``` yaml
+
+        outbound:
+            serviceReferences:
+            - name: <SERVICE_NAME>
+              connectionConfig: <CONNECTION_ID>
+              env:
+              - from: ServiceURL
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ConsumerKey
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ConsumerSecret
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: TokenURL
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+
+        ```
+
+          | Field            | Description                                                 |
+          |------------------|-------------------------------------------------------------|
+          | name             | The name of the service you are connecting to.              |
+          | connectionConfig | The unique connection identifier for the connection.        |
+          | env              | The environment variable mapping.                           |
+          | from             | The key of the configuration entry.                         |
+          | to               | The environment variable name to which Choreo will inject the value of the key.|
 
 
-2. Replace `<YOUR_ENV_VARIABLE_NAME_HERE>` with an appropriate environment variable name of your choice. If you have previously added an outbound service reference, append this as another item under `serviceReferences`. 
+    2. Replace `<YOUR_ENV_VARIABLE_NAME_HERE>` with an appropriate environment variable name of your choice. If you have previously added an outbound service reference, append this as another item under `serviceReferences`. 
 
-      Upon deploying the component, Choreo automatically creates a subscription if applicable and populates the specified environment variables with actual values.
-
-
-      The following table provides details on the configuration keys associated with the connection:
-
-      | Name           |  Type      |  Description                          |Optional       | Sensitive    |
-      |----------------|------------|---------------------------------------|---------------|--------------|
-      | ServiceURL     | string     | Service URL of the Choreo service     | false         | false        |
-      | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
-      | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
-      | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+          Upon deploying the component, Choreo automatically creates a subscription if applicable and populates the specified environment variables with actual values.
 
 
-### Step 2: Read configurations within the application
+          The following table provides details on the configuration keys associated with the connection:
 
-Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+          | Name           |  Type      |  Description                          |Optional       | Sensitive    |
+          |----------------|------------|---------------------------------------|---------------|--------------|
+          | ServiceURL     | string     | Service URL of the Choreo service     | false         | false        |
+          | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
+          | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
+          | TokenURL       | string     | Token URL of the STS                  | false         | false        |
 
-The following is a sample code snippet in NodeJS:
+    <h3> Step 2: Read configurations within the application </h3>
 
-``` java
-const serviceURL = process.env.SVC_URL;
-```
+    Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+
+    The following is a sample code snippet in NodeJS:
+
+    ``` java
+    const serviceURL = process.env.SVC_URL;
+    ```
+
+
 
 ### Step 3: Acquire an OAuth 2.0 access token
 
