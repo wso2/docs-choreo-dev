@@ -12,13 +12,6 @@ Other approvers within your organization will also receive notifications for wor
 
 Approval requests are submitted on behalf of the team. Once approved, any authorized team member can execute the task. For certain tasks, execution may occur automatically upon approval.
 
-## Permissions to review and respond to approval requests
-
-To review and respond to approval requests, users must have the following permissions:
-
-  - **WORKFLOW-MANAGEMENT**: Grants access to view and approve workflow requests. Each workflow type has a separate permission.
-  - **PROJECT-MANAGEMENT**: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
-
 ## View workflow approval requests
 
 To view workflow approval requests assigned to you, follow these steps:
