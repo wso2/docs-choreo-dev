@@ -2,13 +2,6 @@
 
 In Choreo, administrators can [configure approvals for workflows](./configure-approvals-for-choreo-workflows.md) and assign specific users as approvers.
 
-## Permissions to review and respond to approval requests
-
-To review and respond to approval requests, users must have the following permissions:
-
-  - **WORKFLOW-MANAGEMENT**: Grants access to view and approve workflow requests. Each workflow type has a separate permission.
-  - **PROJECT-MANAGEMENT**: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
-
 If you are assigned as an authorized reviewer for a particular workflow approval request, you will receive an email notification when a [request is submitted for approval](../develop-components/submit-and-manage-workflow-approval-requests.md). The email includes a summary of the request and a link to the **Approvals** page in the Choreo Console, where you can review the details and either approve or reject the request.
 
 !!! note
@@ -18,6 +11,13 @@ If you are assigned as an authorized reviewer for a particular workflow approval
 Other approvers within your organization will also receive notifications for workflow requests and may review a request before you. If a request has already been reviewed, it will appear under the **Past** tab on the **Approvals** page.
 
 Approval requests are submitted on behalf of the team. Once approved, any authorized team member can execute the task. For certain tasks, execution may occur automatically upon approval.
+
+## Permissions to review and respond to approval requests
+
+To review and respond to approval requests, users must have the following permissions:
+
+  - **WORKFLOW-MANAGEMENT**: Grants access to view and approve workflow requests. Each workflow type has a separate permission.
+  - **PROJECT-MANAGEMENT**: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
 
 ## View workflow approval requests
 
