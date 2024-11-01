@@ -839,6 +839,7 @@ configMapGenerator:
       - NEW_COMPONENT_HANDLER_FLOW_ENABLED={{.NEW_COMPONENT_HANDLER_FLOW_ENABLED | default "false"}}
       - AUTHZ_SERVICE_GRPC_ENDPOINT={{.AUTHZ_SERVICE_GRPC_ENDPOINT}}
       - AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED={{.AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED}}
+      - API_KEY_SVC_URL={{.API_KEY_SVC_URL | default "http://api-key-service:8080"}}
   - name: env-alert-notification-service
     behavior: create
     literals:
