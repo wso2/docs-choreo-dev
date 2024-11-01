@@ -47,17 +47,18 @@ def capture_test_results(env):
     bq_writer = BigQueryWriter()
     bq_writer.insert_integration_test_data(values)
 
-def capture_release_promotion(build_id, env):
+def capture_release_promotion(build_id, env, release_id):
     """
     Capture the release promotion from source environment to destination environment
     :param build_id: Pipeline build Id
     :param env: Current environment
+    :param release_id: Release ID
     :param dest_env: Destination environment
     :return: None
     """
     pipeline = PipelineReader(env)
 
-    promo_data = pipeline.get_promotion_data(build_id, env)
+    promo_data = pipeline.get_promotion_data(build_id, env, release_id)
 
     values = []
 
@@ -66,7 +67,8 @@ def capture_release_promotion(build_id, env):
         commit_msg=promo_data["commit_msg"],
         promotion_time=promo_data["promotion_time"],
         source_env=promo_data["source_env"],
-        dest_env=promo_data["dest_env"]
+        dest_env=promo_data["dest_env"],
+        release_id=release_id
     )
 
     values.append(promotion.get_as_row())
@@ -128,24 +130,29 @@ def _insert_component_data(build_number, time_stamp, table):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Release Analytics CLI")
     sub_parsers = parser.add_subparsers(help="Sub Commands", dest="sub_command")
+    # Test parser
     test_parser = sub_parsers.add_parser("test", help="Capture test results")
     test_parser.add_argument("-e", "--env", choices=["dev", "stage", "prod"], help="Choreo env",
-                             required=True)
 
+                             required=True)
+    # Promotion parser
     promo_parser = sub_parsers.add_parser("promotion", help="Capture release promotion")
     promo_parser.add_argument("-e", "--env", choices=["dev", "stage"], help="Choreo env being promoted",
                               required=True)
     promo_parser.add_argument("-b", "--build_id", help="Pipeline build Id", required=True)
+    promo_parser.add_argument("-r", "--release_id", help="Release ID", required=True)
 
+    # Component parser
     comp_parser = sub_parsers.add_parser("component", help="Capture release promotion")
     comp_parser.add_argument("-e", "--env", choices=["dev", "stage", "prod"], help="Choreo env",
                               required=True)
     comp_parser.add_argument("-b", "--build_id", help="Pipeline build Id", required=True)
+    comp_parser.add_argument("-r", "--release_id", help="Release ID", required=True)
 
     args = parser.parse_args()
 
     if args.sub_command == "promotion":
-        capture_release_promotion(args.build_id, args.env)
+        capture_release_promotion(args.build_id, args.env, args.release_id)
     elif args.sub_command == "component":
         capture_deployed_component_info(args.build_id, args.env)
     elif args.sub_command == "test":

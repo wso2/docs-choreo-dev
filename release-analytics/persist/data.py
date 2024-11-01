@@ -48,6 +48,7 @@ class ReleasePromotion:
     promotion_time: datetime
     source_env: str
     dest_env: str
+    release_id: str
 
     def get_as_row(self):
         return {
@@ -55,7 +56,8 @@ class ReleasePromotion:
             "commit_msg": self.commit_msg,
             "promotion_time": self.promotion_time.strftime("%Y-%m-%dT%H:%M:%S"),
             "source_env": self.source_env,
-            "dest_env": self.dest_env
+            "dest_env": self.dest_env,
+            "release_id": self.release_id
         }
 
 @dataclass
