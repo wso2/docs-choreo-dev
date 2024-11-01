@@ -58,7 +58,7 @@ def capture_release_promotion(build_id, env, release_id):
     """
     pipeline = PipelineReader(env)
 
-    promo_data = pipeline.get_promotion_data(build_id, env, release_id,)
+    promo_data = pipeline.get_promotion_data(build_id, env)
 
     values = []
 

@@ -85,7 +85,7 @@ class PipelineReader:
 
         return test_results
 
-    def get_promotion_data(self, build_id, src_env, release_id):
+    def get_promotion_data(self, build_id, src_env):
         dest_env = "stage"
         if src_env not in ["dev", "stage"]:
             print("Invalid source environment provided")
@@ -104,7 +104,6 @@ class PipelineReader:
         promotion_data["promotion_time"] = datetime.now(timezone.utc)
         promotion_data["source_env"] = src_env
         promotion_data["dest_env"] = dest_env
-        promotion_data["release_id"] = release_id
 
         return promotion_data
 
