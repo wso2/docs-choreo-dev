@@ -147,7 +147,6 @@ if __name__ == '__main__':
     comp_parser.add_argument("-e", "--env", choices=["dev", "stage", "prod"], help="Choreo env",
                               required=True)
     comp_parser.add_argument("-b", "--build_id", help="Pipeline build Id", required=True)
-    comp_parser.add_argument("-r", "--release_id", help="Release ID", required=True)
 
     args = parser.parse_args()
 
