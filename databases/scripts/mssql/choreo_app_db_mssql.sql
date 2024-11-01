@@ -1818,6 +1818,18 @@ CREATE TABLE [dbo].[org_activity]
     CONSTRAINT unique_org_activity UNIQUE(org_id)
 );
 
+CREATE TABLE [dbo].[org_deletion_history]
+(
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [uuid] [nvarchar](255) NOT NULL,
+    [handle] [nvarchar](255) NOT NULL,
+    [org_id] [int] NOT NULL,
+    [deleted_time] [datetime] NOT NULL,
+    [created_at] [datetime] NOT NULL,
+    [updated_at] [datetime] NOT NULL,
+    PRIMARY KEY (id)
+);
+
 /****** Object:  Trigger [dbo].[org_enterprise_login_config_UpdateTimeTrigger] ******/
 SET ANSI_NULLS ON
     GO
