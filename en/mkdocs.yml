@@ -217,6 +217,7 @@ nav:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md
       - Manage Members of an Organization: administer/manage-members-of-an-organization.md
+      - Control Egress Traffic for your Organization: administer/control-egress-traffic-for-your-organization.md
   - References:
       - FAQ: references/faq.md
       - Choreo Limitations: references/choreo-limitations.md
