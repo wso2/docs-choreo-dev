@@ -14,7 +14,65 @@ You can consume a Choreo-deployed service within another service. Consuming conn
 
 To integrate another service into your application, click the appropriate tab below based on your current configuration file and follow the step-by-step instructions:
 
-=== "Component.yaml file"
+=== "Component.yaml file (v1.1)"
+
+    1. Copy and paste the snippet from the in-line developer guide into the `component.yaml` file.
+
+        The following is a sample snippet: 
+
+        ``` yaml
+
+        dependencies:
+            connectionReferences:
+            - name: <CONNECTION_NAME>
+              resourceRef: <RESOURCE_IDENTIFIER>
+
+        ```
+
+          | Field            | Description                                                         |
+          |------------------|---------------------------------------------------------------------|
+          | name             | The name given to the connection.                                   |
+          | resourceRef      | A unique, readable identifier of the service being connected to.    |
+
+
+    2. If you've previously added a `connectionReferences` section under `dependencies`, append this as another item under `connectionReferences`. Upon deploying the component, Choreo automatically creates a subscription if applicable and the necessary configurations to establish the connection will be injected into the Choreo-defined environment variables.
+      
+          The following table details the Choreo-defined environment variables:
+
+          | Configuration Key       | Choreo-Defined Environment Variable Name                       |
+          |-------------------------|----------------------------------------------------------------|
+          | ServiceURL              | CHOREO_<CONNECTION_NAME\>_SERVICEURL                           |
+          | ConsumerKey             | CHOREO_<CONNECTION_NAME\>_CONSUMERKEY                          |
+          | ConsumerSecret          | CHOREO_<CONNECTION_NAME\>_CONSUMERSECRET                       |
+          | TokenURL                | CHOREO_<CONNECTION_NAME\>_TOKENURL                             |
+
+
+          If you'd like to use custom environment variable names instead of the Choreo-defined ones, add the dependency as a service reference under `dependencies` in the same file. For more details, refer to the instructions under the `component.yaml file (v1.0)` tab.
+
+
+          The following table provides details on the configuration keys associated with the connection:
+
+          | Name           |  Type      |  Description                          |Optional       | Sensitive    |
+          |----------------|------------|---------------------------------------|---------------|--------------|
+          | ServiceURL     | string     | Service URL of the Choreo service     | false         | false        |
+          | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
+          | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
+          | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+
+    ### Step 2: Read configurations within the application
+
+    Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+
+    The following is a sample code snippet in NodeJS:
+
+    ``` java
+    const serviceURL = process.env.CHOREO_<CONNECTION_NAME>_SERVICEURL;
+    ```
+
+=== "Component.yaml file (v1.0)"
+
+    !!! note
+        This `component.yaml v1.0` is a legacy configuration format. For new projects, we recommend using the latest version (v1.1) of `component.yaml` for improved usability and features.
   
     1. Copy and paste the snippet from the in-line developer guide into the `component.yaml` file.
       
@@ -61,7 +119,7 @@ To integrate another service into your application, click the appropriate tab be
           | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
           | TokenURL       | string     | Token URL of the STS                  | false         | false        |
 
-    ### Step 2: Read configurations within the application
+    <h3> Step 2: Read configurations within the application </h3>
 
     Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
 
@@ -75,7 +133,7 @@ To integrate another service into your application, click the appropriate tab be
 === "Component-config.yaml file"
 
     !!! note
-        This `component-config.yaml` is a legacy configuration format. For new projects, we recommend using `component.yaml` for improved usability and features.
+        This `component-config.yaml` is a legacy configuration format. For new projects, we recommend using the latest version (v1.1) of `component.yaml` for improved usability and features.
 
     1. Copy and paste the snippet from the in-line developer guide into the `component-config` file under the `spec` section.
 
