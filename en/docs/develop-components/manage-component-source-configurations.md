@@ -39,8 +39,7 @@ endpoints:
     displayName: Go Greeter Sample
     # +required Service section has the user service endpoint details
     service:
-      # +optional Base path of the API that gets exposed via the endpoint.
-      # This is mandatory if the endpoint type is set to REST or GraphQL.
+      # +optional Context (base path) of the API that gets exposed via the endpoint.
       basePath: /greeting-service
       # +required Numeric port value that gets exposed via the endpoint
       port: 9090
@@ -139,16 +138,16 @@ spec:
       # +required Numeric port value that gets exposed via the endpoint
       port: 9090
       # +required Type of traffic that the endpoint is accepting.
-      # Allowed values: REST, GraphQL, GRPC, TCP, UDP.
+      # Allowed values: REST, GraphQL, GRPC, TCP, UDP, WS.
       type: REST
       # +optional Network level visibility of the endpoint. Defaults to Public
       # Accepted values: Project|Organization|Public.
       networkVisibility: Public
       # +optional Context (base path) of the API that gets exposed via the endpoint.
-      # This is mandatory if the endpoint type is set to REST or GraphQL.
+      # This is mandatory if the endpoint type is set to REST, GraphQL or WS.
       context: /greeting
       # +optional The path to the schema definition file. Defaults to wildcard route if not specified.
-      # This is only applicable to REST endpoint type.
+      # This is only applicable to REST and WS endpoint types.
       # The path should be relative to the Docker context.
       schemaFilePath: greeting_openapi.yaml
   # +optional Outgoing connection details for the component.
@@ -218,16 +217,16 @@ endpoints:
   # +required Numeric port value that gets exposed via this endpoint
   port: 9090
   # +required Type of the traffic this endpoint is accepting.
-  # Allowed values: REST, GraphQL, GRPC, UDP, TCP.
+  # Allowed values: REST, GraphQL, GRPC, UDP, TCP, WS.
   type: REST
   # +optional Network level visibility of this endpoint. Defaults to Public
   # Accepted values: Project|Organization|Public.
   networkVisibility: Project
   # +optional Context (base path) of the API that is exposed via this endpoint.
-  # This is mandatory if the endpoint type is set to REST or GraphQL.
+  # This is mandatory if the endpoint type is set to REST, GraphQL or WS.
   context: /greeting
   # +optional Path to the schema definition file. Defaults to wild card route if not provided
-  # This is only applicable to REST endpoint type.
+  # This is only applicable to REST and WS endpoint types.
   # The path should be relative to the docker context.
   schemaFilePath: greeting_openapi.yaml
 ```
@@ -241,7 +240,7 @@ You can define the following root-level configurations via the `endpoints.yaml` 
 | **version**          | Required     | The version of the `endpoints.yaml` file.                                           |
 | **name**             | Required     | A unique name for the endpoint, which Choreo will use to generate the managed API.|
 | **port**             | Required     | The numeric port value that gets exposed via this endpoint.                      |
-| **type**             | Required     | The type of traffic this endpoint accepts, such as `REST`, `GraphQL`, `gRPC`, `UDP`, or `TCP`. Currently, the MI preset supports only the `REST` type.                                         |
+| **type**             | Required     | The type of traffic this endpoint accepts, such as `REST`, `GraphQL`, `gRPC`, `WS`, `UDP`, or `TCP`. Currently, the MI preset supports only the `REST` type.                                         |
 | **networkVisibility**| Required     | The network level visibility of this endpoint, which defaults to `Public` if not specified. Accepted values are `Project`, `Organization`, or `Public`.|
 | **context**          | Required     | The context (base path) of the API that Choreo exposes via this endpoint.        |
 | **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, and **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, this field should be a relative path to the component root or Docker context.|
