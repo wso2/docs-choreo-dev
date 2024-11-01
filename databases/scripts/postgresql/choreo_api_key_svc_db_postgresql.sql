@@ -29,6 +29,7 @@ CREATE TABLE api_key (
   key_id CHAR(36) PRIMARY KEY,
   apim_app_id CHAR(36),
   identifier VARCHAR(100),
+  env_template_id CHAR(36),
   CONSTRAINT api_key_id_fkey FOREIGN KEY (key_id) REFERENCES key (id) ON DELETE CASCADE,
   CONSTRAINT api_key_unique_key UNIQUE (apim_app_id, identifier)
 );
