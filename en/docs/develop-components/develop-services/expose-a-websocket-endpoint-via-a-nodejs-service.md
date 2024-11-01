@@ -1,4 +1,4 @@
-# Expose a NodeJS WebSocket Endpoint via a Service
+# Expose a WebSocket Endpoint via a NodeJS Service
 
 Choreo allows you to create and deploy applications in your preferred programming language, offering a seamless platform for building dynamic and scalable solutions. This guide walks you through the steps to deploy a WebSocket service using the NodeJS buildpack.
 
