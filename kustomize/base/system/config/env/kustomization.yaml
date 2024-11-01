@@ -1071,3 +1071,6 @@ configMapGenerator:
       - CHOREO_STS_SERVICE_URL=http://choreo-appdev-sts:9000
       - CLOUD_MANAGER_SERVICE_URL=http://dp-cloud-manager
       - CHOREO_IDP_ID={{.CHOREO_IDP_ID}}
+      - WEBSUB_HUB_PUBLISHER_ENABLED={{.WEBSUB_HUB_PUBLISHER_ENABLED | default "false"}}
+      - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL}}
+      - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC}}
