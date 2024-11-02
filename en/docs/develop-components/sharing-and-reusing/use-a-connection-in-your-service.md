@@ -236,4 +236,43 @@ As the service URL you can use the URL that you resolved in [step 2](#step-2-rea
 
     !!! note
         If you want to consume a Choreo service at the project visibility level, you don't need to obtain a token. You can directly invoke the service using the resolved URL.
-        
+
+## Configure resiliency for the connection
+
+To ensure your service remains robust and responsive when consuming other Choreo services through connections, you can configure resiliency patterns. Choreo supports configuring retries for connections.
+
+    !!! note
+        Currently, the resiliency configuration is only available in the CDPs and only for paid users. It will be available for PDPs soon.
+
+### Configure retry
+
+To configure retry for your connection, follow these steps:
+
+1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev).
+2. In the header, click the **Project** list. This opens the project home page.
+3. In the left navigation menu, click **Dependencies** and then click **Connections**.
+4. Click on a required **Connection** to view its details.
+5. Expand the **Advanced Configuration** section.
+6. Enable the **Retry** toggle under **Resiliency**.
+7. Set appropriate values for the retry parameters. For more information, see [Retry configuration parameters](#retry-configuration-parameters).
+8. Click **Save**.
+
+    !!! note
+        To use the retry feature, include the `Choreo-API-Key` header in your request. For details on obtaining the Choreo API key, see [Step 1](#step-1-add-connection-configurations).
+
+### Retry configuration parameters
+
+- **Retry count**: The number of retry attempts if a request fails. For example, setting this to 3 allows Choreo to make up to 3 additional attempts after the initial failure.
+
+- **Retry Backoff Interval**: The base time delay for exponential backoff between retries. This prevents overwhelming the target service with rapid, repeated requests.
+
+- **Timeout Per Retry**: The maximum duration in seconds for each retry attempt. If there is no response within this time, the attempt is considered a failure. For example, setting this to 30 seconds means each retry will wait up to 30 seconds before timing out.
+
+- **Condition**: The conditions under which retries are triggered. Choreo supports the following options, and you can select one or more:
+
+    - **5xx**: Retry on any 5xx response code or when the upstream server fails to respond (disconnect/reset/read timeout). This includes connection failures and refused-stream errors.
+    - **gateway-error**: Retry only on 502, 503, or 504 response codes.
+    - **reset**: Retry when the upstream server does not respond (disconnect/reset/read timeout).
+    - **connect-failure**: Retry on connection failures to the upstream server, such as connection timeouts.
+    - **retriable-4xx**: Retry on retriable 4xx response codes. Currently limited to 409 responses.
+    - **refused-stream**: Retry if the upstream server resets the stream with a `REFUSED_STREAM` error code.
