@@ -26,6 +26,8 @@ The source configuration file must be committed to your repository within the `.
 
 **Sample `component.yaml` file content**:
 
+Click the respective tab to view the structure for your current configuration file version:
+
 === "Version 1.1"
 
     ``` yaml
@@ -105,11 +107,11 @@ The source configuration file must be committed to your repository within the `.
     | Configuration        | Required     | Description                                                                      |
     |----------------------|--------------|----------------------------------------------------------------------------------|
     | **name**             | Required     | The name given to the connection.                                                |
-    | **resourceRef**      | Required     | A unique, readable identifier of the service being connected to.                 |
+    | **resourceRef**      | Required     | A unique, human-readable identifier for the service you are connecting.          |
 
 
     !!! note
-        Choreo automatically generates connection configurations when you create a connection. The properties such as **name**, **resourceRef**,  are automatically generated. The necessary configurations to establish the connection will be injected into Choreo-defined environment variables.
+        Choreo automatically generates connection configurations when you create a connection. The properties such as **name** and **resourceRef** are automatically generated. The configurations required to establish the connection will be injected into Choreo-defined environment variables.
 
 === "Version 1.0"
 
