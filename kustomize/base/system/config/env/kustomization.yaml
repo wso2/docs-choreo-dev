@@ -840,6 +840,8 @@ configMapGenerator:
       - AUTHZ_SERVICE_GRPC_ENDPOINT={{.AUTHZ_SERVICE_GRPC_ENDPOINT}}
       - AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED={{.AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED}}
       - API_KEY_SVC_URL={{.API_KEY_SVC_URL | default "http://api-key-service:8080"}}
+      - STS_MGT_URL=http://sts-mgt-service:3000
+      - ENABLE_STS_MGT_SERVICE={{.ENABLE_STS_MGT_SERVICE | default "false"}}
   - name: env-alert-notification-service
     behavior: create
     literals:
