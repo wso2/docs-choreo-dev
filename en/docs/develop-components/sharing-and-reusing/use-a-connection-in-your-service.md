@@ -129,7 +129,6 @@ To integrate another service into your application, click the appropriate tab be
     const serviceURL = process.env.SVC_URL;
     ```
 
-
 === "Component-config.yaml file"
 
     !!! note
@@ -189,8 +188,6 @@ To integrate another service into your application, click the appropriate tab be
     ``` java
     const serviceURL = process.env.SVC_URL;
     ```
-
-
 
 ### Step 3: Acquire an OAuth 2.0 access token
 
