@@ -5,25 +5,22 @@ import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.platformServices.PlatformServices;
 import com.wso2.choreo.integration.common.utils.SleepUtil;
-import com.wso2.choreo.integration.models.platformServices.DBServerPowerAction;
-import com.wso2.choreo.integration.models.platformServices.Database;
-import com.wso2.choreo.integration.models.platformServices.DatabaseServer;
-import com.wso2.choreo.integration.models.platformServices.ServerStatus;
+import com.wso2.choreo.integration.models.platformServices.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlatformServicesUtils {
-    public static DatabaseServer createReusableDatabaseServer(TestNGCitrusSpringSupport runner, HttpClient client, String dbServerName,
-                                                              String servicePlanId, String orgUUID, String accessToken) {
-        List<DatabaseServer> dbServersList = PlatformServices.getDatabaseServers(runner, client, orgUUID,accessToken);
-        for (DatabaseServer dbServer : dbServersList) {
+    public static CreatedDatabaseServer createReusableDatabaseServer(TestNGCitrusSpringSupport runner, HttpClient client, String dbServerName,
+                                                                     String servicePlanId, String orgUUID, String accessToken) {
+        List<CreatedDatabaseServer> dbServersList = PlatformServices.getDatabaseServers(runner, client, orgUUID,accessToken);
+        for (CreatedDatabaseServer dbServer : dbServersList) {
             if (dbServer.getName().equals(dbServerName)) {
                 return dbServer;
             }
         }
-        DatabaseServer createdDbServer = PlatformServices.createDatabaseServer(runner, client, dbServerName, servicePlanId, accessToken);
+        CreatedDatabaseServer createdDbServer = PlatformServices.createDatabaseServer(runner, client, dbServerName, servicePlanId, accessToken);
         return createdDbServer;
     }
 

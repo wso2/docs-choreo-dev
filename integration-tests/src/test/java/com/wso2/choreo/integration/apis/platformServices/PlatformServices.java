@@ -20,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -30,8 +29,8 @@ import static com.consol.citrus.http.message.HttpMessageHeaders.HTTP_STATUS_CODE
 
 
 public class PlatformServices {
-    public static DatabaseServer createDatabaseServer(TestNGCitrusSpringSupport runner, HttpClient client, String dbServerName,
-                                                      String servicePlanId, String accessToken) {
+    public static CreatedDatabaseServer createDatabaseServer(TestNGCitrusSpringSupport runner, HttpClient client, String dbServerName,
+                                                             String servicePlanId, String accessToken) {
         String resource = Constant.PSM_SUFFIX;
         DatabaseServerCreateRequest dbServerReq = DatabaseServerCreateRequest.builder()
                 .name(dbServerName)
@@ -41,7 +40,7 @@ public class PlatformServices {
                 .is_vector_enabled(false)
                 .build();
         String requestPayload = ObjectMapperUtil.mapObjectToString(dbServerReq);
-        AtomicReference<DatabaseServer> dbServer = new AtomicReference<>();
+        AtomicReference<CreatedDatabaseServer> dbServer = new AtomicReference<>();
         runner.variable("isSuccess", false);
         runner.$(repeatOnError()
                 .until("(i = 5) or ( ${isSuccess} = true )")
@@ -66,7 +65,7 @@ public class PlatformServices {
                                     if (code != HttpStatus.CREATED.value()) {
                                         throw new ValidationException("Database server creation failed with status code: " + code + " error:" + message.getPayload(String.class));
                                     }
-                                    dbServer.set(ObjectMapperUtil.mapStringToObject(DatabaseServer.class, message.getPayload(String.class), ""));
+                                    dbServer.set(ObjectMapperUtil.mapStringToObject(CreatedDatabaseServer.class, message.getPayload(String.class), ""));
                                 })));
         return dbServer.get();
 
@@ -188,8 +187,8 @@ public class PlatformServices {
         return database.get();
     }
 
-    public static DatabaseServer UpdateDatabaseServerMarketplaceStatus(TestNGCitrusSpringSupport runner, HttpClient client, String dbServerId, String dbServerName,
-                                                                       boolean isAddingToMarketplace, String accessToken) throws ValidationException {
+    public static CreatedDatabaseServer UpdateDatabaseServerMarketplaceStatus(TestNGCitrusSpringSupport runner, HttpClient client, String dbServerId, String dbServerName,
+                                                                              boolean isAddingToMarketplace, String accessToken) throws ValidationException {
         String resource = Constant.PSM_SUFFIX.concat("/").concat(dbServerId);
         DatabaseServerPutRequest marketPlaceReq = DatabaseServerPutRequest.builder()
                 .name(dbServerName)
@@ -199,7 +198,7 @@ public class PlatformServices {
                 .display_on_marketplace(isAddingToMarketplace)
                 .build();
         String requestPayload = ObjectMapperUtil.mapObjectToString(marketPlaceReq);
-        AtomicReference<DatabaseServer> databaseServer = new AtomicReference<>();
+        AtomicReference<CreatedDatabaseServer> databaseServer = new AtomicReference<>();
         runner.variable("isSuccess", false);
         runner.$(repeatOnError()
                 .until("(i = 5) or ( ${isSuccess} = true )")
@@ -224,7 +223,7 @@ public class PlatformServices {
                                     if (code != HttpStatus.OK.value()) {
                                         throw new ValidationException("Database server marketplace status update failed with status code: " +  + code + " error:" + message.getPayload(String.class));
                                     }
-                                    databaseServer.set(ObjectMapperUtil.mapStringToObject(DatabaseServer.class, message.getPayload(String.class), ""));
+                                    databaseServer.set(ObjectMapperUtil.mapStringToObject(CreatedDatabaseServer.class, message.getPayload(String.class), ""));
                                 })));
         return databaseServer.get();
     }
@@ -236,7 +235,7 @@ public class PlatformServices {
                 .action(action.getValue())
                 .build();
         String requestPayload = ObjectMapperUtil.mapObjectToString(powerUpdateReq);
-        AtomicReference<DatabaseServer> databaseServer = new AtomicReference<>();
+        AtomicReference<CreatedDatabaseServer> databaseServer = new AtomicReference<>();
         runner.variable("isSuccess", false);
         runner.$(repeatOnError()
                 .until("(i = 5) or ( ${isSuccess} = true )")
@@ -264,10 +263,10 @@ public class PlatformServices {
                                 })));
     }
 
-    public static List<DatabaseServer> getDatabaseServers(TestNGCitrusSpringSupport runner, HttpClient client,
-                                                    String orgUUID, String accessToken) {
+    public static List<CreatedDatabaseServer> getDatabaseServers(TestNGCitrusSpringSupport runner, HttpClient client,
+                                                                 String orgUUID, String accessToken) {
         String resource = Constant.PSM_SUFFIX.concat("?organization_id=").concat(orgUUID);
-        AtomicReference<List<DatabaseServer>> dbServers = new AtomicReference<>();
+        AtomicReference<List<CreatedDatabaseServer>> dbServers = new AtomicReference<>();
         runner.$(http()
                 .client(client)
                 .send()
@@ -284,7 +283,7 @@ public class PlatformServices {
                             try {
                                 dbServers.set(new ObjectMapper()
                                         .readValue(message.getPayload().toString(),
-                                                new TypeReference<List<DatabaseServer>>() {
+                                                new TypeReference<List<CreatedDatabaseServer>>() {
                                                 }));
                             } catch (JsonProcessingException e) {
                                 throw new RuntimeException(e);
@@ -296,7 +295,7 @@ public class PlatformServices {
     }
 
     public static DatabaseServer getDatabaseServer(TestNGCitrusSpringSupport runner, HttpClient client, String dbServerId,
-                                                   String orgUUID, String accessToken) {
+                                                          String orgUUID, String accessToken) {
         String resource = Constant.PSM_SUFFIX.concat("/").concat(dbServerId).concat("?organization_id=").concat(orgUUID);;
         AtomicReference<DatabaseServer> dbServer = new AtomicReference<>();
         runner.$(http()
