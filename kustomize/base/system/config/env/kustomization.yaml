@@ -1028,6 +1028,9 @@ configMapGenerator:
       - MIZZEN_BASE_URL={{.MIZZEN_BASE_URL | default "http://dp-mizzen"}}
       - CLOUD_MANAGER_BASE_URL={{.CLOUD_MANAGER_BASE_URL | default "http://dp-cloud-manager"}}
       - DP_OAUTH_AGENT_BASE_URL={{.DP_OAUTH_AGENT_BASE_URL | default "http://app-gateway-oauth-agent:8080"}}
+      - WEBSUB_HUB_PUBLISHER_ENABLED={{.WEBSUB_HUB_PUBLISHER_ENABLED | default "false"}}
+      - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL | default ""}}
+      - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC | default ""}}
   - name: env-log-controller
     behavior: create
     literals:
