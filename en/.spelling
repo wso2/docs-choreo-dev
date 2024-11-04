@@ -702,6 +702,8 @@ headerName
 fooValue
 authzHeaderValue
 myResourcePath
+evictable
+defaultable
 WebSocket
 WebSockets
 expose-a-nodejs-websocket-endpoint-via-a-service
