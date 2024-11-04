@@ -1,5 +1,6 @@
 accountInfo:
   TEST_USER_EMAIL: choreo-integration-test-user-dev@wso2.com@carbon.super
+  TEST_USER_IDP_ID: 8616ebca-3376-4cfa-bf76-91abc00982a8
   #TEST_USER_PASSWORD:
   TEST_CHOREO_ORG_ID: 3752
   TEST_CHOREO_ORG_HANDLE: choreointegrationtestsuserdevdlwqo
