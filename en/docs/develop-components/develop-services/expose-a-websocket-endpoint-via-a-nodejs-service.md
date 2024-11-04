@@ -114,7 +114,7 @@ To deploy the service, follow these steps:
 
 Once you have successfully deployed your service, you can [test](../../testing/test-websocket-endpoints-via-the-websocket-console.md), [manage](../../api-management/lifecycle-management.md), and observe it like any other component type in Choreo.
 
-During testing, once the WebSocket connection is established, you can send {"type": "Connect", "username": "user1"} to the WebSocket endpoint to connect to the chat service. You can then send chat messages by using {"type": "message", "message": "Hello, World!"}.
+During testing, once the WebSocket connection is established, you can send {"type": "Connect", "username": "user1"} to the WebSocket endpoint to connect to the chat service. You can then send chat messages by using {"type": "Data", "message": "Hello, World!"}.
 
 !!! note
      Some clients, such as certain browsers, may not support adding headers to the WebSocket handshake. In these cases, you can include the access token or Test key required for WebSocket API invocation within the `sec-websocket-protocol` header, along with any specified subprotocols.
