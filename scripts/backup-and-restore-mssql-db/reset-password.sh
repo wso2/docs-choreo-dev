@@ -24,7 +24,6 @@ function reset_database_user_password {
     db_user=$(az keyvault secret show --name mssql-administrator-login-name --vault-name choreo-dev-tf-keyvault --query value)
     db_username=$(echo "$db_user" | sed 's/^"//g; s/"$//g')
     db_password=$(echo "$db_pass" | sed 's/^"//g; s/"$//g')
-    user_password=$(echo "$db_pass" | sed 's/^"//g; s/"$//g')
     sqlcmd -S "${mssql_server_name}.database.windows.net" -U "$db_username" -d "$database" -P "$db_password" -Q "DROP USER $user"
     sqlcmd -S "${mssql_server_name}.database.windows.net" -U "$db_username" -d "$database" -P "$db_password" -Q "CREATE USER $user WITH PASSWORD = $password"
     echo "Adding the permission to user : ${user}"
@@ -45,12 +44,12 @@ for file in "$db_data_directory_path"/*; do
         database=$(basename "$file" .json)
         json_content=$(jq . < "$file")
         users=$(jq -r '.users[]' <<< "$json_content")
-        db_users=($users)
+        db_users=("$users")
         echo "Database is : $database"
         for element in "${db_users[@]}"; do
             user_ref=$(jq --arg key "$element" '.[$key]' <<< "$json_content")
-            permissions=$(jq --arg key "${element}_permissions" '.[$key]' <<< "$json_content")
-            user_permissions=$(jq -r '.[]' <<< "$permissions")
+            db_permissions=$(jq --arg key "${element}_permissions" '.[$key]' <<< "$json_content")
+            user_permissions=$(jq -r '.[]' <<< "$db_permissions")
             array_permissions=($user_permissions)
             reset_database_user_password "$database" "$element" "$user_ref" "${array_permissions[@]}"
         done
