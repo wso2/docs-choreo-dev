@@ -25,8 +25,8 @@ function reset_database_user_password {
     db_username=$(echo "$db_user" | sed 's/^"//g; s/"$//g')
     db_password=$(echo "$db_pass" | sed 's/^"//g; s/"$//g')
     user_password=$(echo "$db_pass" | sed 's/^"//g; s/"$//g')
-    sqlcmd -S "${mssql_server_name}.database.windows.net" -U "$db_username" -d "$database" -P "$db_password" -Q "DROP USER "$user""
-    sqlcmd -S "${mssql_server_name}.database.windows.net" -U "$db_username" -d "$database" -P "$db_password" -Q "CREATE USER "$user" WITH PASSWORD = "$password""
+    sqlcmd -S "${mssql_server_name}.database.windows.net" -U "$db_username" -d "$database" -P "$db_password" -Q "DROP USER $user"
+    sqlcmd -S "${mssql_server_name}.database.windows.net" -U "$db_username" -d "$database" -P "$db_password" -Q "CREATE USER $user WITH PASSWORD = $password"
     echo "Adding the permission to user : ${user}"
     for permission in "${permissions[@]}"; do
         echo "Adding permission : ${permission} to ${user}"
@@ -52,7 +52,7 @@ for file in "$db_data_directory_path"/*; do
             permissions=$(jq --arg key "${element}_permissions" '.[$key]' <<< "$json_content")
             user_permissions=$(jq -r '.[]' <<< "$permissions")
             array_permissions=($user_permissions)
-            reset_database_user_password $database $element $user_ref "${array_permissions[@]}"
+            reset_database_user_password "$database" "$element" "$user_ref" "${array_permissions[@]}"
         done
     fi
 done
