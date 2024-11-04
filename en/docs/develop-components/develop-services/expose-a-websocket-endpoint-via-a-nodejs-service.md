@@ -113,6 +113,7 @@ To deploy the service, follow these steps:
         Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
 
 Once you have successfully deployed your service, you can [test](../../testing/test-websocket-endpoints-via-the-websocket-console.md), [manage](../../api-management/lifecycle-management.md), and observe it like any other component type in Choreo.
+
 During testing, once the WebSocket connection is established, you can send {"type": "Connect", "username": "user1"} to the WebSocket endpoint to connect to the chat service. You can then send chat messages by using {"type": "message", "message": "Hello, World!"}.
 
 !!! note
