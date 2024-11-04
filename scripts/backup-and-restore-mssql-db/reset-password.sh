@@ -50,7 +50,7 @@ for file in "$db_data_directory_path"/*; do
             user_ref=$(jq --arg key "$element" '.[$key]' <<< "$json_content")
             db_permissions=$(jq --arg key "${element}_permissions" '.[$key]' <<< "$json_content")
             user_permissions=$(jq -r '.[]' <<< "$db_permissions")
-            array_permissions=($user_permissions)
+            array_permissions=("$user_permissions")
             reset_database_user_password "$database" "$element" "$user_ref" "${array_permissions[@]}"
         done
     fi
