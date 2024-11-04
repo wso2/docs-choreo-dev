@@ -26,96 +26,184 @@ The source configuration file must be committed to your repository within the `.
 
 **Sample `component.yaml` file content**:
 
-``` yaml
-# +required The configuration file schema version
-schemaVersion: 1.0
+Click the respective tab to view the structure for your current configuration file version:
 
-# +optional Incoming connection details for the component
-endpoints:
-  # +required Unique name for the endpoint.
-  # This name will be used when generating the managed API
-  - name: greeter-sample
-    # +optional Display name for the endpoint.
-    displayName: Go Greeter Sample
-    # +required Service section has the user service endpoint details
-    service:
-      # +optional Base path of the API that gets exposed via the endpoint.
-      # This is mandatory if the endpoint type is set to REST, GraphQL or WS.
-      basePath: /greeting-service
-      # +required Numeric port value that gets exposed via the endpoint
-      port: 9090
-    # +required Type of traffic that the endpoint is accepting.
-    # Allowed values: REST, GraphQL, GRPC, TCP, UDP, WS.
-    type: REST
-    # +optional Network level visibilities of the endpoint.
-    # Accepted values: Project|Organization|Public(Default).
-    networkVisibilities: 
-      - Public
-      - Organization
-    # +optional Path to the schema definition file. Defaults to wild card route if not provided
-    # This is only applicable to REST and WS endpoint types.
-    # The path should be relative to the docker context.
-    schemaFilePath: openapi.yaml
-  
-  # +optional Outgoing connection details for the component.
-  dependencies:
-    # +optional Defines the service references from the Internal Marketplace.
-    serviceReferences:
-      # +required Name of the service reference.
-      - name: choreo:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
-        # +required Name of the connection instance.
-        connectionConfig: 19d2648b-d29c-4452-afdd-1b9311e81412
-        # +required Environment variables injected into the component for connection configuration.
-        env:
-          # +required Key name of the connection configuration.
-          - from: ServiceURL
-            # +required Environment variable injected into the container.
-            to: SERVICE_URL
-```
+=== "Version 1.1"
 
-The descriptor-based approach of the `component.yaml` file simplifies and streamlines endpoint and connection configuration management. The use of versioned schemas ensures backward compatibility, providing a seamless transition with future updates.
+    ``` yaml
+    # +required The configuration file schema version
+    schemaVersion: 1.1
 
-You can define the following root-level configurations via the `component.yaml` file:
+    # +optional Incoming connection details for the component
+    endpoints:
+      # +required Unique name for the endpoint.
+      # This name will be used when generating the managed API
+      - name: greeter-sample
+        # +optional Display name for the endpoint.
+        displayName: Go Greeter Sample
+        # +required Service section has the user service endpoint details
+        service:
+          # +optional Context (base path) of the API that gets exposed via the endpoint.
+          basePath: /greeting-service
+          # +required Numeric port value that gets exposed via the endpoint
+          port: 9090
+        # +required Type of traffic that the endpoint is accepting.
+        # Allowed values: REST, GraphQL, WS, GRPC, TCP, UDP.
+        type: REST
+        # +optional Network level visibilities of the endpoint.
+        # Accepted values: Project|Organization|Public(Default).
+        networkVisibilities: 
+          - Public
+          - Organization
+        # +optional Path to the schema definition file. Defaults to wild card route if not provided
+        # This is only applicable to REST or WS endpoint types.
+        # The path should be relative to the docker context.
+        schemaFilePath: openapi.yaml
+      
+      # +optional Outgoing connection details for the component.
+      dependencies:
+        # +optional Defines the connection references from the Internal Marketplace.
+        connectionReferences:
+          # +required Name of the connection.
+          - name: hr-connection
+            # +required Name of the connection instance.
+            resourceRef: service:/HRProject/UserComponent/v1/ad088/PUBLIC
 
-| Configuration        | Required     | Description                                                              |
-|----------------------|--------------|--------------------------------------------------------------------------|
-| **schemaVersion**    | Required     | The version of the `component.yaml` file. Defaults to the latest version.|
-| **endpoints**        | Optional     | The list of endpoint configurations.                                     |
-| **dependencies**     | Optional     | The list of dependency configurations.                                   |
+    ```
 
-### Endpoint configurations
-In the `endpoints` section of the `component.yaml` file, you can define multiple service endpoint configurations. Each endpoint must have a unique name and the required fields specified in the schema overview.
+    The descriptor-based approach of the `component.yaml` file simplifies and streamlines endpoint and connection configuration management. The use of versioned schemas ensures backward compatibility, providing a seamless transition with future updates.
 
-!!! tip "Why have a unique name?"
-       When you define multiple endpoints, the `endpoint.name` is appended to the Choreo-generated URL. A unique name ensures the endpoint is easily recognizable and readable within the URL.
-       
-| Configuration        | Required     | Description                                                                                             |
-|----------------------|--------------|---------------------------------------------------------------------------------------------------------|
-| **name**             | Required     | A unique identifier for the endpoint within the service component. Avoid using excessively long names.  |
-| **displayName**      | Optional     | A display name for the endpoint.                                                                        |
-| **service**          | Required     | Service details for the endpoint.                                                                       |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.basePath** | Required     | The base path of the API exposed via this endpoint.                        |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.port**     | Required     | The numeric port value exposed via this endpoint.                          |
-| **type**             | Required     | The type of traffic the endpoint accepts. For example, `REST`, `GraphQL`, `gRPC`, `WS`, `UDP`, or `TCP`.|
-| **networkVisibilities** | Required | The network-level visibility of the endpoint. For example, project, organization, or public.                    |
-| **schemaFilePath** | Required | The file path to the swagger definition file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, or **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, the path should be relative to the component root or Docker context. |
+    You can define the following root-level configurations via the `component.yaml` file:
 
-### Dependency configurations
+    | Configuration        | Required     | Description                                                              |
+    |----------------------|--------------|--------------------------------------------------------------------------|
+    | **schemaVersion**    | Required     | The version of the `component.yaml` file. Defaults to the latest version.|
+    | **endpoints**        | Optional     | The list of endpoint configurations.                                     |
+    | **dependencies**     | Optional     | The list of dependency configurations.                                   |
 
-In the `dependencies` section of the `component.yaml` file, you can define multiple service connection configurations under `dependencies.serviceReferences`. You can use the service references generated in the Internal Marketplace when creating a service connection. For instructions on copying [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/), see the in-line developer guide displayed during connection creation.
+    ### Endpoint configurations
+    In the `endpoints` section of the `component.yaml` file, you can define multiple service endpoint configurations. Each endpoint must have a unique name and the required fields specified in the schema overview.
 
-You must include the following configurations in the `dependencies.serviceReferences` schema:
+    !!! tip "Why have a unique name?"
+          When you define multiple endpoints, the `endpoint.name` is appended to the Choreo-generated URL. A unique name ensures the endpoint is easily recognizable and readable within the URL.
+          
+    | Configuration        | Required     | Description                                                                                             |
+    |----------------------|--------------|---------------------------------------------------------------------------------------------------------|
+    | **name**             | Required     | A unique identifier for the endpoint within the service component. Avoid using excessively long names.  |
+    | **displayName**      | Optional     | A display name for the endpoint.                                                                        |
+    | **service**          | Required     | Service details for the endpoint.                                                                       |
+    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.basePath** | Required     | The base path of the API exposed via this endpoint.                        |
+    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.port**     | Required     | The numeric port value exposed via this endpoint.                          |
+    | **type**             | Required     | The type of traffic the endpoint accepts. For example, `REST`, `GraphQL`, `gRPC`, `UDP`, or `TCP`.|
+    | **networkVisibilities** | Required | The network-level visibility of the endpoint. For example, project, organization, or public.                    |
+    | **schemaFilePath** | Required | The file path to the swagger definition file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, or **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, the path should be relative to the component root or Docker context. |
 
-| Configuration        | Required     | Description                                                                      |
-|----------------------|--------------|----------------------------------------------------------------------------------|
-| **name**             | Required     | A unique name for the service reference.                                         |
-| **connectionConfig** | Required     | A unique name for the connection instance.                                       |
-| **env**              | Required     | The list of environment variable mappings to inject into the container.  |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.from**         | Required     | The key name of the connection configuration.                           |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.to**           | Required     | The environment variable to inject into the container.                  |
+    ### Dependency configurations
 
-!!! note
-    Choreo automatically generates connection configurations when you create a connection within the Internal Marketplace. The properties such as **name**, **connectionConfig**, and **env.from** are automatically generated. However, you must manually set the **env.to** value.
+    In the `dependencies` section of the `component.yaml` file, you can define multiple connection configurations under `dependencies.connectionReferences`. You can use the connection reference generated in the in-line developer guide when creating a connection. For instructions on copying [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/), see the in-line developer guide displayed during connection creation.
+
+    You must include the following configurations in the `dependencies.connectionReferences` schema:
+
+    | Configuration        | Required     | Description                                                                      |
+    |----------------------|--------------|----------------------------------------------------------------------------------|
+    | **name**             | Required     | The name given to the connection.                                                |
+    | **resourceRef**      | Required     | A unique, human-readable identifier for the service you are connecting.          |
+
+
+    !!! note
+        Choreo automatically generates connection configurations when you create a connection. The properties such as **name** and **resourceRef** are automatically generated. The configurations required to establish the connection will be injected into Choreo-defined environment variables.
+
+=== "Version 1.0"
+
+    ``` yaml
+    # +required The configuration file schema version
+    schemaVersion: 1.0
+
+    # +optional Incoming connection details for the component
+    endpoints:
+      # +required Unique name for the endpoint.
+      # This name will be used when generating the managed API
+      - name: greeter-sample
+        # +optional Display name for the endpoint.
+        displayName: Go Greeter Sample
+        # +required Service section has the user service endpoint details
+        service:
+          # +optional Context (base path) of the API that gets exposed via the endpoint.
+          basePath: /greeting-service
+          # +required Numeric port value that gets exposed via the endpoint
+          port: 9090
+        # +required Type of traffic that the endpoint is accepting.
+        # Allowed values: REST, GraphQL, WS, GRPC, TCP, UDP.
+        type: REST
+        # +optional Network level visibilities of the endpoint.
+        # Accepted values: Project|Organization|Public(Default).
+        networkVisibilities: 
+          - Public
+          - Organization
+        # +optional Path to the schema definition file. Defaults to wild card route if not provided
+        # This is only applicable to REST or WS endpoint types.
+        # The path should be relative to the docker context.
+        schemaFilePath: openapi.yaml
+      
+      # +optional Outgoing connection details for the component.
+      dependencies:
+        # +optional Defines the service references from the Internal Marketplace.
+        serviceReferences:
+          # +required Name of the service reference.
+          - name: choreo:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
+            # +required Name of the connection instance.
+            connectionConfig: 19d2648b-d29c-4452-afdd-1b9311e81412
+            # +required Environment variables injected into the component for connection configuration.
+            env:
+              # +required Key name of the connection configuration.
+              - from: ServiceURL
+                # +required Environment variable injected into the container.
+                to: SERVICE_URL
+    ```
+
+    The descriptor-based approach of the `component.yaml` file simplifies and streamlines endpoint and connection configuration management. The use of versioned schemas ensures backward compatibility, providing a seamless transition with future updates.
+
+    You can define the following root-level configurations via the `component.yaml` file:
+
+    | Configuration        | Required     | Description                                                              |
+    |----------------------|--------------|--------------------------------------------------------------------------|
+    | **schemaVersion**    | Required     | The version of the `component.yaml` file. Defaults to the latest version.|
+    | **endpoints**        | Optional     | The list of endpoint configurations.                                     |
+    | **dependencies**     | Optional     | The list of dependency configurations.                                   |
+
+    <h3> Endpoint configurations </h3>
+    In the `endpoints` section of the `component.yaml` file, you can define multiple service endpoint configurations. Each endpoint must have a unique name and the required fields specified in the schema overview.
+
+    !!! tip "Why have a unique name?"
+          When you define multiple endpoints, the `endpoint.name` is appended to the Choreo-generated URL. A unique name ensures the endpoint is easily recognizable and readable within the URL.
+          
+    | Configuration        | Required     | Description                                                                                             |
+    |----------------------|--------------|---------------------------------------------------------------------------------------------------------|
+    | **name**             | Required     | A unique identifier for the endpoint within the service component. Avoid using excessively long names.  |
+    | **displayName**      | Optional     | A display name for the endpoint.                                                                        |
+    | **service**          | Required     | Service details for the endpoint.                                                                       |
+    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.basePath** | Required     | The base path of the API exposed via this endpoint.                        |
+    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.port**     | Required     | The numeric port value exposed via this endpoint.                          |
+    | **type**             | Required     | The type of traffic the endpoint accepts. For example, `REST`, `GraphQL`, `gRPC`, `UDP`, or `TCP`.|
+    | **networkVisibilities** | Required | The network-level visibility of the endpoint. For example, project, organization, or public.                    |
+    | **schemaFilePath** | Required | The file path to the swagger definition file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, or **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, the path should be relative to the component root or Docker context. |
+
+    <h3> Dependency configurations </h3>
+
+    In the `dependencies` section of the `component.yaml` file, you can define multiple service connection configurations under `dependencies.serviceReferences`. You can use the service references generated in the in-line developer guide when creating a service connection. For instructions on copying [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/), see the in-line developer guide displayed during connection creation.
+
+    You must include the following configurations in the `dependencies.serviceReferences` schema:
+
+    | Configuration        | Required     | Description                                                                      |
+    |----------------------|--------------|----------------------------------------------------------------------------------|
+    | **name**             | Required     | A unique name for the service reference.                                         |
+    | **connectionConfig** | Required     | A unique name for the connection instance.                                       |
+    | **env**              | Required     | The list of environment variable mappings to inject into the container.  |
+    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.from**         | Required     | The key name of the connection configuration.                           |
+    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.to**           | Required     | The environment variable to inject into the container.                  |
+
+    !!! note
+        Choreo automatically generates connection configurations when you create a connection. The properties such as **name**, **connectionConfig**, and **env.from** are automatically generated. However, you must manually set the **env.to** value.
 
 ## Overview of the `component-config.yaml` file 
 
