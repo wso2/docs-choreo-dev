@@ -1,33 +1,36 @@
-# Choreo Sample Collection
+# Samples Overview
 
-Choreo provides a diverse collection of sample applications covering various use cases. These samples help you get started quickly by deploying applications with ease.
+Choreo provides an extensive collection of samples for a wide range of use cases. You can quickly deploy and explore these samples to easily understand core functionalities of the platform.
 
 ## Prerequisites
 
-- Sign in to Choreo.  
-- If you're signing in for the first time, create an organization:  
-    1. Go to [Choreo Console](https://console.choreo.dev/) and sign in using Google, GitHub, or Microsoft.  
-    2. Enter a unique organization name, for example, `Stark Industries`.  
-    3. Accept the privacy policy and terms of use.  
-    4. Click **Create** to set up the organization.  
-- Create a project or navigate to an existing project:  
-    - If you don't have a project:  
-        1. On the organization home page, click **\+ Create Project**.  
-        2. Enter a display name, unique name, and description for the project.  
-        3. Click **Create**.  
-    - If you already have a project, go to the project overview page of your choice.
+Before you use the samples, complete the following steps:
 
-## Get Started with Samples
+- If you're signing in for the first time, follow these steps to create an organization and then create a project:  
+      1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using Google, GitHub, or Microsoft. 
+      2. Enter a unique organization name. For example, `Stark Industries`.
+      3. Read and accept the privacy policy and terms of use.
+      4. Click **Create**. This creates an organization and takes you to its **Overview*** page.
+      5. On the organization home page, click **+ Create Project**.
+      6. Enter a display name, unique name, and description for the project.
+      7. Click **Create**. This creates the project and takes you to its **Overview** page. 
 
-1. Scroll down to the **Get Started with a Sample** section.  
-2. You will see a few sample applications here. To access the full list of samples, click **View All Samples**.
+## Explore the Choreo samples collection
 
-## Exploring Samples
+You can filter and explore Choreo's sample collection based on your preference.
 
-There are hundreds of samples available. You can search and filter the samples using:
+To view available samples, follow these steps:
 
-- **Buildpacks**: Filter by the technology used to package the sample, such as Ballerina, NodeJS, or Docker.  
-- **Component Types**: Filter by the type of application, such as services, web applications, scheduled tasks, or manual tasks.  
-- **Tags**: Use tags like REST, HTTP, or GraphQL to narrow down samples by their specific functionality or integration.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the Choreo Console header, go to the **Project** list and select your project to open its **Overview** page.
+3. On the project **Overview** page, go to the **Get Started with a Sample** section. You will see a selection of samples.
+4. To see the complete collection of samples, click **View All Samples**.
+   
 
-You have the option to use **Quick Deploy** if available, or you can always access the source code for each sample on **GitHub**.
+When you view all samples, you can filter and search for samples by the following criteria:
+
+ - **Buildpack**: Filters by the technology used. For example, Ballerina, NodeJS, Docker, etc.
+ - **Component Type**: Filters by the component type. For example, service, web application, scheduled tasks, manual tasks, etc.
+ - **Tags**: Use tags like REST, HTTP, or GraphQL to find samples with specific functionalities or integrations.
+
+For each sample, you can either try out the quick deploy feature or access the sample source code on GitHub. For details on quickly deploying a sample, see [Quick Deploy a Sample](./quick-deploy-a-sample.md).
