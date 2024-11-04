@@ -19,22 +19,20 @@ function reset_database_user_password {
     local permissions=("${@:4}")
     echo "Resetting the password for user : $user"
     user_key_ref=$(echo "$key_ref" | sed 's/^"//g; s/"$//g')
-    password=$(az keyvault secret show --name $user_key_ref --vault-name dev-csi-64 --query value)
-    # db_pass=$(az keyvault secret show --name mssql-administrator-login-password --vault-name choreo-dev-tf-keyvault --query value)
-    # db_user=$(az keyvault secret show --name mssql-administrator-login-name --vault-name choreo-dev-tf-keyvault --query value)
-    # db_username=$(echo "$db_user" | sed 's/^"//g; s/"$//g')
-    # db_password=$(echo "$db_pass" | sed 's/^"//g; s/"$//g')
-    echo "Raw password"
-    echo $password
+    password=$(az keyvault secret show --name "$user_key_ref" --vault-name dev-csi-64 --query value)
+    db_pass=$(az keyvault secret show --name mssql-administrator-login-password --vault-name choreo-dev-tf-keyvault --query value)
+    db_user=$(az keyvault secret show --name mssql-administrator-login-name --vault-name choreo-dev-tf-keyvault --query value)
+    db_username=$(echo "$db_user" | sed 's/^"//g; s/"$//g')
+    db_password=$(echo "$db_pass" | sed 's/^"//g; s/"$//g')
     user_password=$(echo "$db_pass" | sed 's/^"//g; s/"$//g')
-    # sqlcmd -S "${mssql_server_name}.database.windows.net" -U $db_username -d $database -P $db_password -Q "DROP USER $user"
-    # sqlcmd -S "${mssql_server_name}.database.windows.net" -U $db_username -d $database -P $db_password -Q "CREATE USER $user WITH PASSWORD = $password"
-    # echo "Adding the permission to user : ${user}"
-    # for permission in "${permissions[@]}"; do
-    #     echo "Adding permission : ${permission} to ${user}"
-    #     permission_format=$(echo "$permission" | sed 's/^"//g; s/"$//g')
-    #     sqlcmd -S "${mssql_server_name}.database.windows.net" -U $db_username -d $database -P $db_password -Q "GRANT ${permission_format} ON DATABASE::${database} TO ${user}"
-    # done
+    sqlcmd -S "${mssql_server_name}.database.windows.net" -U "$db_username" -d "$database" -P "$db_password" -Q "DROP USER "$user""
+    sqlcmd -S "${mssql_server_name}.database.windows.net" -U "$db_username" -d "$database" -P "$db_password" -Q "CREATE USER "$user" WITH PASSWORD = "$password""
+    echo "Adding the permission to user : ${user}"
+    for permission in "${permissions[@]}"; do
+        echo "Adding permission : ${permission} to ${user}"
+        permission_format=$(echo "$permission" | sed 's/^"//g; s/"$//g')
+        sqlcmd -S "${mssql_server_name}.database.windows.net" -U "$db_username" -d "$database" -P "$db_password" -Q "GRANT ${permission_format} ON DATABASE::${database} TO ${user}"
+    done
 }
 
 if [[ ! -d "$db_data_directory_path" ]]; then
@@ -44,9 +42,7 @@ fi
 
 for file in "$db_data_directory_path"/*; do
     if [[ -f "$file" ]]; then
-        filename=$(basename "$file")
         database=$(basename "$file" .json)
-
         json_content=$(jq . < "$file")
         users=$(jq -r '.users[]' <<< "$json_content")
         db_users=($users)
@@ -60,16 +56,3 @@ for file in "$db_data_directory_path"/*; do
         done
     fi
 done
-
-sqlcmd -S choreo-dev-ctrl-plane-mssql.database.windows.net -U "dev-mssql-admin" -d choreo_gateway_adapter_db -P "U6jw7NrxpYSaq3KY"
-
-DROP USER choreo_gateway_adapter_db_user
-
-CREATE USER choreo_gateway_adapter_db_user WITH PASSWORD = "BDcQlW79Nv+sXKXy"
-
-GRANT ALTER ON DATABASE::choreo_gateway_adapter_db TO choreo_gateway_adapter_db_user
-GRANT SELECT ON DATABASE::choreo_gateway_adapter_db TO choreo_gateway_adapter_db_user
-GRANT INSERT ON DATABASE::choreo_gateway_adapter_db TO choreo_gateway_adapter_db_user
-GRANT UPDATE ON DATABASE::choreo_gateway_adapter_db TO choreo_gateway_adapter_db_user
-GRANT DELETE ON DATABASE::choreo_gateway_adapter_db TO choreo_gateway_adapter_db_user
-GRANT EXECUTE ON DATABASE::choreo_gateway_adapter_db TO choreo_gateway_adapter_db_user
