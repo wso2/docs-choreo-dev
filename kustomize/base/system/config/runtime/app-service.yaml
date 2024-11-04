@@ -177,6 +177,18 @@ defaultRoles:
         - environments:view_prod
         - environments:view_dev
         - choreo:deployment_manage
+        - choreo:non_prod_env_manage
+        - choreo:prod_env_manage
+        - choreo:log_view_non_prod
+        - choreo:log_view_prod
+        - choreo:project_view
+        - choreo:project_manage
+        - choreo:component_manage
+        - choreo:domain_view
+        - choreo:url_mapping_manage
+        - choreo:url_mapping_view
+        - choreo:workflow_component_promotion_approve
+        - choreo:workflow_subscription_approve
         - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
         - {{.PERMISSION_DEVOPS_DEPLOYMENT_MANAGE}}
         - {{.PERMISSION_DEVOPS_DEPLOYMENT_COMPONENT_MANAGE}}
@@ -200,16 +212,6 @@ defaultRoles:
         - {{.PERMISSION_CONFIG_CREATE}}
         - {{.PERMISSION_CONFIG_DELETE}}
         - {{.PERMISSION_CUSTOM_DOMAIN_VIEW}}
-        - choreo:non_prod_env_manage
-        - choreo:prod_env_manage
-        - choreo:log_view_non_prod
-        - choreo:log_view_prod
-        - choreo:project_view
-        - choreo:project_manage
-        - choreo:component_manage
-        - choreo:domain_view
-        - choreo:url_mapping_manage
-        - choreo:url_mapping_view
         - {{.PERMISSION_USER_MANAGEMENT_PERMISSION_VIEW}}
         - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_VIEW}}
         - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_CREATE}}
@@ -217,8 +219,6 @@ defaultRoles:
         - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_DELETE}}
         - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_MANAGE}}
         - {{.PERMISSION_USER_MANAGEMENT_ROLE_VIEW}}
-        - choreo:workflow_component_promotion_approve
-        - choreo:workflow_subscription_approve
     - name: Developer
       handle: developer
       description: Users who develop, deploy, and manage cloud-native applications at scale.
