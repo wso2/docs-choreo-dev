@@ -68,10 +68,9 @@ describe("Verify Component visibility functionality", () => {
         displayName: "",
         repoUrl: REPO_URL,
         buildPack: BuildPacks.Ballerina,
-        repoName: PROJECT_EXPOSED_REPO_NAME,
-        repoTestid: PROJECT_EXPOSED_REPO_NAME,
-        ENDPOINT_NAME: PROJECT_EXPOSED_ENDPOINT_NAME,
-      })
+        directoryInfo: { directoryName: PROJECT_EXPOSED_REPO_NAME, directoryTestid: PROJECT_EXPOSED_REPO_NAME }
+      },
+      PROJECT_EXPOSED_ENDPOINT_NAME)
       .then((comp) => {
         projectExposedService = comp;
       });
@@ -99,10 +98,9 @@ describe("Verify Component visibility functionality", () => {
       displayName: "",
       repoUrl: REPO_URL,
       buildPack: BuildPacks.Ballerina,
-      repoName: PUBLIC_EXPOSED_REPO_NAME,
-      repoTestid: PUBLIC_EXPOSED_REPO_NAME,
-      ENDPOINT_NAME: PUBLIC_EXPOSED_ENDPOINT_NAME,
-    })
+      directoryInfo: { directoryName: PUBLIC_EXPOSED_REPO_NAME, directoryTestid: PUBLIC_EXPOSED_REPO_NAME }
+    },
+    PUBLIC_EXPOSED_ENDPOINT_NAME)
       .then((comp) => {
         publicExposedService = comp;
       });

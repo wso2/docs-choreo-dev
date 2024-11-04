@@ -86,10 +86,9 @@ describe("Verify containerized service functionality", () => {
         displayName: "",
         repoUrl: REPO_URL,
         buildPack: BuildPacks.DOCKER,
-        repoName: REPO_NAME,
-        repoTestid: REPO_NAME,
-        ENDPOINT_NAME,
-      })
+        directoryInfo: { directoryName: REPO_NAME, directoryTestid: REPO_NAME },
+      }, 
+      ENDPOINT_NAME)
       .then((comp) => {
         byoc = comp;
       });

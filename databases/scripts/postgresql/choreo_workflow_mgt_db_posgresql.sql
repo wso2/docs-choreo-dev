@@ -189,3 +189,41 @@ VALUES('API_SUBSCRIPTION_UPDATE', 'API Subscription Update','Update an existing 
             "extractfrom": "apiInfo.apiVersion"
         }
     }');
+
+-- 4. API_SUBSCRIPTION
+
+INSERT INTO public.workflow_definition
+(id, "name", description, approver_types, approver_permission, execute_upon_approval, allow_parallel_requests, request_format_schema)
+VALUES('API_SUBSCRIPTION', 'API Subscription', 'Creation or update of an API subscription with a specified plan', 'ROLE,USER', 'choreo:workflow_subscription_approve', true, false,
+    '{
+        "subscriptionPolicy": {
+            "displayName": "Subscription Plan",
+            "dataType": "string",
+            "required": true,
+            "extractfrom": "subscriptionPolicy"
+        },
+        "requestedSubscriptionPolicy": {
+            "displayName": "Requested Plan", 
+            "dataType": "string",
+            "required": false,
+            "extractfrom": "requestedSubscriptionPolicy"
+        },
+        "applicationName": {
+            "displayName": "Application Name",
+            "dataType": "string", 
+            "required": true,
+            "extractfrom": "applicationInfo.applicationName"
+        },
+        "apiName": {
+            "displayName": "API name",
+            "dataType": "string",
+            "required": true,
+            "extractfrom": "apiInfo.apiName"
+        },
+        "apiVersion": {
+            "displayName": "API version",
+            "dataType": "string",
+            "required": true,
+            "extractfrom": "apiInfo.apiVersion"
+        }
+    }');
