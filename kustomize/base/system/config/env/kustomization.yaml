@@ -843,6 +843,7 @@ configMapGenerator:
       - API_KEY_SVC_URL={{.API_KEY_SVC_URL | default "http://api-key-service:8080"}}
       - STS_MGT_URL=http://sts-mgt-service:3000
       - ENABLE_STS_MGT_SERVICE={{.ENABLE_STS_MGT_SERVICE | default "false"}}
+      - CONNECTION_SERVICE_URL={{.CONNECTION_SERVICE_URL | default "http://connection-service:9000"}}
   - name: env-alert-notification-service
     behavior: create
     literals:
