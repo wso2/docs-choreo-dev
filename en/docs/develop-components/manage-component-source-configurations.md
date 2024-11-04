@@ -48,7 +48,7 @@ Click the respective tab to view the structure for your current configuration fi
           # +required Numeric port value that gets exposed via the endpoint
           port: 9090
         # +required Type of traffic that the endpoint is accepting.
-        # Allowed values: REST, GraphQL, GRPC, TCP, UDP.
+        # Allowed values: REST, GraphQL, WS, GRPC, TCP, UDP.
         type: REST
         # +optional Network level visibilities of the endpoint.
         # Accepted values: Project|Organization|Public(Default).
@@ -56,7 +56,7 @@ Click the respective tab to view the structure for your current configuration fi
           - Public
           - Organization
         # +optional Path to the schema definition file. Defaults to wild card route if not provided
-        # This is only applicable to REST endpoint types.
+        # This is only applicable to REST or WS endpoint types.
         # The path should be relative to the docker context.
         schemaFilePath: openapi.yaml
       
@@ -133,7 +133,7 @@ Click the respective tab to view the structure for your current configuration fi
           # +required Numeric port value that gets exposed via the endpoint
           port: 9090
         # +required Type of traffic that the endpoint is accepting.
-        # Allowed values: REST, GraphQL, GRPC, TCP, UDP.
+        # Allowed values: REST, GraphQL, WS, GRPC, TCP, UDP.
         type: REST
         # +optional Network level visibilities of the endpoint.
         # Accepted values: Project|Organization|Public(Default).
@@ -141,7 +141,7 @@ Click the respective tab to view the structure for your current configuration fi
           - Public
           - Organization
         # +optional Path to the schema definition file. Defaults to wild card route if not provided
-        # This is only applicable to REST endpoint types.
+        # This is only applicable to REST or WS endpoint types.
         # The path should be relative to the docker context.
         schemaFilePath: openapi.yaml
       
