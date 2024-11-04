@@ -1,6 +1,6 @@
 # Samples Overview
 
-Choreo provides an extensive collection of samples for a wide range of use cases. You can quickly deploy and explore these samples to easily understand core functionalities of the platform.
+Choreo provides an extensive collection of samples for a wide range of use cases. You can quickly deploy and explore these samples to easily understand the core functionalities of the platform.
 
 ## Prerequisites
 
