@@ -30,11 +30,13 @@ governance-service:
   feature-flags:
     disableDatabaseConnection: {{.DISABLE_DATABASE_CONNECTION | default true}}
     validateRulesetContent: {{.VALIDATE_RULESET_CONTENT | default false}}
+    excludedOrgsFromAuthorization: {{.EXCLUDED_ORGS_FROM_AUTHORIZATION | default ""}}
   endpoints:
     apimBasePath: "https://choreo-am-service:9443/api/am/publisher/v2"
-    linterServiceBasePath: "http://choreo-linter-service:8080/linter-service"
     appService: {{.APP_SERVICE_BASE_URL}}
     projectManager: {{.PROJECT_MANAGER_BASE_URL}}
+    linterServiceBasePath: "http://choreo-linter-service:8080/linter-service"
+    resourceAuthorizationService: {{.RESOURCE_AUTHORIZATION_SERVICE_BASE_URL}}
   apim:
     superAdminUserName: {{.APIM_SUPER_ADMIN_USERNAME}}
     superAdminPassword: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_SUPER_ADMIN_PASSWORD)"
