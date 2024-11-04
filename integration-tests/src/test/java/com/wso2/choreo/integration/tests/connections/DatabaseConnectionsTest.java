@@ -77,7 +77,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
     private ChoreoComponent clientChoreoComponent;
     private ChoreoComponent clientChoreoComponentNewVersion;
     private final String REPO_NAME = "database-connections-test-apps";
-    private static final String CLIENT_COMPONENT_REPO_URL = "https://github.com/hanzjk/database-connections-test-apps";
+    private static final String CLIENT_COMPONENT_REPO_URL = "https://github.com/choreo-test-apps/database-connections-test-apps";
     private static final String CLIENT_COMPONENT_DOCKET_CONTEXT = "database-connection-test/";
     private static final String OAS_FILE_PATH = "openapi.yaml";
 
@@ -107,10 +107,6 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         mysqlDatabaseServer = PlatformServicesUtils.createReusableDatabaseServer(this, httpClient, mysqlDatabaseServerName, Constant.MYSQL_SERVICE_PLAN_ID, orgUUID, accessToken);
         redisDatabaseServer = PlatformServicesUtils.createReusableDatabaseServer(this, httpClient, redisDatabaseServerName, Constant.REDIS_SERVICE_PLAN_ID, orgUUID, accessToken);
-        ChoreoOrganization testOrg = new ChoreoOrganization(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
-                Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID)),
-                Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
-
     }
 
     @Test(dependsOnMethods = {"createDatabaseServer_TestDatabaseConnections"})
@@ -223,17 +219,17 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
                 dbServer.getConnection_params().getPort(), dbServer.getConnection_params().getUser(), false, devDatabaseName);
         ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/database-configs", expectedResp);
 
-//        //promote to environments
-//        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponent,
-//                environments, ComponentFlavour.BYOC, consumerProject);
-//        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponent,
-//                statusDTO.get(0)); //consider only the first promotion
-//        //invoke in promoted environment
-//        invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
-//                clientChoreoComponent, clientDeploymentStatusDTO, environments);
-//        expectedResp = String.format(EXPECTED_RESPONSE_FOR_CONNECTION_TO_DATABASE, dbServer.getConnection_params().getHost(),
-//                dbServer.getConnection_params().getPort(), dbServer.getConnection_params().getUser(), false, prodDatabase);
-//        ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/database-configs", expectedResp);
+        //promote to environments
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponent,
+                environments, ComponentFlavour.BYOC, consumerProject);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponent,
+                statusDTO.get(0)); //consider only the first promotion
+        //invoke in promoted environment
+        invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                clientChoreoComponent, clientDeploymentStatusDTO, environments);
+        expectedResp = String.format(EXPECTED_RESPONSE_FOR_CONNECTION_TO_DATABASE, dbServer.getConnection_params().getHost(),
+                dbServer.getConnection_params().getPort(), dbServer.getConnection_params().getUser(), false, prodDatabase);
+        ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/database-configs", expectedResp);
     }
 
     @Test(dependsOnMethods = {"consumeDatabaseConnectionWithComponentConfigFile_TestDatabaseConnections"},alwaysRun = true)
@@ -242,9 +238,9 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
 
         clientChoreoComponentNewVersion = ComponentUtils.createComponentVersion(this, citrusClients,
-                accessToken, clientChoreoComponent, "v1.1", "componentyaml");
+                accessToken, clientChoreoComponent, "v1.1", "componentyamlv10");
 
-        ConnectionService.UpdateSourceConfigurationFile(REPO_NAME, "componentyaml", databaseConnection.getGroupUuid(), "database:".concat(devDatabaseName), SourceConfigurationFileTypes.COMPONENT_V1D0);
+        ConnectionService.UpdateSourceConfigurationFile(REPO_NAME, "componentyamlv10", databaseConnection.getGroupUuid(), "database:".concat(devDatabaseName), SourceConfigurationFileTypes.COMPONENT_V1D0);
 
         DatabaseServer dbServer = PlatformServices.getDatabaseServer(this,httpClient,mysqlDatabaseServer.getId(),orgUUID,accessToken);
 
@@ -259,17 +255,17 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
                 dbServer.getConnection_params().getPort(), dbServer.getConnection_params().getUser(), false, devDatabaseName);
         ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/database-configs",
                 expectedResp);
-//        //promote to environments
-//        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponentNewVersion,
-//                environments, ComponentFlavour.BYOC, consumerProject);
-//        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponentNewVersion,
-//                statusDTO.get(0)); //consider only the first promotion
-//        //invoke in promoted environment
-//        invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
-//                clientChoreoComponentNewVersion, clientDeploymentStatusDTO, environments);
-//        expectedResp = String.format(EXPECTED_RESPONSE_FOR_CONNECTION_TO_DATABASE, dbServer.getConnection_params().getHost(),
-//                dbServer.getConnection_params().getPort(), dbServer.getConnection_params().getUser(), false, prodDatabase);
-//        ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/database-configs", expectedResp);
+        //promote to environments
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponentNewVersion,
+                environments, ComponentFlavour.BYOC, consumerProject);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponentNewVersion,
+                statusDTO.get(0)); //consider only the first promotion
+        //invoke in promoted environment
+        invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                clientChoreoComponentNewVersion, clientDeploymentStatusDTO, environments);
+        expectedResp = String.format(EXPECTED_RESPONSE_FOR_CONNECTION_TO_DATABASE, dbServer.getConnection_params().getHost(),
+                dbServer.getConnection_params().getPort(), dbServer.getConnection_params().getUser(), false, prodDatabase);
+        ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/database-configs", expectedResp);
     }
 
     @Test(dependsOnMethods = {"consumeDatabaseConnectionWithComponentFileV10_TestDatabaseConnections"},alwaysRun = true)
@@ -295,17 +291,17 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
                 dbServer.getConnection_params().getPort(), dbServer.getConnection_params().getUser(), false, devDatabaseName);
         ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/database-configs",
                 expectedResp);
-//        //promote to environments
-//        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponentNewVersion,
-//                environments, ComponentFlavour.BYOC, consumerProject);
-//        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponentNewVersion,
-//                statusDTO.get(0)); //consider only the first promotion
-//        //invoke in promoted environment
-//        invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
-//                clientChoreoComponentNewVersion, clientDeploymentStatusDTO, environments);
-//        expectedResp = String.format(EXPECTED_RESPONSE_FOR_CONNECTION_TO_DATABASE, dbServer.getConnection_params().getHost(),
-//                dbServer.getConnection_params().getPort(), dbServer.getConnection_params().getUser(), false, prodDatabase);
-//        ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/database-configs", expectedResp);
+        //promote to environments
+        List<ComponentDeploymentStatusDTO> statusDTO = ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponentNewVersion,
+                environments, ComponentFlavour.BYOC, consumerProject);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponentNewVersion,
+                statusDTO.get(0)); //consider only the first promotion
+        //invoke in promoted environment
+        invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                clientChoreoComponentNewVersion, clientDeploymentStatusDTO, environments);
+        expectedResp = String.format(EXPECTED_RESPONSE_FOR_CONNECTION_TO_DATABASE, dbServer.getConnection_params().getHost(),
+                dbServer.getConnection_params().getPort(), dbServer.getConnection_params().getUser(), false, prodDatabase);
+        ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/database-configs", expectedResp);
     }
 
     @Test(dependsOnMethods = {"createDatabaseServer_TestDatabaseConnections", "getEnvironmentIds_TestDatabaseConnections"})
