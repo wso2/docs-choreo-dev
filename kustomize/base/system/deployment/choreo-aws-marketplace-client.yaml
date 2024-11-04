@@ -36,7 +36,7 @@ spec:
             - name: AWS_DEFAULT_REGION
               value: us-east-1
             - name: ENABLE_SQS_LISTENING
-              value: false
+              value: "false"
             - name: SQS_URL
               value: empty
             - name: BILLING_INTERNAL_GRPC_ADDRESS
