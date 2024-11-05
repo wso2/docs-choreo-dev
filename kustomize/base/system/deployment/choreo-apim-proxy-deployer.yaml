@@ -99,7 +99,7 @@ spec:
               choreo.component: choreo-apim-proxy-deployer
           maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
+          whenUnsatisfiable: ScheduleAnyway
         - labelSelector:
             matchLabels:
               choreo.component: choreo-apim-proxy-deployer
