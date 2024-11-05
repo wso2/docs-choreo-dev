@@ -367,6 +367,7 @@ configMapGenerator:
       - BUILD_STS_URL_FROM_DEFAULT_DOMAIN_ENABLED={{.BUILD_STS_URL_FROM_DEFAULT_DOMAIN_ENABLED | default "false"}}
       - STS_MANAGEMENT_SERVICE_ENABLED={{.STS_MANAGEMENT_SERVICE_ENABLED | default "false"}}
       - CHOREO_STS_MGT_URL=http://sts-mgt-service:3000/api/v1/sts-proxy
+      - ENABLE_API_KEY_DEFAULT_SECURITY_SCHEME={{.ENABLE_API_KEY_DEFAULT_SECURITY_SCHEME | default "false"}}
   - name: env-dp-helmhub
     behavior: create
     literals:
