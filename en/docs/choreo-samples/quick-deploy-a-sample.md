@@ -1,6 +1,6 @@
 # Quick Deploy a Sample
 
-Choreo provides a quick deploy option for samples, allowing you to deploy a sample with a single click. This capability lets you quickly explore the sample and Choero functionalities.
+Choreo provides a quick deploy option for samples, allowing you to deploy a sample with a single click. This capability lets you quickly explore the sample.
 
 ## Prerequisites
 
