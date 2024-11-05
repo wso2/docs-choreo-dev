@@ -63,7 +63,7 @@ It is important to understand the purpose of the key files in the sample service
 | `greeter_client/main.go`| The greeter client application written in the Go language.                                   |
 | `Dockerfile.server`     | The Dockerfile to build the container image of the server application.                       |
 | `Dockerfile.client`     | The Dockerfile to build the container image of the client application.                       |
-| `.choreo/endpoints.yaml`| The Choreo-specific configuration that provides information about how Choreo exposes the service.|
+| `.choreo/component.yaml`| The Choreo-specific configuration that provides information about how Choreo exposes the service.|
 | `pkg/greeter.proto`     | The interface definition of the gRPC service. This is used to generate the server and client stubs for the Go application.|
 
 ### Configure the service port with endpoints
@@ -72,9 +72,9 @@ In Choreo, you can expose your services via endpoints.
 
 Let's run the gRPC server service component on port 8080. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
-Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of the containerized component. Ensure the `.choreo` directory is at the root of the Docker build context path.
+Choreo looks for an `component.yaml` file inside the `.choreo` directory to configure the endpoint details of the containerized component. Ensure the `.choreo` directory is at the root of the Docker build context path.
 
-In the gRPC server sample, the `endpoints.yaml` file is at `go-grpc/.choreo/endpoints.yaml`, where the build context path is `go-grpc`.
+In the gRPC server sample, the `component.yaml` file is at `go-grpc/.choreo/component.yaml`, where the build context path is `go-grpc`.
 
 ## Step 1: Create a service component with a gRPC endpoint
 
