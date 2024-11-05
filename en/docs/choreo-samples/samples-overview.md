@@ -33,4 +33,4 @@ When you view all samples, you can filter and search for samples by the followin
  - **Component Type**: Filters by the component type. For example, service, web application, scheduled tasks, manual tasks, etc.
  - **Tags**: Use tags like REST, HTTP, or GraphQL to find samples with specific functionalities or integrations.
 
-For each sample, you can either try out the quick deploy feature or access the sample source code on GitHub. For details on quickly deploying a sample, see [Quick Deploy a Sample](./quick-deploy-a-sample.md).
+You can either quick deploy a sample or access its source code on GitHub. For details on quick deploying a sample, see [Quick Deploy a Sample](./quick-deploy-a-sample.md).

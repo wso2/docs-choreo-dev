@@ -1,6 +1,6 @@
 # Quick Deploy a Sample
 
-Choreo provides a quick deploy option for samples, allowing you to deploy a sample with a single click. This capability lets you quickly explore the sample and its functionalities.
+Choreo provides a quick deploy option for samples, allowing you to deploy a sample with a single click. This capability lets you quickly explore the sample.
 
 ## Prerequisites
 
@@ -30,4 +30,4 @@ Once you quick deploy a sample, you can follow one of the following post-deploym
 
 - **For services**: Go to the **Test Console** to test the deployed service.  
 - **For web applications**: Open the deployed web application using the provided URL.  
-- **For tasks (manual tasks and scheduled tasks):** Go to the **Tasks** page and execute the task. For scheduled tasks, you can also find the cron schedule on the **Overview** page.
+- **For manual tasks and scheduled tasks:** Go to the **Execute** page and run the task. For scheduled tasks, you can also find the cron schedule on the **Overview** page.
