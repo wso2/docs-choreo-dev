@@ -16,7 +16,7 @@ window.__RUNTIME_CONFIG__ = {
             grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
             subject_token_type: 'urn:ietf:params:oauth:token-type:jwt',
             requested_token_type: 'urn:ietf:params:oauth:token-type:jwt',
-            scope: 'apim:admin'
+            scope: 'apim:admin apim:api_view apim:api_manage apim:api_import_export apim:api_list_view'
         }
     },
     INSIGHTS_API_URL: 'https://choreocontrolplane.choreo.dev/93tu/insights/1.0.0/query-api',
