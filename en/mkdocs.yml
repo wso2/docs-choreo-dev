@@ -78,6 +78,11 @@ nav:
       - Deploy Your First Service: quick-start-guides/deploy-your-first-service.md
       - Deploy Your First Static Web Application: quick-start-guides/deploy-your-first-static-web-application.md
       - Deploy a Web Application that Consumes a Backend Service: quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md
+  - Choreo Samples:
+      - Explore the Samples Collection:
+          - Samples Overview: choreo-samples/samples-overview.md
+          - Quick Deploy a Sample: choreo-samples/quick-deploy-a-sample.md
+      - Explore the Demo Organization: choreo-samples/explore-the-demo-organization.md
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
@@ -183,7 +188,10 @@ nav:
       - Lifecycle Management: api-management/lifecycle-management.md
       - Documents: api-management/documents.md
       - API Rate Limiting: api-management/api-rate-limiting.md
-      - API Policies: api-management/api-policies.md
+      - API Policies:
+          - About API Policies: api-management/api-policies/about-api-policies.md
+          - Attach and Manage Policies: api-management/api-policies/attach-and-manage-policies.md
+          - Apply Advanced Settings on Mediation Policies: api-management/api-policies/apply-advanced-settings-on-mediation-policies.md
       - Control API Visibility: api-management/control-api-visibility.md
       - Manage API Traffic:
           - Assign Subscription Plans to APIs: api-management/manage-api-traffic/assign-subscription-plans-to-apis.md
@@ -399,6 +407,7 @@ plugins:
           'manage-databases-and-caches/choreo-managed-redis-datastores.md': 'https://wso2.com/choreo/docs/manage-databases-and-caches/choreo-managed-caches/'
           'monitoring-and-insights/usage-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/insights-overview/'
           'develop-components/configure-mutual-tls-between-components.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/configure-mutual-tls-between-components/'
+          'api-management/api-policies.md': 'https://wso2.com/choreo/docs/api-management/api-policies/about-api-policies/'
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css
