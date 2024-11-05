@@ -34,7 +34,7 @@ CREATE TABLE ORG_DELETION_HISTORY
     [HANDLE] [nvarchar](255) NOT NULL,
     [ORG_ID] [int] NOT NULL,
     [DELETED_TIME] [datetime] NOT NULL,
-    [CREATED_AT] [datetime] NOT NULL,
+    [CREATED_AT] [datetime] NOT NULL DEFAULT (getdate()),
     [UPDATED_AT] [datetime] NOT NULL,
     PRIMARY KEY (ID)
 );
