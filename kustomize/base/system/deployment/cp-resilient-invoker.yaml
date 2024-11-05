@@ -88,7 +88,7 @@ spec:
               choreo.component: cp-resilient-invoker
           maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
+          whenUnsatisfiable: ScheduleAnyway
         - labelSelector:
             matchLabels:
               choreo.component: cp-resilient-invoker
