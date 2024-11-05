@@ -28,14 +28,10 @@ describe("Verify the functionality in Choreo Marketplace", () => {
   before(() => {
     cy.clearAllSessionStorage();
     cy.clearAllCookies();
-    cy.clearAllLocalStorage()
+    cy.clearAllLocalStorage();
     LoginPage.login();
   });
-  after(() => {
-    ChoreoHomePage.logout();
-  });
-
-
+   
   it("verify Type filter functionality by internal", () => {
     ChoreoHomePage.goToMarketplacePage();
     Marketplace.filterByInternal();
@@ -49,9 +45,7 @@ describe("Verify the functionality in Choreo Marketplace", () => {
     Marketplace.filterByOrganization();
   });
 
-
   it("verify Network filter functionality by public", () => {
     Marketplace.filterByPublic();
   });
-
 });
