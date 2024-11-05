@@ -15,6 +15,7 @@ buildpacks
 Temurin
 RabbitMQ
 SalesOrderQueue
+v1.1
 1.x
 12.x.x
 14.x.x 
@@ -88,10 +89,12 @@ liveness
 readingListApp
 ORGANIZATION_ID
 Petstore
+approvers
 build-your-first-cloud-native-application-with-choreo
 expose-a-service-as-a-managed-api
 build-your-first-integration
 configure-a-user-store-with-built-in-idp
+configure-approvals-for-choreo-workflows
 assign-subscription-plans-to-apis
 devops-and-ci-cd
 autoscale-component-replicas
@@ -699,6 +702,12 @@ headerName
 fooValue
 authzHeaderValue
 myResourcePath
+evictable
+defaultable
+WebSocket
+WebSockets
+expose-a-nodejs-websocket-endpoint-via-a-service
+test-websocket-endpoints-via-the-websocket-console
 schemaVersion
 displayName
 basePath
