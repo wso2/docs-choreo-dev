@@ -824,7 +824,7 @@ public class ComponentUtils {
                     Map<String, String> argMap = new HashMap<>();
                     argMap.put("componentId", component.getId());
                     argMap.put("versionId", component.getLatestApiVersion().getId());
-                    argMap.put("sourceReleaseId", component.getReleaseIdByEnvironmentId(srcEnv.getId()));
+                    argMap.put("sourceReleaseId", component.getReleaseIdByEnvironmentId(srcEnv.getId(),component.getLatestApiVersion().getId()));
                     argMap.put("targetEnvironmentId", destEnv.getId());
                     validateEndpointExistence(runner, citrusClients, accessToken, component, srcEnv);
                     GraphQL.promoteEndpoints(runner, appServiceClient, accessToken, argMap);
