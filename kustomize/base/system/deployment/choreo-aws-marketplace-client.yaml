@@ -40,7 +40,7 @@ spec:
             - name: SQS_URL
               value: empty
             - name: BILLING_INTERNAL_GRPC_ADDRESS
-              value: http://billing-service:9094
+              value: billing-service:9094
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
