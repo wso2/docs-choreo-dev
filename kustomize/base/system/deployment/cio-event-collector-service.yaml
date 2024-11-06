@@ -104,7 +104,7 @@ spec:
               choreo.component: cio-event-collector-service
           maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
+          whenUnsatisfiable: ScheduleAnyway
         - labelSelector:
             matchLabels:
               choreo.component: cio-event-collector-service

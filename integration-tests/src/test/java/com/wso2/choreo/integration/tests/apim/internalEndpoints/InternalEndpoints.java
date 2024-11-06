@@ -59,7 +59,7 @@ public class InternalEndpoints extends TestNGCitrusSpringSupport {
         orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-        userIdpId = Configuration.getSecurityConfig(SecurityConfigDefinition.ORG_MGT_IDP_ID);
+        userIdpId = Configuration.getConfig(ConfigDefinition.TEST_USER_IDP_ID);
         API_INVOCATION_REQUEST_BODY = "[{\"id\":1,\"title\":\"Book 1\",\"author\":\"Author 1\"},{\"id\":2,\"title\":\"Book 2\",\"author\":\"Author 2\"}]";
         API_INVOCATION_RESOURCE_PATH = "books";
     }

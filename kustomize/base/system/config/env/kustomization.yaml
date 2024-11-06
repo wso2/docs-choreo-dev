@@ -367,6 +367,7 @@ configMapGenerator:
       - BUILD_STS_URL_FROM_DEFAULT_DOMAIN_ENABLED={{.BUILD_STS_URL_FROM_DEFAULT_DOMAIN_ENABLED | default "false"}}
       - STS_MANAGEMENT_SERVICE_ENABLED={{.STS_MANAGEMENT_SERVICE_ENABLED | default "false"}}
       - CHOREO_STS_MGT_URL=http://sts-mgt-service:3000/api/v1/sts-proxy
+      - ENABLE_API_KEY_DEFAULT_SECURITY_SCHEME={{.ENABLE_API_KEY_DEFAULT_SECURITY_SCHEME | default "false"}}
   - name: env-dp-helmhub
     behavior: create
     literals:
@@ -433,6 +434,7 @@ configMapGenerator:
       - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.16.yml"}}
       - BD_PMSV={{.BD_PMSV | default "v1.1.0"}}
       - BD_PMS_FP={{.BD_PMS_FP | default ".github/workflows/choreo-build-deploy_prism-mock-service_1.1.0.yml"}}
+      - BD_IMAGE_PUSH_TEMPLATE_VERSION={{.BD_IMAGE_PUSH_TEMPLATE_VERSION | default "choreo-templates/choreo-image-push@v1.0.7"}}
       - MEDIATION_WF_CODE_GENV={{.MEDIATION_WF_CODE_GENV | default "v1.2.11"}}
       - MEDIATION_WF_CODEGEN_FP={{.MEDIATION_WF_CODEGEN_FP | default ".github/workflows/mediation-code-generator_1.2.11.yml"}}
       - DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW={{.DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW}}
@@ -517,6 +519,7 @@ configMapGenerator:
       - REACT_APP_ASGARDEO_SDK_ENABLE_PKCE={{.REACT_APP_ASGARDEO_SDK_ENABLE_PKCE}}
       - REACT_APP_ASGARDEO_SDK_CHECK_SESSION_INTERVAL={{.REACT_APP_ASGARDEO_SDK_CHECK_SESSION_INTERVAL}}
       - REACT_APP_ASGARDEO_SDK_DISABLE_SIGNIN_SILENTLY={{.REACT_APP_ASGARDEO_SDK_DISABLE_SIGNIN_SILENTLY}}
+      - REACT_APP_ASGARDEO_SDK_AUTO_LOGOUT_ON_TOKEN_REFRESH_ERROR={{.REACT_APP_ASGARDEO_SDK_AUTO_LOGOUT_ON_TOKEN_REFRESH_ERROR | default false}}
       - REACT_APP_ASGARDEO_SDK_AUTHORIZATION_ENDPOINT_URL={{.REACT_APP_ASGARDEO_SDK_AUTHORIZATION_ENDPOINT_URL}}
       - REACT_APP_ASGARDEO_SDK_TOKEN_ENDPOINT_URL={{.REACT_APP_ASGARDEO_SDK_TOKEN_ENDPOINT_URL}}
       - REACT_APP_ASGARDEO_SDK_LOGOUT_ENDPOINT_URL={{.REACT_APP_ASGARDEO_SDK_LOGOUT_ENDPOINT_URL}}
@@ -745,7 +748,7 @@ configMapGenerator:
       - REACT_APP_FEATURE_FLAG_APP_GW_SETTINGS={{.REACT_APP_FEATURE_FLAG_APP_GW_SETTINGS}}
       - REACT_APP_ENABLE_COMPONENT_NOTIFICATION={{.REACT_APP_ENABLE_COMPONENT_NOTIFICATION}}
       - REACT_APP_DOC_LINK_SCALE_TO_ZERO={{.REACT_APP_DOC_LINK_SCALE_TO_ZERO}}
-      - REACT_APP_CHOREO_APPROVAL_WORKFLOWS_DOC_URL={{.REACT_APP_CHOREO_APPROVAL_WORKFLOWS_DOC_URL | default "https://wso2.com/choreo/docs"}}
+      - REACT_APP_CHOREO_APPROVAL_WORKFLOWS_DOC_URL={{.REACT_APP_CHOREO_APPROVAL_WORKFLOWS_DOC_URL | default "https://wso2.com/choreo/docs/administer/configure-approvals-for-choreo-workflows/#permissions-to-review-and-respond-to-approval-requests"}}
       - REACT_APP_COMPONENT_NOTIFICATION_TEXT={{.REACT_APP_COMPONENT_NOTIFICATION_TEXT}}
       - REACT_APP_COMPONENT_NOTIFICATION_LINK_TEXT={{.REACT_APP_COMPONENT_NOTIFICATION_LINK_TEXT}}
       - REACT_APP_COMPONENT_NOTIFICATION_LINK={{.REACT_APP_COMPONENT_NOTIFICATION_LINK}}
@@ -839,6 +842,10 @@ configMapGenerator:
       - NEW_COMPONENT_HANDLER_FLOW_ENABLED={{.NEW_COMPONENT_HANDLER_FLOW_ENABLED | default "false"}}
       - AUTHZ_SERVICE_GRPC_ENDPOINT={{.AUTHZ_SERVICE_GRPC_ENDPOINT}}
       - AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED={{.AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED}}
+      - API_KEY_SVC_URL={{.API_KEY_SVC_URL | default "http://api-key-service:8080"}}
+      - STS_MGT_URL=http://sts-mgt-service:3000
+      - ENABLE_STS_MGT_SERVICE={{.ENABLE_STS_MGT_SERVICE | default "false"}}
+      - CONNECTION_SERVICE_URL={{.CONNECTION_SERVICE_URL | default "http://connection-service:9000"}}
   - name: env-alert-notification-service
     behavior: create
     literals:
@@ -877,6 +884,7 @@ configMapGenerator:
       - BALLERINA_CENTRAL_URL={{.BALLERINA_CENTRAL_URL}}
       - ENABLE_INSTANCE_BASED_AUTHORIZATION={{.ENABLE_INSTANCE_BASED_AUTHORIZATION | default false}}
       - ENABLE_CRYPTO_KEY_DELETION={{.ENABLE_CRYPTO_KEY_DELETION | default false}}
+      - ENABLE_APP_DEV_STS_DELETION={{.ENABLE_APP_DEV_STS_DELETION | default false}}
   - name: env-organization-management
     behavior: create
     literals:
@@ -1024,6 +1032,9 @@ configMapGenerator:
       - MIZZEN_BASE_URL={{.MIZZEN_BASE_URL | default "http://dp-mizzen"}}
       - CLOUD_MANAGER_BASE_URL={{.CLOUD_MANAGER_BASE_URL | default "http://dp-cloud-manager"}}
       - DP_OAUTH_AGENT_BASE_URL={{.DP_OAUTH_AGENT_BASE_URL | default "http://app-gateway-oauth-agent:8080"}}
+      - WEBSUB_HUB_PUBLISHER_ENABLED={{.WEBSUB_HUB_PUBLISHER_ENABLED | default "false"}}
+      - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL | default ""}}
+      - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC | default ""}}
   - name: env-log-controller
     behavior: create
     literals:
@@ -1071,3 +1082,6 @@ configMapGenerator:
       - CHOREO_STS_SERVICE_URL=http://choreo-appdev-sts:9000
       - CLOUD_MANAGER_SERVICE_URL=http://dp-cloud-manager
       - CHOREO_IDP_ID={{.CHOREO_IDP_ID}}
+      - WEBSUB_HUB_PUBLISHER_ENABLED={{.WEBSUB_HUB_PUBLISHER_ENABLED | default "false"}}
+      - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL}}
+      - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC}}

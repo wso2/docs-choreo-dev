@@ -84,7 +84,7 @@ spec:
               choreo.component: devops-portal-api
           maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
+          whenUnsatisfiable: ScheduleAnyway
         - labelSelector:
             matchLabels:
               choreo.component: devops-portal-api

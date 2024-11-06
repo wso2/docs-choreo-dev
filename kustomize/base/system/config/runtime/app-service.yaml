@@ -149,6 +149,76 @@ defaultRoles:
     permissions:
       - all
   roles:
+    - name: Project Admin
+      handle: project-admin
+      description: Users who have full access at the project level
+      tags:
+        - project-admin
+      permissions:
+        - apim:publisher_settings
+        - apim:api_manage
+        - apim:tier_manage
+        - apim:subscription_manage
+        - apim:dcr:app_manage
+        - apim:api_publish
+        - apim:api_view
+        - apim:tier_view
+        - apim:api_generate_key
+        - apim:document_manage
+        - apim:api_settings
+        - apim:subscription_view
+        - apim:prod_key_manage
+        - apim:sand_key_manage
+        - apim:subscribe
+        - apim:app_manage
+        - apim:sub_manage
+        - apim:app_import_export
+        - apim:api_key
+        - environments:view_prod
+        - environments:view_dev
+        - choreo:deployment_manage
+        - choreo:non_prod_env_manage
+        - choreo:prod_env_manage
+        - choreo:log_view_non_prod
+        - choreo:log_view_prod
+        - choreo:project_view
+        - choreo:project_manage
+        - choreo:component_manage
+        - choreo:domain_view
+        - choreo:url_mapping_manage
+        - choreo:url_mapping_view
+        - choreo:workflow_component_promotion_approve
+        - choreo:workflow_subscription_approve
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_MANAGE}}
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_COMPONENT_MANAGE}}
+        - {{.PERMISSION_COMPONENT_FILE_VIEW}}
+        - {{.PERMISSION_COMPONENT_UTILS_FILE_VIEW}}
+        - {{.PERMISSION_COMPONENT_TRIGGER}}
+        - {{.PERMISSION_COMPONENT_UTILS_TRIGGER}}
+        - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
+        - {{.PERMISSION_COMPONENT_UTILS_COMPONENT_MANAGE}}
+        - {{.PERMISSION_COMPONENT_CREATE}}
+        - {{.PERMISSION_COMPONENT_CONFIG_VIEW}}
+        - {{.PERMISSION_COMPONENT_LOGS_VIEW}}
+        - {{.PERMISSION_COMPONENT_INIT_VIEW}}
+        - {{.PERMISSION_GLOBAL_CONFIG_MANAGE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
+        - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_UPDATE}}
+        - {{.PERMISSION_CONFIG_MANAGE}}
+        - {{.PERMISSION_CONFIG_VIEW}}
+        - {{.PERMISSION_CONFIG_CREATE}}
+        - {{.PERMISSION_CONFIG_DELETE}}
+        - {{.PERMISSION_CUSTOM_DOMAIN_VIEW}}
+        - {{.PERMISSION_USER_MANAGEMENT_PERMISSION_VIEW}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_VIEW}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_CREATE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_UPDATE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_DELETE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_MANAGE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_VIEW}}
     - name: Developer
       handle: developer
       description: Users who develop, deploy, and manage cloud-native applications at scale.
