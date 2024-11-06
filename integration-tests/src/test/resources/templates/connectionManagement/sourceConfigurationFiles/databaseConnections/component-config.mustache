@@ -1,0 +1,37 @@
+apiVersion: core.choreo.dev/v1beta1
+kind: ComponentConfig
+spec:
+  # +optional Incoming connection details for the component (AKA endpoints).
+  inbound:
+    # +required Unique name for the endpoint. (This name will be used when generating the managed API)
+    - name: go-database-configs
+      # +required Numeric port value that gets exposed via the endpoint
+      port: 9090
+      # +required Type of traffic that the endpoint is accepting. For example: REST, GraphQL, etc.
+      # Allowed values: REST, GraphQL, GRPC, TCP, UDP.
+      type: REST
+      # +optional Network level visibility of the endpoint. Defaults to Public
+      # Accepted values: Project|Organization|Public.
+      networkVisibility: Public
+      # +optional Context (base path) of the API that gets exposed via the endpoint.
+      # This is mandatory if the endpoint type is set to REST or GraphQL.
+      context: /
+      # +optional The path to the schema definition file. Defaults to wildcard route if not specified.
+      # This is only applicable to REST endpoint types.
+      # The path should be relative to the Docker context.
+      schemaFilePath: openapi.yaml
+  outbound:
+    serviceReferences:
+    - name: {{serviceIdentifier}}
+      connectionConfig: {{connectionId}}
+      env: 
+      - from: HostName
+        to: HOST_NAME
+      - from: Port
+        to: PORT
+      - from: Username
+        to: USERNAME
+      - from: Password
+        to: PASSWORD
+      - from: DatabaseName
+        to: DATABASE_NAME
