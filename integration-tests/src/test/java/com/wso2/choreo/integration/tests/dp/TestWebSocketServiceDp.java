@@ -50,7 +50,7 @@ public class TestWebSocketServiceDp extends TestBase {
         String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
 
         Repository repo = Repository.builder().
-                repoUrl("https://github.com/Thushani-Jayasekera/choreo-samples").
+                repoUrl("https://github.com/wso2/choreo-samples").
                 branch("main").
                 subPath("websocket-chat-service-ballerina").build();
 
