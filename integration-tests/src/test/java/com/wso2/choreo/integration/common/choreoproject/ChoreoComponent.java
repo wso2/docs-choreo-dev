@@ -1029,8 +1029,18 @@ public class ChoreoComponent {
         throw new ReleaseIdNotFoundException();
     }
 
-    public String getReleaseIdByEnvironmentId(String envId) throws ReleaseIdNotFoundException {
-        AppEnvVersion[] appEnvVersions = getApiVersions().get(0).getAppEnvVersions().toArray(new AppEnvVersion[0]);
+    public String getReleaseIdByEnvironmentId(String envId, String... versionId) throws ReleaseIdNotFoundException {
+        List<ApiVersion> test = getApiVersions();
+        ApiVersion apiVersion = getApiVersions().get(0);
+        if (versionId.length > 0) {
+            for (ApiVersion version:getApiVersions()) {
+                if (version.getId().equals(versionId[0])) {
+                    apiVersion = version;
+                    break;
+                }
+            }
+        }
+        AppEnvVersion[] appEnvVersions = apiVersion.getAppEnvVersions().toArray(new AppEnvVersion[0]);
         for (AppEnvVersion appEnvVersion : appEnvVersions) {
             if (appEnvVersion.getEnvironmentId().equals(envId)) {
                 return appEnvVersion.getReleaseId();

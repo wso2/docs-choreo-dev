@@ -279,10 +279,10 @@ public class ComponentUtils {
                 .byocWebAppsConfig(webAppsConfig).build();
     }
 
-    public static GraphqlDTO createBuildpackComponentRequest(String name, ChoreoProject project, Repository repo) {
+    public static GraphqlDTO createBuildpackComponentRequest(String name, ChoreoProject project, Repository repo, Buildpack... buildpackType) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-        Buildpack buildpack = Buildpack.GOLANG;
+        Buildpack buildpack = buildpackType.length > 0  ?  buildpackType[0] : Buildpack.GOLANG;
 
         return GraphqlDTO.builder().name(name).srcGitRepoUrl(repo.getRepoUrl()).projectId(project.getId()).orgId(orgId)
                 .orgHandler(orgHandle).buildpackId(buildpack.getId()).languageVersion(buildpack.getVersion())
@@ -824,7 +824,7 @@ public class ComponentUtils {
                     Map<String, String> argMap = new HashMap<>();
                     argMap.put("componentId", component.getId());
                     argMap.put("versionId", component.getLatestApiVersion().getId());
-                    argMap.put("sourceReleaseId", component.getReleaseIdByEnvironmentId(srcEnv.getId()));
+                    argMap.put("sourceReleaseId", component.getReleaseIdByEnvironmentId(srcEnv.getId(),component.getLatestApiVersion().getId()));
                     argMap.put("targetEnvironmentId", destEnv.getId());
                     validateEndpointExistence(runner, citrusClients, accessToken, component, srcEnv);
                     GraphQL.promoteEndpoints(runner, appServiceClient, accessToken, argMap);
