@@ -130,6 +130,7 @@ nav:
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
       - Manage Component Source Configurations: develop-components/manage-component-source-configurations.md
+      - Submit and Manage Workflow Approval Requests: develop-components/submit-and-manage-workflow-approval-requests.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
   - Integrate and Manage External Services: 
       - Integrate and Manage Third-Party Services: integrate-and-manage-external-services/integrate-and-manage-third-party-services.md
@@ -216,7 +217,9 @@ nav:
       - Configure an External IdP:
           - Configure Asgardeo as an External IdP: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
           - Configure Azure as an External IdP: administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md
-      - Create API Subscription Plans: administer/create-api-subscription-plans.md 
+      - Create API Subscription Plans: administer/create-api-subscription-plans.md
+      - Configure Approvals for Choreo Workflows: administer/configure-approvals-for-choreo-workflows.md
+      - Review Workflow Approval Requests: administer/review-workflow-approval-requests.md
       - Configure a User Store with the Built-In Identity Provider: administer/configure-a-user-store-with-built-in-idp.md
       - Developer Portal:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
