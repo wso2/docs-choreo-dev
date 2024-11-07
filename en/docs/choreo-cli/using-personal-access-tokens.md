@@ -1,7 +1,8 @@
 # Personal Access Tokens Guide for Choreo CLI
 
 ## Introduction
-Personal Access Tokens (PATs) allow you to authenticate without using your primary credentials, adding an extra layer of security and ease of management. 
+Personal Access Tokens (PATs) allow you to authenticate without using your primary credentials, adding an extra layer 
+of security and ease of management. 
 
 ---
 
@@ -10,9 +11,9 @@ Personal Access Tokens (PATs) allow you to authenticate without using your prima
 1. [What Are Personal Access Tokens?](#what-are-personal-access-tokens)
 2. [Use Cases for Personal Access Tokens](#use-cases-for-personal-access-tokens)
 3. [Setting Up Personal Access Tokens](#setting-up-personal-access-tokens)
-3. [Using Personal Access Tokens with Choreo CLI](#using-personal-access-tokens-with-cli-tool)
-4. [Managing and Revoking Tokens](#managing-and-revoking-tokens)
-5. [Best Practices for Token Management](#best-practices-for-token-management)
+4. [Using Personal Access Tokens with Choreo CLI](#using-personal-access-tokens-with-choreo-cli)
+5. [Managing and Revoking Tokens](#managing-and-revoking-tokens)
+6. [Best Practices for Token Management](#best-practices-for-token-management)
 
 ---
 
@@ -65,11 +66,11 @@ the Choreo Console.
 
 #### Step 2: Generate a New Token
 1. Click on **Create New**.
-2. Specify a name for your token and define its scope and permissions by default this would select all the necessary 
+2. Specify a name for your token and define its scope and permissions. By default, this will select all the necessary 
 scopes for the CLI to function.
 3. Click **Generate**.
 
-![GenerateForm](../assets/img/choreo-cli/personal-access-tokens/create-pat.png)
+![CreatePAT](../assets/img/choreo-cli/personal-access-tokens/create-pat.png)
 ![GenerateForm](../assets/img/choreo-cli/personal-access-tokens/generated-pat.png)
 
 4. Copy the token shown on the screen and store it securely. You won’t be able to view it again.
@@ -90,7 +91,7 @@ To use a token, use the login command with the flag `--with-token`:
 choreo login --with-token
 ```
 
-This command would read the token from the standard input
+This command will read the token from the standard input.
 
 **Example:**
 ```bash
