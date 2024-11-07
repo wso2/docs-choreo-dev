@@ -234,5 +234,11 @@
       <version>${google-api-client.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.consol.citrus</groupId>
+      <artifactId>citrus-websocket</artifactId>
+      <version>${citrus.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
