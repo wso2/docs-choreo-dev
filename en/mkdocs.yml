@@ -78,6 +78,11 @@ nav:
       - Deploy Your First Service: quick-start-guides/deploy-your-first-service.md
       - Deploy Your First Static Web Application: quick-start-guides/deploy-your-first-static-web-application.md
       - Deploy a Web Application that Consumes a Backend Service: quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md
+  - Choreo Samples:
+      - Explore the Samples Collection:
+          - Samples Overview: choreo-samples/samples-overview.md
+          - Quick Deploy a Sample: choreo-samples/quick-deploy-a-sample.md
+      - Explore the Demo Organization: choreo-samples/explore-the-demo-organization.md
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
