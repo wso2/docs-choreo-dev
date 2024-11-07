@@ -1,40 +1,44 @@
-# Control Egress Traffic for your Organization
+# Control Egress Traffic for Your Organization
 
-In Choreo, you have the option to control egress traffic originating from your applications. You can control egress traffic at the organization level by defining an allow list or a deny list. Default egress behaviour is allow all which means egress traffic to any destination is allowed.
+In Choreo, you can manage egress traffic originating from your applications by setting up an allow list or deny list. By default, egress traffic is allowed to any destination unless specifically restricted.
 
 ## Configure an egress policy at the organization level
 
-To configure an egress policy at the organization level, follow the steps below.
+To configure an egress policy at the organization level, follow these steps:
 
-1.  Go to **Settings** in the left side menu and select **Egress Control**.
-2.  Click on the **+ Create** button to create a new egress policy.
-3.  Choose the egress control type based on your requirements and add egress rules.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the Choreo Console header, go to the **Organization** list and select your organization.
+3. In the left navigation menu, click **Settings**. This opens the organization-level settings page.
+4. Click the **Egress Control** tab.
+5. Click **+ Create** to add a new egress policy.
+6. Select the type of egress control to apply and add the required rules:
 
-    - **Allow All** - Under this egress control type, all the egress traffic is allowed by default and you can selectively deny egress traffic to specific IP ranges.
-    - **Deny All** - Under this egress control type, all the egress traffic is denied by default and you can selectively allow egress traffic to specific IP ranges or domains.
+    - **Allow All**: Allows all egress traffic by default. You can selectively block traffic to specific IP ranges.
+    - **Deny All**: Blocks all egress traffic by default. You can selectively allow traffic to specific IP ranges or domains.
 
-        !!! note 
-            - Once egress control type is selected and a rule is created, you cannot switch the egress control type. You have to delete the egress rules and create again.
-            - Configuring egress rules can break your exisiting applications as egress traffic may get blocked based on the egress rules configured.
-            - For Deny All egress control type, choreo managed database hosts needs to be added to the allow list.
-            - Egress policies configured are not bound to any environment and will be applied to all the environments of an organization.
-            - Egress policies configured are **not** applied for API proxies.
+        !!! note
 
-    ![Egress creation wizard](../assets/img/administer/egress-control-wizard.png)
+             - Once you select an egress control type and create a rule, you cannot change the type. To change the type, you must delete existing rules.
+             - Egress rules you add can disrupt your application if they block traffic to required destinations. Ensure you add rules appropriately to prevent such disruptions.
+             - If you use the **Deny All** type, be sure to add Choreo-managed database hosts to the allowed list.
+             - Egress policies apply across all environments in an organization.
+             - Egress policies do not apply to API proxies.
 
-## Override organization level egress policy at the project level
+    ![Configure an organization-level egress policy](../assets/img/administer/configure-an-organization-level-egress-policy.png)
 
-An Egress policy configured at the organization level can be overriden at the project level depending on the egress control type chosen at the organization level.
+## Override the organization-level egress policy at the project level
 
-To configure egress policy at the project level, follow the steps below.
+An egress policy set at the project level can override the organization-level policy, depending on the egress control type you select.
 
-1. Go to **Settings** in the left side menu inside a project and select **Egress Control**.
-2. Egress policy inherited from the organization level is shown at the project level egress control settings.
-3. Depending on the egress control type chosen at the organization level, you can override the organization level egress policy.
+To override the organization-level egress policy at the project level, follow these steps:
 
-    - **Allow All** - If Allow All egress control type is selected at the organization level, additional deny rules can be added at the project level to restrict egress traffic further for a specific project.
-    - **Deny All** - If Deny All egress control type is selected at the organization level, allow rules added at the organization level can be removed to restrict egress traffic further for a specific project.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the Choreo Console header, go to the **Project** list and select your project.
+3. In the left navigation menu, click **Settings**. This opens the project-level settings page.
+4. Click the **Egress Control** tab. You will see that the organization-level egress policy is enforced by default.
+5. Add required project-level rules to further restrict egress traffic.
 
-    ![Egress creation project](../assets/img/administer/egress-control-project.png)
+    - If the **Allow All** egress control type is selected at the organization level, you can add project-level deny rules to further restrict traffic.
+    - If the **Deny All** egress control type is selected at the organization level, you can remove allow rules inherited from the organization level to further restrict traffic.
 
-
+    ![Add project-level rules](../assets/img/administer/add-project-level-rules.png)
