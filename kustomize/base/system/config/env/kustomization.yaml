@@ -1088,3 +1088,10 @@ configMapGenerator:
       - WEBSUB_HUB_PUBLISHER_ENABLED={{.WEBSUB_HUB_PUBLISHER_ENABLED | default "false"}}
       - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL}}
       - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC}}
+  - name: env-choreo-aws-marketplace-client
+    behavior: create
+    literals:
+      - AWS_DEFAULT_REGION=us-east-1
+      - ENABLE_SQS_LISTENING={{.ENABLE_SQS_LISTENING | default "false"}}
+      - SQS_URL={{.WEBSUB_HUB_BASE_URL | default "empty"}}
+      - BILLING_INTERNAL_GRPC_ADDRESS=billing-service:9094

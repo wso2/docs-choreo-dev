@@ -32,25 +32,11 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-aws-marketplace-client:latest
           ports:
             - containerPort: 8080
-          env:
-            - name: AWS_DEFAULT_REGION
-              value: us-east-1
-            - name: ENABLE_SQS_LISTENING
-              value: "false"
-            - name: SQS_URL
-              value: empty
-            - name: BILLING_INTERNAL_GRPC_ADDRESS
-              value: billing-service:9094
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: choreo-aws-marketplace-client-secret
-                  key: AWS_ACCESS_KEY_ID
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: choreo-aws-marketplace-client-secret
-                  key: AWS_SECRET_ACCESS_KEY
+          envfrom:
+            - configMapRef:
+                name: env-choreo-aws-marketplace-client
+            - secretRef:
+                name: choreo-aws-marketplace-client-secret
           resources:
             requests:
               cpu: 100m
