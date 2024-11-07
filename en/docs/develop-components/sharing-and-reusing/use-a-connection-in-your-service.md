@@ -45,6 +45,7 @@ To integrate another service into your application, click the appropriate tab be
           | ConsumerKey             | CHOREO_<CONNECTION_NAME\>_CONSUMERKEY                          |
           | ConsumerSecret          | CHOREO_<CONNECTION_NAME\>_CONSUMERSECRET                       |
           | TokenURL                | CHOREO_<CONNECTION_NAME\>_TOKENURL                             |
+          | ChoreoAPIKey            | CHOREO_<CONNECTION_NAME\>CHOREOAPIKEY                          |
 
 
           If you'd like to use custom environment variable names instead of the Choreo-defined ones, add the dependency as a service reference under `dependencies` in the same file. For more details, refer to the instructions under the `component.yaml file (v1.0)` tab.
@@ -58,6 +59,7 @@ To integrate another service into your application, click the appropriate tab be
           | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
           | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
           | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+          | ChoreoAPIKey   | string     | API key of the Choreo service         | false         | true         |
 
     ### Step 2: Read configurations within the application
 
@@ -93,6 +95,8 @@ To integrate another service into your application, click the appropriate tab be
                 to: <YOUR_ENV_VARIABLE_NAME_HERE>
               - from: TokenURL
                 to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ChoreoAPIKey
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
 
         ```
 
@@ -118,6 +122,7 @@ To integrate another service into your application, click the appropriate tab be
           | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
           | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
           | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+          | ChoreoAPIKey   | string     | API key of the Choreo service         | false         | true         |
 
     <h3> Step 2: Read configurations within the application </h3>
 
@@ -153,6 +158,8 @@ To integrate another service into your application, click the appropriate tab be
                 to: <YOUR_ENV_VARIABLE_NAME_HERE>
               - from: TokenURL
                 to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ChoreoAPIKey
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
 
         ```
 
@@ -178,6 +185,7 @@ To integrate another service into your application, click the appropriate tab be
           | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
           | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
           | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+          | ChoreoAPIKey   | string     | API key of the Choreo service         | false         | true         |
 
     <h3> Step 2: Read configurations within the application </h3>
 
@@ -188,6 +196,8 @@ To integrate another service into your application, click the appropriate tab be
     ``` java
     const serviceURL = process.env.SVC_URL;
     ```
+
+If you're using the API-Key security scheme for the connection, skip **Step 3** and proceed to **Step 4: Service secured with API Key**.
 
 ### Step 3: Acquire an OAuth 2.0 access token
 
@@ -215,6 +225,22 @@ To consume a Choreo service with the visibility level set to organization or pub
 
 ### Step 4: Invoke the Service
 
+=== "Service secured with API Key"
+
+Invoke the API using the **choreo-api-key** header with the value obtained from the corresponding environment variable as described in [step 2](#step-2-read-configurations-within-the-application).
+
+  The following is a sample code snippet in NodeJS:
+
+  ``` java
+    const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
+        headers: {
+          'Choreo-API-Key': `${choreoApiKey}`
+        }
+    });
+  ```
+
+=== "Service secured with OAuth 2.0"
+
 You can invoke the service as follows:
 
 - For languages with OAuth 2.0-aware HTTP clients, you can invoke the service in a straightforward manner. The HTTP client seamlessly manages OAuth 2.0 authentication without requiring additional intervention.
@@ -230,6 +256,7 @@ As the service URL you can use the URL that you resolved in [step 2](#step-2-rea
     const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
+          'Choreo-API-Key': `${choreoApiKey}`
         }
     });
     ```
