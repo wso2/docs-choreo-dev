@@ -1093,5 +1093,5 @@ configMapGenerator:
     literals:
       - AWS_DEFAULT_REGION=us-east-1
       - ENABLE_SQS_LISTENING={{.ENABLE_SQS_LISTENING | default "false"}}
-      - SQS_URL={{.WEBSUB_HUB_BASE_URL | default "empty"}}
+      - SQS_URL={{.SQS_URL | default "empty"}}
       - BILLING_INTERNAL_GRPC_ADDRESS=billing-service:9094
