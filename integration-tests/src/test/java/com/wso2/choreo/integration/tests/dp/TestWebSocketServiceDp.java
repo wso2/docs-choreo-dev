@@ -68,8 +68,8 @@ public class TestWebSocketServiceDp extends TestBase {
     @Test(dependsOnMethods = {"createUserManagedComponentFor_TestWebSocketServiceDp"}, dataProvider = "dps")
     @CitrusTest
     public void componentDeploy_TestWebSocketServiceDp(DataProviderWrapper dp) throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.STANDARD);
+        ComponentDeploymentStatusDTO statusDTO =ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken, dp.getChoreoComponent(),
+        dp.getEnvironments(), ComponentFlavour.STANDARD);
         dp.setDeploymentStatusDTO(statusDTO);
     }
 
