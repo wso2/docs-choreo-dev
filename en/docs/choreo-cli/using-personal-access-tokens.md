@@ -8,14 +8,15 @@ Personal Access Tokens (PATs) allow you to authenticate without using your prima
 ## Table of Contents
 
 1. [What Are Personal Access Tokens?](#what-are-personal-access-tokens)
-2. [Setting Up Personal Access Tokens](#setting-up-personal-access-tokens)
+2. [Use Cases for Personal Access Tokens](#use-cases-for-personal-access-tokens)
+3. [Setting Up Personal Access Tokens](#setting-up-personal-access-tokens)
 3. [Using Personal Access Tokens with Choreo CLI](#using-personal-access-tokens-with-cli-tool)
 4. [Managing and Revoking Tokens](#managing-and-revoking-tokens)
 5. [Best Practices for Token Management](#best-practices-for-token-management)
 
 ---
 
-### 1. What Are Personal Access Tokens?
+### What Are Personal Access Tokens?
 Personal Access Tokens (PATs) are unique strings that allow you to authenticate without requiring a username and 
 password each time. PATs are associated with your account and can be created for specific use cases, allowing granular 
 access to your app resources.
@@ -24,7 +25,32 @@ access to your app resources.
 
 ---
 
-### 2. Setting Up Personal Access Tokens
+### Use Cases for Personal Access Tokens
+
+Personal Access Tokens can be helpful in many scenarios. Below are some common use cases for leveraging PATs within 
+Choreo CLI:
+
+- **Automated Scripting**: PATs can be used in scripts to perform automated tasks like deployments or data updates 
+without prompting for login credentials each time. This makes it easy to set up CI/CD pipelines or other automation 
+that relies on the CLI.
+
+- **Granular Permissions for Specific Tasks**: When you want to grant access to certain commands or parts of the app
+platform but don’t want to share full access, PATs can be configured with restricted permissions to ensure secure,
+limited access.
+
+- **Temporary Access**: If you only need access for a short period, such as during a project or a temporary 
+collaboration, a PAT can provide that access without sharing full account credentials.
+
+- **Integrating with Third-Party Tools**: PATs can be used to authenticate other tools or services that need access to
+your resources, such as analytics tools, monitoring systems, or deployment services. This approach keeps your main
+credentials secure while still allowing API access.
+
+- **Maintaining Multiple Accounts**: If you work with multiple accounts or roles within the same app platform, you can
+use different PATs for each role. This lets you switch contexts easily without repeatedly logging in and out.
+
+---
+
+### Setting Up Personal Access Tokens
 
 To use Personal Access Tokens with the Choreo CLI, follow these steps to set up and retrieve a token from 
 the Choreo Console.
@@ -52,7 +78,7 @@ scopes for the CLI to function.
 
 ---
 
-### 3. Using Personal Access Tokens with Choreo CLI
+### Using Personal Access Tokens with Choreo CLI
 
 After generating your token, you can use it with Choreo CLI for various operations. Here’s how to authenticate with 
 a Personal Access Token.
@@ -76,7 +102,7 @@ echo "$CHOREO_TOKEN" | choreo login --with-token
 
 ---
 
-### 4. Managing and Revoking Tokens
+### Managing and Revoking Tokens
 
 To manage or revoke existing tokens, return to the **Personal Access Tokens** section in your account settings.
 
@@ -89,7 +115,7 @@ To manage or revoke existing tokens, return to the **Personal Access Tokens** se
 
 ---
 
-### 5. Best Practices for Token Management
+### Best Practices for Token Management
 
 - **Limit Scope:** Only grant the permissions needed for each use case.
 - **Rotate Tokens Regularly:** Replace tokens periodically to reduce the risk of compromise.
