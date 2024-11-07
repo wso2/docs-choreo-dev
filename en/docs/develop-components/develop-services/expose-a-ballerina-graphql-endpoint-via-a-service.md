@@ -12,12 +12,12 @@ This guide shows how to build a simple reading list service and deploy it in Cho
 
 This resource accepts an optional filter, `status`, which filters the reading list by reading status. Accepted values for status are `reading`, `read`, and `to_read`.
 
-**Sample Request**:
+**Sample request**:
 ```
 $ curl -X POST -H "Content-Type: application/json" -d '{"query": "query {allBooks (status: \"reading\") { id title author status }}"}' http://localhost:8090
 ```
 
-**Sample Response**
+**Sample response**
 ```
 $ {
   "data": {
@@ -37,12 +37,12 @@ $ {
 
 This resource accepts a filter, `id`, which will select the book item from the reading list by book id.  The id is an Integer value. 
 
-**Sample Request**
+**Sample request**
 ```
 $ curl -X POST -H "Content-Type: application/json" -d '{"query": "query {book (id: 1) { id title author status }}"}' http://localhost:8090
 ```
 
-**Sample Response**
+**Sample response**
 ```
 $ {
   "data": {
@@ -63,13 +63,13 @@ $ {
 This remote function accepts a book record as the input and consists of the title and the author. When you add a new book to the reading list, the method updates the reading status of the newly added book to `to_read`. This method returns the added book item upon successful execution.
 
 
-**Sample Request**
+**Sample request**
 
 ```
 $ curl -X POST -H "Content-type: application/json" -d '{ "query": "mutation { addBook(book: {title: \"Sample Book\", author: \"Test Author\"}) { id title author status } }" }' 'http://localhost:8090'
 ```
 
-**Sample Response**
+**Sample response**
 
 ```
 $ {
@@ -84,17 +84,17 @@ $ {
 }
 ```
 
-**Update reading status of a book**
+**Update the reading status of a book**
 
 This remote function requires `id` and `status` as inputs to update the reading status of the selected book. The `id` refers to the id of the book. It is an integer.  The `status` refers to the reading status that needs to be updated. This method returns the updated book item upon successful execution.
 
-**Sample Request**
+**Sample request**
 
 ```
 $ curl -X POST -H "Content-type: application/json" -d '{ "query": "mutation { setStatus(id: 1, status: \"reading\") { id title author status } }" }' 'http://localhost:8090'
 ```
 
-**Sample Response**
+**Sample response**
 
 ```
 $ {
@@ -113,13 +113,13 @@ $ {
 
 This remote function requires the `id` as the input to delete the book item from the reading list. This method returns the removed book item upon successful execution.
 
-**Sample Request**
+**Sample request**
 
 ```
 $ curl -X POST -H "Content-type: application/json" -d '{ "query": "mutation { deleteBook(id: 1) { id title author status } }" }' 'http://localhost:8090'
 ```
 
-**Sample Response**
+**Sample response**
 ```
 $ {
   "data": {
@@ -137,38 +137,51 @@ Our next step is to set up the resources that you will require to follow the gui
 
 ## Prerequisites
 
-- To deploy a service component with a GraphQL endpoint, you will need a GitHub account with a repository that contains an `endpoints.yaml`. Fork the [Choreo sample apps repository](https://github.com/wso2/choreo-sample-apps/), which contains the sample for this guide.
+- If you are signing in to the Choreo Console for the first time, create an organization as follows:
+
+    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
+    2. Enter a unique organization name. For example, `Stark Industries`.
+    3. Read and accept the privacy policy and terms of use.
+    4. Click **Create**.
+
+    This creates the organization and opens the **Project Home** page of the default project created for you.
+
+- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample GraphQL service](https://github.com/wso2/choreo-samples/tree/main/reading-list-graphql) implementation for this guide.
 
 Let's get started!
 
-## Repository file structure
+## Learn the repository file structure
 
-Before we begin, it's important to familiarize yourself with the key files in the sample reading list application. The below table gives a brief overview of the important files in the reading list service.
+It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the reading list service.
 
 !!! note
-    The following file paths are relative to the path `<sample-repository-dir>/ballerina/reading-list`.
+    The following file paths are relative to the path `<sample-repository-dir>/reading-list-graphql`.
 
-|Filepath                 | Description                                                                              |
-|-------------------------|------------------------------------------------------------------------------------------|
-| service.bal             | Reading list service code written in the Ballerina language.                             |
-| Ballerina.toml          | Ballerina configuration file.                                                            |
-| .choreo/endpoints.yaml  | Endpoint details configuration file.                                                     |
+|Filepath                 | Description                                                     |
+|-------------------------|-----------------------------------------------------------------|
+| `service.bal`           | The reading list service code written in the Ballerina language.|
+| `Ballerina.toml`        | The Ballerina configuration file.                               |
+| `.choreo/component.yaml`| The configuration file with endpoint details.                   |
 
-## Create a service component 
+## Step 1: Create a service component 
 
-Let's create a Ballerina service component by following these steps:
+To create a Ballerina service component, follow these steps:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev](https://console.choreo.dev).
-2. Create a project to add the service component. 
-3. On the **Components** page, click on the **Service** card.
-4. Enter a unique name and a description of the service. For this guide, let's enter the following values:
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
+3. Click the **Service** card.
+4. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
+    
+    !!! info
+         In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
-    | Field      | Value                      |
-    |------------|----------------------------|
-    | Name       | Ballerina Reading List     |
-    | Description| Manage a reading list      |
-
-5. Go to the **GitHub** tab.
+    | **Field**                 | **Value**               |
+    |---------------------------|-------------------------|
+    | **Component Display Name**| `Ballerina Reading List`|
+    | **Component Name**        | `ballerina-reading-list`|
+    | **Description**           | Manage a reading list   |
+    
+5. Click the **GitHub** tab.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     Alternatively, you can paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
@@ -181,59 +194,55 @@ Let's create a Ballerina service component by following these steps:
              
            You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-7. Enter the following information:
+7. Under **Connect Your Repository**, enter the following information:
 
-    | **Field**             | **Description**        |
-    |-----------------------|------------------------|
-    | **GitHub Account**    | Your account           |
-    | **GitHub Repository** | choreo-sample-apps     |
-    | **Branch**            | **`main`**             |
-    | **Buildpack**      | Ballerina              |
-    | **Project Path**      | ballerina/reading-list |
+    | **Field**               | **Value**               |
+    |-------------------------|-------------------------|
+    | **Organization**        | Your GitHub account     |
+    | **GitHub Repository**   | **`choreo-samples`**    |
+    | **Branch**              | **`main`**              |
 
-8. Click **Create**. Once the component creation is complete, you will see the component overview page.
+8. Select **Ballerina** as the buildpack.
+9. Enter the following information:
+    
+    | **Field**                      | **Value**                 |
+    |--------------------------------|---------------------------|
+    | **Ballerina Project Directory**| `reading-list-graphql`    |.
 
-You have successfully created a Service component that exposes a GraphQL API written in the Ballerina language. Next, let's build and deploy the service.
+10. Click **Create**. This creates the component and takes you to the **Overview** page of the component.
 
-## Build and deploy
+You have successfully created a service component that exposes a GraphQL API written in the Ballerina language. Next, let's build and deploy the service.
+
+## Step 2: Build and deploy
 
 Now that we have connected the source repository, it's time to build and deploy the reading list service.
 
-To build and deploy the service, follow these steps:
+### Step 2.1: Build
 
-1. In the left navigation click **Deploy** and navigate to the **Deploy** page.
-2. In the **Deploy** page, click **Configure &  Deploy**. The endpoint added to the `.choreo/endpoints.yaml` is listed in the **Configure & Deploy** pane on the right. 
+To build the service, follow these steps:
 
-    !!! tip
-        - Optionally, you can click the arrow icon on the endpoint in the **Configure & Deploy** pane to view the endpoint details. The endpoint details added to the `.choreo/endpoints.yaml` is visible here.
-        - Optionally, to change the network visibility, you can click the edit icon on the endpoint on the **Configure & Deploy** pane to change the network visibility. Click **Update** to persist your changes.
+1. In the left navigation menu, click **Build**.
+2. On the **Build** page, click **Build Latest**.
 
     !!! note
-        To test the service over the web you need to expose the service to the public. This is done securely by setting the network visibility to `public` in `.choreo/endpoints.yaml`. 
+        Building the service component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
 
-3. In the **Endpoint Details** pane, click **Deploy** to deploy the service.
+### Step 2.2: Deploy
+
+To deploy the service, follow these steps: 
+
+1. In the left navigation menu, click **Deploy**.
+2. On the **Set Up** card, click **Configure &  Deploy**.
+3. In the **Configurations** pane that opens, click **Next** to skip the configuration.
+4. Review the **Endpoint Details** and click **Deploy**.
 
     !!! note
-        Deploying the service component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the deployment status changes to `Active` in the corresponding environment card.
+        Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
+To build and deploy the service, follow the steps below:
 
-
-4. Check the deployment progress by observing the console logs on the right of the page.
-    You can access the following scans under **Build**. 
-
-    - **The Dockerfile scan**: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
-    - **Container (Trivy) vulnerability scan**: This detects vulnerabilities in the final docker image. 
-    - **Container (Trivy) vulnerability scan**: The details of the vulnerabilities open in a separate pane. If this scan detects critical vulnerabilities, the build will fail.
-
-    !!! info
-        If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
-
-The DevOps configurations related to scaling, health checks, configuration, and secret management are available to all Web Application components regardless of how you created them, similar to other Choreo components.  
+Once you have successfully deployed your service, you can test, manage, and observe it like any other component type in Choreo.
 
 For detailed instructions, see the following sections:
 
 - [Step 3: Test](https://wso2.com/choreo/docs/testing/test-graphql-endpoints-via-the-graphql-console/)
 - [Step 4: Manage](https://wso2.com/choreo/docs/manage/api-management/)
-
-## Manage the deployment¶
-
-If you want to view Kubernetes-level insights to perform a more detailed diagnosis of this Ballerina REST API, see Choreo's [DevOps capabilities](https://wso2.com/choreo/docs/devops-and-ci-cd/builds-and-deployments/).

@@ -103,11 +103,14 @@ nav:
           - Expose a TCP Server via a Service: develop-components/develop-services/expose-a-tcp-server-via-a-service.md
           - Expose a UDP Server via a Service: develop-components/develop-services/expose-a-udp-server-via-a-service.md
           - Expose a Ballerina GraphQL Endpoint via a Service: develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service.md
+          - Expose a Prism-Based Mock Server Using an OpenAPI Specification: develop-components/develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification.md
+          - Expose a WebSocket Endpoint via a NodeJS Service: develop-components/develop-services/expose-a-websocket-endpoint-via-a-nodejs-service.md
       - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop Web Applications: 
           - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
           - Develop Web Applications Locally with Choreo’s Managed Authentication: develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md
-      - Develop a Webhook: develop-components/develop-a-webhook.md 
+      - Develop a Webhook: develop-components/develop-a-webhook.md
+      - Develop an External Consumer: develop-components/develop-an-external-consumer.md
       - Develop Integrations:
           - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
           - Develop an Event Handler: develop-components/develop-integrations/develop-an-event-handler.md
@@ -122,25 +125,38 @@ nav:
       - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
       - Share and Reuse Components:
           - Create a Connection: develop-components/sharing-and-reusing/create-a-connection.md
-          - Share and Reuse Services: develop-components/sharing-and-reusing/share-and-reuse-services.md
-          - Share and Reuse Web Applications: develop-components/sharing-and-reusing/share-and-reuse-web-applications.md
+          - Use a Connection in Your Service: develop-components/sharing-and-reusing/use-a-connection-in-your-service.md
+          - Use a Connection in Your Web Application: develop-components/sharing-and-reusing/use-a-connection-in-your-web-application.md
+          - Use a Database Connection in Your Component: develop-components/sharing-and-reusing/use-a-database-connection-in-your-component.md
       - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
-      - Configure Mutual TLS Between Components: develop-components/configure-mutual-tls-between-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
+      - Manage Component Source Configurations: develop-components/manage-component-source-configurations.md
+      - Submit and Manage Workflow Approval Requests: develop-components/submit-and-manage-workflow-approval-requests.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
+  - Integrate and Manage External Services: 
+      - Integrate and Manage Third-Party Services: integrate-and-manage-external-services/integrate-and-manage-third-party-services.md
+      - Integrate and Manage Generative AI Services: integrate-and-manage-external-services/integrate-and-manage-gen-ai-services.md
   - Choreo-Managed Databases and Caches: 
           - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
           - PostgreSQL:  manage-databases-and-caches/choreo-managed-postgresql-databases.md
           - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
-          - Redis: manage-databases-and-caches/choreo-managed-redis-datastores.md
+          - Choreo-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
+          - Add Choreo-Managed Databases and Caches to the Marketplace: manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md
           - Billing: manage-databases-and-caches/billing-for-platform-services.md
+  - Choreo-Managed Message Brokers: 
+      - Overview: manage-message-brokers/choreo-managed-message-brokers.md
+      - Kafka:  
+          - Create Choreo-Managed Kafka Services: manage-message-brokers/create-choreo-managed-kafka-services.md
+          - Configure a Kafka Service: manage-message-brokers/configure-a-kafka-service.md
+          - Monitor a Kafka Service: manage-message-brokers/monitor-a-kafka-service.md         
   - Authentication and Authorization:
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
       - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
       - Test Secure API Access with Choreo Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
-      - Secure Communication Between the Choreo Gateway and Your Backend: authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend.md
+      - Configure Mutual TLS Between Components: authentication-and-authorization/configure-mutual-tls-between-components.md
+      - Secure Communication Between the Choreo Gateway and Your Backend with Mutual TLS: authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls.md 
   - DevOps and CI/CD: 
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
       - View Runtime Details: devops-and-ci-cd/view-runtime-details.md
@@ -148,13 +164,15 @@ nav:
       - Set Up Health Checks: devops-and-ci-cd/set-up-health-checks.md
       - Autoscale:
         - Autoscale Component Replicas: devops-and-ci-cd/autoscale/autoscale-component-replicas.md
+        - Autoscale Components with Scale-to-Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
+      - Configure VPNs on the Choreo Cloud Data Plane: devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane.md
   - Testing: 
       - Test REST Endpoints via the OpenAPI Console: testing/test-rest-endpoints-via-the-openapi-console.md
       - Test GraphQL Endpoints via the GraphQL Console: testing/test-graphql-endpoints-via-the-graphql-console.md
+      - Test WebSocket Endpoints via the WebSocket Console: testing/test-websocket-endpoints-via-the-websocket-console.md
       - Test APIs with cURL: testing/test-apis-with-curl.md
-      - Test APIs using Postman: testing/test-apis-using-postman.md
       - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
       - Test Components with Test Runner: testing/test-components-with-test-runner.md
   - Consuming Services:
@@ -167,18 +185,25 @@ nav:
       - Lifecycle Management: api-management/lifecycle-management.md
       - Documents: api-management/documents.md
       - API Rate Limiting: api-management/api-rate-limiting.md
-      - API Policies: api-management/api-policies.md
+      - API Policies:
+          - About API Policies: api-management/api-policies/about-api-policies.md
+          - Attach and Manage Policies: api-management/api-policies/attach-and-manage-policies.md
+          - Apply Advanced Settings on Mediation Policies: api-management/api-policies/apply-advanced-settings-on-mediation-policies.md
       - Control API Visibility: api-management/control-api-visibility.md
+      - Manage API Traffic:
+          - Assign Subscription Plans to APIs: api-management/manage-api-traffic/assign-subscription-plans-to-apis.md
+          - Subscribe to an API with a Subscription Plan: api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan.md
       - Rename API Display Name: api-management/rename-api-display-name.md
   - Monitoring and Insights:
       - Observability Overview: monitoring-and-insights/observability-overview.md
       - Delivery Insights:
           - Configure DORA Metrics: monitoring-and-insights/delivery-insights/configure-dora-metrics.md
           - View DORA Metrics: monitoring-and-insights/delivery-insights/view-dora-metrics.md
-      - Usage Insights: monitoring-and-insights/usage-insights.md
+      - Usage Insights: 
+          - Insights Overview: monitoring-and-insights/insights-overview.md
+          - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
+          - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
       - View Logs: monitoring-and-insights/view-logs.md
-      - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
-      - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
       - Work with the Choreo Insights API:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
           - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md 
@@ -193,6 +218,9 @@ nav:
       - Configure an External IdP:
           - Configure Asgardeo as an External IdP: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
           - Configure Azure as an External IdP: administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md
+      - Create API Subscription Plans: administer/create-api-subscription-plans.md
+      - Configure Approvals for Choreo Workflows: administer/configure-approvals-for-choreo-workflows.md
+      - Review Workflow Approval Requests: administer/review-workflow-approval-requests.md
       - Configure a User Store with the Built-In Identity Provider: administer/configure-a-user-store-with-built-in-idp.md
       - Developer Portal:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
@@ -204,6 +232,8 @@ nav:
       - Troubleshoot Choreo: references/troubleshoot-choreo.md
       - Private Data Plane Security Levels: references/private-data-plane-security-levels.md
       - Private Data Plane Management Models: references/private-data-plane-management-models.md
+      - Choreo Platform Services Billing: references/choreo-platform-services-billing.md
+      
 # Extensions
 # Extensions
 markdown_extensions:
@@ -369,7 +399,14 @@ plugins:
           'administer/configure-a-custom-domain-for-apis.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
           'administer/customize-developer-portal-domain.md': 'https://wso2.com/choreo/docs/administer/configure-a-custom-domain-for-your-organization/'
           'authentication-and-authorization/access-control/control-access-in-the-choreo-console.md': 'https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/'
-          
+          'authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls/'
+          'develop-components/sharing-and-reusing/share-and-reuse-services.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/'
+          'develop-components/sharing-and-reusing/share-and-reuse-web-applications.md': 'https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-web-application/'
+          'manage-databases-and-caches/choreo-managed-redis-datastores.md': 'https://wso2.com/choreo/docs/manage-databases-and-caches/choreo-managed-caches/'
+          'monitoring-and-insights/usage-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/insights-overview/'
+          'develop-components/configure-mutual-tls-between-components.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/configure-mutual-tls-between-components/'
+          'api-management/api-policies.md': 'https://wso2.com/choreo/docs/api-management/api-policies/about-api-policies/'
+
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css

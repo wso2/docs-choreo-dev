@@ -156,7 +156,7 @@ Follow these steps:
     
     Now you can proceed to create groups and assign applicable roles to the groups.
     
-4. In the Asgardeo Console left navigation menu, click **Groups**.
+4. In the Asgardeo Console left navigation menu, click **User Management** and then click **Groups**.
 5. In the **Groups** pane, follow these steps to add groups and assign roles:
     1. Click **+ New Group**,  enter `HR-Manager` as the **Group Name**, and click **Finish**.
     2. Click the **Roles** tab in the HR-Manager group you created and then click **+ Assign Roles**. 
