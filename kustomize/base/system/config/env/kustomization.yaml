@@ -1091,6 +1091,10 @@ configMapGenerator:
       - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL}}
       - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC}}
       - TOKEN_REVOCATION_CLIENT_ID={{.TOKEN_REVOCATION_CLIENT_ID}}
+  - name: env-choreo-gcp-marketplace-client
+    behavior: create
+    literals:
+      - ENABLE_LISTENER={{.ENABLE_LISTENER | default "false"}}
   - name: env-choreo-aws-marketplace-client
     behavior: create
     literals:

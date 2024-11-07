@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-gcp-marketplace-client
+  labels:
+    choreo.component: choreo-gcp-marketplace-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-gcp-marketplace-client
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-gcp-marketplace-client
+        antiaffinity: choreo-gcp-marketplace-client
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  antiaffinity: choreo-gcp-marketplace-client
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: choreo-gcp-marketplace-client
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-gcp-marketplace-client:latest
+          ports:
+            - containerPort: 8080
+          envfrom:
+            - configMapRef:
+                name: env-choreo-gcp-marketplace-client
+            - secretRef:
+                name: choreo-gcp-marketplace-client-secret
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          volumeMounts:
+            - name: choreo-gcp-marketplace-client-secret-vol
+              mountPath: "/mnt/csi/choreo-gcp-marketplace-client-secret"
+              readOnly: true
+      volumes:
+        - name: choreo-gcp-marketplace-client-secret-vol
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: choreo-gcp-marketplace-client-secrets
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
