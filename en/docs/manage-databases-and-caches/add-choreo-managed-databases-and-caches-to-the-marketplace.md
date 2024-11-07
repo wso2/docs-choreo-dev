@@ -7,9 +7,9 @@ When you create a Choreo-managed database or cache, you can add it to the Market
 
 ## Step 1: Register credentials
 
-When you create a database or cache server, you get super admin credentials by default. You can use these credentials to create new user credentials. The steps to create new user credentials depend on the type of database or cache you are using.
+You can register either the default super admin credentials or credentials you create using the super admin credentials. When you create a database or cache server, you get super admin credentials by default. You can use these super user credentials to create new user credentials. The steps to create new user credentials depend on the type of database or cache you are using.
 
-You can register either the default super admin credentials or any custom credentials you create using the super admin credentials.
+The registered credentials will be used when creating the connection. You will be prompted to select the credentials for each database from the list of added credentials during the connection setup.
 
 To register credentials for a database, follow these steps:
 
@@ -20,8 +20,13 @@ To register credentials for a database, follow these steps:
 5. Click the **Databases** tab.
 6. Click to expand the database for which you want to register credentials, then click **Add Credentials**.
 7. In the **Add Credentials** dialog, do one of the following depending on your requirements:
-    - If you want to use the custom credentials you created using the super admin credentials, select **Add New Credentials** and specify appropriate values for each field.
-    - If you want to use the default super admin credentials, select **Add Super Admin Credentials** and specify appropriate values for each field.
+
+    i. **Add New Credentials**
+    - Save the newly created database credentials to Choreo by providing a display name and specifying the environment where those credentials will be used. The steps to create new user credentials depend on the type of database or cache you are using.
+    - Generally, you will need to log in to your database server as the super admin using a command-line interface or a database management tool and create new database users with the required permission levels.
+
+    ii. **Add Super Admin Credentials** 
+    - Save the provided super admin credentials by giving a display name and specifying the environment where those credentials will be used.
 8. Click **Save**.
 
 !!! tip 
