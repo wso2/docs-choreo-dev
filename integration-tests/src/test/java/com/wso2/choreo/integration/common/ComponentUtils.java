@@ -24,6 +24,8 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.configmgt.ConfigManagement;
@@ -99,6 +101,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -1138,6 +1141,35 @@ public class ComponentUtils {
         TimeUnit.SECONDS.sleep(2);
     }
 
+    public static JsonArray invokeApiGETResponse(TestActionRunner runner, String apiKey, String invokeUrl ,String resource) throws Exception {
+        // Test API Invocation
+        AtomicReference<JsonArray> apiResp = new AtomicReference<>();
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(30000)
+                .actions((http()
+                                .client(invokeUrl)
+                                .send()
+                                .get(resource)
+                                .message()
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .header("API-Key", apiKey)),
+                        http()
+                                .client(invokeUrl)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    String payload = message.getPayload(String.class);
+                                    JsonArray dataJsonArray = JsonParser.parseString(payload).getAsJsonArray();
+                                    apiResp.set(dataJsonArray);
+                                })));
+
+        return  apiResp.get();
+    }
+
     /**
      * Invoke API POST with validation
      *
@@ -1174,6 +1206,48 @@ public class ComponentUtils {
                                 .type(MessageType.JSON)
                                 .body(expectedResponse)
                                 ));
+    }
+
+    /**
+     * Invoke API POST
+     *
+     * @param runner           Test action runner
+     * @param apiKey           API Key
+     * @param invokeUrl        Invoke URL
+     * @param resource         API Resource
+     * @param requestBody      Request payload
+     *
+     */
+    public static JsonObject invokeApiPOST(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
+                                     String requestBody, org.springframework.http.HttpStatus expectedHttpStatus) {
+        // Test API Invocation
+        AtomicReference<JsonObject> apiResp = new AtomicReference<>();
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(30000)
+                .actions((http()
+                                .client(invokeUrl)
+                                .send()
+                                .post(resource)
+                                .message()
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .header("API-Key", apiKey)),
+                        http()
+                                .client(invokeUrl)
+                                .receive()
+                                .response(expectedHttpStatus)
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    String payload = message.getPayload(String.class);
+                                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                                    apiResp.set(dataJsonObject);
+                                })));
+
+        return  apiResp.get();
     }
 
     public static List<Environment> getEnvironments(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,

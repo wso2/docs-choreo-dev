@@ -20,7 +20,9 @@ public abstract class ControlPlaneAPI {
     protected static final String ORG_UUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
     protected static final int ORG_ID = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
     protected static final String GH_ORG = Configuration.getConfig(ConfigDefinition.GITHUB_ORG);
+    protected static final String GH_TEST_USER_ORG = Configuration.getConfig(ConfigDefinition.GITHUB_TEST_USER_ORG);
     protected static final String ORG_HANDLE = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
     protected static final String AUTH_HEADER = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.getConfig(ConfigDefinition.GITHUB_PAT));
+    protected static final String AUTH_HEADER_FOR_TEST_USER = Constant.GITHUB_AUTH_HEADER_PREFIX.concat(Configuration.getConfig(ConfigDefinition.GITHUB_TEST_USER_PAT));
 
 }

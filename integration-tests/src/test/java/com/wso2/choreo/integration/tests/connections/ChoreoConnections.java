@@ -231,7 +231,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 "templates/marketplace/component-config.mustache", params);
         String encodedFileContent = Base64.getEncoder().
                 encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
-        GitHub.mergeNewCode(repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent);
+        GitHub.mergeNewCode(repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent, null);
     }
     @Test(dependsOnMethods = {"createComponentLevelConnection_TestChoreoConnections"})
     @CitrusTest

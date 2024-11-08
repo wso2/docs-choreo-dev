@@ -117,7 +117,7 @@ public class AutoDeployOnCommit extends TestNGCitrusSpringSupport {
         String srcCode = MessageUtils.generateStringFromTemplate(
                 "templates/autodeploy/service.mustache", params);
         String encodedCode = Base64.getEncoder().encodeToString(srcCode.getBytes(StandardCharsets.UTF_8));
-        GitHub.mergeNewCode(repoName, "service.bal", " change on DeployIT ", encodedCode);
+        GitHub.mergeNewCode(repoName, "service.bal", " change on DeployIT ", encodedCode, null);
     }
 
     @Test(dependsOnMethods = {"mergeNewCode_AutoDeployOnCommit"})
