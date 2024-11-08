@@ -248,6 +248,17 @@ public class ComponentUtils {
                 .repositorySubPath(repo.getSubPath()).displayType(Constant.displayType.ballerinaService.name()).build();
     }
 
+    public static GraphqlDTO createBallerinaServiceComponentWithPublicURLRequest(String name, ChoreoProject project,
+            Repository repo) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+
+        return GraphqlDTO.builder().name(name).triggerID("null").srcGitRepoUrl(repo.getRepoUrl())
+                .projectId(project.getId()).orgId(orgId).orgHandler(orgHandle)
+                .repositoryType(Constant.NON_EMPTY_REPO_TYPE).repositoryBranch(repo.getBranch()).isPublicRepo(true)
+                .repositorySubPath(repo.getSubPath()).displayType(Constant.displayType.ballerinaService.name()).build();
+    }
+
     public static GraphqlDTO createByocComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
