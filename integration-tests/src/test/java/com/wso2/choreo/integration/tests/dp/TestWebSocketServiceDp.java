@@ -54,7 +54,7 @@ public class TestWebSocketServiceDp extends TestBase {
                 branch("main").
                 subPath("websocket-chat-service-ballerina").build();
 
-        GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
+        GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentWithPublicURLRequest(componentName, project, repo);
 
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
         dp.setChoreoProject(project);
