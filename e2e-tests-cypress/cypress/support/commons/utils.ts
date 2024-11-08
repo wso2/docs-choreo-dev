@@ -389,6 +389,18 @@ export class Utils {
     }
   }
 
+  static isTestConsoleOnly() {
+    const consoleOnlyMode = Cypress.env("consoleOnlyMode");
+
+    let isConsoleOnlyMode = false;
+
+    if (consoleOnlyMode != null) {
+      isConsoleOnlyMode = consoleOnlyMode == true || consoleOnlyMode == "true";
+    }
+
+    return cy.wrap(isConsoleOnlyMode, { log: false });
+  }
+
   static isApiConfigurationEnabled() {
     const enableApiConfiguration = Cypress.env("enableApiConfiguration");
 
