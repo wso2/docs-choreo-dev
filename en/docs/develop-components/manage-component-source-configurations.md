@@ -113,7 +113,7 @@ Click the respective tab to view the structure for your current configuration fi
     !!! note
         Choreo automatically generates connection configurations when you create a connection. The properties such as **name** and **resourceRef** are automatically generated. The configurations required to establish the connection will be injected into Choreo-defined environment variables.
 
-        If you'd like to use custom environment variable names instead of the default Choreo-defined ones, you can add the dependency in the format of a `serviceReference` under `dependencies` in the same `component.yaml v1.1` due to its backward-compatibility. Simply copy the configuration from `component.yaml v1.0` tab and paste it under `dependencies` in your `component.yaml v1.1` configuration file.
+        To use custom environment variable names instead of Choreo's default ones, add the dependency as a `serviceReference` in your `component.yaml v1.1` file. You can copy the `serviceReference` section from the `component.yaml v1.0` tab and paste it under `dependencies` in your `component.yaml v1.1` file, which maintains backward compatibility with the v1.0 format.
 
 === "Version 1.0"
 
