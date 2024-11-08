@@ -32,7 +32,7 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-aws-marketplace-client:latest
           ports:
             - containerPort: 8080
-          envfrom:
+          envFrom:
             - configMapRef:
                 name: env-choreo-aws-marketplace-client
             - secretRef:
