@@ -22,11 +22,11 @@ To register credentials for a database, follow these steps:
 7. In the **Add Credentials** dialog, do one of the following depending on your requirements:
 
     i. **Add New Credentials**
-    - Save the newly created database credentials to Choreo by providing a display name and specifying the environment where those credentials will be used. The steps to create new user credentials depend on the type of database or cache you are using.
-    - Generally, you will need to log in to your database server as the super admin using a command-line interface or a database management tool and create new database users with the required permission levels.
+    - Add the newly created database credentials to Choreo by providing a display name and specifying the environment where those credentials will be used. 
+    - The steps to create new user credentials depend on the type of database or cache you are using. Generally, you will need to log in to your database server as the super admin using a command-line interface or a database management tool and create new database users with the required permission levels.
 
     ii. **Add Super Admin Credentials** 
-    - Save the provided super admin credentials by giving a display name and specifying the environment where those credentials will be used.
+    - Add the provided super admin credentials by giving a display name and specifying the environment where those credentials will be used.
 8. Click **Save**.
 
 !!! tip 
