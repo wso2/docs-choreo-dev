@@ -8,7 +8,7 @@
 CREATE TABLE key (
   id CHAR(36) PRIMARY KEY,
   org_uuid CHAR(36) NOT NULL,
-  key_hash CHAR(64) NOT NULL,
+  key_hash VARCHAR(110) NOT NULL,
   type VARCHAR(20) NOT NULL,
   allowed_scopes TEXT NOT NULL,
   CONSTRAINT key_type_ck CHECK (type IN ('USER', 'APPLICATION')),

@@ -15,11 +15,14 @@ package com.wso2.choreo.integration.common;
 
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.exceptions.TestCaseFailedException;
+import com.consol.citrus.exceptions.CitrusRuntimeException;
 import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.consol.citrus.websocket.client.WebSocketClientEndpointConfiguration;
+import com.consol.citrus.websocket.handler.CitrusWebSocketHandler;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
@@ -89,6 +92,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.testng.Assert;
 
 import java.io.IOException;
@@ -105,6 +109,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static org.junit.Assert.fail;
 
 @Log4j2
 public class ComponentUtils {
@@ -243,6 +248,17 @@ public class ComponentUtils {
         return GraphqlDTO.builder().name(name).triggerID("null").srcGitRepoUrl(repo.getRepoUrl())
                 .projectId(project.getId()).orgId(orgId).orgHandler(orgHandle)
                 .repositoryType(Constant.NON_EMPTY_REPO_TYPE).repositoryBranch(repo.getBranch())
+                .repositorySubPath(repo.getSubPath()).displayType(Constant.displayType.ballerinaService.name()).build();
+    }
+
+    public static GraphqlDTO createBallerinaServiceComponentWithPublicURLRequest(String name, ChoreoProject project,
+            Repository repo) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+
+        return GraphqlDTO.builder().name(name).triggerID("null").srcGitRepoUrl(repo.getRepoUrl())
+                .projectId(project.getId()).orgId(orgId).orgHandler(orgHandle)
+                .repositoryType(Constant.NON_EMPTY_REPO_TYPE).repositoryBranch(repo.getBranch()).isPublicRepo(true)
                 .repositorySubPath(repo.getSubPath()).displayType(Constant.displayType.ballerinaService.name()).build();
     }
 
@@ -1248,6 +1264,32 @@ public class ComponentUtils {
                                 })));
 
         return  apiResp.get();
+                                     }
+     
+     /**
+     * Invoke WebSocket API with validation
+     *
+     * @param runner           Test action runner
+     * @param apiKey           API Key
+     * @param invokeUrl        Invoke URL
+     * @param resource         API Resource
+     * @param requestBody      Request payload
+     *
+     */
+    public static void invokeWSApi(TestActionRunner runner, String apiKey, String invokeUrl, String resource) {
+
+            WebSocketHttpHeaders headers = new WebSocketHttpHeaders();
+            headers.add("API-Key", apiKey);
+
+            WebSocketClientEndpointConfiguration webSocketEndpointConfiguration = new WebSocketClientEndpointConfiguration();
+            webSocketEndpointConfiguration.setEndpointUri(invokeUrl + "/" + resource);
+            webSocketEndpointConfiguration.setWebSocketHttpHeaders(headers);
+
+            try {
+                CitrusWebSocketHandler webSocketHandler = webSocketEndpointConfiguration.getHandler();
+            } catch (CitrusRuntimeException e) {
+                fail("Test failed due to CitrusRuntimeException: " + e.getMessage());
+            }
     }
 
     public static List<Environment> getEnvironments(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,

@@ -58,6 +58,9 @@ maxHeaderSize = {{.MAX_HEADER_SIZE | default 65536}}
 workflowManagementServiceUrl = "http://workflow-mgt:9082"
 enableWorkflowApprovalValidation = {{.ENABLE_WORKFLOW_APPROVAL_VALIDATION | default false}}
 enableCloudManagerHTTP11Client = {{.ENABLE_CLOUD_MANAGER_HTTP_11_CLIENT | default false}}
+appdevStsUrl = "http://sts-mgt-service:3000"
+mizzenUrl = "http://dp-mizzen:80"
+enableChoreoAppdevSTSCreation = {{.ENABLE_CHOREO_APPDEV_STS_CREATION | default false}}
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"

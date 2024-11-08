@@ -28,6 +28,7 @@
             <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithAPIRateLimit"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBallerinaServiceDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestWebSocketServiceDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBuildpackDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestPrismMockDp"/>

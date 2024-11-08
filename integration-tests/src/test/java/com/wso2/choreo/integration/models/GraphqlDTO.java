@@ -73,6 +73,7 @@ public class GraphqlDTO {
     private String srcGitRepoBranch;
     private String imageUrl;
     private String registryId;
+    private boolean isPublicRepo;
 
     @NoArgsConstructor
     @AllArgsConstructor
