@@ -225,7 +225,7 @@ disableSslVerification = false
     testConsoleHeaderName = "api-key"
 
 [enforcer.security.apiKeyConfig]
-    oauthAgentURL = "{{.OAUTH_AGENT_URL | default "https://localhost:8080"}}"
+    oauthAgentURL = "{{.OAUTH_AGENT_URL | default "http://app-gateway-oauth-agent:8080"}}"
 
 [enforcer.security.patConfig]
     tokenExpiryTimeSkew = {{.TOKEN_EXPIRY_TIME_SKEW | default 1}}
