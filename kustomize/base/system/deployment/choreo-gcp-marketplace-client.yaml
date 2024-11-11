@@ -35,8 +35,6 @@ spec:
           envfrom:
             - configMapRef:
                 name: env-choreo-gcp-marketplace-client
-            - secretRef:
-                name: choreo-gcp-marketplace-client-secret
           resources:
             requests:
               cpu: 100m

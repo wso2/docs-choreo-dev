@@ -1095,6 +1095,8 @@ configMapGenerator:
     behavior: create
     literals:
       - ENABLE_LISTENER={{.ENABLE_LISTENER | default "false"}}
+      - GCP_CREDENTIALS_JSON_FILE=/mnt/csi/choreo-gcp-marketplace-client-secret/GCP_CREDENTIALS_JSON
+      - GCP_PROVIDER_ID_FILE=/mnt/csi/choreo-gcp-marketplace-client-secret/GCP_PROVIDER_ID
   - name: env-choreo-aws-marketplace-client
     behavior: create
     literals:
