@@ -15,3 +15,4 @@ resources:
   - dp-rudder-deploy-history-cleanup-task.yaml
   - choreo-k8s-cronjob-timezone-migrator.yaml
   - dp-rudder-webapp-deployment-hour-enforcer.yaml
+  - choreo-org-activity-update.yaml
