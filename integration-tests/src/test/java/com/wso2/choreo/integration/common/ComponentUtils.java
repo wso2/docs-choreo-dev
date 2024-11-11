@@ -1675,40 +1675,48 @@ public class ComponentUtils {
     }
 
     public static Pair<Boolean, Integer> testDeploymentWithRateLimit(String invokeURL, String apiKey,
-            int repititionCount) throws Exception {
-
-        // Rate limiting counter resets based on the system clock.
-        long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
-        if (timeRemainingTillNextMinute < 15000) {
-            Thread.sleep(timeRemainingTillNextMinute + 5000);
-        }
+        int repetitionCount) throws Exception {
 
         boolean isRateLimitExceeded = false;
         int count = 0;
-        long startTime;
-        long endTime;
 
-        // Repeat the check until the rate limit is exceeded or all requests are sent
-        // within the same minute
         while (!isRateLimitExceeded) {
-            count = 0;
-            startTime = System.currentTimeMillis();
-            for (int i = 0; i < repititionCount; i++) {
-                Response dev = HttpClientUtil.httpGET(invokeURL, "", apiKey);
-                count++;
-                if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
-                    isRateLimitExceeded = true;
-                    break;
-                } else if (dev.getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
-                    throw new RuntimeException("API token for invokeURL : " + invokeURL + " is unauthorized");
-                }
-                Thread.sleep(500);
+            // Synchronize with the start of the next minute if we're too close to the end
+            long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
+            if (timeRemainingTillNextMinute < 15000) {
+                Thread.sleep(timeRemainingTillNextMinute + 5000);
             }
-            endTime = System.currentTimeMillis();
 
-            // Break the loop if all requests are sent within the same minute
+            count = 0;
+            long startTime = System.currentTimeMillis();
+
+            synchronized (ComponentUtils.class) {
+                for (int i = 0; i < repetitionCount; i++) {
+                    Response dev = HttpClientUtil.httpGET(invokeURL, "", apiKey);
+                    count++;
+
+                    if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
+                        isRateLimitExceeded = true;
+                        break;
+                    } else if (dev.getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
+                        throw new RuntimeException("API token for invokeURL : " + invokeURL + " is unauthorized");
+                    }
+
+                    Thread.sleep(500);
+                }
+            }
+
+            long endTime = System.currentTimeMillis();
+
+            // Break if all requests were sent within the same minute
             if (endTime / 60000 == startTime / 60000) {
                 break;
+            }
+
+            // Resynchronize after the loop
+            timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
+            if (timeRemainingTillNextMinute < 60000) {
+                Thread.sleep(timeRemainingTillNextMinute + 5000);
             }
         }
 
