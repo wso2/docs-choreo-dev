@@ -197,7 +197,7 @@ To integrate another service into your application, click the appropriate tab be
     const serviceURL = process.env.SVC_URL;
     ```
 
-If you're using the API-Key security scheme for the connection, skip **Step 3** and proceed to **Step 4: Service secured with API Key**.
+If you're using the API key security scheme for the connection, skip Step 3 and follow the instructions in [Step 4: API key security scheme](#step-4-invoke-the-service) tab.
 
 ### Step 3: Acquire an OAuth 2.0 access token
 
@@ -223,44 +223,42 @@ To consume a Choreo service with the visibility level set to organization or pub
 
     ```
 
-### Step 4: Invoke the Service
+### Step 4: Invoke the service
 
-=== "Service secured with API Key"
+Click the tab that matches the security scheme of your service and follow the instructions below:
 
-Invoke the API using the **choreo-api-key** header with the value obtained from the corresponding environment variable as described in [step 2](#step-2-read-configurations-within-the-application).
+=== "API key security scheme"
 
-  The following is a sample code snippet in NodeJS:
+     To invoke the API, use the `choreo-api-key` header with the API key value retrieved from the corresponding environment variable as described in [step 2](#step-2-read-configurations-within-the-application).
 
-  ``` java
-    const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
-        headers: {
-          'Choreo-API-Key': `${choreoApiKey}`
-        }
-    });
-  ```
+     The following is a sample code snippet in NodeJS:
 
-=== "Service secured with OAuth 2.0"
+     ``` java
+       const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
+           headers: {
+             'Choreo-API-Key': `${choreoApiKey}`
+           }
+       });
+     ```
 
-You can invoke the service as follows:
+=== "OAuth 2.0 security scheme"
 
-- For languages with OAuth 2.0-aware HTTP clients, you can invoke the service in a straightforward manner. The HTTP client seamlessly manages OAuth 2.0 authentication without requiring additional intervention.
+     To invoke the service, use the following instructions based on your programming language:
 
-    As the service URL you can use the URL that you resolved in [step 2](#step-2-read-configurations-within-the-application). For sample requests and responses, see the API definition provided via the Choreo marketplace for the service.
+      - For languages with OAuth 2.0-aware HTTP clients, use the service URL resolved in [Step 2](#step-2-read-configurations-within-the-application). The OAuth-aware client manages authentication automatically. For sample requests and responses, see the API definition provided via the Choreo marketplace for the service.
 
-- For languages without OAuth 2.0-aware HTTP clients, you can use the token obtained in [step 3](#step-3-acquire-an-oauth-20-access-token) to make calls to the dependent service. Subsequently, add the obtained token to the HTTP authorization header with the bearer prefix.
-As the service URL you can use the URL that you resolved in [step 2](#step-2-read-configurations-within-the-application). For sample requests and responses, see the API definition of the service provided via the Choreo marketplace.
+      - For languages without OAuth 2.0-aware HTTP clients, use the token obtained in [step 3](#step-3-acquire-an-oauth-20-access-token) to make calls to the dependent service. Subsequently, add the obtained token to the HTTP authorization header with the bearer prefix. As the service URL, use the URL resolved in [step 2](#step-2-read-configurations-within-the-application). For sample requests and responses, see the API definition of the service provided via the Choreo marketplace.
 
-    The following is a sample code snippet in NodeJS:
+       The following is a sample code snippet in NodeJS:
 
-    ``` java
-    const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-          'Choreo-API-Key': `${choreoApiKey}`
-        }
-    });
-    ```
+       ``` java
+       const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
+           headers: {
+             'Authorization': `Bearer ${accessToken}`
+             'Choreo-API-Key': `${choreoApiKey}`
+           }
+       });
+       ```
 
     !!! note
         If you want to consume a Choreo service at the project visibility level, you don't need to obtain a token. You can directly invoke the service using the resolved URL.
-        
