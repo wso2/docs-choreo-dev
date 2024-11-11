@@ -439,6 +439,7 @@ configMapGenerator:
       - BD_PMS_FP={{.BD_PMS_FP | default ".github/workflows/choreo-build-deploy_prism-mock-service_1.1.0.yml"}}
       - BD_IMAGE_PUSH_TEMPLATE_VERSION={{.BD_IMAGE_PUSH_TEMPLATE_VERSION | default "choreo-templates/choreo-image-push@v1.0.7"}}
       - BD_BUILD_DEPLOY_TEMPLATE_VERSION={{.BD_BUILD_DEPLOY_TEMPLATE_VERSION | default "choreo-templates/build-deploy-action@v2.2.4"}}
+      - BD_AWS_SINGLE_IMAGE_REPO_ENABLED_ORGS={{.BD_AWS_SINGLE_IMAGE_REPO_ENABLED_ORGS | default ""}}
       - MEDIATION_WF_CODE_GENV={{.MEDIATION_WF_CODE_GENV | default "v1.2.11"}}
       - MEDIATION_WF_CODEGEN_FP={{.MEDIATION_WF_CODEGEN_FP | default ".github/workflows/mediation-code-generator_1.2.11.yml"}}
       - DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW={{.DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW}}
