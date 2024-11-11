@@ -47,7 +47,7 @@ spec:
                   type: array
                   items:
                     type: object
-                    required: ["secretName","key","value"]
+                    required: ["secretName", "key", "value"]
                     properties:
                       secretName:
                         type: string
@@ -60,7 +60,7 @@ spec:
                   type: array
                   items:
                     type: object
-                    required: ["secretName","key","value"]
+                    required: ["secretName", "key", "value"]
                     properties:
                       secretName:
                         type: string
