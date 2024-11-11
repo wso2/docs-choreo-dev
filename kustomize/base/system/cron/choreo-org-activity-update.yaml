@@ -10,7 +10,7 @@ spec:
   concurrencyPolicy: Replace
   jobTemplate:
     spec:
-      backoffLimit: 15
+      backoffLimit: 5
       completions: 1
       parallelism: 1
       template:
