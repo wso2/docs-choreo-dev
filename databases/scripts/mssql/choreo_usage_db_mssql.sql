@@ -72,7 +72,7 @@ BEGIN
         collection_successful BIT NOT NULL DEFAULT 0,
         insertion_successful BIT NOT NULL DEFAULT 0,
         monthly_insertion_successful BIT NOT NULL DEFAULT 0,
-        PRIMARY KEY (date)
+        PRIMARY KEY (date, cluster_id)
     );
 END
 GO
