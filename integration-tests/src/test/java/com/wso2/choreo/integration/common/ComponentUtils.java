@@ -1675,7 +1675,7 @@ public class ComponentUtils {
     }
 
     public static Pair<Boolean, Integer> testDeploymentWithRateLimit(String invokeURL, String apiKey,
-                                                                     int repititionCount) throws Exception {
+        int repetitionCount) throws Exception {
 
         boolean isRateLimitExceeded = false;
         int count = 0;
@@ -1691,7 +1691,7 @@ public class ComponentUtils {
             long startTime = System.currentTimeMillis();
 
             synchronized (ComponentUtils.class) {
-                for (int i = 0; i < repititionCount; i++) {
+                for (int i = 0; i < repetitionCount; i++) {
                     Response dev = HttpClientUtil.httpGET(invokeURL, "", apiKey);
                     count++;
 
