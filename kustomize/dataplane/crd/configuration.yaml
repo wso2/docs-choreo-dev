@@ -44,18 +44,26 @@ spec:
               properties:
                 envs:
                   description: List of environment variables as keys and kv references as values
+                  type: array
                   items:
-                    type: array
+                    type: object
+                    required: ["secretName","key","value"]
                     properties:
+                      secretName:
+                        type: string
                       key:
                         type: string
                       value:
                         type: string
                 files:
                   description: List of file names as keys and templated files as values
+                  type: array
                   items:
-                    type: array
+                    type: object
+                    required: ["secretName","key","value"]
                     properties:
+                      secretName:
+                        type: string
                       key:
                         type: string
                       value:
