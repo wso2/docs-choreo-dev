@@ -120,77 +120,7 @@ VALUES('ENV_PROMOTION', 'Environment Promotion','Promotion of a build from one e
         }
     }');
 
--- 2. API_SUBSCRIPTION_CREATION
-
-INSERT INTO public.workflow_definition
-(id, "name", description, approver_types, approver_permission, execute_upon_approval, allow_parallel_requests, request_format_schema)
-VALUES('API_SUBSCRIPTION_CREATION', 'API Subscription Creation','Create an API subscription with a given plan', 'ROLE,USER', 'choreo:workflow_subscription_approve', true, false,
-    '{
-        "subscriptionPolicy": {
-            "displayName": "Subscription Plan",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "subscriptionPolicy"
-        },
-        "applicationName": {
-            "displayName": "Application Name",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "applicationInfo.applicationName"
-        },
-        "apiName": {
-            "displayName": "API name",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "apiInfo.apiName"
-        },
-        "apiVersion": {
-            "displayName": "API version",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "apiInfo.apiVersion"
-        }
-    }');
-
--- 3. API_SUBSCRIPTION_UPDATE
-
-INSERT INTO public.workflow_definition
-(id, "name", description, approver_types, approver_permission, execute_upon_approval, allow_parallel_requests, request_format_schema)
-VALUES('API_SUBSCRIPTION_UPDATE', 'API Subscription Update','Update an existing API subscription with a given plan', 'ROLE,USER', 'choreo:workflow_subscription_approve', true, false,
-    '{
-        "subscriptionPolicy": {
-            "displayName": "Subscription Plan",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "subscriptionPolicy"
-        },
-        "requestedSubscriptionPolicy": {
-            "displayName": "Requested Plan",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "requestedSubscriptionPolicy"
-        },
-        "applicationName": {
-            "displayName": "Application Name",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "applicationInfo.applicationName"
-        },
-        "apiName": {
-            "displayName": "API name",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "apiInfo.apiName"
-        },
-        "apiVersion": {
-            "displayName": "API version",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "apiInfo.apiVersion"
-        }
-    }');
-
--- 4. API_SUBSCRIPTION
+-- 2. API_SUBSCRIPTION
 
 INSERT INTO public.workflow_definition
 (id, "name", description, approver_types, approver_permission, execute_upon_approval, allow_parallel_requests, request_format_schema)
