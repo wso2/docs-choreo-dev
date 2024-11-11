@@ -1690,20 +1690,18 @@ public class ComponentUtils {
             count = 0;
             long startTime = System.currentTimeMillis();
 
-            synchronized (ComponentUtils.class) {
-                for (int i = 0; i < repetitionCount; i++) {
-                    Response dev = HttpClientUtil.httpGET(invokeURL, "", apiKey);
-                    count++;
+            for (int i = 0; i < repetitionCount; i++) {
+                Response dev = HttpClientUtil.httpGET(invokeURL, "", apiKey);
+                count++;
 
-                    if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
-                        isRateLimitExceeded = true;
-                        break;
-                    } else if (dev.getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
-                        throw new RuntimeException("API token for invokeURL : " + invokeURL + " is unauthorized");
-                    }
-
-                    Thread.sleep(500);
+                if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
+                    isRateLimitExceeded = true;
+                    break;
+                } else if (dev.getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
+                    throw new RuntimeException("API token for invokeURL : " + invokeURL + " is unauthorized");
                 }
+
+                Thread.sleep(500);
             }
 
             long endTime = System.currentTimeMillis();
@@ -1712,14 +1710,7 @@ public class ComponentUtils {
             if (endTime / 60000 == startTime / 60000) {
                 break;
             }
-
-            // Resynchronize after the loop
-            timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
-            if (timeRemainingTillNextMinute < 60000) {
-                Thread.sleep(timeRemainingTillNextMinute + 5000);
-            }
         }
-
         return Pair.of(isRateLimitExceeded, count);
     }
 
