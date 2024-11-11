@@ -302,7 +302,7 @@ public class ResourceAuthorizationTests extends TestNGCitrusSpringSupport {
         Assert.assertTrue(projectsList.size() > 0, "No projects found");
         // User should only see project X
         Assert.assertTrue(projectsList.stream()
-                .anyMatch(project -> project.getId().equals(projectX.getId())), "Project X not found");
+                .allMatch(project -> project.getId().equals(projectX.getId())), "Unauthorized projects listed");
     }
 
     // Test 4
