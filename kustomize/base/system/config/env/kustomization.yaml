@@ -1089,6 +1089,7 @@ configMapGenerator:
       - WEBSUB_HUB_PUBLISHER_ENABLED={{.WEBSUB_HUB_PUBLISHER_ENABLED | default "false"}}
       - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL}}
       - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC}}
+      - TOKEN_REVOCATION_CLIENT_ID={{.WEBSUB_HUB_TOPIC}}
   - name: env-choreo-aws-marketplace-client
     behavior: create
     literals:
