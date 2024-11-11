@@ -1,41 +1,27 @@
 schemaVersion: 1.0
-# +optional Incoming connection details for the component
 endpoints:
-  # +required Unique name for the endpoint.
-  # This name will be used when generating the managed API
-  - name: go-database-configs
-    # +required Service section has the user service endpoint details
+  # +required Unique name for the endpoint. (This name will be used when generating the managed API)
+  - name: appointments
     service:
-      # +optional Base path of the API that gets exposed via the endpoint.
-      # This is mandatory if the endpoint type is set to REST or GraphQL.
       basePath: /
-      # +required Numeric port value that gets exposed via the endpoint
-      port: 9090
-    # +required Type of traffic that the endpoint is accepting.
-    # Allowed values: REST, GraphQL, GRPC, TCP, UDP.
+      port: 8090
     type: REST
-    # +optional Network level visibilities of the endpoint.
-    # Takes priority over networkVisibility if defined. 
-    # Accepted values: Project|Organization|Public(Default).
-    networkVisibilities: 
-      - Public
-    # +optional The path to the schema definition file.
-    # Defaults to wildcard route if not specified.
-    # This is only applicable to REST endpoint types.
-    # The path should be relative to the docker context.
+    # +optional Network level visibility of the endpoint. Defaults to Public
+    # Accepted values: Project|Organization|Public.
+    networkVisibility: Public
     schemaFilePath: openapi.yaml
-outbound:
+dependencies:
     serviceReferences:
     - name: {{serviceIdentifier}}
       connectionConfig: {{connectionId}}
       env:
       - from: HostName
-        to: CHOREO_INTEGRATION-TEST-DB-CONNECTION-FOR-DATABASE_HOST_NAME
+        to: CHOREO_DATABASE_CONNECTION_HOSTNAME
       - from: Port
-        to: CHOREO_INTEGRATION-TEST-DB-CONNECTION-FOR-DATABASE_PORT
+        to: CHOREO_DATABASE_CONNECTION_PORT
       - from: Username
-        to: CHOREO_INTEGRATION-TEST-DB-CONNECTION-FOR-DATABASE_USERNAME
+        to: CHOREO_DATABASE_CONNECTION_USERNAME
       - from: Password
-        to: CHOREO_INTEGRATION-TEST-DB-CONNECTION-FOR-DATABASE_PASSWORD
+        to: CHOREO_DATABASE_CONNECTION_PASSWORD
       - from: DatabaseName
-        to: HOREO_INTEGRATION-TEST-DB-CONNECTION-FOR-DATABASE_DATABASE_NAME
+        to: CHOREO_DATABASE_CONNECTION_DATABASENAME

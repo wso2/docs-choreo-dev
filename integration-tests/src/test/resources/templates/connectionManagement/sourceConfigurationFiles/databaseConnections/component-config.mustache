@@ -4,9 +4,9 @@ spec:
   # +optional Incoming connection details for the component (AKA endpoints).
   inbound:
     # +required Unique name for the endpoint. (This name will be used when generating the managed API)
-    - name: go-database-configs
+    - name: appointments
       # +required Numeric port value that gets exposed via the endpoint
-      port: 9090
+      port: 8090
       # +required Type of traffic that the endpoint is accepting. For example: REST, GraphQL, etc.
       # Allowed values: REST, GraphQL, GRPC, TCP, UDP.
       type: REST
@@ -21,17 +21,17 @@ spec:
       # The path should be relative to the Docker context.
       schemaFilePath: openapi.yaml
   outbound:
-    serviceReferences:
-    - name: {{serviceIdentifier}}
-      connectionConfig: {{connectionId}}
-      env: 
-      - from: HostName
-        to: HOST_NAME
-      - from: Port
-        to: PORT
-      - from: Username
-        to: USERNAME
-      - from: Password
-        to: PASSWORD
-      - from: DatabaseName
-        to: DATABASE_NAME
+      serviceReferences:
+      - name: {{serviceIdentifier}}
+        connectionConfig: {{connectionId}}
+        env:
+        - from: HostName
+          to: CHOREO_DATABASE_CONNECTION_HOSTNAME
+        - from: Port
+          to: CHOREO_DATABASE_CONNECTION_PORT
+        - from: Username
+          to: CHOREO_DATABASE_CONNECTION_USERNAME
+        - from: Password
+          to: CHOREO_DATABASE_CONNECTION_PASSWORD
+        - from: DatabaseName
+          to: CHOREO_DATABASE_CONNECTION_DATABASENAME
