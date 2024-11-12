@@ -19,3 +19,8 @@ spec:
           objectType: secret
           objectAlias: CHOREO_STS_MGT_DB_PASSWORD
           objectVersion: "{{.CHOREO_STS_MGT_DB_PASSWORD}}"
+        - |
+          objectName: apim-super-admin-password
+          objectType: secret
+          objectAlias: APIM_SUPER_ADMIN_CLIENT_SECRET
+          objectVersion: "{{.APIM_SUPER_ADMIN_CLIENT_SECRET}}"
