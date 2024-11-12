@@ -1,112 +1,96 @@
 # Manage Authentication with Personal Access Tokens
 
-## Introduction
-Personal access tokens (PATs) provide a secure method to authenticate with the Choreo CLI, allowing you to manage 
-access without relying on primary credentials.
+Personal access tokens (PATs) provide a secure method to authenticate with the Choreo CLI, allowing you to manage access without relying on primary credentials.
 
-### What are personal access tokens?
-Personal Access Tokens (PATs) are unique strings that allow you to authenticate without requiring a username and 
-password each time. PATs are associated with your account and can be created for specific use cases, allowing granular 
-access to your app resources.
+## What are personal access tokens?
 
-> **Note:** PATs should be treated like passwords and stored securely.
+Personal access tokens are unique strings that provide an alternative to username and password authentication. You can create PATs for specific use cases, associating them with your account to grant granular access to your application resources as needed.
 
----
+!!! note 
+      PATs should be treated like passwords and stored securely.
 
-### Use Cases for Personal Access Tokens
+## Sample use cases for personal access tokens
 
-Personal Access Tokens can be helpful in many scenarios. Below are some common use cases for leveraging PATs within 
-Choreo CLI:
+PATs are versatile and suitable for various tasks in the Choreo CLI:
 
-- **Automated Scripting**: PATs can be used in scripts to perform automated tasks like deployments or data updates 
-without prompting for login credentials each time. This makes it easy to set up CI/CD pipelines or other automation 
-that relies on the CLI.
-
-- **Granular Permissions for Specific Tasks**: When you want to grant access to certain commands or parts of the app
-platform but don’t want to share full access, PATs can be configured with restricted permissions to ensure secure,
-limited access.
-
-- **Temporary Access**: If you only need access for a short period, such as during a project or a temporary 
-collaboration, a PAT can provide that access without sharing full account credentials.
-
-- **Integrating with Third-Party Tools**: PATs can be used to authenticate other tools or services that need access to
+- **Automated scripting**: To use in scripts for CI/CD pipelines or task automation, avoiding repeated sign-in prompts. This simplifies setting up CI/CD pipelines or other automation that rely on the CLI.
+- **Granular permissions for specific tasks**: To limit access to certain commands or specific features without providing full access, you can configure PATs with restricted permissions.
+- **Temporary access**: To grant temporary access for short-term projects or collaborations, without sharing full credentials.
+- **Integration with third-party tools**: To authenticate other tools or services that need access to
 your resources, such as analytics tools, monitoring systems, or deployment services. This approach keeps your main
-credentials secure while still allowing API access.
+credentials secure while allowing API access.
+- **Multiple account management**: If you work with multiple accounts or roles, you can
+use separate PATs for each role for easy context switching.
 
-- **Maintaining Multiple Accounts**: If you work with multiple accounts or roles within the same app platform, you can
-use different PATs for each role. This lets you switch contexts easily without repeatedly logging in and out.
+## Set up personal access tokens
 
----
+To create a PAT to use with the Choreo CLI, you must set up and retrieve a token from the Choreo Console.
 
-### Setting Up Personal Access Tokens
+Follow these steps to create a PAT for Choreo CLI:
 
-To use Personal Access Tokens with the Choreo CLI, follow these steps to set up and retrieve a token from 
-the Choreo Console.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. Go to the Choreo Console header right corner, click your profile picture, and then click **Account Settings**.
 
-#### Step 1: Log into Your Account
-1. Go to [Choreo Console](https://console.choreo.dev).
-2. Navigate to **Account Settings**.
-3. From the Account settings page go to **Personal Access Tokens** section.
+    ![Profile](../assets/img/choreo-cli/personal-access-tokens/profile.png)
 
-![Profile](../assets/img/choreo-cli/personal-access-tokens/profile.png)
-![AccountSettings](../assets/img/choreo-cli/personal-access-tokens/account-settings.png)
+3. Click the **Personal Access Tokens** tab.
 
-#### Step 2: Generate a New Token
-1. Click on **Create New**.
-2. Specify a name for your token and define its scope and permissions. By default, this will select all the necessary 
-scopes for the CLI to function.
-3. Click **Generate**.
+    ![Account settings](../assets/img/choreo-cli/personal-access-tokens/account-settings.png)
 
-![CreatePAT](../assets/img/choreo-cli/personal-access-tokens/create-a-pat.png)
-![GenerateForm](../assets/img/choreo-cli/personal-access-tokens/generated-pat.png)
+4. Click **+ Create New**.
+5. Specify a name for your token and define its scopes and permissions. By default, all necessary scopes for CLI functionality are selected.
 
-4. Copy the token shown on the screen and store it securely. You won’t be able to view it again.
+    ![Create a PAT](../assets/img/choreo-cli/personal-access-tokens/create-a-pat.png)
 
-> **Warning:** Treat your token as confidential information. Do not share it or store it in unsecured files.
+6. Click **Generate**.
+7. Copy and securely store the displayed token. You won’t be able to view it again.
+8. Click **Done**.
 
----
+!!! info "Caution" 
+     - Treat the token as confidential information. 
+     - Avoid storing the token in unprotected files.
 
-### Using Personal Access Tokens with Choreo CLI
+## Use a personal access token with the Choreo CLI
 
-After generating your token, you can use it with Choreo CLI for various operations. Here’s how to authenticate with 
-a Personal Access Token.
+Once you generate a token, you can use it to authenticate with the Choreo CLI and perform various operations. 
 
-#### Command Syntax
-To use a token, use the login command with the flag `--with-token`:
+### Command syntax
+
+To log in with the token, use the following command:
 
 ```bash
 choreo login --with-token
 ```
 
-This command will read the token from the standard input.
+This command reads the token from the standard input.
 
 **Example:**
+
 ```bash
-export CHOREO_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN>
+export CHOREO_TOKEN= <YOUR_PERSONAL_ACCESS_TOKEN>
 echo "$CHOREO_TOKEN" | choreo login --with-token
 ```
 
-> **Note:** Replace `YOUR_PERSONAL_ACCESS_TOKEN` with your actual token.
+!!! note 
+     Replace `YOUR_PERSONAL_ACCESS_TOKEN` with your actual token.
 
----
+## Manage and revoke tokens
 
-### Managing and Revoking Tokens
+To manage or revoke existing tokens, follow these steps:
 
-To manage or revoke existing tokens, return to the **Personal Access Tokens** section in your account settings.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. Go to the Choreo Console header right corner, click your profile picture, and then click **Account Settings**.
+3. On the **Account settings** page, click the **Personal Access Tokens** tab.
+4. Go to the token you want to revoke and click **Revoke**.
 
-1. Locate the token you want to revoke.
-2. Click on **Revoke** next to the token.
+!!! tip 
+     To maintain security, you must regularly review and revoke tokens that are no longer in use.
 
-> **Tip:** Regularly review and revoke tokens that are no longer in use to maintain security.
+![PAT listing](../assets/img/choreo-cli/personal-access-tokens/pat-listing.png)
 
-![PatListing](../assets/img/choreo-cli/personal-access-tokens/pat-listing.png)
+## Best practices for token management
 
----
-
-### Best Practices for Token Management
-
-- **Limit Scope:** Only grant the permissions needed for each use case.
-- **Rotate Tokens Regularly:** Replace tokens periodically to reduce the risk of compromise.
-- **Use Secure Storage:** Store tokens in a secure location, such as a secrets manager.
-- **Revoke Unused Tokens:** Regularly audit and revoke tokens no longer required.
-
+- **Limit scope:** Assign only the necessary permissions to each token.
+- **Rotate tokens regularly:** Replace tokens periodically to enhance security.
+- **Use secure storage:**  Store tokens in a secure location, such as a secrets manager.
+- **Revoke unused tokens:** Regularly audit and revoke inactive tokens.
