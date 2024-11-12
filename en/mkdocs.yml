@@ -215,7 +215,8 @@ nav:
       - Integrate Choreo with Moesif: monitoring-and-insights/integrate-choreo-with-moesif.md     
   - Choreo CLI:
       - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
-      - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md  
+      - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md
+      - Manage Authentication with Personal Access Tokens: choreo-cli/manage-authentication-with-personal-access-tokens.md
   - Administer:
       - Control Access in the Choreo Console: administer/control-access-in-the-choreo-console.md
       - Configure a Custom Domain for Your Organization: administer/configure-a-custom-domain-for-your-organization.md
