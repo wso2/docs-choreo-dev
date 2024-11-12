@@ -1,23 +1,10 @@
-# Personal Access Tokens Guide for Choreo CLI
+# Manage Authentication with Personal Access Tokens
 
 ## Introduction
-Personal Access Tokens (PATs) allow you to authenticate without using your primary credentials, adding an extra layer 
-of security and ease of management. 
+Personal access tokens (PATs) provide a secure method to authenticate with the Choreo CLI, allowing you to manage 
+access without relying on primary credentials.
 
----
-
-## Table of Contents
-
-1. [What Are Personal Access Tokens?](#what-are-personal-access-tokens)
-2. [Use Cases for Personal Access Tokens](#use-cases-for-personal-access-tokens)
-3. [Setting Up Personal Access Tokens](#setting-up-personal-access-tokens)
-4. [Using Personal Access Tokens with Choreo CLI](#using-personal-access-tokens-with-choreo-cli)
-5. [Managing and Revoking Tokens](#managing-and-revoking-tokens)
-6. [Best Practices for Token Management](#best-practices-for-token-management)
-
----
-
-### What Are Personal Access Tokens?
+### What are personal access tokens?
 Personal Access Tokens (PATs) are unique strings that allow you to authenticate without requiring a username and 
 password each time. PATs are associated with your account and can be created for specific use cases, allowing granular 
 access to your app resources.
