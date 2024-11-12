@@ -61,7 +61,7 @@ the Choreo Console.
 2. Navigate to **Account Settings**.
 3. From the Account settings page go to **Personal Access Tokens** section.
 
-![UserMenu](../assets/img/choreo-cli/personal-access-tokens/user-menu.png)
+![Profile](../assets/img/choreo-cli/personal-access-tokens/profile.png)
 ![AccountSettings](../assets/img/choreo-cli/personal-access-tokens/account-settings.png)
 
 #### Step 2: Generate a New Token
@@ -70,7 +70,7 @@ the Choreo Console.
 scopes for the CLI to function.
 3. Click **Generate**.
 
-![CreatePAT](../assets/img/choreo-cli/personal-access-tokens/create-pat.png)
+![CreatePAT](../assets/img/choreo-cli/personal-access-tokens/create-a-pat.png)
 ![GenerateForm](../assets/img/choreo-cli/personal-access-tokens/generated-pat.png)
 
 4. Copy the token shown on the screen and store it securely. You won’t be able to view it again.
