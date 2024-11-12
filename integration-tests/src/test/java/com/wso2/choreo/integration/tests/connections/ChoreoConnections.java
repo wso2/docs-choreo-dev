@@ -296,7 +296,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     public void promoteClientComponent_TestChoreoConnections() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         List<ComponentDeploymentStatusDTO> statusDTO =  ComponentUtils.promoteComponent(this, citrusClients, accessToken, clientChoreoComponent,
-                clientComponentEnvironments, ComponentFlavour.BYOC , projectOne);
+                clientComponentEnvironments, ComponentFlavour.BYOC , projectOne, clientDeploymentStatusDTO.getBuild().getCommit().getSha());
         clientPromotionStatusDTO = statusDTO.get(0);  //we'll consider only the first promotion
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponent,
                 clientPromotionStatusDTO);
@@ -785,7 +785,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         List<ComponentDeploymentStatusDTO> newClientStatusDTO = ComponentUtils.promoteComponent(this,
                 citrusClients, accessToken, newClientChoreoComponent,
-                newClientComponentEnvironments, ComponentFlavour.BYOC, projectOne);
+                newClientComponentEnvironments, ComponentFlavour.BYOC, projectOne, 
+                newClientDeploymentStatusDTO.getBuild().getCommit().getSha());
         newClientPromotionStatusDTO = newClientStatusDTO.get(0);
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, newClientChoreoComponent,
                 newClientPromotionStatusDTO);
