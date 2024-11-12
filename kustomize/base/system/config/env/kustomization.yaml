@@ -1091,6 +1091,8 @@ configMapGenerator:
       - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL}}
       - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC}}
       - TOKEN_REVOCATION_CLIENT_ID={{.TOKEN_REVOCATION_CLIENT_ID}}
+      - APIM_SUPER_ADMIN_CLIENT_KEY={{.APIM_SUPER_ADMIN_CLIENT_KEY}}
+      - APIM_SUPER_ADMIN_CLIENT_SECRET_FILE=/mnt/csi/secret-sts-mgt-svc/APIM_SUPER_ADMIN_CLIENT_SECRET
   - name: env-choreo-aws-marketplace-client
     behavior: create
     literals:
