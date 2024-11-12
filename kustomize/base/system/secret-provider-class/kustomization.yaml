@@ -81,6 +81,7 @@ resources:
   - usage-handler-service-ingress-tls.yaml
   - choreo-platform-services-manager.yaml
   - workflow-mgt-db.yaml
+  - choreo-gcp-marketplace-client.yaml
   - choreo-aws-marketplace-client.yaml
   - sts-mgt-service.yaml
 
