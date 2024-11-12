@@ -1091,6 +1091,15 @@ configMapGenerator:
       - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL}}
       - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC}}
       - TOKEN_REVOCATION_CLIENT_ID={{.TOKEN_REVOCATION_CLIENT_ID}}
+  - name: env-choreo-gcp-marketplace-client
+    behavior: create
+    literals:
+      - ENABLE_LISTENER={{.ENABLE_LISTENER | default "false"}}
+      - GCP_CREDENTIALS_JSON_FILE={{.GCP_CREDENTIALS_JSON_FILE | default "/mnt/csi/choreo-gcp-marketplace-client-secret/GCP_CREDENTIALS_JSON"}}
+      - GCP_PROVIDER_ID_FILE={{.GCP_PROVIDER_ID_FILE | default "/mnt/csi/choreo-gcp-marketplace-client-secret/GCP_PROVIDER_ID"}}
+      - GCP_PROJECT_ID={{.GCP_PROJECT_ID | default "choreo-public"}}
+      - PUBSUB_SUBSCRIPTION_NAME={{.PUBSUB_SUBSCRIPTION_NAME | default "test-choreo-public-subscription"}}
+      - BILLING_INTERNAL_GRPC_ADDRESS={{.BILLING_INTERNAL_GRPC_ADDRESS | default "billing-service:9094"}}
   - name: env-choreo-aws-marketplace-client
     behavior: create
     literals:
