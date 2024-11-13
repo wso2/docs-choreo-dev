@@ -374,6 +374,7 @@ roleBasedUserMgt:
   enabled: ${ROLE_BASED_USER_MGT_ENABLED}
 onPremKeySubscription:
   trialDurationDays: 14
+  commercialDurationYears: 50
 termsOfService:
   version: 1.0
   serviceNames:
