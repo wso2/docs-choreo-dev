@@ -719,6 +719,7 @@ create-choreo-managed-kafka-services
 configure-a-kafka-service
 monitor-a-kafka-service
 choreo-platform-services-billing
+expose-a-websocket-endpoint-via-a-service
 faq.md
 Moesif.md
 integrate-choreo-with-moesif
