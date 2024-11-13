@@ -83,6 +83,7 @@ resources:
   - workflow-mgt-db.yaml
   - choreo-aws-marketplace-client.yaml
   - sts-mgt-service.yaml
+  - choreo-org-activity-cron-secret.yaml
 
 patches:
   - path: patch.json

@@ -20,6 +20,32 @@ configMapGenerator:
       - CHOREO_APP_DEPLOYER_SERVICE_GRPC_ADDRESS=http://app-deployer:8080
       - CHOREO_WS_MANAGER_SERVICE_GRPC_ADDRESS=http://workspace-manager:8080
       - CHOREO_APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+  - name: cm-choreo-org-activity-update
+    behavior: create
+    literals:
+      - SCHEDULED_HOUR={{.SCHEDULED_HOUR}}
+      - DB_USER=choreo_app_db_user
+      - DB_SERVER={{.DB_SERVER}}
+      - DB_DATABASE=choreo_app_db
+      - DB_PORT=1433
+      - SUBS_DB_USER=choreo_subscriptions_db_user
+      - SUBS_DB_SERVER={{.SUBS_DB_SERVER}}
+      - SUBS_DB_DATABASE=choreo_subscriptions_db
+      - SUBS_DB_PORT=1433
+      - STORAGE_ACCOUNT_NAME={{.STORAGE_ACCOUNT_NAME}}
+      - STORAGE_ACCOUNT_URL={{.STORAGE_ACCOUNT_URL}}
+      - STORAGE_CONTAINER_NAME={{.STORAGE_CONTAINER_NAME}}
+      - SCIM_BACKEND_API_USER_NAME=choreo-user-data-retriever
+      - LOG_ANALYTICS_QUERY_URL={{.LOG_ANALYTICS_QUERY_URL}}
+      - LOG_ANALYTICS_RESOURCE={{.LOG_ANALYTICS_RESOURCE}}
+      - LOG_ANALYTICS_CLIENT_ID={{.LOG_ANALYTICS_CLIENT_ID}}
+      - AZURE_TOKEN_URL={{.AZURE_TOKEN_URL}}
+      - ADX_RESOURCE={{.ADX_RESOURCE}}
+      - ADX_QUERY_URL={{.ADX_QUERY_URL}}
+      - ADX_QUERY_DB={{.ADX_QUERY_DB}}
+      - CLUSTER_NAME_SPACE={{.CLUSTER_NAME_SPACE}}
+      - CLUSTER_NAMES={{.CLUSTER_NAMES}}
+      - WHITELISTED_ORGS={{.WHITELISTED_ORGS}}
   - name: cm-idp-replica
     behavior: create
     literals:
