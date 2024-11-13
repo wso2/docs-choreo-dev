@@ -21,8 +21,9 @@ To create a connection to a service or a database, follow the step-by-step instr
     3. Click **+Create**. This opens the Marketplace view where you can browse and search for services or databases.
     4. Click the **Services** tab. You can search and apply filters to efficiently find a service.
     5. Click on the service you want to connect to. 
-    6. Enter a name and a description for the connection and then click **Next**. This displays the **Service URL** for both development and production environments. 
-    7. Click **Create**.
+    6. Enter a name and a description for the connection.
+    7. Select an **Access Mode** and **Authentication Scheme** for the connection.
+    8. Click **Create**.
    
     This creates the connection and displays its details for each environment, along with an inline guide on how to use the connection in your component. 
 
