@@ -512,7 +512,7 @@ public class ComponentUtils {
         }
 
         if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            ConfigManagement.addConfiguration(runner, appServiceClient, component, commitHistory, environments.get(0),
+            ConfigManagement.addConfiguration(runner, appServiceClient, component, sha, environments.get(0),
                     balconfigs);
         }
 
@@ -569,11 +569,12 @@ public class ComponentUtils {
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, choreoProjectsTestClient, testComponent.getId(), accessToken,
                 testComponent.getRepository().getBranchApp());
 
+        Commit latestCommit = Commit.getLatestCommit(commitHistory);
         if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            ConfigManagement.addConfiguration(runner, choreoProjectsTestClient, testComponent, commitHistory, environments.get(0),
+            ConfigManagement.addConfiguration(runner, choreoProjectsTestClient, testComponent, latestCommit.getSha(), environments.get(0),
                     balconfigs);
         }
-        Commit latestCommit = Commit.getLatestCommit(commitHistory);
+
         ComponentDeploymentStatusDTO componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken, testComponent, latestCommit,
                 environments);
         try {
@@ -793,9 +794,17 @@ public class ComponentUtils {
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
             List<Environment> environments, ComponentFlavour componentFlavour,
             BalConfig... balconfigs) throws Exception {
+        return promoteComponent(runner, citrusClients, accessToken, component, environments, componentFlavour, "",
+                balconfigs);
+    }
+
+    public static List<ComponentDeploymentStatusDTO> promoteComponent(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
+            List<Environment> environments, ComponentFlavour componentFlavour, String commitHash,
+            BalConfig... balconfigs) throws Exception {
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
         promotionStatus = promote(runner, citrusClients, accessToken, component, environments, componentFlavour,
-                balconfigs);
+                commitHash, balconfigs);
         return promotionStatus;
     }
 
@@ -804,6 +813,15 @@ public class ComponentUtils {
             List<Environment> environments, ComponentFlavour componentFlavour, ChoreoProject project,
             BalConfig... balconfigs) throws Exception {
 
+        return promoteComponent(runner, citrusClients, accessToken, component, environments, componentFlavour, project,
+                "", balconfigs);
+    }
+
+    public static List<ComponentDeploymentStatusDTO> promoteComponent(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
+            List<Environment> environments, ComponentFlavour componentFlavour, ChoreoProject project,
+            String commitHash, BalConfig... balconfigs) throws Exception {
+
         HttpClient apimClient = citrusClients.get(Endpoints.STS_ENDPOINT);
         String query = "context:/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID) + "/"
                 + project.getHandler() + "/" + component.getName() + "/v1.0";
@@ -811,18 +829,24 @@ public class ComponentUtils {
 
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
         promotionStatus = promote(runner, citrusClients, accessToken, component, environments, componentFlavour,
-                balconfigs);
+                commitHash, balconfigs);
         return promotionStatus;
     }
 
     private static List<ComponentDeploymentStatusDTO> promote(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
-            List<Environment> environments, ComponentFlavour componentFlavour, BalConfig... balconfigs)
+            List<Environment> environments, ComponentFlavour componentFlavour, String commitHash, BalConfig... balconfigs)
             throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        List<Commit> commitHistory = GraphQL.getCommitHistory(runner, appServiceClient, component.getId(),
-                accessToken, component.getRepository().getBranchApp());
+
+        String commitHashToPromote = commitHash;
+        if (commitHashToPromote.isBlank()) {
+            List<Commit> commitHistory = GraphQL.getCommitHistory(runner, appServiceClient, component.getId(),
+                    accessToken, component.getRepository().getBranchApp());
+            commitHashToPromote = Commit.getLatestCommit(commitHistory).getSha();
+        }
+
         List<ComponentDeploymentStatusDTO> deploymentStatus = new ArrayList<>();
         int srcEnvIndex = 0;
         int destEnvIndex = 1;
@@ -850,8 +874,7 @@ public class ComponentUtils {
                 }
 
                 if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-                    ConfigManagement.addConfiguration(runner, appServiceClient, component, commitHistory, destEnv,
-                            balconfigs);
+                    ConfigManagement.addConfiguration(runner, appServiceClient, component, commitHashToPromote, destEnv, balconfigs);
                 }
 
                 String componentId = component.getId();
@@ -865,7 +888,7 @@ public class ComponentUtils {
                 GraphQL.promoteComponent(runner, appServiceClient, accessToken, graphqlDTO);
                 SleepUtil.sleep(5);
                 ComponentDeploymentStatusDTO statusDTO = getComponentPromotionStatus(runner, componentId, latestVersionId,
-                        latestAppEnvId, commitHistory, appServiceClient, accessToken, component);
+                        latestAppEnvId, commitHashToPromote, appServiceClient, accessToken, component);
                 deploymentStatus.add(statusDTO);
 
                 if (displayType.equals(Constant.displayType.ballerinaService.name())
@@ -887,18 +910,16 @@ public class ComponentUtils {
     }
 
     private static ComponentDeploymentStatusDTO getComponentPromotionStatus(TestNGCitrusSpringSupport runner,
-            String componentId, String latestVersionId, String latestAppEnvId, List<Commit> commitHistory,
+            String componentId, String latestVersionId, String latestAppEnvId, String commitHash,
             HttpClient appServiceClient, String accessToken, ChoreoComponent component)
             throws IOException, NoLatestCommitHashFoundException {
         ChoreoOrganization org = component.getOrganization();
         GraphqlDTO graphqlDT = GraphqlDTO.builder().componentId(componentId).orgHandler(org.getOrgHandle())
                 .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(latestAppEnvId).build();
-        Commit latestCommit = Commit.getLatestCommit(commitHistory);
-        String sha = latestCommit.getSha();
 
         Map<String, String> responseParams = new HashMap<>();
         responseParams.put("environmentId", latestAppEnvId);
-        responseParams.put("sha", sha);
+        responseParams.put("sha", commitHash);
         responseParams.put("versionId", latestVersionId);
 
         return GraphQL.getComponentDeploymentStatus(runner, appServiceClient, accessToken, graphqlDT, responseParams);
@@ -1579,16 +1600,16 @@ public class ComponentUtils {
 
         Environment environment = environments.get(0);
 
-        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            Component.triggerConfigurableGeneration(runner, appServiceClient, component, commitHistory,
-                    component.getBranch());
-            ConfigManagement.addConfiguration(runner, appServiceClient, component, commitHistory, environment,
-                    balconfigs);
-        }
-
         Commit latestCommit = Commit.getLatestCommit(commitHistory);
         String shaDate = latestCommit.getAuthor().getDate();
         String sha = latestCommit.getSha();
+
+        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
+            Component.triggerConfigurableGeneration(runner, appServiceClient, component, commitHistory,
+                    component.getBranch());
+            ConfigManagement.addConfiguration(runner, appServiceClient, component, sha, environment,
+                    balconfigs);
+        }
 
         String componentId = component.getId();
         ApiVersion apiVersion = component.getLatestApiVersion();
@@ -1637,8 +1658,11 @@ public class ComponentUtils {
             Environment srcEnv = environments.get(srcEnvIndex);
             Environment destEnv = environments.get(destEnvIndex);
 
+            Commit latestCommit = Commit.getLatestCommit(commitHistory);
+            String sha = latestCommit.getSha();
+
             if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-                ConfigManagement.addConfiguration(runner, cpProjectsClient, component, commitHistory, destEnv,
+                ConfigManagement.addConfiguration(runner, cpProjectsClient, component, sha, destEnv,
                         balconfigs);
             }
 
@@ -1655,9 +1679,6 @@ public class ComponentUtils {
             ChoreoOrganization org = component.getOrganization();
             graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(org.getOrgHandle())
                     .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(latestAppEnvId).build();
-
-            Commit latestCommit = Commit.getLatestCommit(commitHistory);
-            String sha = latestCommit.getSha();
 
             Map<String, String> responseParams = new HashMap<>();
             responseParams.put("environmentId", latestAppEnvId);

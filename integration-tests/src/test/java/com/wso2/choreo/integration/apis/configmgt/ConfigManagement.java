@@ -37,13 +37,12 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class ConfigManagement {
     private static final String CONTEXT = "/config-mgt/1.0.0/";
     public static void addConfiguration(TestActionRunner runner, HttpClient client,
-                                        ChoreoComponent component, List<Commit> commitHistory, Environment environment,
+                                        ChoreoComponent component, String commitHash, Environment environment,
                                         BalConfig... balconfigs) throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String componentId = component.getId();
         String envIdToDeploy = environment.getId();
         String latestVersionId = component.getLatestApiVersion().getId();
-        String latestCommitSha = component.getLatestCommitHash(commitHistory.toArray(Commit[]::new));
         String orgHandle = component.getOrgHandler();
         String projectId = component.getProjectId();
 
@@ -54,7 +53,7 @@ public class ConfigManagement {
         Map<String, Object> requestBodyMap = new HashMap<>() {
             {
                 put("moduleName", component.getName());
-                put("commitHash", latestCommitSha);
+                put("commitHash", commitHash);
                 put("applyNow", false);
                 put("operation", 0);
                 put("sourceUuid", "");
