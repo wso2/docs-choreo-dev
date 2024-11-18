@@ -12,63 +12,192 @@ You can consume a Choreo-deployed service within another service. Consuming conn
 
 ### Step 1: Add connection configurations
 
-To integrate another service into your application, follow the steps below:
+To integrate another service into your application, click the appropriate tab below based on your current configuration file and follow the step-by-step instructions:
 
-1. Copy and paste the snippet from the in-line developer guide into the `component-config` file under the `spec` section.
+=== "Component.yaml file (v1.1)"
 
-    The following is a sample snippet:
+    1. Copy and paste the snippet from the in-line developer guide into the `component.yaml` file.
 
-    ``` yaml
+        The following is a sample snippet: 
 
-    outbound:
-        serviceReferences:
-        - name: <SERVICE_NAME>
-          connectionConfig: <CONNECTION_ID>
-          env:
-          - from: ServiceURL
-            to: <YOUR_ENV_VARIABLE_NAME_HERE>
-          - from: ConsumerKey
-            to: <YOUR_ENV_VARIABLE_NAME_HERE>
-          - from: ConsumerSecret
-            to: <YOUR_ENV_VARIABLE_NAME_HERE>
-          - from: TokenURL
-            to: <YOUR_ENV_VARIABLE_NAME_HERE>
+        ``` yaml
 
+        dependencies:
+            connectionReferences:
+            - name: <CONNECTION_NAME>
+              resourceRef: <RESOURCE_IDENTIFIER>
+
+        ```
+
+          | Field            | Description                                                         |
+          |------------------|---------------------------------------------------------------------|
+          | name             | The name given to the connection.                                   |
+          | resourceRef      | A unique, readable identifier of the service being connected to.    |
+
+
+    2. If you've previously added a `connectionReferences` section under `dependencies`, append this as another item under `connectionReferences`. Upon deploying the component, Choreo automatically creates a subscription if applicable and the necessary configurations to establish the connection will be injected into the Choreo-defined environment variables.
+      
+          The following table details the Choreo-defined environment variables:
+
+          | Configuration Key       | Choreo-Defined Environment Variable Name                       |
+          |-------------------------|----------------------------------------------------------------|
+          | ServiceURL              | CHOREO_<CONNECTION_NAME\>_SERVICEURL                           |
+          | ConsumerKey             | CHOREO_<CONNECTION_NAME\>_CONSUMERKEY                          |
+          | ConsumerSecret          | CHOREO_<CONNECTION_NAME\>_CONSUMERSECRET                       |
+          | TokenURL                | CHOREO_<CONNECTION_NAME\>_TOKENURL                             |
+          | ChoreoAPIKey            | CHOREO_<CONNECTION_NAME\>CHOREOAPIKEY                          |
+
+
+          If you'd like to use custom environment variable names instead of the Choreo-defined ones, add the dependency as a service reference under `dependencies` in the same file. For more details, refer to the instructions under the `component.yaml file (v1.0)` tab.
+
+
+          The following table provides details on the configuration keys associated with the connection:
+
+          | Name           |  Type      |  Description                          |Optional       | Sensitive    |
+          |----------------|------------|---------------------------------------|---------------|--------------|
+          | ServiceURL     | string     | Service URL of the Choreo service     | false         | false        |
+          | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
+          | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
+          | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+          | ChoreoAPIKey   | string     | API key of the Choreo service         | false         | true         |
+
+    ### Step 2: Read configurations within the application
+
+    Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+
+    The following is a sample code snippet in NodeJS:
+
+    ``` java
+    const serviceURL = process.env.CHOREO_<CONNECTION_NAME>_SERVICEURL;
     ```
 
-      | Field            | Description                                                 |
-      |------------------|-------------------------------------------------------------|
-      | Name             | The name of the service you are connecting to.              |
-      | ConnectionConfig | The unique connection identifier for the connection.        |
-      | env              | The environment variable mapping.                           |
-      | from             | The key of the configuration entry.                         |
-      | to               | The environment variable name to which Choreo will inject the value of the key.|
+=== "Component.yaml file (v1.0)"
+
+    !!! note
+        This `component.yaml v1.0` is a legacy configuration format. For new projects, we recommend using the latest version (v1.1) of `component.yaml` for improved usability and features.
+  
+    1. Copy and paste the snippet from the in-line developer guide into the `component.yaml` file.
+      
+        The following is a sample snippet:
+
+        ``` yaml
+
+        dependencies:
+            serviceReferences:
+            - name: <SERVICE_NAME>
+              connectionConfig: <CONNECTION_ID>
+              env:
+              - from: ServiceURL
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ConsumerKey
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ConsumerSecret
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: TokenURL
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ChoreoAPIKey
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+
+        ```
+
+          | Field            | Description                                                 |
+          |------------------|-------------------------------------------------------------|
+          | name             | The name of the service you are connecting to.              |
+          | connectionConfig | The unique connection identifier for the connection.        |
+          | env              | The environment variable mapping.                           |
+          | from             | The key of the configuration entry.                         |
+          | to               | The environment variable name to which Choreo will inject the value of the key.|
 
 
-2. Replace `<YOUR_ENV_VARIABLE_NAME_HERE>` with an appropriate environment variable name of your choice. If you have previously added an outbound service reference, append this as another item under `serviceReferences`. 
+    2. Replace `<YOUR_ENV_VARIABLE_NAME_HERE>` with an appropriate environment variable name of your choice. If you have previously added a service reference section under `dependencies`, append this as another item under `serviceReferences`. 
 
-      Upon deploying the component, Choreo automatically creates a subscription if applicable and populates the specified environment variables with actual values.
-
-
-      The following table provides details on the configuration keys associated with the connection:
-
-      | Name           |  Type      |  Description                          |Optional       | Sensitive    |
-      |----------------|------------|---------------------------------------|---------------|--------------|
-      | ServiceURL     | string     | Service URL of the Choreo service     | false         | false        |
-      | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
-      | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
-      | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+          Upon deploying the component, Choreo automatically creates a subscription if applicable and populates the specified environment variables with actual values.
 
 
-### Step 2: Read configurations within the application
+          The following table provides details on the configuration keys associated with the connection:
 
-Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+          | Name           |  Type      |  Description                          |Optional       | Sensitive    |
+          |----------------|------------|---------------------------------------|---------------|--------------|
+          | ServiceURL     | string     | Service URL of the Choreo service     | false         | false        |
+          | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
+          | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
+          | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+          | ChoreoAPIKey   | string     | API key of the Choreo service         | false         | true         |
 
-The following is a sample code snippet in NodeJS:
+    <h3> Step 2: Read configurations within the application </h3>
 
-``` java
-const serviceURL = process.env.SVC_URL;
-```
+    Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+
+    The following is a sample code snippet in NodeJS:
+
+    ``` java
+    const serviceURL = process.env.SVC_URL;
+    ```
+
+=== "Component-config.yaml file"
+
+    !!! note
+        This `component-config.yaml` is a legacy configuration format. For new projects, we recommend using the latest version (v1.1) of `component.yaml` for improved usability and features.
+
+    1. Copy and paste the snippet from the in-line developer guide into the `component-config` file under the `spec` section.
+
+        The following is a sample snippet:
+
+        ``` yaml
+
+        outbound:
+            serviceReferences:
+            - name: <SERVICE_NAME>
+              connectionConfig: <CONNECTION_ID>
+              env:
+              - from: ServiceURL
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ConsumerKey
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ConsumerSecret
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: TokenURL
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+              - from: ChoreoAPIKey
+                to: <YOUR_ENV_VARIABLE_NAME_HERE>
+
+        ```
+
+          | Field            | Description                                                 |
+          |------------------|-------------------------------------------------------------|
+          | name             | The name of the service you are connecting to.              |
+          | connectionConfig | The unique connection identifier for the connection.        |
+          | env              | The environment variable mapping.                           |
+          | from             | The key of the configuration entry.                         |
+          | to               | The environment variable name to which Choreo will inject the value of the key.|
+
+
+    2. Replace `<YOUR_ENV_VARIABLE_NAME_HERE>` with an appropriate environment variable name of your choice. If you have previously added an outbound service reference, append this as another item under `serviceReferences`. 
+
+          Upon deploying the component, Choreo automatically creates a subscription if applicable and populates the specified environment variables with actual values.
+
+
+          The following table provides details on the configuration keys associated with the connection:
+
+          | Name           |  Type      |  Description                          |Optional       | Sensitive    |
+          |----------------|------------|---------------------------------------|---------------|--------------|
+          | ServiceURL     | string     | Service URL of the Choreo service     | false         | false        |
+          | ConsumerKey    | string     | Consumer key of the Choreo service    | false         | false        |
+          | ConsumerSecret | string     | Consumer secret of the Choreo service | false         | true         |
+          | TokenURL       | string     | Token URL of the STS                  | false         | false        |
+          | ChoreoAPIKey   | string     | API key of the Choreo service         | false         | true         |
+
+    <h3> Step 2: Read configurations within the application </h3>
+
+    Once you add the connection configuration snippet, you can proceed to read those configurations within your application. The steps to follow depend on the programming language you are using.
+
+    The following is a sample code snippet in NodeJS:
+
+    ``` java
+    const serviceURL = process.env.SVC_URL;
+    ```
+
+If you're using the API key security scheme for the connection, skip Step 3 and follow the instructions in [Step 4: API key security scheme](#step-4-invoke-the-service) tab.
 
 ### Step 3: Acquire an OAuth 2.0 access token
 
@@ -94,27 +223,42 @@ To consume a Choreo service with the visibility level set to organization or pub
 
     ```
 
-### Step 4: Invoke the Service
+### Step 4: Invoke the service
 
-You can invoke the service as follows:
+Click the tab that matches the security scheme of your service and follow the instructions below:
 
-- For languages with OAuth 2.0-aware HTTP clients, you can invoke the service in a straightforward manner. The HTTP client seamlessly manages OAuth 2.0 authentication without requiring additional intervention.
+=== "API key security scheme"
 
-    As the service URL you can use the URL that you resolved in [step 2](#step-2-read-configurations-within-the-application). For sample requests and responses, see the API definition provided via the Choreo marketplace for the service.
+     To invoke the API, use the `choreo-api-key` header with the API key value retrieved from the corresponding environment variable as described in [step 2](#step-2-read-configurations-within-the-application).
 
-- For languages without OAuth 2.0-aware HTTP clients, you can use the token obtained in [step 3](#step-3-acquire-an-oauth-20-access-token) to make calls to the dependent service. Subsequently, add the obtained token to the HTTP authorization header with the bearer prefix.
-As the service URL you can use the URL that you resolved in [step 2](#step-2-read-configurations-within-the-application). For sample requests and responses, see the API definition of the service provided via the Choreo marketplace.
+     The following is a sample code snippet in NodeJS:
 
-    The following is a sample code snippet in NodeJS:
+     ``` java
+       const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
+           headers: {
+             'Choreo-API-Key': `${choreoApiKey}`
+           }
+       });
+     ```
 
-    ``` java
-    const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
-    });
-    ```
+=== "OAuth 2.0 security scheme"
+
+     To invoke the service, use the following instructions based on your programming language:
+
+      - For languages with OAuth 2.0-aware HTTP clients, use the service URL resolved in [Step 2](#step-2-read-configurations-within-the-application). The OAuth-aware client manages authentication automatically. For sample requests and responses, see the API definition provided via the Choreo marketplace for the service.
+
+      - For languages without OAuth 2.0-aware HTTP clients, use the token obtained in [step 3](#step-3-acquire-an-oauth-20-access-token) to make calls to the dependent service. Subsequently, add the obtained token to the HTTP authorization header with the bearer prefix. As the service URL, use the URL resolved in [step 2](#step-2-read-configurations-within-the-application). For sample requests and responses, see the API definition of the service provided via the Choreo marketplace.
+
+       The following is a sample code snippet in NodeJS:
+
+       ``` java
+       const response = await axios.get(serviceURL/{RESOURCE_PATH}, {
+           headers: {
+             'Authorization': `Bearer ${accessToken}`
+             'Choreo-API-Key': `${choreoApiKey}`
+           }
+       });
+       ```
 
     !!! note
         If you want to consume a Choreo service at the project visibility level, you don't need to obtain a token. You can directly invoke the service using the resolved URL.
-        
