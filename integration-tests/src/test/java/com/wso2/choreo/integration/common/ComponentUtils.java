@@ -1722,7 +1722,7 @@ public class ComponentUtils {
                     throw new RuntimeException("API token for invokeURL : " + invokeURL + " is unauthorized");
                 } else if (dev.getStatusCode() == HttpStatus.NOT_FOUND.value()) {
                     // API might be not be deployed
-                    Thread.sleep(30000);
+                    Thread.sleep(60000);
                     break;
                 }
 
