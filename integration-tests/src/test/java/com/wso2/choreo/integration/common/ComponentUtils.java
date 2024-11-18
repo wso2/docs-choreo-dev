@@ -331,15 +331,24 @@ public class ComponentUtils {
 
     public static ChoreoProject createProject(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusClients,
-            String accessToken, String region) throws Exception {
+            String accessToken, String region, int orgId, String orgHandle) throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String projectName = NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX);
         String projectHandler = NameGenerator.generateThreadUniqueName();
         ChoreoProject project = GraphQL.createProject(runner, appServiceClient, region, accessToken, projectName,
-                projectHandler);
+                projectHandler, orgId, orgHandle);
         Assert.assertNotNull(project.getId(), "Project ID is not null.");
         return project;
+    }
+
+    public static ChoreoProject createProject(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, String region) throws Exception {
+
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        return createProject(runner, citrusClients, accessToken, region, orgId, orgHandle);
     }
 
     public static ChoreoComponent createComponent(TestNGCitrusSpringSupport runner,

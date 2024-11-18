@@ -40,6 +40,7 @@ alerts:
   ALERT_RELEASE_ID: de821f3e-9418-449f-99d9-687831b5b3f7
 selfSignup:
   SELF_SIGNUP_ORG_UUID: 7c03ac3e-f161-4d4f-bb22-0ff2ca655705
+  SELF_SIGNUP_ORG_ID: 8438
   SELF_SIGNUP_ORG_HANDLE: choreoselfsignup
   SELF_SIGNUP_ORG_ADMIN_EMAIL: samchoreots@gmail.com@carbon.super
   #SELF_SIGNUP_ORG_ADMIN_PASSWORD:
