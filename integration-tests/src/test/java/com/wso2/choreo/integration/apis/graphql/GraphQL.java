@@ -616,9 +616,9 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     public static ChoreoProject createProject(TestNGCitrusSpringSupport runner, HttpClient client, String region,
-                                              String accessToken, String projectName, String projectHandler) throws Exception {
+                                              String accessToken, String projectName, String projectHandler, int orgId, String orgHandle) throws Exception {
         GraphqlDTO graphqlDTO = GraphqlDTO.builder().name(projectName).description(Constant.TEST_PROJECT_DESCRIPTION)
-                .projectHandler(projectHandler).region(region).orgId(ORG_ID).orgHandler(ORG_HANDLE).build();
+                .projectHandler(projectHandler).region(region).orgId(orgId).orgHandler(orgHandle).build();
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/createProject.mustache", graphqlDTO);
         final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
@@ -656,6 +656,11 @@ public class GraphQL extends ControlPlaneAPI {
                 )
         );
         return project.get();
+    }
+
+    public static ChoreoProject createProject(TestNGCitrusSpringSupport runner, HttpClient client, String region,
+                                              String accessToken, String projectName, String projectHandler) throws Exception {
+        return createProject(runner, client, region, accessToken, projectName, projectHandler, ORG_ID, ORG_HANDLE);
     }
 
     public static ChoreoComponent createBYOCComponent(GraphqlDTO graphqlDTO, String accessToken) throws IOException {
