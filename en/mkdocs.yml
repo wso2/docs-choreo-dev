@@ -413,6 +413,7 @@ plugins:
           'monitoring-and-insights/usage-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/insights-overview/'
           'develop-components/configure-mutual-tls-between-components.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/configure-mutual-tls-between-components/'
           'api-management/api-policies.md': 'https://wso2.com/choreo/docs/api-management/api-policies/about-api-policies/'
+          'develop-components/develop-services/expose-a-websocket-endpoint-via-a-nodejs-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-websocket-endpoint-via-a-service/'
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css
