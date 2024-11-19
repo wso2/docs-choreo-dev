@@ -93,7 +93,7 @@ public class ConnectionService extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.CREATED)
+                                .response()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                     if (code != HttpStatus.CREATED.value()) {
@@ -152,7 +152,7 @@ public class ConnectionService extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.CREATED)
+                                .response()
                                 .validate((message, context) -> {
                                             int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                             if (code != HttpStatus.CREATED.value()) {
@@ -473,7 +473,7 @@ public class ConnectionService extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.CREATED)
+                                .response()
                                 .validate((message, context) -> {
                                             int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                             if (code != HttpStatus.CREATED.value()) {

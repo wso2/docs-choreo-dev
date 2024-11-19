@@ -1,7 +1,9 @@
 package com.wso2.choreo.integration.apis.oauth;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,9 +61,13 @@ public class OAuthService {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
                                     try {
                                         ClientCredentialsResponseDTO response = new ObjectMapper()
                                                 .readValue(message.getPayload().toString(),

@@ -4,6 +4,7 @@ import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.actions.HttpActionBuilder;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -59,7 +60,7 @@ public class PlatformServices {
                         HttpActionBuilder.http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.CREATED)
+                                .response()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                     if (code != HttpStatus.CREATED.value()) {
@@ -97,7 +98,7 @@ public class PlatformServices {
                         HttpActionBuilder.http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                     if (code != HttpStatus.OK.value()) {
@@ -138,7 +139,7 @@ public class PlatformServices {
                         HttpActionBuilder.http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.CREATED)
+                                .response()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                     if (code != HttpStatus.CREATED.value()) {
@@ -176,7 +177,7 @@ public class PlatformServices {
                         HttpActionBuilder.http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                     if (code != HttpStatus.OK.value()) {
@@ -217,7 +218,7 @@ public class PlatformServices {
                         HttpActionBuilder.http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                     if (code != HttpStatus.OK.value()) {
@@ -254,7 +255,7 @@ public class PlatformServices {
                         HttpActionBuilder.http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                     if (code != HttpStatus.OK.value()) {
@@ -277,9 +278,13 @@ public class PlatformServices {
 
         runner.$(http().client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
                             try {
                                 dbServers.set(new ObjectMapper()
                                         .readValue(message.getPayload().toString(),
@@ -308,9 +313,13 @@ public class PlatformServices {
 
         runner.$(http().client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
                             dbServer.set(ObjectMapperUtil.mapStringToObject(DatabaseServer.class, message.getPayload(String.class), ""));
                         }
                 )
@@ -338,7 +347,7 @@ public class PlatformServices {
                                 .accept(MediaType.APPLICATION_JSON_VALUE),
                         http().client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HTTP_STATUS_CODE);
@@ -375,9 +384,13 @@ public class PlatformServices {
 
         runner.$(http().client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
                             try {
                                 databases.set(new ObjectMapper()
                                         .readValue(message.getPayload().toString(),
@@ -408,7 +421,7 @@ public class PlatformServices {
                                 .accept(MediaType.APPLICATION_JSON_VALUE),
                         http().client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HTTP_STATUS_CODE);

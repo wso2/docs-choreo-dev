@@ -3,6 +3,7 @@ package com.wso2.choreo.integration.apis.apimanager;
 import com.consol.citrus.TestActionRunner;
 import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.google.gson.JsonObject;
@@ -62,10 +63,14 @@ public class ApiManager extends ControlPlaneAPI {
                     http()
                             .client(client)
                             .receive()
-                            .response(HttpStatus.CREATED)
+                            .response()
                             .message()
                             .type(MessageType.JSON)
                             .validate((message, context) -> {
+                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                if (code != HttpStatus.CREATED.value()) {
+                                    throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                }
                                 proxyAPI.set(ObjectMapperUtil.mapStringToObject(ProxyAPI.class, message.getPayload(String.class), ""));
                             })));
 
@@ -107,11 +112,15 @@ public class ApiManager extends ControlPlaneAPI {
         runner.$(http()
                 .client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/apimanager/responses/generateKeySuccess.json"))
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     keyData.set(ObjectMapperUtil.mapStringToObject(KeyData.class, message.getPayload(String.class), ""));
                 }));
 
@@ -136,11 +145,15 @@ public class ApiManager extends ControlPlaneAPI {
         runner.$(http()
                 .client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/maxApiRevisions/get_revisions_success.mustache"))
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     revisionWrapper.set(ObjectMapperUtil.mapStringToObject(RevisionWrapper.class, message.getPayload(String.class), ""));
                 }));
         RevisionWrapper data = revisionWrapper.get();
@@ -160,11 +173,15 @@ public class ApiManager extends ControlPlaneAPI {
         runner.$(http()
                 .client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/apimanager/responses/getApiSuccess.mustache"))
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     String payload = message.getPayload(String.class);
                     JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject();
                     apiInfo.set(dataJsonObject);
@@ -214,10 +231,14 @@ public class ApiManager extends ControlPlaneAPI {
                     http()
                             .client(client)
                             .receive()
-                            .response(HttpStatus.CREATED)
+                            .response()
                             .message()
                             .type(MessageType.JSON)
                             .validate((message, context) -> {
+                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                if (code != HttpStatus.CREATED.value()) {
+                                    throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                }
                                 String payload = message.getPayload(String.class);
                                 proxyWrapper.set(ObjectMapperUtil.mapStringToObject(ProxyAPIWrapper.class, payload, ""));
                                 if (proxyWrapper.get().getCount() == 0) {
