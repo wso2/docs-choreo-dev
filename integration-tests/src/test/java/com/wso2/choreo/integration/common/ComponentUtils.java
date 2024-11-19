@@ -1204,10 +1204,14 @@ public class ComponentUtils {
                         http()
                                 .client(invokeUrl)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .type(MessageType.JSON)
                                 .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
                                     String payload = message.getPayload(String.class);
                                     JsonArray dataJsonArray = JsonParser.parseString(payload).getAsJsonArray();
                                     apiResp.set(dataJsonArray);
@@ -1284,10 +1288,14 @@ public class ComponentUtils {
                         http()
                                 .client(invokeUrl)
                                 .receive()
-                                .response(expectedHttpStatus)
+                                .response()
                                 .message()
                                 .type(MessageType.JSON)
                                 .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != expectedHttpStatus.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
                                     String payload = message.getPayload(String.class);
                                     JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject();
                                     apiResp.set(dataJsonObject);

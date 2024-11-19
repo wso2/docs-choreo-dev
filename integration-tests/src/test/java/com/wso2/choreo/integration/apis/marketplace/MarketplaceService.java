@@ -75,7 +75,7 @@ public class MarketplaceService {
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)),
                         http().client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
@@ -112,9 +112,13 @@ public class MarketplaceService {
 
         runner.$(http().client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
                             serviceIdentifier.set(message.getPayload(String.class));
                         }
                 )
@@ -140,9 +144,13 @@ public class MarketplaceService {
 
         runner.$(http().client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
                             try {
                                 JsonObject jsonObject = JsonParser.parseString((String) message.getPayload()).getAsJsonObject();
                                 JsonArray dataArray = jsonObject.getAsJsonArray("data");

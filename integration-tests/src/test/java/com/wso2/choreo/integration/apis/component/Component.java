@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.apis.component;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.DefaultMessage;
@@ -198,9 +199,13 @@ public class Component extends ControlPlaneAPI {
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)),
                         http().client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
                                     String payload = message.getPayload(String.class);
                                     JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject()
                                             .getAsJsonObject("data");
@@ -238,9 +243,13 @@ public class Component extends ControlPlaneAPI {
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)),
                         http().client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
                                     String payload = message.getPayload(String.class);
                                     JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject()
                                             .getAsJsonObject("data");
@@ -284,9 +293,13 @@ public class Component extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
                                     try {
                                         KeyGenResponseDTO response = new ObjectMapper()
                                                 .readValue(message.getPayload().toString(),
@@ -330,9 +343,13 @@ public class Component extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
                                     try {
                                         KeyGenResponseDTO response = new ObjectMapper()
                                                 .readValue(message.getPayload().toString(),
