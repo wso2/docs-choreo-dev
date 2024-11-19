@@ -4,7 +4,7 @@ Choreo allows you to create PostgreSQL and MySQL databases as well as Choreo-Man
 These databases and caches can be seamlessly provisioned to offer persistence and caching capabilities for all your Choreo components. Choreo provides various service plans for each type, ranging from smaller instances for development purposes to production-grade databases with automatic backups and high-availability multi-nodes.
 
 !!! info "Note"
-     - The capability to create Choreo-managed database, vector database, and cache services is available only for paid Choreo users.
+     - The capability to create Choreo-managed databases, vector databases, and cache services is available only for paid Choreo users.
      - Billing for these services will be included in your Choreo subscription, with pricing varying based on the service plan of the resources you create. For more details, see [Choreo Platform Services Billing](../references/choreo-platform-services-billing-and-upgrades.md#platform-service-billing-information).
 
 !!!Tip "Explore the free trial"
