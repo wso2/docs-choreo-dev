@@ -53,6 +53,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
@@ -251,14 +252,19 @@ public class Component extends ControlPlaneAPI {
                                         throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
                                     }
                                     String payload = message.getPayload(String.class);
-                                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject()
-                                            .getAsJsonObject("data");
-                                    if (!dataJsonObject.get("deploy").isJsonNull() && !dataJsonObject.getAsJsonObject("deploy").get("status").isJsonNull()) {
-                                        deployStatus.set(dataJsonObject.getAsJsonObject("deploy").get("status").getAsString());
-                                        if ("completed".equals(deployStatus.get())) {
-                                            context.setVariable("isComponentBuildDeployCompleted", true);
-                                        }
-                                    }
+                                    JsonObject jsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                                    Optional.ofNullable(jsonObject)
+                                            .map(json -> json.getAsJsonObject("data"))
+                                            .map(data -> data.getAsJsonObject("deploy"))
+                                            .map(deploy -> deploy.get("status"))
+                                            .filter(status -> !status.isJsonNull())
+                                            .map(JsonElement::getAsString)
+                                            .ifPresent(status -> {
+                                                deployStatus.set(status);
+                                                if ("completed".equals(status)) {
+                                                    context.setVariable("isComponentBuildDeployCompleted", true);
+                                                }
+                                            });
                                     // Wait after build is successful to give some time for deployment
                                     SleepUtil.sleep(sleepInterval);
                                 })));
