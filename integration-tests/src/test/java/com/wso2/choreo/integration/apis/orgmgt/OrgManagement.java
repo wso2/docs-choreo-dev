@@ -117,7 +117,7 @@ public class OrgManagement extends ControlPlaneAPI {
                                 .message()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                                    if (code != HttpStatus.CREATED.value()) {
+                                    if (code != HttpStatus.OK.value()) {
                                         throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
                                     }
                                     try {
