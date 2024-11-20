@@ -109,7 +109,7 @@ nav:
           - Expose a UDP Server via a Service: develop-components/develop-services/expose-a-udp-server-via-a-service.md
           - Expose a Ballerina GraphQL Endpoint via a Service: develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service.md
           - Expose a Prism-Based Mock Server Using an OpenAPI Specification: develop-components/develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification.md
-          - Expose a WebSocket Endpoint via a NodeJS Service: develop-components/develop-services/expose-a-websocket-endpoint-via-a-nodejs-service.md
+          - Expose a WebSocket Endpoint via a Service: develop-components/develop-services/expose-a-websocket-endpoint-via-a-service.md
       - Develop an API Proxy: develop-components/develop-an-api-proxy.md
       - Develop Web Applications: 
           - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
@@ -231,6 +231,7 @@ nav:
           - Customize the Developer Portal: administer/customize-the-developer-portal.md
           - Configure Self-Sign-Up: administer/configure-self-sign-up.md
       - Manage Members of an Organization: administer/manage-members-of-an-organization.md
+      - Control Egress Traffic for Your Organization: administer/control-egress-traffic-for-your-organization.md
   - References:
       - FAQ: references/faq.md
       - Choreo Limitations: references/choreo-limitations.md
@@ -411,6 +412,7 @@ plugins:
           'monitoring-and-insights/usage-insights.md': 'https://wso2.com/choreo/docs/monitoring-and-insights/insights-overview/'
           'develop-components/configure-mutual-tls-between-components.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/configure-mutual-tls-between-components/'
           'api-management/api-policies.md': 'https://wso2.com/choreo/docs/api-management/api-policies/about-api-policies/'
+          'develop-components/develop-services/expose-a-websocket-endpoint-via-a-nodejs-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-websocket-endpoint-via-a-service/'
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css

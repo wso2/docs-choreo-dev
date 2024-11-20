@@ -66,7 +66,7 @@ Click the respective tab to view the structure for your current configuration fi
         connectionReferences:
           # +required Name of the connection.
           - name: hr-connection
-            # +required Name of the connection instance.
+            # +required service identifer of the dependent component.
             resourceRef: service:/HRProject/UserComponent/v1/ad088/PUBLIC
 
     ```
@@ -113,6 +113,8 @@ Click the respective tab to view the structure for your current configuration fi
     !!! note
         Choreo automatically generates connection configurations when you create a connection. The properties such as **name** and **resourceRef** are automatically generated. The configurations required to establish the connection will be injected into Choreo-defined environment variables.
 
+        To use custom environment variable names instead of Choreo's default ones, add the dependency as a `serviceReference` in your `component.yaml v1.1` file. You can copy the `serviceReference` section from the `component.yaml v1.0` tab and paste it under `dependencies` in your `component.yaml v1.1` file, which maintains backward compatibility with the v1.0 format.
+
 === "Version 1.0"
 
     ``` yaml
@@ -150,7 +152,7 @@ Click the respective tab to view the structure for your current configuration fi
         # +optional Defines the service references from the Internal Marketplace.
         serviceReferences:
           # +required Name of the service reference.
-          - name: choreo:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
+          - name: choreo:///apifirst/HRProject/UserComponent/ad088/v1/PUBLIC
             # +required Name of the connection instance.
             connectionConfig: 19d2648b-d29c-4452-afdd-1b9311e81412
             # +required Environment variables injected into the component for connection configuration.
