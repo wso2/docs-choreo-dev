@@ -1720,10 +1720,6 @@ public class ComponentUtils {
                     break;
                 } else if (dev.getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
                     throw new RuntimeException("API token for invokeURL : " + invokeURL + " is unauthorized");
-                } else if (dev.getStatusCode() == HttpStatus.NOT_FOUND.value()) {
-                    // API might be not be deployed
-                    Thread.sleep(60000);
-                    break;
                 }
 
                 Thread.sleep(500);
@@ -1937,5 +1933,18 @@ public class ComponentUtils {
 
         Component.configureLocalDevelopmentForManagedAuthentication(runner, client, projectId, componentId, releaseId,
                 localDevelopmentConfigureRequest, expectedStatus);
+    }
+
+    public static void testAPIReady(String invokeURL, String apiKey) throws Exception {
+        // Poll invoke URL for a maximum of 5 minutes till we get a status.ok
+        for (int i = 0; i < 10; i++) {
+            Response res = HttpClientUtil.httpGET(invokeURL, "", apiKey);
+            if (HttpStatus.OK.value() == res.getStatusCode()) {
+                Thread.sleep(60000);
+                break;
+            }
+            Thread.sleep(30000);
+        }
+
     }
 }

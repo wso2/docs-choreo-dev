@@ -173,10 +173,8 @@ public class TestProxyApiDpWithAPIRateLimit extends TestBase {
     @CitrusTest
     public void testDevDeployment_ProxyApiDpWithAPIRateLimit(DataProviderWrapper dp) throws Exception {
 
-        // To give a time to deploy the API.
-        Thread.sleep(10000);
         String devURL = dp.getProxyDeployments().get(0).getInvokeUrl() + "/users";
-
+        ComponentUtils.testAPIReady(devURL, dp.getDevKeyData().getApikey());
         Pair<Boolean, Integer> pair = ComponentUtils.testDeploymentWithRateLimit(devURL, dp.getDevKeyData().getApikey(),15);
         Boolean isRateLimitExceeded = pair.getLeft();
         int count = pair.getRight();
