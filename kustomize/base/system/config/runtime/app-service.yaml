@@ -375,6 +375,7 @@ roleBasedUserMgt:
 onPremKeySubscription:
   trialDurationDays: 14
   commercialDurationYears: 50
+  choreoSystemUserIdpId: ${CHOREO_SYSTEM_USER_IDP_ID}
 termsOfService:
   version: 1.0
   serviceNames:
