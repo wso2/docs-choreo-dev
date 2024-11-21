@@ -1951,4 +1951,16 @@ public class ComponentUtils {
         Component.configureLocalDevelopmentForManagedAuthentication(runner, client, projectId, componentId, releaseId,
                 localDevelopmentConfigureRequest, expectedStatus);
     }
+
+    public static void testAPIReady(String invokeURL, String apiKey) throws Exception {
+        // Poll invoke URL for a maximum of 5 minutes till we get a status.ok
+        for (int i = 0; i < 50; i++) {
+            Response res = HttpClientUtil.httpGET(invokeURL, "", apiKey);
+            if (HttpStatus.OK.value() == res.getStatusCode()) {
+                break;
+            }
+            Thread.sleep(10000);
+        }
+
+    }
 }
