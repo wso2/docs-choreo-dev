@@ -469,6 +469,7 @@ configMapGenerator:
       - CP_GW_URL={{.CP_GW_URL | default ""}}
       - PROXY_DEPLOYER_URL={{.PROXY_DEPLOYER_URL}}
       - TRAFFIC_ROUTING_PROXY_DISABLED={{.TRAFFIC_ROUTING_PROXY_DISABLED | default "false"}}
+      - ENABLE_ASYNC_INITIAL_BUILD={{.ENABLE_ASYNC_INITIAL_BUILD | default "false"}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
