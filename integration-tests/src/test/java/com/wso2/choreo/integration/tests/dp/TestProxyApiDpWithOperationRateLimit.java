@@ -166,10 +166,9 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
     public void testDevDeployment_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp)
             throws Exception {
 
-        // To give a time to deploy the API.
-        Thread.sleep(30000);
         String devURL = dp.getProxyDeployments().get(0).getInvokeUrl() + "/users";
 
+        ComponentUtils.testAPIReady(devURL, dp.getDevKeyData().getApikey());
         Pair<Boolean, Integer> pair = ComponentUtils.testDeploymentWithRateLimit(devURL, dp.getDevKeyData().getApikey(),8);
         Boolean isRateLimitExceeded = pair.getLeft();
         int count = pair.getRight();
