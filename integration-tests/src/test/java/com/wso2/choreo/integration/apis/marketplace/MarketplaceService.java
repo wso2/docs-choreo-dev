@@ -64,7 +64,7 @@ public class MarketplaceService {
         runner.$(repeatOnError()
                 .until("(i = 5) or ( ${isServiceFound} = true )")
                 .index("i")
-                .autoSleep(5000)
+                .autoSleep(10000)
                 .actions(
                         http()
                                 .client(client)
