@@ -11,10 +11,10 @@ from datetime import datetime
 from gspread.exceptions import APIError
 
 # The ID of your spreadsheet
-SAMPLE_SPREADSHEET_ID = "1NOmSI5QnyPczG2efSN5D_yoO3xXyP0GuHYMEYqREwhg"
+SAMPLE_SPREADSHEET_ID = "1sM_UfSTZ88fadSDXIWxLrPsmRhYUyCX1qVCP2Rm6BH0"
 
 # Name of the sheet where the data will be written
-TARGET_SHEET_NAME = "api-invocations"
+TARGET_SHEET_NAME = "API Invocations"
 # TARGET_SHEET_NAME = "Class Data"
 
 
