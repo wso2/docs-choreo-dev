@@ -10,9 +10,6 @@ from googleapiclient.errors import HttpError
 from datetime import datetime
 from gspread.exceptions import APIError
 
-# If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
-
 # The ID of your spreadsheet
 SAMPLE_SPREADSHEET_ID = "1NOmSI5QnyPczG2efSN5D_yoO3xXyP0GuHYMEYqREwhg"
 
@@ -40,7 +37,7 @@ def read_token():
 
 
 def prepend_data_with_merge(file_path):
-    
+
     token_content = os.environ.get('GSHEET_TOKEN')
 
     if token_content is None:
@@ -49,13 +46,13 @@ def prepend_data_with_merge(file_path):
     credentials_file = 'token.json'
 
     SAMPLE_SPREADSHEET_ID = "1NOmSI5QnyPczG2efSN5D_yoO3xXyP0GuHYMEYqREwhg"
-    
+
     with open(credentials_file, 'w') as file:
         file.write(token_content)
 
     # Load the credentials from the JSON file
     creds = Credentials.from_authorized_user_file(credentials_file)
-    
+
     """Prepends CSV content with a timestamp to a specific Google Sheet, adds a buffer row, and merges cells."""
     # creds = read_token()
     try:
@@ -91,7 +88,7 @@ def prepend_data_with_merge(file_path):
         body = {"values": updated_values}
         sheet.values().update(
             spreadsheetId=SAMPLE_SPREADSHEET_ID,
-            range=f"{TARGET_SHEET_NAME}!A2",
+            range=f"{TARGET_SHEET_NAME}!B2",
             valueInputOption="RAW",
             body=body,
         ).execute()
@@ -169,7 +166,7 @@ def create_sheet_if_not_exists(service, spreadsheet_id, sheet_name):
 
 if __name__ == "__main__":
     # Path to the uploaded file
-    
+
     if len(sys.argv) < 2:
         print("Usage: python3 your_script.py <file_path>")
         sys.exit(1)
@@ -184,4 +181,3 @@ if __name__ == "__main__":
     # write_to_sheet(file_path)
     prepend_data_with_merge(file_path);
     # write_to_gsheet(file_path,TARGET_SHEET_NAME)
-
