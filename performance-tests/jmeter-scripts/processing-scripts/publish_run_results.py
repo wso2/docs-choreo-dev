@@ -45,8 +45,6 @@ def prepend_data_with_merge(file_path):
 
     credentials_file = 'token.json'
 
-    SAMPLE_SPREADSHEET_ID = "1NOmSI5QnyPczG2efSN5D_yoO3xXyP0GuHYMEYqREwhg"
-
     with open(credentials_file, 'w') as file:
         file.write(token_content)
 
