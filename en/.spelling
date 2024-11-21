@@ -15,7 +15,6 @@ buildpacks
 Temurin
 RabbitMQ
 SalesOrderQueue
-v1.1
 1.x
 12.x.x
 14.x.x 
@@ -89,12 +88,10 @@ liveness
 readingListApp
 ORGANIZATION_ID
 Petstore
-approvers
 build-your-first-cloud-native-application-with-choreo
 expose-a-service-as-a-managed-api
 build-your-first-integration
 configure-a-user-store-with-built-in-idp
-configure-approvals-for-choreo-workflows
 assign-subscription-plans-to-apis
 devops-and-ci-cd
 autoscale-component-replicas
@@ -462,8 +459,6 @@ mTLS
 OpenSSL
 namespaces
 GitLab
-DatabaseName
-mysql2
 roadmap
 Subprocessor
 subprocessors
@@ -702,23 +697,7 @@ headerName
 fooValue
 authzHeaderValue
 myResourcePath
-evictable
-defaultable
-WebSocket
-WebSockets
-test-websocket-endpoints-via-the-websocket-console
-schemaVersion
-displayName
-basePath
-networkVisibilities
-component.yaml
 develop-a-ballerina-graphql-api
-choreo-managed-message-brokers
-create-choreo-managed-kafka-services
-configure-a-kafka-service
-monitor-a-kafka-service
-choreo-platform-services-billing
-expose-a-websocket-endpoint-via-a-service
 faq.md
 Moesif.md
 integrate-choreo-with-moesif
@@ -998,7 +977,6 @@ submodules
 submodule
 unpublish
 unpublishing
-GenAI
  - docs/administer/customize-the-developer-portal.md
 cInlineImage-threeQuarter
  - docs/develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project.md

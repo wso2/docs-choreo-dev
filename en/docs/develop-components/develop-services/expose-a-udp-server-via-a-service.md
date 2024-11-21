@@ -46,7 +46,7 @@ It is important to understand the purpose of the key files in the sample service
 | `client/main.go`        | The greeter client application written in the Go language.                                   |
 | `Dockerfile.server`     | The Dockerfile to build the container image of the server application.                       |
 | `Dockerfile.client`     | The Dockerfile to build the container image of the client application.                       |
-| `.choreo/component.yaml`| The Choreo-specific configuration provides information about how Choreo exposes the service. |
+| `.choreo/endpoints.yaml`| The Choreo-specific configuration provides information about how Choreo exposes the service. |
 
 ### Configure the service port with endpoints
 
@@ -54,9 +54,9 @@ In Choreo, you can expose your services via endpoints.
 
 Let's run the UDP server service component on port 5050. To securely expose the service through Choreo, you must provide the port and other required information to Choreo. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
-Choreo looks for an `component.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
+Choreo looks for an `endpoints.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
 
-In our gRPC server sample, the `component.yaml` file is at `docker-udp-service/.choreo/component.yaml`, where the build context path is `docker-udp-service`.
+In our gRPC server sample, the `endpoints.yaml` file is at `docker-udp-service/.choreo/endpoints.yaml`, where the build context path is `docker-udp-service`.
 
 ## Step 1: Create a service component with a UDP endpoint
 

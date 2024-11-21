@@ -16,11 +16,11 @@ Follow the steps below to test a REST endpoint via the integrated OpenAPI Consol
 5. Select the required endpoint from the **Endpoint** list.
 
     !!! note
-        - The **Network Visibilities** of an endpoint is set in the **component.yaml**. You can set it to **Public**, **Organization**, or **Project**. 
-        - If you have set the **Network Visibilities** of the endpoint in the **component.yaml** to **Public**, go to step 7. 
-        - If you have set the **Network Visibilities** of the endpoint in the **component.yaml** to **Organization**, the endpoint will not be publicly accessible. However, for testing purposes, Choreo offers the ability to create a temporary test URL that is publicly accessible (secured with OAuth 2.0) and remains active for 15 minutes. To generate the temporary URL, proceed with step 6.
+        - The **Network Visibility** of an endpoint is set in the **endpoints.yaml**. You can set it to **Public**, **Organization**, or **Project**. 
+        - If you have set the **Network Visibility** of the endpoint in the **endpoints.yaml** to **Public**, go to step 7. 
+        - If you have set the **Network Visibility** of the endpoint in the **endpoints.yaml** to **Organization**, the endpoint will not be publicly accessible. However, for testing purposes, Choreo offers the ability to create a temporary test URL that is publicly accessible (secured with OAuth 2.0) and remains active for 15 minutes. To generate the temporary URL, proceed with step 6.
 
-6. If the **Network Visibilities** of the endpoint contains **Organization**, click on **Generate URL** to generate a temporary test URL that will be active for 15 minutes. Else, skip this step.
+6. If the **Network Visibility** of the endpoint is set to **Organization**, click on **Generate URL** to generate a temporary test URL that will be active for 15 minutes. Else, skip this step.
 
     !!! note
         The temporary test URL will be available **only for 15 minutes** and it will get expired after. You can deactivate the test URL by clicking on the **Deactivate URL** button.
