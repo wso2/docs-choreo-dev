@@ -24,10 +24,7 @@ import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.consol.citrus.validation.json.JsonMessageValidationContext;
 import com.consol.citrus.validation.json.JsonTextMessageValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -1293,42 +1290,71 @@ public class GraphQL extends ControlPlaneAPI {
                                 .body(new ClassPathResource("templates/graphql/responses/deploymentStatusByVersionFailure.json"))));
     }
 
-    public static String getRunId(TestActionRunner runner, HttpClient client, String accessToken, GraphqlDTO graphqlDTO) throws IOException {
+    public static String getRunId(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken, GraphqlDTO graphqlDTO) throws IOException {
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/createIntegrationComponent/deploymentStatusByVersion.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
 
+        AtomicInteger successiveFailureCount = new AtomicInteger(0);
         final AtomicReference<String> runIdRef = new AtomicReference<>();
-        runner.$(http()
-                .client(client)
-                .send()
-                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(requestBody)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
-        runner.$(http()
-                .client(client)
-                .receive()
-                .response()
-                .message()
-                .type(MessageType.JSON)
-                .validate((message, context) -> {
-                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-                    if (code != HttpStatus.OK.value()) {
-                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
-                    }
-                    String runId = new JsonParser().parse((String) message.getPayload())
-                            .getAsJsonObject()
-                            .getAsJsonObject("data")
-                            .getAsJsonArray("deploymentStatusByVersion")
-                            .get(0)
-                            .getAsJsonObject()
-                            .get("id")
-                            .getAsString();
-                    runIdRef.set(runId);
-                }));
+        final String hasRuns = "hasRuns";
+        runner.variable(hasRuns, false);
+        // Repeat the request until we get a valid "runId".
+        // Initial build is triggered asynchronously after component creation.
+        // Therefore, first few attempts will return an empty list.
+        runner.$(repeat()
+                .until("(i = 30) or ( ${" + hasRuns + "} = true )")
+                .index("i")
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        if (successiveFailureCount.incrementAndGet() >= 5 ) {
+                                            // even if no builds available, it should return 200
+                                            throw new ValidationException("Too many successive calls with response code != 200");
+                                        }
+                                        SleepUtil.sleep(5);
+                                        return;
+                                    }
+                                    successiveFailureCount.set(0);
+                                    JsonObject rootJsonObject = new JsonParser().parse((String) message.getPayload())
+                                            .getAsJsonObject();
+                                    Optional.ofNullable(rootJsonObject)
+                                            .map(json -> json.getAsJsonObject("data"))
+                                            .map(dataObject -> dataObject.getAsJsonArray("deploymentStatusByVersion"))
+                                            .filter(deploymentStatusArray -> !deploymentStatusArray.isEmpty())
+                                            .map(deploymentStatusArray -> deploymentStatusArray.get(0))
+                                            .map(JsonElement::getAsJsonObject) // items will be objects, always
+                                            .map(jsonObject -> jsonObject.get("id"))
+                                            .map(JsonElement::getAsString)// if there's an id field, it'll be always String
+                                            .ifPresent(runId -> {
+                                                runIdRef.set(runId);
+                                                context.setVariable("hasRuns", true);
+                                            });
+                                    if (runIdRef.get() == null) {
+                                        SleepUtil.sleep(5);
+                                    }
+                                })
+                )
+        );
+        if (runIdRef.get() == null) {
+            throw new ValidationException("Failed to retrieve runId after 30 attempts");
+        }
         return runIdRef.get();
     }
 
