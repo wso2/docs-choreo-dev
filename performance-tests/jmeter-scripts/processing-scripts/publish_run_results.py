@@ -1,58 +1,89 @@
 import os
 import csv
 import sys
+import re
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from datetime import datetime, timedelta
 
-from datetime import datetime
-from gspread.exceptions import APIError
-
-# The ID of your spreadsheet
 SAMPLE_SPREADSHEET_ID = "1sM_UfSTZ88fadSDXIWxLrPsmRhYUyCX1qVCP2Rm6BH0"
-
-# Name of the sheet where the data will be written
 TARGET_SHEET_NAME = "API Invocations"
-# TARGET_SHEET_NAME = "Class Data"
+
+def get_week_monday(date_str):
+    """
+    Calculate the Monday of the week for the given date.
+    :param date_str: The date string in the format 'YYYY-MM-DD HH:MM:SS'
+    :return: The date string for the Monday in the format 'YYYY-MM-DD'
+    """
+    date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+    monday = date - timedelta(days=date.weekday())  # Subtract days to get to Monday
+    return monday.strftime("%Y-%m-%d")
 
 
-def read_token():
-    creds = None
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-        return creds
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                "credentials.json", SCOPES
-            )
-            creds = flow.run_local_server(port=0)
-        with open("token.json", "w") as token:
-            token.write(creds.to_json())
-        return creds
+def extract_users_from_log(log_path):
+    """Extract the 'users' value from the JMeter log."""
+    try:
+        with open(log_path, "r") as log_file:
+            for line in log_file:
+                match = re.search(r"Setting JMeter property: users=(\d+)", line)
+                if match:
+                    return match.group(1)  # Return the users value
+    except FileNotFoundError:
+        print(f"Log file not found: {log_path}")
+        sys.exit(1)
 
+    print("Users property not found in the log file.")
+    sys.exit(1)
 
-def prepend_data_with_merge(file_path):
+def get_drive_link(link_file_path):
+    """
+    Reads the link from the specified text file.
+    :param link_file_path: Path to the text file containing the link
+    :return: The link as a string
+    """
+    try:
+        with open(link_file_path, "r") as file:
+            link = file.read().strip()
+            if not link:
+                raise ValueError(f"The link file '{link_file_path}' is empty.")
+            return link
+    except FileNotFoundError:
+        print(f"Error: Link file '{link_file_path}' does not exist.")
+        sys.exit(1)
 
-    token_content = os.environ.get('GSHEET_TOKEN')
+def prepend_data_with_users_and_link(results_folder, link_file_path):
+    """Prepends data with week, timestamp, users, and adds a link row under each data row."""
+    # Derive file paths for CSV and log files
+    csv_file_path = os.path.join(results_folder, "AggregateReport.csv")
+    log_file_path = os.path.join(results_folder, "jmeter.log")
 
+    # Ensure both files exist
+    if not os.path.exists(csv_file_path):
+        print(f"Error: CSV file '{csv_file_path}' does not exist.")
+        sys.exit(1)
+    if not os.path.exists(log_file_path):
+        print(f"Error: Log file '{log_file_path}' does not exist.")
+        sys.exit(1)
+
+    # Load credentials from environment variable
+    token_content = os.environ.get("GSHEET_TOKEN")
     if token_content is None:
         print("Error: The GSHEET_TOKEN environment variable is not set.")
+        sys.exit(1)
 
-    credentials_file = 'token.json'
-
-    with open(credentials_file, 'w') as file:
+    credentials_file = "token.json"
+    with open(credentials_file, "w") as file:
         file.write(token_content)
-
-    # Load the credentials from the JSON file
     creds = Credentials.from_authorized_user_file(credentials_file)
 
-    """Prepends CSV content with a timestamp to a specific Google Sheet, adds a buffer row, and merges cells."""
-    # creds = read_token()
+    # Extract the 'users' value from the log file
+    users_value = extract_users_from_log(log_file_path)
+
+    # Read the drive link from the text file
+    drive_link = get_drive_link(link_file_path)
+
     try:
         service = build("sheets", "v4", credentials=creds)
 
@@ -68,48 +99,66 @@ def prepend_data_with_merge(file_path):
 
         # Read the new data from the CSV file
         new_data = []
-        with open(file_path, mode="r") as file:
+        with open(csv_file_path, mode="r") as file:
             reader = csv.reader(file)
             new_data = list(reader)
 
         new_data = new_data[1:]  # Skip the header row
 
-        # Add a timestamp column to the new data
+        # Add week, timestamp, users, and link rows
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        new_data_with_timestamp = [[timestamp] + row for row in new_data]
+        week = get_week_monday(timestamp)  # Compute the week (Monday)
 
+        # Prepare data with the link row
+        new_data_with_metadata = []
+        for row in new_data:
+            # Normal data row
+            data_row = [week, timestamp, users_value] + row
+            new_data_with_metadata.append(data_row)
+
+        new_data_with_metadata[1][2] = drive_link
         # Add an empty row as a buffer
-        empty_row = ["" for _ in range(len(new_data_with_timestamp[0]))]  # Create an empty row
-        updated_values = new_data_with_timestamp + [empty_row] + existing_values
+        empty_row = ["" for _ in range(len(new_data_with_metadata[0]))]
+        updated_values = new_data_with_metadata + [empty_row] + existing_values
 
         # Write the updated data back to the sheet
         body = {"values": updated_values}
         sheet.values().update(
             spreadsheetId=SAMPLE_SPREADSHEET_ID,
-            range=f"{TARGET_SHEET_NAME}!B2",
+            range=f"{TARGET_SHEET_NAME}!A2",
             valueInputOption="RAW",
             body=body,
         ).execute()
 
-        # Merge the timestamp cell for the new data (spanning 3 rows)
         merge_request = {
             "requests": [
                 {
                     "mergeCells": {
                         "range": {
                             "sheetId": None,  # Sheet ID will be resolved dynamically
-                            "startRowIndex": 1,  # Account for the empty row buffer
-                            "endRowIndex": 3,  # Merge spans 3 rows after the buffer
+                            "startRowIndex": 1,
+                            "endRowIndex": 3,
                             "startColumnIndex": 0,
-                            "endColumnIndex": 1,  # First column only
+                            "endColumnIndex": 1,  # Week column
                         },
                         "mergeType": "MERGE_ALL",
                     }
-                }
+                },
+                {
+                    "mergeCells": {
+                        "range": {
+                            "sheetId": None,
+                            "startRowIndex": 1,
+                            "endRowIndex": 3,
+                            "startColumnIndex": 1,
+                            "endColumnIndex": 2,  # Timestamp column
+                        },
+                        "mergeType": "MERGE_ALL",
+                    }
+                },
             ]
         }
 
-        # Resolve the sheet ID dynamically
         spreadsheet = service.spreadsheets().get(spreadsheetId=SAMPLE_SPREADSHEET_ID).execute()
         sheets = spreadsheet.get("sheets", [])
         sheet_id = next(
@@ -119,14 +168,16 @@ def prepend_data_with_merge(file_path):
         )
 
         # Update the merge request with the resolved sheet ID
-        merge_request["requests"][0]["mergeCells"]["range"]["sheetId"] = sheet_id
+        for request in merge_request["requests"]:
+            request["mergeCells"]["range"]["sheetId"] = sheet_id
 
         # Execute the merge request
         service.spreadsheets().batchUpdate(
             spreadsheetId=SAMPLE_SPREADSHEET_ID, body=merge_request
         ).execute()
 
-        print("Data prepended with a buffer row and cells merged successfully.")
+
+        print("Data prepended with week, timestamp, users, and link rows successfully.")
 
     except HttpError as err:
         print(f"An error occurred: {err}")
@@ -135,16 +186,11 @@ def prepend_data_with_merge(file_path):
 def create_sheet_if_not_exists(service, spreadsheet_id, sheet_name):
     """Creates the sheet if it does not exist."""
     try:
-        # Get the spreadsheet metadata
         spreadsheet = service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
         sheets = spreadsheet.get("sheets", [])
-
-        # Check if the sheet already exists
         for sheet in sheets:
             if sheet.get("properties", {}).get("title") == sheet_name:
-                return  # Sheet already exists
-
-        # If the sheet does not exist, create it
+                return
         batch_update_request_body = {
             "requests": [
                 {
@@ -161,21 +207,20 @@ def create_sheet_if_not_exists(service, spreadsheet_id, sheet_name):
     except HttpError as err:
         print(f"An error occurred while creating the sheet: {err}")
 
-
 if __name__ == "__main__":
-    # Path to the uploaded file
-
-    if len(sys.argv) < 2:
-        print("Usage: python3 your_script.py <file_path>")
+    if len(sys.argv) < 3:
+        print("Usage: python3 write_to_sheet.py <results_folder> <link_file_path>")
         sys.exit(1)
 
-    file_path = sys.argv[1]
+    results_folder = sys.argv[1]
+    link_file_path = sys.argv[2]
 
-    # Verify that the file exists
-    if not os.path.exists(file_path):
-        print(f"Error: File '{file_path}' does not exist.")
+    if not os.path.exists(results_folder):
+        print(f"Error: Results folder '{results_folder}' does not exist.")
         sys.exit(1)
 
-    # write_to_sheet(file_path)
-    prepend_data_with_merge(file_path);
-    # write_to_gsheet(file_path,TARGET_SHEET_NAME)
+    if not os.path.exists(link_file_path):
+        print(f"Error: Link file '{link_file_path}' does not exist.")
+        sys.exit(1)
+
+    prepend_data_with_users_and_link(results_folder, link_file_path)
