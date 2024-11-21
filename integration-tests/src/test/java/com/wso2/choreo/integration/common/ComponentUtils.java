@@ -833,7 +833,7 @@ public class ComponentUtils {
 
         HttpClient apimClient = citrusClients.get(Endpoints.STS_ENDPOINT);
         String query = "context:/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID) + "/"
-                + project.getHandler() + "/" + component.getName() + "/v1.0";
+                + project.getHandler() + "/" + component.getName() + "/" + component.getLatestApiVersion().getApiVersion();
         ApiManager.searchAPIByQuery(runner, apimClient, accessToken, query);
 
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
