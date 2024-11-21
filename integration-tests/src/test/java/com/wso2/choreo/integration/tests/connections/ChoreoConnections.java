@@ -614,7 +614,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 API_INVOCATION_REQUEST_URI, API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
     }
 
-    @Test(dependsOnMethods = {"createProject_TestChoreoConnections"}, enabled = false)
+    @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
     @CitrusTest
     public void createProjectEndpointPublisherComponent_TestChoreoConnections() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
