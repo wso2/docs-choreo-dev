@@ -293,6 +293,20 @@ public class ConnectionService extends ControlPlaneAPI {
         ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
     }
 
+    public static void enableAPIKeySecurityForAPI(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                            String apiId, String accessToken) {
+
+        HttpClient httpClient = citrusClients.get(Endpoints.STS_ENDPOINT);
+        JsonObject apiInfo = ApiManager.getApi(runner,httpClient,accessToken,apiId);
+        if (apiInfo.has("securityScheme")) {
+            apiInfo.remove("securityScheme");
+        }
+        JsonArray securityScheme = new JsonArray();
+        securityScheme.add("api_key");
+        apiInfo.add("securityScheme",securityScheme);
+        ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
+    }
+
     public static String getEndpointForProxy(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
                                              ChoreoComponent proxySourceComponent,
                                              List<com.wso2.choreo.integration.models.environments.Environment> environments) throws Exception {
