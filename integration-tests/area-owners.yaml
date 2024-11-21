@@ -198,3 +198,7 @@ areaOwners:
     assignees:
       - sumedhas@wso2.com
       - rolandh@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.connections.DatabaseConnectionsTest
+    assignees:
+      - hansi@wso2.com
+      - menaka@wso2.com

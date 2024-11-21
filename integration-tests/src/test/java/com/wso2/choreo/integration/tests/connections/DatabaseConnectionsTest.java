@@ -363,7 +363,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"consumeDatabaseConnectionWithComponentConfigFile_TestDatabaseConnections","consumeDatabaseConnectionWithComponentFileV10_TestDatabaseConnections",
-                             "consumeDatabaseConnectionWithComponentFileV11_TestDatabaseConnections", "createDatabaseConnectionToAServer_TestDatabaseConnections"})
+                             "consumeDatabaseConnectionWithComponentFileV11_TestDatabaseConnections", "createDatabaseConnectionToAServer_TestDatabaseConnections"},alwaysRun = true)
     @CitrusTest
     public void removeDatabaseFromMarketplace_TestDatabaseConnections() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
@@ -376,7 +376,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
 
     }
 
-    @Test(dependsOnMethods = {"removeDatabaseFromMarketplace_TestDatabaseConnections"})
+    @Test(dependsOnMethods = {"removeDatabaseFromMarketplace_TestDatabaseConnections"},alwaysRun = true)
     @CitrusTest
     public void deleteCredentials_TestDatabaseConnections() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
