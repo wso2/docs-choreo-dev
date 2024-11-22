@@ -243,7 +243,7 @@ To configure managed authentication, follow the steps given below:
 1. In the left navigation menu, click **Deploy**.
 2. In the **Set Up** card, click **Configure and Deploy**. This opens the **Configure & Deploy** pane, where you can specify values for the mount file.
 3. Specify the following in the `config.js` file mount.
-    - You must replace `<Service URL>` with the value that you copied when creating a connection to the `Reading List Service` in [step 6.2](#step-62-create-a-connection-to-the-deployed-service).
+    - You must replace `<Service URL>` with the value that you copied when creating a connection to the `Reading List Service` in [step 6.2](#step-62-create-a-connection-between-the-web-application-and-the-deployed-service).
 
         ```javascript
         window.configs = {
