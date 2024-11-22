@@ -99,6 +99,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -832,8 +834,9 @@ public class ComponentUtils {
             String commitHash, BalConfig... balconfigs) throws Exception {
 
         HttpClient apimClient = citrusClients.get(Endpoints.STS_ENDPOINT);
-        String query = "context:/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID) + "/"
-                + project.getHandler() + "/" + component.getName() + "/" + component.getLatestApiVersion().getApiVersion();
+        String apiContext = "/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID) + "/"
+                + project.getHandler() + "/" + component.getName();
+        String query = URLEncoder.encode("context:" + apiContext + " version:\"" + component.getLatestApiVersion().getApiVersion() + "\"", StandardCharsets.UTF_8);
         ApiManager.searchAPIByQuery(runner, apimClient, accessToken, query);
 
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
