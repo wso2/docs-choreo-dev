@@ -74,7 +74,7 @@ nav:
   - Home: index.md
   - Introduction:
       - What is Choreo?: what-is-choreo.md
-  - Quick Start Guide:
+  - Quick Start Guides:
       - Deploy Your First Service: quick-start-guides/deploy-your-first-service.md
       - Deploy Your First Static Web Application: quick-start-guides/deploy-your-first-static-web-application.md
       - Deploy a Web Application that Consumes a Backend Service: quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md
