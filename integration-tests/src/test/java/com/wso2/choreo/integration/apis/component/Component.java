@@ -217,13 +217,12 @@ public class Component extends ControlPlaneAPI {
 
     }
 
-    public static String waitForComponentBuildDeployComplete(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+    public static void waitForComponentBuildDeployComplete(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
                                                       String projectId,
                                                       String componentId, String runId, int sleepInterval) {
         runner.variable("isComponentBuildDeployCompleted", false);
-        AtomicReference<JsonArray> steps = new AtomicReference<>(new JsonArray());
-        AtomicReference<String> deployStatus = new AtomicReference<>("");
-        runner.$(repeat()
+        runner.$(repeatOnError()
+                .autoSleep(sleepInterval * 1000)
                 .until("(i = 10) or ( ${isComponentBuildDeployCompleted} = true )")
                 .index("i")
                 .actions(
@@ -253,26 +252,72 @@ public class Component extends ControlPlaneAPI {
                                     }
                                     String payload = message.getPayload(String.class);
                                     JsonObject jsonObject = new JsonParser().parse(payload).getAsJsonObject();
-                                    Optional.ofNullable(jsonObject)
+                                    JsonObject data = Optional.ofNullable(jsonObject)
                                             .map(json -> json.getAsJsonObject("data"))
-                                            .map(data -> data.getAsJsonObject("deploy"))
-                                            .map(deploy -> deploy.get("status"))
-                                            .filter(status -> !status.isJsonNull())
-                                            .map(JsonElement::getAsString)
-                                            .ifPresent(status -> {
-                                                deployStatus.set(status);
-                                                if ("completed".equals(status)) {
-                                                    context.setVariable("isComponentBuildDeployCompleted", true);
+                                            .orElseThrow(() -> new ValidationException("Response does not contain [data] field."));
+                                    Optional<JsonElement> buildData = Optional.ofNullable(data.get("build"));
+                                    boolean isBuildCompleted = buildData
+                                        .map(build -> build.getAsJsonObject().get("status"))
+                                        .filter(JsonElement::isJsonPrimitive)
+                                        .map(JsonElement::getAsString)
+                                        .filter("completed"::equals)
+                                        .isPresent();
+                                    if (!isBuildCompleted) {
+                                        throw new ValidationException("Build is not completed.");
+                                    }
+                                    boolean hasFailedBuildSteps = buildData
+                                        .map(build -> build.getAsJsonObject().get("steps"))
+                                        .filter(JsonElement::isJsonArray)
+                                        .map(JsonElement::getAsJsonArray)
+                                        .map(steps -> {
+                                            for (JsonElement stepElement : steps) {
+                                                JsonObject step = stepElement.getAsJsonObject();
+                                                String stepStatus = Optional.ofNullable(step.get("status"))
+                                                        .filter(JsonElement::isJsonPrimitive)
+                                                        .map(JsonElement::getAsString)
+                                                        .orElse(null);
+                                                if ("failure".equals(stepStatus)) {
+                                                    return true;
                                                 }
-                                            });
-                                    // Wait after build is successful to give some time for deployment
-                                    SleepUtil.sleep(sleepInterval);
+                                            }
+                                            return false;
+                                        })
+                                        .orElseThrow(() -> new ValidationException("Build does not contain any steps."));
+                                    if (hasFailedBuildSteps) {
+                                        throw new ValidationException("Build contains failed steps.");
+                                    }
+                                    Optional<JsonElement> deployData = Optional.ofNullable(data.get("deploy"));
+                                    boolean isDeployCompleted = deployData
+                                        .map(deploy -> deploy.getAsJsonObject().get("status"))
+                                        .filter(JsonElement::isJsonPrimitive)
+                                        .map(JsonElement::getAsString)
+                                        .filter("completed"::equals)
+                                        .isPresent();
+                                    if (!isDeployCompleted) {
+                                        throw new ValidationException("Deployment is not completed.");
+                                    }
+                                    boolean hasFailedDeploySteps = deployData
+                                        .map(deploy -> deploy.getAsJsonObject().get("steps"))
+                                        .filter(JsonElement::isJsonArray)
+                                        .map(JsonElement::getAsJsonArray)
+                                        .map(steps -> {
+                                            for (JsonElement stepElement : steps) {
+                                                JsonObject step = stepElement.getAsJsonObject();
+                                                String stepStatus = Optional.ofNullable(step.get("status"))
+                                                        .filter(JsonElement::isJsonPrimitive)
+                                                        .map(JsonElement::getAsString)
+                                                        .orElse(null);
+                                                if ("failure".equals(stepStatus)) {
+                                                    return true;
+                                                }
+                                            }
+                                            return false;
+                                        })
+                                        .orElseThrow(() -> new ValidationException("Deployment does not contain any steps."));
+                                    if (hasFailedDeploySteps) {
+                                        throw new ValidationException("Deployment contains failed steps.");
+                                    }
                                 })));
-        if (!"completed".equals(deployStatus.get())) {
-            throw new RuntimeException("Component build and deploy not completed.");
-        } else {
-            return deployStatus.get();
-        }
     }
 
     public static KeyGenResponseDTO generateKeys(TestActionRunner runner, HttpClient client,
