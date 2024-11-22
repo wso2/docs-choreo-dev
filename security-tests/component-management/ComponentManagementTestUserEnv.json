@@ -201,6 +201,18 @@
 			"enabled": true
 		},
 		{
+			"key": "gitLabServerUrl",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gitLabServerAccessToken",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
 			"key": "credentialID",
 			"value": "",
 			"type": "default",
