@@ -1230,22 +1230,19 @@ public class GraphQL extends ControlPlaneAPI {
                                         if (deploymentStatusByVersion.size() > 0) {
                                             JsonObject latestDeploymentStatus = deploymentStatusByVersion.get(0).getAsJsonObject();
                                             String latestDeployedCommitHash = latestDeploymentStatus.get("sourceCommitId").getAsString();
-                                            if ((graphqlDTO.getSha() != null) && !latestDeployedCommitHash.equals(graphqlDTO.getSha())){
-                                                throw new DeploymentStatusByVersionFailureException(
-                                                    String.format("deploymentStatusByVersion[0] contains a different commit hash. Expected: %s. Received: %s",
-                                                    graphqlDTO.getSha(), latestDeployedCommitHash));
-                                            }
-                                            String status = latestDeploymentStatus.get("status").getAsString();
-                                            deploymentStatus.set(status);
-                                            if ("completed".equals(status)) {
-                                                String conclusion = deploymentStatusByVersion.get(0).getAsJsonObject().get("conclusion").getAsString();
-                                                deploymentConclusion.set(conclusion);
-                                                if ("failure".equals(conclusion)) {
-                                                    throw new DeploymentStatusByVersionFailureException("deploymentStatusByVersion[0].conclusion is failure");
+                                            if ((graphqlDTO.getSha() == null) || latestDeployedCommitHash.equals(graphqlDTO.getSha())){
+                                                String status = latestDeploymentStatus.get("status").getAsString();
+                                                deploymentStatus.set(status);
+                                                if ("completed".equals(status)) {
+                                                    String conclusion = deploymentStatusByVersion.get(0).getAsJsonObject().get("conclusion").getAsString();
+                                                    deploymentConclusion.set(conclusion);
+                                                    if ("failure".equals(conclusion)) {
+                                                        throw new DeploymentStatusByVersionFailureException("deploymentStatusByVersion[0].conclusion is failure");
+                                                    }
+    
+                                                    isPassed.set("success".equals(conclusion));
+                                                    context.setVariable("deploymentSuccess", isPassed.get());
                                                 }
-
-                                                isPassed.set("success".equals(conclusion));
-                                                context.setVariable("deploymentSuccess", isPassed.get());
                                             }
                                         }
                                     }
