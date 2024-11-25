@@ -169,6 +169,7 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
         String devURL = dp.getProxyDeployments().get(0).getInvokeUrl() + "/users";
 
         ComponentUtils.testAPIReady(devURL, dp.getDevKeyData().getApikey());
+        Thread.sleep(60000);
         Pair<Boolean, Integer> pair = ComponentUtils.testDeploymentWithRateLimit(devURL, dp.getDevKeyData().getApikey(),8);
         Boolean isRateLimitExceeded = pair.getLeft();
         int count = pair.getRight();
@@ -176,8 +177,7 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
         Assert.assertTrue(isRateLimitExceeded, "Requests are not rate limited");
         Assert.assertTrue(count > 5, "Requests are not rate limited at the desired count " + count);
 
-        long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
-        Thread.sleep(timeRemainingTillNextMinute + 5000);
+        Thread.sleep(60000);
         Response dev = HttpClientUtil.httpGET(devURL, "", dp.getDevKeyData().getApikey());
         Assert.assertEquals(dev.getStatusCode(), HttpStatus.OK.value(), "Rate limit counter did not reset");
     }
