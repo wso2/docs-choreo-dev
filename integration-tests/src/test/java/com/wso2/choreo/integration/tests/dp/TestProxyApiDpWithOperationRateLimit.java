@@ -63,7 +63,7 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
     @Test(dataProvider = "dps")
     @CitrusTest
     public void createProject_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
-        String firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
+        String firstAPIName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.DEFAULT_API_NAME);
         String firstContext = APICreator.generateContext(firstAPIName);
         ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, dp.getRegion());
         dp.setChoreoProject(project);
