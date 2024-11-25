@@ -537,6 +537,18 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
 
     @Test
     @CitrusTest
+    public void gitTokenPermissionsGitLabServer_ComponentManagementElevatedAccessCheck() throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        Map<String, String> params = new HashMap<>();
+        params.put("gitLabServerUrl", gitLabServerUrl);
+        params.put("gitLabServerAccessToken", gitLabServerAccessToken);
+        String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
+                "gitTokenPermissionsGitLab.mustache", params);
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+    }
+
+    @Test
+    @CitrusTest
     public void createCommonCredential_ComponentManagementElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         Map<String, String> params = new HashMap<>();
