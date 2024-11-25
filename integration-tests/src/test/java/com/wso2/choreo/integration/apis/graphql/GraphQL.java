@@ -1228,7 +1228,14 @@ public class GraphQL extends ControlPlaneAPI {
                                                 .getAsJsonObject("data")
                                                 .getAsJsonArray("deploymentStatusByVersion");
                                         if (deploymentStatusByVersion.size() > 0) {
-                                            String status = deploymentStatusByVersion.get(0).getAsJsonObject().get("status").getAsString();
+                                            JsonObject latestDeploymentStatus = deploymentStatusByVersion.get(0).getAsJsonObject();
+                                            String latestDeployedCommitHash = latestDeploymentStatus.get("sourceCommitId").getAsString();
+                                            if ((graphqlDTO.getSha() != null) && !latestDeployedCommitHash.equals(graphqlDTO.getSha())){
+                                                throw new DeploymentStatusByVersionFailureException(
+                                                    String.format("deploymentStatusByVersion[0] contains a different commit hash. Expected: %s. Received: %s",
+                                                    graphqlDTO.getSha(), latestDeployedCommitHash));
+                                            }
+                                            String status = latestDeploymentStatus.get("status").getAsString();
                                             deploymentStatus.set(status);
                                             if ("completed".equals(status)) {
                                                 String conclusion = deploymentStatusByVersion.get(0).getAsJsonObject().get("conclusion").getAsString();
