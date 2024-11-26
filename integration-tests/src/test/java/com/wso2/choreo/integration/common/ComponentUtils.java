@@ -1724,7 +1724,7 @@ public class ComponentUtils {
         while (!isRateLimitExceeded) {
             // Synchronize with the start of the next minute if we're too close to the end
             long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
-            if (timeRemainingTillNextMinute < 40000) {
+            if (timeRemainingTillNextMinute < 45000) {
                 Thread.sleep(timeRemainingTillNextMinute + 1000);
             }
 
@@ -1732,10 +1732,6 @@ public class ComponentUtils {
             long startTime = System.currentTimeMillis();
 
             for (int i = 0; i < repetitionCount; i++) {
-                timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
-                if (timeRemainingTillNextMinute <= 20000) {
-                    break;
-                }
                 Response dev = HttpClientUtil.httpGET(invokeURL, "", apiKey);
                 count++;
 
