@@ -51,6 +51,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
     private static String secretRef;
     private static String bitbucketOrgName;
     private static String appPwd;
+    private static String gitLabServerUrl;
+    private static String gitLabServerAccessToken;
     private static String credentialID;
     private static String credentialName;
     private static String targetEnvironmentId;
@@ -97,6 +99,8 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         secretRef = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_SECRET_REF);
         bitbucketOrgName = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_BITBUCKET_ORG_NAME);
         appPwd = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_APP_PWD);
+        gitLabServerUrl = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_GITLAB_SERVER_URL);
+        gitLabServerAccessToken = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_GITLAB_SERVER_ACCESS_TOKEN);
         credentialID = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_CREDENTIAL_ID);
         credentialName = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_CREDENTIAL_NAME);
         targetEnvironmentId = Configuration.getSecurityConfig(SecurityConfigDefinition.CM_TARGET_ENV_ID);
@@ -533,6 +537,18 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
 
     @Test
     @CitrusTest
+    public void gitTokenPermissionsGitLabServer_ComponentManagementElevatedAccessCheck() throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        Map<String, String> params = new HashMap<>();
+        params.put("gitLabServerUrl", gitLabServerUrl);
+        params.put("gitLabServerAccessToken", gitLabServerAccessToken);
+        String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
+                "gitTokenPermissionsGitLab.mustache", params);
+        SecurityUtils.elevatedAccessCheckForPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+    }
+
+    @Test
+    @CitrusTest
     public void createCommonCredential_ComponentManagementElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         Map<String, String> params = new HashMap<>();
@@ -541,6 +557,19 @@ public class ComponentManagementElevatedAccessCheck extends TestNGCitrusSpringSu
         params.put("appPwd", appPwd);
         String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
                 "commonCredential.mustache", params);
+        SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
+    }
+
+     @Test
+    @CitrusTest
+    public void createCommonCredentialGitLabServer_ComponentManagementElevatedAccessCheck() throws Exception {
+        HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        Map<String, String> params = new HashMap<>();
+        params.put("orgUuid", orgUuid);
+        params.put("gitLabServerUrl", gitLabServerUrl);
+        params.put("gitLabServerAccessToken", gitLabServerAccessToken);
+        String body = MessageUtils.generateStringFromTemplate("templates/graphql/requests/" +
+                "commonCredentialGitLab.mustache", params);
         SecurityUtils.elevatedAccessCheckForForbiddenPostRequests(this, choreoCPTestClient, requestUrl, body, accessToken);
     }
 

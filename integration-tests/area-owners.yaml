@@ -142,6 +142,7 @@ areaOwners:
   - testClass: com.wso2.choreo.integration.tests.security.componentManagement.ComponentManagementElevatedAccessCheck
     assignees:
       - yasithag@wso2.com
+      - yashodha@wso2.com
   - testClass: com.wso2.choreo.integration.tests.security.organizationManagement.CustomDomains.OrgMgtCustomDomainsElevatedAccessCheck
     assignees:
       - ketharan@ws02.com
