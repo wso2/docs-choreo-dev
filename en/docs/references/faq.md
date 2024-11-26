@@ -17,10 +17,10 @@ A component is a workload designed to run on Choreo. Examples of components incl
 ### Q: What is the difference between an internal and external API?
 In Choreo, you can publish an API as an internal or an external API. A user or an application can access an external API publicly over the internet, whereas an internal API is only accessible through other components within the same organization. 
 
-### Q: What is a connector in Choreo Marketplace?
-A connector is a reusable Ballerina package that simplifies connecting to external or internal systems and APIs, such as Salesforce, SAP, GitHub, and Twilio. You can use the connectors available in the Choreo marketplace to implement your integration use cases.  Connectors can be created and published by both WSO2 and Choreo users.
+### Q: What is a connector in Service Catalog?
+A connector is a reusable Ballerina package that simplifies connecting to external or internal systems and APIs, such as Salesforce, SAP, GitHub, and Twilio. You can use the connectors available in the Service Catalog to implement your integration use cases.  Connectors can be created and published by both WSO2 and Choreo users.
 
-### Q: What is a trigger in Choreo Marketplace?
+### Q: What is a trigger in Service Catalog?
 A trigger is a construct that enables users to receive known event payloads from external systems, facilitating event-driven programming.
 
 ### Q: What is a sample/template in Choreo?

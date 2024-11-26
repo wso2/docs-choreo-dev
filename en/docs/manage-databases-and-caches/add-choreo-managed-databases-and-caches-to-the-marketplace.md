@@ -1,9 +1,9 @@
-# Add Choreo-Managed Databases and Caches to the Marketplace
+# Add Choreo-Managed Databases and Caches to the Service Catalog
 
-When you create a Choreo-managed database or cache, you can add it to the Marketplace, making it available for consumption through a connection.
+When you create a Choreo-managed database or cache, you can add it to the Service Catalog, making it available for consumption through a connection.
 
 !!! note 
-     To add a Choreo-managed database or cache to the Marketplace, you must register at least one credential for it.
+     To add a Choreo-managed database or cache to the Service Catalog, you must register at least one credential for it.
 
 ## Step 1: Register credentials
 
@@ -37,13 +37,13 @@ To register credentials for a database, follow these steps:
 !!! tip 
      Choreo allows you to delete registered credentials to prevent their use when establishing new connections. However, deleting credentials will not affect any existing database connections that are already using them.
 
-## Step 2: Add the database or cache to the Marketplace
+## Step 2: Add the database or cache to the Service Catalog
 
-- On the **Databases** tab, click **+Add to Marketplace** corresponding to the database you want to add. 
+- On the **Databases** tab, click **+Add to Service Catalog** corresponding to the database you want to add. 
 
-Once the database is added to the Marketplace, it can be consumed via a connection. For details on creating a connection to a Choreo-managed database, see [Create a connection to a database](../develop-components/sharing-and-reusing/create-a-connection.md).
+Once the database is added to the Service Catalog, it can be consumed via a connection. For details on creating a connection to a Choreo-managed database, see [Create a connection to a database](../develop-components/sharing-and-reusing/create-a-connection.md).
 
 !!! note 
-     To remove a database or cache that you added to the Marketplace, click the corresponding **Remove from Marketplace**. This action prevents new connections to the removed database, but existing connections remain unaffected.
+     To remove a database or cache that you added to the Service Catalog, click the corresponding **Remove from Service Catalog**. This action prevents new connections to the removed database, but existing connections remain unaffected.
 
 For details on using a database connection in your component, see [Use a Database Connection in Your Component](../develop-components/sharing-and-reusing/use-a-database-connection-in-your-component.md).

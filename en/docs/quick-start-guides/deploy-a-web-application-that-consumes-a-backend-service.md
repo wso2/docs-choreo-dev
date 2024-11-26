@@ -110,7 +110,7 @@ For the REST endpoint of the service to be invokable, you need to deploy it. To 
 3. In the **Environment Configurations** pane that opens, click **Next** to skip the configuration.
 4. In the **File Mount** pane that opens, click **Next** to skip the configuration.
 5. In the **Endpoint Details** pane that opens, verify that the **Network Visibility** is set to **Public**. This setting securely exposes the endpoint for consumption.
-6. Click **Deploy**. This deploys the service to the development environment and lists the service in the [Choreo Marketplace](../choreo-concepts/choreo-marketplace.md). 
+6. Click **Deploy**. This deploys the service to the development environment and lists the service in the [Service Catalog](../choreo-concepts/choreo-marketplace.md). 
 
 ## Step 5: Test the service
 
@@ -148,7 +148,7 @@ Similarly, you can expand and try out the **GET** and **DELETE** methods.
 
 ## Step 6: Consume the service
 
-Now that the `Reading List Service` is deployed and available in the Choreo Marketplace, application developers can discover the service via the Marketplace and consume it.  
+Now that the `Reading List Service` is deployed and available in the Service Catalog, application developers can discover the service via the Service Catalog and consume it.  
 
 In this section of the guide, you will deploy a sample front-end application to consume the service. This application will serve as the interface for users to interact with the reading list. The sample application used in this guide is designed to personalize the book  lists based on the user ID that it obtains from its identity provider. 
 

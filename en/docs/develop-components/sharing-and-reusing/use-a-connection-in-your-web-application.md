@@ -134,11 +134,11 @@ To connect to a selected service, follow the step-by-step instructions given bel
 
     - For languages with OAuth 2.0-aware HTTP clients, you can invoke the service in a straightforward manner. The HTTP client seamlessly manages OAuth 2.0 authentication without requiring additional intervention.
 
-        As the service URL you can use the URL that you resolved in step 2 above. For sample requests and responses, see the API definition provided via the Choreo marketplace for the service.
+        As the service URL you can use the URL that you resolved in step 2 above. For sample requests and responses, see the API definition provided via the Service Catalog for the service.
 
     - For languages without OAuth 2.0-aware HTTP clients, you can use the token obtained in step 3 above to make calls to the dependent service. Subsequently, add the obtained token to the HTTP authorization header with the bearer prefix.
 
-        As the service URL you can use the URL that you resolved in step 2 above. For sample requests and responses, see the API definition of the service provided via the Choreo marketplace.
+        As the service URL you can use the URL that you resolved in step 2 above. For sample requests and responses, see the API definition of the service provided via the Service Catalog.
 
         The following is a sample code snippet in NodeJS:
 

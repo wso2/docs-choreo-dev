@@ -25,7 +25,7 @@ The following are some of the cutting-edge capabilities of Choreo:
 
  - Reusable digital assets:
     - **Control visibility and sharing**: Publish your digital assets to a shared marketplace for consumption by internal or external stakeholders, managed by role-based access control.
-    - **Internal Marketplace**: Choreo's secure internal marketplace fosters transparency and efficiency with granular access control for publishers and consumers.
+    - **Service Catalog**: Choreo's secure Service Catalog fosters transparency and efficiency with granular access control for publishers and consumers.
 
  - Comprehensive observability:
     - **Anomaly detection**: Stay ahead of issues with prompt notifications, ensuring balanced scaling and immediate action during unexpected mishaps.

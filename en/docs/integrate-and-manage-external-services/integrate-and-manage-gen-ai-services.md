@@ -6,7 +6,7 @@ Choreo enables seamless integration with GenAI services, allowing you to incorpo
 
 ## Register a GenAI service
 
-To use a GenAI service in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing you to consume it via a Connection.
+To use a GenAI service in Choreo, you need to register it. Once registered, the service becomes available in the Service Catalog, allowing you to consume it via a Connection.
 
 You can register a GenAI service at two levels:
 
@@ -53,13 +53,13 @@ To register a GenAI service, follow these steps:
 
 2. Click **Register**.
 
-Once registered, the GenAI service is automatically listed in the Internal Marketplace.
+Once registered, the GenAI service is automatically listed in the Service Catalog.
 
-If you want to remove the service from the Internal Marketplace, see [Remove a GenAI service from the Internal Marketplace](#remove-a-genai-service-from-the-internal-marketplace).
+If you want to remove the service from the Service Catalog, see [Remove a GenAI service from the Service Catalog](#remove-a-genai-service-from-the-internal-marketplace).
 
 ## Discover GenAI services
 
-The GenAI services you register are discoverable via the Internal Marketplace for you to consume via a Connection.
+The GenAI services you register are discoverable via the Service Catalog for you to consume via a Connection.
 
 For details on consuming a GenAI service via a connection, see [Create a Connection](../develop-components/sharing-and-reusing/create-a-connection.md).
 
@@ -77,19 +77,19 @@ To view or update a GenAI service, follow these steps.
     - **General Details**: Displays service metadata. For example, the service name, overview, labels, etc. 
     - **Service Definition**: Displays the service definition. To update the definition, click **Upload** and select the new definition file.
 
-### Add a GenAI service to the Internal Marketplace
+### Add a GenAI service to the Service Catalog
 
 !!! info
-    To add a GenAI service to the Internal Marketplace, you must provide all the required configurations.
+    To add a GenAI service to the Service Catalog, you must provide all the required configurations.
 
 1. In the Choreo Console left navigation menu, click **Dependencies** and then click **GenAI Services**.
-2. Click on the service you want to add to the Internal Marketplace.
-3. Click **Add to Marketplace**.
+2. Click on the service you want to add to the Service Catalog.
+3. Click **Add to Service Catalog**.
 
-### Remove a GenAI service from the Internal Marketplace
+### Remove a GenAI service from the Service Catalog
 
 1. In the Choreo Console left navigation menu, click **Dependencies** and then click **GenAI Services**.
-2. Click on the service you want to remove from the Internal Marketplace.
-3. Click **Remove from Marketplace**.
+2. Click on the service you want to remove from the Service Catalog.
+3. Click **Remove from Service Catalog**.
 
-This removes the service from the Internal Marketplace. Therefore, the service will not be available to consume via a Connection. However, the connections created before removal will continue to work as expected.
+This removes the service from the Service Catalog. Therefore, the service will not be available to consume via a Connection. However, the connections created before removal will continue to work as expected.

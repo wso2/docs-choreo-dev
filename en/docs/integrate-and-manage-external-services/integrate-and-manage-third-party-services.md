@@ -6,7 +6,7 @@ The following topics walk you through the steps to seamlessly register, manage, 
 
 ## Register a third-party service in Choreo
 
-To use a third-party service in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing you to consume it via a Connection.
+To use a third-party service in Choreo, you need to register it. Once registered, the service becomes available in the Service Catalog, allowing you to consume it via a Connection.
 
 You can register a third-party service at two levels:
 
@@ -79,15 +79,15 @@ To define service endpoints, follow these steps:
 
 6. Click **Register**.
 
-When you define all required parameter values for at least one endpoint, the service will be automatically listed in the Internal Marketplace. Otherwise, you must [add the service to the Internal Marketplace](#add-a-third-party-service-to-the-internal-marketplace) after providing the endpoint values.
+When you define all required parameter values for at least one endpoint, the service will be automatically listed in the Service Catalog. Otherwise, you must [add the service to the Service Catalog](#add-a-third-party-service-to-the-internal-marketplace) after providing the endpoint values.
 
-If you want to remove a third-party service from the Internal Marketplace, see [Remove a third-party service from the Internal Marketplace](#remove-a-third-party-service-from-the-internal-marketplace).
+If you want to remove a third-party service from the Service Catalog, see [Remove a third-party service from the Service Catalog](#remove-a-third-party-service-from-the-internal-marketplace).
  
 For details on managing third-party services, see [Manage third-party service](#manage-third-party-services).
 
 ## Discover third-party services
 
-The third-party services you register are discoverable via the Internal Marketplace to consume via a Connection.
+The third-party services you register are discoverable via the Service Catalog to consume via a Connection.
 
 For details on consuming a third-party service via a connection, see [Create a Connection](../develop-components/sharing-and-reusing/create-a-connection.md#create-a-connection-to-an-external-service).
 
@@ -106,19 +106,19 @@ To view or update a third-party service, follow these steps.
     - **Service Definition**: Displays the service definition. To update the definition, click **Upload** and select the new definition file.
     - **Endpoints**: Displays service endpoint details. You can add, modify, or delete service endpoints.
 
-### Add a third-party service to the Internal Marketplace
+### Add a third-party service to the Service Catalog
 
 !!! info
-    To add a third-party service to the Internal Marketplace, you must provide all required parameters for at least one endpoint.
+    To add a third-party service to the Service Catalog, you must provide all required parameters for at least one endpoint.
 
 1. In the Choreo Console left navigation menu, click **Dependencies** and then click **Third-Party Services**.
-2. Click on the service you want to add to the Internal Marketplace.
-3. Click **Add to Marketplace**.
+2. Click on the service you want to add to the Service Catalog.
+3. Click **Add to Service Catalog**.
 
-### Remove a third-party service from the Internal Marketplace
+### Remove a third-party service from the Service Catalog
 
 1. In the Choreo Console left navigation menu, click **Dependencies** and then click **Third-Party Services**.
-2. Click on the service you want to remove from the Internal Marketplace.
-3. Click **Remove from Marketplace**.
+2. Click on the service you want to remove from the Service Catalog.
+3. Click **Remove from Service Catalog**.
 
-This removes the service from the Internal Marketplace. Therefore, the service will not be available to consume via a Connection. However, the connections created before removal will continue to work as expected.
+This removes the service from the Service Catalog. Therefore, the service will not be available to consume via a Connection. However, the connections created before removal will continue to work as expected.

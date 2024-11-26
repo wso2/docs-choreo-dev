@@ -97,7 +97,7 @@ nav:
       - Connections: choreo-concepts/connections.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
-      - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
+      - Service Catalog: choreo-concepts/choreo-marketplace.md
   - Develop Components:
       - Develop Services:
           - Service Component Overview: develop-components/develop-services/service-component-overview.md
@@ -146,7 +146,7 @@ nav:
           - PostgreSQL:  manage-databases-and-caches/choreo-managed-postgresql-databases.md
           - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
           - Choreo-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
-          - Add Choreo-Managed Databases and Caches to the Marketplace: manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md
+          - Add Choreo-Managed Databases and Caches to the Service Catalog: manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md
   - Choreo-Managed Message Brokers: 
       - Overview: manage-message-brokers/choreo-managed-message-brokers.md
       - Kafka:  

@@ -62,7 +62,7 @@ Click the respective tab to view the structure for your current configuration fi
       
       # +optional Outgoing connection details for the component.
       dependencies:
-        # +optional Defines the connection references from the Internal Marketplace.
+        # +optional Defines the connection references from the Service Catalog.
         connectionReferences:
           # +required Name of the connection.
           - name: hr-connection
@@ -149,7 +149,7 @@ Click the respective tab to view the structure for your current configuration fi
       
       # +optional Outgoing connection details for the component.
       dependencies:
-        # +optional Defines the service references from the Internal Marketplace.
+        # +optional Defines the service references from the Service Catalog.
         serviceReferences:
           # +required Name of the service reference.
           - name: choreo:///apifirst/HRProject/UserComponent/ad088/v1/PUBLIC
@@ -243,7 +243,7 @@ spec:
       schemaFilePath: greeting_openapi.yaml
   # +optional Outgoing connection details for the component.
   outbound:
-    # +optional Defines the service references from the Internal Marketplace.
+    # +optional Defines the service references from the Service Catalog.
     serviceReferences:
       # +required Name of the service reference.
       - name: choreo:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
@@ -274,7 +274,7 @@ In the `spec.inbound` configuration section, you can specify endpoints to set up
 
 #### Outbound connection configurations (`spec.outbound`)
 
-In the `spec.outbound` section, you can define `serviceReferences`. To define `serviceReferences`, you can use the service references generated in the Internal Marketplace when creating a service connection. To copy the [outbound connection configurations](../sharing-and-reusing/use-a-connection-in-your-service/#use-a-connection-in-your-service), see the inline developer guide displayed when you create a connection.
+In the `spec.outbound` section, you can define `serviceReferences`. To define `serviceReferences`, you can use the service references generated in the Service Catalog when creating a service connection. To copy the [outbound connection configurations](../sharing-and-reusing/use-a-connection-in-your-service/#use-a-connection-in-your-service), see the inline developer guide displayed when you create a connection.
 
 You must include the following configurations in the `serviceReferences` schema:
 
