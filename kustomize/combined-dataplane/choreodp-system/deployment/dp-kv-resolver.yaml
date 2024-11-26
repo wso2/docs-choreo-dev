@@ -101,10 +101,10 @@ spec:
           resources:
             requests:
               memory: 2Gi
-              cpu: 1
+              cpu: "1"
             limits:
               memory: 4Gi
-              cpu: 1.5
+              cpu: "1.5"
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:

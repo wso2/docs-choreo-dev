@@ -19,15 +19,15 @@ kind: Kustomization
 
 resources:
   - ../../shared-components/dp-mizzen
-  - netpol
   - config
   - cron
   - deployment
   - hpa
+  - netpol
   - pdb
   - rbac
-  - service
   - secret-provider-class
+  - service
 
 patches:
   - path: priority-class-deployment-patch.yaml
