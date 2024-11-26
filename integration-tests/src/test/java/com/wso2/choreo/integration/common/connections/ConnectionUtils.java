@@ -15,9 +15,6 @@ package com.wso2.choreo.integration.common.connections;
 
 import java.util.Map;
 
-import com.wso2.choreo.integration.apis.component.Component;
-import com.wso2.choreo.integration.apis.graphql.GraphQL;
-
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.common.ComponentFlavour;
