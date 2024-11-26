@@ -29,6 +29,7 @@ import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.choreoproject.ComponentRepository;
+import com.wso2.choreo.integration.common.connections.ConnectionUtils;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
@@ -176,10 +177,9 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 oasFilePath(PUBLIC_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT+OAS_FILE_PATH).
                 dockerfilePath(PUBLIC_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT+SVC_COMPONENT_DOCKER_FILE_PATH).
                 dockerContext(PUBLIC_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT).build();
-
-        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, projectOne, repo);
-        publicEndpointServiceComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
-                dto, ComponentFlavour.BYOC);
+        
+        publicEndpointServiceComponent = 
+                ConnectionUtils.createByocComponent(this, citrusClients, accessToken, componentName, projectOne, repo);
     }
     @Test(dependsOnMethods = {"createServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
@@ -201,10 +201,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 oasFilePath(OAS_FILE_PATH).
                 dockerfilePath(CLIENT_COMPONENT_DOCKER_FILE_PATH).build();
 
-        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, projectOne, repo);
-
-        clientChoreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
-                dto, ComponentFlavour.BYOC);
+        clientChoreoComponent = ConnectionUtils.createByocComponent(this, citrusClients, accessToken, componentName, projectOne, repo);
         clientComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 clientChoreoComponent);
     }
@@ -459,9 +456,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 dockerfilePath(ORG_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT+SVC_COMPONENT_DOCKER_FILE_PATH).
                 dockerContext(ORG_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT).build();
 
-        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, projectOne, repo);
-        orgEndpointServiceComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
-                dto, ComponentFlavour.BYOC);
+        orgEndpointServiceComponent = 
+                ConnectionUtils.createByocComponent(this, citrusClients, accessToken, componentName, projectOne, repo);
         orgEndpointComponentDeployedEnvs = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 orgEndpointServiceComponent);
         orgEndpointServiceDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
@@ -493,10 +489,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 oasFilePath(OAS_FILE_PATH).
                 dockerfilePath(CLIENT_COMPONENT_DOCKER_FILE_PATH).build();
 
-        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, projectOne, repo);
-
-        apiKeyEnabledClientChoreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
-                dto, ComponentFlavour.BYOC);
+        apiKeyEnabledClientChoreoComponent = 
+                ConnectionUtils.createByocComponent(this, citrusClients, accessToken, componentName, projectOne, repo);
         apiKeyEnabledClientComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
                 accessToken, apiKeyEnabledClientChoreoComponent);
     }
@@ -619,10 +613,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 dockerfilePath(PROJECT_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT+SVC_COMPONENT_DOCKER_FILE_PATH).
                 dockerContext(PROJECT_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT).build();
 
-
-        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, projectOne, repo);
-        projectEndpointServiceComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
-                dto, ComponentFlavour.BYOC);
+        projectEndpointServiceComponent = 
+                ConnectionUtils.createByocComponent(this, citrusClients, accessToken, componentName, projectOne, repo);
         projectEndpointComponentDeployedEnvs = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 projectEndpointServiceComponent);
         projectEndpointServiceDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
@@ -820,9 +812,8 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 oasFilePath(OAS_FILE_PATH).
                 dockerfilePath(CLIENT_COMPONENT_DOCKER_FILE_PATH).build();
 
-        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, projectOne, repo);
-        newClientChoreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
-                dto, ComponentFlavour.BYOC);
+        newClientChoreoComponent = 
+                ConnectionUtils.createByocComponent(this, citrusClients, accessToken, componentName, projectOne, repo);
         newClientComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 newClientChoreoComponent);
         componentLevelNewConnectionId = ConnectionService.createAndUseConnection(this, citrusClients, accessToken,
