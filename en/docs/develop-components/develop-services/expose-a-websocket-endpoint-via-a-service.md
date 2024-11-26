@@ -34,7 +34,7 @@ It is important to understand the purpose of the key files in the sample service
 |Filepath                        | Description                                                     |
 |--------------------------------|-----------------------------------------------------------------|
 | `server.js`                    | The NodeJS chat service.                                        |
-| `.choreo/component-config.yaml`| The configuration file with endpoint details.                   |
+| `.choreo/component.yaml`       | The configuration file with endpoint details.                   |
 
 !!! note
     Choreo currently supports the AsyncAPI 2.0 specification for defining WebSocket APIs.
