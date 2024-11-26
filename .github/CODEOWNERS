@@ -1,8 +1,5 @@
 # Code owners configuration for deployment artifacts
-/kustomize/ @a5anka @chirangaalwis @chalitha1989 @jsdjayanga
+* @ruwany @chalitha1989 @chirangaalwis @Rovinovic @SachithKasthuriarachchi @shananjana @udhanMti @janethavi @hiranadikari @ranikamadurawe
 
 # protect the CODEOWNERS file
-/.github/CODEOWNERS @a5anka @chirangaalwis @jsdjayanga @ramith @chalitha1989
-
-# Code owners configuaration for liquibase changelogfiles
-/liquibase/db/changelog/ @a5anka @chirangaalwis @chalitha1989 @udhanMti @SachithKasthuriarachchi @shananjana @ranikamadurawe
+/.github/CODEOWNERS @ruwany @chirangaalwis @chalitha1989
