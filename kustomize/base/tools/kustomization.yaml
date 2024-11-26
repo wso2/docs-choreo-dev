@@ -10,6 +10,4 @@
 # --------------------------------------------------------------------------------------
 
 resources:
-  - certificates
-
-namespace: cert-manager
+  - ../../../helm/actions-runner-controller
