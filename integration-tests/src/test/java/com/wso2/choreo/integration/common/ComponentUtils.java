@@ -1967,4 +1967,16 @@ public class ComponentUtils {
         }
 
     }
+
+    public static void waitForComponentInitialBuildComplete(TestNGCitrusSpringSupport runner, Map<Endpoints, 
+            HttpClient> citrusClients, String accessToken, ChoreoComponent component) throws Exception {
+    
+        GraphqlDTO dto = GraphqlDTO.builder()
+            .componentId(component.getId())
+            .latestVersionId(component.getLatestApiVersion().getId())
+            .build();
+        String runId = GraphQL.getRunId(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
+        Component.waitForComponentBuildDeployComplete(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, 
+            component.getProjectId(), component.getId(), runId, 50);
+    }
 }
