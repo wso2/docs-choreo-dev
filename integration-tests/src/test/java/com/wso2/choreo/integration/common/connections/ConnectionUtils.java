@@ -34,17 +34,10 @@ public class ConnectionUtils {
     public static ChoreoComponent createByocComponent(TestNGCitrusSpringSupport runner, Map<Endpoints, 
             HttpClient> citrusClients, String accessToken, String componentName, ChoreoProject project, Repository repo) throws Exception {
     
-    GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, project, repo);
-    ChoreoComponent component = ComponentUtils.createComponent(runner, citrusClients, accessToken,
-            dto, ComponentFlavour.BYOC);
-    // wait for auto build to complete
-    GraphqlDTO runIdDto = GraphqlDTO.builder()
-            .componentId(component.getId())
-            .latestVersionId(component.getLatestApiVersion().getId())
-            .build();
-    String runId = GraphQL.getRunId(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, runIdDto);
-    Component.waitForComponentBuildDeployComplete(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, 
-            project.getId(), component.getId(), runId, 50);
+        GraphqlDTO dto = ComponentUtils.createByocComponentRequest(componentName, project, repo);
+        ChoreoComponent component = ComponentUtils.createComponent(runner, citrusClients, accessToken,
+                dto, ComponentFlavour.BYOC);
+        ComponentUtils.waitForComponentInitialBuildComplete(runner, citrusClients, accessToken, component);
         return component;
     }
 }
