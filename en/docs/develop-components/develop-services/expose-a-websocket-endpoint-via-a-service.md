@@ -36,6 +36,9 @@ It is important to understand the purpose of the key files in the sample service
 | `server.js`                    | The NodeJS chat service.                                        |
 | `.choreo/component-config.yaml`| The configuration file with endpoint details.                   |
 
+!!! note
+    Choreo currently supports the AsyncAPI 2.0 specification for defining WebSocket APIs.
+
 ## Step 1: Create a service component 
 
 To create a NodeJS service component, follow these steps:
