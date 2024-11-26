@@ -1,7 +1,0 @@
-resources:
-  - cert-manager
-  - choreo-ai
-  - choreo-observability
-  - csi-secret-store-driver
-  - keda
-  - reloader

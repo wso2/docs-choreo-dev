@@ -1,6 +1,5 @@
 resources:
   - cert-manager
   - choreo-ai
-  - csi-secret-store-driver
-  - reloader
   - spicedb-operator
+  - tools
