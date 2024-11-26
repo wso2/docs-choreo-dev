@@ -19,6 +19,9 @@ spec:
       labels:
         choreo.component: choreo-gcp-marketplace-client
         antiaffinity: choreo-gcp-marketplace-client
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       affinity:
         podAntiAffinity:
@@ -27,9 +30,21 @@ spec:
                 matchLabels:
                   antiaffinity: choreo-gcp-marketplace-client
               topologyKey: kubernetes.io/hostname
+      automountServiceAccountToken: true
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: choreo-gcp-marketplace-client
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-gcp-marketplace-client:latest
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - ALL
           ports:
             - containerPort: 8080
           envFrom:
