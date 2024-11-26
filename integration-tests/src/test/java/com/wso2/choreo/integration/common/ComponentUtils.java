@@ -1858,6 +1858,7 @@ public class ComponentUtils {
             apiVersions.add(existingVersion);
         }
         ApiVersion latestApiVersion = new ApiVersion();
+        latestApiVersion.setApiVersion(version);
         latestApiVersion.setLatest(true);
         latestApiVersion.setId(newDeploymentTrack.getId());
         latestApiVersion.setAppEnvVersions(apiVersions.get(0).getAppEnvVersions());
