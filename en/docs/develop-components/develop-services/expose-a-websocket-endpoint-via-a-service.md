@@ -37,7 +37,7 @@ It is important to understand the purpose of the key files in the sample service
 | `.choreo/component.yaml`       | The configuration file with endpoint details.                   |
 
 !!! note
-    Choreo currently supports the AsyncAPI 2.0 specification for defining WebSocket APIs.
+    Choreo currently supports defining WebSocket APIs using the AsyncAPI 2.0 specification.
 
 ## Step 1: Create a service component 
 
@@ -120,8 +120,8 @@ Once you have successfully deployed your service, you can [test](../../testing/t
 During testing, once the WebSocket connection is established, you can send {"type": "Connect", "username": "user1"} to the WebSocket endpoint to connect to the chat service. You can then send chat messages by using {"type": "Data", "message": "Hello, World!"}.
 
 !!! note
-     Some clients, such as certain browsers, may not support adding headers to the WebSocket handshake. In these cases, you can include the access token or Test key required for WebSocket API invocation within the `sec-websocket-protocol` header, along with any specified subprotocols.
+     Some clients, such as certain browsers, may not support adding headers to the WebSocket handshake. In these cases, you can include the access token or test key required for WebSocket API invocation within the `sec-websocket-protocol` header, along with any specified subprotocols.
 
      For example: `sec-websocket-protocol: choreo-oauth2-token, {access token}, subprotocols`
 
-     If you are using a Test Key, replace `choreo-oauth2-token` with `choreo-test-key`.
+     If you are using a test key, replace `choreo-oauth2-token` with `choreo-test-key`.
