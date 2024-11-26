@@ -26,6 +26,7 @@ import com.wso2.choreo.integration.common.*;
 import com.wso2.choreo.integration.common.PlatformServices.PlatformServicesUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.choreoproject.ComponentRepository;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -253,10 +254,12 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
 
         Optional<ChoreoComponent> clientChoreoComponentNewVer = ComponentUtils.getComponentByName(this, accessToken, citrusClients,consumerProject,clientChoreoComponent.getName());
         clientChoreoComponentNewVersion = clientChoreoComponentNewVer.get();
+        ComponentRepository repository = clientChoreoComponentNewVersion.getRepository();
+        repository.setBranchApp("component-yaml-v10");
+        clientChoreoComponentNewVersion.setRepository(repository);
+
         ConnectionService.UpdateSourceConfigurationFile(REPO_NAME, "component-yaml-v10", databaseConnection.getGroupUuid(), "database:".concat(devDatabaseName),
                 SourceConfigurationFileTypes.COMPONENT_V1D0, CLIENT_COMPONENT_CHOREO_FOLDER_PATH);
-
-        DatabaseServer dbServer = PlatformServices.getDatabaseServer(this,httpClient,mysqlDatabaseServer.getId(),orgUUID,accessToken);
 
         //deploy to dev environment
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, clientChoreoComponentNewVersion);
@@ -291,11 +294,12 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
         ComponentUtils.createComponentVersion(this, citrusClients, accessToken, clientChoreoComponent, "v1.2", "component-config-yaml");
         Optional<ChoreoComponent> clientChoreoComponentNewVer = ComponentUtils.getComponentByName(this, accessToken, citrusClients,consumerProject,clientChoreoComponent.getName());
         clientChoreoComponentNewVersion = clientChoreoComponentNewVer.get();
+        ComponentRepository repository = clientChoreoComponentNewVersion.getRepository();
+        repository.setBranchApp("component-config-yaml");
+        clientChoreoComponentNewVersion.setRepository(repository);
 
         ConnectionService.UpdateSourceConfigurationFile(REPO_NAME, "component-config-yaml", databaseConnection.getGroupUuid(), "database:".concat(devDatabaseName),
                     SourceConfigurationFileTypes.COMPONENT_CONFIG, CLIENT_COMPONENT_CHOREO_FOLDER_PATH);
-
-        DatabaseServer dbServer = PlatformServices.getDatabaseServer(this,httpClient,mysqlDatabaseServer.getId(),orgUUID,accessToken);
 
         //deploy to dev environment
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, clientChoreoComponentNewVersion);
