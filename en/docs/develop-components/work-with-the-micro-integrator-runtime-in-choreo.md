@@ -21,7 +21,7 @@ In addition to streamlining the development process, Integration Studio offers f
 
 The Composite Exporter project simplifies the deployment process by allowing developers to package their integration projects as a single, self-contained artifact that can be easily deployed and managed. This approach enhances the consistency and reliability of integration projects while streamlining the overall deployment process.
 
-To start developing integrations with WSO2 Integration Studio, see [WSO2 API Manager Documentation - Developing Integration Solutions](https://apim.docs.wso2.com/en/latest/integrate/develop/intro-integration-development/).
+To start developing integrations with WSO2 Micro Integrator, see [WSO2 Micro Integrator documentation - Developing Integration Solutions](https://mi.docs.wso2.com/en/latest/develop/intro-integration-development/).
 
 ## Integration project directory structure
 
