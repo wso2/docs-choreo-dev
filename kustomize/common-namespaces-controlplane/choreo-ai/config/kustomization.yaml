@@ -33,3 +33,14 @@ configMapGenerator:
       - ZILLIZ_CLOUD_URI={{.ZILLIZ_CLOUD_URI | default ""}}
       - DOCS_COLLECTION={{.DOCS_COLLECTION | default ""}}
       - COMMITS_COLLECTION={{.COMMITS_COLLECTION | default ""}}
+  - name: env-copilot-datacollector-cm
+    behavior: create
+    literals:
+      - DB_SERVER={{.DB_SERVER | default ""}}
+      - DB_USER={{.DB_USER | default ""}}
+      - DB_PORT={{.DB_PORT | default ""}}
+      - DB_NAME={{.DB_NAME | default ""}}
+      - DB_PASSWORD_FILE=/mnt/csi/secret-copilot-datacollector/DB_PASSWORD
+      - DB_PASSWORD_FILE=/mnt/csi/secret-copilot-datacollector/BQ_SERVICE_ACCOUNT_KEY
+      - BQ_PROJECT_ID={{.BQ_PROJECT_ID | default ""}}
+      - ORG_MANAGER_SCOPE={{.ORG_MANAGER_SCOPE | default ""}}

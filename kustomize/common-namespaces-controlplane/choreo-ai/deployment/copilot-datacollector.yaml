@@ -1,0 +1,110 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2024, WSO2 LLC. (http://wso2.com) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: "CKV_K8S_AZURE_WSO2_2=Linkerd is disable for dataplane"
+  labels:
+    choreo.component: copilot-datacollector-service
+  name: copilot-datacollector-service
+spec:
+  selector:
+    matchLabels:
+      choreo.component: copilot-datacollector
+  template:
+    metadata:
+      labels:
+        choreo.component: copilot-datacollector
+        antiaffinity: copilot-datacollector
+      annotations:
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+        seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: copilot-datacollector
+          envFrom:
+            - configMapRef:
+                name: env-copilot-datacollector-cm
+            - secretRef:
+                name: copilot-datacollector-secret
+          image: choreocontrolplane.azurecr.io/choreoipaas/copilot-datacollector:latest
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 250m
+              memory: 250Mi
+          ports:
+            - containerPort: 8000
+              name: data-col-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: data-col-port
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: data-col-port
+              path: /health
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - mountPath: /mnt/csi/secret-copilot-datacollector
+              name: copilot-datacollector-secret
+              readOnly: true
+            - mountPath: /tmp
+              name: temp-volume
+      volumes:
+        - name: copilot-datacollector-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: copilot-datacollector-secret
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: temp-volume
+          emptyDir: {}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  antiaffinity: copilot-datacollector
+              topologyKey: kubernetes.io/hostname

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: copilot-datacollector
+  name: copilot-datacollector.yaml
+spec:
+  ports:
+    - name: spec-pop-port
+      port: 8000
+      targetPort: spec-pop-port
+  selector:
+    choreo.component: spec-populator
