@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.apis.configmgt;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.TestCaseFailedException;
 import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
@@ -29,6 +30,7 @@ import org.springframework.http.MediaType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -63,24 +65,43 @@ public class ConfigManagement {
 
         String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required", "isRequired");
 
-        // Update configurations
-        runner.$(repeatOnError()
-                .until("i = 10")
-                .index("i")
-                .autoSleep(30000)
-                .actions(
-                        http()
-                                .client(client)
-                                .send()
-                                .post(configurationsUpdateRequestURI)
-                                .message()
-                                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
-                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                                .body(configurationsRequestBody),
-                        http()
-                                .client(client)
-                                .receive()
-                                .response(HttpStatus.OK)));
+        int retryNumber = 0;
+        int maxNumberOfRetries = 4;
+        int backOffFactor = 2;
+        boolean shouldRetry;
+        do {
+            try {
+                // Update configurations
+                runner.$(repeatOnError()
+                        .until("i = 3") //Reduced repeats based on response since manual backoff handles retries
+                        .index("i")
+                        .autoSleep(30000)
+                        .actions(
+                            http()
+                                        .client(client)
+                                        .send()
+                                        .post(configurationsUpdateRequestURI)
+                                        .message()
+                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                        .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                        .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                        .body(configurationsRequestBody),
+                                http()
+                                        .client(client)
+                                        .receive()
+                                        .response(HttpStatus.OK)));
+                shouldRetry = false;
+            } catch (TestCaseFailedException e) {
+                retryNumber++;
+                shouldRetry = retryNumber < maxNumberOfRetries;
+                if (retryNumber == maxNumberOfRetries) {
+                    throw new RuntimeException("Invocations failed for URL : " + configurationsUpdateRequestURI, e);
+                } else {
+                    //Using a linear backoff instead of exponential backoff to reduce the impact on test suite runtime
+                    TimeUnit.SECONDS.sleep((long) backOffFactor * retryNumber);
+                    log.debug(". Retry #{} for URL {} since invoke failed : {}", retryNumber, configurationsUpdateRequestURI, e);
+                }
+            }
+        } while (shouldRetry);
     }
 }

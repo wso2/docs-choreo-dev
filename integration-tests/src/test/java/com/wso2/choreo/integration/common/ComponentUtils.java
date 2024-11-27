@@ -576,6 +576,7 @@ public class ComponentUtils {
                                                                                Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent testComponent,
                                                                                List<Environment> environments, ComponentFlavour componentFlavour,
                                                                                           BalConfig... balconfigs) throws Exception {
+        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = null;
         HttpClient choreoProjectsTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, choreoProjectsTestClient, testComponent.getId(), accessToken,
                 testComponent.getRepository().getBranchApp());
@@ -585,17 +586,24 @@ public class ComponentUtils {
             ConfigManagement.addConfiguration(runner, choreoProjectsTestClient, testComponent, latestCommit.getSha(), environments.get(0),
                     balconfigs);
         }
-
-        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken, testComponent, latestCommit,
-                environments);
-        try {
-            ComponentUtils.validateComponentDeployment(runner, citrusClients, accessToken, testComponent, latestCommit, environments);
-        } catch (Exception e) {
-            if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
-                log.error("DeployStatusByVersion failure detected", e);
-            } else {
-                throw e;
+        for (int i = 0; i < MAX_DEPLOY_RETRY_COUNT; ++i) {
+            componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken,
+                    testComponent, latestCommit,
+                    environments);
+            try {
+                ComponentUtils.validateComponentDeployment(runner, citrusClients, accessToken, testComponent,
+                        latestCommit, environments);
+                break;
+            } catch (Exception e) {
+                if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
+                    log.error("DeployStatusByVersion failure detected, attempt number " + (i + 1), e);
+                } else {
+                    throw e;
+                }
             }
+        }
+        if (componentDeploymentStatusDTO == null) {
+            throw new Exception("Component deployment failed");
         }
 
         return componentDeploymentStatusDTO;
