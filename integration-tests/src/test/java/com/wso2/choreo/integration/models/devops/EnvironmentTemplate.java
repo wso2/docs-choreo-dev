@@ -37,12 +37,15 @@ public class EnvironmentTemplate {
     private String envName;
     private String region;
     private String choreoEnv;
+    @JsonProperty("cluster_id")
     private UUID clusterId;
     private UUID dockerCredentialUuid;
     private String externalApimEnvName;
     private String internalApimEnvName;
     private String sandboxApimEnvName;
     private boolean critical;
+    @JsonProperty("dns_prefix")
+    private String dnsPrefix;
     private String pdpWebAppDnsPrefix;
     private String deletionStatus;
 }

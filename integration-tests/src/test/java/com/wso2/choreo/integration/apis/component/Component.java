@@ -321,7 +321,8 @@ public class Component extends ControlPlaneAPI {
     }
 
     public static KeyGenResponseDTO generateKeys(TestActionRunner runner, HttpClient client,
-            String projectId, String componentId, String environmentId, HashMap<String, Object> keyGenRequest)
+                                                 String projectId, String componentId, String environmentId, HashMap<String, Object> keyGenRequest,
+                                                 String componentType)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
@@ -335,7 +336,7 @@ public class Component extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .send()
-                                .post(getKeyGenURL(projectId, componentId, environmentId))
+                                .post(getKeyGenURL(projectId, componentId, environmentId, componentType))
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, getAccessToken())
                                 .contentType(String.valueOf(MediaType.APPLICATION_JSON))
@@ -368,12 +369,13 @@ public class Component extends ControlPlaneAPI {
     }
 
     public static KeyGenResponseDTO regenerateKeysets(TestActionRunner runner, HttpClient client,
-            String projectId, String componentId, String environmentId, String oAuthAppId)
+                                                      String projectId, String componentId, String environmentId, String oAuthAppId,
+                                                      String componentType)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
 
-        String url = getKeyRegenerateURL(projectId, componentId, environmentId, oAuthAppId);
+        String url = getKeyRegenerateURL(projectId, componentId, environmentId, oAuthAppId, componentType);
         URIBuilder uriBuilder = new URIBuilder(url);
         uriBuilder.addParameter("organizationId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
         uriBuilder.addParameter("project_id", projectId);
@@ -422,7 +424,7 @@ public class Component extends ControlPlaneAPI {
                     HashMap<String, Object> keyMappingRequest, HttpStatus expectedStatus)
                     throws TokenRetrievalException, IOException, URISyntaxException {
 
-            String requestBody = ObjectMapperUtil.mapToString(keyMappingRequest);
+        String requestBody = ObjectMapperUtil.mapToString(keyMappingRequest);
 
         runner.$(repeatOnError()
                 .until("i = 5")
@@ -473,15 +475,18 @@ public class Component extends ControlPlaneAPI {
                                 .message()));
     }
 
-    private static String getKeyGenURL(String projectId, String componentId, String environmentId) {
+    private static String getKeyGenURL(String projectId, String componentId, String environmentId,
+                                       String componentType) {
 
-        return getKeyManagerCommonURL(projectId, componentId, environmentId) + "/generate";
+        return getKeyManagerCommonURL(projectId, componentId, environmentId)
+                + "/generate?keyType=sandbox&componentType=" + componentType;
     }
 
     private static String getKeyRegenerateURL(String projectId, String componentId, String environmentId,
-            String oAuthAppId) {
+            String oAuthAppId, String componentType) {
 
-        return getKeyManagerCommonURL(projectId, componentId, environmentId) + "/" + oAuthAppId;
+        return getKeyManagerCommonURL(projectId, componentId, environmentId) + "/" + oAuthAppId
+                + "?keyType=sandbox&componentType=" + componentType;
     }
 
     private static String getKeyMappingEndpointURL(String projectId, String componentId, String environmentId) {

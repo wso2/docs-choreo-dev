@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientCredentialsResponseDTO {
+public class TokenResponseDTO {
     private String access_token;
     private String scope;
     private String token_type;

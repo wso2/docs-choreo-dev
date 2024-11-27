@@ -65,6 +65,8 @@ public class KeysetManagementService {
      *
      * @param runner              Citrus test runner
      * @param client              Citrus http client
+     * @param orgUuid             Org UUID
+     * @param envId               Environment template Id
      * @param oAuthAppId          OAuth application ID
      * @param configUpdateRequest Configuration update request
      * @return OAuthAppUpdateResponseDTO
@@ -73,7 +75,7 @@ public class KeysetManagementService {
      * @throws URISyntaxException      If an error occurs while building the URI
      */
     public static OAuthAppUpdateResponseDTO updateKeysetConfigurations(TestActionRunner runner, HttpClient client,
-            String oAuthAppId, HashMap<String, Object> configUpdateRequest)
+                                                                       String orgUuid, String envId, String oAuthAppId, HashMap<String, Object> configUpdateRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
@@ -81,7 +83,8 @@ public class KeysetManagementService {
 
         String url = getConfigUpdateURL(oAuthAppId);
         URIBuilder uriBuilder = new URIBuilder(url);
-        uriBuilder.addParameter("organizationId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+        uriBuilder.addParameter("organizationId", orgUuid);
+        uriBuilder.addParameter("environmentId", envId);
 
         runner.$(repeatOnError()
                 .until("i = 5")
@@ -376,7 +379,7 @@ public class KeysetManagementService {
 
     private static String getConfigUpdateURL(String oAuthAppId) {
 
-        return APIM_APPDEV_BASE_PATH + "/oauth-applications/" + oAuthAppId;
+        return "choreo-appdev-sts-management-service/v1.0/sts-proxy/oauth-applications/" + oAuthAppId;
     }
 
     private static String getStsEndpoint() {

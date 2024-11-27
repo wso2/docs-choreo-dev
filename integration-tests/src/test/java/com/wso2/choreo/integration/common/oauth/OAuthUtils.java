@@ -19,7 +19,8 @@ import com.consol.citrus.http.client.HttpClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.wso2.choreo.integration.apis.oauth.OAuthService;
-import com.wso2.choreo.integration.models.oauth.ClientCredentialsResponseDTO;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants;
+import com.wso2.choreo.integration.models.oauth.TokenResponseDTO;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,34 +30,37 @@ import java.util.HashMap;
  * Utility class for OAuth related operations.
  */
 public class OAuthUtils {
-    
+
     /**
      * Invokes the client credentials grant type flow.
      *
      * @param runner           Citrus test runner
-     * @param tokenEndpointURL Token endpoint URL
+     * @param httpClient       Http client
      * @param clientId         Client ID
      * @param clientSecret     Client secret
-     * @param oAuthRequest     OAuth request
-     * @return ClientCredentialsResponseDTO
+     * @return TokenResponseDTO
      * @throws JsonMappingException   JsonMappingException
      * @throws JsonProcessingException JsonProcessingException
      */
-    public static ClientCredentialsResponseDTO invokeClientCredentialsAuthFlow(TestActionRunner runner,
-            String tokenEndpointURL, String clientId, String clientSecret,
-            HashMap<String, Object> oAuthRequest) throws JsonMappingException, JsonProcessingException {
+    public static TokenResponseDTO invokeClientCredentialsAuthFlow(TestActionRunner runner, HttpClient httpClient,
+                                                                   String clientId, String clientSecret)
+            throws JsonMappingException, JsonProcessingException {
 
-        return OAuthService.invokeClientCredentialsAuthFlow(runner,
-                createHttpClientForClientCredentialsFlow(tokenEndpointURL), tokenEndpointURL, clientId, clientSecret,
-                oAuthRequest);
+        HashMap<String, Object> oAuthRequest = new HashMap<>() {
+            {
+                put(KeysetManagementConstants.ClientCredentialsAuthFlowParams.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT_TYPE);
+                put(KeysetManagementConstants.ClientCredentialsAuthFlowParams.SCOPE, OAuthConstants.DEFAULT_CLIENT_CREDENTIALS_SCOPES);
+            }
+        };
+        return OAuthService.invokeTokenCall(runner, httpClient, clientId, clientSecret, oAuthRequest);
     }
 
-    private static HttpClient createHttpClientForClientCredentialsFlow(String tokenEndpointURL) {
+    public static HttpClient createStsClient(String stsUrl) {
         return CitrusEndpoints
                 .http()
                 .client()
                 .restTemplate(restTemplate())
-                .requestUrl(tokenEndpointURL)
+                .requestUrl(stsUrl)
                 .build();
     }
 

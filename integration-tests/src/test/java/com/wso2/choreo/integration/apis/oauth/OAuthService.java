@@ -8,7 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
-import com.wso2.choreo.integration.models.oauth.ClientCredentialsResponseDTO;
+import com.wso2.choreo.integration.models.oauth.TokenResponseDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.wso2.choreo.integration.common.oauth.OAuthConstants.DEFAULT_TOKEN_ENDPOINT;
 
 /**
  * Utility class for OAuth related operations.
@@ -29,7 +30,6 @@ public class OAuthService {
      *
      * @param runner           Citrus test runner
      * @param client           HTTP client
-     * @param tokenEndpointURL Token endpoint URL
      * @param clientId         Client ID
      * @param clientSecret     Client secret
      * @param oAuthRequest     OAuth request
@@ -37,13 +37,12 @@ public class OAuthService {
      * @throws JsonMappingException   JsonMappingException
      * @throws JsonProcessingException JsonProcessingException
      */
-    public static ClientCredentialsResponseDTO invokeClientCredentialsAuthFlow(TestActionRunner runner,
-            HttpClient client, String tokenEndpointURL, String clientId, String clientSecret,
-            HashMap<String, Object> oAuthRequest) throws JsonMappingException, JsonProcessingException {
+    public static TokenResponseDTO invokeTokenCall(TestActionRunner runner, HttpClient client, String clientId,
+                                                   String clientSecret, HashMap<String, Object> oAuthRequest)
+            throws JsonMappingException, JsonProcessingException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
         String requestBody = ObjectMapperUtil.mapToString(oAuthRequest);
-
         runner.$(repeatOnError()
                 .until("i = 5")
                 .index("i")
@@ -52,7 +51,7 @@ public class OAuthService {
                         http()
                                 .client(client)
                                 .send()
-                                .post("/")
+                                .post(DEFAULT_TOKEN_ENDPOINT)
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, getBasicAuthorizationHeader(clientId, clientSecret))
                                 .contentType(String.valueOf(MediaType.APPLICATION_JSON))
@@ -69,9 +68,8 @@ public class OAuthService {
                                         throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
                                     }
                                     try {
-                                        ClientCredentialsResponseDTO response = new ObjectMapper()
-                                                .readValue(message.getPayload().toString(),
-                                                        ClientCredentialsResponseDTO.class);
+                                        TokenResponseDTO response = new ObjectMapper()
+                                                .readValue(message.getPayload().toString(), TokenResponseDTO.class);
                                         if (response.getAccess_token() == null) {
                                             throw new RuntimeException("Response fields are empty");
                                         }
@@ -81,8 +79,7 @@ public class OAuthService {
                                     }
                                 })));
 
-        return new ObjectMapper().readValue(responseDTO.get(), ClientCredentialsResponseDTO.class);
-
+        return new ObjectMapper().readValue(responseDTO.get(), TokenResponseDTO.class);
     }
 
     private static String getBasicAuthorizationHeader(String clientId, String clientSecret) {
