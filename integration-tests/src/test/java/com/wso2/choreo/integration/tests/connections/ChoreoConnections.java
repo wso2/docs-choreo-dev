@@ -501,13 +501,13 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients, this, accessToken,
                 ORG_VISIBILITY_SVC_COMPONENT_SERVICE_NAME, ORG_LVL_NETWORK_VISIBILITY_FILTER, "");
-        componentLevelConnectionCreationReq = ConnectionService.createComponentLevelConnectionCreationReq(
+        ConnectionCreateRequest connectionCreateReq = ConnectionService.createComponentLevelConnectionCreationReq(
                 apiKeyEnabledClientComponentEnvironments, projectOne.getId(), apiKeyEnabledClientChoreoComponent.getId(),
                 ORGANIZATION_SERVICE, serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String serviceId = serviceFound.getServiceId();
         String connectionId = ConnectionService.createChoreoConnection(this, httpClient,
-                accessToken, componentLevelConnectionCreationReq, true,
+                accessToken, connectionCreateReq, true,
                 orgEndpointComponentDeployedEnvs, false);
         //update component-config.yaml file
         String serviceIdentifier = MarketplaceService.getChoreoServiceIdentifier(this,
