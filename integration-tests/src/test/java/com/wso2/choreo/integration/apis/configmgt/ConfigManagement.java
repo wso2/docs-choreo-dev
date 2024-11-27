@@ -65,43 +65,24 @@ public class ConfigManagement {
 
         String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required", "isRequired");
 
-        int retryNumber = 0;
-        int maxNumberOfRetries = 4;
-        int backOffFactor = 2;
-        boolean shouldRetry;
-        do {
-            try {
-                // Update configurations
-                runner.$(repeatOnError()
-                        .until("i = 3") //Reduced repeats based on response since manual backoff handles retries
-                        .index("i")
-                        .autoSleep(30000)
-                        .actions(
-                            http()
-                                        .client(client)
-                                        .send()
-                                        .post(configurationsUpdateRequestURI)
-                                        .message()
-                                        .header(HttpHeaders.AUTHORIZATION, accessToken)
-                                        .contentType(String.valueOf(MediaType.APPLICATION_JSON))
-                                        .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                                        .body(configurationsRequestBody),
-                                http()
-                                        .client(client)
-                                        .receive()
-                                        .response(HttpStatus.OK)));
-                shouldRetry = false;
-            } catch (TestCaseFailedException e) {
-                retryNumber++;
-                shouldRetry = retryNumber < maxNumberOfRetries;
-                if (retryNumber == maxNumberOfRetries) {
-                    throw new RuntimeException("Invocations failed for URL : " + configurationsUpdateRequestURI, e);
-                } else {
-                    //Using a linear backoff instead of exponential backoff to reduce the impact on test suite runtime
-                    TimeUnit.SECONDS.sleep((long) backOffFactor * retryNumber);
-                    log.debug(". Retry #{} for URL {} since invoke failed : {}", retryNumber, configurationsUpdateRequestURI, e);
-                }
-            }
-        } while (shouldRetry);
+        // Update configurations
+        runner.$(repeatOnError()
+                .until("i = 10")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(configurationsUpdateRequestURI)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(configurationsRequestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)));
     }
 }
