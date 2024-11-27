@@ -132,7 +132,7 @@ public class DPLogsAPITestCase extends TestNGCitrusSpringSupport {
         String invokeUrlDev = endpoint.getPublicUrl();
         for (int i = 0; i < 5; ++i) {
             ComponentUtils.invokeApiGETWithBackoffRetries(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
-                    REST_API_EXPECTED_RESPONSE, 2, 3);
+                    REST_API_EXPECTED_RESPONSE, 2, 5);
         }
     }
 

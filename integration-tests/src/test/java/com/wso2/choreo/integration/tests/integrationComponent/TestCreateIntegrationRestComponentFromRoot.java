@@ -189,8 +189,8 @@ public class TestCreateIntegrationRestComponentFromRoot extends TestNGCitrusSpri
         final String devApiKey = testComponent.getAPIKeyForInvoke(accessToken, endpoint.getApimId(),
                         environments.get(0).getName()).replace("\"", "");
         String invokeUrlDev = endpoint.getPublicUrl();
-        ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
-                REST_API_EXPECTED_RESPONSE);
+        ComponentUtils.invokeApiGETWithBackoffRetries(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
+                REST_API_EXPECTED_RESPONSE, 2, 5);
     }
 
     @Test(dependsOnMethods = {"invokeAPIDev_TestCreateIntegrationRestComponentFromRoot"})
