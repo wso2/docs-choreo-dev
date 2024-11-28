@@ -11,6 +11,8 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.code.Repository;
 import com.wso2.choreo.integration.models.environments.Environment;
@@ -51,7 +53,7 @@ public class TestBuildpackGitLabDp extends TestBase {
                 repoUrl("https://gitlab.preview-dv.choreo.dev/Administrator/choreo-samples-new").
                 buildContext("greeting-service-go").build();
 
-        GraphqlDTO dto = ComponentUtils.createBuildpackComponentRequestWithSecretRef(componentName, project, repo, Buildpack.GOLANG, secretRef);
+        GraphqlDTO dto = ComponentUtils.createBuildpackComponentRequestWithSecretRef(componentName, project, repo, secretRef, Buildpack.GOLANG);
 
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
                 dto, ComponentFlavour.BUILDPACK);

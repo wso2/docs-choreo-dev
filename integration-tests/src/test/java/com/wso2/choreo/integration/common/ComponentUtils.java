@@ -308,7 +308,7 @@ public class ComponentUtils {
                 .buildContext(repo.getBuildContext()).build();
     }
 
-    public static GraphqlDTO createBuildpackComponentRequestWithSecretRef(String name, ChoreoProject project, Repository repo, Buildpack... buildpackType, String secretRef) {
+    public static GraphqlDTO createBuildpackComponentRequestWithSecretRef(String name, ChoreoProject project, Repository repo, String secretRef, Buildpack... buildpackType) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
         Buildpack buildpack = buildpackType.length > 0  ?  buildpackType[0] : Buildpack.GOLANG;
