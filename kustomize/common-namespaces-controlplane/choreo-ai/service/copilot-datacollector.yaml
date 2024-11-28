@@ -6,8 +6,8 @@ metadata:
   name: copilot-datacollector
 spec:
   ports:
-    - name: spec-pop-port
-      port: 8000
-      targetPort: spec-pop-port
+    - name: data-col-port
+      port: 8080
+      targetPort: data-col-port
   selector:
-    choreo.component: spec-populator
+    choreo.component: copilot-datacollector
