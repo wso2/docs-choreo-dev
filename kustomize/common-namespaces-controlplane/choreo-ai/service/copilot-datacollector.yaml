@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     choreo.component: copilot-datacollector
-  name: copilot-datacollector.yaml
+  name: copilot-datacollector
 spec:
   ports:
     - name: spec-pop-port
