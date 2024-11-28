@@ -310,6 +310,16 @@ public class ComponentUtils {
                 .buildContext(repo.getBuildContext()).build();
     }
 
+    public static GraphqlDTO createBuildpackComponentRequestWithSecretRef(String name, ChoreoProject project, Repository repo, String secretRef, Buildpack... buildpackType) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        Buildpack buildpack = buildpackType.length > 0  ?  buildpackType[0] : Buildpack.GOLANG;
+
+        return GraphqlDTO.builder().name(name).srcGitRepoUrl(repo.getRepoUrl()).projectId(project.getId()).orgId(orgId)
+                .orgHandler(orgHandle).buildpackId(buildpack.getId()).languageVersion(buildpack.getVersion())
+                .buildContext(repo.getBuildContext()).secretRef(secretRef).build();
+    }
+
     public static GraphqlDTO createGrpahQLComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
@@ -576,6 +586,7 @@ public class ComponentUtils {
                                                                                Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent testComponent,
                                                                                List<Environment> environments, ComponentFlavour componentFlavour,
                                                                                           BalConfig... balconfigs) throws Exception {
+        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = null;
         HttpClient choreoProjectsTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, choreoProjectsTestClient, testComponent.getId(), accessToken,
                 testComponent.getRepository().getBranchApp());
@@ -585,17 +596,24 @@ public class ComponentUtils {
             ConfigManagement.addConfiguration(runner, choreoProjectsTestClient, testComponent, latestCommit.getSha(), environments.get(0),
                     balconfigs);
         }
-
-        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken, testComponent, latestCommit,
-                environments);
-        try {
-            ComponentUtils.validateComponentDeployment(runner, citrusClients, accessToken, testComponent, latestCommit, environments);
-        } catch (Exception e) {
-            if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
-                log.error("DeployStatusByVersion failure detected", e);
-            } else {
-                throw e;
+        for (int i = 0; i < MAX_DEPLOY_RETRY_COUNT; ++i) {
+            componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken,
+                    testComponent, latestCommit,
+                    environments);
+            try {
+                ComponentUtils.validateComponentDeployment(runner, citrusClients, accessToken, testComponent,
+                        latestCommit, environments);
+                break;
+            } catch (Exception e) {
+                if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
+                    log.error("DeployStatusByVersion failure detected, attempt number " + (i + 1), e);
+                } else {
+                    throw e;
+                }
             }
+        }
+        if (componentDeploymentStatusDTO == null) {
+            throw new Exception("Component deployment failed");
         }
 
         return componentDeploymentStatusDTO;

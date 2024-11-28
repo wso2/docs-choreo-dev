@@ -501,13 +501,13 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients, this, accessToken,
                 ORG_VISIBILITY_SVC_COMPONENT_SERVICE_NAME, ORG_LVL_NETWORK_VISIBILITY_FILTER, "");
-        componentLevelConnectionCreationReq = ConnectionService.createComponentLevelConnectionCreationReq(
+        ConnectionCreateRequest connectionCreateReq = ConnectionService.createComponentLevelConnectionCreationReq(
                 apiKeyEnabledClientComponentEnvironments, projectOne.getId(), apiKeyEnabledClientChoreoComponent.getId(),
                 ORGANIZATION_SERVICE, serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String serviceId = serviceFound.getServiceId();
         String connectionId = ConnectionService.createChoreoConnection(this, httpClient,
-                accessToken, componentLevelConnectionCreationReq, true,
+                accessToken, connectionCreateReq, true,
                 orgEndpointComponentDeployedEnvs, false);
         //update component-config.yaml file
         String serviceIdentifier = MarketplaceService.getChoreoServiceIdentifier(this,
@@ -580,7 +580,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 orgEndpointServiceComponent.getName(), ORG_LVL_NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for a secured service with org visibility",ORGANIZATION_SERVICE,
-                true,orgEndpointComponentDeployedEnvs.subList(0,1));
+                true, orgEndpointComponentDeployedEnvs);
     }
 
     @Test(dependsOnMethods = {"createProjectLevelConnectionToSecuredOrgService_TestChoreoConnections"})
@@ -599,7 +599,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 orgEndpointServiceComponent.getName(), ORG_LVL_NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for an unsecured service with org visibility",ORGANIZATION_SERVICE,
-                false,orgEndpointComponentDeployedEnvs.subList(0,1));
+                false, orgEndpointComponentDeployedEnvs);
     }
 
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})

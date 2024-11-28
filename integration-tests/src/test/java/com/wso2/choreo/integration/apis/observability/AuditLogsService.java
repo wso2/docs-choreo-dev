@@ -89,7 +89,7 @@ public class AuditLogsService extends ControlPlaneAPI {
 					.message()
 					.validate((message, context) -> {
 						int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
-						if (code != HttpStatus.CREATED.value()) {
+						if (code != HttpStatus.CREATED.value() || code != HttpStatus.OK.value()) {
 							throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
 						}
 						try {
@@ -140,7 +140,7 @@ public class AuditLogsService extends ControlPlaneAPI {
 								.body(body),
 						http().client(client)
 								.receive()
-								.response(HttpStatus.CREATED)
+								.response()
 								.message()
 								.body(new ClassPathResource(
 										"templates/observability/responses/auditLogsResponseSuccess.json"))

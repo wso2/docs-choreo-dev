@@ -178,6 +178,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
         Repository repo = Repository.builder().repoUrl(CLIENT_COMPONENT_REPO_URL).buildContext(CLIENT_COMPONENT_DOCKET_CONTEXT).build();
         GraphqlDTO dto = ComponentUtils.createBuildpackComponentRequest(componentName, consumerProject, repo, Buildpack.NODEJS);
         clientChoreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.BUILDPACK);
+        ComponentUtils.waitForComponentInitialBuildComplete(this, citrusClients, accessToken, clientChoreoComponent);
     }
 
     @Test(dependsOnMethods = {"addDatabaseToMarketplace_TestDatabaseConnections", "createConsumer_TestDatabaseConnections"})
