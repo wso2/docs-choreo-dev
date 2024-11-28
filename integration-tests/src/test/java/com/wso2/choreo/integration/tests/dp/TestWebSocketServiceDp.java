@@ -60,7 +60,8 @@ public class TestWebSocketServiceDp extends TestBase {
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertNotNull(choreoComponent.getId());
-
+        
+        ComponentUtils.waitForComponentInitialBuildComplete(this, citrusClients, accessToken, testComponent);
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
         dp.setEnvironments(environments);
     }
@@ -68,7 +69,6 @@ public class TestWebSocketServiceDp extends TestBase {
     @Test(dependsOnMethods = {"createUserManagedComponentFor_TestWebSocketServiceDp"}, dataProvider = "dps")
     @CitrusTest
     public void componentDeploy_TestWebSocketServiceDp(DataProviderWrapper dp) throws Exception {
-        ComponentUtils.waitForComponentInitialBuildComplete(this, citrusClients, accessToken, dp.getChoreoComponent());
         ComponentDeploymentStatusDTO statusDTO =ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken, dp.getChoreoComponent(),
         dp.getEnvironments(), ComponentFlavour.STANDARD);
         dp.setDeploymentStatusDTO(statusDTO);
