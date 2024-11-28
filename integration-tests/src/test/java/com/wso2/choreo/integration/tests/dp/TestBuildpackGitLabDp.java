@@ -49,10 +49,9 @@ public class TestBuildpackGitLabDp extends TestBase {
         String secretRef = Configuration.getConfig(ConfigDefinition.GITLAB_SECRETREF);
         Repository repo = Repository.builder().
                 repoUrl("https://gitlab.preview-dv.choreo.dev/Administrator/choreo-samples-new").
-                subPath("greeting-service").
-                buildContext(".").build();
+                buildContext("greeting-service-go").build();
 
-        GraphqlDTO dto = ComponentUtils.createBuildpackComponentRequestWithSecretRef(componentName, project, repo, secretRef);
+        GraphqlDTO dto = ComponentUtils.createBuildpackComponentRequestWithSecretRef(componentName, project, repo, Buildpack.GOLANG, secretRef);
 
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
                 dto, ComponentFlavour.BUILDPACK);
