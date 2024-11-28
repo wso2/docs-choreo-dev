@@ -14,5 +14,5 @@ spec:
         - |
           objectName: ai-datacollector-bq-service-account-key
           objectType: secret
-          objectAlias: MILVERSE_API_KEY
+          objectAlias: BQ_SERVICE_ACCOUNT_KEY
           objectVersion: "{{.BQ_SERVICE_ACCOUNT_KEY}}"
