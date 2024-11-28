@@ -1,5 +1,4 @@
 resources:
-  - ../../../helm/keda-core
   - rbac
   - deployment
   - service

@@ -8,6 +8,7 @@ resources:
   - clusterissuers
   - idp
   - system
+  - tools
   - priorityclass
 commonLabels:
   app: choreo-control-plane

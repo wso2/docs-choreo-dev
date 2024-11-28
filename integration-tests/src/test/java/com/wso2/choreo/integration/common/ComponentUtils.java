@@ -310,6 +310,16 @@ public class ComponentUtils {
                 .buildContext(repo.getBuildContext()).build();
     }
 
+    public static GraphqlDTO createBuildpackComponentRequestWithSecretRef(String name, ChoreoProject project, Repository repo, Buildpack... buildpackType, String secretRef) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        Buildpack buildpack = buildpackType.length > 0  ?  buildpackType[0] : Buildpack.GOLANG;
+
+        return GraphqlDTO.builder().name(name).srcGitRepoUrl(repo.getRepoUrl()).projectId(project.getId()).orgId(orgId)
+                .orgHandler(orgHandle).buildpackId(buildpack.getId()).languageVersion(buildpack.getVersion())
+                .buildContext(repo.getBuildContext()).secretRef(secretRef).build();
+    }
+
     public static GraphqlDTO createGrpahQLComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
@@ -1875,6 +1885,7 @@ public class ComponentUtils {
             apiVersions.add(existingVersion);
         }
         ApiVersion latestApiVersion = new ApiVersion();
+        latestApiVersion.setApiVersion(version);
         latestApiVersion.setLatest(true);
         latestApiVersion.setId(newDeploymentTrack.getId());
         latestApiVersion.setAppEnvVersions(apiVersions.get(0).getAppEnvVersions());
@@ -1982,5 +1993,17 @@ public class ComponentUtils {
             Thread.sleep(10000);
         }
 
+    }
+
+    public static void waitForComponentInitialBuildComplete(TestNGCitrusSpringSupport runner, Map<Endpoints, 
+            HttpClient> citrusClients, String accessToken, ChoreoComponent component) throws Exception {
+    
+        GraphqlDTO dto = GraphqlDTO.builder()
+            .componentId(component.getId())
+            .latestVersionId(component.getLatestApiVersion().getId())
+            .build();
+        String runId = GraphQL.getRunId(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
+        Component.waitForComponentBuildDeployComplete(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, 
+            component.getProjectId(), component.getId(), runId, 50);
     }
 }

@@ -10,6 +10,6 @@
 # --------------------------------------------------------------------------------------
 
 resources:
-  - certificates
-
-namespace: cert-manager
+  - ../../../helm/cert-manager
+  - ../../../helm/csi-secrets-store-provider-azure
+  - ../../../helm/reloader
