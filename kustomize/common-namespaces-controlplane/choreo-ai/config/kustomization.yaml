@@ -37,7 +37,7 @@ configMapGenerator:
     behavior: create
     literals:
       - DB_SERVER={{.DB_SERVER | default ""}}
-      - DB_USER=choreo_ai_copilot_db
+      - DB_USER=choreo_ai_copilot_db_user
       - DB_PORT=1433
       - DB_NAME=choreo-ai-copilot
       - DB_PASSWORD_FILE=/mnt/csi/secret-copilot-datacollector/DB_PASSWORD
