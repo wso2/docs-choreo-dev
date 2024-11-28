@@ -593,15 +593,6 @@ public class ComponentUtils {
 
         Commit latestCommit = Commit.getLatestCommit(commitHistory);
         if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            try {
-                validateBuild(runner, citrusClients, accessToken, testComponent, latestCommit, environments);
-            } catch (Exception e) {
-                if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
-                    log.error("Build failure detected", e);
-                } else {
-                    throw e;
-                }
-            }
             ConfigManagement.addConfiguration(runner, choreoProjectsTestClient, testComponent, latestCommit.getSha(), environments.get(0),
                     balconfigs);
         }
