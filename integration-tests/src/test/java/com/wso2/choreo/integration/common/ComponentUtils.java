@@ -310,6 +310,16 @@ public class ComponentUtils {
                 .buildContext(repo.getBuildContext()).build();
     }
 
+    public static GraphqlDTO createBuildpackComponentRequestWithSecretRef(String name, ChoreoProject project, Repository repo, Buildpack... buildpackType, String secretRef) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        Buildpack buildpack = buildpackType.length > 0  ?  buildpackType[0] : Buildpack.GOLANG;
+
+        return GraphqlDTO.builder().name(name).srcGitRepoUrl(repo.getRepoUrl()).projectId(project.getId()).orgId(orgId)
+                .orgHandler(orgHandle).buildpackId(buildpack.getId()).languageVersion(buildpack.getVersion())
+                .buildContext(repo.getBuildContext()).secretRef(secretRef).build();
+    }
+
     public static GraphqlDTO createGrpahQLComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));

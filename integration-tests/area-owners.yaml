@@ -60,6 +60,9 @@ areaOwners:
   - testClass: com.wso2.choreo.integration.tests.dp.TestBuildpackDp
     assignees:
       - janakas@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestBuildpackGitLabDp
+    assignees:
+      - yashodha@wso2.com
   - testClass: com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase
     assignees:
       - lakmal@wso2.com
