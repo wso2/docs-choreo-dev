@@ -15,7 +15,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: ai-datacollector-db-password
+          objectName: ai-datacollector-db-password-mssql-password
           objectType: secret
           objectAlias: DB_PASSWORD
           objectVersion: "{{.DB_PASSWORD}}"
