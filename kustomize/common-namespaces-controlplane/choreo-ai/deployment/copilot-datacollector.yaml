@@ -44,8 +44,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-copilot-datacollector-cm
-            - secretRef:
-                name: copilot-datacollector-secret
           image: choreocontrolplane.azurecr.io/choreoipaas/copilot-datacollector:latest
           resources:
             limits:
