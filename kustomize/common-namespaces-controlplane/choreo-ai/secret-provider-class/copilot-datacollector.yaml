@@ -3,6 +3,14 @@ kind: SecretProviderClass
 metadata:
   name: copilot-datacollector-secret
 spec:
+  secretObjects:
+    - secretName: copilot-datacollector-secret
+      type: Opaque
+      data:
+        - objectName: DB_PASSWORD
+          key: DB_PASSWORD
+        - objectName: BQ_SERVICE_ACCOUNT_KEY
+          key: BQ_SERVICE_ACCOUNT_KEY
   parameters:
     objects: |
       array:
