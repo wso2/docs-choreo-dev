@@ -415,6 +415,59 @@ public class GraphQL extends ControlPlaneAPI {
         }
     }
 
+        public static Optional<CreateByocComponentResponseDTO> createBuildpackComponentWithSecretRef(TestNGCitrusSpringSupport runner, HttpClient client,
+                                                                               GraphqlDTO graphqlDTO,
+                                                                               String accessToken) throws Exception {
+        graphqlDTO.setOrgId(ORG_ID);
+        graphqlDTO.setOrgHandler(ORG_HANDLE);
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/createBuildpackcomponentWithSecretRef.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        Map<String, String> responseParams = new HashMap<>();
+        responseParams.put("orgId", String.valueOf(ORG_ID));
+        responseParams.put("projectId", graphqlDTO.getProjectId());
+        responseParams.put("handler", ORG_HANDLE);
+        AtomicReference<CreateByocComponentResponseDTO> responseDTO = new AtomicReference<>();
+        runner.variable("isComponentCreationSuccess", false);
+        runner.$(repeat()
+                .until("(i = 5) or ( ${isComponentCreationSuccess} = true )")
+                .index("i")
+                .actions(
+                    http()
+                        .client(client)
+                        .send()
+                        .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                        .message()
+                        .header(HttpHeaders.AUTHORIZATION, accessToken)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(requestBody)
+                        .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                    http().client(client)
+                        .receive()
+                        .response()
+                        .message()
+                        .type(MessageType.JSON)
+                        .validate((message, context) -> {
+                                int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                if (code == HttpStatus.OK.value()) {
+                                     context.setVariable("isComponentCreationSuccess", true);  
+                                     responseDTO.set(ObjectMapperUtil.mapStringToObject(
+                                                CreateByocComponentResponseDTO.class, (String) message.getPayload(), 
+                                                        "createBuildpackComponent"));
+                                } else {
+                                        SleepUtil.sleep(5);
+                                }        
+                        })
+                )
+        );
+
+        if (responseDTO.get() == null) {
+                throw new ComponentCreationException("Buildpack component creation response retrieval failure.");
+        } else {
+                return Optional.of(responseDTO.get());
+        }
+    }
+
     public static Optional<CreateByocComponentResponseDTO> createPrismMockComponent(TestNGCitrusSpringSupport runner, HttpClient client,
                                                                                     GraphqlDTO graphqlDTO,
                                                                                     String accessToken) throws Exception {
