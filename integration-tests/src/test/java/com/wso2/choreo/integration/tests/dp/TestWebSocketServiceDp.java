@@ -60,7 +60,8 @@ public class TestWebSocketServiceDp extends TestBase {
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertNotNull(choreoComponent.getId());
-
+        
+        ComponentUtils.waitForComponentInitialBuildComplete(this, citrusClients, accessToken, choreoComponent);
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
         dp.setEnvironments(environments);
     }

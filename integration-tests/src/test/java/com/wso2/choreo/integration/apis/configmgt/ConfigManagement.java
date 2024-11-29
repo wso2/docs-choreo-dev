@@ -19,7 +19,6 @@ import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
-import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.environments.Environment;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +26,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;

@@ -580,7 +580,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 orgEndpointServiceComponent.getName(), ORG_LVL_NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for a secured service with org visibility",ORGANIZATION_SERVICE,
-                true,orgEndpointComponentDeployedEnvs.subList(0,1));
+                true, orgEndpointComponentDeployedEnvs);
     }
 
     @Test(dependsOnMethods = {"createProjectLevelConnectionToSecuredOrgService_TestChoreoConnections"})
@@ -599,7 +599,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 orgEndpointServiceComponent.getName(), ORG_LVL_NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for an unsecured service with org visibility",ORGANIZATION_SERVICE,
-                false,orgEndpointComponentDeployedEnvs.subList(0,1));
+                false, orgEndpointComponentDeployedEnvs);
     }
 
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
