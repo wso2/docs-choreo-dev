@@ -39,7 +39,7 @@ configMapGenerator:
       - DB_SERVER={{.DB_SERVER | default ""}}
       - DB_USER=choreo_ai_copilot_db
       - DB_PORT=1433
-      - DB_NAME=choreo-ai-copilot
+      - DB_NAME=choreo_ai_copilot
       - DB_PASSWORD_FILE=/mnt/csi/secret-copilot-datacollector/DB_PASSWORD
       - GOOGLE_APPLICATION_CREDENTIALS=/mnt/csi/secret-copilot-datacollector/BQ_SERVICE_ACCOUNT_KEY
       - BQ_PROJECT_ID={{.BQ_PROJECT_ID | default ""}}
