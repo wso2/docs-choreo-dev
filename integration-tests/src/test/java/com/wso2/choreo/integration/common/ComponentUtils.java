@@ -366,6 +366,70 @@ public class ComponentUtils {
     public static ChoreoComponent createComponent(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusClients,
             String accessToken, GraphqlDTO dto,
+            ComponentFlavour componentFlavour, String... branchName) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+
+        GraphqlDTO graphqlDTO;
+
+        if (componentFlavour.equals(ComponentFlavour.BYOC)) {
+            dto.setComponentType("byocService");
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBYOCComponent(runner, appServiceClient,
+                    dto, accessToken, branchName);
+
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandle()).build();
+        } else if (componentFlavour.equals(ComponentFlavour.BUILDPACK)) {
+            dto.setComponentType("buildpackService");
+            Optional<CreateByocComponentResponseDTO> responseDTO= GraphQL.createBuildpackComponent(runner,appServiceClient, dto, accessToken);
+            String projectId = responseDTO.get().getProjectId();
+            graphqlDTO = GraphqlDTO.builder().projectId(projectId)
+                    .componentHandler(responseDTO.get().getHandle()).build();
+            List<ChoreoComponent> components = GraphQL.getProjectComponents(runner, appServiceClient, projectId, accessToken);
+            String componentId = components.get(0).getId();
+            log.debug("Component Id: " + componentId);
+            Component.waitForAsyncComponentCreationSuccess(runner, appServiceClient, accessToken, componentId);
+        } else if (componentFlavour.equals(ComponentFlavour.PRISM_MOCK_SERVICE)) {
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createPrismMockComponent(runner,
+                    appServiceClient,
+                    dto, accessToken);
+            String projectId = responseDTO.get().getProjectId();
+            graphqlDTO = GraphqlDTO.builder().projectId(projectId)
+                    .componentHandler(responseDTO.get().getHandle()).build();
+            List<ChoreoComponent> components = GraphQL.getProjectComponents(runner, appServiceClient, projectId, accessToken);
+            String componentId = components.get(0).getId();
+            log.debug("Component Id: " + componentId);
+            Component.waitForAsyncComponentCreationSuccess(runner, appServiceClient, accessToken, componentId);
+        } else if (componentFlavour.equals(ComponentFlavour.WEBAPP)) {
+            dto.setComponentType("byocWebAppsDockerfileLess");
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createWebappComponent(runner,
+                    appServiceClient,
+                    dto, accessToken);
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandle()).build();
+        }
+
+        else {
+            String queryString = ObjectMapperUtil.mapObjectToString(
+                    "templates/graphql/requests/createUserManagedComponent.mustache", dto);
+
+            Optional<CreateComponentResponseDTO> responseDTO = GraphQL.createUserManagedComponent(runner,
+                    appServiceClient, queryString, dto.getProjectId(), accessToken);
+
+            Component.waitForComponentCreationSuccess(runner, appServiceClient, accessToken,
+                    responseDTO.get().getProjectId(),
+                    responseDTO.get().getId());
+
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandler()).build();
+        }
+
+        return GraphQL.retrieveComponent(runner, appServiceClient, accessToken,
+                graphqlDTO);
+    }
+
+        public static ChoreoComponent createComponentWithSecretRef(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, GraphqlDTO dto,
             ComponentFlavour componentFlavour, String secretRef, String... branchName) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
@@ -380,17 +444,7 @@ public class ComponentUtils {
                     .componentHandler(responseDTO.get().getHandle()).build();
         } else if (componentFlavour.equals(ComponentFlavour.BUILDPACK)) {
             dto.setComponentType("buildpackService");
-            Optional<CreateByocComponentResponseDTO> responseDTO;
-            if (secretRef != null && !secretRef.isEmpty()) {
-                    responseDTO = GraphQL.createBuildpackComponentWithSecretRef(runner,
-                    appServiceClient,
-                    dto, accessToken);
-            }
-            else {
-                    responseDTO = GraphQL.createBuildpackComponent(runner,
-                    appServiceClient,
-                    dto, accessToken);
-            }
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBuildpackComponentWithSecretRef(runner, appServiceClient, dto, accessToken);
             String projectId = responseDTO.get().getProjectId();
             graphqlDTO = GraphqlDTO.builder().projectId(projectId)
                     .componentHandler(responseDTO.get().getHandle()).build();
