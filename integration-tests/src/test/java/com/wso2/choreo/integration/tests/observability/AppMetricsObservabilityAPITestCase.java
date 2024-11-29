@@ -111,8 +111,8 @@ public class AppMetricsObservabilityAPITestCase extends TestNGCitrusSpringSuppor
                 environments.get(0).getName()).replace("\"", "");
         String invokeUrlDev = endpoint.getPublicUrl();
         for (int i = 0; i < 5; ++i) {
-            ComponentUtils.invokeApiGETWithBackoffRetries(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
-                    REST_API_EXPECTED_RESPONSE, 3, 6);
+            ComponentUtils.invokeApiGET(this, devApiKey, invokeUrlDev, API_INVOCATION_REQUEST_URI,
+                    REST_API_EXPECTED_RESPONSE);
         }
     }
 
@@ -133,8 +133,8 @@ public class AppMetricsObservabilityAPITestCase extends TestNGCitrusSpringSuppor
                 environments.get(1).getName()).replace("\"", "");
         String invokeUrlProd = endpoint.getPublicUrl();
         for (int i = 0; i < 5; ++i) {
-            ComponentUtils.invokeApiGETWithBackoffRetries(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
-                    REST_API_EXPECTED_RESPONSE, 3, 6);
+            ComponentUtils.invokeApiGET(this, prodApiKey, invokeUrlProd, API_INVOCATION_REQUEST_URI,
+                    REST_API_EXPECTED_RESPONSE);
         }
     }
 
