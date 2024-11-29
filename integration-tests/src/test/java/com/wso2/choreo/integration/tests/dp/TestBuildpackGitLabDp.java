@@ -57,7 +57,7 @@ public class TestBuildpackGitLabDp extends TestBase {
         GraphqlDTO dto = ComponentUtils.createBuildpackComponentRequestWithSecretRef(componentName, project, repo, secretRef, Buildpack.GOLANG);
 
         ChoreoComponent choreoComponent = ComponentUtils.createComponentWithSecretRef(this, citrusClients, accessToken,
-                dto, ComponentFlavour.BUILDPACK, secretRef);
+                dto, ComponentFlavour.BUILDPACK);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertNotNull(choreoComponent.getId());
