@@ -146,6 +146,7 @@ public class ComponentUtils {
         Optional<ChoreoComponent> component = ComponentUtils.getComponentByName(runner, accessToken, citrusClients,
                 project, componentName);
         ChoreoComponent serviceComponent = new ChoreoComponent();
+
         if (component.isEmpty()) {
             if (componentType.equals(Constant.displayType.ballerinaService.name())) {
                 GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
@@ -380,7 +381,7 @@ public class ComponentUtils {
         } else if (componentFlavour.equals(ComponentFlavour.BUILDPACK)) {
             dto.setComponentType("buildpackService");
             Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBuildpackComponent(runner,
-                    appServiceClient, 
+                    appServiceClient,
                     dto, accessToken);
             String projectId = responseDTO.get().getProjectId();
             graphqlDTO = GraphqlDTO.builder().projectId(projectId)
