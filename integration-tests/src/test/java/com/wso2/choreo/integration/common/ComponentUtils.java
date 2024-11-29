@@ -1835,20 +1835,23 @@ public class ComponentUtils {
                                 })));
     }
 
-    public static KeyGenResponseDTO generateKeys(TestActionRunner runner, HttpClient client,
-                                                 String projectId, String componentId, String environmentId, HashMap<String, Object> keygenRequest,
-                                                 String componentType)
+    public static KeyGenResponseDTO generateKeys(TestActionRunner runner, HttpClient client, String orgHandle,
+                                                 String environmentId, String projectId,
+                                                 String componentId, String componentType,
+                                                 HashMap<String, Object> keygenRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return Component.generateKeys(runner, client, projectId, componentId, environmentId, keygenRequest, componentType);
+        return Component.generateKeys(runner, client, orgHandle, environmentId, projectId, componentId, componentType,
+                keygenRequest);
     }
 
-    public static KeyGenResponseDTO regenerateKeys(TestActionRunner runner, HttpClient client,
-                                                   String projectId, String componentId, String environmentId, String oAuthAppId,
-                                                   String componentType)
+    public static KeyGenResponseDTO regenerateKeys(TestActionRunner runner, HttpClient client, String orgHandle,
+                                                   String environmentId, String projectId, String componentId,
+                                                   String componentType, String oAuthAppId)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return Component.regenerateKeysets(runner, client, projectId, componentId, environmentId, oAuthAppId, componentType);
+        return Component.regenerateKeysets(runner, client, orgHandle, environmentId, projectId, componentId,
+                componentType, oAuthAppId);
     }
 
     public static void addExternalIdpKeys(TestActionRunner runner, HttpClient client, String projectId,

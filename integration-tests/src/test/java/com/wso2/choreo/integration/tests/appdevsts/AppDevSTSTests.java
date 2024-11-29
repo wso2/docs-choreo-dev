@@ -17,8 +17,10 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
+import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.DataCleaner;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
@@ -40,6 +42,7 @@ import com.wso2.choreo.integration.models.oauth.TokenResponseDTO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -57,7 +60,6 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
     private int orgId;
     private String orgHandle;
     private String orgUuid;
-    private String accessToken;
     private Dataplane dataplane;
     private EnvironmentTemplate environment;
     private ChoreoProject testProject;
@@ -68,19 +70,33 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
     @BeforeClass
     public void setup_AppDevSTSTests() throws Exception {
 
-        orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-        orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        String token = System.getProperty("Token");
+        if (StringUtils.isNotBlank(token)) {
+            // Manual mode. Make sure the org have the new app dev sts.
+            orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
+            orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+            orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        } else {
+            // Pipeline mode
+            orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_APP_DEV_STS_ORG_UUID);
+            orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_APP_DEV_STS_ORG_HANDLE);
+            orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_APP_DEV_STS_ORG_ID));
+            if (StringUtils.isEmpty(orgUuid) || StringUtils.isEmpty(orgHandle) || orgId == 0) {
+                log.warn("App Dev STS Org is not provided. AppDevSTS tests will not be executed.");
+                throw new SkipException("Skipping App Dev STS tests as the App Dev STS org is not provided.");
+            }
+        }
+        DataCleaner.removeOldProjectData(new ChoreoOrganization(orgHandle, orgId, orgUuid));
     }
+
     @Test
     @CitrusTest
     public void populateContext_AppDevSTSTests() throws Exception {
 
-
-        List<Dataplane> dataplanes = DevopsPortalApi.getDataplaneList(this, accessToken, orgUuid);
-        Assert.assertNotNull(dataplanes);
-        dataplane = dataplanes.get(0);
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(orgHandle);
+        List<Dataplane> dataPlanes = DevopsPortalApi.getDataplaneList(this, accessToken, orgUuid);
+        Assert.assertNotNull(dataPlanes);
+        dataplane = dataPlanes.get(0);
         Assert.assertNotNull(dataplane);
 
         EnvironmentTemplatesListDTO environmentTemplatesListDTO =
@@ -95,15 +111,15 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
             }
         }
         Assert.assertNotNull(environment);
-
         stsClient = createStsHttpClient();
     }
 
-    // Setup a project for testing App Dev related operations
+    // Set up a project for testing App Dev related operations
     @Test(dependsOnMethods = {"populateContext_AppDevSTSTests"})
     @CitrusTest
     public void createTestProject_AppDevSTSTests() throws Exception {
 
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(orgHandle);
         testProject = ComponentUtils.createProject(this, citrusClients, accessToken,
                 KeysetManagementConstants.TestProjectData.REGION, orgId, orgHandle);
 
@@ -120,6 +136,7 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
         GraphqlDTO componentCreationRequestDTO = ComponentUtils.createExternalConsumerComponentRequest(componentName,
                 testProject, orgId, orgHandle);
 
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(orgHandle);
         ChoreoComponent component = ComponentUtils.createComponent(this, citrusClients, accessToken,
                 componentCreationRequestDTO, ComponentFlavour.EXTERNAL_CONSUMER);
 
@@ -137,9 +154,9 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        KeyGenResponseDTO keyGenResponse = ComponentUtils.generateKeys(this, appServiceClient,
-                testComponent.getProjectId(), testComponent.getId(), environment.getId().toString(),
-                KeysetManagementUtils.getAppGenRequest(), "externalConsumer");
+        KeyGenResponseDTO keyGenResponse = ComponentUtils.generateKeys(this, appServiceClient, orgHandle,
+                environment.getId().toString(), testComponent.getProjectId(), testComponent.getId(),
+                "externalConsumer", KeysetManagementUtils.getAppGenRequest());
         Assert.assertNotNull(keyGenResponse.getClientId());
         generatedKeys = keyGenResponse;
     }
@@ -150,18 +167,21 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
     public void updateOAuthAppConfiguration_AppDevSTSTests() throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(orgHandle);
 
-        OAuthAppUpdateResponseDTO updatedApp = KeysetManagementUtils.updateOAuthAppConfiguration(this, appServiceClient,
-                orgUuid, environment.getId().toString(), generatedKeys.getClientId(),
+        OAuthAppUpdateResponseDTO updatedApp = KeysetManagementUtils.updateOAuthAppConfiguration(this,
+                appServiceClient, accessToken, orgUuid, environment.getId().toString(), generatedKeys.getClientId(),
                 KeysetManagementUtils.getAppUpdateRequest());
 
         Assert.assertNotNull(updatedApp);
-        Assert.assertEquals(updatedApp.getAppTokenExpiry(), KeysetManagementConstants.ModifiedOAuthAppConfig.APP_TOKEN_EXPIRY);
+        Assert.assertEquals(updatedApp.getAppTokenExpiry(),
+                KeysetManagementConstants.ModifiedOAuthAppConfig.APP_TOKEN_EXPIRY);
         Assert.assertEquals(updatedApp.getRefreshTokenExpiry(),
                 KeysetManagementConstants.ModifiedOAuthAppConfig.REFRESH_TOKEN_EXPIRY);
         Assert.assertEquals(updatedApp.getUserTokenExpiry(),
                 KeysetManagementConstants.ModifiedOAuthAppConfig.USER_TOKEN_EXPIRY);
-        Assert.assertEquals(updatedApp.isPublicClient(), KeysetManagementConstants.ModifiedOAuthAppConfig.IS_PUBLIC_CLIENT);
+        Assert.assertEquals(updatedApp.isPublicClient(),
+                KeysetManagementConstants.ModifiedOAuthAppConfig.IS_PUBLIC_CLIENT);
     }
 
     // Test 1.3 - Regenerate keysets in the component
@@ -171,10 +191,9 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        KeyGenResponseDTO regeneratedKeys = ComponentUtils.regenerateKeys(this,
-                appServiceClient,
-                testComponent.getProjectId(), testComponent.getId(), environment.getId().toString(),
-                generatedKeys.getClientId(), "externalConsumer");
+        KeyGenResponseDTO regeneratedKeys = ComponentUtils.regenerateKeys(this, appServiceClient,
+                orgHandle, environment.getId().toString(), testComponent.getProjectId(), testComponent.getId(),
+                "externalConsumer", generatedKeys.getClientId());
 
         Assert.assertNotNull(regeneratedKeys.getClientId());
         Assert.assertEquals(regeneratedKeys.getClientId(), generatedKeys.getClientId());
@@ -187,8 +206,6 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = { "regenerateKeysetsInComponent_AppDevSTSTests" })
     @CitrusTest
     public void invokeClientCredentialsAuthFlowAndGetAccessToken_AppDevSTSTests() throws Exception {
-
-        Thread.sleep(2 * 60 * 1000);  // wait for cache invalidation
 
         TokenResponseDTO clientCredentialsResponse = OAuthUtils.invokeClientCredentialsAuthFlow(this,
                 stsClient, generatedKeys.getClientId(), generatedKeys.getClientSecret());

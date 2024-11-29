@@ -7,13 +7,13 @@ import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.models.oauth.TokenResponseDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.util.MultiValueMap;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
@@ -38,11 +38,10 @@ public class OAuthService {
      * @throws JsonProcessingException JsonProcessingException
      */
     public static TokenResponseDTO invokeTokenCall(TestActionRunner runner, HttpClient client, String clientId,
-                                                   String clientSecret, HashMap<String, Object> oAuthRequest)
+                                                   String clientSecret, MultiValueMap<String, Object> oAuthRequest)
             throws JsonMappingException, JsonProcessingException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
-        String requestBody = ObjectMapperUtil.mapToString(oAuthRequest);
         runner.$(repeatOnError()
                 .until("i = 5")
                 .index("i")
@@ -54,9 +53,9 @@ public class OAuthService {
                                 .post(DEFAULT_TOKEN_ENDPOINT)
                                 .message()
                                 .header(HttpHeaders.AUTHORIZATION, getBasicAuthorizationHeader(clientId, clientSecret))
-                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
-                                .body(requestBody),
+                                .body(oAuthRequest),
                         http()
                                 .client(client)
                                 .receive()

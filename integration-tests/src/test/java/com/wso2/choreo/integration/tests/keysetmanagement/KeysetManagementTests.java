@@ -160,8 +160,8 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
         KeyGenResponseDTO keyGenResponse = ComponentUtils.generateKeys(this, appServiceClient,
-                testComponent.getProjectId(), testComponent.getId(), devEnvironment.getId(),
-                KeysetManagementUtils.getAppGenRequest(), "byocWebAppsDockerfileLess");
+                TestContext.getTestOrg().getOrgHandle(), devEnvironment.getId(), testComponent.getProjectId(),
+                testComponent.getId(), "byocWebAppsDockerfileLess", KeysetManagementUtils.getAppGenRequest());
 
         String clientId = getConfigValueFromGroup(this, appServiceClient,
                 DefaultConfigGroups.APP_GW_KEYSETS,
@@ -178,10 +178,11 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
     public void updateOAuthAppConfiguration_KeysetManagementTests() throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
 
         OAuthAppUpdateResponseDTO updatedApp = KeysetManagementUtils.updateOAuthAppConfiguration(this, appServiceClient,
-                TestContext.getTestOrg().getOrgUUID(), devEnvironment.getTemplateId(), generatedKeys.getClientId(),
-                KeysetManagementUtils.getAppUpdateRequest());
+                accessToken, TestContext.getTestOrg().getOrgUUID(), devEnvironment.getTemplateId(),
+                generatedKeys.getClientId(), KeysetManagementUtils.getAppUpdateRequest());
 
         Assert.assertNotNull(updatedApp);
         Assert.assertEquals(updatedApp.getAppTokenExpiry(), ModifiedOAuthAppConfig.APP_TOKEN_EXPIRY);
@@ -199,10 +200,9 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        KeyGenResponseDTO regeneratedKeys = ComponentUtils.regenerateKeys(this,
-                appServiceClient,
-                testComponent.getProjectId(), testComponent.getId(), devEnvironment.getId(),
-                generatedKeys.getClientId(), "byocWebAppsDockerfileLess");
+        KeyGenResponseDTO regeneratedKeys = ComponentUtils.regenerateKeys(this, appServiceClient,
+                TestContext.getTestOrg().getOrgHandle(), devEnvironment.getId(), testComponent.getProjectId(),
+                testComponent.getId(), "byocWebAppsDockerfileLess", generatedKeys.getClientId());
 
         String clientId = getConfigValueFromGroup(this, appServiceClient,
                 DefaultConfigGroups.APP_GW_KEYSETS,

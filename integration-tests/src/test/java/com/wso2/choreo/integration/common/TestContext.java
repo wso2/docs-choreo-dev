@@ -65,7 +65,8 @@ public class TestContext {
             String token = System.getProperty("Token");
 
             if (!StringUtils.isEmpty(token)) {
-                testUserTokenHandler = new TokenHandler(token);
+                testUserTokenHandler =
+                        new TokenHandler(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE), token);
             } else {
                 testUserTokenHandler = new TokenHandler.Builder(
                         Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE),
@@ -85,7 +86,8 @@ public class TestContext {
             if (resourceAuthzTestUserTokenHandler == null) {
                 if (!StringUtils.isEmpty(System.getProperty("Token"))) {
                     log.warn("Test user token is provided. Resource authz tests will be skipped.");
-                    resourceAuthzTestUserTokenHandler = new TokenHandler("");
+                    resourceAuthzTestUserTokenHandler =
+                            new TokenHandler(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE), "");
                     return;
                 }
 

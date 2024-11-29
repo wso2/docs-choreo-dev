@@ -54,6 +54,7 @@ public class KeysetManagementUtils {
      *
      * @param runner              Citrus test runner
      * @param client              Citrus http client
+     * @param accessToken         Access token
      * @param orgUuid             Organization UUID
      * @param envId               Environment template ID
      * @param oAuthAppId          OAuth App ID
@@ -64,12 +65,13 @@ public class KeysetManagementUtils {
      * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static OAuthAppUpdateResponseDTO updateOAuthAppConfiguration(TestActionRunner runner, HttpClient client,
-                                                                        String orgUuid, String envId, String oAuthAppId,
+                                                                        String accessToken, String orgUuid,
+                                                                        String envId, String oAuthAppId,
                                                                         HashMap<String, Object> configUpdateRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return KeysetManagementService.updateKeysetConfigurations(runner, client, orgUuid, envId, oAuthAppId,
-                configUpdateRequest);
+        return KeysetManagementService.updateKeysetConfigurations(runner, client, accessToken, orgUuid, envId,
+                oAuthAppId, configUpdateRequest);
     }
 
     /**

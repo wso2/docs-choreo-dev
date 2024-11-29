@@ -69,8 +69,8 @@ public class KeysetManagementConstants {
 
     public static class ModifiedOAuthAppConfig {
 
-        public static final int APP_TOKEN_EXPIRY = 1000;
-        public static final int REFRESH_TOKEN_EXPIRY = 2000;
+        public static final int APP_TOKEN_EXPIRY = 60;
+        public static final int REFRESH_TOKEN_EXPIRY = 86400;
         public static final int USER_TOKEN_EXPIRY = 3000;
         public static final boolean IS_PUBLIC_CLIENT = true;
         public static final List<String> CALLBACK_URLS = List.of(

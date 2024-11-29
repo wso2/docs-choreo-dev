@@ -22,9 +22,9 @@ import com.wso2.choreo.integration.apis.oauth.OAuthService;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants;
 import com.wso2.choreo.integration.models.oauth.TokenResponseDTO;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
 
 /**
  * Utility class for OAuth related operations.
@@ -46,12 +46,11 @@ public class OAuthUtils {
                                                                    String clientId, String clientSecret)
             throws JsonMappingException, JsonProcessingException {
 
-        HashMap<String, Object> oAuthRequest = new HashMap<>() {
-            {
-                put(KeysetManagementConstants.ClientCredentialsAuthFlowParams.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT_TYPE);
-                put(KeysetManagementConstants.ClientCredentialsAuthFlowParams.SCOPE, OAuthConstants.DEFAULT_CLIENT_CREDENTIALS_SCOPES);
-            }
-        };
+        MultiValueMap<String, Object> oAuthRequest = new LinkedMultiValueMap<>();
+        oAuthRequest.add(KeysetManagementConstants.ClientCredentialsAuthFlowParams.GRANT_TYPE,
+                OAuthConstants.CLIENT_CREDENTIALS_GRANT_TYPE);
+        oAuthRequest.add(KeysetManagementConstants.ClientCredentialsAuthFlowParams.SCOPE,
+                OAuthConstants.DEFAULT_CLIENT_CREDENTIALS_SCOPES);
         return OAuthService.invokeTokenCall(runner, httpClient, clientId, clientSecret, oAuthRequest);
     }
 

@@ -21,6 +21,9 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -38,7 +41,9 @@ import java.net.URISyntaxException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -101,8 +106,7 @@ public class TokenHandler {
     private String cpAppClientId;
     private String cpAppClientSecret;
 
-    private String stsAccessToken = "";
-    private long tokenExpiryTime = 0;
+    private Map<String, STSToken> stsTokens = new HashMap<>();
 
     private boolean isManualMode = false;
 
@@ -116,8 +120,9 @@ public class TokenHandler {
         cpAppClientSecret = builder.cpAppClientSecret;
     }
 
-    public TokenHandler(String accessToken) {
-        stsAccessToken = accessToken;
+    public TokenHandler(String orgHandle, String accessToken) {
+        testChoreoOrgHandle = orgHandle;
+        stsTokens.put(testChoreoOrgHandle, new STSToken(accessToken,0));
         isManualMode =  true;
     }
 
@@ -130,19 +135,34 @@ public class TokenHandler {
      * @throws TokenRetrievalException if token retrieval fails
      */
     public String getTestTokenForCPAPIs() throws TokenRetrievalException, IOException, URISyntaxException {
+
+        return getTestTokenForCPAPIs(testChoreoOrgHandle);
+    }
+
+    /**
+     * Retrieve oauth token to be used when invoking Control Plane exposed choreo APIs
+     *
+     * @param orgHandle org handle
+     * @return oauth token
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws TokenRetrievalException if token retrieval fails
+     */
+    public String getTestTokenForCPAPIs(String orgHandle) throws TokenRetrievalException, IOException,
+            URISyntaxException {
         if (!isManualMode) {
-            if (!isTokenValid()) {
+            if (!isTokenValid(stsTokens.get(orgHandle))) {
                 synchronized (TokenHandler.class) {
-                    if (!isTokenValid()) {
+                    if (!isTokenValid(stsTokens.get(orgHandle))) {
                         String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
-                        stsAccessToken = getStsToken(cpAppClientId, cpAppClientSecret, userToken);
-                        readTokenExpiryTime();
+                        String stsAccessToken = getStsToken(cpAppClientId, cpAppClientSecret, userToken, orgHandle);
+                        long tokenExpiryTime = readTokenExpiryTime(stsAccessToken);
+                        stsTokens.put(orgHandle, new STSToken(stsAccessToken, tokenExpiryTime));
                     }
                 }
             }
         }
 
-        return Constant.BEARER_PREFIX.concat(stsAccessToken);
+        return Constant.BEARER_PREFIX.concat(stsTokens.get(orgHandle).getStsAccessToken());
     }
 
     /**
@@ -154,15 +174,31 @@ public class TokenHandler {
      */
     public String refetchTestTokenForCPAPIs() throws TokenRetrievalException, IOException, URISyntaxException {
         
+        return refetchTestTokenForCPAPIs(testChoreoOrgHandle);
+    }
+
+
+    /**
+     * Re-retrieve oauth token to be used when invoking Control Plane exposed choreo APIs for the specified org.
+     *
+     * @param orgHandle                 org handle
+     * @return oauth token
+     * @throws IOException             if an IO error occurs when sending or receiving request
+     * @throws TokenRetrievalException if token retrieval fails
+     */
+    public String refetchTestTokenForCPAPIs(String orgHandle) throws TokenRetrievalException, IOException,
+            URISyntaxException {
+
         if (!isManualMode) {
             synchronized (TokenHandler.class) {
                 String userToken = getTestUserToken(asgardeoClientId, asgardeoClientSecret);
-                stsAccessToken = getStsToken(cpAppClientId, cpAppClientSecret, userToken);
-                readTokenExpiryTime();
+                String stsAccessToken = getStsToken(cpAppClientId, cpAppClientSecret, userToken, orgHandle);
+                long tokenExpiryTime = readTokenExpiryTime(stsAccessToken);
+                stsTokens.put(orgHandle, new STSToken(stsAccessToken, tokenExpiryTime));
             }
         }
 
-        return Constant.BEARER_PREFIX.concat(stsAccessToken);
+        return Constant.BEARER_PREFIX.concat(stsTokens.get(orgHandle).getStsAccessToken());
     }
 
     /**
@@ -209,11 +245,12 @@ public class TokenHandler {
      * @param stsClientId     client id for STS SP
      * @param stsClientSecret client secret for STS SP
      * @param userToken       test user token
+     * @param orgHandle       org handle
      * @return sts access token
      * @throws TokenRetrievalException
      * @throws IOException
      */
-    private String getStsToken(String stsClientId, String stsClientSecret, String userToken)
+    private String getStsToken(String stsClientId, String stsClientSecret, String userToken, String orgHandle)
             throws TokenRetrievalException, URISyntaxException, IOException {
         String tokenAuthHeader = Constant.BASIC_PREFIX.concat(encodeCredentials(stsClientId, stsClientSecret));
         String stsEndPoint = Configuration.getConfig(ConfigDefinition.STS_ENDPOINT)
@@ -228,7 +265,7 @@ public class TokenHandler {
         urlParameters.add(new BasicNameValuePair("subject_token", userToken));
         urlParameters.add(new BasicNameValuePair("subject_token_type", Constant.SUBJECT_TOKEN_TYPE));
         urlParameters.add(new BasicNameValuePair("requested_token_type", Constant.REQUESTED_TOKEN_TYPE));
-        urlParameters.add(new BasicNameValuePair("orgHandle", testChoreoOrgHandle));
+        urlParameters.add(new BasicNameValuePair("orgHandle", orgHandle));
         urlParameters.add(new BasicNameValuePair("scope", getOAuthScopes()));
         urlParameters.add(new BasicNameValuePair("client_id", stsClientId));
 
@@ -264,7 +301,12 @@ public class TokenHandler {
         return Base64.getEncoder().encodeToString(concatenateCredentials.getBytes());
     }
 
-    private boolean isTokenValid() {
+    private boolean isTokenValid(STSToken token) {
+        if (token == null) {
+            return false;
+        }
+        String stsAccessToken = token.getStsAccessToken();
+        long tokenExpiryTime = token.getTokenExpiryTime();
         if (!stsAccessToken.isEmpty()) {
             long currentTime = Instant.now().getEpochSecond();
 
@@ -274,7 +316,7 @@ public class TokenHandler {
         return false;
     }
 
-    private void readTokenExpiryTime() {
+    private long readTokenExpiryTime(String stsAccessToken) {
         String[] splits = stsAccessToken.split("\\.");
 
         if (splits.length != 3) {
@@ -282,7 +324,7 @@ public class TokenHandler {
         }
 
         String payload = new String(Base64.getDecoder().decode(splits[1]));
-        tokenExpiryTime = new JsonParser().parse(payload).getAsJsonObject().getAsJsonPrimitive("exp").getAsLong();
+        return new JsonParser().parse(payload).getAsJsonObject().getAsJsonPrimitive("exp").getAsLong();
     }
 
 
@@ -305,8 +347,14 @@ public class TokenHandler {
         Scopes scopes = mapper.readValue(new File(Objects.requireNonNull(TokenHandler.class.getClassLoader().
                 getResource(scopesYaml)).toURI()), Scopes.class);
 
-        return  scopes.scopes;
+        return scopes.scopes;
     }
 
-
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    private class STSToken {
+        private String stsAccessToken;
+        private long tokenExpiryTime;
+    }
 }

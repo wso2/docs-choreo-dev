@@ -65,6 +65,7 @@ public class KeysetManagementService {
      *
      * @param runner              Citrus test runner
      * @param client              Citrus http client
+     * @param accessToken         Access token
      * @param orgUuid             Org UUID
      * @param envId               Environment template Id
      * @param oAuthAppId          OAuth application ID
@@ -75,7 +76,8 @@ public class KeysetManagementService {
      * @throws URISyntaxException      If an error occurs while building the URI
      */
     public static OAuthAppUpdateResponseDTO updateKeysetConfigurations(TestActionRunner runner, HttpClient client,
-                                                                       String orgUuid, String envId, String oAuthAppId, HashMap<String, Object> configUpdateRequest)
+                                                                       String accessToken, String orgUuid, String envId,
+                                                                       String oAuthAppId, HashMap<String, Object> configUpdateRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
@@ -96,7 +98,7 @@ public class KeysetManagementService {
                                 .send()
                                 .put(uriBuilder.build().toString())
                                 .message()
-                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .contentType(String.valueOf(MediaType.APPLICATION_JSON))
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
                                 .body(requestBody),
