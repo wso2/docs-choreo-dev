@@ -11,6 +11,10 @@ spec:
           key: AZURE_OPENAI_API_KEY
         - objectName: REDIS_PASSWORD
           key: REDIS_PASSWORD
+        - objectName: DATA_COLLECTOR_CONSUMER_KEY
+          key: DATA_COLLECTOR_CONSUMER_KEY
+        - objectName: DATA_COLLECTOR_CONSUMER_SECRET
+          key: DATA_COLLECTOR_CONSUMER_SECRET
   parameters:
     objects: |
       array:
@@ -24,3 +28,13 @@ spec:
           objectType: secret
           objectAlias: REDIS_PASSWORD
           objectVersion: "{{.REDIS_PASSWORD}}"
+        - |
+          objectName: ai-data-collector-consumer-key
+          objectType: secret
+          objectAlias: DATA_COLLECTOR_CONSUMER_KEY
+          objectVersion: {{.DATA_COLLECTOR_CONSUMER_KEY}}
+        - |
+          objectName: ai-data-collector-consumer-secret
+          objectType: secret
+          objectAlias: DATA_COLLECTOR_CONSUMER_SECRET
+          objectVersion: {{.DATA_COLLECTOR_CONSUMER_SECRET}}
