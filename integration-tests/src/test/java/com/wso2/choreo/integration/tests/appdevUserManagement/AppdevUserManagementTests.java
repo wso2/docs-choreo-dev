@@ -32,8 +32,6 @@ import com.wso2.choreo.integration.models.environments.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.LinkedMultiValueMap;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -55,12 +53,14 @@ public class AppdevUserManagementTests extends TestNGCitrusSpringSupport {
 
     @BeforeClass
     public void cleanup_AppdevUserManagementTests() throws Exception {
-        List<UserStore> userStores = AppdevUserManagementUtils.getAllUserStores();
+        String orgUuid = TestContext.getTestOrg().getOrgUUID();
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        List<UserStore> userStores = AppdevUserManagementUtils.getAllUserStores(accessToken, orgUuid);
 
         if (userStores != null && !userStores.isEmpty()) {
             for (UserStore userStore : userStores) {
                 try {
-                    AppdevUserManagementUtils.deleteUserStore(userStore.getUserStoreId());
+                    AppdevUserManagementUtils.deleteUserStore(accessToken, orgUuid, userStore.getUserStoreId());
                 } catch (Exception e) {
                     log.error("Error occurred while deleting user store: " + userStore.getUserStoreId(), e);
                 }
@@ -96,11 +96,10 @@ public class AppdevUserManagementTests extends TestNGCitrusSpringSupport {
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-
-        LinkedMultiValueMap<String, Object> createUserStoreRequest = getCreateUserStoreRequest("testUserStore");
-
+        String orgUuid = TestContext.getTestOrg().getOrgUUID();
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         CreateUserStoreResponseDTO createdUserStore = AppdevUserManagementUtils.createUserStoreInEnvironment(
-                this, appServiceClient, devEnvironmentId, createUserStoreRequest);
+                this, appServiceClient, accessToken, orgUuid, devEnvironmentId, "testUserStore");
 
         Assert.assertNotNull(createdUserStore);
 
@@ -142,11 +141,8 @@ public class AppdevUserManagementTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        LinkedMultiValueMap<String, Object> reCreateUserStoreRequest = getCreateUserStoreRequest(
-                "updatedTestUserStore");
-
         CreateUserStoreResponseDTO createdUserStore = AppdevUserManagementUtils.reCreateUserStoreInEnvironment(
-                this, appServiceClient, createdUserStoreId, reCreateUserStoreRequest);
+                this, appServiceClient, createdUserStoreId, "updatedTestUserStore");
 
         Assert.assertNotNull(createdUserStore);
         Assert.assertEquals(createdUserStore.getName(), "updatedTestUserStore");
@@ -160,15 +156,5 @@ public class AppdevUserManagementTests extends TestNGCitrusSpringSupport {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
         AppdevUserManagementUtils.deleteUserStoreInEnvironment(this, appServiceClient, createdUserStoreId);
-    }
-
-    private LinkedMultiValueMap<String, Object> getCreateUserStoreRequest(String userStoreName) {
-
-        LinkedMultiValueMap<String, Object> createUserStoreRequest = new LinkedMultiValueMap<>();
-        createUserStoreRequest.add("name", userStoreName);
-        createUserStoreRequest.add("userstoreFile",
-                new ClassPathResource("templates/appdevUserManagement/user-store-file.csv"));
-
-        return createUserStoreRequest;
     }
 }

@@ -21,24 +21,22 @@ import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.appdevAuthorization.AppdevAuthorizationConstants;
-import com.wso2.choreo.integration.common.appdevAuthorization.AppdevAuthorizationUtils;
 import com.wso2.choreo.integration.common.appdevAuthorization.AppdevAuthorizationConstants.TestGroupData;
 import com.wso2.choreo.integration.common.appdevAuthorization.AppdevAuthorizationConstants.TestPermissionData;
 import com.wso2.choreo.integration.common.appdevAuthorization.AppdevAuthorizationConstants.TestRoleData;
+import com.wso2.choreo.integration.common.appdevAuthorization.AppdevAuthorizationUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.appdevAuthorization.CreateRoleResponseDTO;
 import com.wso2.choreo.integration.models.appdevAuthorization.ListRolesResponseDTO;
-import com.wso2.choreo.integration.models.appdevAuthorization.Permission;
 import com.wso2.choreo.integration.models.appdevAuthorization.RoleGroupMappingResponseDTO;
 import com.wso2.choreo.integration.models.environments.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,20 +85,9 @@ public class AppdevAuthorizationTests extends TestNGCitrusSpringSupport {
     public void createRoleWithPermissions_AppdevAuthorizationTests() throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-
-        HashMap<String, Object> createRoleRequest = new HashMap<>();
-        createRoleRequest.put("name", TestRoleData.NAME);
-        createRoleRequest.put("description", TestRoleData.DESCRIPTION);
-        createRoleRequest.put("projectId", testProject.getId());
-
-        Permission permission = Permission.builder()
-                .environmentId(devEnvironmentId)
-                .name(TestPermissionData.PERMISSION)
-                .build();
-        createRoleRequest.put("permissions", List.of(permission));
-
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         CreateRoleResponseDTO createdRole = AppdevAuthorizationUtils.createRoleWithPermissions(this, appServiceClient,
-                createRoleRequest);
+                accessToken, devEnvironmentId, testProject.getId(), TestRoleData.NAME, TestPermissionData.UPDATED_PERMISSION);
 
         Assert.assertNotNull(createdRole);
         Assert.assertEquals(createdRole.getName(), TestRoleData.NAME);
@@ -127,19 +114,9 @@ public class AppdevAuthorizationTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        HashMap<String, Object> updateRoleRequest = new HashMap<>();
-        updateRoleRequest.put("name", TestRoleData.UPDATED_NAME);
-        updateRoleRequest.put("description", TestRoleData.DESCRIPTION);
-        updateRoleRequest.put("projectId", testProject.getId());
-
-        Permission permission = Permission.builder()
-                .environmentId(devEnvironmentId)
-                .name(TestPermissionData.UPDATED_PERMISSION)
-                .build();
-        updateRoleRequest.put("permissions", List.of(permission));
-
         CreateRoleResponseDTO updatedRole = AppdevAuthorizationUtils.updateRole(this, appServiceClient,
-                createdRoleId, updateRoleRequest);
+                createdRoleId, devEnvironmentId, testProject.getId(), TestRoleData.UPDATED_NAME,
+                TestPermissionData.UPDATED_PERMISSION);
 
         Assert.assertNotNull(updatedRole);
         Assert.assertEquals(updatedRole.getName(), TestRoleData.UPDATED_NAME);
@@ -150,14 +127,9 @@ public class AppdevAuthorizationTests extends TestNGCitrusSpringSupport {
     public void mapRoleToGroup_AppdevAuthorizationTests() throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-
-        HashMap<String, Object> mapRoleToGroupRequest = new HashMap<>();
-        mapRoleToGroupRequest.put("groups", List.of(TestGroupData.NAME));
-        mapRoleToGroupRequest.put("roleId", createdRoleId);
-
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         RoleGroupMappingResponseDTO mapRoleToGroupResponse = AppdevAuthorizationUtils.mapGroupsToRole(this,
-                appServiceClient,
-                mapRoleToGroupRequest);
+                appServiceClient, accessToken, createdRoleId, List.of(TestGroupData.NAME));
 
         Assert.assertNotNull(mapRoleToGroupResponse);
         Assert.assertTrue(mapRoleToGroupResponse.getRoleGroupMappings().getGroups().size() > 0);

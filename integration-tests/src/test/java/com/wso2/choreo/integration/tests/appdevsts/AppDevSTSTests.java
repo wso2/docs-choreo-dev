@@ -16,6 +16,8 @@ package com.wso2.choreo.integration.tests.appdevsts;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.common.ChoreoOrganization;
 import com.wso2.choreo.integration.common.ComponentFlavour;
@@ -23,22 +25,31 @@ import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.DataCleaner;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.appdevAuthorization.AppdevAuthorizationConstants;
+import com.wso2.choreo.integration.common.appdevAuthorization.AppdevAuthorizationUtils;
+import com.wso2.choreo.integration.common.appdevUserManagement.AppdevUserManagementUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementUtils;
+import com.wso2.choreo.integration.common.oauth.OAuthConstants.STSEndpoints;
 import com.wso2.choreo.integration.common.oauth.OAuthUtils;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.appdevAuthorization.CreateRoleResponseDTO;
+import com.wso2.choreo.integration.models.appdevUserManagement.CreateUserStoreResponseDTO;
+import com.wso2.choreo.integration.models.appdevUserManagement.User;
+import com.wso2.choreo.integration.models.appdevUserManagement.UserStore;
 import com.wso2.choreo.integration.models.devops.Dataplane;
 import com.wso2.choreo.integration.models.devops.EnvironmentTemplate;
 import com.wso2.choreo.integration.models.devops.EnvironmentTemplatesListDTO;
 import com.wso2.choreo.integration.models.keymanager.KeyGenResponseDTO;
 import com.wso2.choreo.integration.models.keymanager.OAuthAppUpdateResponseDTO;
 import com.wso2.choreo.integration.models.oauth.TokenResponseDTO;
+import com.wso2.choreo.integration.models.oauth.WellKnownResponseDTO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
@@ -46,9 +57,11 @@ import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
+import static com.wso2.choreo.integration.common.appdevAuthorization.AppdevAuthorizationConstants.TestPermissionData.UPDATED_PERMISSION;
 
 /**
  * This class contains test cases related to App Dev STS operations using the external consumer component.
@@ -65,7 +78,9 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
     private ChoreoProject testProject;
     private ChoreoComponent testComponent;
     private KeyGenResponseDTO generatedKeys;
+    private TokenResponseDTO tokenResponseDTO;
     private HttpClient stsClient;
+    private User user;
 
     @BeforeClass
     public void setup_AppDevSTSTests() throws Exception {
@@ -87,6 +102,18 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
             }
         }
         DataCleaner.removeOldProjectData(new ChoreoOrganization(orgHandle, orgId, orgUuid));
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(orgHandle);
+        List<UserStore> userStores = AppdevUserManagementUtils.getAllUserStores(accessToken, orgUuid);
+        if (userStores != null && !userStores.isEmpty()) {
+            log.info("Number of user stores: " + userStores.size());
+            for (UserStore userStore : userStores) {
+                try {
+                    AppdevUserManagementUtils.deleteUserStore(accessToken, orgUuid, userStore.getUserStoreId());
+                } catch (Exception e) {
+                    log.error("Error occurred while deleting user store: " + userStore.getUserStoreId(), e);
+                }
+            }
+        }
     }
 
     @Test
@@ -202,21 +229,110 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
         generatedKeys = regeneratedKeys;
     }
 
-    // Test 2.1 - Invoke Client Credentials Auth Flow and get an access token
+    // Test Runtime flows
+    // Test 2.0 - Populate AppDev user mgt and authorization management.
     @Test(dependsOnMethods = { "regenerateKeysetsInComponent_AppDevSTSTests" })
+    @CitrusTest
+    public void prepareForRuntimeTests_AppDevSTSTests() throws Exception {
+
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(orgHandle);
+
+        // Creates user
+        CreateUserStoreResponseDTO createdUserStore = AppdevUserManagementUtils.createUserStoreInEnvironment(
+                this, appServiceClient, accessToken, orgUuid, environment.getId().toString(), "testUserStore");
+
+        Assert.assertNotNull(createdUserStore);
+
+        user = new User();
+        user.setUsername("integrationTestUser");
+        user.setPassword("yLekKbfL");
+        user.setGroups(List.of("manager", "engineering"));
+        user.setFirst_name("John");
+        user.setLast_name("Doe");
+        user.setEmail("john1@acme.org");
+
+        // Create authorization config
+        CreateRoleResponseDTO createdRole = AppdevAuthorizationUtils.createRoleWithPermissions(this,
+                appServiceClient, accessToken, environment.getId().toString(), testProject.getId(),
+                AppdevAuthorizationConstants.TestRoleData.NAME, UPDATED_PERMISSION);
+        Assert.assertNotNull(createdRole);
+        Assert.assertNotNull(createdRole.getId());
+        AppdevAuthorizationUtils.mapGroupsToRole(this, appServiceClient, accessToken, createdRole.getId(),
+                List.of(user.getGroups().get(0)));
+    }
+
+    // Test 2.2 - Invoke Well Known Endpoint
+    @Test(dependsOnMethods = { "prepareForRuntimeTests_AppDevSTSTests" })
+    @CitrusTest
+    public void invokeWellKnownEndpoint_AppDevSTSTests() {
+
+        WellKnownResponseDTO responseDTO = OAuthUtils.invokeWellKnownEndpoint(this, stsClient);
+        Assert.assertNotNull(responseDTO);
+        Assert.assertEquals(responseDTO.getIssuer(), getStsBaseUrl() + STSEndpoints.TOKEN);
+        Assert.assertEquals(responseDTO.getAuthorization_endpoint(), getStsBaseUrl() + STSEndpoints.AUTHORIZE);
+        Assert.assertEquals(responseDTO.getEnd_session_endpoint(), getStsBaseUrl() + STSEndpoints.LOGOUT);
+
+    }
+
+    // Test 2.2 - Invoke Client Credentials Auth Flow and get an access token
+    @Test(dependsOnMethods = { "invokeWellKnownEndpoint_AppDevSTSTests" })
     @CitrusTest
     public void invokeClientCredentialsAuthFlowAndGetAccessToken_AppDevSTSTests() throws Exception {
 
-        TokenResponseDTO clientCredentialsResponse = OAuthUtils.invokeClientCredentialsAuthFlow(this,
+        TokenResponseDTO tokenResponseDTO = OAuthUtils.invokeClientCredentialsAuthFlow(this,
                 stsClient, generatedKeys.getClientId(), generatedKeys.getClientSecret());
 
-        Assert.assertNotNull(clientCredentialsResponse.getAccess_token());
+        Assert.assertNotNull(tokenResponseDTO.getAccess_token());
+        Assert.assertEquals(tokenResponseDTO.getExpires_in(), generatedKeys.getAppTokenExpiry() - 1);
+        SignedJWT token = SignedJWT.parse(tokenResponseDTO.getAccess_token());
+        JWTClaimsSet jwtClaimsSet = token.getJWTClaimsSet();
+        Assert.assertEquals(jwtClaimsSet.getIssuer(), getStsBaseUrl() + STSEndpoints.TOKEN);
     }
 
+    // Test 2.3 - Invoke Auth Code Flow and get an access token
+    @Test(dependsOnMethods = { "invokeClientCredentialsAuthFlowAndGetAccessToken_AppDevSTSTests" })
+    @CitrusTest
+    public void invokeAuthCodeFlowAndGetAccessToken_AppDevSTSTests() throws Exception {
+
+        tokenResponseDTO = OAuthUtils.testAuthCodeFlow(this, stsClient, generatedKeys.getClientId(),
+                generatedKeys.getClientSecret(), generatedKeys.getCallbackUrls().get(0),
+                UPDATED_PERMISSION, user.getUsername(), user.getPassword());
+
+        validateToken(tokenResponseDTO);
+    }
+
+    @Test(dependsOnMethods = { "invokeAuthCodeFlowAndGetAccessToken_AppDevSTSTests" })
+    @CitrusTest
+    public void invokeRefreshTokenFlowAndGetAccessToken_AppDevSTSTests() throws Exception {
+
+        TokenResponseDTO refreshedToken = OAuthUtils.invokeRefreshTokenFlow(this, stsClient,
+                generatedKeys.getClientId(), generatedKeys.getClientSecret(),
+                UPDATED_PERMISSION, tokenResponseDTO.getRefresh_token());
+
+        validateToken(refreshedToken);
+    }
+
+    private void validateToken(TokenResponseDTO tokenResponseDTO) throws ParseException {
+
+        Assert.assertNotNull(tokenResponseDTO.getAccess_token());
+        Assert.assertEquals(tokenResponseDTO.getExpires_in(), generatedKeys.getUserTokenExpiry() - 1);
+        Assert.assertTrue(tokenResponseDTO.getScope().contains(UPDATED_PERMISSION));
+        SignedJWT token = SignedJWT.parse(tokenResponseDTO.getAccess_token());
+        JWTClaimsSet jwtClaimsSet = token.getJWTClaimsSet();
+        Assert.assertEquals(jwtClaimsSet.getSubject(), user.getUsername());
+        Assert.assertEquals(jwtClaimsSet.getClaim("email"), user.getEmail());
+        Assert.assertEquals(jwtClaimsSet.getIssuer(), getStsBaseUrl() + STSEndpoints.TOKEN);
+    }
 
     private HttpClient createStsHttpClient() {
 
-        String stsBaseUrl = "https://" + orgUuid + "-" + environment.getDnsPrefix() + "." + dataplane.getStsDefaultDomain();
+        String stsBaseUrl = getStsBaseUrl();
         return OAuthUtils.createStsClient(stsBaseUrl);
+    }
+
+    private String getStsBaseUrl() {
+
+        return "https://" + orgUuid + "-" + environment.getDnsPrefix() + "." + dataplane.getStsDefaultDomain();
     }
 }

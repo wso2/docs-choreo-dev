@@ -19,11 +19,13 @@ import com.wso2.choreo.integration.apis.appdevAuthorization.AppdevAuthorizationS
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.models.appdevAuthorization.CreateRoleResponseDTO;
 import com.wso2.choreo.integration.models.appdevAuthorization.ListRolesResponseDTO;
+import com.wso2.choreo.integration.models.appdevAuthorization.Permission;
 import com.wso2.choreo.integration.models.appdevAuthorization.RoleGroupMappingResponseDTO;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Utility class for Appdev Authorization related tests.
@@ -33,19 +35,23 @@ public class AppdevAuthorizationUtils {
     /**
      * Create a role with permissions.
      *
-     * @param runner            Citrus test runner
-     * @param client            Citrus http client
-     * @param createRoleRequest CreateRoleRequest object
+     * @param runner      Citrus test runner
+     * @param client      Citrus http client
+     * @param accessToken Access token
+     * @param envId       Environment ID
+     * @param projectId   Project ID
+     * @param name        Role name
+     * @param permission  Permission
      * @return CreateRoleResponseDTO object
-     * @throws TokenRetrievalException If an error occurs while retrieving the token
      * @throws IOException             If an error occurs while reading the response
-     * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static CreateRoleResponseDTO createRoleWithPermissions(TestActionRunner runner, HttpClient client,
-            HashMap<String, Object> createRoleRequest)
-            throws TokenRetrievalException, IOException, URISyntaxException {
+                                                                  String accessToken, String envId,
+                                                                  String projectId, String name, String permission)
+            throws IOException {
 
-        return AppdevAuthorizationService.createRoleWithPermissions(runner, client, createRoleRequest);
+        return AppdevAuthorizationService.createRoleWithPermissions(runner, client, accessToken,
+                getRoleRequest(envId, projectId, name, permission));
     }
 
     /**
@@ -69,20 +75,24 @@ public class AppdevAuthorizationUtils {
     /**
      * Update a role.
      *
-     * @param runner            Citrus test runner
-     * @param client            Citrus http client
-     * @param roleId            Role ID
-     * @param updateRoleRequest UpdateRoleRequest object
+     * @param runner     Citrus test runner
+     * @param client     Citrus http client
+     * @param roleId     Role ID
+     * @param envId      Environment ID
+     * @param projectId  Project ID
+     * @param name       Role name
+     * @param permission Permission
      * @return CreateRoleResponseDTO object
      * @throws TokenRetrievalException If an error occurs while retrieving the token
      * @throws IOException             If an error occurs while reading the response
      * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static CreateRoleResponseDTO updateRole(TestActionRunner runner, HttpClient client,
-            String roleId, HashMap<String, Object> updateRoleRequest)
+            String roleId, String envId, String projectId, String name, String permission)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return AppdevAuthorizationService.updateRole(runner, client, roleId, updateRoleRequest);
+        return AppdevAuthorizationService.updateRole(runner, client, roleId,
+                getRoleRequest(envId, projectId, name, permission));
     }
 
     /**
@@ -104,18 +114,38 @@ public class AppdevAuthorizationUtils {
     /**
      * Map groups to a role.
      *
-     * @param runner           Citrus test runner
-     * @param client           Citrus http client
-     * @param mapGroupsRequest MapGroupsRequest object
+     * @param runner      Citrus test runner
+     * @param client      Citrus http client
+     * @param accessToken Access token
+     * @param roleId      Role ID
+     * @param groups      List of groups
      * @return RoleGroupMappingResponseDTO object
-     * @throws TokenRetrievalException If an error occurs while retrieving the token
      * @throws IOException             If an error occurs while reading the response
-     * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static RoleGroupMappingResponseDTO mapGroupsToRole(TestActionRunner runner, HttpClient client,
-            HashMap<String, Object> mapGroupsRequest)
-            throws TokenRetrievalException, IOException, URISyntaxException {
+                                                              String accessToken, String roleId,
+                                                              List<String> groups)
+            throws IOException {
 
-        return AppdevAuthorizationService.mapGroupsToRole(runner, client, mapGroupsRequest);
+        HashMap<String, Object> mapGroupsRequest = new HashMap<>();
+        mapGroupsRequest.put("groups", groups);
+        mapGroupsRequest.put("roleId", roleId);
+        return AppdevAuthorizationService.mapGroupsToRole(runner, client, accessToken, mapGroupsRequest);
+    }
+
+    private static HashMap<String, Object> getRoleRequest(String envId, String projectId, String name,
+                                                          String permission) {
+
+        HashMap<String, Object> roleRequest = new HashMap<>();
+        roleRequest.put("name", name);
+        roleRequest.put("description", AppdevAuthorizationConstants.TestRoleData.DESCRIPTION);
+        roleRequest.put("projectId", projectId);
+
+        Permission permissionObj = Permission.builder()
+                .environmentId(envId)
+                .name(permission)
+                .build();
+        roleRequest.put("permissions", List.of(permissionObj));
+        return roleRequest;
     }
 }

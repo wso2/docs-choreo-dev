@@ -20,6 +20,7 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.models.appdevUserManagement.CreateUserStoreResponseDTO;
 import com.wso2.choreo.integration.models.appdevUserManagement.UserStore;
 import com.wso2.choreo.integration.models.appdevUserManagement.UsersListResponseDTO;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.LinkedMultiValueMap;
 
 import java.io.IOException;
@@ -36,18 +37,22 @@ public class AppdevUserManagementUtils {
      * 
      * @param runner                 Citrus test runner
      * @param client                 Citrus http client
+     * @param accessToken            Access token
+     * @param orgUuid                Organization UUID
      * @param environmentId          Environment ID
-     * @param createUserStoreRequest Request body to create user store
+     * @param userStoreName          UserStore name
      * @return CreateUserStoreResponseDTO
-     * @throws TokenRetrievalException If an error occurs while retrieving the token
      * @throws IOException             If an error occurs while reading the response
      * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static CreateUserStoreResponseDTO createUserStoreInEnvironment(TestActionRunner runner, HttpClient client,
-            String environmentId, LinkedMultiValueMap<String, Object> createUserStoreRequest)
-            throws TokenRetrievalException, IOException, URISyntaxException {
+                                                                          String accessToken, String orgUuid,
+                                                                          String environmentId, String userStoreName)
+            throws IOException, URISyntaxException {
 
-        return AppdevUserManagementService.createUserStoreInEnvironment(runner, client, environmentId,
+        LinkedMultiValueMap<String, Object> createUserStoreRequest = getCreateUserStoreRequest(userStoreName);
+        return AppdevUserManagementService.createUserStoreInEnvironment(runner, client, accessToken, orgUuid,
+                environmentId,
                 createUserStoreRequest);
     }
 
@@ -74,16 +79,17 @@ public class AppdevUserManagementUtils {
      * @param runner                 Citrus test runner
      * @param client                 Citrus http client
      * @param userStoreId            User store ID
-     * @param createUserStoreRequest Request body to create user store
+     * @param userStoreName          UserStore name
      * @return CreateUserStoreResponseDTO
      * @throws TokenRetrievalException If an error occurs while retrieving the token
      * @throws IOException             If an error occurs while reading the response
      * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static CreateUserStoreResponseDTO reCreateUserStoreInEnvironment(TestActionRunner runner, HttpClient client,
-            String userStoreId, LinkedMultiValueMap<String, Object> createUserStoreRequest)
+            String userStoreId, String userStoreName)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
+        LinkedMultiValueMap<String, Object> createUserStoreRequest = getCreateUserStoreRequest(userStoreName);
         return AppdevUserManagementService.reCreateUserStoreInEnvironment(runner, client, userStoreId,
                 createUserStoreRequest);
     }
@@ -131,31 +137,41 @@ public class AppdevUserManagementUtils {
 
     /**
      * List user stores in all environments
-     * 
-     * @param runner        Citrus test runner
-     * @param client        Citrus http client
-     * @param environmentId Environment ID
+     *
+     * @param accessToken Access token
+     * @param orgUuid     Organization UUID
      * @return List of UserStore objects
-     * @throws TokenRetrievalException If an error occurs while retrieving the token
-     * @throws IOException             If an error occurs while reading the response
-     * @throws URISyntaxException      If an error occurs while creating the URI
+     * @throws IOException        If an error occurs while reading the response
+     * @throws URISyntaxException If an error occurs while creating the URI
      */
-    public static List<UserStore> getAllUserStores() throws TokenRetrievalException, IOException, URISyntaxException {
+    public static List<UserStore> getAllUserStores(String accessToken, String orgUuid) throws IOException,
+            URISyntaxException {
 
-        return AppdevUserManagementService.getAllUserStores();
+        return AppdevUserManagementService.getAllUserStores(accessToken, orgUuid);
     }
 
     /**
      * Delete a user store
-     * 
+     *
+     * @param accessToken Access token
+     * @param orgUuid     Organization UUID
      * @param userStoreId User store ID
-     * @throws TokenRetrievalException If an error occurs while retrieving the token
-     * @throws IOException             If an error occurs while reading the response
-     * @throws URISyntaxException      If an error occurs while creating the URI
+     * @throws IOException        If an error occurs while reading the response
+     * @throws URISyntaxException If an error occurs while creating the URI
      */
-    public static void deleteUserStore(String userStoreId)
-            throws TokenRetrievalException, IOException, URISyntaxException {
+    public static void deleteUserStore(String accessToken, String orgUuid, String userStoreId) throws IOException,
+            URISyntaxException {
 
-        AppdevUserManagementService.deleteUserStore(userStoreId);
+        AppdevUserManagementService.deleteUserStore(accessToken, orgUuid, userStoreId);
+    }
+
+    private static LinkedMultiValueMap<String, Object> getCreateUserStoreRequest(String userStoreName) {
+
+        LinkedMultiValueMap<String, Object> createUserStoreRequest = new LinkedMultiValueMap<>();
+        createUserStoreRequest.add("name", userStoreName);
+        createUserStoreRequest.add("userstoreFile",
+                new ClassPathResource("templates/appdevUserManagement/user-store-file.csv"));
+
+        return createUserStoreRequest;
     }
 }
