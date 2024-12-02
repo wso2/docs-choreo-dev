@@ -5,10 +5,9 @@ resources:
   - choreo-apim
   - choreodp-system
   - clusterissuers
+  - crd
+  - priorityclass
   - ../base/clusterissuers
-  - ../dataplane/choreo-apim
-  - ../dataplane/crd
-  - ../dataplane/priorityclass
 
 commonLabels:
   app: choreo-dataplane

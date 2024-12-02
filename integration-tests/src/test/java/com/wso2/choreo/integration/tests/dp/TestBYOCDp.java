@@ -105,7 +105,7 @@ public class TestBYOCDp extends TestBase {
             Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
                     dp.getChoreoComponent(), statusDTO, dp.getEnvironments());
             ComponentUtils.invokeApiGETWithBackoffRetries(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/greeter/greet",
-                    expectedResponse, 2, 3);
+                    expectedResponse, 2, 6);
         }
     }
 

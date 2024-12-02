@@ -76,6 +76,7 @@ configMapGenerator:
       - CONFIG_YAML_OBSERVE_REPORTER_HOST={{.CONFIG_YAML_OBSERVE_REPORTER_HOST}}
       - MEDIATION_SERVICE_ACCESS_LOGS_ENABLED={{.MEDIATION_SERVICE_ACCESS_LOGS_ENABLED}}
       - CONTROL_PLANE_ORG_UUID={{.CONTROL_PLANE_ORG_UUID}}
+      - CHOREO_SYSTEM_USER_IDP_ID={{.CHOREO_SYSTEM_USER_IDP_ID}}
       - CHOREO_DEMO_ORG_UUID={{.CHOREO_DEMO_ORG_UUID}}
       - ROLE_BASED_USER_MGT_ENABLED={{.ROLE_BASED_USER_MGT_ENABLED}}
       - BAL_CENTRAL_USER_IDP_ID={{.BAL_CENTRAL_USER_IDP_ID}}
@@ -425,20 +426,21 @@ configMapGenerator:
       - ENABLE_ASYNC_OPERATIONS={{.ENABLE_ASYNC_OPERATIONS}}
       - ASYNC_REPO_CREATION_RETRY_CONFIG="eyJpbml0aWFsRGVsYXkiOiAyLCJwcm9ncmVzc2lvbkZhY3RvciI6IDIuMCwibWF4RGVsYXkiOiAxODAwLCJjb3VudCI6IDIwfQo="
       - MI_BUILDPACKS_ENABLED_TEST_ORGS={{.MI_BUILDPACKS_ENABLED_TEST_ORGS}}
-      - BD_CMV={{.BD_CMV | default "v1.1.34"}}
-      - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.34.yml"}}
-      - BD_BYORV={{.BD_BYORV | default "v1.1.39"}}
-      - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.39.yml"}}
-      - BD_BYOCV={{.BD_BYOCV | default "v1.0.30"}}
-      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.30.yml"}}
-      - BD_MIV={{.BD_MIV | default "v1.0.25"}}
-      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.25.yml"}}
-      - BD_BPV={{.BD_BPV | default "v0.12.16"}}
-      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.16.yml"}}
-      - BD_PMSV={{.BD_PMSV | default "v1.1.0"}}
-      - BD_PMS_FP={{.BD_PMS_FP | default ".github/workflows/choreo-build-deploy_prism-mock-service_1.1.0.yml"}}
+      - BD_CMV={{.BD_CMV | default "v1.1.35"}}
+      - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.35.yml"}}
+      - BD_BYORV={{.BD_BYORV | default "v1.1.40"}}
+      - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.40.yml"}}
+      - BD_BYOCV={{.BD_BYOCV | default "v1.0.31"}}
+      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.31.yml"}}
+      - BD_MIV={{.BD_MIV | default "v1.0.26"}}
+      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.26.yml"}}
+      - BD_BPV={{.BD_BPV | default "v0.12.17"}}
+      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.17.yml"}}
+      - BD_PMSV={{.BD_PMSV | default "v1.1.1"}}
+      - BD_PMS_FP={{.BD_PMS_FP | default ".github/workflows/choreo-build-deploy_prism-mock-service_1.1.1.yml"}}
       - BD_IMAGE_PUSH_TEMPLATE_VERSION={{.BD_IMAGE_PUSH_TEMPLATE_VERSION | default "choreo-templates/choreo-image-push@v1.0.7"}}
       - BD_BUILD_DEPLOY_TEMPLATE_VERSION={{.BD_BUILD_DEPLOY_TEMPLATE_VERSION | default "choreo-templates/build-deploy-action@v2.2.4"}}
+      - BD_AWS_SINGLE_IMAGE_REPO_ENABLED_ORGS={{.BD_AWS_SINGLE_IMAGE_REPO_ENABLED_ORGS | default ""}}
       - MEDIATION_WF_CODE_GENV={{.MEDIATION_WF_CODE_GENV | default "v1.2.11"}}
       - MEDIATION_WF_CODEGEN_FP={{.MEDIATION_WF_CODEGEN_FP | default ".github/workflows/mediation-code-generator_1.2.11.yml"}}
       - DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW={{.DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW}}
@@ -467,6 +469,8 @@ configMapGenerator:
       - CP_GW_URL={{.CP_GW_URL | default ""}}
       - PROXY_DEPLOYER_URL={{.PROXY_DEPLOYER_URL}}
       - TRAFFIC_ROUTING_PROXY_DISABLED={{.TRAFFIC_ROUTING_PROXY_DISABLED | default "false"}}
+      - ENABLE_ASYNC_INITIAL_BUILD={{.ENABLE_ASYNC_INITIAL_BUILD | default "false"}}
+      - ENABLE_SAVE_SRC_CONFIG_DETAILS={{.ENABLE_SAVE_SRC_CONFIG_DETAILS | default "false"}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
@@ -634,7 +638,6 @@ configMapGenerator:
       - REACT_APP_ENABLE_INTERNAL_API_FEATURE={{.REACT_APP_ENABLE_INTERNAL_API_FEATURE}}
       - REACT_APP_ENABLE_BYOC_FEATURE={{.REACT_APP_ENABLE_BYOC_FEATURE}}
       - REACT_APP_ENABLE_EXTERNAL_CI_FEATURE={{.REACT_APP_ENABLE_EXTERNAL_CI_FEATURE}}
-      - REACT_APP_ENABLE_BYO_CLOUD_INFRASTRUCTURE={{.REACT_APP_ENABLE_BYO_CLOUD_INFRASTRUCTURE}}
       - REACT_APP_ENABLE_KAFKA_AS_A_SERVICE={{.REACT_APP_ENABLE_KAFKA_AS_A_SERVICE | default "false"}}
       - REACT_APP_ENABLE_GRAPHQL_FEATURE={{.REACT_APP_ENABLE_GRAPHQL_FEATURE}}
       - REACT_APP_PROXY_DEPLOYER_BASE_URL={{.REACT_APP_PROXY_DEPLOYER_BASE_URL}}
@@ -784,6 +787,7 @@ configMapGenerator:
       - REACT_APP_ENABLE_DEFAULT_ENDPOINT_URL_FEATURE={{.REACT_APP_ENABLE_DEFAULT_ENDPOINT_URL_FEATURE | default "false"}}
       - REACT_APP_ENABLE_APPROVAL_WORKFLOW_FEATURE={{.REACT_APP_ENABLE_APPROVAL_WORKFLOW_FEATURE | default "false"}}
       - REACT_APP_AI_COPILOT_URL_SUFFIX={{.REACT_APP_AI_COPILOT_URL_SUFFIX | default "/systemapis/aicopilot/v1.0/copilot"}}
+      - REACT_APP_AI_COPILOT_DATACOLLECTOR_BASE_URL={{.REACT_APP_AI_COPILOT_DATACOLLECTOR_BASE_URL | default ""}}
       - REACT_APP_AI_COPILOT_BLOG_URL={{.REACT_APP_AI_COPILOT_BLOG_URL | default "https://wso2.com/library/blogs/introducing-choreo-copilot/"}}
       - REACT_APP_ENABLE_COMPONENT_NAME_FLOW_CONSOLE={{.REACT_APP_ENABLE_COMPONENT_NAME_FLOW_CONSOLE | default "false"}}
       - REACT_APP_ENABLE_RESILIENCY_FEATURE={{.REACT_APP_ENABLE_RESILIENCY_FEATURE | default "false"}}
@@ -1089,6 +1093,16 @@ configMapGenerator:
       - WEBSUB_HUB_PUBLISHER_ENABLED={{.WEBSUB_HUB_PUBLISHER_ENABLED | default "false"}}
       - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL}}
       - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC}}
+      - TOKEN_REVOCATION_CLIENT_ID={{.TOKEN_REVOCATION_CLIENT_ID}}
+  - name: env-choreo-gcp-marketplace-client
+    behavior: create
+    literals:
+      - ENABLE_LISTENER={{.ENABLE_LISTENER | default "false"}}
+      - GCP_CREDENTIALS_JSON_FILE={{.GCP_CREDENTIALS_JSON_FILE | default "/mnt/csi/choreo-gcp-marketplace-client-secret/GCP_CREDENTIALS_JSON"}}
+      - GCP_PROVIDER_ID_FILE={{.GCP_PROVIDER_ID_FILE | default "/mnt/csi/choreo-gcp-marketplace-client-secret/GCP_PROVIDER_ID"}}
+      - GCP_PROJECT_ID={{.GCP_PROJECT_ID | default "choreo-public"}}
+      - PUBSUB_SUBSCRIPTION_NAME={{.PUBSUB_SUBSCRIPTION_NAME | default "test-choreo-public-subscription"}}
+      - BILLING_INTERNAL_GRPC_ADDRESS={{.BILLING_INTERNAL_GRPC_ADDRESS | default "billing-service:9094"}}
   - name: env-choreo-aws-marketplace-client
     behavior: create
     literals:

@@ -60,6 +60,9 @@ areaOwners:
   - testClass: com.wso2.choreo.integration.tests.dp.TestBuildpackDp
     assignees:
       - janakas@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestBuildpackGitLabDp
+    assignees:
+      - yashodha@wso2.com
   - testClass: com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase
     assignees:
       - lakmal@wso2.com
@@ -142,6 +145,7 @@ areaOwners:
   - testClass: com.wso2.choreo.integration.tests.security.componentManagement.ComponentManagementElevatedAccessCheck
     assignees:
       - yasithag@wso2.com
+      - yashodha@wso2.com
   - testClass: com.wso2.choreo.integration.tests.security.organizationManagement.CustomDomains.OrgMgtCustomDomainsElevatedAccessCheck
     assignees:
       - ketharan@ws02.com
@@ -198,3 +202,7 @@ areaOwners:
     assignees:
       - sumedhas@wso2.com
       - rolandh@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.connections.DatabaseConnectionsTest
+    assignees:
+      - hansi@wso2.com
+      - menaka@wso2.com

@@ -19,7 +19,6 @@ import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.BalConfig;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
-import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.environments.Environment;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +26,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
@@ -37,13 +35,12 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class ConfigManagement {
     private static final String CONTEXT = "/config-mgt/1.0.0/";
     public static void addConfiguration(TestActionRunner runner, HttpClient client,
-                                        ChoreoComponent component, List<Commit> commitHistory, Environment environment,
+                                        ChoreoComponent component, String commitHash, Environment environment,
                                         BalConfig... balconfigs) throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String componentId = component.getId();
         String envIdToDeploy = environment.getId();
         String latestVersionId = component.getLatestApiVersion().getId();
-        String latestCommitSha = component.getLatestCommitHash(commitHistory.toArray(Commit[]::new));
         String orgHandle = component.getOrgHandler();
         String projectId = component.getProjectId();
 
@@ -54,7 +51,7 @@ public class ConfigManagement {
         Map<String, Object> requestBodyMap = new HashMap<>() {
             {
                 put("moduleName", component.getName());
-                put("commitHash", latestCommitSha);
+                put("commitHash", commitHash);
                 put("applyNow", false);
                 put("operation", 0);
                 put("sourceUuid", "");

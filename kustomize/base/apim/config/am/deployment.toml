@@ -445,6 +445,14 @@ orgId="{{.ORG_ID}}"
 connection_string = "{{.CONNECTION_STRING}}"
 {{end}}
 
+{{range .AZURE_SERVICE_BUS_POOL}}
+[[choreo.azure_service_bus_pool]]
+id = {{.ID}}
+name = "{{.NAME}}"
+connection_string = "{{.CONNECTION_STRING}}"
+capacity = {{.CAPACITY}}
+{{end}}
+
 [choreo.azure_service_bus.org_cleanup]
 enabled = true
 worker_threads = 10
