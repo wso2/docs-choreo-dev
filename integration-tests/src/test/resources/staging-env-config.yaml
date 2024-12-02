@@ -23,7 +23,7 @@ common:
   GITHUB_ENDPOINT: https://api.github.com
   GITHUB_ORG: choreo-test-apps
   GITHUB_TEST_USER_ORG: choreo-integration-test-user-stage
-  GITLAB_SECRETREF: 26ef0ca7b-979a-4af2-b216-1a9d085137c2
+  GITLAB_SECRETREF: b9a3c7a1-57f2-47c7-85ff-43b6683093f3
   #GITHUB_TEST_USER_PAT:
   #GITHUB_PAT:
   GMAIL_API_CK: 412441153337-r3a3sj5ecba3a04aqlb3l05ro25tf08l.apps.googleusercontent.com

@@ -3,6 +3,7 @@ package com.wso2.choreo.integration.tests.dp;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
+import com.wso2.choreo.integration.common.Buildpack;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
@@ -55,7 +56,7 @@ public class TestBuildpackGitLabDp extends TestBase {
 
         GraphqlDTO dto = ComponentUtils.createBuildpackComponentRequestWithSecretRef(componentName, project, repo, secretRef, Buildpack.GOLANG);
 
-        ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
+        ChoreoComponent choreoComponent = ComponentUtils.createComponentWithSecretRef(this, citrusClients, accessToken,
                 dto, ComponentFlavour.BUILDPACK);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
