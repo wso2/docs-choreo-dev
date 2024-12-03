@@ -472,6 +472,7 @@ configMapGenerator:
       - TRAFFIC_ROUTING_PROXY_DISABLED={{.TRAFFIC_ROUTING_PROXY_DISABLED | default "false"}}
       - ENABLE_ASYNC_INITIAL_BUILD={{.ENABLE_ASYNC_INITIAL_BUILD | default "false"}}
       - ENABLE_SAVE_SRC_CONFIG_DETAILS={{.ENABLE_SAVE_SRC_CONFIG_DETAILS | default "false"}}
+      - LATEST_COMPONENT_YAML_SCHEMA_VERSION={{.LATEST_COMPONENT_YAML_SCHEMA_VERSION | default "1.1"}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
