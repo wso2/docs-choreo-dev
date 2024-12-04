@@ -4,7 +4,7 @@ Kafka on Choreo offers fully managed, distributed message broker services across
 
 !!! info "Note"
      - Kafka service creation is available only for paid Choreo users.
-     - Kafka service billing will be included in your Choreo subscription, with pricing varying based on the service plan of the resources you create. For more details, see [Choreo Platform Services Billing](../references/choreo-platform-services-billing.md).
+     - Kafka service billing will be included in your Choreo subscription, with pricing varying based on the service plan of the resources you create. For more details, see [Choreo Platform Services Billing](../references/choreo-platform-services-billing-and-upgrades.md#platform-service-billing-information).
 
 ## Create a Choreo-managed Kafka service
 
