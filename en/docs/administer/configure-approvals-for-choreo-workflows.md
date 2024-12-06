@@ -2,14 +2,30 @@
 
 Choreo allows you to configure approval processes for specific workflows within the platform. An approval process for a workflow ensures that critical or sensitive changes are properly managed and controlled.
 
-Choreo currently allows you to configure approvals for environment promotion workflows, with support for API subscription approvals coming soon.
+Choreo currently allows you to configure approvals for environment promotion and API subscription workflows.
+
+Configuring approvals for environment promotion allows authorized users to control components being promoted to a critical/production environment. 
+
+Configuring approvals for the API subscription workflow allows you to create subscription plans that require approval before being activated. This feature allows you to control access to APIs by requiring administrative review and authorization of subscriptions before they become active.
 
 ## Permissions to review and respond to approval requests
 
-To review and respond to approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:
+Click the respective tab for details on permissions depending on the workflow for which you want to configure approvals:
 
-  - **WORKFLOW-MANAGEMENT**: Grants access to view and approve workflow requests. Each workflow type has a separate permission.
-  - **PROJECT-MANAGEMENT**: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
+=== "Environment promotion"
+
+     To review and respond to environment promotion approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:
+
+      - **WORKFLOW-MANAGEMENT**: Grants access to view and approve workflow requests. Each workflow type has a separate permission.
+      - **PROJECT-MANAGEMENT**: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
+
+=== "API subscription"
+
+     To review and respond to API subscription approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:
+
+      - **WORKFLOW-MANAGEMENT**: Grants access to view and approve workflow requests. Each workflow type has a separate permission.
+      - **PROJECT-MANAGEMENT**: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
+      - **Approve API subscriptions**: Grants access to approve or reject API subscription requests.
 
 ## Set up an approval process for a workflow
 
@@ -34,4 +50,12 @@ To set up an approval process for a workflow, follow these steps:
          
 7. Click **Save**. This configures and enables the approval process for the workflow.
 
-Once you configure an approval process for a workflow, developers must [submit a request for approval to use the workflow](../develop-components/submit-and-manage-workflow-approval-requests.md). An authorized assignee must then [review and approve the request](./review-workflow-approval-requests.md) for a developer to proceed with the task related to the workflow. Depending on the workflow, there can be tasks where the execution may occur automatically upon approval.
+Once you enable the approval process for a workflow, see the following details on how to submit a request for approval and the approval process. Click the respective tab depending on the workflow for which you enabled the approval process:  
+
+=== "Environment promotion"
+
+     Once you configure an approval process for environment promotion, developers must [submit a request for approval to use the workflow](../develop-components/submit-and-manage-workflow-approval-requests.md). An authorized assignee must then [review and approve the request](./review-workflow-approval-requests.md) for a developer to proceed with the task related to the workflow.
+
+=== "API subscription"
+
+     Once you configure an approval process for API subscription, administrators can select the **Approval required** checkbox to create or update subscription plans to require approval. For details, see [Create API Subscription Plans](../administer/create-api-subscription-plans.md). API consumers using these plans must request approval to proceed. For details, see step 7 in [Subscribe to an API with a Subscription Plan](../api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan.md). An authorized approver must then [review and approve the request](./review-workflow-approval-requests.md) before the subscription is granted.
