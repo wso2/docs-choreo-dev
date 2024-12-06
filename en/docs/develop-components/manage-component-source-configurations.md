@@ -338,26 +338,44 @@ You can define the following root-level configurations via the `endpoints.yaml` 
 
 ## Migration guide
 
-With the upcoming deprecation of the `component-config.yaml` file and the `endpoints.yaml` file, Choreo provides a seamless migration path to the `component.yaml` file. See the following guidelines for details depending on the configuration you want to migrate from:
+With the upcoming deprecation of the `component-config.yaml` file and the `endpoints.yaml` file, Choreo provides a seamless migration path to the `component.yaml` file. SFollow these steps to seamlessly transition to the latest version of the `component.yaml` source configuration file.
 
-### Migrate from the `component-config.yaml` file
+### **Step 1: Identify if Your Current Source Configuration is Outdated**
 
-To migrate from the `component-config.yaml` file to the `component.yaml` file, do the following:
+You can verify if you are using an older version of the source configuration file in two ways:
 
-- Add the `schemaVersion` in the `component.yaml` and omit `apiVersion` and `kind`.
-- Move endpoint configurations from the `spec.inbound` section to the `endpoints` section in the `component.yaml` file.
-    - Copy the value of `spec.inbound.context` to `endpoints.service.basePath`.
-    - Copy the value of `spec.inbound.port` to `endpoints.service.port`.
-    - Copy the value of `spec.inbound.networkVisibility` to `endpoints.networkVisibilities`.
+1. **During a Build:**
+   - On the **Build page**, after triggering a build, a warning will appear if you are using an outdated source configuration file.
+   - Click **View Details** in the **Initialization -> Source Config Validation step** you will see an informational banner with an option to update.
 
-- Move dependency configurations from the `spec.outbound` section to the `dependencies` section in the `component.yaml` file. 
+2. **For Current Deployments**
+   - If your current deployment uses a build with an older version of the source configuration file, a warning message will appear directly on the build card of the relevant environment.
 
-### Migrate from the `endpoints.yaml` file
 
-To migrate from the `endpoints.yaml` file to the `component.yaml` file, do the following:
+### **Step 2: Generate the Latest `component.yaml` File**
 
-- Add the `schemaVersion` in the `component.yaml` and omit `version`.
-- Move endpoint configurations from the `endpoints.yaml` file to the `endpoints` section in the `component.yaml` file.
-    - Copy the value of `context` to `endpoints.service.basePath`.
-    - Copy the value of `port` to `endpoints.service.port`.
-    - Copy the value of `networkVisibility` to `endpoints.networkVisibilities`.
+- In either of the above cases, clicking **Update** will guide you through the process to generate the latest `component.yaml`.
+- This updated file will retain your existing configurations to ensure a smooth migration.
+
+
+### **Step 3: Add the New Configuration File to Your Repository**
+
+1. Download the generated `component.yaml` file.
+2. Add the file to the `.choreo` folder inside your source repository.
+   - Ensure the file is named `component.yaml`.
+
+
+### **Step 4: Trigger a New Build**
+
+1. Commit the changes (with the new `component.yaml` file) to your repository.
+2. Trigger a build using the latest commit.
+
+
+### **Step 5: Verify the Migration**
+
+- Once the build is complete:
+  - The warning messages should disappear.
+  - You can now benefit from the latest features and enhancements introduced with the updated source configuration file.
+
+
+
