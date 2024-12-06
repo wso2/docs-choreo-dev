@@ -358,7 +358,7 @@ You can determine whether you’re using an outdated configuration file in the f
 ### Step 3: Add the generated configuration file to your repository
 
 1. Download the generated `component.yaml` file.
-2. Replace the existing file in the `.choreo` folder within your source repository.
+2. Replace the existing file in the `.choreo` folder of your source repository with the downloaded file.
     - Ensure the file name is `component.yaml`.
 
 
