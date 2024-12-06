@@ -94,9 +94,9 @@ Click the respective tab to view the structure for your current configuration fi
     | **service**          | Required     | Service details for the endpoint.                                                                       |
     | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.basePath** | Required     | The base path of the API exposed via this endpoint.                        |
     | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.port**     | Required     | The numeric port value exposed via this endpoint.                          |
-    | **type**             | Required     | The type of traffic the endpoint accepts. For example, `REST`, `GraphQL`, `gRPC`, `UDP`, or `TCP`.|
+    | **type**             | Required     | The type of traffic the endpoint accepts. For example, `REST`, `GraphQL`, `WS`, `gRPC`, `UDP`, or `TCP`.|
     | **networkVisibilities** | Required | The network-level visibility of the endpoint. For example, project, organization, or public.                    |
-    | **schemaFilePath** | Required | The file path to the swagger definition file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, or **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, the path should be relative to the component root or Docker context. |
+    | **schemaFilePath** | Required | The file path to the swagger definition  or AsyncAPI 2.0 specification file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, or **WSO2 MI** buildpacks. For REST or WebSocket endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, the path should be relative to the component root or Docker context. |
 
     ### Dependency configurations
 
@@ -186,9 +186,9 @@ Click the respective tab to view the structure for your current configuration fi
     | **service**          | Required     | Service details for the endpoint.                                                                       |
     | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.basePath** | Required     | The base path of the API exposed via this endpoint.                        |
     | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**.port**     | Required     | The numeric port value exposed via this endpoint.                          |
-    | **type**             | Required     | The type of traffic the endpoint accepts. For example, `REST`, `GraphQL`, `gRPC`, `UDP`, or `TCP`.|
+    | **type**             | Required     | The type of traffic the endpoint accepts. For example, `REST`, `GraphQL`, `gRPC`, `WS`, `UDP`, or `TCP`.|
     | **networkVisibilities** | Required | The network-level visibility of the endpoint. For example, project, organization, or public.                    |
-    | **schemaFilePath** | Required | The file path to the swagger definition file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, or **WSO2 MI** buildpacks. For REST endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, the path should be relative to the component root or Docker context. |
+    | **schemaFilePath** | Required | The file path to the swagger definition  or AsyncAPI 2.0 specification file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, or **WSO2 MI** buildpacks. For REST or WebSocket endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, the path should be relative to the component root or Docker context. |
 
     <h3> Dependency configurations </h3>
 

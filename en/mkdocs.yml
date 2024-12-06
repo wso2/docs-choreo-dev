@@ -74,7 +74,7 @@ nav:
   - Home: index.md
   - Introduction:
       - What is Choreo?: what-is-choreo.md
-  - Quick Start Guide:
+  - Quick Start Guides:
       - Deploy Your First Service: quick-start-guides/deploy-your-first-service.md
       - Deploy Your First Static Web Application: quick-start-guides/deploy-your-first-static-web-application.md
       - Deploy a Web Application that Consumes a Backend Service: quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md
@@ -147,7 +147,6 @@ nav:
           - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
           - Choreo-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
           - Add Choreo-Managed Databases and Caches to the Marketplace: manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md
-          - Billing: manage-databases-and-caches/billing-for-platform-services.md
   - Choreo-Managed Message Brokers: 
       - Overview: manage-message-brokers/choreo-managed-message-brokers.md
       - Kafka:  
@@ -216,7 +215,8 @@ nav:
       - Integrate Choreo with Moesif: monitoring-and-insights/integrate-choreo-with-moesif.md     
   - Choreo CLI:
       - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
-      - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md  
+      - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md
+      - Manage Authentication with Personal Access Tokens: choreo-cli/manage-authentication-with-personal-access-tokens.md
   - Administer:
       - Control Access in the Choreo Console: administer/control-access-in-the-choreo-console.md
       - Configure a Custom Domain for Your Organization: administer/configure-a-custom-domain-for-your-organization.md
@@ -239,7 +239,7 @@ nav:
       - Troubleshoot Choreo: references/troubleshoot-choreo.md
       - Private Data Plane Security Levels: references/private-data-plane-security-levels.md
       - Private Data Plane Management Models: references/private-data-plane-management-models.md
-      - Choreo Platform Services Billing: references/choreo-platform-services-billing.md
+      - Choreo Platform Service Billing and Upgrades: references/choreo-platform-services-billing-and-upgrades.md
       
 # Extensions
 # Extensions
@@ -414,6 +414,7 @@ plugins:
           'develop-components/configure-mutual-tls-between-components.md': 'https://wso2.com/choreo/docs/authentication-and-authorization/configure-mutual-tls-between-components/'
           'api-management/api-policies.md': 'https://wso2.com/choreo/docs/api-management/api-policies/about-api-policies/'
           'develop-components/develop-services/expose-a-websocket-endpoint-via-a-nodejs-service.md': 'https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-websocket-endpoint-via-a-service/'
+          'manage-databases-and-caches/billing-for-platform-services.md': 'https://wso2.com/choreo/docs/references/choreo-platform-services-billing-and-upgrades/'
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css
