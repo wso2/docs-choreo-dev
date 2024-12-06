@@ -21,7 +21,7 @@ In addition to streamlining the development process, Integration Studio offers f
 
 The Composite Exporter project simplifies the deployment process by allowing developers to package their integration projects as a single, self-contained artifact that can be easily deployed and managed. This approach enhances the consistency and reliability of integration projects while streamlining the overall deployment process.
 
-To start developing integrations with WSO2 Integration Studio, see [WSO2 API Manager Documentation - Developing Integration Solutions](https://apim.docs.wso2.com/en/latest/integrate/develop/intro-integration-development/).
+To start developing integrations with WSO2 Micro Integrator, see [WSO2 Micro Integrator documentation - Developing Integration Solutions](https://mi.docs.wso2.com/en/latest/develop/intro-integration-development/).
 
 ## Integration project directory structure
 
@@ -134,8 +134,7 @@ To use MI Secure Vault to work with sensitive data, follow these steps:
 This code retrieves the secret named "user_pass" from the MI Secure Vault and stores it in the property named "
 secret_value_1". You can then use this property in your integration code to access the secret value.
 
-You can refer to the [Accessing secrets](https://apim.docs.wso2.com/en/latest/install-and-setup/setup/mi-setup/security/encrypting_plain_text/#step-3-accessing-secrets)
-section of MI Secure Vault documentation for more information on these features. By using MI
+For more information on these features, see the [Accessing secrets](https://mi.docs.wso2.com/en/latest/install-and-setup/setup/security/encrypting-plain-text/#step-3-accessing-secrets) section of the MI Secure Vault documentation. By using MI
 Secure Vault to store and access sensitive data in your integrations, you can ensure that your integrations
 remain secure and protect sensitive data from unauthorized access.
 
@@ -159,7 +158,7 @@ To customize the preconfigured settings of WSO2 MI instances running on Choreo, 
     Therefore, the recommended approach is to update only the necessary configuration parameters.
 
 Given below is a sample `deployment.toml` file that can be used to configure the JMS transport. For more information on WSO2 MI
-configuration parameters, see the [MI Config Catalog](https://apim.docs.wso2.com/en/latest/reference/config-catalog-mi/).
+configuration parameters, see the [MI Configuration Catalog](https://mi.docs.wso2.com/en/latest/reference/config-catalog-mi/).
 
 ```
 [[transport.jms.sender]]
@@ -194,7 +193,7 @@ Environment variables offer several benefits:
  - Portability: By using environment variables, you can ensure that your integration artifacts can be easily migrated and deployed across various environments with minimal changes.
  - Manageability: Environment variables offer a centralized way to manage configuration settings, making it easier to update and maintain your integrations over time.
 
-For a comprehensive list of parameters that can be configured as environment variables, see [WSO2 API Manager Documentation - Injecting Parameters - Supported parameters](https://apim.docs.wso2.com/en/latest/integrate/develop/injecting-parameters/#supported-parameters).
+For a comprehensive list of parameters that can be configured as environment variables, see [WSO2 Micro Integrator documentation - Injecting Parameters - Supported parameters](https://mi.docs.wso2.com/en/latest/develop/injecting-parameters/#supported-parameters).
 
 ## Configure logging
 
@@ -235,10 +234,10 @@ WSO2 Micro Integrator (MI) Connectors are prebuilt connectors designed to simpli
 
 WSO2 Integration Studio is a comprehensive development environment that facilitates the creation of integration flows using WSO2 Micro Integrator Connectors. With Integration Studio, you can design and implement integration flows that connect diverse systems and execute various actions, such as sending messages, executing queries, or retrieving data. You can build integration flows using either prebuilt connectors provided by WSO2 MI or custom connectors developed using the Connector Development Toolkit. Integration Studio offers a graphical user interface that simplifies the process of building and testing integration flows while also providing a set of tools for managing and deploying these flows in a WSO2 MI runtime environment.
 
-For more information, see the following topics in the WSO2 API Manager documentation.
+For more information, see the following topics in the WSO2 Micro Integrator documentation.
 
-- [Connectors Overview](https://apim.docs.wso2.com/en/latest/reference/connectors/connectors-overview/)
-- [Adding Connectors](https://apim.docs.wso2.com/en/latest/integrate/develop/creating-artifacts/adding-connectors/)
+- [Connectors Overview](https://mi.docs.wso2.com/en/latest/reference/connectors/connectors-overview/)
+- [Adding Connectors](https://mi.docs.wso2.com/en/latest/develop/creating-artifacts/adding-connectors/)
 
 ## Deploying integrations in Choreo 
 
