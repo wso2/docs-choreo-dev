@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: dp-rudder-webapp-deployment-hour-enforcer
 spec:
-  schedule: "0 * * * *"
+  schedule: "*/30 * * * *"
   concurrencyPolicy: Replace
   suspend: false
   jobTemplate:
