@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+  labels:
+    choreo.component: sts-mgt-service
+  name: sts-mgt-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: sts-mgt-service
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: sts-mgt-service
+        antiaffinity: sts-mgt-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: sts-mgt-service
+          image: choreocontrolplane.azurecr.io/choreoipaas/sts-mgt-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: service-port
+          readinessProbe:
+            initialDelaySeconds: 60
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /health
+          resources:
+            limits:
+              cpu: 300m
+              memory: 768Mi
+            requests:
+              cpu: 100m
+              memory: 500Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          envFrom:
+            - configMapRef:
+                name: env-choreo-sts-mgt-service
+          volumeMounts:
+            - name: secret-sts-mgt-service
+              mountPath: "/mnt/csi/secret-sts-mgt-svc"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: secret-sts-mgt-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-sts-mgt-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  antiaffinity: sts-mgt-service
+              topologyKey: kubernetes.io/hostname

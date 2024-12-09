@@ -103,11 +103,15 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         runner.$(http()
                 .client(DEVOPS_ENDPOINT)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/createIntegrationComponent/environment_variable_response.json"))
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     JsonObject component = new JsonParser().parse((String) message.getPayload())
                             .getAsJsonObject()
                             .getAsJsonObject("data");
@@ -152,11 +156,15 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         runner.$(http()
                 .client(DEVOPS_ENDPOINT)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/createIntegrationComponent/environment_variable_response.json"))
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     JsonObject component = new JsonParser().parse((String) message.getPayload())
                             .getAsJsonObject()
                             .getAsJsonObject("data");
@@ -263,7 +271,7 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                     http()
                             .client(DEVOPS_ENDPOINT)
                             .receive()
-                            .response(HttpStatus.CREATED)
+                            .response()
                             .message()
                             .type(MessageType.JSON)
                             .validate((message, context) -> {
@@ -314,7 +322,7 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                     http()
                         .client(DEVOPS_ENDPOINT)
                         .receive()
-                        .response(HttpStatus.OK)
+                        .response()
                         .message()
                         .type(MessageType.JSON)
                         .validate((message, context) -> {
@@ -367,7 +375,7 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                     http()
                             .client(DEVOPS_ENDPOINT)
                             .receive()
-                            .response(HttpStatus.CREATED)
+                            .response()
                             .message()
                             .type(MessageType.JSON)
                             .validate((message, context) -> {
@@ -414,7 +422,7 @@ public class DevopsPortalApi extends ControlPlaneAPI {
                     http()
                         .client(DEVOPS_ENDPOINT)
                         .receive()
-                        .response(HttpStatus.OK)
+                        .response()
                         .message()
                         .type(MessageType.JSON)
                         .validate((message, context) -> {
@@ -474,11 +482,15 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         runner.$(http()
                 .client(DEVOPS_ENDPOINT)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .body(new ClassPathResource("templates/createIntegrationComponent/environment_variable_response.json"))
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                            throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     secrets.addAll(new JsonParser().parse((String) message.getPayload()).getAsJsonArray());
                 }));
         return secrets;
@@ -513,10 +525,14 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         runner.$(http()
                 .client(DEVOPS_ENDPOINT)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                            throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     try {
                                 List<Dataplane> response = new ObjectMapper()
                                         .readValue(message.getPayload().toString(),
@@ -568,10 +584,14 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         runner.$(http()
                 .client(DEVOPS_ENDPOINT)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                            throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     try {
                         EnvironmentWithClustersListDTO response = new ObjectMapper()
                                         .readValue(message.getPayload().toString(),
@@ -642,10 +662,14 @@ public class DevopsPortalApi extends ControlPlaneAPI {
         runner.$(http()
                 .client(DEVOPS_ENDPOINT)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     try {
                         EnvironmentTemplatesListDTO response = new ObjectMapper()
                                 .readValue(message.getPayload().toString(),

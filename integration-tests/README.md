@@ -15,6 +15,7 @@ You can execute integration tests against your own Choreo account in Dev using t
    values for the respective env)
     - ALERT_MAIL_IMAP_PASS
     - GITHUB_PAT
+    - GITHUB_TEST_USER_PAT
     - GMAIL_API_CS
     - GMAIL_API_REFRESH_TOKEN
     - SELF_SIGNUP_ORG_ADMIN_PASSWORD

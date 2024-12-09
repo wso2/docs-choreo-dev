@@ -45,10 +45,9 @@ describe("Verify MI service with endpoint.yaml functionality", () => {
         repoUrl: REPO_URL,
         branch: BRANCH,
         buildPack: BuildPacks.MI,
-        repoName: REPO_NAME,
-        repoTestid: "subPath-hello-world-mi",
-        ENDPOINT_NAME,
-      })
+        directoryInfo: { directoryName: REPO_NAME, directoryTestid: REPO_NAME }
+      }, 
+      ENDPOINT_NAME)
       .then((comp) => {
         service = comp;
       });

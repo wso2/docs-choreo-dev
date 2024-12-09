@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: app-gateway-oauth-agent
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: app-gateway-oauth-agent

@@ -1,0 +1,12 @@
+Configuration:
+  Appenders:
+    Console:
+      name: Console
+      target: SYSTEM_OUT
+      JsonTemplateLayout:
+        eventTemplateUri: "classpath:json-log-layout.json"
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: Console

@@ -173,38 +173,12 @@ public class DataCleaner  {
 
     private static boolean shouldGroupBeDeleted(String groupName) throws ParseException {
 
-        if (!groupName.startsWith(ResourceAuthzConstants.TestGroupData.GROUP_NAME_BASE)) {
-            return false;
-        }
-
-        String timestamp = groupName.split("_")[1];
-
-        return !isValidTimestamp(timestamp);
+        return groupName.startsWith(ResourceAuthzConstants.TestGroupData.GROUP_NAME_BASE);
     }
 
     private static boolean shouldRoleBeDeleted(String roleName) throws ParseException {
 
-        if (!(roleName.startsWith(ResourceAuthzConstants.TestRoleData.ROLE_DISPLAY_NAME_BASE) || roleName
-                .startsWith(ResourceAuthzConstants.ProjectViewAndOrgManageRoleData.ROLE_DISPLAY_NAME_BASE))) {
-            return false;
-        }
-
-        String timestamp = roleName.split("_")[1];
-
-        return !isValidTimestamp(timestamp);
-    }
-
-    private static boolean isValidTimestamp(String timestampString) throws ParseException {
-
-        try {
-            long timestamp = Long.parseLong(timestampString);
-            LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault());
-            LocalDateTime currentTime = LocalDateTime.now();
-            LocalDateTime oneHourLater = dateTime.plusHours(1);
-
-            return currentTime.isBefore(oneHourLater);
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return roleName.startsWith(ResourceAuthzConstants.TestRoleData.ROLE_DISPLAY_NAME_BASE) 
+            || roleName.startsWith(ResourceAuthzConstants.ProjectViewAndOrgManageRoleData.ROLE_DISPLAY_NAME_BASE);
     }
 }

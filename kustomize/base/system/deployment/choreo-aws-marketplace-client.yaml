@@ -4,6 +4,8 @@ metadata:
   name: choreo-aws-marketplace-client
   labels:
     choreo.component: choreo-aws-marketplace-client
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Required by linkerd
 spec:
   replicas: 1
   selector:
@@ -19,6 +21,9 @@ spec:
       labels:
         choreo.component: choreo-aws-marketplace-client
         antiaffinity: choreo-aws-marketplace-client
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
     spec:
       affinity:
         podAntiAffinity:
@@ -27,24 +32,28 @@ spec:
                 matchLabels:
                   antiaffinity: choreo-aws-marketplace-client
               topologyKey: kubernetes.io/hostname
+      automountServiceAccountToken: true
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: choreo-aws-marketplace-client
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-aws-marketplace-client:latest
           ports:
             - containerPort: 8080
-          env:
-            - name: AWS_DEFAULT_REGION
-              value: us-east-1
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: choreo-aws-marketplace-client-secret
-                  key: AWS_ACCESS_KEY_ID
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: choreo-aws-marketplace-client-secret
-                  key: AWS_SECRET_ACCESS_KEY
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - ALL
+          envFrom:
+            - configMapRef:
+                name: env-choreo-aws-marketplace-client
+            - secretRef:
+                name: choreo-aws-marketplace-client-secret
           resources:
             requests:
               cpu: 100m

@@ -100,7 +100,7 @@ spec:
               choreo.component: resource-registry
           maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
+          whenUnsatisfiable: ScheduleAnyway
         - labelSelector:
             matchLabels:
               choreo.component: resource-registry

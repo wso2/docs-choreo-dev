@@ -109,7 +109,7 @@ spec:
               choreo.component: alert-notification-service
           maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
+          whenUnsatisfiable: ScheduleAnyway
         - labelSelector:
             matchLabels:
               choreo.component: alert-notification-service

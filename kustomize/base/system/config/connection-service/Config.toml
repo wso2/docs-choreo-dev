@@ -14,7 +14,6 @@ choreoIdpId = "{{.CHOREO_IDP_ID}}"
 rudderClientEndpoint = "http://dp-rudder:80"
 apimClientId = "{{.APIM_REST_API_CONSUMER_KEY}}"
 choreoStsUrl = "{{.CHOREO_STS_URL}}"
-intRoutingEnabled = {{.INT_ROUTING_FEATURE_ENABLED | default false}}
 connectionDatabaseEnabled = {{.CONNECTION_DB_ENABLED | default false}}
 connectionListingFromDBEnabled = {{.CONNECTION_LISTING_ENABLED | default false}}
 connectionListingV2Enabled = {{.CONNECTION_LISTING_V2_ENABLED | default false}}
@@ -26,6 +25,9 @@ platformServicesManagerEndpoint = "http://platform-services-manager:80"
 enableEventPublish = {{.ENABLE_EVENT_PUBLISH | default false}}
 websubHubUrl = "{{.WEBSUB_HUB_URL}}"
 websubHubTopic = "{{.WEBSUB_HUB_TOPIC}}"
+enableSTSManagementService = {{.ENABLE_STS_MANAGEMENT_SERVICE | default false}}
+choreoStsMgtServiceUrl = "http://sts-mgt-service:3000/api/v1/sts-proxy"
+apiKeyServiceEndpoint = "http://api-key-service:8080/api/v1"
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"

@@ -1,0 +1,27 @@
+schemaVersion: 1.0
+endpoints:
+  # +required Unique name for the endpoint. (This name will be used when generating the managed API)
+  - name: appointments
+    service:
+      basePath: /
+      port: 8090
+    type: REST
+    # +optional Network level visibility of the endpoint. Defaults to Public
+    # Accepted values: Project|Organization|Public.
+    networkVisibility: Public
+    schemaFilePath: openapi.yaml
+dependencies:
+    serviceReferences:
+    - name: {{serviceIdentifier}}
+      connectionConfig: {{connectionId}}
+      env:
+      - from: HostName
+        to: CHOREO_DATABASE_CONNECTION_HOSTNAME
+      - from: Port
+        to: CHOREO_DATABASE_CONNECTION_PORT
+      - from: Username
+        to: CHOREO_DATABASE_CONNECTION_USERNAME
+      - from: Password
+        to: CHOREO_DATABASE_CONNECTION_PASSWORD
+      - from: DatabaseName
+        to: CHOREO_DATABASE_CONNECTION_DATABASENAME

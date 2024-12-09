@@ -62,7 +62,7 @@ describe("Create Reusable Schedule Trigger", () => {
   });
 
   it("Deploying to Dev", () => {
-    component.deployToDev();
+    component.deployToDev(2);
   });
 
   it("Verify component promotion to Prod", () => {

@@ -41,10 +41,9 @@ describe("Verify MI service component functionality", () => {
         displayName: "",
         repoUrl: REPO_URL,
         buildPack: BuildPacks.MI,
-        repoName: REPO_NAME,
-        repoTestid: "subPath-hello-world-mi",
-        ENDPOINT_NAME,
-      })
+        directoryInfo: { directoryName: REPO_NAME, directoryTestid: REPO_NAME},
+      }, 
+      ENDPOINT_NAME)
       .then((comp) => {
         service = comp;
       });

@@ -60,10 +60,10 @@ public class TestOrgEnvironments extends TestNGCitrusSpringSupport {
     public void setup_TestOrgEnvironments()
             throws Exception {
 
-        orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
-        orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-        orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-        accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        orgHandle = Configuration.getConfig(ConfigDefinition.SELF_SIGNUP_ORG_HANDLE);
+        orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.SELF_SIGNUP_ORG_ID));
+        orgUUID = Configuration.getConfig(ConfigDefinition.SELF_SIGNUP_ORG_UUID);
+        accessToken = TestContext.getSelfSignupTestAdminUserTokenHandler().getTestTokenForCPAPIs();
     }
 
     @Test
@@ -73,7 +73,7 @@ public class TestOrgEnvironments extends TestNGCitrusSpringSupport {
         environmentName = "test-" + String.format("%03x", new Random().nextInt(4096));
         dnsPrefix = "dns-" + String.format("%03x", new Random().nextInt(4096));
 
-        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, region);
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, region, orgId, orgHandle);
         projectId = project.getId();
     }
 
@@ -156,7 +156,7 @@ public class TestOrgEnvironments extends TestNGCitrusSpringSupport {
         environmentName = "test-" + String.format("%03x", new Random().nextInt(4096));
         dnsPrefix = "dns-" + String.format("%03x", new Random().nextInt(4096));
 
-        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, region);
+        ChoreoProject project = ComponentUtils.createProject(this, citrusClients, accessToken, region, orgId, orgHandle);
         projectId = project.getId();
     }
 

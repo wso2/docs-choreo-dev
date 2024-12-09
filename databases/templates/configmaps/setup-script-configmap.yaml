@@ -33,7 +33,6 @@ data:
     # Set the credentials read from the Azure Key Vault
     sed -i "s|<pw_app_db_user>|${app-CHOREO-DB-PASSWORD}|g" /tmp/initialize.sql
     sed -i "s|<pw_perf_db_user>|${perfanalyzer-CHOREO-PERF-DB-PASSWORD}|g" /tmp/initialize.sql
-    sed -i "s|<pw_program_db_user>|${program-CHOREO-DB-PASSWORD}|g" /tmp/initialize.sql
     sed -i "s|<pw_testbase_db_user>|${testbase-CHOREO-DB-PASSWORD}|g" /tmp/initialize.sql
     sed -i "s|<pw_apim_db_user>|${apim-CHOREO-APIM-DB-PASSWORD}|g" /tmp/initialize.sql
 
@@ -57,9 +56,6 @@ data:
     echo "Done."
     echo "Populate the Choreo Perf database..."
     mysql --host=${AZURE_DB_SERVICE_HOST} --port=${AZURE_DB_SERVICE_PORT} --user=${DATABASE_ADMIN_USER} --password=${DATABASE_ADMIN_USER_PASSWORD} --ssl-ca=/certs/mysql-ca.crt.pem --ssl-verify-server-cert=TRUE < /sql-scripts/structure/choreo_perf_db.sql
-    echo "Done."
-    echo "Populate the Choreo Program database..."
-    mysql --host=${AZURE_DB_SERVICE_HOST} --port=${AZURE_DB_SERVICE_PORT} --user=${DATABASE_ADMIN_USER} --password=${DATABASE_ADMIN_USER_PASSWORD} --ssl-ca=/certs/mysql-ca.crt.pem --ssl-verify-server-cert=TRUE < /sql-scripts/structure/choreo_program_db.sql
     echo "Done."
     echo "Populate the Choreo Testbase database..."
     mysql --host=${AZURE_DB_SERVICE_HOST} --port=${AZURE_DB_SERVICE_PORT} --user=${DATABASE_ADMIN_USER} --password=${DATABASE_ADMIN_USER_PASSWORD} --ssl-ca=/certs/mysql-ca.crt.pem --ssl-verify-server-cert=TRUE < /sql-scripts/structure/choreo_testbase_db.sql

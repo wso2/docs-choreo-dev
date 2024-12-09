@@ -20,6 +20,7 @@ import { Project } from "../../../support/console/entities/project/project";
 import { console } from "../../../support/console/console";
 import { OK } from "../../../support/commons/http";
 import { devPortal } from "../../../support/console/devportal";
+import { Utils } from "../../../support/commons/utils";
 
 describe("Create proxy using existing url", () => {
   const PROJECT_DESCRIPTION = "Proxy from oas URL";
@@ -195,23 +196,47 @@ describe("Create proxy using existing url", () => {
   });
 
   it("Navigate to Dev portal", () => {
-    devPortal.loginToDevPortal();
-    // Recreate Proxy object using previously saved metadata
-    cy.task("getData", Cypress.spec.name).then((metaData) => {
-      proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
+    Utils.isTestConsoleOnly().then((testConsoleOnly) => {
+      if (!testConsoleOnly) {
+        devPortal.loginToDevPortal();
+        // Recreate Proxy object using previously saved metadata
+        cy.task("getData", Cypress.spec.name).then((metaData) => {
+          proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
+        });
+      } else {
+        cy.log(`Skipping Devportal step due to testConsoleOnly: ${testConsoleOnly}`);
+      }
     });
   });
 
   it("Find API in devportal custom domain", () => {
-    devPortal.searchApi(proxy.getName());
+    Utils.isTestConsoleOnly().then((testConsoleOnly) => {
+      if (!testConsoleOnly) {
+        devPortal.searchApi(proxy.getName());
+      } else {
+        cy.log(`Skipping Devportal step due to testConsoleOnly: ${testConsoleOnly}`);
+      }
+    });
   });
 
   it("Generate Production credentials for proxy in Dev portal", () => {
-    proxy.generateCredentials_DevPortal(Enums.Environment.PRODUCTION);
+    Utils.isTestConsoleOnly().then((testConsoleOnly) => {
+      if (!testConsoleOnly) {
+        proxy.generateCredentials_DevPortal(Enums.Environment.PRODUCTION);
+      } else {
+        cy.log(`Skipping Devportal step due to testConsoleOnly: ${testConsoleOnly}`);
+      }
+    });
   });
 
   it("Tryout proxy in Dev portal", () => {
-    proxy.testSwaggerConsole_DevPortal({ resource: RESOURCE });
+    Utils.isTestConsoleOnly().then((testConsoleOnly) => {
+      if (!testConsoleOnly) {
+        proxy.testSwaggerConsole_DevPortal({ resource: RESOURCE });
+      } else {
+        cy.log(`Skipping Devportal step due to testConsoleOnly: ${testConsoleOnly}`);
+      }
+    });
   });
 
   it("Stop proxy", () => {

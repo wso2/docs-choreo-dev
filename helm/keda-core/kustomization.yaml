@@ -33,3 +33,5 @@ resources:
   - keda-core-operator-role.yaml
   - keda-core-operator-role-binding.yaml
   - keda-netpol.yaml
+
+namespace: keda

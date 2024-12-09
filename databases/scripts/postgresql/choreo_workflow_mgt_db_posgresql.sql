@@ -11,15 +11,18 @@ CREATE TABLE workflow_definition (
     name VARCHAR(255) NOT NULL,
     description TEXT,
     approver_types VARCHAR(255) NOT NULL,
+    approver_permission VARCHAR(255) NOT NULL,
     execute_upon_approval BOOLEAN NOT NULL,
     allow_parallel_requests BOOLEAN NOT NULL,
-    request_format_schema TEXT NOT NULL
+    request_format_schema TEXT NOT NULL,
+    scope VARCHAR(50) NOT NULL DEFAULT 'PROJECT'
 );
 
 -- Create org_workflow_config table
 CREATE TABLE org_workflow_config (
     id VARCHAR(36) PRIMARY KEY,
     org_id VARCHAR(36) NOT NULL,
+    project_id VARCHAR(36),
     enabled BOOLEAN NOT NULL DEFAULT false,
     workflow_definition_id VARCHAR(50) NOT NULL REFERENCES workflow_definition(id),
     assignee_roles VARCHAR(255) NOT NULL,
@@ -34,6 +37,7 @@ CREATE TABLE workflow_instance (
     description VARCHAR(255) NOT NULL DEFAULT '',
     org_workflow_config_id VARCHAR(36) NOT NULL REFERENCES org_workflow_config(id),
     org_id VARCHAR(36) NOT NULL,
+    project_id VARCHAR(36),
     resource VARCHAR(255) NOT NULL,
     workflow_definition_id VARCHAR(50) NOT NULL REFERENCES workflow_definition(id),
     created_by VARCHAR(255) NOT NULL,
@@ -69,8 +73,8 @@ CREATE TABLE audit_event (
 -- 1. ENVIRONMENT PROMOTION
 
 INSERT INTO public.workflow_definition
-(id, "name", description, approver_types, execute_upon_approval, allow_parallel_requests, request_format_schema)
-VALUES('ENV_PROMOTION', 'Environment Promotion','Promotion of a build from one environment to another', 'ROLE,USER', false, false,
+(id, "name", description, approver_types, approver_permission, execute_upon_approval, allow_parallel_requests, request_format_schema)
+VALUES('ENV_PROMOTION', 'Environment Promotion','Promotion of a build from one environment to another, 'ROLE,USER', 'choreo:workflow_component_promotion_approve', false, false,
     '{
         "projectName": {
             "displayName": "Project Name",
@@ -116,43 +120,11 @@ VALUES('ENV_PROMOTION', 'Environment Promotion','Promotion of a build from one e
         }
     }');
 
--- 2. API_SUBSCRIPTION_CREATION
+-- 2. API_SUBSCRIPTION
 
 INSERT INTO public.workflow_definition
-(id, "name", description, approver_types, execute_upon_approval, allow_parallel_requests, request_format_schema)
-VALUES('API_SUBSCRIPTION_CREATION', 'API Subscription Creation','Create an API subscription with a given plan', 'ROLE,USER', true, false,
-    '{
-        "subscriptionPolicy": {
-            "displayName": "Subscription Plan",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "subscriptionPolicy"
-        },
-        "applicationName": {
-            "displayName": "Application Name",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "applicationInfo.applicationName"
-        },
-        "apiName": {
-            "displayName": "API name",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "apiInfo.apiName"
-        },
-        "apiVersion": {
-            "displayName": "API version",
-            "dataType": "string",
-            "required": true,
-            "extractfrom": "apiInfo.apiVersion"
-        }
-    }');
-
--- 3. API_SUBSCRIPTION_UPDATE
-
-INSERT INTO public.workflow_definition
-(id, "name", description, approver_types, execute_upon_approval, allow_parallel_requests, request_format_schema)
-VALUES('API_SUBSCRIPTION_UPDATE', 'API Subscription Update','Update an existing API subscription with a given plan', 'ROLE,USER', true, false,
+(id, "name", description, approver_types, approver_permission, execute_upon_approval, allow_parallel_requests, request_format_schema)
+VALUES('API_SUBSCRIPTION', 'API Subscription', 'Creation or update of an API subscription with a specified plan', 'ROLE,USER', 'choreo:workflow_subscription_approve', true, false,
     '{
         "subscriptionPolicy": {
             "displayName": "Subscription Plan",
@@ -161,14 +133,14 @@ VALUES('API_SUBSCRIPTION_UPDATE', 'API Subscription Update','Update an existing 
             "extractfrom": "subscriptionPolicy"
         },
         "requestedSubscriptionPolicy": {
-            "displayName": "Requested Plan",
+            "displayName": "Requested Plan", 
             "dataType": "string",
-            "required": true,
+            "required": false,
             "extractfrom": "requestedSubscriptionPolicy"
         },
         "applicationName": {
             "displayName": "Application Name",
-            "dataType": "string",
+            "dataType": "string", 
             "required": true,
             "extractfrom": "applicationInfo.applicationName"
         },

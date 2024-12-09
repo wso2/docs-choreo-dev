@@ -21,7 +21,10 @@ mutation{
             repositoryType: "",
             repositoryBranch: "",
             initializeAsBallerinaProject: false,
-            enableCellDiagram: false
+            enableCellDiagram: false,
+            {{#isPublicRepo}}
+                isPublicRepo: {{isPublicRepo}}
+            {{/isPublicRepo}}
         }
     ){        id, orgId, projectId, handler      }
 }

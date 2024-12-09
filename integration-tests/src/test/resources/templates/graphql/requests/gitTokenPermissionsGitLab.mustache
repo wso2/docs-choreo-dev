@@ -1,0 +1,17 @@
+{
+  "query": "query {
+    gitTokenPermissions(input: {
+      gitLabServerConfig: {
+        serverUrl: \"{{gitLabServerUrl}}\",
+        pat: \"{{gitLabServerAccessToken}}\"
+      }
+    }) {
+      hasOrgs
+      hasRepos
+      prWrite
+      accountRead
+      webhookWrite
+      validCredential
+    }
+  }"
+}

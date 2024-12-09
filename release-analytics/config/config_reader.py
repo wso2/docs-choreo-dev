@@ -18,13 +18,13 @@ import binascii
 import json
 import os
 import sys
-from enum import StrEnum
+from enum import Enum
 import yaml
 
 
-class ConfigGroup(StrEnum):
-    DEVOPS = "devops"
-    BIGQUERY = "bigquery"
+class ConfigGroup(Enum):
+    DEVOPS = 1
+    BIGQUERY = 2
 
 
 def get_gcloud_account_info():
@@ -40,7 +40,11 @@ def get_gcloud_account_info():
 
 def get_azure_devops_pat():
     try:
-        return os.environ['RELEASE_ANALYTICS_AZURE_DEVOPS_PAT']
+        pat: str = os.environ['RELEASE_ANALYTICS_AZURE_DEVOPS_PAT']
+        print("Length of PAT: ", len(pat))
+        pat = pat.strip()
+        print("Length of PAT after strip: ", len(pat))
+        return pat
     except KeyError:
         print("You must first set the RELEASE_ANALYTICS_AZURE_DEVOPS_PAT environment variable")
         sys.exit(1)
@@ -48,6 +52,11 @@ def get_azure_devops_pat():
 
 
 class ConfigReader(object):
+    config_group_mapping = {
+        ConfigGroup.DEVOPS: "devops",
+        ConfigGroup.BIGQUERY: "bigquery"
+    }
+
     def __init__(self):
         with open('config/config.yaml', 'r') as file:
             self.config = yaml.safe_load(file)
@@ -58,4 +67,4 @@ class ConfigReader(object):
         return cls.instance
 
     def get_config(self, group: ConfigGroup, key: str):
-        return self.config[group.value][key]
+        return self.config[self.config_group_mapping[group]][key]

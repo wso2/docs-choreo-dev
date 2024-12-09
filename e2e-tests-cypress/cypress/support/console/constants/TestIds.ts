@@ -59,6 +59,7 @@ export namespace TestIds {
   export const availableEndpoints = '[data-testid="Endpoints-env-artifact"]';
   export const apiConfiguration =
     '[data-testid="API Configuration-env-artifact"]';
+  export const rightDrawerButton = '[data-cyid="deploy-right-drawer-icon-button"]';  
   export const attachPolicy = '[data-cyid="attach-policy-button-button"]';
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
   export const endpointCard = '[data-cyid="endponint-selector-card-card"]';
@@ -214,7 +215,6 @@ export namespace TestIds {
   export const applicationList = (appName: string) =>
     `[data-testid="application-list-${appName}"]`;
   export const applicationEdit = '[data-testid="appliation-edit-btn"]';
-  export const permissionsField = '[data-testid="autocomplete-textfield"]';
   export const apiBar = '[data-testid="apis-appbar-btn"]';
   export const apiSearch = "#outlined-search-bar-api-listing";
   export const apiCard = (apiName: string) =>
@@ -303,7 +303,8 @@ export namespace TestIds {
     '[data-cyid="key-value-card-add-new-secret-check-box"]';
   export const nextButton = '[data-testid="btn-next"]';
   export const fileMount = '[data-cyid="file-mount-upload-button"]';
-  export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
+  export const addNewConfigs = '[data-cyid="promote-selector-default-configs"]';
+  export const copyConfigs = '[data-cyid="promote-selector-copy-configs"]';
   export const componentSearchBox =
     '[data-cyid="component-listing-auto-forcused-search-search-field"]';
   export const searchDomain =
@@ -431,12 +432,13 @@ export namespace TestIds {
   export const gqlServiceRepo = '[data-cyid="subPath-graphql-service"]';
   export const webAppComponentCard = '[data-cyid="component-template-webApp-card"]';
   export const reactBuildPack = '[data-cyid="React-card-button"]';
-  export const webAppServiceRepo = '[data-cyid="subPath-reading-list-app"]';
-  export const webAppServiceAuthRepo = '[data-cyid="subPath-reading-list-app/reading-list-front-end-with-managed-auth"]';
   export const containerizedBuildPack = '[data-cyid="Docker-card-button"]';
   export const dockerSearchBox = '[data-cyid="project-directory-search-search-bar"]';
   export const dockerFileSelect = '[data-cyid="subPath-greeting-service-go/Dockerfile"]';
   export const connectionServiceCard = '[data-cyid="choreo-service-card-button"]';
+
+  export const oAuth2Security = '[data-cyid="sec-scheme-oauth2-check-box"]';
+  export const apiKeySecurity = '[data-cyid="sec-scheme-api-key-check-box"]';
 }
 
 

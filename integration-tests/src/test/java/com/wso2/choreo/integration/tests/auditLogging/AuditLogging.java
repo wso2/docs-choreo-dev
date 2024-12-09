@@ -55,7 +55,7 @@ public class AuditLogging extends TestNGCitrusSpringSupport {
     public void setup_AuditLoggingTests() throws Exception {
         orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        userIdpId = Configuration.getSecurityConfig(SecurityConfigDefinition.ORG_MGT_IDP_ID);
+        userIdpId = Configuration.getConfig(ConfigDefinition.TEST_USER_IDP_ID);
     }
 
     @Test
