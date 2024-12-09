@@ -27,6 +27,7 @@ azureLaClientId = "{{.AZURE_LA_CLIENT_ID}}"
 choreoJwtIssuer = "{{.CHOREO_JWT_ISSUER}}"
 choreoJwtAudience = "{{.CHOREO_JWT_AUDIENCE}}"
 site24x7JwtAudience = "{{.SITE24x7_JWT_AUDIENCE}}"
+authAudienceList = "{{.AUTH_AUDIENCE_LIST}}"
 choreoJwtJwksUrl = "{{.CHOREO_JWT_JWKS_URL}}"
 site24x7OrgUuid = "{{.SITE24x7_ORG_UUID}}"
 healthCheckServicePort = 9090
