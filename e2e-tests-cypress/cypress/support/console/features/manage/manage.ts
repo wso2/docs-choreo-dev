@@ -210,8 +210,6 @@ export function mixinManage<T extends Types.Constructor>(
         .should("be.visible")
         .find(TestIds.viewArtifact)
         .click();
-
-      this.disableAPIKeySecurityAndEnableOAuth2();
       this.toggleResourceSecurity(method, resource);
     }
 
@@ -285,11 +283,6 @@ export function mixinManage<T extends Types.Constructor>(
       // Wait short time for setting changes to be applied.
       // UI seems to work in a slightly async manner giving a misleading indication that the action has completed
       cy.get(TestIds.editSettings).should("be.enabled").wait(3000);
-    }
-
-    private disableAPIKeySecurityAndEnableOAuth2() {
-      cy.get(TestIds.apiKeySecurity).should("be.visible").click();
-      cy.get(TestIds.oAuth2Security).should("be.visible").click();
     }
 
     private toggleResourceSecurity(method: Enums.HTTPMethod, resource: string) {
