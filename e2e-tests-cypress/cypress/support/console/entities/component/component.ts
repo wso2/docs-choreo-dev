@@ -26,6 +26,8 @@ import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu"
 import { Application } from "../application/application";
 import { _Stats } from "../../features/stats/stats";
 import { _Observability } from "../../features/observability/observability";
+import { GRAPHQL_URL } from "../../../commons/urls";
+import { login } from "../login/login";
 
 export interface DevPortalTryOut {
   resource: string;
@@ -270,8 +272,24 @@ export class Component {
 
   navigateToComponentInConsole() {
     cy.log(this.getComponentUrl());
+
+    // For intercepting the latest access token
+    cy.intercept({
+      method: "POST",
+      url: GRAPHQL_URL,
+      times: 1,
+    }).as("gql");
+    
     cy.visit(this.getComponentUrl()).then(() => {
       cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
+
+
+      cy.wait("@gql", MEDIUM_TIME).then((intercept) => {
+        // Update the latest access token
+        const header = intercept.request.headers["authorization"] as string;
+        const accessToken = header.replace("Bearer", "").trim();
+        login.updateAccessToken(accessToken);
+      });
     });
   }
 
