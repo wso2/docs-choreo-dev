@@ -59,6 +59,10 @@ def create_email_body(images):
     .main-title {{ font-size: 18px; font-weight: bold; margin-top: 30px; border-bottom: 2px solid #ccc; padding-bottom: 5px; }}
     .section-title {{ font-size: 16px; font-weight: bold; margin-top: 20px; }}
     .subtitle {{ font-size: 14px; font-weight: bold; margin-top: 10px; }}
+    table {{ border-collapse: collapse; width: 30%; margin: 20px 0; border: 1px solid #ddd; }}
+    th, td {{ border: 1px solid #ddd; text-align: left; padding: 8px; }}
+    th {{ background-color: #f2f2f2; }}
+    tr:hover {{ background-color: #f1f1f1; }}
     p {{ margin-top: 10px; }}
     a {{ color: #1a73e8; text-decoration: none; }}
     a:hover {{ text-decoration: underline; }}
@@ -73,6 +77,7 @@ def create_email_body(images):
         All these tests were performed in the staging environment.
     </p>
 
+    <!-- Control Plane Operations Section -->
     <div class="main-title">Control Plane Operations</div>
     <p>
         The following results show the performance of main operations in the Control plane.<br>
@@ -106,11 +111,32 @@ def create_email_body(images):
 
     <div class="separator"></div>
 
-    <div class="main-title">API Invocations</div>
+    <!-- Data Plane Operations Section -->
+    <div class="main-title">Data Plane Operations</div>
+    <div class="section-title">API Invocations</div>
     <p>
         The following results pertain to API Invocations.<br>
         This test was conducted with a concurrency level of 300, using a service deployed on Choreo as the backend.
     </p>
+
+    <div class="subtitle">Resources Used</div>
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>CPU</th>
+            <th>Memory</th>
+        </tr>
+        <tr>
+            <td>Nginx</td>
+            <td>500m</td>
+            <td>1536MiB</td>
+        </tr>
+        <tr>
+            <td>Choreo-Connect</td>
+            <td>3000m</td>
+            <td>7168MiB</td>
+        </tr>
+    </table>
 
     <div class="subtitle">Throughput and Error Variation</div>
     <div>
@@ -126,7 +152,7 @@ def create_email_body(images):
 
     <div class="footer">
         <b>
-        You can find detailed results and additional information in the
+        You can find detailed results and additional information in the 
         <a href="https://docs.google.com/spreadsheets/d/1sM_UfSTZ88fadSDXIWxLrPsmRhYUyCX1qVCP2Rm6BH0/edit?usp=sharing" target="_blank">
         Google Sheet</a>.
         </b>
