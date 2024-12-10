@@ -86,6 +86,11 @@ spec:
                 secretKeyRef:
                   key: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
                   name: secret-dp-cicd
+            - name: AZURE_CONTAINER_REGISTRY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: AZURE-CONTAINER-REGISTRY-PASSWORD
+                  name: secret-dp-cicd
             - name: BUILDPACKS_BUILDER_IMAGE
               valueFrom:
                 configMapKeyRef:

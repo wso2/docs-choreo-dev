@@ -1,0 +1,13 @@
+
+{
+    "users":["choreo_apim_db_user","dev_mssql_ddl_user","dev_mssql_reader","dev_mssql_writer"],
+    "choreo_apim_db_user":"choreo-apim-db-mssql-password",
+    "choreo_apim_db_user_permissions":["SELECT","INSERT","UPDATE","DELETE","EXECUTE"],
+    "dev_mssql_reader":"database-user-DEV-MSSQL-READER",
+    "dev_mssql_reader_permissions":["SELECT"],
+    "dev_mssql_writer":"database-user-DEV-MSSQL-WRITER",
+    "dev_mssql_writer_permissions":["SELECT","INSERT","UPDATE","DELETE"],
+    "dev_mssql_ddl_user":"database-user-DEV-MSSQL-DDL-USER",
+    "dev_mssql_ddl_user_permissions":["SELECT","INSERT","UPDATE","DELETE"]
+}
+

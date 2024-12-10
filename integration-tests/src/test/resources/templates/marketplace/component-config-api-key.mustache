@@ -1,0 +1,44 @@
+apiVersion: core.choreo.dev/v1beta1
+kind: ComponentConfig
+metadata:
+  # +required Name of the component that this configuration belongs to.
+  name: Reward Management API
+  # +required Project name of the component that this component belongs to. Cannot be changed after creation.
+  projectName: Connection-Testing
+  annotations:
+    componentType: Service
+spec:
+  # +optional Build instructions for the component.
+  build:
+    # +required Name of the branch. This is used to identify the corresponding deployment track.
+    branch: main
+  # +optional Incoming connection details for the component (AKA Endpoints).
+  inbound:
+    # +required Unique name for the endpoint. (This name will be used when generating the managed API)
+    - name: Reward Management API
+      # +required Numeric port value that gets exposed via this endpoint
+      port: 8080
+      # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
+      # Allowed values: REST, GraphQL, GRPC, TCP, UDP
+      type: REST
+      # +optional Network level visibility of this endpoint. Defaults to Project
+      # Accepted values: Project|Organization|Public.
+      visibility: Public
+      # +optional Context (base path) of the API that exposed via this endpoint.
+      # This is mandatory if the endpoint type is set to REST or GraphQL.
+      context: /
+      # +optional Path to the schema definition file. Defaults to wild card route if not provided
+      # This is only applicable to REST endpoint types.
+      # The path should be relative to the docker context.
+      schemaFilePath: openapi.json
+  outbound:
+    # +optional Defines the service references from the internal API marketplace.
+    serviceReferences:
+      # +required Name of the service reference
+    - name: {{serviceIdentifier}}
+      connectionConfig: {{connectionId}}
+      env:
+      - from: ServiceURL
+        to: LOYALTY_API_URL
+      - from: ChoreoAPIKey
+        to: CHOREO_API_KEY

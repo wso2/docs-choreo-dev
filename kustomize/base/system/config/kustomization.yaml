@@ -421,6 +421,7 @@ configMapGenerator:
       - USER_SERVICE_ENDPOINT="http://app-service:8080"
       - PROJECT_MANAGER_ENDPOINT="http://dp-project-manager:80"
       - API_SERVER_ENDPOINT="http://api-server"
+      - RUDDER_ENDPOINT="http://dp-rudder:80"
   - name: cm-file-cio-event-collector
     behavior: create
     files:

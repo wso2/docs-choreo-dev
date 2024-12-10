@@ -10,7 +10,6 @@
 # --------------------------------------------------------------------------------------
 
 resources:
-  - ../../../helm/cert-manager
   - certificates
 
 namespace: cert-manager

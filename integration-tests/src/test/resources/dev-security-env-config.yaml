@@ -106,6 +106,8 @@ componentManagement:
   CM_SECRET_REF: b4750887-0d49-4e92-a803-d015c88b42ec
   CM_BITBUCKET_ORG_NAME: rbactests
   CM_APP_PWD: /
+  CM_GITLAB_SERVER_URL: https://gitlab.preview-dv.choreo.dev/
+  CM_GITLAB_SERVER_ACCESS_TOKEN: /
   CM_CREDENTIAL_ID: /
   CM_CREDENTIAL_NAME: /
   CM_TARGET_ENV_ID: bc2f31b1-a0be-4f23-b425-17f6fca7d536

@@ -97,3 +97,5 @@ commonAnnotations:
 patchesStrategicMerge:
   - actions-runner-controller-deployment-patches.yaml
   - actions-runner-controller-github-webhook-server-deployment-patches.yaml
+
+namespace: actions-runner-system

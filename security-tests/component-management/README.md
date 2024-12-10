@@ -25,7 +25,7 @@ a value for that.
 1. dockerFilePath
 2. dockerContextPath
 
-### Details related to the GitHub and Bitbucket
+### Details related to the GitHub, Bitbucket and GitLab
 
 1. appPwd - Bitbucket app password
 2. bitbucketOrgName - Bitbucket organization name
@@ -33,6 +33,8 @@ a value for that.
 4. bitbucketUrl - URL of the BB repository
 5. secretRef - Secret form the Bitbucket webhook URL
 6. dirPath - Sub direcory path in GitHub
+7. gitLabServerUrl - URL of the GitLab Server
+8. gitLabServerAccessToken - Access token obtained from the GitLab Server
 
 ### Details related to MI component
 

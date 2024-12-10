@@ -1,7 +1,9 @@
 package com.wso2.choreo.integration.apis.observability;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.MessageType;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
@@ -423,10 +425,14 @@ public class ObservabilityService extends ControlPlaneAPI {
         runner.$(http()
                 .client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                            throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     JsonParser parser = new JsonParser();
                     String astString = parser.parse(message.getPayload(String.class)).getAsJsonObject()
                             .getAsJsonObject("data")
@@ -639,10 +645,14 @@ public class ObservabilityService extends ControlPlaneAPI {
         runner.$(http()
                 .client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .validate((message, context) -> {
+                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                    if (code != HttpStatus.OK.value()) {
+                            throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                    }
                     traceId.set(new JsonParser().parse(message.getPayload(String.class))
                             .getAsJsonObject().getAsJsonObject("data")
                             .getAsJsonObject("requestTraceGroup")
