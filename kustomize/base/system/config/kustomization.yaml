@@ -316,6 +316,7 @@ configMapGenerator:
       - REACT_CHOREO_HOME_PAGE='https://wso2.com/choreo/'
       - REACT_APP_CHOREO_STEP_BASED_ENTERPRISE_TIER_UUID='01ec1f84-ce3d-122e-ac9b-f10c95fd72da'
       - REACT_APP_CHOREO_ENTERPRISE_TIER_UUID='4abe3757-86f6-47de-994f-f02fb0522e99'
+      - REACT_APP_CHOREO_DEVELOPER_TIER_UUID='41e29802-f4bb-456c-a92e-b14cca67c4bb'
   - name: cm-userapps-image-deleter
     behavior: create
     literals:
