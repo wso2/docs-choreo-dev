@@ -436,9 +436,6 @@ export namespace TestIds {
   export const dockerSearchBox = '[data-cyid="project-directory-search-search-bar"]';
   export const dockerFileSelect = '[data-cyid="subPath-greeting-service-go/Dockerfile"]';
   export const connectionServiceCard = '[data-cyid="choreo-service-card-button"]';
-
-  export const oAuth2Security = '[data-cyid="sec-scheme-oauth2-check-box"]';
-  export const apiKeySecurity = '[data-cyid="sec-scheme-api-key-check-box"]';
 }
 
 
