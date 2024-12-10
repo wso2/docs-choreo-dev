@@ -1,13 +1,21 @@
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 import smtplib
 
-# Get current UTC time
-today = datetime.utcnow()
+
+def get_week_monday(date_str):
+    """
+    Calculate the Monday of the week for the given date.
+    :param date_str: The date string in the format 'YYYY-MM-DD HH:MM:SS'
+    :return: The date string for the Monday in the format 'YYYY-MM-DD'
+    """
+    date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+    monday = date - timedelta(days=date.weekday())  # Subtract days to get to Monday
+    return monday.strftime("%Y-%m-%d")
 
 # List of all required and optional images
 images = {
@@ -118,7 +126,7 @@ def create_email_body(images):
 
     <div class="footer">
         <b>
-        You can find detailed results and additional information in the 
+        You can find detailed results and additional information in the
         <a href="https://docs.google.com/spreadsheets/d/1sM_UfSTZ88fadSDXIWxLrPsmRhYUyCX1qVCP2Rm6BH0/edit?usp=sharing" target="_blank">
         Google Sheet</a>.
         </b>
@@ -152,7 +160,8 @@ def send_email():
 
     # Create the email message
     msg = MIMEMultipart('related')
-    msg['Subject'] = "[Choreo] Performance Test Results " + datetime.strftime(today, '%Y-%m-%d')
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    msg['Subject'] = "[Choreo] Performance Test Results as at " + get_week_monday(timestamp)
     msg['From'] = sender
     msg['To'] = ", ".join(receiver)
 
