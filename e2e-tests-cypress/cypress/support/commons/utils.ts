@@ -542,25 +542,31 @@ export class Utils {
     }
   }
 
-  static unCheckIfChecked(locator: string) {
-    cy.get(locator)
-      .find("input")
-      .invoke("attr", "checked")
-      .then((checked) => {
-        if (checked !== "undefined" && checked) {
-          cy.get(locator).click();
+  static isChecked(locator: string) : Cypress.Chainable<boolean> {
+    return cy.get(locator)
+      .invoke("attr", "class")
+      .then((clazz) => {
+        if (clazz && clazz.includes("Mui-checked")) {
+          return cy.wrap(true);
+        } else {
+          return cy.wrap(false);
         }
       });
   }
 
-  static checkIfUnchecked(locator: string) {
-    cy.get(locator)
-      .find("input")
-      .invoke("attr", "checked")
-      .then((checked) => {
-        if (checked === "undefined" || !checked) {
-          cy.get(locator).click();
-        }
-      });
+  static unCheckIfChecked(locator: string) {
+    this.isChecked(locator).then((isChecked) => {
+      if (isChecked) {
+        cy.get(locator).click();
+      }
+    });
+  }
+
+  static checkIfUnchecked(locator: string) {   
+    this.isChecked(locator).then((isChecked) => {
+      if (!isChecked) {
+        cy.get(locator).click();
+      }
+    });
   }
 }
