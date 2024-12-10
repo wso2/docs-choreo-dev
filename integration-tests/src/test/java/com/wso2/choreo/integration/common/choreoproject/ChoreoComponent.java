@@ -1030,7 +1030,6 @@ public class ChoreoComponent {
     }
 
     public String getReleaseIdByEnvironmentId(String envId, String... versionId) throws ReleaseIdNotFoundException {
-        List<ApiVersion> test = getApiVersions();
         ApiVersion apiVersion = getApiVersions().get(0);
         if (versionId.length > 0) {
             for (ApiVersion version:getApiVersions()) {

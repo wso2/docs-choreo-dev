@@ -1,5 +1,4 @@
 resources:
-  - ../../../helm/actions-runner-controller
   - deployment
   - hpa
   - secret-provider-class

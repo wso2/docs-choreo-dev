@@ -345,6 +345,7 @@ export namespace TestIds {
   export const connectionNameInput = '[data-cyid="connection-name"]';
   export const connectionCreateButton =
     '[data-cyid="connection-create-button"]';
+  export const marketPlaceSearch = '[data-cyid="internal-marketplace-services-search-bar"]';
   export const searchField = '[data-testid="search-field"]';
   export const userTable = '[data-cyid="user-list"]';
   export const roleTable = '[data-cyid="roles"]';

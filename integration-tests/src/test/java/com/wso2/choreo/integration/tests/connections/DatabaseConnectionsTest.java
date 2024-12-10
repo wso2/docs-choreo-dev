@@ -26,6 +26,7 @@ import com.wso2.choreo.integration.common.*;
 import com.wso2.choreo.integration.common.PlatformServices.PlatformServicesUtils;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.choreoproject.ComponentRepository;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
@@ -177,6 +178,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
         Repository repo = Repository.builder().repoUrl(CLIENT_COMPONENT_REPO_URL).buildContext(CLIENT_COMPONENT_DOCKET_CONTEXT).build();
         GraphqlDTO dto = ComponentUtils.createBuildpackComponentRequest(componentName, consumerProject, repo, Buildpack.NODEJS);
         clientChoreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.BUILDPACK);
+        ComponentUtils.waitForComponentInitialBuildComplete(this, citrusClients, accessToken, clientChoreoComponent);
     }
 
     @Test(dependsOnMethods = {"addDatabaseToMarketplace_TestDatabaseConnections", "createConsumer_TestDatabaseConnections"})
@@ -253,10 +255,12 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
 
         Optional<ChoreoComponent> clientChoreoComponentNewVer = ComponentUtils.getComponentByName(this, accessToken, citrusClients,consumerProject,clientChoreoComponent.getName());
         clientChoreoComponentNewVersion = clientChoreoComponentNewVer.get();
+        ComponentRepository repository = clientChoreoComponentNewVersion.getRepository();
+        repository.setBranchApp("component-yaml-v10");
+        clientChoreoComponentNewVersion.setRepository(repository);
+
         ConnectionService.UpdateSourceConfigurationFile(REPO_NAME, "component-yaml-v10", databaseConnection.getGroupUuid(), "database:".concat(devDatabaseName),
                 SourceConfigurationFileTypes.COMPONENT_V1D0, CLIENT_COMPONENT_CHOREO_FOLDER_PATH);
-
-        DatabaseServer dbServer = PlatformServices.getDatabaseServer(this,httpClient,mysqlDatabaseServer.getId(),orgUUID,accessToken);
 
         //deploy to dev environment
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, clientChoreoComponentNewVersion);
@@ -291,11 +295,12 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
         ComponentUtils.createComponentVersion(this, citrusClients, accessToken, clientChoreoComponent, "v1.2", "component-config-yaml");
         Optional<ChoreoComponent> clientChoreoComponentNewVer = ComponentUtils.getComponentByName(this, accessToken, citrusClients,consumerProject,clientChoreoComponent.getName());
         clientChoreoComponentNewVersion = clientChoreoComponentNewVer.get();
+        ComponentRepository repository = clientChoreoComponentNewVersion.getRepository();
+        repository.setBranchApp("component-config-yaml");
+        clientChoreoComponentNewVersion.setRepository(repository);
 
         ConnectionService.UpdateSourceConfigurationFile(REPO_NAME, "component-config-yaml", databaseConnection.getGroupUuid(), "database:".concat(devDatabaseName),
                     SourceConfigurationFileTypes.COMPONENT_CONFIG, CLIENT_COMPONENT_CHOREO_FOLDER_PATH);
-
-        DatabaseServer dbServer = PlatformServices.getDatabaseServer(this,httpClient,mysqlDatabaseServer.getId(),orgUUID,accessToken);
 
         //deploy to dev environment
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, clientChoreoComponentNewVersion);
@@ -363,7 +368,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"consumeDatabaseConnectionWithComponentConfigFile_TestDatabaseConnections","consumeDatabaseConnectionWithComponentFileV10_TestDatabaseConnections",
-                             "consumeDatabaseConnectionWithComponentFileV11_TestDatabaseConnections", "createDatabaseConnectionToAServer_TestDatabaseConnections"})
+                             "consumeDatabaseConnectionWithComponentFileV11_TestDatabaseConnections", "createDatabaseConnectionToAServer_TestDatabaseConnections"},alwaysRun = true)
     @CitrusTest
     public void removeDatabaseFromMarketplace_TestDatabaseConnections() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
@@ -376,7 +381,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
 
     }
 
-    @Test(dependsOnMethods = {"removeDatabaseFromMarketplace_TestDatabaseConnections"})
+    @Test(dependsOnMethods = {"removeDatabaseFromMarketplace_TestDatabaseConnections"},alwaysRun = true)
     @CitrusTest
     public void deleteCredentials_TestDatabaseConnections() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();

@@ -65,6 +65,24 @@ spec:
             capabilities:
               drop:
                 - all
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: http-port
+              path: /readyz
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: http-port
+              path: /healthz
           volumeMounts:
             - mountPath: /configuration-schema-service.yaml
               name: config

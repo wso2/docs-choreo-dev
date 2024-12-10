@@ -1,3 +1,4 @@
 resources:
   - spec-populator.yaml
   - milvus-proxy.yaml
+  - copilot-datacollector.yaml

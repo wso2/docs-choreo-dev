@@ -1,8 +1,0 @@
-resources:
-  - ../../../helm/keda-core
-  - rbac
-  - deployment
-  - service
-  - hpa
-
-namespace: keda

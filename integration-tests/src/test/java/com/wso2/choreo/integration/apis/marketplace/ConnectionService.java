@@ -93,7 +93,7 @@ public class ConnectionService extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.CREATED)
+                                .response()
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                     if (code != HttpStatus.CREATED.value()) {
@@ -152,7 +152,7 @@ public class ConnectionService extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.CREATED)
+                                .response()
                                 .validate((message, context) -> {
                                             int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                             if (code != HttpStatus.CREATED.value()) {
@@ -290,6 +290,20 @@ public class ConnectionService extends ControlPlaneAPI {
             apiInfo.remove("securityScheme");
         }
         apiInfo.add("securityScheme",(new JsonArray()));
+        ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
+    }
+
+    public static void enableAPIKeySecurityForAPI(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                            String apiId, String accessToken) {
+
+        HttpClient httpClient = citrusClients.get(Endpoints.STS_ENDPOINT);
+        JsonObject apiInfo = ApiManager.getApi(runner,httpClient,accessToken,apiId);
+        if (apiInfo.has("securityScheme")) {
+            apiInfo.remove("securityScheme");
+        }
+        JsonArray securityScheme = new JsonArray();
+        securityScheme.add("api_key");
+        apiInfo.add("securityScheme",securityScheme);
         ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
     }
 
@@ -473,7 +487,7 @@ public class ConnectionService extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.CREATED)
+                                .response()
                                 .validate((message, context) -> {
                                             int code = (int) message.getHeader(HTTP_STATUS_CODE);
                                             if (code != HttpStatus.CREATED.value()) {

@@ -14,6 +14,7 @@
 package com.wso2.choreo.integration.apis.component;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.DefaultMessage;
@@ -52,6 +53,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
@@ -198,9 +200,13 @@ public class Component extends ControlPlaneAPI {
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)),
                         http().client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
                                     String payload = message.getPayload(String.class);
                                     JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject()
                                             .getAsJsonObject("data");
@@ -211,13 +217,12 @@ public class Component extends ControlPlaneAPI {
 
     }
 
-    public static String waitForComponentBuildDeployComplete(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+    public static void waitForComponentBuildDeployComplete(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
                                                       String projectId,
                                                       String componentId, String runId, int sleepInterval) {
         runner.variable("isComponentBuildDeployCompleted", false);
-        AtomicReference<JsonArray> steps = new AtomicReference<>(new JsonArray());
-        AtomicReference<String> deployStatus = new AtomicReference<>("");
-        runner.$(repeat()
+        runner.$(repeatOnError()
+                .autoSleep(sleepInterval * 1000)
                 .until("(i = 10) or ( ${isComponentBuildDeployCompleted} = true )")
                 .index("i")
                 .actions(
@@ -238,26 +243,81 @@ public class Component extends ControlPlaneAPI {
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON)),
                         http().client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
-                                    String payload = message.getPayload(String.class);
-                                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject()
-                                            .getAsJsonObject("data");
-                                    if (!dataJsonObject.get("deploy").isJsonNull() && !dataJsonObject.getAsJsonObject("deploy").get("status").isJsonNull()) {
-                                        deployStatus.set(dataJsonObject.getAsJsonObject("deploy").get("status").getAsString());
-                                        if ("completed".equals(deployStatus.get())) {
-                                            context.setVariable("isComponentBuildDeployCompleted", true);
-                                        }
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
                                     }
-                                    // Wait after build is successful to give some time for deployment
-                                    SleepUtil.sleep(sleepInterval);
+                                    String payload = message.getPayload(String.class);
+                                    JsonObject jsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                                    JsonObject data = Optional.ofNullable(jsonObject)
+                                            .map(json -> json.getAsJsonObject("data"))
+                                            .orElseThrow(() -> new ValidationException("Response does not contain [data] field."));
+                                    Optional<JsonElement> buildData = Optional.ofNullable(data.get("build"));
+                                    boolean isBuildCompleted = buildData
+                                        .map(build -> build.getAsJsonObject().get("status"))
+                                        .filter(JsonElement::isJsonPrimitive)
+                                        .map(JsonElement::getAsString)
+                                        .filter("completed"::equals)
+                                        .isPresent();
+                                    if (!isBuildCompleted) {
+                                        throw new ValidationException("Build is not completed.");
+                                    }
+                                    boolean hasFailedBuildSteps = buildData
+                                        .map(build -> build.getAsJsonObject().get("steps"))
+                                        .filter(JsonElement::isJsonArray)
+                                        .map(JsonElement::getAsJsonArray)
+                                        .map(steps -> {
+                                            for (JsonElement stepElement : steps) {
+                                                JsonObject step = stepElement.getAsJsonObject();
+                                                String stepStatus = Optional.ofNullable(step.get("status"))
+                                                        .filter(JsonElement::isJsonPrimitive)
+                                                        .map(JsonElement::getAsString)
+                                                        .orElse(null);
+                                                if ("failure".equals(stepStatus)) {
+                                                    return true;
+                                                }
+                                            }
+                                            return false;
+                                        })
+                                        .orElseThrow(() -> new ValidationException("Build does not contain any steps."));
+                                    if (hasFailedBuildSteps) {
+                                        throw new ValidationException("Build contains failed steps.");
+                                    }
+                                    Optional<JsonElement> deployData = Optional.ofNullable(data.get("deploy"));
+                                    boolean isDeployCompleted = deployData
+                                        .map(deploy -> deploy.getAsJsonObject().get("status"))
+                                        .filter(JsonElement::isJsonPrimitive)
+                                        .map(JsonElement::getAsString)
+                                        .filter("completed"::equals)
+                                        .isPresent();
+                                    if (!isDeployCompleted) {
+                                        throw new ValidationException("Deployment is not completed.");
+                                    }
+                                    boolean hasFailedDeploySteps = deployData
+                                        .map(deploy -> deploy.getAsJsonObject().get("steps"))
+                                        .filter(JsonElement::isJsonArray)
+                                        .map(JsonElement::getAsJsonArray)
+                                        .map(steps -> {
+                                            for (JsonElement stepElement : steps) {
+                                                JsonObject step = stepElement.getAsJsonObject();
+                                                String stepStatus = Optional.ofNullable(step.get("status"))
+                                                        .filter(JsonElement::isJsonPrimitive)
+                                                        .map(JsonElement::getAsString)
+                                                        .orElse(null);
+                                                if ("failure".equals(stepStatus)) {
+                                                    return true;
+                                                }
+                                            }
+                                            return false;
+                                        })
+                                        .orElseThrow(() -> new ValidationException("Deployment does not contain any steps."));
+                                    if (hasFailedDeploySteps) {
+                                        throw new ValidationException("Deployment contains failed steps.");
+                                    }
                                 })));
-        if (!"completed".equals(deployStatus.get())) {
-            throw new RuntimeException("Component build and deploy not completed.");
-        } else {
-            return deployStatus.get();
-        }
     }
 
     public static KeyGenResponseDTO generateKeys(TestActionRunner runner, HttpClient client,
@@ -284,9 +344,13 @@ public class Component extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
                                     try {
                                         KeyGenResponseDTO response = new ObjectMapper()
                                                 .readValue(message.getPayload().toString(),
@@ -330,9 +394,13 @@ public class Component extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
                                     try {
                                         KeyGenResponseDTO response = new ObjectMapper()
                                                 .readValue(message.getPayload().toString(),
