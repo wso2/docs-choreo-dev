@@ -347,7 +347,7 @@ export class Project {
     } else if (proxyInfo.oasFilePath !== undefined) {
       this.proxyCreationWizard.createFromOASFile(proxyInfo.oasFilePath);
     } else {
-      cy.get(TestIds.skipSource).should("be.visible").click();
+      cy.getUnstable(TestIds.skipSource).should("be.visible").click();
     }
 
     const proxyName = Utils.generateComponentName("oas");
