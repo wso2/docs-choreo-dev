@@ -94,7 +94,6 @@ public class OAuthUtils {
         oAuthRequest.add(TokenParams.GRANT_TYPE, Grants.AUTHORIZATION_CODE);
         oAuthRequest.add(TokenParams.SCOPE, scopes);
         oAuthRequest.add(TokenParams.CODE, authCode);
-//        oAuthRequest.add(TokenParams.CLIENT_ID, clientId);
         oAuthRequest.add(TokenParams.REDIRECT_URI, redirectUrl);
         oAuthRequest.add(TokenParams.CODE_VERIFIER, "47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU");
         String basicAuthorizationHeader = getBasicAuthorizationHeader(clientId, clientSecret);
@@ -149,7 +148,7 @@ public class OAuthUtils {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestFactory(requestFactor())
+                .requestFactory(requestFactory())
                 .restTemplate(restTemplate())
                 .requestUrl(stsUrl)
                 .build();
@@ -162,7 +161,7 @@ public class OAuthUtils {
         return restTemplate;
     }
 
-    private static ClientHttpRequestFactory requestFactor() {
+    private static ClientHttpRequestFactory requestFactory() {
 
         CookieStore cookieStore = new BasicCookieStore();
         Registry<CookieSpecProvider> cookieSpecRegistry = RegistryBuilder.<CookieSpecProvider>create()

@@ -154,8 +154,8 @@ public class ManagedAuthenticationUtils {
         String releaseId = component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
 
         return ComponentUtils.generateKeys(runner, appServiceClient, TestContext.getTestOrg().getOrgHandle(),
-                environment.getId(), component.getProjectId(), component.getId(), "byocWebAppsDockerfileLess",
-                getTestKeygenRequest(releaseId));
+                environment.getId(), component.getProjectId(), component.getId(),
+                Constant.displayType.byocWebAppsDockerfileLess.name(), getTestKeygenRequest(releaseId));
     }
 
     /**

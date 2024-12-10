@@ -56,6 +56,8 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
  */
 public class KeysetManagementService {
 
+    public static final String APPDEV_STS_MANAGEMENT_SERVICE_BASE_PATH =
+            "choreo-appdev-sts-management-service/v1.0/sts-proxy/oauth-applications/";
     private static String APIM_APPDEV_BASE_PATH = "apim-appdev/v1.0/sts";
     private static String KEY_MANAGER_PUBLISHER_BASE_PATH = "api/am/publisher/v3/key-managers";
     private static String KEY_MANAGER_ADMIN_BASE_PATH = "api/am/admin/v2/key-managers";
@@ -381,7 +383,7 @@ public class KeysetManagementService {
 
     private static String getConfigUpdateURL(String oAuthAppId) {
 
-        return "choreo-appdev-sts-management-service/v1.0/sts-proxy/oauth-applications/" + oAuthAppId;
+        return APPDEV_STS_MANAGEMENT_SERVICE_BASE_PATH + oAuthAppId;
     }
 
     private static String getStsEndpoint() {

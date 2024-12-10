@@ -153,7 +153,7 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
         Assert.assertNotNull(testProject.getId());
     }
 
-    // Create a webapp component in the test project
+    // Create an external consumer component in the test project
     @Test(dependsOnMethods = { "createTestProject_AppDevSTSTests" })
     @CitrusTest
     public void createTestComponent_AppDevSTSTests() throws Exception {
@@ -183,7 +183,7 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
 
         KeyGenResponseDTO keyGenResponse = ComponentUtils.generateKeys(this, appServiceClient, orgHandle,
                 environment.getId().toString(), testComponent.getProjectId(), testComponent.getId(),
-                "externalConsumer", KeysetManagementUtils.getAppGenRequest());
+                Constant.displayType.externalConsumer.name(), KeysetManagementUtils.getAppGenRequest());
         Assert.assertNotNull(keyGenResponse.getClientId());
         generatedKeys = keyGenResponse;
     }
@@ -220,7 +220,7 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
 
         KeyGenResponseDTO regeneratedKeys = ComponentUtils.regenerateKeys(this, appServiceClient,
                 orgHandle, environment.getId().toString(), testComponent.getProjectId(), testComponent.getId(),
-                "externalConsumer", generatedKeys.getClientId());
+                Constant.displayType.externalConsumer.name(), generatedKeys.getClientId());
 
         Assert.assertNotNull(regeneratedKeys.getClientId());
         Assert.assertEquals(regeneratedKeys.getClientId(), generatedKeys.getClientId());
@@ -302,6 +302,7 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
         validateToken(tokenResponseDTO);
     }
 
+    // Test 2.4 - Refresh the access token
     @Test(dependsOnMethods = { "invokeAuthCodeFlowAndGetAccessToken_AppDevSTSTests" })
     @CitrusTest
     public void invokeRefreshTokenFlowAndGetAccessToken_AppDevSTSTests() throws Exception {

@@ -161,7 +161,7 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
 
         KeyGenResponseDTO keyGenResponse = ComponentUtils.generateKeys(this, appServiceClient,
                 TestContext.getTestOrg().getOrgHandle(), devEnvironment.getId(), testComponent.getProjectId(),
-                testComponent.getId(), "byocWebAppsDockerfileLess", KeysetManagementUtils.getAppGenRequest());
+                testComponent.getId(), Constant.displayType.byocWebAppsDockerfileLess.name(), KeysetManagementUtils.getAppGenRequest());
 
         String clientId = getConfigValueFromGroup(this, appServiceClient,
                 DefaultConfigGroups.APP_GW_KEYSETS,
@@ -202,7 +202,7 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
 
         KeyGenResponseDTO regeneratedKeys = ComponentUtils.regenerateKeys(this, appServiceClient,
                 TestContext.getTestOrg().getOrgHandle(), devEnvironment.getId(), testComponent.getProjectId(),
-                testComponent.getId(), "byocWebAppsDockerfileLess", generatedKeys.getClientId());
+                testComponent.getId(), Constant.displayType.byocWebAppsDockerfileLess.name(), generatedKeys.getClientId());
 
         String clientId = getConfigValueFromGroup(this, appServiceClient,
                 DefaultConfigGroups.APP_GW_KEYSETS,
