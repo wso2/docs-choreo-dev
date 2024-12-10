@@ -59,3 +59,5 @@ export const DOMAIN_URL_MGT =
 export const CONNECTIONS_URL_CONFIG =
   Cypress.env("newAppSvcURL") +
   "/connections/v1/configurations/service-configs/choreo-connections?generateCreds=true";
+
+export const MARKETPLACE_SERVICES_API = Cypress.env("newAppSvcURL") + "/marketplace/0.1.0/services?*";
