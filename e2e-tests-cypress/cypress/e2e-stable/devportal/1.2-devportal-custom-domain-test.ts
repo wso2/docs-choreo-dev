@@ -124,4 +124,15 @@ describe("Create and deploy a component to test developer portal with custom dom
   it("Delete a consumer application", () => {
     proxy.deleteApplication_DevPortal(application);
   });
+
+  it("Remove developer portal custom domain", () => {
+    cy.task("getData", Cypress.spec.name).then((metaData) => {
+      proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
+    }).then(() => {
+      proxy.navigateToComponentInConsole();
+      // This step is added to free up the domain so that if the same test is run
+      // from another account the domain will be available for use
+      console.removeCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
+    });
+  });
 });

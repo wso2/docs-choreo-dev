@@ -41,7 +41,7 @@ export class Application {
 
     cy.wait("@getAllApis", VERY_SHORT_TIME).then(() => {
       cy.get(TestIds.apiSubscriptionSearch).should("be.visible").within(() => {
-        cy.get('button[title="Open"]').should("be.visible").click();
+        cy.getUnstable('button[title="Open"]').should("be.visible").click();
         cy.get('input[value="Select API"]').click().type(`${apiName}`);
       });
 
