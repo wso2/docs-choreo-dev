@@ -22,7 +22,7 @@ import org.springframework.util.MultiValueMap;
 import java.net.URI;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
+import static com.consol.citrus.container.Sequence.Builder.sequential;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 /**
@@ -46,10 +46,7 @@ public class OAuthService {
             throws JsonMappingException, JsonProcessingException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
-        runner.$(repeatOnError()
-                .until("i = 5")
-                .index("i")
-                .autoSleep(30000)
+        runner.$(sequential()
                 .actions(
                         http()
                                 .client(client)
@@ -90,10 +87,7 @@ public class OAuthService {
 
         AtomicReference<String> response = new AtomicReference<>();
 
-        runner.$(repeatOnError()
-                .until("i = 5")
-                .index("i")
-                .autoSleep(30000)
+        runner.$(sequential()
                 .actions(
                         http()
                                 .client(client)
@@ -119,13 +113,14 @@ public class OAuthService {
 
     public static String submitCredentials(TestActionRunner runner, HttpClient client,
                                            String loginUrl, String username, String password) {
-        
-        AtomicReference<String> csrfToken = new AtomicReference<>();
 
-        runner.$(repeatOnError()
-                .until("i = 5")
-                .index("i")
-                .autoSleep(30000)
+        AtomicReference<String> response = new AtomicReference<>();
+
+        MultiValueMap<String, Object> loginRequest = new LinkedMultiValueMap<>();
+        loginRequest.add("username", username);
+        loginRequest.add("password", password);
+
+        runner.$(sequential()
                 .actions(
                         http()
                                 .client(client)
@@ -148,22 +143,8 @@ public class OAuthService {
                                     if (StringUtils.isEmpty(token)) {
                                         throw new ValidationException("CSRF token not found in the response");
                                     }
-                                    csrfToken.set(token);
-                                })));
-
-
-        MultiValueMap<String, Object> loginRequest = new LinkedMultiValueMap<>();
-        loginRequest.add("username", username);
-        loginRequest.add("password", password);
-        loginRequest.add("_csrf", csrfToken.get());
-
-        AtomicReference<String> response = new AtomicReference<>();
-
-        runner.$(repeatOnError()
-                .until("i = 5")
-                .index("i")
-                .autoSleep(30000)
-                .actions(
+                                    loginRequest.add("_csrf", token);
+                                }),
                         http()
                                 .client(client)
                                 .send()
@@ -193,10 +174,7 @@ public class OAuthService {
 
         AtomicReference<WellKnownResponseDTO> responseDTO = new AtomicReference<>();
 
-        runner.$(repeatOnError()
-                .until("i = 5")
-                .index("i")
-                .autoSleep(30000)
+        runner.$(sequential()
                 .actions(
                         http()
                                 .client(client)
