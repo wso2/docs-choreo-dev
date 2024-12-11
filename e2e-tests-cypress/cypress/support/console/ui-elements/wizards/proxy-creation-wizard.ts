@@ -14,7 +14,6 @@
 import { ProxyInfo } from "../../entities/project/project";
 import { TestIds } from "../../constants/TestIds";
 import { SHORT_TIME } from "../../../commons/timeouts";
-import { MIN_RENDERING_WAIT_TIME } from "../../../commons/constants";
 
 export class _ProxyCreationWizard {
   createFromOASUrl(url: string) {
