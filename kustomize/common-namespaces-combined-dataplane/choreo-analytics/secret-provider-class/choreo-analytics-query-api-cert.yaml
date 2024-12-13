@@ -30,24 +30,32 @@ spec:
           objectAlias: https.pfx.base64
           objectType: secret
           objectFormat: pfx
+          objectVersion: "{{.ANALYTICS_API_STORE}}"
         - |
           objectName: alert-api-password
           objectType: secret
+          objectVersion: "{{.ANALYTICS_API_PASSWORD}}"
         - |
           objectName: kusto-application-client-id
           objectType: secret
+          objectVersion: "{{.KUSTO_APPLICATION_CLIENT_ID}}"
         - |
           objectName: kusto-application-key
           objectType: secret
+          objectVersion: "{{.KUSTO_APPLICATION_KEY}}"
         - |
           objectName: kusto-authority-id
           objectType: secret
+          objectVersion: "{{.KUSTO_AUTHORITY_ID}}"
         - |
           objectName: kusto-resource-uri
           objectType: secret
+          objectVersion: "{{.KUSTO_RESOURCE_URI}}"
         - |
           objectName: kusto-database
           objectType: secret
+          objectVersion: "{{.KUSTO_DATABASE}}"
         - |
           objectName: truststore-password
           objectType: secret
+          objectVersion: "{{.TRUSTSTORE_PASSWORD}}"
