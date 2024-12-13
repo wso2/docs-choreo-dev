@@ -115,14 +115,4 @@ spec:
             volumeAttributes:
               secretProviderClass: secret-idp-configs
       restartPolicy: Always
-      serviceAccountName: dp-loggingapi
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - loggingapi
-              topologyKey: kubernetes.io/hostname
+      serviceAccountName: dp-analytics-query-api
