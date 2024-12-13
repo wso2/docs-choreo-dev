@@ -31,21 +31,6 @@ spec:
           args:
             - "-Dlog4j2.formatMsgNoLookups=true"
           env:
-            - name: DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  key: DATASOURCE_USERNAME
-                  name: secret-sql-db
-            - name: DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: DATASOURCE_PASSWORD
-                  name: secret-sql-db
-            - name: DATASOURCE_URL
-              valueFrom:
-                secretKeyRef:
-                  key: DATASOURCE_URL
-                  name: secret-sql-db
             - name: KEY_PASS
               valueFrom:
                 secretKeyRef:
@@ -104,12 +89,6 @@ spec:
               drop:
                 - ALL
           volumeMounts:
-            - name: secret-sql-db
-              mountPath: "/mnt/csi/secret-sql-db"
-              readOnly: true
-            - name: secret-kusto-query
-              mountPath: "/mnt/csi/secret-kusto-query"
-              readOnly: true
             - name: secret-idp-configs
               mountPath: "/mnt/csi/secret-idp-configs"
             - name: keystore-passwords
