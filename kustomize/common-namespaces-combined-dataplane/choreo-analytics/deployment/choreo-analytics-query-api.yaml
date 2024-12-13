@@ -226,7 +226,6 @@ spec:
             capabilities:
               drop:
                 - ALL
-                - NET_RAW
           volumeMounts:
             - name: config
               mountPath: /home/ballerina/Config.toml
