@@ -1,0 +1,33 @@
+configMapGenerator:
+  - name: query-api-conf
+    behavior: create
+    literals:
+      - ORG_ENDPOINT=https://controlplane-system.choreo-dv.internal/orgs
+      - CHOREO_API_DETAILS_ENDPOINT=https://controlplane-apim.choreo-dv.internal/api/am/publisher/v2/apis
+      - CHOREO_ON_PREM_KEY_LIST_ENDPOINT=https://controlplane-system.choreo-dv.internal/onprem-keys?orgUuid={orgUuid}
+      - CHOREO_ORG_UUID=cc9327fa-2ce3-4e5e-b0d4-0b2ad3f866e4
+      - RUDDER_ENDPOINT=http://controlplane-system.choreo-dv.internal/api/v1/choreo/environments
+      - PROJECT_ENDPOINT=http://controlplane-system.choreo-dv.internal/graphql
+      - CORS_ALLOW_CREDENTIALS=true
+      - CORS_ALLOW_ORIGINS=*
+      - CORS_ALLOWED_METHODS=POST
+      - CORS_ALLOWED_HEADERS=*
+      - INTROSPECTION_ENDPOINT=https://controlplane-system.choreo-dv.internal/orgs/keys/introspect
+      - USER_TOKEN_CACHE_EXPIRYTIME=3600
+      - USER_TOKEN_CACHE_SIZE=100
+      - ON_PREM_TOKEN_CACHE_EXPIRYTIME=3600
+      - ON_PREM_TOKEN_CACHE_SIZE=100
+      - PROJECT_CACHE_SIZE=100
+      - PROJECT_CACHE_EXPIRYTIME=60
+      - CHOREO_APIM_ORG_UUID=ec459d25-683d-47ba-a064-ff369b53a3e8
+      - LOGGER_LEVEL_ORG_WSO2_CHOREO_ANALYTICS_API=DEBUG
+      - SECURITY_JWKS=https://id.dv.choreo.dev/oauth2/jwks
+      - SECURITY_JWKS_ISSUER=https://id.dv.choreo.dev:443/oauth2/token
+      - JWT_ASSERTION_AUTH_HEADER=X-JWT-Assertion
+      - CHOREO_SYSTEM_ORG_UUID=783c6c4d-8b9b-4190-b70a-e717ab1ee739
+      - SERVER_MAX_HTTP_HEADER_SIZE=20KB
+      - CODEC_MAX_IN_MEMORY_SIZE=10485760
+  - name: analytics-client-truststore
+    behavior: create
+    files:
+      - client-truststore/truststore.p12    

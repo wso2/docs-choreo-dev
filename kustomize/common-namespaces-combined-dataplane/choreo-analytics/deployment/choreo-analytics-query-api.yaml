@@ -1,0 +1,343 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: choreo-analytics-api
+  name: choreo-analytics-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-analytics-api
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-analytics-api
+        antiaffinity: choreo-analytics-api
+        app: choreo-analytics-api
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-analytics-api
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-analytics-api:latest
+          args:
+            - "-Dlog4j2.formatMsgNoLookups=true"
+          env:
+            - name: DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: DATASOURCE_USERNAME
+                  name: secret-sql-db
+            - name: DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: DATASOURCE_PASSWORD
+                  name: secret-sql-db
+            - name: DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  key: DATASOURCE_URL
+                  name: secret-sql-db
+            - name: KEY_PASS
+              valueFrom:
+                secretKeyRef:
+                  key: ALERT_API_PASSWORD
+                  name: keystore-passwords
+            - name: KUSTO_APPLICATION_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: KUSTO_APPLICATION_CLIENT_ID
+                  name: secret-kusto-query
+            - name: KUSTO_APPLICATION_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: KUSTO_APPLICATION_KEY
+                  name: secret-kusto-query
+            - name: KUSTO_AUTHORITY_ID
+              valueFrom:
+                secretKeyRef:
+                  key: KUSTO_AUTHORITY_ID
+                  name: secret-kusto-query
+            - name: KUSTO_RESOURCE_URI
+              valueFrom:
+                secretKeyRef:
+                  key: KUSTO_RESOURCE_URI
+                  name: secret-kusto-query
+            - name: KUSTO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: KUSTO_DATABASE
+                  name: secret-kusto-query
+            - name: SECURITY_JWKS
+              valueFrom:
+                configMapKeyRef:
+                  key: SECURITY_JWKS
+                  name: query-api-conf
+            - name: SECURITY_JWKS_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  key: SECURITY_JWKS_ISSUER
+                  name: query-api-conf
+            - name: ORG_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: ORG_ENDPOINT
+                  name: query-api-conf
+            - name: CHOREO_API_DETAILS_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_API_DETAILS_ENDPOINT
+                  name: query-api-conf
+            - name: CORS_ALLOW_CREDENTIALS
+              valueFrom:
+                configMapKeyRef:
+                  key: CORS_ALLOW_CREDENTIALS
+                  name: query-api-conf
+            - name: CORS_ALLOW_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  key: CORS_ALLOW_ORIGINS
+                  name: query-api-conf
+            - name: CORS_ALLOWED_METHODS
+              valueFrom:
+                configMapKeyRef:
+                  key: CORS_ALLOWED_METHODS
+                  name: query-api-conf
+            - name: CORS_ALLOWED_HEADERS
+              valueFrom:
+                configMapKeyRef:
+                  key: CORS_ALLOWED_HEADERS
+                  name: query-api-conf
+            - name: INTROSPECTION_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: INTROSPECTION_ENDPOINT
+                  name: query-api-conf
+            - name: USER_TOKEN_CACHE_EXPIRYTIME
+              valueFrom:
+                configMapKeyRef:
+                  key: USER_TOKEN_CACHE_EXPIRYTIME
+                  name: query-api-conf
+            - name: USER_TOKEN_CACHE_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  key: USER_TOKEN_CACHE_SIZE
+                  name: query-api-conf
+            - name: ON_PREM_TOKEN_CACHE_EXPIRYTIME
+              valueFrom:
+                configMapKeyRef:
+                  key: ON_PREM_TOKEN_CACHE_EXPIRYTIME
+                  name: query-api-conf
+            - name: ON_PREM_TOKEN_CACHE_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  key: ON_PREM_TOKEN_CACHE_SIZE
+                  name: query-api-conf
+            - name: PROJECT_CACHE_EXPIRYTIME
+              valueFrom:
+                configMapKeyRef:
+                  key: PROJECT_CACHE_EXPIRYTIME
+                  name: query-api-conf
+            - name: PROJECT_CACHE_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  key: PROJECT_CACHE_SIZE
+                  name: query-api-conf
+            - name: CHOREO_APIM_ORG_UUID
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_APIM_ORG_UUID
+                  name: query-api-conf
+            - name: CHOREO_ON_PREM_KEY_LIST_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_ON_PREM_KEY_LIST_ENDPOINT
+                  name: query-api-conf
+            - name: CHOREO_ORG_UUID
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_ORG_UUID
+                  name: query-api-conf
+            - name: RUDDER_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: RUDDER_ENDPOINT
+                  name: query-api-conf
+            - name: PROJECT_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: PROJECT_ENDPOINT
+                  name: query-api-conf
+            - name: CHOREO_SYSTEM_ORG_UUID
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_SYSTEM_ORG_UUID
+                  name: query-api-conf
+            - name: logging.level.org.wso2.choreo.analytics.api
+              valueFrom:
+                configMapKeyRef:
+                  key: LOGGER_LEVEL_ORG_WSO2_CHOREO_ANALYTICS_API
+                  name: query-api-conf
+            - name: JWT_ASSERTION_AUTH_HEADER
+              valueFrom:
+                configMapKeyRef:
+                  key: JWT_ASSERTION_AUTH_HEADER
+                  name: query-api-conf
+            - name: SERVER_MAX_HTTP_HEADER_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_MAX_HTTP_HEADER_SIZE
+                  name: query-api-conf
+            - name: CODEC_MAX_IN_MEMORY_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  key: CODEC_MAX_IN_MEMORY_SIZE
+                  name: query-api-conf
+            - name: TRUSTSTORE_PASSWORD
+              valueFrom:
+                 secretKeyRef:
+                  key: TRUSTSTORE_PASSWORD
+                  name: keystore-passwords 
+            - name: TRUSTSTORE_PATH
+              value: /mnt/csi/client-truststore/truststore.p12
+            - name: ENABLE_DEFAULT_TRUSTSTORE
+              value: "false"
+            - name: REDIS
+              value: "apim-analytics-query-api"
+          envFrom:
+            - configMapRef:
+                name: choreo-analytics-api-cm
+            - configMapRef:
+                name: choreo-analytics-api-env
+            - secretRef:
+                name: choreo-analytics-api-secret
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+                - NET_RAW
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: loggingapi-secret
+              mountPath: "/mnt/csi/loggingapi-secret"
+              readOnly: true
+            - name: opensearch-password
+              mountPath: "/mnt/csi/opensearch-password"
+              readOnly: true
+            - name: secret-sql-db
+              mountPath: "/mnt/csi/secret-sql-db"
+              readOnly: true
+            - name: secret-kusto-query
+              mountPath: "/mnt/csi/secret-kusto-query"
+              readOnly: true
+            - name: secret-idp-configs
+              mountPath: "/mnt/csi/secret-idp-configs"
+            - name: keystore-passwords
+              mountPath: /mnt/csi/certssecrets
+              readOnly: true
+            - name: query-api-keystores
+              mountPath: "/mnt/csi/keys-store"
+              readOnly: true
+            - name: query-api-client-truststore
+              mountPath: "/mnt/csi/client-truststore"
+              readOnly: true
+          ports:
+            - containerPort: 8443
+          livenessProbe:
+            httpGet:
+              path: /healthz/query-api/liveness
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz/query-api/readiness
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 120
+            periodSeconds: 20
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: 250m
+              memory: 500Mi
+            requests:
+              cpu: 500m
+              memory: 800Mi
+      volumes:
+        - name: config
+          configMap:
+            name: loggingapi-cm-file
+        - name: loggingapi-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: loggingapi-secret
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: opensearch-password
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: opensearch-http-passwd
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: query-api-keystores
+          secret:
+            secretName: analytics-api-service-keystore
+        - name: query-api-client-truststore
+          configMap:
+            name: analytics-client-truststore    
+        - name: secret-sql-db
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-sql-db
+        - name: secret-kusto-query
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-kusto-query
+        - name: keystore-passwords
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: keystore-passwords
+        - name: secret-idp-configs
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-idp-configs
+      restartPolicy: Always
+      serviceAccountName: dp-loggingapi
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - loggingapi
+              topologyKey: kubernetes.io/hostname
