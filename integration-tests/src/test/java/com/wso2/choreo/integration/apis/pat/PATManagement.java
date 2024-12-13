@@ -24,6 +24,7 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.models.pat.PATListResponseDTO;
 import com.wso2.choreo.integration.models.pat.PATResponseDTO;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +37,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
+@Log4j2
 public class PATManagement {
 
     private static final String PAT_SERVICE_BASE_PATH = "api-key-service/v1.0/pat";
@@ -84,7 +86,11 @@ public class PATManagement {
                                 .validate((message, context) -> {
                                     int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
                                     if (code != HttpStatus.CREATED.value()) {
-                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                        if (code > 500) {
+                                            throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                        }
+                                        log.error("PAT generate call returned with status code: " + code);
+                                        return;
                                     }
                                     try {
                                         PATResponseDTO response = new ObjectMapper()
