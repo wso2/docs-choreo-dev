@@ -96,23 +96,31 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-sql-db
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
         - name: secret-kusto-query
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-kusto-query
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
         - name: keystore-passwords
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
               secretProviderClass: keystore-passwords
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
         - name: secret-idp-configs
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-idp-configs
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: dp-analytics-query-api
