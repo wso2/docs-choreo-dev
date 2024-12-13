@@ -17,5 +17,6 @@ resources:
   - service
   - hpa
   - netpol
-
+  - secret-provider-class
+  - config
 namespace: choreo-analytics

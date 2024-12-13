@@ -1,5 +1,5 @@
 configMapGenerator:
-  - name: query-api-conf
+  - name: choreo-analytics-query-api-conf
     behavior: create
     literals:
       - ORG_ENDPOINT=https://controlplane-system.choreo-dv.internal/orgs

@@ -1,20 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: choreo-analytics-api
+  name: choreo-analytics-query-api
 spec:
   podSelector:
     matchLabels:
-      app: choreo-analytics-api
+      app: choreo-analytics-query-api
   policyTypes:
     - Ingress
     - Egress
   ingress:
-    - from:
-        - ipBlock:
-            cidr: <aks-app-gateway-cidr>
-      ports:
-        - port: 8443
     - from:
         - namespaceSelector:
             matchLabels:

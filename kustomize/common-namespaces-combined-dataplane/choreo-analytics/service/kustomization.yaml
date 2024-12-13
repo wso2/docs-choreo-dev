@@ -1,2 +1,2 @@
 resources:
-  - query-api-service.yaml
+  - choreo-analytics-query-api-service.yaml

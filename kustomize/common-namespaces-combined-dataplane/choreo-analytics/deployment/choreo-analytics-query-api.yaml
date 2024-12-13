@@ -10,14 +10,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      choreo.component: choreo-analytics-api
+      choreo.component: choreo-analytics-query-api
   strategy: {}
   template:
     metadata:
       labels:
-        choreo.component: choreo-analytics-api
-        antiaffinity: choreo-analytics-api
-        app: choreo-analytics-api
+        choreo.component: choreo-analytics-query-api
+        antiaffinity: choreo-analytics-query-api
+        app: choreo-analytics-query-api
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -26,7 +26,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: choreo-analytics-api
+        - name: choreo-analytics-query-api
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-analytics-api:latest
           args:
             - "-Dlog4j2.formatMsgNoLookups=true"
@@ -80,127 +80,127 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: SECURITY_JWKS
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: SECURITY_JWKS_ISSUER
               valueFrom:
                 configMapKeyRef:
                   key: SECURITY_JWKS_ISSUER
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: ORG_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   key: ORG_ENDPOINT
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: CHOREO_API_DETAILS_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   key: CHOREO_API_DETAILS_ENDPOINT
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: CORS_ALLOW_CREDENTIALS
               valueFrom:
                 configMapKeyRef:
                   key: CORS_ALLOW_CREDENTIALS
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: CORS_ALLOW_ORIGINS
               valueFrom:
                 configMapKeyRef:
                   key: CORS_ALLOW_ORIGINS
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: CORS_ALLOWED_METHODS
               valueFrom:
                 configMapKeyRef:
                   key: CORS_ALLOWED_METHODS
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: CORS_ALLOWED_HEADERS
               valueFrom:
                 configMapKeyRef:
                   key: CORS_ALLOWED_HEADERS
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: INTROSPECTION_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   key: INTROSPECTION_ENDPOINT
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: USER_TOKEN_CACHE_EXPIRYTIME
               valueFrom:
                 configMapKeyRef:
                   key: USER_TOKEN_CACHE_EXPIRYTIME
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: USER_TOKEN_CACHE_SIZE
               valueFrom:
                 configMapKeyRef:
                   key: USER_TOKEN_CACHE_SIZE
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: ON_PREM_TOKEN_CACHE_EXPIRYTIME
               valueFrom:
                 configMapKeyRef:
                   key: ON_PREM_TOKEN_CACHE_EXPIRYTIME
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: ON_PREM_TOKEN_CACHE_SIZE
               valueFrom:
                 configMapKeyRef:
                   key: ON_PREM_TOKEN_CACHE_SIZE
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: PROJECT_CACHE_EXPIRYTIME
               valueFrom:
                 configMapKeyRef:
                   key: PROJECT_CACHE_EXPIRYTIME
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: PROJECT_CACHE_SIZE
               valueFrom:
                 configMapKeyRef:
                   key: PROJECT_CACHE_SIZE
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: CHOREO_APIM_ORG_UUID
               valueFrom:
                 configMapKeyRef:
                   key: CHOREO_APIM_ORG_UUID
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: CHOREO_ON_PREM_KEY_LIST_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   key: CHOREO_ON_PREM_KEY_LIST_ENDPOINT
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: CHOREO_ORG_UUID
               valueFrom:
                 configMapKeyRef:
                   key: CHOREO_ORG_UUID
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: RUDDER_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   key: RUDDER_ENDPOINT
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: PROJECT_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   key: PROJECT_ENDPOINT
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: CHOREO_SYSTEM_ORG_UUID
               valueFrom:
                 configMapKeyRef:
                   key: CHOREO_SYSTEM_ORG_UUID
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: logging.level.org.wso2.choreo.analytics.api
               valueFrom:
                 configMapKeyRef:
                   key: LOGGER_LEVEL_ORG_WSO2_CHOREO_ANALYTICS_API
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: JWT_ASSERTION_AUTH_HEADER
               valueFrom:
                 configMapKeyRef:
                   key: JWT_ASSERTION_AUTH_HEADER
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: SERVER_MAX_HTTP_HEADER_SIZE
               valueFrom:
                 configMapKeyRef:
                   key: SERVER_MAX_HTTP_HEADER_SIZE
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: CODEC_MAX_IN_MEMORY_SIZE
               valueFrom:
                 configMapKeyRef:
                   key: CODEC_MAX_IN_MEMORY_SIZE
-                  name: query-api-conf
+                  name: choreo-analytics-query-api-conf
             - name: TRUSTSTORE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -214,11 +214,11 @@ spec:
               value: "apim-analytics-query-api"
           envFrom:
             - configMapRef:
-                name: choreo-analytics-api-cm
+                name: choreo-analytics-query-api-cm
             - configMapRef:
-                name: choreo-analytics-api-env
+                name: choreo-analytics-query-api-env
             - secretRef:
-                name: choreo-analytics-api-secret
+                name: choreo-analytics-query-api-secret
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
@@ -279,25 +279,6 @@ spec:
               cpu: 500m
               memory: 800Mi
       volumes:
-        - name: config
-          configMap:
-            name: loggingapi-cm-file
-        - name: loggingapi-secret
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: loggingapi-secret
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-        - name: opensearch-password
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: opensearch-http-passwd
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
         - name: query-api-keystores
           secret:
             secretName: analytics-api-service-keystore
