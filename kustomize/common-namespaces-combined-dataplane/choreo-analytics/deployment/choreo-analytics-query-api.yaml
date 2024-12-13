@@ -30,48 +30,6 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-analytics-api:latest
           args:
             - "-Dlog4j2.formatMsgNoLookups=true"
-          env:
-            - name: KEY_PASS
-              valueFrom:
-                secretKeyRef:
-                  key: ALERT_API_PASSWORD
-                  name: keystore-passwords
-            - name: KUSTO_APPLICATION_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  key: KUSTO_APPLICATION_CLIENT_ID
-                  name: secret-kusto-query
-            - name: KUSTO_APPLICATION_KEY
-              valueFrom:
-                secretKeyRef:
-                  key: KUSTO_APPLICATION_KEY
-                  name: secret-kusto-query
-            - name: KUSTO_AUTHORITY_ID
-              valueFrom:
-                secretKeyRef:
-                  key: KUSTO_AUTHORITY_ID
-                  name: secret-kusto-query
-            - name: KUSTO_RESOURCE_URI
-              valueFrom:
-                secretKeyRef:
-                  key: KUSTO_RESOURCE_URI
-                  name: secret-kusto-query
-            - name: KUSTO_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  key: KUSTO_DATABASE
-                  name: secret-kusto-query
-            - name: TRUSTSTORE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: TRUSTSTORE_PASSWORD
-                  name: keystore-passwords
-            - name: TRUSTSTORE_PATH
-              value: /mnt/csi/client-truststore/truststore.p12
-            - name: ENABLE_DEFAULT_TRUSTSTORE
-              value: "false"
-            - name: REDIS
-              value: "choreo-analytics-query-api"
           envFrom:
             - configMapRef:
                 name: choreo-analytics-query-api-conf

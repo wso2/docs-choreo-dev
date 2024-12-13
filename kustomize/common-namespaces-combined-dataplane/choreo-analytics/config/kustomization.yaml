@@ -27,6 +27,9 @@ configMapGenerator:
       - CHOREO_SYSTEM_ORG_UUID={{.CHOREO_SYSTEM_ORG_UUID}}
       - SERVER_MAX_HTTP_HEADER_SIZE=20KB
       - CODEC_MAX_IN_MEMORY_SIZE=10485760
+      - TRUSTSTORE_PATH=/mnt/csi/client-truststore/truststore.p12
+      - ENABLE_DEFAULT_TRUSTSTORE=false
+      - REDIS=choreo-analytics-query-api
   - name: analytics-client-truststore
     behavior: create
     files:

@@ -4,6 +4,24 @@ metadata:
   name: choreo-analytics-query-api-cert
 spec:
   provider: azure
+  secretObjects:
+    - secretName: analytics-api-combined-secrets
+      type: Opaque
+      data:
+        - key: KEY_PASS
+          objectName: alert-api-password
+        - key: KUSTO_APPLICATION_CLIENT_ID
+          objectName: kusto-application-client-id
+        - key: KUSTO_APPLICATION_KEY
+          objectName: kusto-application-key
+        - key: KUSTO_AUTHORITY_ID
+          objectName: kusto-authority-id
+        - key: KUSTO_RESOURCE_URI
+          objectName: kusto-resource-uri
+        - key: KUSTO_DATABASE
+          objectName: kusto-database
+        - key: TRUSTSTORE_PASSWORD
+          objectName: truststore-password
   parameters:
     objects: |
       array:
@@ -12,3 +30,24 @@ spec:
           objectAlias: https.pfx.base64
           objectType: secret
           objectFormat: pfx
+        - |
+          objectName: alert-api-password
+          objectType: secret
+        - |
+          objectName: kusto-application-client-id
+          objectType: secret
+        - |
+          objectName: kusto-application-key
+          objectType: secret
+        - |
+          objectName: kusto-authority-id
+          objectType: secret
+        - |
+          objectName: kusto-resource-uri
+          objectType: secret
+        - |
+          objectName: kusto-database
+          objectType: secret
+        - |
+          objectName: truststore-password
+          objectType: secret
