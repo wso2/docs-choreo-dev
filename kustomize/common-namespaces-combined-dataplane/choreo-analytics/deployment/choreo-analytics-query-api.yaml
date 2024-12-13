@@ -203,9 +203,9 @@ spec:
                   name: query-api-conf
             - name: TRUSTSTORE_PASSWORD
               valueFrom:
-                 secretKeyRef:
+                secretKeyRef:
                   key: TRUSTSTORE_PASSWORD
-                  name: keystore-passwords 
+                  name: keystore-passwords
             - name: TRUSTSTORE_PATH
               value: /mnt/csi/client-truststore/truststore.p12
             - name: ENABLE_DEFAULT_TRUSTSTORE
@@ -304,7 +304,7 @@ spec:
             secretName: analytics-api-service-keystore
         - name: query-api-client-truststore
           configMap:
-            name: analytics-client-truststore    
+            name: analytics-client-truststore
         - name: secret-sql-db
           csi:
             driver: secrets-store.csi.k8s.io

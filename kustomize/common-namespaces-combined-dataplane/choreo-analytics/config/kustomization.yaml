@@ -30,4 +30,4 @@ configMapGenerator:
   - name: analytics-client-truststore
     behavior: create
     files:
-      - client-truststore/truststore.p12    
+      - client-truststore/truststore.p12
