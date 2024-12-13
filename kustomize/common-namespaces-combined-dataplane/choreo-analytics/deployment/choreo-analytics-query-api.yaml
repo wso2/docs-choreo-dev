@@ -104,15 +104,6 @@ spec:
               drop:
                 - ALL
           volumeMounts:
-            - name: config
-              mountPath: /home/ballerina/Config.toml
-              subPath: Config.toml
-            - name: loggingapi-secret
-              mountPath: "/mnt/csi/loggingapi-secret"
-              readOnly: true
-            - name: opensearch-password
-              mountPath: "/mnt/csi/opensearch-password"
-              readOnly: true
             - name: secret-sql-db
               mountPath: "/mnt/csi/secret-sql-db"
               readOnly: true
