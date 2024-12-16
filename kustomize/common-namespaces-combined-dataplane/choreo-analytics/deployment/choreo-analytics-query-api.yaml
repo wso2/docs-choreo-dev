@@ -76,4 +76,3 @@ spec:
           configMap:
             name: analytics-client-truststore
       restartPolicy: Always
-      serviceAccountName: dp-analytics-query-api
