@@ -38,17 +38,17 @@ spec:
           objectAlias: CHOREO_APP_INSIGHTS_APP_ID
           objectVersion: "{{.CHOREO_APP_INSIGHTS_APP_ID}}"
         - |
-          objectName: bq-data-pipeline-choreo-subscriptions-db-password
+          objectName: choreo-subscriptions-db-mssql-password
           objectType: secret
           objectAlias: SUBSCRIPTIONS_DB_PASSWORD
           objectVersion: "{{.SUBSCRIPTIONS_DB_PASSWORD}}"
         - |
-          objectName: bq-data-pipeline-choreo-app-db-password
+          objectName: choreo-app-db-mssql-password
           objectType: secret
           objectAlias: APP_DB_PASSWORD
           objectVersion: "{{.APP_DB_PASSWORD}}"
         - |
-          objectName: bq-data-pipeline-scim2-api-password
+          objectName: idp-SCIM-BACKEND-API-USER-PASSWORD
           objectType: secret
           objectAlias: SCIM2_API_PASSWORD
           objectVersion: "{{.SCIM2_API_PASSWORD}}"
