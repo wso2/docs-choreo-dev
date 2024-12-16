@@ -51,4 +51,4 @@ spec:
           objectName: bq-data-pipeline-scim2-api-password
           objectType: secret
           objectAlias: SCIM2_API_PASSWORD
-          objectVersion: "{{.SCIM2_API_PASSWORD}}"        
+          objectVersion: "{{.SCIM2_API_PASSWORD}}"
