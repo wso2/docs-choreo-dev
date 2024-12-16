@@ -209,11 +209,11 @@ def create_grouped_bar_chart(data, title, ylabel, output_file):
     for i, (date, color) in enumerate(zip(last_four_dates, color_palette)):
         data_for_date = [chart_row[i] for chart_row in chart_data]
         ax.bar(
-            x + (i - 1.5) * width, 
-            data_for_date, 
-            width, 
-            label=date, 
-            color=color, 
+            x + (i - 1.5) * width,
+            data_for_date,
+            width,
+            label=date,
+            color=color,
             zorder=3
         )  # Bars above the grid
 
@@ -354,8 +354,8 @@ def main():
     if not sheet_id:
         print("Error: Could not find the sheet ID.")
         return
-    
-    #delete_existing_charts(service, sheet_id)
+
+    delete_existing_charts(service, sheet_id)
 
     # TPS Chart
     tps_data = fetch_data(service, "B1:Z6")
@@ -373,7 +373,7 @@ def main():
     error_data = fetch_data(service, "B15:Z20")
     if error_data:
         create_grouped_bar_chart(error_data, "Error Rate", "Percentage (%)", "200_error_chart.png")
-        add_chart_to_sheet(service, sheet_id, "B15:Z20", "Error Rate (200 Users)", "Percentage (%)")        
+        add_chart_to_sheet(service, sheet_id, "B15:Z20", "Error Rate (200 Users)", "Percentage (%)")
 
     tps_data = fetch_data(service, "B22:Z27")
     if tps_data:
