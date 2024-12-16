@@ -66,11 +66,11 @@ spec:
             timeoutSeconds: 10
           resources:
             limits:
-              cpu: 250m
-              memory: 500Mi
-            requests:
               cpu: 500m
               memory: 800Mi
+            requests:
+              cpu: 250m
+              memory: 500Mi
       volumes:
         - name: query-api-client-truststore
           configMap:
