@@ -38,7 +38,7 @@ spec:
           objectAlias: CHOREO_APP_INSIGHTS_APP_ID
           objectVersion: "{{.CHOREO_APP_INSIGHTS_APP_ID}}"
         - |
-          objectName: bq-data-pipeline-choreo-subscriptions-db-passowrd
+          objectName: bq-data-pipeline-choreo-subscriptions-db-password
           objectType: secret
           objectAlias: SUBSCRIPTIONS_DB_PASSWORD
           objectVersion: "{{.SUBSCRIPTIONS_DB_PASSWORD}}"
