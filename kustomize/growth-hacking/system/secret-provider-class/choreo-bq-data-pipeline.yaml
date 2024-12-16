@@ -13,6 +13,12 @@ spec:
           key: CHOREO_APP_INSIGHTS_API_KEY
         - objectName: CHOREO_APP_INSIGHTS_APP_ID
           key: CHOREO_APP_INSIGHTS_APP_ID
+        - objectName: SUBSCRIPTIONS_DB_PASSWORD
+          key: SUBSCRIPTIONS_DB_PASSWORD
+        - objectName: APP_DB_PASSWORD
+          key: APP_DB_PASSWORD
+        - objectName: SCIM2_API_PASSWORD
+          key: SCIM2_API_PASSWORD
   parameters:
     objects: |
       array:
@@ -31,3 +37,18 @@ spec:
           objectType: secret
           objectAlias: CHOREO_APP_INSIGHTS_APP_ID
           objectVersion: "{{.CHOREO_APP_INSIGHTS_APP_ID}}"
+        - |
+          objectName: bq-data-pipeline-choreo-subscriptions-db-password
+          objectType: secret
+          objectAlias: SUBSCRIPTIONS_DB_PASSWORD
+          objectVersion: "{{.SUBSCRIPTIONS_DB_PASSWORD}}"
+        - |
+          objectName: bq-data-pipeline-choreo-app-db-password
+          objectType: secret
+          objectAlias: APP_DB_PASSWORD
+          objectVersion: "{{.APP_DB_PASSWORD}}"
+        - |
+          objectName: bq-data-pipeline-scim2-api-password
+          objectType: secret
+          objectAlias: SCIM2_API_PASSWORD
+          objectVersion: "{{.SCIM2_API_PASSWORD}}"
