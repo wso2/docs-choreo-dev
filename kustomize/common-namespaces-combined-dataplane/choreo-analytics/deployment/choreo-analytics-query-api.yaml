@@ -35,6 +35,8 @@ spec:
                 name: choreo-analytics-query-api-conf
             - configMapRef:
                 name: analytics-client-truststore
+            - secretRef:
+                name: keystore-passwords
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
@@ -45,6 +47,9 @@ spec:
           volumeMounts:
             - name: query-api-client-truststore
               mountPath: "/mnt/csi/client-truststore"
+              readOnly: true
+            - name: keystore-passwords
+              mountPath: /mnt/csi/certssecrets
               readOnly: true
           ports:
             - containerPort: 8443
@@ -75,4 +80,12 @@ spec:
         - name: query-api-client-truststore
           configMap:
             name: analytics-client-truststore
+        - name: keystore-passwords
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: keystore-passwords
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       restartPolicy: Always

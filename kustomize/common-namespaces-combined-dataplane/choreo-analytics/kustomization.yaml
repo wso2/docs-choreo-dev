@@ -18,4 +18,5 @@ resources:
   - hpa
   - config
   - namespace
+  - secret-provider-class
 namespace: choreo-analytics
