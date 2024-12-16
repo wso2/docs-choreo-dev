@@ -16,6 +16,5 @@ resources:
   - deployment
   - service
   - hpa
-  - netpol
   - config
 namespace: choreo-analytics
