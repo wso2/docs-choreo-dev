@@ -17,4 +17,5 @@ resources:
   - service
   - hpa
   - config
+  - namespace
 namespace: choreo-analytics
