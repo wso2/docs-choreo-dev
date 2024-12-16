@@ -5,74 +5,23 @@ metadata:
 spec:
   provider: azure
   secretObjects:
-    - secretName: analytics-api-combined-secrets
+    - secretName: choreo-analytics-query-api-secret
       type: Opaque
       data:
-        - key: KEY_PASS
-          objectName: alert-api-password
-        - key: KUSTO_APPLICATION_CLIENT_ID
-          objectName: kusto-application-client-id
-        - key: KUSTO_APPLICATION_KEY
-          objectName: kusto-application-key
-        - key: KUSTO_AUTHORITY_ID
-          objectName: kusto-authority-id
-        - key: KUSTO_RESOURCE_URI
-          objectName: kusto-resource-uri
-        - key: KUSTO_DATABASE
-          objectName: kusto-database
+        - key: ALERT_API_PASSWORD
+          objectName: ALERT_API_PASSWORD
         - key: TRUSTSTORE_PASSWORD
           objectName: truststore-password
-    - secretName: secret-idp-configs
-      type: Opaque
-      data:
-        - key: SECURITY_JWKS
-          objectName: SECURITY_JWKS
-        - key: SECURITY_JWKS_ISSUER
-          objectName: SECURITY_JWKS_ISSUER
   parameters:
     objects: |
       array:
         - |
-          objectName: analytics-api-store
-          objectAlias: https.pfx.base64
-          objectType: secret
-          objectFormat: pfx
-          objectVersion: "{{.ANALYTICS_API_STORE}}"
-        - |
-          objectName: alert-api-password
-          objectType: secret
-          objectVersion: "{{.ANALYTICS_API_PASSWORD}}"
-        - |
-          objectName: kusto-application-client-id
-          objectType: secret
-          objectVersion: "{{.KUSTO_APPLICATION_CLIENT_ID}}"
-        - |
-          objectName: kusto-application-key
-          objectType: secret
-          objectVersion: "{{.KUSTO_APPLICATION_KEY}}"
-        - |
-          objectName: kusto-authority-id
-          objectType: secret
-          objectVersion: "{{.KUSTO_AUTHORITY_ID}}"
-        - |
-          objectName: kusto-resource-uri
-          objectType: secret
-          objectVersion: "{{.KUSTO_RESOURCE_URI}}"
-        - |
-          objectName: kusto-database
-          objectType: secret
-          objectVersion: "{{.KUSTO_DATABASE}}"
-        - |
           objectName: truststore-password
           objectType: secret
+          objectAlias: TRUSTSTORE_PASSWORD
           objectVersion: "{{.TRUSTSTORE_PASSWORD}}"
         - |
-          objectName: idp-SECURITY-JWKS
+          objectName: keystore-pw-alert-api
           objectType: secret
-          objectAlias: SECURITY_JWKS
-          objectVersion: "{{.SECURITY_JWKS}}"
-        - |
-          objectName: idp-SECURITY-JWKS-ISSUER
-          objectType: secret
-          objectAlias: SECURITY_JWKS_ISSUER
-          objectVersion: "{{.SECURITY_JWKS_ISSUER}}"
+          objectAlias: ALERT_API_PASSWORD
+          objectVersion: "{{.ALERT_API_PASSWORD}}"
