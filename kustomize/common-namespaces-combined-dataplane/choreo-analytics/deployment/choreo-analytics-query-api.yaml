@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: choreo-analytics-query-api
+  name: choreo-analytics-query-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-analytics-query-api
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-analytics-query-api
+        antiaffinity: choreo-analytics-query-api
+        app: choreo-analytics-query-api
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-analytics-query-api
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-analytics-api:latest
+          args:
+            - "-Dlog4j2.formatMsgNoLookups=true"
+          envFrom:
+            - configMapRef:
+                name: choreo-analytics-query-api-conf
+            - configMapRef:
+                name: analytics-client-truststore
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: query-api-client-truststore
+              mountPath: "/mnt/csi/client-truststore"
+              readOnly: true
+          ports:
+            - containerPort: 8443
+          livenessProbe:
+            httpGet:
+              path: /healthz/query-api/liveness
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz/query-api/readiness
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 120
+            periodSeconds: 20
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: 250m
+              memory: 500Mi
+            requests:
+              cpu: 500m
+              memory: 800Mi
+      volumes:
+        - name: query-api-client-truststore
+          configMap:
+            name: analytics-client-truststore
+      restartPolicy: Always
+      serviceAccountName: dp-analytics-query-api
