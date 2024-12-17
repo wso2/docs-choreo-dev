@@ -1051,6 +1051,7 @@ configMapGenerator:
       - WEBSUB_HUB_PUBLISHER_ENABLED={{.WEBSUB_HUB_PUBLISHER_ENABLED | default "false"}}
       - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL | default ""}}
       - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC | default ""}}
+      - SIGNATURE_VALIDATION_ENABLED={{.SIGNATURE_VALIDATION_ENABLED | default "true"}}
   - name: env-log-controller
     behavior: create
     literals:
