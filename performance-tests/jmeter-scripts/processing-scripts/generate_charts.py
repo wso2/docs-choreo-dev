@@ -50,25 +50,34 @@ def delete_existing_charts(service, sheet_id):
 
 def create_api_invocation_chart(data, title, ylabel, output_file):
     """
-    Creates a bar chart for API invocation data with dates as the x-axis and TPS as the y-axis.
+    Creates a grouped bar chart for API invocation data with dates as the x-axis
+    and multiple rows as separate series in the chart.
     """
+    import matplotlib.colors as mcolors
+
     header = data[0]  # First row is the header (dates)
-    rows = data[1]   # Second row contains the TPS data
+    rows = data[1:]   # Remaining rows contain the data
 
-    dates = header[2:]  # Use the header row for x-axis labels
-    tps_values = [float(value) for value in rows[2:]]  # Extract TPS values from the first data row
+    # Extract dates from the header starting from index 2
+    dates = header[2:]
 
-    x = np.arange(len(dates))  # Positions for the x-axis
-    width = 0.4  # Bar width
+    # Extract labels and data
+    labels = [row[1] for row in rows]  # Labels are in column B
+    all_values = [[float(value) for value in row[2:]] for row in rows]  # Data starts from column 3
+
+    x = np.arange(len(dates))  # X-axis positions
+    width = 0.2  # Width of each bar
+
+    # Define a color palette
+    color_palette = list(mcolors.TABLEAU_COLORS.values())
 
     # Create the plot
     fig, ax = plt.subplots(figsize=(12, 8))
-    color_palette = list(mcolors.TABLEAU_COLORS.values())
 
-    #Pick a color from the color palette
-    color = color_palette[0]
-
-    ax.bar(x, tps_values, width, label='API Invocations', color=color, zorder=3)  # Bars above the grid
+    # Plot each row of data as a separate series
+    for i, (label, values) in enumerate(zip(labels, all_values)):
+        color = color_palette[i % len(color_palette)]  # Cycle through colors if needed
+        ax.bar(x + (i - len(rows)/2) * width, values, width, label=label, color=color, zorder=3)
 
     # Set a light grey background
     ax.set_facecolor('#f7f7f7')
@@ -77,23 +86,24 @@ def create_api_invocation_chart(data, title, ylabel, output_file):
     ax.yaxis.grid(color='black', linestyle='-', linewidth=0.7, zorder=1)  # Y-axis grid
     ax.xaxis.set_major_locator(plt.MultipleLocator(1))  # Ensure one grid line per bar
     ax.xaxis.grid(color='black', which='both', linestyle='-', linewidth=0.7, zorder=1)  # X-axis grid
+
     ax.set_axisbelow(True)  # Ensure grid lines are below the bars
 
     # Add labels, title, and formatting
     ax.set_ylabel(ylabel, fontsize=12)
-    # ax.set_xlabel("Dates", fontsize=12)
     ax.set_title(title, fontsize=14, weight='bold')
     ax.set_xticks(x)
     ax.set_xticklabels(dates, rotation=45, ha='right', fontsize=10)
 
-    # Adjust legend styling
-    # legend = ax.legend(frameon=True, loc='upper left', fontsize=10)
-    # legend.get_frame().set_alpha(0.8)  # Transparent legend background
-    # legend.get_frame().set_facecolor('#eeeeee')
+    # Add legend with transparent background
+    legend = ax.legend(frameon=True, loc='upper left', fontsize=10)
+    legend.get_frame().set_alpha(0.8)  # Transparent legend background
+    legend.get_frame().set_facecolor('#eeeeee')
 
+    # Finalize and save the chart
     plt.tight_layout()
     plt.savefig(output_file)
-    print(f"API invocation chart saved as {output_file}")
+    print(f"Chart saved as {output_file}")
     return output_file
 
 
@@ -209,11 +219,11 @@ def create_grouped_bar_chart(data, title, ylabel, output_file):
     for i, (date, color) in enumerate(zip(last_four_dates, color_palette)):
         data_for_date = [chart_row[i] for chart_row in chart_data]
         ax.bar(
-            x + (i - 1.5) * width, 
-            data_for_date, 
-            width, 
-            label=date, 
-            color=color, 
+            x + (i - 1.5) * width,
+            data_for_date,
+            width,
+            label=date,
+            color=color,
             zorder=3
         )  # Bars above the grid
 
@@ -354,8 +364,8 @@ def main():
     if not sheet_id:
         print("Error: Could not find the sheet ID.")
         return
-    
-    #delete_existing_charts(service, sheet_id)
+
+    delete_existing_charts(service, sheet_id)
 
     # TPS Chart
     tps_data = fetch_data(service, "B1:Z6")
@@ -373,7 +383,7 @@ def main():
     error_data = fetch_data(service, "B15:Z20")
     if error_data:
         create_grouped_bar_chart(error_data, "Error Rate", "Percentage (%)", "200_error_chart.png")
-        add_chart_to_sheet(service, sheet_id, "B15:Z20", "Error Rate (200 Users)", "Percentage (%)")        
+        add_chart_to_sheet(service, sheet_id, "B15:Z20", "Error Rate (200 Users)", "Percentage (%)")
 
     tps_data = fetch_data(service, "B22:Z27")
     if tps_data:
@@ -383,7 +393,6 @@ def main():
     if tps_data:
         create_grouped_bar_chart(latency_data, "Latency - 99th Percentile", "Latency (ms)", "20_latency_chart.png")
 
-
    # Fetch API invocation data
     api_invocations = fetch_data(service, "B43:Z44")
     if api_invocations:
@@ -391,16 +400,16 @@ def main():
         add_api_invocation_chart_to_sheet(service, sheet_id, "B43:Z44", "API Invocations", "TPS")
 
    # Fetch API invocation data
-    api_invocations = fetch_data(service, "B46:Z47")
+    api_invocations = fetch_data(service, "B46:Z48")
     if api_invocations:
         create_api_invocation_chart(api_invocations, "API Invocations - Latency", "P99 Latency (ms)", "api_invocations_latency_chart.png")
-        add_api_invocation_chart_to_sheet(service, sheet_id, "B46:Z47", "API Invocations - Latency", "P99 Latency (ms)")
+        add_api_invocation_chart_to_sheet(service, sheet_id, "B46:Z48", "API Invocations - Latency", "P99 Latency (ms)")
 
    # Fetch API invocation data
-    api_invocations = fetch_data(service, "B49:Z50")
+    api_invocations = fetch_data(service, "B50:Z51")
     if api_invocations:
         create_api_invocation_chart(api_invocations, "API Invocations - Errors", "Errors (%)", "api_invocations_error_chart.png")
-        add_api_invocation_chart_to_sheet(service, sheet_id, "B49:Z50", "API Invocations - Errors", "Errors (%)")
+        add_api_invocation_chart_to_sheet(service, sheet_id, "B50:Z51", "API Invocations - Errors", "Errors (%)")
 
 if __name__ == "__main__":
     main()
