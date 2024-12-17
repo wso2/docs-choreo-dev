@@ -1,6 +1,5 @@
 resources:
   - choreo-ai
   - choreo-observability
-  - choreo-analytics
   - keda
   - tools
