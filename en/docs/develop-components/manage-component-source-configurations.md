@@ -347,7 +347,7 @@ You can determine whether you’re using an outdated configuration file in the f
      - On the **Build** page, after triggering a build, a warning will appear if your source configuration file is outdated. Click **View Details** in the **Initialization** -> **Source Config Validation** step. You will see an information banner with an option to update the file.
 
 - **In existing deployments:**
-     - If an existing deployment uses a build with an outdated source configuration file, You will see a warning message on the relevant environment card.
+     - If an existing deployment uses a build with an outdated source configuration file, you will see a warning icon on the build card of the relevant environment card.
 
 
 ### Step 2: Generate the latest `component.yaml` file
