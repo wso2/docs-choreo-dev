@@ -67,11 +67,11 @@ spec:
               path: /liveness
           resources:
             limits:
-              cpu: 100m
-              memory: 100Mi
+              cpu: 400m
+              memory: 512Mi
             requests:
-              cpu: 50m
-              memory: 50Mi
+              cpu: 200m
+              memory: 400Mi
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
