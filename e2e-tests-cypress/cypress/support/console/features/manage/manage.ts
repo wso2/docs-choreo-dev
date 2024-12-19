@@ -13,7 +13,7 @@
 
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
-import { ApiVisibility, Enums } from "../../../commons/enums";
+import { ApiVisibility, Enums, SecurityScheme } from "../../../commons/enums";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { UsagePlan } from "../../../commons/enums";
 import { Types } from "../../../commons/types";
@@ -40,6 +40,7 @@ export interface ManageFeature {
   _applyPermissionToResources(component: Component, permission: string);
   _verifyConsumer(appName: string);
   _updateApiVisibility(component: Component, visibility: ApiVisibility);
+  _enableSecurityScemes(component: Component,securitySchemes: SecurityScheme[]);
 }
 
 export function mixinManage<T extends Types.Constructor>(
@@ -55,6 +56,11 @@ export function mixinManage<T extends Types.Constructor>(
       [UsagePlan.Gold, `[data-testid="switch-subscription-plan-${UsagePlan.Gold}"]`],
       [UsagePlan.Silver, `[data-testid="switch-subscription-plan-${UsagePlan.Silver}"]`],
       [UsagePlan.Unlimited, `[data-testid="switch-subscription-plan-${UsagePlan.Unlimited}"]`],
+    ]);
+
+    private securitySchemes = new Map<SecurityScheme, string>([
+      [SecurityScheme.ApiKey, '[data-cyid="sec-scheme-api-key-check-box"]'],
+      [SecurityScheme.OAuth2, '[data-cyid="sec-scheme-oauth2-check-box"]'],
     ]);
 
     _changeLifeCycleState(component: Component, state: Enums.LifeCycleState) {
@@ -221,6 +227,22 @@ export function mixinManage<T extends Types.Constructor>(
       this.toggleResourceSecurity(method, resource);
     }
 
+    _enableSecurityScemes(
+      component: Component,
+      securitySchemes: SecurityScheme[]
+    ) {
+      this.sideMenu.navigateToDeploy();
+
+      this.deploymentTrack.validate(component);
+
+      cy.get(TestIds.buildCard)
+        .should("be.visible")
+        .find(TestIds.viewArtifact)
+        .click();
+
+      this.enableSeuritySchemes(securitySchemes);
+    }
+
     _updateApiVisibility(component: Component, visibility: ApiVisibility) {
       this.sideMenu.navigateToManage();
       cy.get(TestIds.apiInfo).should("be.visible").click();
@@ -304,6 +326,10 @@ export function mixinManage<T extends Types.Constructor>(
       return new Map(this.usagePlans);
     }
 
+    private cloneSecuritySchemes() : Map<SecurityScheme, string> {
+      return new Map(this.securitySchemes);
+    }
+
     private applySettingChanges() {
       cy.get(TestIds.saveSettings).click();
       cy.get(TestIds.apply).should("be.visible").click();
@@ -323,6 +349,27 @@ export function mixinManage<T extends Types.Constructor>(
         .click();
 
       cy.get(TestIds.security).scrollIntoView().click();
+
+      this.applySecuritySettings();
+    }
+
+    private enableSeuritySchemes(securitySchemes: SecurityScheme[]) {
+      const remainingSchemes = this.cloneSecuritySchemes();
+
+      securitySchemes.forEach((scheme) => {
+        const schemeSelector = remainingSchemes.get(scheme);
+
+        if (schemeSelector) {
+          Utils.checkIfUnchecked(schemeSelector);
+          remainingSchemes.delete(scheme);
+        } else {
+          throw new Error(`Security scheme ${scheme} not found`);
+        }
+      });
+
+      for (const schemeSelector of remainingSchemes.values()) {
+        Utils.unCheckIfChecked(schemeSelector);
+      }
 
       this.applySecuritySettings();
     }

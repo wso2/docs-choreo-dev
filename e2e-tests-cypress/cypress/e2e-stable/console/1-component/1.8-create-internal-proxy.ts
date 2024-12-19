@@ -18,7 +18,7 @@ import {
   ProxyMetaData,
 } from "../../../support/console/entities/component/proxy-component";
 import { Utils } from "../../../support/commons/utils";
-import { Enums } from "../../../support/commons/enums";
+import { Enums, SecurityScheme } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
 import { devPortal } from "../../../support/console/devportal";
 
@@ -196,6 +196,10 @@ describe(`Verify internal API Proxy functionality`, () => {
 
   it("Change Internal Proxy to External Proxy and promote", () => {
     internalProxy.promote();
+  });
+
+  it("Ensure correct security schemes are selected after converting to external", () => {
+    internalProxy.enableSecurityScemes([SecurityScheme.OAuth2]);
   });
 
   // Reloading the proxy is required to ensure that the access mode change is reflected in other parts of the UI,
