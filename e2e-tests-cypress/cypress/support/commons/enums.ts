@@ -136,3 +136,8 @@ export enum BuildPacks {
   WEBAPP = "WebApp",
   DOCKER = "Docker"
 }
+
+export enum SecurityScheme {
+  ApiKey,
+  OAuth2,
+}
