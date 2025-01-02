@@ -1114,6 +1114,7 @@ configMapGenerator:
       - GCP_PROJECT_ID={{.GCP_PROJECT_ID | default "choreo-public"}}
       - PUBSUB_SUBSCRIPTION_NAME={{.PUBSUB_SUBSCRIPTION_NAME | default "test-choreo-public-subscription"}}
       - BILLING_INTERNAL_GRPC_ADDRESS={{.BILLING_INTERNAL_GRPC_ADDRESS | default "billing-service:9094"}}
+      - SERVICE_CONTROL_SERVICE_NAME={{.SERVICE_CONTROL_SERVICE_NAME | default "choreo.endpoints.choreo-test.cloud.goog"}}
   - name: env-choreo-aws-marketplace-client
     behavior: create
     literals:
