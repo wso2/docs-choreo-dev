@@ -16,16 +16,18 @@ Click the respective tab for details on permissions depending on the workflow fo
 
      To review and respond to environment promotion approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:
 
-      - **WORKFLOW-MANAGEMENT**: Grants access to view and approve workflow requests. Each workflow type has a separate permission.
+      - **WORKFLOW-MANAGEMENT**: 
+          - Approve component promotion requests: Grants access to review and approve environment promotion requests.
       - **PROJECT-MANAGEMENT**: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
 
 === "API subscription"
 
      To review and respond to API subscription approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:
 
-      - **WORKFLOW-MANAGEMENT**: Grants access to view and approve workflow requests. Each workflow type has a separate permission.
-      - **PROJECT-MANAGEMENT**: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
-      - **Approve API subscriptions**: Grants access to approve or reject API subscription requests.
+      - **WORKFLOW-MANAGEMENT**:
+          - Approve API subscriptions: Grants access to review and approve API subscription workflow requests
+      - **PROJECT-MANAGEMENT**: 
+          Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
 
 ## Set up an approval process for a workflow
 
