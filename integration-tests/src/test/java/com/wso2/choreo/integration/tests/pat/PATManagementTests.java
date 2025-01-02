@@ -23,6 +23,7 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.exceptions.ProjectRetrievalException;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
+import com.wso2.choreo.integration.common.utils.SleepUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -126,6 +127,8 @@ public class PATManagementTests extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void retrieveProjectListAfterRevoke() {
 
+        // Add 30s sleep to allow the PAT to be revoked.
+        SleepUtil.sleep(30);
         testOrganization.clearProjects();
         String accessToken = Constant.BEARER_PREFIX + pat;
         Assert.assertThrows(ProjectRetrievalException.class, () -> testOrganization.getProjectsList(accessToken));
