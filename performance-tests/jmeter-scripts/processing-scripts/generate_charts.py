@@ -84,7 +84,9 @@ def create_api_invocation_chart(data, title, ylabel, output_file):
     ax.set_facecolor('#f7f7f7')
 
     # Enable grid lines for the Y-axis
-    ax.yaxis.grid(color='white', linestyle='-', linewidth=0.7, zorder=1)
+    ax.yaxis.grid(color='black', linestyle='-', linewidth=0.7, zorder=1)
+    ax.xaxis.set_major_locator(plt.MultipleLocator(1))  # Ensure one grid line per bar
+    ax.xaxis.grid(color='black', which='both', linestyle='-', linewidth=0.7, zorder=1)  # X-axis grid
     ax.set_axisbelow(True)  # Ensure grid lines are below the bars
 
     # Add labels, title, and formatting
