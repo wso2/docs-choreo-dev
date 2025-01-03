@@ -50,22 +50,23 @@ def delete_existing_charts(service, sheet_id):
 
 def create_api_invocation_chart(data, title, ylabel, output_file):
     """
-    Creates a grouped bar chart for API invocation data with dates as the x-axis
-    and multiple rows as separate series in the chart.
+    Creates a grouped bar chart for API invocation data with the most recent 4 days
+    as the x-axis and multiple rows as separate series in the chart.
     """
     import matplotlib.colors as mcolors
 
     header = data[0]  # First row is the header (dates)
     rows = data[1:]   # Remaining rows contain the data
 
-    # Extract dates from the header starting from index 2
-    dates = header[2:]
+    # Select the most recent 4 days (columns)
+    date_columns = header[2:]  # Dates start from the third column
+    last_four_dates = date_columns[-4:]  # Select the most recent 4 dates
 
-    # Extract labels and data
+    # Extract labels and data for the last 4 days
     labels = [row[1] for row in rows]  # Labels are in column B
-    all_values = [[float(value) for value in row[2:]] for row in rows]  # Data starts from column 3
+    all_values = [[float(row[header.index(date)]) for date in last_four_dates] for row in rows]
 
-    x = np.arange(len(dates))  # X-axis positions
+    x = np.arange(len(last_four_dates))  # X-axis positions for the last 4 days
     width = 0.2  # Width of each bar
 
     # Define a color palette
@@ -82,18 +83,17 @@ def create_api_invocation_chart(data, title, ylabel, output_file):
     # Set a light grey background
     ax.set_facecolor('#f7f7f7')
 
-    # Enable grid lines for both axes
-    ax.yaxis.grid(color='black', linestyle='-', linewidth=0.7, zorder=1)  # Y-axis grid
+    # Enable grid lines for the Y-axis
+    ax.yaxis.grid(color='black', linestyle='-', linewidth=0.7, zorder=1)
     ax.xaxis.set_major_locator(plt.MultipleLocator(1))  # Ensure one grid line per bar
     ax.xaxis.grid(color='black', which='both', linestyle='-', linewidth=0.7, zorder=1)  # X-axis grid
-
     ax.set_axisbelow(True)  # Ensure grid lines are below the bars
 
     # Add labels, title, and formatting
     ax.set_ylabel(ylabel, fontsize=12)
     ax.set_title(title, fontsize=14, weight='bold')
     ax.set_xticks(x)
-    ax.set_xticklabels(dates, rotation=45, ha='right', fontsize=10)
+    ax.set_xticklabels(last_four_dates, rotation=45, ha='right', fontsize=10)
 
     # Add legend with transparent background
     legend = ax.legend(frameon=True, loc='upper left', fontsize=10)
@@ -106,20 +106,52 @@ def create_api_invocation_chart(data, title, ylabel, output_file):
     print(f"Chart saved as {output_file}")
     return output_file
 
-
 # Reusable: Add a chart for API invocations to Google Sheets
 def add_api_invocation_chart_to_sheet(service, sheet_id, data_range, title, ylabel):
     """
-    Adds a bar chart for API invocations to Google Sheets with dates on the x-axis.
+    Adds a bar chart to the Google Sheet for API invocation data, considering only the last 4 days.
     """
     # Parse data_range to calculate row and column indices
     range_start, range_end = data_range.split(":")
     start_column, start_row = range_start[:1], int(range_start[1:]) - 1
     end_column, end_row = range_end[:1], int(range_end[1:]) - 1
 
-    # Compute column indices for domains and series
-    start_column_index = ord(start_column.upper()) - ord("A")
-    end_column_index = ord(end_column.upper()) - ord("A")
+    # Fetch the data and determine the last 4 days
+    full_data = fetch_data(service, f"{start_column}{start_row + 1}:{end_column}{end_row + 1}")
+    header = full_data[0]  # Header row (dates)
+    date_columns = header[2:]  # Dates start from the third column
+    last_four_dates = date_columns[-4:]  # Select the most recent 4 dates
+    last_four_start_column = chr(ord(start_column) + 2 + len(date_columns) - 4)  # Start column for the last 4 dates
+    last_four_end_column = chr(ord(last_four_start_column) + 3)  # End column for the last 4 dates
+
+    # Update the chart range to consider only the last 4 days
+    chart_data_range = f"{start_column}{start_row + 1}:{last_four_end_column}{end_row + 1}"
+
+    # Prepare series requests for the last 4 days
+    series_requests = [
+        {
+            "series": {
+                "sourceRange": {
+                    "sources": [
+                        {
+                            "sheetId": sheet_id,
+                            "startRowIndex": start_row,
+                            "endRowIndex": end_row + 1,
+                            "startColumnIndex": ord(last_four_start_column) - ord('A') + i,
+                            "endColumnIndex": ord(last_four_start_column) - ord('A') + i + 1,
+                        }
+                    ]
+                }
+            },
+            "targetAxis": "LEFT_AXIS",
+            "color": {
+                "red": (i * 0.2) % 1.0,
+                "green": (i * 0.4) % 1.0,
+                "blue": (i * 0.6) % 1.0,
+            },
+        }
+        for i in range(4)  # For the last 4 days
+    ]
 
     # Define chart request
     chart_request = {
@@ -131,12 +163,9 @@ def add_api_invocation_chart_to_sheet(service, sheet_id, data_range, title, ylab
                             "title": title,
                             "basicChart": {
                                 "chartType": "COLUMN",
-                                "legendPosition": "BOTTOM_LEGEND",
+                                "legendPosition": "TOP_LEGEND",
                                 "headerCount": 1,
-                                "axis": [
-                                    {"position": "BOTTOM_AXIS", "title": "Dates"},
-                                    {"position": "LEFT_AXIS", "title": ylabel},
-                                ],
+                                "axis": [{"position": "LEFT_AXIS", "title": ylabel}],
                                 "domains": [
                                     {
                                         "domain": {
@@ -145,39 +174,25 @@ def add_api_invocation_chart_to_sheet(service, sheet_id, data_range, title, ylab
                                                     {
                                                         "sheetId": sheet_id,
                                                         "startRowIndex": start_row,
-                                                        "endRowIndex": start_row + 1,
-                                                        "startColumnIndex": start_column_index + 1,
-                                                        "endColumnIndex": end_column_index + 1,
+                                                        "endRowIndex": end_row + 1,
+                                                        "startColumnIndex": ord(start_column) - ord('A') + 1,
+                                                        "endColumnIndex": ord(start_column) - ord('A') + 2,
                                                     }
                                                 ]
                                             }
                                         }
                                     }
                                 ],
-                                "series": [
-                                    {
-                                        "series": {
-                                            "sourceRange": {
-                                                "sources": [
-                                                    {
-                                                        "sheetId": sheet_id,
-                                                        "startRowIndex": start_row + 1,
-                                                        "endRowIndex": start_row + 2,
-                                                        "startColumnIndex": start_column_index + 1,
-                                                        "endColumnIndex": end_column_index + 1,
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "targetAxis": "LEFT_AXIS",
-                                        "color": {"red": 0.2, "green": 0.4, "blue": 1.0},
-                                    }
-                                ],
+                                "series": series_requests,
                             }
                         },
                         "position": {
                             "overlayPosition": {
-                                "anchorCell": {"sheetId": sheet_id, "rowIndex": end_row + 2, "columnIndex": 7},
+                                "anchorCell": {
+                                    "sheetId": sheet_id,
+                                    "rowIndex": end_row + 5,
+                                    "columnIndex": 7,
+                                }
                             }
                         },
                     }
@@ -185,11 +200,10 @@ def add_api_invocation_chart_to_sheet(service, sheet_id, data_range, title, ylab
             }
         ]
     }
-
     response = service.spreadsheets().batchUpdate(
         spreadsheetId=SAMPLE_SPREADSHEET_ID, body=chart_request
     ).execute()
-    print(f"API Invocation chart '{title}' added successfully to Google Sheets: {response}")
+    print(f"Chart '{title}' added successfully to Google Sheets: {response}")
 
 # Reusable: Create grouped bar chart locally
 def create_grouped_bar_chart(data, title, ylabel, output_file):
