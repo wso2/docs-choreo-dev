@@ -337,7 +337,7 @@ You can define the following root-level configurations via the `endpoints.yaml` 
 
 ## Update to the latest source configuration file
 
-With the upcoming deprecation of the `component-config.yaml` file and the `endpoints.yaml` file, Choreo provides a seamless process to update to the latest `component.yaml` file. Follow these steps to transition seamlessly:
+With the upcoming deprecation of the `component-config.yaml` file and the `endpoints.yaml` file, Choreo provides a seamless process to move to the latest `component.yaml`  version of the `component.yaml` file. Follow these steps to transition seamlessly:
 
 ### Step 1: Identify whether your current source configuration file is outdated
 
@@ -358,13 +358,13 @@ You can determine whether you’re using an outdated configuration file in the f
 ### Step 3: Add the generated configuration file to your repository
 
 1. Download the generated `component.yaml` file.
-2. Replace the existing file in the `.choreo` folder within your source repository.
+2. Replace the existing source configuration file in the `.choreo` folder within your source repository.
     - Ensure the file name is `component.yaml`.
 
 
 ### Step 4: Trigger a new build
 
-1. Commit the new `component.yaml` file to your repository.
+1. Commit the new `component.yaml` file to your repository. Push changes to the remote Git repository.
 2. Trigger a build using the latest commit.
 
 
@@ -372,5 +372,7 @@ You can determine whether you’re using an outdated configuration file in the f
 
 Once the build is complete:
 
+  - Deploy the build.
   - Confirm that the warning messages no longer appear.
-  - You can benefit from the latest features and enhancements provided by the updated source configuration file.
+
+You can benefit from the latest features and enhancements provided by the updated source configuration file.
