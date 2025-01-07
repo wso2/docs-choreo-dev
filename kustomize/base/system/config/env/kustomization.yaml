@@ -434,12 +434,12 @@ configMapGenerator:
       - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.35.yml"}}
       - BD_BYORV={{.BD_BYORV | default "v1.1.41"}}
       - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.41.yml"}}
-      - BD_BYOCV={{.BD_BYOCV | default "v1.0.32"}}
-      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.32.yml"}}
+      - BD_BYOCV={{.BD_BYOCV | default "v1.0.33"}}
+      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.33.yml"}}
       - BD_MIV={{.BD_MIV | default "v1.0.28"}}
       - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.28.yml"}}
-      - BD_BPV={{.BD_BPV | default "v0.12.18"}}
-      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.18.yml"}}
+      - BD_BPV={{.BD_BPV | default "v0.12.19"}}
+      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.19.yml"}}
       - BD_PMSV={{.BD_PMSV | default "v1.1.1"}}
       - BD_PMS_FP={{.BD_PMS_FP | default ".github/workflows/choreo-build-deploy_prism-mock-service_1.1.1.yml"}}
       - BD_IMAGE_PUSH_TEMPLATE_VERSION={{.BD_IMAGE_PUSH_TEMPLATE_VERSION | default "choreo-templates/choreo-image-push@v1.0.7"}}
