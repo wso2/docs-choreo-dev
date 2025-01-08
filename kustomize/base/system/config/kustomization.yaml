@@ -159,7 +159,6 @@ configMapGenerator:
       - PROJECT_MANAGER_API_URL=http://dp-project-manager
       - BUILDPACKS_BUILDER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:alpine"
       - BUILDPACKS_DOCKER_ACR="choreocontrolplane.azurecr.io"
-      - UNIT_TEST_RUNNER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-unit-test-runner:0.0.1"
   - name: cm-runner-cleaner
     behavior: create
     literals:
