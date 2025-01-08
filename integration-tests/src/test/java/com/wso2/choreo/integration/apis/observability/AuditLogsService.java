@@ -61,7 +61,7 @@ public class AuditLogsService extends ControlPlaneAPI {
 		return TimeRangeISO.builder().startTime(startTime).endTime(endTime).build();
 	}
 
-	public static AuditLogList getAuditLogs(TestActionRunner runner, HttpClient client, String orgUuid,
+	public static AuditLogList getAuditLogs(TestActionRunner runner, HttpClient client,
 											AuditLogRetrievalRequest auditLogRetrievalRequest)
 			throws TokenRetrievalException, IOException, URISyntaxException {
 
@@ -76,7 +76,7 @@ public class AuditLogsService extends ControlPlaneAPI {
 				http()
 					.client(client)
 					.send()
-					.post(getAuditLogsEndpoint(orgUuid))
+					.post(getAuditLogsEndpoint())
 					.message()
 					.header(HttpHeaders.AUTHORIZATION, getAccessToken())
 					.contentType(String.valueOf(MediaType.APPLICATION_JSON))
@@ -110,8 +110,7 @@ public class AuditLogsService extends ControlPlaneAPI {
 
 	public static void verifyAuditLogs(TestActionRunner runner, HttpClient client, String accessToken)
 			throws Exception {
-		String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
-		String resourceUrl = Constant.OBSERVABILITY_AUDIT_LOGS + "/orgs/" + orgUuid + "/audit-logs";
+		String resourceUrl = Constant.OBSERVABILITY_AUDIT_LOGS + "/audit-logs";
 		TimeRangeISO timeRangeISO = getTimeRangeISO();
 		String body = MessageUtils.generateJson(new HashMap<String, Object>() {
 			{
@@ -196,8 +195,8 @@ public class AuditLogsService extends ControlPlaneAPI {
 		return TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
 	}
 
-	private static String getAuditLogsEndpoint(String orgUuid) {
+	private static String getAuditLogsEndpoint() {
 
-		return Constant.OBSERVABILITY_AUDIT_LOGS + "/orgs/" + orgUuid + "/audit-logs";
+		return Constant.OBSERVABILITY_AUDIT_LOGS + "/audit-logs";
 	}
 }
