@@ -931,6 +931,7 @@ configMapGenerator:
       - LOG_LEVEL={{.LOG_LEVEL}}
       - ENVIRONMENT={{.ENVIRONMENT}}
       - REGISTRY_NAMES={{.REGISTRY_NAMES}}
+      - AZURE_CLIENT_ID={{.AZURE_CLIENT_ID | default "08eae7d4-cdcb-400d-894e-b27d66419876"}}
   - name: env-proxy-deployer
     behavior: create
     literals:
