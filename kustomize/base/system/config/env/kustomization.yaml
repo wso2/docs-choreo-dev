@@ -1057,6 +1057,10 @@ configMapGenerator:
       - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL | default ""}}
       - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC | default ""}}
       - SIGNATURE_VALIDATION_ENABLED={{.SIGNATURE_VALIDATION_ENABLED | default "true"}}
+      - CHOREO_STS_MGT_URL=http://sts-mgt-service:3000/api/v1/sts-proxy
+      - APIM_CLIENT_KEY={{.APIM_CLIENT_KEY}}
+      - APIM_CLIENT_SECRET_FILE={{.APIM_CLIENT_SECRET_FILE | default "/mnt/csi/secret-api-key-svc/APIM_REST_API_CONSUMER_SECRET"}}
+      - APIM_SERVICE_URL={{.APIM_SERVICE_URL}}
   - name: env-log-controller
     behavior: create
     literals:
