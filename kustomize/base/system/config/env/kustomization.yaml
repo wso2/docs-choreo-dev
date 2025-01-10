@@ -966,6 +966,7 @@ configMapGenerator:
       - CHOREO_JWT_AUDIENCES={{.CHOREO_JWT_AUDIENCES}}
       - CHOREO_JWT_JWKS_URL={{.CHOREO_JWT_JWKS_URL}}
       - CHOREO_SYSTEM_ORG_UUID={{.CHOREO_SYSTEM_ORG_UUID}}
+      - PRICEID_TO_SALESFORCEID = "{{.PRICEID_TO_SALESFORCEID}}"
   - name: env-cio-event-collector-service
     behavior: create
     literals:
