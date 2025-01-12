@@ -33,6 +33,16 @@ spec:
                 secretKeyRef:
                   name: secret-choreo-admin-api
                   key: MSSQL_PASSWORD
+            - name: SF_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secret-choreo-admin-api
+                  key: SF_CLIENT_ID
+            - name: SF_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-choreo-admin-api
+                  key: SF_CLIENT_SECRET
             - name: CHOREO_APP_DB_PASSWORD
               valueFrom:
                 secretKeyRef:

@@ -9,6 +9,10 @@ spec:
       data:
         - objectName: MSSQL_PASSWORD
           key: MSSQL_PASSWORD
+        - objectName: SF_CLIENT_ID
+          key: SF_CLIENT_ID
+        - objectName: SF_CLIENT_SECRET
+          key: SF_CLIENT_SECRET
   parameters:
     objects: |
       array:
@@ -17,3 +21,13 @@ spec:
           objectType: secret
           objectAlias: MSSQL_PASSWORD
           objectVersion: "{{.MSSQL_PASSWORD}}"
+        - |
+          objectName: stripe-salesforce-salesforce-client-id
+          objectType: secret
+          objectAlias: SF_CLIENT_ID
+          objectVersion: "{{.SF_CLIENT_ID}}"
+        - |
+          objectName: stripe-salesforce-salesforce-client-secret
+          objectType: secret
+          objectAlias: SF_CLIENT_SECRET
+          objectVersion: "{{.SF_CLIENT_SECRET}}"
