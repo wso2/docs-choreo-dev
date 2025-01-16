@@ -22,6 +22,8 @@ CREATE TABLE pat (
   description TEXT NULL,
   valid_until TIMESTAMPTZ,
   user_metadata TEXT NULL,
+  revoked BOOLEAN NOT NULL DEFAULT false,
+  revoked_reason TEXT,
   CONSTRAINT pat_key_id_fkey FOREIGN KEY (key_id) REFERENCES key (id) ON DELETE CASCADE
 );
 

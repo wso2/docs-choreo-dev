@@ -1803,7 +1803,7 @@ public class ComponentUtils {
         boolean isRateLimitExceeded = false;
         int count = 0;
 
-        while (!isRateLimitExceeded) {
+        for (int j = 0; j < 3; j++) {
             // Synchronize with the start of the next minute if we're too close to the end
             long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
             if (timeRemainingTillNextMinute < 45000) {

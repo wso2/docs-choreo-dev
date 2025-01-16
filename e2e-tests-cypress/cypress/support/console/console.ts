@@ -360,33 +360,15 @@ class Console {
     this.navigateToHome();
     this.navigateToSettings();
 
+    const interceptSignature = "getDomains";
+
     cy.intercept({ method: "GET", url: DOMAIN_URL_MGT, times: 1 }).as(
-      "getDomains"
+      interceptSignature
     );
 
     this.navigateToUrlSettings();
 
-    cy.wait("@getDomains").then((interception) => {
-      cy.get(TestIds.searchIcon).should("be.visible").click().wait(2000);
-      cy.get(TestIds.searchDomain)
-        .should("be.visible")
-        .within(() => {
-          cy.get("input").click().clear().type(domainName);
-        });
-
-        cy.get(TestIds.domainTable).get("tbody").then((tbody) => {
-          if (tbody.find(TestIds.noDataAvailable).length == 0) {
-            cy.contains("td", domainName).should("be.visible");
-            interception.response?.body.forEach((domain) => {
-              if (domain.name === domainName) {
-                this.deleteSelectedDomain(domain.id);
-              } else {
-                throw new Error("Domain not found");
-              }
-            });
-          }
-        });
-    });
+    this.deleteCustomDomain(domainName, interceptSignature);
 
     cy.get(TestIds.domainTable).should("be.visible");
     cy.get(TestIds.addDomain).should("be.visible").click();
@@ -415,13 +397,19 @@ class Console {
     this.navigateToHome();
     this.navigateToSettings();
 
+    const interceptSignature = "getDomains";
+
     cy.intercept({ method: "GET", url: DOMAIN_URL_MGT, times: 1 }).as(
-      "getDomains"
+      interceptSignature
     );
 
     this.navigateToUrlSettings();
 
-    cy.wait("@getDomains").then((interception) => {
+    this.deleteCustomDomain(domainName, interceptSignature);
+  }
+
+  private deleteCustomDomain(domainName: string, interceptSignature: string) {
+    cy.wait(`@${interceptSignature}`).then((interception) => {
       cy.get(TestIds.searchIcon).should("be.visible").click().wait(2000);
       cy.get(TestIds.searchDomain)
         .should("be.visible")

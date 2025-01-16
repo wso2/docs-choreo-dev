@@ -19,6 +19,7 @@ import { OK } from "../../../support/commons/http";
 import { ConfigEntryStep } from "../../../support/commons/types";
 import { TestIds } from "../../../support/console/constants/TestIds";
 import { Utils } from "../../../support/commons/utils";
+import { marketplace, MarketPlaceFilter } from "../../../support/console/entities/marketplace/marketplace";
 
 describe("Verify Component visibility functionality", () => {
   const PROJECT_DESCRIPTION = "Component Visibility Test";
@@ -162,6 +163,22 @@ describe("Verify Component visibility functionality", () => {
     .then((res) => {
       expect(res.statusCode).to.be.equal(OK.toString());
       expect(res.response).to.contain("User");
+    });
+  });
+
+  it("Verify Marketplace filter by Project", () => {
+    marketplace.filterBy([MarketPlaceFilter.Project]).then(() => {
+      marketplace.find(projectExposedService.getName()).then(() => {
+        marketplace.find(publicExposedService.getName(), 0);
+      });
+    });
+  });
+
+  it("Verify Marketplace filter by Public", () => {
+    marketplace.filterBy([MarketPlaceFilter.Public]).then(() => {
+      marketplace.find(publicExposedService.getName()).then(() => {
+        marketplace.find(projectExposedService.getName(), 0);
+      });
     });
   });
 });

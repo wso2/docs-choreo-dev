@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { ApiVisibility, Enums, UsagePlan } from "../../../commons/enums";
+import { ApiVisibility, Enums, SecurityScheme, UsagePlan } from "../../../commons/enums";
 import { Types } from "../../../commons/types";
 import { Component } from "./component";
 import { mixinProxyDeploy } from "../../features/deploy/deploy-proxy";
@@ -221,6 +221,10 @@ export class Proxy extends mixinDevelop(
 
   disableSecurity(method: Enums.HTTPMethod, resource: string) {
     this._disableSecurity(this, method, resource);
+  }
+
+  enableSecurityScemes(securitySchemes: SecurityScheme[]) {
+    this._enableSecurityScemes(this, securitySchemes);
   }
 
   updateAccessModeAndDeploy(accessMode: Enums.Accessibility) {

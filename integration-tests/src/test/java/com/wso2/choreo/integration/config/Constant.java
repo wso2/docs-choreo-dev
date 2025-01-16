@@ -171,7 +171,7 @@ public final class Constant {
 
     public static final String OBSERVABILITY_PROJECT_LOGS = "/projectLogs";
 
-    public static final String OBSERVABILITY_AUDIT_LOGS = "/audit-logging/1.0.0";
+    public static final String OBSERVABILITY_AUDIT_LOGS = "/audit-logging/v1.0";
 
     public static final String OBSERVABILITY_GATEWAY_ACCESS_LOGS = "/gatewayAccessLogs";
 
