@@ -590,9 +590,6 @@ service_url="{{.AUTHORIZATION_SERVICE_URL}}"
 [choreo.app_service]
 url="{{.APP_SVC_URL}}"
 
-[choreo.subscription_service]
-url="{{.SUBSCRIPTION_SVC_URL}}"
-
 [cache.app_info_cache]
 enable = true
 timeout = "60"
