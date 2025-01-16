@@ -12,7 +12,6 @@
  */
 
 import {
-  BUILD_FAILED,
   CONFIG_CONTENT,
   DEPLOYMENT_PENDING,
   DEPLOYMENT_PROGRESSING,
@@ -45,7 +44,7 @@ export interface DeployServiceFeature {
   _deployService(
     component: Service,
     shouldModifyEndpoint: boolean,
-    endpointVisibility: EndpointAccessibility,
+    endpointVisibility: EndpointAccessibility[],
     configStepsAvailable?: ConfigEntryStep[]
   );
 
@@ -68,7 +67,7 @@ export interface DeployServiceFeature {
   _promoteService(
     component: Service,
     shouldModifyEndpoint: boolean,
-    endpointVisibility: EndpointAccessibility,
+    endpointVisibility: EndpointAccessibility[],
     configStepsAvailable?: ConfigEntryStep[]
   );
 
@@ -101,7 +100,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     _deployService(
       component: Service,
       shouldModifyEndpoint: boolean,
-      endpointVisibility: EndpointAccessibility,
+      endpointVisibility: EndpointAccessibility[],
       configStepsAvailable?: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
@@ -184,7 +183,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     _promoteService(
       component: Service,
       shouldModifyEndpoint: boolean,
-      endpointVisibility: EndpointAccessibility,
+      endpointVisibility: EndpointAccessibility[],
       configStepsAvailable: ConfigEntryStep[]
     ) {
       this.sideMenu.navigateToDeploy();
@@ -295,7 +294,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     private saveEndpointUrls(
       service: Service,
-      endpointVisibility: EndpointAccessibility,
+      endpointVisibility: EndpointAccessibility[],
       environment: Enums.Environment
     ) {
       let envCardSelector = TestIds.devEnvCard;
@@ -313,40 +312,39 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
       cy.get(TestIds.componentLoader).should("not.exist");
 
-      let urlTypeRegex = /^Project URL.*/;
-      let urlMatcher = /^http:\/\/.*/;
+      for (const visibility of endpointVisibility) {
+        let urlTypeRegex = /^Project URL.*/;
+        let urlMatcher = /^http:\/\/.*/;
 
-      if (endpointVisibility === EndpointAccessibility.Public) {
-        urlTypeRegex = /^Public URL.*/;
-        urlMatcher = /^https:\/\/.*/;
-      } else if (endpointVisibility === EndpointAccessibility.Organization) {
-        urlTypeRegex = /^Organization URL.*/;
-        urlMatcher = /^https:\/\/.*/;
+        if (visibility === EndpointAccessibility.Public) {
+          urlTypeRegex = /^Public URL.*/;
+          urlMatcher = /^https:\/\/.*/;
+        } else if (visibility === EndpointAccessibility.Organization) {
+          urlTypeRegex = /^Organization URL.*/;
+          urlMatcher = /^https:\/\/.*/;
+        }
+
+        cy.get(TestIds.endpointCard)
+          .should("be.visible")
+          .contains(urlTypeRegex)
+          .next()
+          .invoke("attr", "title")
+          .then((url) => {
+            if (url === undefined) {
+              throw new Error("URL is undefined");
+            }
+
+            expect(url).to.match(urlMatcher);
+            if (environment == Enums.Environment.DEVELOPMENT) {
+              service.setDevEndpointUrl(visibility, url);
+            } else {
+              service.setProdEndpointUrl(visibility, url);
+            }
+          });
       }
 
-      cy.get(TestIds.endpointCard)
-        .should("be.visible")
-        .contains(urlTypeRegex)
-        .next()
-        .invoke("attr", "title")
-        .then((url) => {
-          if (url === undefined) {
-            throw new Error("URL is undefined");
-          }
-
-          expect(url).to.match(urlMatcher);
-          if (environment == Enums.Environment.DEVELOPMENT) {
-            service.setDevEndpointUrl(url);
-          } else {
-            service.setProdEndpointUrl(url);
-          }
-        });
-
-      cy.contains("span", "Endpoint Details")
-        .parent()
-        .siblings()
-        .first()
-        .click();
+      // Close right drawer
+      cy.get(TestIds.rightDrawerButton).eq(1).click();
     }
 
     private waitTillReadyToDeploy() {
@@ -420,7 +418,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     private reviewAndUpdateEndpoint(
       component: Service,
       shouldModifyEndpoint: boolean,
-      endpointVisibility: EndpointAccessibility
+      endpointVisibility: EndpointAccessibility[]
     ) {
       if (shouldModifyEndpoint) {
         cy.get(
@@ -430,13 +428,30 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
         cy.get(`[data-testid="${component.getEndpointName()}-edit-btn"]`)
           .should("be.visible")
           .click();
-        cy.get(TestIds.endpointVisibility(endpointVisibility))
-          .should("be.visible")
-          .click();
+        this.selectEndpointVisibility(endpointVisibility);
         cy.get(TestIds.endpointSubmit).click();
       }
 
       cyGet(TestIds.next).should("be.visible").click();
+    }
+
+    private selectEndpointVisibility(specifiedVisibilities: EndpointAccessibility[]) {
+      const visibilityOptions = Object.values(EndpointAccessibility);
+
+      for (const option of visibilityOptions) {
+        let isOptionsSpecified = false;
+        for (const specifiedVisibility of specifiedVisibilities) {
+          if (option === specifiedVisibility) {
+            Utils.checkIfUnchecked(TestIds.endpointVisibility(option));
+            isOptionsSpecified = true;
+            break;
+          } 
+        }
+
+        if (!isOptionsSpecified) {
+          Utils.unCheckIfChecked(TestIds.endpointVisibility(option));
+        }
+      }
     }
 
     private verifyDeploymentStatus() {
@@ -518,7 +533,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
 
     private verifyEndpointAccessibility(
       service: Service,
-      endpointVisibility: EndpointAccessibility,
+      endpointVisibility: EndpointAccessibility[],
       env: Enums.Environment
     ) {
       // Begin workaround for https://github.com/wso2-enterprise/choreo/issues/25414
@@ -527,8 +542,17 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
       // End workaround for https://github.com/wso2-enterprise/choreo/issues/25414
 
       this.saveEndpointUrls(service, endpointVisibility, env);
+
+      let isPublicEndpointExists = false;
+      for (const visibility of endpointVisibility) {
+        if (visibility === EndpointAccessibility.Public) {
+          isPublicEndpointExists = true;
+          break;
+        }
+      }
+
       // Non public endpoints are not accessible over the internet
-      if (endpointVisibility !== EndpointAccessibility.Public) {
+      if (!isPublicEndpointExists) {
         this.sideMenu.navigateToTest();
         cy.get(TestIds.notificationBanner).should("be.visible");
         this.sideMenu.navigateToManage();

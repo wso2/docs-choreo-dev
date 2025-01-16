@@ -21,6 +21,11 @@ export class ServiceLeftMenu extends LeftMenu {
 
   navigateToBuild() {
     this.scrollToTopOfMenu();
+    // A workaround for when the build page is waiting for the build list but the scheduling 
+    // of the build is delayed in the backend. In this case the page does not resppond to any actions.
+    // Navigating to the deploy page and then the build page will cause the build page to reload
+    // & make the page actionable.
+    this.navigateToMenuItem("[data-cyid=link-deploy]");
     this.navigateToMenuItem("[data-cyid=link-build]");
   }
 

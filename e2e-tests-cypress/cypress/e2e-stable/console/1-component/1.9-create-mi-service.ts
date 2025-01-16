@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { Service } from "../../../support/console/entities/component/service-component";
 import { Project } from "../../../support/console/entities/project/project";
@@ -19,11 +19,13 @@ import { createDefaultSteps } from "../../../support/commons/types";
 
 describe("Verify MI service component functionality", () => {
   const PROJECT_DESCRIPTION = "MI Service component";
-  const MATCHING_STRING = "Hello Integration";
+  const MATCHING_STRING = "World";
   const ENDPOINT_NAME = "HelloWorld";
 
   let project: Project;
   let service: Service;
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "hello-world-mi";
 
   it("Login to Console", () => {
     console.login();
@@ -33,19 +35,17 @@ describe("Verify MI service component functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify MI service component creation", () => {
+  it("Creating a MI service from choreo samples", () => {
     project
-      .createMIServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/synaps-api-project-sample",
-          branch: "with-response-message",
-        },
-        ENDPOINT_NAME
-      )
-      .then((miServiceComponent: Service) => {
-        project.visitComponent(miServiceComponent.getName());
-        service = miServiceComponent;
+      .createMIServiceComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.MI,
+        directoryInfo: { directoryName: REPO_NAME, directoryTestid: REPO_NAME},
+      }, 
+      ENDPOINT_NAME)
+      .then((comp) => {
+        service = comp;
       });
   });
 
@@ -62,7 +62,7 @@ describe("Verify MI service component functionality", () => {
   });
 
   it("Verifying component promotion to Prod", () => {
-    service.promotePublicLevelAccessibility(createDefaultSteps(1));
+    service.promotePublicLevelAccessibility(createDefaultSteps(2));
   });
 
   it("Testing the component in Dev", () => {

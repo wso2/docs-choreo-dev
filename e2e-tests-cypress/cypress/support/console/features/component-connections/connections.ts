@@ -45,10 +45,9 @@ export function mixinConnections<T extends Types.Constructor>(
         return cy.then(() => { throw new Error("Connection URL is not a string"); });
       });
     }
-
+    
     private addConnection(toService: string, connectionName: string) {
-      cy.get(TestIds.addConnectionButton).should("be.visible")
-      cy.get(TestIds.addConnectionButton).click();
+      cy.get(TestIds.connectionServiceCard).click();
       cy.intercept(this.generateServiceSearchRequestRegex(toService)).as('serviceSearchRequest');
       cy.get(TestIds.connectionSearchBar).type(toService);
       cy.wait('@serviceSearchRequest', VERY_SHORT_TIME);

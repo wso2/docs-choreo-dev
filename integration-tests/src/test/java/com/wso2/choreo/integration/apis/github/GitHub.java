@@ -5,12 +5,17 @@ import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.github.Content;
 import com.wso2.choreo.integration.models.response.Response;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Log4j2
 public class GitHub extends ControlPlaneAPI {
@@ -66,19 +71,25 @@ public class GitHub extends ControlPlaneAPI {
      * @param commitMessage Commit message
      * @param content       Encoded content
      */
-    public static Response mergeNewCode(String repoName, String path, String commitMessage, String content, String... branchName) throws IOException {
+    public static Response mergeNewCode(String repoName, String path, String commitMessage, String content, Map<String, String> options) throws IOException {
 
-        String requestUrl = GH_URL + "/repos/" + GH_ORG + "/" + repoName + "/contents/" + path;
-        requestUrl = branchName.length > 0 ? requestUrl.concat("?ref=" + branchName[0]) :  requestUrl;
+        String orgName = options != null  && options.containsKey("orgName") ? options.get("orgName") : GH_ORG;
+        String branchName = options != null   && options.containsKey("branchName") ? options.get("branchName") : "";
+        String authHeader = AUTH_HEADER;
+        if (orgName.equals(GH_TEST_USER_ORG)){
+            authHeader= AUTH_HEADER_FOR_TEST_USER;
+        }
+        String requestUrl = GH_URL + "/repos/" + orgName + "/" + repoName + "/contents/" + path;
+        requestUrl = !Objects.equals(branchName, "") ? requestUrl.concat("?ref=" + branchName) :  requestUrl;
         Response response = HttpClientUtil.httpGET(requestUrl, AUTH_HEADER, "");
         JsonObject jsonObject = new JsonParser().parse(response.getRes()).getAsJsonObject();
         String serviceBalSha = jsonObject.get("sha").getAsString();
         String request = "{\n" +
                 "    \"message\":" + "\"" + commitMessage + "\"" + " ,\n" +
                 "    \"content\":" + "\"" + content + "\"" + ",\n" +
-                "    \"sha\":" + "\"" + serviceBalSha + "\"" + (branchName.length > 0  ? ",\n" +  "    \"branch\":" + "\"" + branchName[0] + "\"\n}":"\n}");
+                "    \"sha\":" + "\"" + serviceBalSha + "\"" + (!Objects.equals(branchName, "")  ? ",\n" +  "    \"branch\":" + "\"" + branchName + "\"\n}":"\n}");
 
-        return HttpClientUtil.httpPUT(requestUrl, request, AUTH_HEADER, "");
+        return HttpClientUtil.httpPUT(requestUrl, request, authHeader, "");
     }
 
     public static void createNewFile(String repoName, String path, String content) throws IOException {

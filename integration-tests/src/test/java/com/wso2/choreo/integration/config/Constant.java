@@ -171,7 +171,7 @@ public final class Constant {
 
     public static final String OBSERVABILITY_PROJECT_LOGS = "/projectLogs";
 
-    public static final String OBSERVABILITY_AUDIT_LOGS = "/audit-logging/1.0.0";
+    public static final String OBSERVABILITY_AUDIT_LOGS = "/audit-logging/v1.0";
 
     public static final String OBSERVABILITY_GATEWAY_ACCESS_LOGS = "/gatewayAccessLogs";
 
@@ -221,4 +221,10 @@ public final class Constant {
     // Data plane Logs
     public static final String DP_LOGS_SUFFIX = "/choreologgingapi/0.2.0/logs";
     public static final String SYSTEM_OBS_SUFFIX = "/choreosysobsapi/0.2.0/system-metrics/component/application";
+
+    // Platform Services Manager related constants
+    public static final String PSM_SUFFIX = "platform-services/v1.0/db-servers";
+    public static final String MYSQL_SERVICE_PLAN_ID = "84e044ae-81bc-429c-badf-a0945a606124";
+    public static final String REDIS_SERVICE_PLAN_ID = "fdeee256-09ac-425c-9250-883508f8dfcb";
+
 }

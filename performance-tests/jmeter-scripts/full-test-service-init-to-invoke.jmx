@@ -40,7 +40,7 @@
           </elementProp>
           <elementProp name="choreoHost" elementType="Argument">
             <stringProp name="Argument.name">choreoHost</stringProp>
-            <stringProp name="Argument.value">apis.perf.choreo.dev</stringProp>
+            <stringProp name="Argument.value">apis.st.choreo.dev</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="commonDelay" elementType="Argument">
@@ -50,18 +50,18 @@
           </elementProp>
           <elementProp name="choreoSts" elementType="Argument">
             <stringProp name="Argument.name">choreoSts</stringProp>
-            <stringProp name="Argument.value">sts.perf.choreo.dev</stringProp>
+            <stringProp name="Argument.value">sts.st.choreo.dev</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,perfAdmin1)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,wso2con1AdminTenant1)}</stringProp>
             <stringProp name="Argument.desc">dummy800AdminTenant2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="usernamePrefix" elementType="Argument">
             <stringProp name="Argument.name">usernamePrefix</stringProp>
-            <stringProp name="Argument.value">${__P(userPrefix,perfAdmin)}</stringProp>
+            <stringProp name="Argument.value">${__P(userPrefix,wso2con1AdminTenant)}</stringProp>
             <stringProp name="Argument.desc">dummy800AdminTenant2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -78,7 +78,7 @@
           </elementProp>
           <elementProp name="asgardeo" elementType="Argument">
             <stringProp name="Argument.name">asgardeo</stringProp>
-            <stringProp name="Argument.value">perf.api.asgardeo.io</stringProp>
+            <stringProp name="Argument.value">stage.api.asgardeo.io</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="branch" elementType="Argument">
@@ -256,7 +256,7 @@ vars.put(&quot;webAppBuildStatus&quot;, &quot;&quot;);
                   </elementProp>
                 </collectionProp>
               </elementProp>
-              <stringProp name="HTTPSampler.domain">perf.api.asgardeo.io</stringProp>
+              <stringProp name="HTTPSampler.domain">stage.api.asgardeo.io</stringProp>
               <stringProp name="HTTPSampler.port">443</stringProp>
               <stringProp name="HTTPSampler.protocol">https</stringProp>
               <stringProp name="HTTPSampler.path">/oauth2/token</stringProp>
@@ -281,7 +281,7 @@ vars.put(&quot;webAppBuildStatus&quot;, &quot;&quot;);
                   </elementProp>
                   <elementProp name="" elementType="Header">
                     <stringProp name="Header.name">Authorization</stringProp>
-                    <stringProp name="Header.value">Basic cmFuZG9tU3BDbGllbnRJZDpyYW5kb21TcENsaWVudFNlY3JldA==</stringProp>
+                    <stringProp name="Header.value">Basic YWQzZFVMc2RhVDZ0N1pkZmEyNDJmSkZrRFVmczpqVWllOG8wYUloYUFoS0FlaDEwem95dWFEMjRS</stringProp>
                   </elementProp>
                 </collectionProp>
               </HeaderManager>
@@ -427,7 +427,7 @@ vars.put(&quot;webAppBuildStatus&quot;, &quot;&quot;);
               <intProp name="HTTPSampler.ipSourceType">0</intProp>
             </HTTPSamplerProxy>
             <hashTree>
-              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="false">
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
                 <collectionProp name="HeaderManager.headers">
                   <elementProp name="" elementType="Header">
                     <stringProp name="Header.name">Content-Type</stringProp>
@@ -440,7 +440,7 @@ vars.put(&quot;webAppBuildStatus&quot;, &quot;&quot;);
                 </collectionProp>
               </HeaderManager>
               <hashTree/>
-              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="false">
                 <collectionProp name="HeaderManager.headers">
                   <elementProp name="" elementType="Header">
                     <stringProp name="Header.name">Content-Type</stringProp>

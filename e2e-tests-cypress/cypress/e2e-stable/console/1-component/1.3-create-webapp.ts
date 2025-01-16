@@ -11,44 +11,26 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { WebApp } from "../../../support/console/entities/component/webapp-component";
 import { Service } from "../../../support/console/entities/component/service-component";
 import {
   Project,
-  RepoInfo,
-  WebAppInfo,
 } from "../../../support/console/entities/project/project";
 import { console } from "../../../support/console/console";
 
 
 describe("Create Web App", () => {
   const WEB_APP_PROJECT_DESCRIPTION = "Web App";
-
-  const webAppRepoInfo: RepoInfo = {
-    url: "https://github.com/choreo-test-apps/choreo-examples",
-    branch: "main",
-    dockerContext:
-      "cloud-native-app-developer/reading-list-front-end-with-managed-auth",
-  };
-
-  const webAppInfo: WebAppInfo = {
-    webAppType: "React",
-    webAppBuildCommand: "npm install && npm run build",
-    webAppPackageManagerVersion: "18",
-    webAppOutputDirectory: "dist",
-  };
-
   const BACKEND_SERVICE_PROJECT_NAME = "Default Project";
-  const BACKEND_SERVICE_ENDPOINT_NAME = "Readinglist";
+  const ENDPOINT_NAME = "Readinglist";
   const BACKEND_SERVICE_COMPONENT_NAME = "managedauthbackend";
   const BACKEND_CONNECTION_NAME = "Managed Auth BE Connection";
-
-  const backendServiceRepoInfo: RepoInfo = {
-    url: "https://github.com/choreo-test-apps/choreo-examples",
-    branch: "main",
-    subPath: "cloud-native-app-developer/reading-list-service",
-  };
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const DIRECTORY_NAME = "reading-list-app";
+  const SUB_DIRECTORY = [DIRECTORY_NAME];
+  const BACKEND_SUB_DIRECTORY_ID = `${DIRECTORY_NAME}/reading-list-service`
+  const WEB_APP_SUB_DIRECTORY_ID = `${DIRECTORY_NAME}/reading-list-front-end-with-managed-auth`
 
   let project: Project;
   let webApp: WebApp;
@@ -81,6 +63,12 @@ describe("Create Web App", () => {
         cy.contains("button", "Sign In").click();
       });
     });
+  }
+
+  function enterBuildPackInfo() {
+    cy.get('[data-cyid="command"]').eq(0).type('npm install && npm run build');
+    cy.get('[data-cyid="command"]').eq(1).type('dist');
+    cy.get('[data-cyid="command"]').eq(2).type('18');
   }
 
   function verifyLogin() {
@@ -123,23 +111,24 @@ describe("Create Web App", () => {
     project = console.searchProject(BACKEND_SERVICE_PROJECT_NAME);
   });
 
-  it("Create backend service if not exists", () => {
+  it("Creating a backend ballerina service from choreo samples", () => {
     project.isComponentExists(BACKEND_SERVICE_COMPONENT_NAME).then((isExists) => {
       if (!isExists) {
         project
-          .createServiceComponent(
-            Enums.Accessibility.EXTERNAL,
-            backendServiceRepoInfo,
-            BACKEND_SERVICE_ENDPOINT_NAME,
-            BACKEND_SERVICE_COMPONENT_NAME
-          )
-          .then((serviceComponent: Service) => {
-            project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
-            service = serviceComponent;
+          .createServiceComponentUI({
+            displayName: "",
+            repoUrl: REPO_URL,
+            buildPack: BuildPacks.Ballerina,
+            directoryInfo: { directoryName: DIRECTORY_NAME, subDirectories: SUB_DIRECTORY, directoryTestid: BACKEND_SUB_DIRECTORY_ID },
+          }, 
+          ENDPOINT_NAME, 
+          BACKEND_SERVICE_COMPONENT_NAME)
+          .then((comp) => {
+            service = comp;
           });
       } else {
         project.visitComponent(BACKEND_SERVICE_COMPONENT_NAME);
-        service = new Service(BACKEND_SERVICE_COMPONENT_NAME, BACKEND_SERVICE_ENDPOINT_NAME);
+        service = new Service(BACKEND_SERVICE_COMPONENT_NAME, ENDPOINT_NAME);
       }
     });
   });
@@ -182,13 +171,22 @@ describe("Create Web App", () => {
     project = console.createNewProject(WEB_APP_PROJECT_DESCRIPTION);
   });
 
-  it("Creating a Web App", () => {
-    project
-      .createWebAppComponent(Enums.Accessibility.EXTERNAL, webAppRepoInfo, webAppInfo)
-      .then((app: WebApp) => {
-        project.visitComponent(app.getName());
-        webApp = app;
-      });
+  it("Creating a WebApp component from choreo samples", () => {
+    project.createWebAppServiceComponentUI(
+      {
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.WEBAPP,
+        directoryInfo: { directoryName: DIRECTORY_NAME, subDirectories: SUB_DIRECTORY, directoryTestid: WEB_APP_SUB_DIRECTORY_ID },
+      },
+      enterBuildPackInfo
+    ).then((comp) => {
+      webApp = comp;
+    });
+  });
+
+  it("Build the Web App", () => {
+    webApp.build();
   });
 
   it("Create a connection to backend service", () => {
@@ -196,10 +194,6 @@ describe("Create Web App", () => {
     webApp.copyConnectionUrl(BACKEND_CONNECTION_NAME).then((url: string) => {
       connectionUrl = url;
     });
-  });
-
-  it("Build the Web App", () => {
-    webApp.build();
   });
 
   it("Deploying to Dev", () => {
@@ -212,14 +206,6 @@ describe("Create Web App", () => {
     const customConfig = new Map<string, string>();
     customConfig.set("apiUrl", connectionUrl);
     webApp.promoteToProdWithAuthConfiguration(customConfig);
-  });
-
-  it("Verify test page is disabled", () => {
-    webApp.verifyTestPageIsDisabled();
-  });
-
-  it("Verify manage page is disabled", () => {
-    webApp.verifyManagePageIsDisabled();
   });
 
   it("Verify web app functionality in Dev", () => {

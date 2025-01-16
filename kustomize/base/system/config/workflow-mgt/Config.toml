@@ -2,11 +2,23 @@
 healthPort = 9050
 servicePort = 9082
 
+[workflow_mgt_service.interceptors]
+workflowMgtPermission = "{{.WORKFLOW_MGT_PERMISSION}}"
+
+[workflow_mgt_service.apim]
+apimUrl = "{{.APIM_URL}}"
+apimClientId = "{{.APIM_CLIENT_ID}}"
+
 [workflow_mgt_service.db]
 host = "{{.DB_HOST}}"
 port = 5432
 user = "{{.DB_USER}}"
 database = 'choreo_workflow_mgt_db'
+
+[workflow_mgt_service.event_publisher]
+enableEventPublish = {{.ENABLE_EVENT_PUBLISH | default false}}
+websubhubUrl = "{{.WEBSUBHUB_URL}}"
+topic = "{{.WEBSUBHUB_TOPIC}}"
 
 [workflow_mgt_service.rpc_app_service]
 appServiceHost = "http://app-service:8080"
@@ -15,6 +27,15 @@ appServiceHost = "http://app-service:8080"
 notificationService = "http://alert-notification-service:9090"
 consoleHostname = "{{.CONSOLE_HOSTNAME}}"
 
+[workflow_mgt_service.project_mgt_service]
+projectManagerEndpoint = "http://dp-project-manager:80/api/v1"
+
+[workflow_mgt_service.authorization_service]
+authServiceHost = "{{.AUTH_SERVICE_HOST | default ""}}"
+
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
 format="json"
+
+[workflow_mgt_service.dpcicd]
+cicdUrl = "http://dp-cicd:80"

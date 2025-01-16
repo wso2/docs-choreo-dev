@@ -74,10 +74,9 @@ public class TestBYOCDp extends TestBase {
     @Test(dependsOnMethods = {"createComponent_TestBYOCDp"}, dataProvider = "dps")
     @CitrusTest
     public void deployComponent_TestBYOCDp(DataProviderWrapper dp) throws Exception {
-        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployComponent(this, citrusClients,
-                accessToken, dp.getChoreoComponent(), dp.getEnvironments(), ComponentFlavour.BYOC);
+        ComponentDeploymentStatusDTO statusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, dp.getChoreoComponent(),
+                dp.getEnvironments());
         dp.setDeploymentStatusDTO(statusDTO);
-        SleepUtil.sleep(30);
     }
 
     @Test(dependsOnMethods = {"deployComponent_TestBYOCDp"}, dataProvider = "dps")
@@ -86,8 +85,8 @@ public class TestBYOCDp extends TestBase {
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
                 dp.getChoreoComponent(), dp.getDeploymentStatusDTO(), dp.getEnvironments());
         String expectedResponse = TestHelperContants.EXPECTED_API_RESPONSE;
-        ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/greeter/greet",
-                expectedResponse);
+        ComponentUtils.invokeApiGETWithBackoffRetries(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/greeter/greet",
+                expectedResponse, 2, 3);
     }
 
     @Test(dependsOnMethods = {"invokeAPIDev_TestBYOCDp"}, dataProvider = "dps")
@@ -105,8 +104,8 @@ public class TestBYOCDp extends TestBase {
         for (ComponentDeploymentStatusDTO statusDTO :dp.getPromoteStatusDTO()) {
             Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
                     dp.getChoreoComponent(), statusDTO, dp.getEnvironments());
-            ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/greeter/greet",
-                    expectedResponse);
+            ComponentUtils.invokeApiGETWithBackoffRetries(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/greeter/greet",
+                    expectedResponse, 2, 6);
         }
     }
 

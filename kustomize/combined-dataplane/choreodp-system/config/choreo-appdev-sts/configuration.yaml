@@ -1,0 +1,50 @@
+client:
+  clientSecretEncryptionKeyFile: {{.CLIENT_SECRET_ENCRYPTION_KEY_FILE | default "/mnt/csi/choreo-appdev-sts-secrets/client-secret-encryption-key.txt"}}
+  tokenSettings:
+    authCodeValidity: {{.AUTH_CODE_VALIDITY | default 5}}
+    userTokenValidity: {{.USER_TOKEN_VALIDITY | default 1440}}
+    refreshTokenValidity: {{.REFRESH_TOKEN_VALIDITY | default 10080}}
+    applicationTokenValidity: {{.APPLICATION_TOKEN_VALIDITY | default 360}}
+management:
+  dataplaneIdentifier: {{.DATAPLANE_IDENTIFIER}}
+redis:
+  username: {{.REDIS_USERNAME | default "default"}}
+  passwordFile: {{.REDIS_PASSWORD_FILE | default "/mnt/csi/choreo-appdev-sts-secrets/redis-password.txt"}}
+  nodes:
+    - {{.REDIS_NODE | default "redis-cluster-headless.redis.svc.cluster.local:6379"}}
+  client:
+    commandTimeout: {{.REDIS_COMMAND_TIMEOUT | default 2000}}
+    shutdownTimeout: {{.REDIS_SHUTDOWN_TIMEOUT | default 2000}}
+    maxIdleSize: {{.REDIS_MAX_IDLE_SIZE | default 50}}
+    maxSize: {{.REDIS_MAX_SIZE | default 100}}
+    minIdleSize: {{.REDIS_MIN_IDLE_SIZE | default 5}}
+    readWriteTimeout: {{.REDIS_READ_WRITE_TIMEOUT | default 2000}}
+    maxWaitTime: {{.REDIS_MAX_WAIT_TIME | default 10000}}
+    testOnBorrow: {{.REDIS_TEST_ON_BORROW | default true}}
+    testOnReturn: {{.REDIS_TEST_ON_RETURN | default true}}
+    lifoEnabled: {{.REDIS_LIFO_ENABLED | default false}}
+    evictionTimeout: {{.REDIS_EVICTION_TIMEOUT | default 60}}
+services:
+  userMgtService:
+    url: {{.USER_MGT_SERVICE_URL}}
+  authzService:
+    url: {{.AUTHZ_SERVICE_URL}}
+  kvResolverService:
+    url: {{.KV_RESOLVER_SERVICE_URL | default "http://dp-kv-resolver.svc.cluster.local:80"}}
+  legacyTokenService:
+    url: {{.LEGACY_TOKEN_SERVICE_URL}}
+    rewritePaths:
+      - from: "/.well-known/openid-configuration"
+        to: "/api/am/appdev/v1/sts/.well-known/openid-configuration"
+      - from: "/connect/logout"
+        to: "/oidc/logout"
+  controlPlaneTokenService:
+    enable: {{.CONTROL_PLANE_TOKEN_SERVICE_ENABLE | default false}}
+    url: {{.CONTROL_PLANE_TOKEN_SERVICE_URL}}
+    consumerKey: {{.CONTROL_PLANE_TOKEN_SERVICE_CONSUMER_KEY}}
+    consumerSecret: {{.CONTROL_PLANE_TOKEN_SERVICE_CONSUMER_SECRET | default "/mnt/csi/choreo-appdev-sts-secrets/cp-consumer-secret.txt"}}
+  stsManagementService:
+    url: {{.STS_MANAGEMENT_SERVICE_URL}}
+httpClient:
+  maxTotal: {{.HTTP_CLIENT_MAX_TOTAL | default 100}}
+  defaultMaxPerRoute: {{.HTTP_CLIENT_DEFAULT_MAX_PER_ROUTE | default 10}}

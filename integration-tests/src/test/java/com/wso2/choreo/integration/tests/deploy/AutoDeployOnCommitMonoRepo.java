@@ -151,7 +151,7 @@ public class AutoDeployOnCommitMonoRepo extends TestNGCitrusSpringSupport {
         String srcCode = MessageUtils.generateStringFromTemplate(
                 "templates/autodeploy/service.mustache", params);
         String encodedCode = Base64.getEncoder().encodeToString(srcCode.getBytes(StandardCharsets.UTF_8));
-        GitHub.mergeNewCode(repoName, "serviceA/service.bal", " change on DeployIT ", encodedCode);
+        GitHub.mergeNewCode(repoName, "serviceA/service.bal", " change on DeployIT ", encodedCode, null);
         // add delay to trigger auto deploy
         try {
             Thread.sleep(10000);

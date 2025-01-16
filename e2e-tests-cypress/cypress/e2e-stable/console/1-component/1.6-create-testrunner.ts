@@ -11,6 +11,7 @@
  * associated services.
  */
 
+import { BuildPacks } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { TestRunner } from "../../../support/console/entities/component/test-runner-component";
 import { Project } from "../../../support/console/entities/project/project";
@@ -24,6 +25,13 @@ describe("Verify Test Runner Component functionality", () => {
 
   let project: Project;
   let runner: TestRunner;
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "test-runner-go";
+  const sampleName = "Greeting Service";
+
+  function enterCustomInfo() {
+    cy.get("li").contains("1.x").click();
+  }
 
   it("Login to Console", () => {
     console.login();
@@ -33,20 +41,16 @@ describe("Verify Test Runner Component functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify test runner component creation", () => {
+  it("Creating a Test Runner from choreo samples", () => {
     project
-      .createTestRunnerComponent(
-        {
-          url: "https://github.com/choreo-test-apps/buildPack-testrunner-Goapp",
-          branch: "main",
-        },
-        {
-          buildpackId: "F9E4820E-6284-11EE-8C99-0242AC120005",
-          languageVersion: "1.x",
-        }
-      )
-      .then((comp: TestRunner) => {
-        project.visitComponent(comp.getName());
+      .createTestRunnerUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.Go,
+        directoryInfo: { directoryName: REPO_NAME, directoryTestid: REPO_NAME }
+      }, 
+      enterCustomInfo)
+      .then((comp) => {
         runner = comp;
       });
   });
@@ -63,11 +67,11 @@ describe("Verify Test Runner Component functionality", () => {
     runner.promoteProd();
   });
 
-  it("Verify test page is disabled", () => {
-    runner.verifyTestPageIsDisabled();
+  it("Return to Project", () => {
+    runner.goBackToProject();
   });
 
-  it("Verify manage page is disabled", () => {
-    runner.verifyManagePageIsDisabled();
+  it("Verify component deletion", () => {
+    project.deleteComponent(runner.getName());
   });
 });

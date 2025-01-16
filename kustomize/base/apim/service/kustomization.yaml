@@ -7,3 +7,5 @@ resources:
   - config-deployer-service.yaml
   - choreo-governance-service.yaml
   - choreo-linter-service.yaml
+  - app-gw-oauth-agent.yaml
+  - choreo-connect-common-private-global-adapter.yaml

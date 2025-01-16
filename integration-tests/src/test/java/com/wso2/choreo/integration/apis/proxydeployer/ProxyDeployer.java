@@ -83,10 +83,14 @@ public class ProxyDeployer extends ControlPlaneAPI {
                     http()
                         .client(client)
                         .receive()
-                        .response(HttpStatus.OK)
+                        .response()
                         .message()
                         .type(MessageType.JSON)
                         .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
                             build.set(ObjectMapperUtil.mapStringToObject(ProxyAPIBuild.class, message.getPayload(String.class), ""));
                         })));
 
@@ -217,7 +221,7 @@ public class ProxyDeployer extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.OK)
+                                .response()
                                 .message()
                                 .type(MessageType.JSON)
                                 .validate((message, context) -> {
@@ -273,7 +277,7 @@ public class ProxyDeployer extends ControlPlaneAPI {
                         http()
                                 .client(client)
                                 .receive()
-                                .response(HttpStatus.CREATED)
+                                .response()
                                 .message()
                                 .type(MessageType.JSON)
                                 .validate((message, context) -> {

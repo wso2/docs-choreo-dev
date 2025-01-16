@@ -13,13 +13,13 @@
 
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
-import { ApiVisibility, Enums } from "../../../commons/enums";
+import { ApiVisibility, Enums, SecurityScheme } from "../../../commons/enums";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
 import { UsagePlan } from "../../../commons/enums";
 import { Types } from "../../../commons/types";
 import { Component } from "../../entities/component/component";
 import { Utils } from "../../../commons/utils";
-import { LONG_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
+import { VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { Service } from "../../entities/component/service-component";
 
 export interface ManageFeature {
@@ -40,6 +40,7 @@ export interface ManageFeature {
   _applyPermissionToResources(component: Component, permission: string);
   _verifyConsumer(appName: string);
   _updateApiVisibility(component: Component, visibility: ApiVisibility);
+  _enableSecurityScemes(component: Component,securitySchemes: SecurityScheme[]);
 }
 
 export function mixinManage<T extends Types.Constructor>(
@@ -48,6 +49,19 @@ export function mixinManage<T extends Types.Constructor>(
   return class extends base {
     private sideMenu = new ServiceLeftMenu();
     private deploymentTrack = new DeploymentTrack();
+
+    // Ordered alphabetically intentionaly to match the order in the UI
+    private usagePlans = new Map<UsagePlan, string>([
+      [UsagePlan.Bronze, `[data-testid="switch-subscription-plan-${UsagePlan.Bronze}"]`],
+      [UsagePlan.Gold, `[data-testid="switch-subscription-plan-${UsagePlan.Gold}"]`],
+      [UsagePlan.Silver, `[data-testid="switch-subscription-plan-${UsagePlan.Silver}"]`],
+      [UsagePlan.Unlimited, `[data-testid="switch-subscription-plan-${UsagePlan.Unlimited}"]`],
+    ]);
+
+    private securitySchemes = new Map<SecurityScheme, string>([
+      [SecurityScheme.ApiKey, '[data-cyid="sec-scheme-api-key-check-box"]'],
+      [SecurityScheme.OAuth2, '[data-cyid="sec-scheme-oauth2-check-box"]'],
+    ]);
 
     _changeLifeCycleState(component: Component, state: Enums.LifeCycleState) {
       this.sideMenu.navigateToLifecycle();
@@ -213,6 +227,22 @@ export function mixinManage<T extends Types.Constructor>(
       this.toggleResourceSecurity(method, resource);
     }
 
+    _enableSecurityScemes(
+      component: Component,
+      securitySchemes: SecurityScheme[]
+    ) {
+      this.sideMenu.navigateToDeploy();
+
+      this.deploymentTrack.validate(component);
+
+      cy.get(TestIds.buildCard)
+        .should("be.visible")
+        .find(TestIds.viewArtifact)
+        .click();
+
+      this.enableSeuritySchemes(securitySchemes);
+    }
+
     _updateApiVisibility(component: Component, visibility: ApiVisibility) {
       this.sideMenu.navigateToManage();
       cy.get(TestIds.apiInfo).should("be.visible").click();
@@ -254,24 +284,50 @@ export function mixinManage<T extends Types.Constructor>(
     }
 
     private saveUsagePlans(component: Component, plans: UsagePlan[]) {
-      const unlimitedPlan = `[data-testid="switch-subscription-plan-${UsagePlan.Unlimited}"]`;
+      const remainingPlans = this.cloneUsagePlans();
 
-      Utils.unCheckIfChecked(unlimitedPlan);
+      // Plan option boxes are listed in the UI in alphabetical order. If a given plan is selected via Cypress at random,
+      // it can lead to adjacent plans being selected. The reason for this behavior could not be determined and no solution
+      // was found. However, it was found that if the option boxes are accessed in the order they are listed in the UI, 
+      // the issue does not occur. Therefore, the plans are sorted in the order they are listed in the UI as a workaround.
+      plans = plans.sort((n1,n2) => {
+        if (n1 > n2) {
+            return 1;
+        }
 
-      plans.forEach((plan) => {
-        const planLocator = `[data-testid="switch-subscription-plan-${plan}"]`;
-        Utils.checkIfUnchecked(planLocator);
+        if (n1 < n2) {
+            return -1;
+        }
+
+        return 0;
       });
+
+      for (const plan of plans) {
+        const planSelector = remainingPlans.get(plan);
+
+        if (planSelector) {
+          Utils.checkIfUnchecked(planSelector);
+          remainingPlans.delete(plan);
+        } else {
+          throw new Error(`Plan ${plan} not found in usage plans`);
+        }
+      }
+
+      // Uncheck plans that are not specified
+      for (const planSelector of remainingPlans.values()) {
+        Utils.unCheckIfChecked(planSelector);
+      }
+
       cy.get(TestIds.usagePlanSave).click();
       cy.get(TestIds.backdropLoader).should("not.exist");
-      cy.get(unlimitedPlan).within(() => {
-        cy.get("input").should("not.be.checked");
-      });
-      plans.forEach((plan) => {
-        cy.get(`[data-testid="switch-subscription-plan-${plan}"]`).within(() => {
-          cy.get("input").should("be.checked");
-        });
-      });
+    }
+
+    private cloneUsagePlans() : Map<UsagePlan, string> {
+      return new Map(this.usagePlans);
+    }
+
+    private cloneSecuritySchemes() : Map<SecurityScheme, string> {
+      return new Map(this.securitySchemes);
     }
 
     private applySettingChanges() {
@@ -293,6 +349,27 @@ export function mixinManage<T extends Types.Constructor>(
         .click();
 
       cy.get(TestIds.security).scrollIntoView().click();
+
+      this.applySecuritySettings();
+    }
+
+    private enableSeuritySchemes(securitySchemes: SecurityScheme[]) {
+      const remainingSchemes = this.cloneSecuritySchemes();
+
+      securitySchemes.forEach((scheme) => {
+        const schemeSelector = remainingSchemes.get(scheme);
+
+        if (schemeSelector) {
+          Utils.checkIfUnchecked(schemeSelector);
+          remainingSchemes.delete(scheme);
+        } else {
+          throw new Error(`Security scheme ${scheme} not found`);
+        }
+      });
+
+      for (const schemeSelector of remainingSchemes.values()) {
+        Utils.unCheckIfChecked(schemeSelector);
+      }
 
       this.applySecuritySettings();
     }

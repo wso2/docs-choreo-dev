@@ -16,7 +16,6 @@ spec:
     metadata:
       labels:
         choreo.component: crypto-key-service
-        antiaffinity: crypto-key-service
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -35,7 +34,7 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 500Mi
+              memory: 600Mi
             requests:
               cpu: 250m
               memory: 400Mi
@@ -101,13 +100,16 @@ spec:
             nodePublishSecretRef:
               name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - crypto-key-service
-              topologyKey: kubernetes.io/hostname
+      topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              choreo.component: crypto-key-service
+          maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+        - labelSelector:
+            matchLabels:
+              choreo.component: crypto-key-service
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway

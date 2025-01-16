@@ -2,11 +2,11 @@ resources:
   - connector-builder.yaml
   - testbase.yaml
   - email-service.yaml
+  - api-key-service.yaml
   - api-server.yaml
   - app-service.yaml
   - audit-logging.yaml
   - telemetry-go.yaml
-  - negotiator.yaml
   - connectords.yaml
   - platform-services-manager.yaml
   - analytics-subscription.yaml
@@ -49,5 +49,7 @@ resources:
   - app-dev-authorization-service.yaml
   - cp-gw-adapter.yaml
   - choreo-url-management.yaml
+  - choreo-gcp-marketplace-client.yaml
   - choreo-aws-marketplace-client.yaml
   - configuration-schema-service.yaml
+  - sts-mgt-service.yaml

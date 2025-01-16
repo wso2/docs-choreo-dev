@@ -14,7 +14,9 @@
 package com.wso2.choreo.integration.apis.insights;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.MessageType;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -178,11 +180,15 @@ public class InsightRequest extends ControlPlaneAPI {
         runner.$(http()
                 .client(client)
                 .receive()
-                .response(HttpStatus.OK)
+                .response()
                 .message()
                 .type(MessageType.JSON)
                 .validate(jsonPath().expression("$.data.listEnvironments", greaterThan(0)))
                 .validate((message, context) -> {
+                        int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                        if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                        }
                         JsonArray environments = new JsonParser().parse((String) message.getPayload())
                                         .getAsJsonObject()
                                         .getAsJsonObject("data")

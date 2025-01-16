@@ -1,2 +1,0 @@
-resources:
-  - ../../../helm/csi-secrets-store-provider-azure

@@ -30,6 +30,7 @@ describe("Verify Ballerina service functionality", () => {
   let component: Service;
   const REPO_URL = "https://github.com/wso2/choreo-samples";
   const REPO_NAME = "greeting-service";
+  const sampleName = "Greeting Service";
 
   it("Login to Console", () => {
     console.login();
@@ -45,10 +46,9 @@ describe("Verify Ballerina service functionality", () => {
         displayName: "",
         repoUrl: REPO_URL,
         buildPack: BuildPacks.Ballerina,
-        repoName: REPO_NAME,
-        repoTestid: "greeting-service",
-        ENDPOINT_NAME,
-      })
+        directoryInfo: { directoryName: REPO_NAME, directoryTestid: REPO_NAME }
+      }, 
+      ENDPOINT_NAME)
       .then((comp) => {
         component = comp;
       });
@@ -176,5 +176,9 @@ describe("Verify Ballerina service functionality", () => {
 
   it("Verifying project insights in Prod", () => {
     project.verifyUsageInsights(Enums.Environment.PRODUCTION);
+  });
+
+  it("Verify sample search", () => {
+    project.searchSampleService(sampleName);
   });
 });

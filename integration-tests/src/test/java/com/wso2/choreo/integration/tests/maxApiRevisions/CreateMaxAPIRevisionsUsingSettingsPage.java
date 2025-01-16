@@ -109,8 +109,7 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
                 .environmentId(environmentId)
                 .build();
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, component);
-        ComponentUtils.deployComponent(this, citrusClients, accessToken, component, environments, 
-                ComponentFlavour.STANDARD);
+        ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, component, environments);
         List<Endpoint> endpoints = ComponentUtils.getEndpoints(this, citrusClients, accessToken,
         component, Constant.DEV_ENVIRONMENT);
         Endpoint endpoint = endpoints.get(0);
@@ -123,8 +122,8 @@ public class CreateMaxAPIRevisionsUsingSettingsPage extends TestNGCitrusSpringSu
         apiRevisionDTO.setRevisionCount(revisionCount);
   
         while(revisionCount<18){
-            ComponentUtils.deployComponent(this, citrusClients,
-                    accessToken, component, environments, ComponentFlavour.STANDARD);
+            ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients,
+                    accessToken, component, environments);
             revisionCount = revisionCount+1;
             apiRevisionDTO.setRevisionCount(apiRevisionDTO.getRevisionCount() + 1);
             SleepUtil.sleep(30);

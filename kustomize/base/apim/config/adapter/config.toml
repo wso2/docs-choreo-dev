@@ -224,6 +224,12 @@ disableSslVerification = false
     authorizationHeader = "authorization"
     testConsoleHeaderName = "api-key"
 
+[enforcer.security.apiKeyConfig]
+    oauthAgentURL = "{{.OAUTH_AGENT_URL | default "http://app-gateway-oauth-agent:8080"}}"
+
+[enforcer.security.patConfig]
+    tokenExpiryTimeSkew = {{.TOKEN_EXPIRY_TIME_SKEW | default 1}}
+
 # JWT token authorization configurations. You can provide multiple JWT issuers
 # Issuer 1
 [[enforcer.security.tokenService]]

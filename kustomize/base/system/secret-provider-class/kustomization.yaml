@@ -16,6 +16,7 @@ resources:
   - ai-storage-table.yaml
   - alert-configuration-service.yaml
   - alert-notification-service.yaml
+  - api-key-service.yaml
   - api-manager.yaml
   - apim-service.yaml
   - app-db.yaml
@@ -61,7 +62,6 @@ resources:
   - log-controller.yaml
   - testbase-db.yaml
   - telemetry.yaml
-  - program-db.yaml
   - redis.yaml
   - service-now.yaml
   - subscriptions.yaml
@@ -81,7 +81,10 @@ resources:
   - usage-handler-service-ingress-tls.yaml
   - choreo-platform-services-manager.yaml
   - workflow-mgt-db.yaml
+  - choreo-gcp-marketplace-client.yaml
   - choreo-aws-marketplace-client.yaml
+  - sts-mgt-service.yaml
+  - choreo-org-activity-cron-secret.yaml
 
 patches:
   - path: patch.json

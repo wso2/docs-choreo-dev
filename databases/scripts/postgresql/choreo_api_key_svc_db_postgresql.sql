@@ -8,8 +8,8 @@
 CREATE TABLE key (
   id CHAR(36) PRIMARY KEY,
   org_uuid CHAR(36) NOT NULL,
-  key_hash CHAR(64) NOT NULL,
-  type VARCHAR(10) NOT NULL,
+  key_hash VARCHAR(110) NOT NULL,
+  type VARCHAR(20) NOT NULL,
   allowed_scopes TEXT NOT NULL,
   CONSTRAINT key_type_ck CHECK (type IN ('USER', 'APPLICATION')),
   CONSTRAINT unique_key_hash UNIQUE (key_hash)
@@ -22,13 +22,16 @@ CREATE TABLE pat (
   description TEXT NULL,
   valid_until TIMESTAMPTZ,
   user_metadata TEXT NULL,
+  revoked BOOLEAN NOT NULL DEFAULT false,
+  revoked_reason TEXT,
   CONSTRAINT pat_key_id_fkey FOREIGN KEY (key_id) REFERENCES key (id) ON DELETE CASCADE
 );
 
 CREATE TABLE api_key (
   key_id CHAR(36) PRIMARY KEY,
-  env_id CHAR(36),
-  apim_app_id VARCHAR(20),
-  client_id VARCHAR(20),
-  CONSTRAINT api_key_id_fkey FOREIGN KEY (key_id) REFERENCES key (id) ON DELETE CASCADE
+  apim_app_id CHAR(36),
+  identifier VARCHAR(100),
+  env_template_id CHAR(36),
+  CONSTRAINT api_key_id_fkey FOREIGN KEY (key_id) REFERENCES key (id) ON DELETE CASCADE,
+  CONSTRAINT api_key_unique_key UNIQUE (apim_app_id, identifier)
 );

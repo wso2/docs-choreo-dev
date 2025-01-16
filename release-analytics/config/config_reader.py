@@ -13,16 +13,50 @@
 
 #!/usr/bin/python3
 
-from enum import StrEnum
+import base64
+import binascii
+import json
+import os
+import sys
+from enum import Enum
 import yaml
 
 
-class ConfigGroup(StrEnum):
-    DEVOPS = "devops"
-    BIGQUERY = "bigquery"
+class ConfigGroup(Enum):
+    DEVOPS = 1
+    BIGQUERY = 2
+
+
+def get_gcloud_account_info():
+    try:
+        gcloud_var: str = os.environ['RELEASE_ANALYTICS_GCLOUD_ACCOUNT_INFO']
+        return json.loads(base64.b64decode(gcloud_var).decode("utf-8"))
+    except KeyError:
+        print("You must first set the RELEASE_ANALYTICS_GCLOUD_ACCOUNT_INFO environment variable")
+        sys.exit(1)
+    except binascii.Error:
+        print("Error when decoding GCloud credentials")
+        sys.exit(1)
+
+def get_azure_devops_pat():
+    try:
+        pat: str = os.environ['RELEASE_ANALYTICS_AZURE_DEVOPS_PAT']
+        print("Length of PAT: ", len(pat))
+        pat = pat.strip()
+        print("Length of PAT after strip: ", len(pat))
+        return pat
+    except KeyError:
+        print("You must first set the RELEASE_ANALYTICS_AZURE_DEVOPS_PAT environment variable")
+        sys.exit(1)
+
 
 
 class ConfigReader(object):
+    config_group_mapping = {
+        ConfigGroup.DEVOPS: "devops",
+        ConfigGroup.BIGQUERY: "bigquery"
+    }
+
     def __init__(self):
         with open('config/config.yaml', 'r') as file:
             self.config = yaml.safe_load(file)
@@ -33,4 +67,4 @@ class ConfigReader(object):
         return cls.instance
 
     def get_config(self, group: ConfigGroup, key: str):
-        return self.config[group.value][key]
+        return self.config[self.config_group_mapping[group]][key]

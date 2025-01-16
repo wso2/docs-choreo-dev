@@ -11,11 +11,11 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { BuildPacks, Enums } from "../../../support/commons/enums";
 import { Project } from "../../../support/console/entities/project/project";
 import { console } from "../../../support/console/console";
 import { OK } from "../../../support/commons/http";
-import { ConfigEntryStep } from "../../../support/commons/types";
+import { ConfigEntryStep, createDefaultSteps } from "../../../support/commons/types";
 import { TestIds } from "../../../support/console/constants/TestIds";
 import { Service } from "../../../support/console/entities/component/service-component";
 import { Utils } from "../../../support/commons/utils";
@@ -33,6 +33,8 @@ describe("Verify containerized service functionality", () => {
   const SECRET_VALUE = "secret-value";
   const MOUNT_PATH = "/app/configs/config.json";
   const CONFIG_FILE = '{\n\t"name": "testUser"';
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const REPO_NAME = "greeting-service-go";
 
   let project: Project;
   let byoc: Service;
@@ -56,10 +58,17 @@ describe("Verify containerized service functionality", () => {
     cy.get(TestIds.nextButton).click();
   }
 
+  // This step is only encountered the first time a service component with a config is promoted.
+  // However if due to an error the step is retried by Cypress this step will not be encountered.
+  // Therefore this is handled as an optional step.
   function addConfigurationProd() {
-    cy.get(TestIds.byocPromote).click();
-    cy.get(TestIds.next).should("be.visible").click();
-    addConfiguration();
+    cy.contains(/^Step/).should("be.visible");
+    cy.get("body").then((body) => {
+      if (body.find(TestIds.copyConfigs).length > 0) {
+        cy.get(TestIds.copyConfigs).click();
+        cy.get(TestIds.next).should("be.visible").click();
+      }
+    });
   }
 
   it("Login to Console", () => {
@@ -70,22 +79,17 @@ describe("Verify containerized service functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify containerized service component creation", () => {
+
+  it("Creating a containerized service from choreo samples", () => {
     project
-      .createByocServiceComponent(
-        {
-          url: "https://github.com/choreo-test-apps/byoc-service-app",
-          branch: "main",
-        },
-        {
-          dockerfilePath: "Dockerfile",
-          dockerContext: "",
-        },
-        "",
-        ENDPOINT_NAME
-      )
-      .then((comp: Service) => {
-        project.visitComponent(comp.getName());
+      .createContainerizedServiceComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.DOCKER,
+        directoryInfo: { directoryName: REPO_NAME, directoryTestid: REPO_NAME },
+      }, 
+      ENDPOINT_NAME)
+      .then((comp) => {
         byoc = comp;
       });
   });
@@ -99,7 +103,9 @@ describe("Verify containerized service functionality", () => {
   });
 
   it("Verify component promotion to Prod", () => {
-    byoc.promotePublicLevelAccessibility([new ConfigEntryStep(addConfigurationProd)], false);
+    let configSteps = createDefaultSteps(3);
+    configSteps[0] = new ConfigEntryStep(addConfigurationProd);
+    byoc.promotePublicLevelAccessibility(configSteps, false);
   });
 
   it("Verify test functionality of root resource in dev on swagger", () => {

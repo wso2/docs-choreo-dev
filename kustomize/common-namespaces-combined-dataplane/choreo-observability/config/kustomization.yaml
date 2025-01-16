@@ -1,0 +1,99 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2023, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+configMapGenerator:
+  - name: loggingapi-cm-file
+    behavior: create
+    files:
+      - loggingapi/Config.toml
+    literals:
+      - K8S_API_SERVER_TOKEN_FILE_PATH="/var/run/secrets/kubernetes.io/serviceaccount/token"
+  - name: sys-obsapi-cm-file
+    behavior: create
+    files:
+      - sys-obsapi/Config.toml
+  - name: loggingapi-cm
+    behavior: create
+    literals:
+      - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - CLOUD_VENDOR=azure
+  - name: cm-hubble-exporter
+    behavior: create
+    literals:
+      - HUBBLE_ENDPOINT={{.HUBBLE_ENDPOINT}}
+      - REQUEST_CLEANUP_INTERVAL="10m"
+      - REQUEST_STALE_TOLERATION_PERIOD="10m"
+      - REQUEST_LOG_INTERVAL="1m"
+      - DEBUG="false"
+      - HEALTH_SERVER_HOST=":8080"
+  - name: cm-obsapi
+    behavior: create
+    literals:
+      - AZURE_ADX_DB=observability
+      - AZURE_ADX_PIXIE_METRIC_TABLE=pixieMetrics
+      - AZURE_ADX_HUBBLE_METRIC_TABLE=hubbleMetrics
+      - AZURE_ADX_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+  - name: cm-obsapi-v2
+    behavior: create
+    literals:
+      - THANOS_ADDRESS=http://thanos-querier:10902
+      - PROMETHEUS_ADDRESS=http://prometheus-operated:9090
+  - name: sys-obsapi-cm
+    behavior: create
+    literals:
+      - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+  - name: loggingapi-env
+    behavior: create
+    literals:
+      - OBSMANAGER_ADDRESS={{.OBSMANAGER_ADDRESS}}
+      - FETCH_LIVE_LOGS_FROM_CLOUD_PROVIDER={{.FETCH_LIVE_LOGS_FROM_CLOUD_PROVIDER | default false}}
+      - FETCH_HISTORICAL_LOGS_FROM_OPENSEARCH={{.FETCH_HISTORICAL_LOGS_FROM_OPENSEARCH | default false}}
+      - MAX_LOG_LIMIT={{.MAX_LOG_LIMIT | default 1000}}
+      - AZURE_LA_CLIENT_ID={{.AZURE_LA_CLIENT_ID}}
+      - AZURE_LA_WORKSPACE_ID={{.AZURE_LA_WORKSPACE_ID}}
+      - FLUENT_BIT_ADDRESS={{.FLUENT_BIT_ADDRESS | default "http://fluent-bit:2020"}}
+      - OBSMANAGER_HTTP_PROXY_HOST={{.OBSMANAGER_HTTP_PROXY_HOST | default ""}}
+      - OBSMANAGER_HTTP_PROXY_PORT={{.OBSMANAGER_HTTP_PROXY_PORT | default ""}}
+      - OPENSEARCH_USERNAME={{.OPENSEARCH_USERNAME | default "admin"}}
+      - OPENSEARCH_ADDRESS={{.OPENSEARCH_ADDRESS | default "https://opensearch-cluster-master:9200"}}
+      - SAMPLE_APP_COMPONENT_ID="{{.SAMPLE_APP_COMPONENT_ID}}"
+      - SAMPLE_APP_ENVIRONMENT_ID="{{.SAMPLE_APP_ENVIRONMENT_ID}}"
+      - SAMPLE_APP_PROJECT_ID="{{.SAMPLE_APP_PROJECT_ID}}"
+      - SAMPLE_APP_NAMESPACE="{{.SAMPLE_APP_NAMESPACE}}"
+  - name: obsapi-env
+    behavior: create
+    literals:
+      - OBSMANAGER_ADDRESS={{.OBSMANAGER_ADDRESS}}
+      - AZURE_ADX_ENDPOINT={{.AZURE_ADX_ENDPOINT}}
+      - AZURE_ADX_CLIENT_ID={{.AZURE_ADX_CLIENT_ID}}
+      - SAMPLE_APP_RELEASE_ID={{.SAMPLE_APP_RELEASE_ID}}
+      - LOG_LEVEL={{.LOG_LEVEL}}
+  - name: obsapi-v2-env
+  - name: opensearch
+    behavior: create
+    literals:
+      - OPENSEARCH_CHOREOLOGS_INDEX_RETENTION_TIME={{.OPENSEARCH_CHOREOLOGS_INDEX_RETENTION_TIME}}
+    options:
+      disableNameSuffixHash: true
+  - name: sys-obsapi-env
+    behavior: create
+    literals:
+      - OBSMANAGER_ADDRESS={{.OBSMANAGER_ADDRESS}}
+      - AZURE_LA_CLIENT_ID={{.AZURE_LA_CLIENT_ID}}
+      - AZURE_LA_WORKSPACE_ID={{.AZURE_LA_WORKSPACE_ID}}
+      - SAMPLE_APP_NAMESPACE={{.SAMPLE_APP_NAMESPACE}}
+      - SAMPLE_APP_RELEASE_ID={{.SAMPLE_APP_RELEASE_ID}}
+      - LOG_LEVEL={{.LOG_LEVEL}}
+  - name: env-hubble-exporter
+    behavior: create
+    literals:
+      - DATAPLANE_ID="{{.DATAPLANE_ID}}"
+      - CLOUD_VENDOR="azure"

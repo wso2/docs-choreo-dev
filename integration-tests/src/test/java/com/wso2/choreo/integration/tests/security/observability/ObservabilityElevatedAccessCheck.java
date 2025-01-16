@@ -232,7 +232,7 @@ public class ObservabilityElevatedAccessCheck extends TestNGCitrusSpringSupport 
     @CitrusTest
     public void viewAuditLogs_ObservabilityElevatedAccessCheck() throws Exception {
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String requestUrlForViewAuditLogs = Constant.OBSERVABILITY_AUDIT_LOGS + "/orgs/" + orgId +
+        String requestUrlForViewAuditLogs = Constant.OBSERVABILITY_AUDIT_LOGS +
                 "/audit-logs?startTime=" + from + "&endTime=" + to;
         SecurityUtils.elevatedAccessCheckForGetRequests(this, choreoCPTestClient,
                 requestUrlForViewAuditLogs, accessToken);

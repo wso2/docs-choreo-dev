@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: platform-service-manager-resource-cleaner
+spec:
+  schedule: "30 4 * * *" # runs every day at 10:00 AM IST
+  startingDeadlineSeconds: 60 # to avoid blocking the next run due to a job in pending state
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      backoffLimit: 1 # runs every day, no need to retry
+      ttlSecondsAfterFinished: 300
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+        spec:
+          containers:
+            - name: platform-services-manager
+              image: choreocontrolplane.azurecr.io/choreoipaas/platform-services-manager:latest
+              args: ["-cron-aiven-resource-cleanup"]
+              envFrom:
+                - configMapRef:
+                    name: env-choreo-platform-services-manager
+                - secretRef:
+                    name: secret-choreo-platform-services-manager
+                - configMapRef:
+                    name: cm-platform-services-manager
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 250Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                seccompProfile:
+                  type: RuntimeDefault
+                runAsUser: 10001
+                runAsGroup: 10001
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              volumeMounts:
+                - name: secret-choreo-platform-services-manager
+                  mountPath: "/mnt/csi/secret-choreo-platform-services-manager"
+                  readOnly: true
+          restartPolicy: Never
+          securityContext:
+            runAsUser: 10001
+            runAsGroup: 10001
+          volumes:
+            - name: secret-choreo-platform-services-manager
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-choreo-platform-services-manager
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          serviceAccountName: sa-choreo-default
+          automountServiceAccountToken: false

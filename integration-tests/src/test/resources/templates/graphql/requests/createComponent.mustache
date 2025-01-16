@@ -23,7 +23,10 @@ mutation {
           repositoryBranch: "main",
           initializeAsBallerinaProject: false,
           enableCellDiagram: true,
-          secretRef: ""
+          secretRef: "",
+          {{#isPublicRepo}}
+              isPublicRepo: {{isPublicRepo}}
+          {{/isPublicRepo}}
         }
       ) {
         id

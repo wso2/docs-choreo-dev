@@ -59,6 +59,7 @@ export namespace TestIds {
   export const availableEndpoints = '[data-testid="Endpoints-env-artifact"]';
   export const apiConfiguration =
     '[data-testid="API Configuration-env-artifact"]';
+  export const rightDrawerButton = '[data-cyid="deploy-right-drawer-icon-button"]';  
   export const attachPolicy = '[data-cyid="attach-policy-button-button"]';
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
   export const endpointCard = '[data-cyid="endponint-selector-card-card"]';
@@ -75,7 +76,7 @@ export namespace TestIds {
   export const executeDeploy =
     '[data-cyid="direct-deploy-option-split-group-button-button"]';
   export const endpointVisibility = (visibility: EndpointAccessibility) =>
-    `[data-testid="${visibility}-visibility-option"]`;
+    `[data-cyid="${visibility}-visibility-option-check-box"]`;
   export const endpointSubmit = '[data-cyid="endpoint-submit-btn-button"]';
   export const stop = '[data-testid="btn-stop"]';
   export const reDeploy = '[data-cyid="btn-redeploy-button"]';
@@ -214,7 +215,6 @@ export namespace TestIds {
   export const applicationList = (appName: string) =>
     `[data-testid="application-list-${appName}"]`;
   export const applicationEdit = '[data-testid="appliation-edit-btn"]';
-  export const permissionsField = '[data-testid="autocomplete-textfield"]';
   export const apiBar = '[data-testid="apis-appbar-btn"]';
   export const apiSearch = "#outlined-search-bar-api-listing";
   export const apiCard = (apiName: string) =>
@@ -303,7 +303,8 @@ export namespace TestIds {
     '[data-cyid="key-value-card-add-new-secret-check-box"]';
   export const nextButton = '[data-testid="btn-next"]';
   export const fileMount = '[data-cyid="file-mount-upload-button"]';
-  export const byocPromote = '[data-cyid="promote-selector-default-configs"]';
+  export const addNewConfigs = '[data-cyid="promote-selector-default-configs"]';
+  export const copyConfigs = '[data-cyid="promote-selector-copy-configs"]';
   export const componentSearchBox =
     '[data-cyid="component-listing-auto-forcused-search-search-field"]';
   export const searchDomain =
@@ -344,6 +345,7 @@ export namespace TestIds {
   export const connectionNameInput = '[data-cyid="connection-name"]';
   export const connectionCreateButton =
     '[data-cyid="connection-create-button"]';
+  export const marketPlaceSearch = '[data-cyid="internal-marketplace-services-search-bar"]';
   export const searchField = '[data-testid="search-field"]';
   export const userTable = '[data-cyid="user-list"]';
   export const roleTable = '[data-cyid="roles"]';
@@ -419,10 +421,22 @@ export namespace TestIds {
   export const miComponentCard = '[data-cyid="WSO2 MI-card-button"]';
   export const repoSearchBox = '[data-cyid="project-directory-search-search-bar-input"]';
   export const continueButton = '[data-cyid="Continue-button"]';
-  export const greetingBalServiceRepo = '[data-cyid="subPath-greeting-service"]';
+  export const repoSubPath = (subPath: string) => `[data-cyid="subPath-${subPath}"]`;
   export const serviceCreateButton = '[data-cyid="Create-button"]';
   export const HelloWorldGoManualTaskRepo = '[data-cyid="subPath-docker-hello-world-manual-task"]';
   export const manualTriggerBuildPack = '[data-cyid="component-template-manualTrigger-card"]';
   export const languageVersionDropDown = '[data-cyid="version-picker-select"]';
+  export const testRunnerBuildPack = '[data-cyid="component-template-testRunnerComponent-card"]';
+  export const testRunnerGoRepo = '[data-cyid="subPath-test-runner-go"]';
+  export const mIServiceRepo = '[data-cyid="subPath-hello-world-mi"]';
+  export const scheduleTriggerBuildPack = '[data-cyid="component-template-scheduleTask-card"]';
+  export const gqlServiceRepo = '[data-cyid="subPath-graphql-service"]';
+  export const webAppComponentCard = '[data-cyid="component-template-webApp-card"]';
+  export const reactBuildPack = '[data-cyid="React-card-button"]';
+  export const containerizedBuildPack = '[data-cyid="Docker-card-button"]';
+  export const dockerSearchBox = '[data-cyid="project-directory-search-search-bar"]';
+  export const dockerFileSelect = '[data-cyid="subPath-greeting-service-go/Dockerfile"]';
+  export const connectionServiceCard = '[data-cyid="choreo-service-card-button"]';
 }
+
 

@@ -2,6 +2,7 @@ accountInfo:
   TEST_USER_EMAIL: choreo-integration-test-user-prod@wso2.com@carbon.super
   #TEST_USER_PASSWORD:
   #TEST_CHOREO_ORG_ID:
+  TEST_USER_IDP_ID: 85128232-a1c4-4cb2-9828-46f414db52f5
   TEST_CHOREO_ORG_HANDLE: choreointegrationtestuserprod
   #TEST_CHOREO_ORG_UUID:
 authInfo:
@@ -21,6 +22,9 @@ common:
   BAL_REGISTRY_URL: https://api.central.ballerina.io/2.0/registry
   GITHUB_ENDPOINT: https://api.github.com
   GITHUB_ORG: choreo-test-apps
+  GITHUB_TEST_USER_ORG: choreo-integration-test-user-prod
+  GITLAB_SECRETREF: 96eb6aab-4b84-4bfd-b051-f347c2464605
+  #GITHUB_TEST_USER_PAT:
   #GITHUB_PAT:
   GMAIL_API_CK: 412441153337-r3a3sj5ecba3a04aqlb3l05ro25tf08l.apps.googleusercontent.com
   #GMAIL_API_CS:
@@ -37,6 +41,7 @@ alerts:
   ALERT_RELEASE_ID: 156f5be1-9d3e-44e9-8dc2-50f37e6c21da
 selfSignup:
   SELF_SIGNUP_ORG_UUID: 9d7cc542-6693-4bc5-a0d0-33c02b4471df
+  SELF_SIGNUP_ORG_ID: 43557
   SELF_SIGNUP_ORG_HANDLE: choreoselfsignup
   SELF_SIGNUP_ORG_ADMIN_EMAIL: samchoreots@gmail.com@carbon.super
   #SELF_SIGNUP_ORG_ADMIN_PASSWORD:

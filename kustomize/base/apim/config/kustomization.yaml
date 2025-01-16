@@ -9,6 +9,10 @@ configMapGenerator:
     behavior: create
     files:
       - private-global-adapter/log_config.toml
+  - name: env-common-private-ga
+    behavior: create
+    literals:
+      - moesif_ms_url={{.MOESIF_MS_URL}}
   - name: env-private-ga
     behavior: create
     literals:
@@ -33,6 +37,11 @@ configMapGenerator:
     behavior: create
     files:
       - devportal/devportal.config.js
+  - name: cc-common-private-global-adapter-conf
+    behavior: create
+    files:
+      - common-private-global-adapter/ga_config.toml
+      - common-private-global-adapter/log_config.toml
   - name: cc-global-adapter-conf-v2
     behavior: create
     files:
@@ -57,3 +66,18 @@ configMapGenerator:
     files:
       - choreo-governance-service/application.yml
       - choreo-governance-service/log4j2.yaml
+  - name: env-app-gateway-oauth-agent
+    behavior: create
+    literals:
+      - REDIS_HOST="{{.REDIS_HOST | default ""}}"
+      - PAT_CLIENT_ID="{{.PAT_CLIENT_ID | default ""}}"
+      - PAT_CLIENT_TOKEN_EP="{{.PAT_CLIENT_TOKEN_EP | default "http://choreo-am-service:9763/oauth2/token"}}"
+      - PAT_TOKEN_TTL_BUFFER="{{.PAT_TOKEN_TTL_BUFFER | default "10"}}"
+  - name: cm-app-gateway-oauth-agent
+    behavior: create
+    literals:
+      - ENC_KEY_FILE_PATH="/etc/agent-secrets/OAUTH_AGENT_ENC_KEY"
+      - REDIS_PORT="6380"
+      - REDIS_PWD_FILE_PATH="/etc/agent-secrets/REDIS_PASSWORD"
+      - REDIS_DB="1"
+      - PAT_CLIENT_SECRET_FILE_PATH="/etc/agent-secrets/PAT_CLIENT_SECRET"

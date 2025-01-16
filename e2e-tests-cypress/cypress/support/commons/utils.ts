@@ -101,6 +101,10 @@ export class Utils {
     return text.replace(/(\r\n|\n|\r)/gm, "");
   }
   
+  static replaceTrailingSlash(text: string) : string {
+    return text.replace(/\/$/, "");
+  }
+
   /**
    * Create name for on-prem key.
    *
@@ -385,6 +389,18 @@ export class Utils {
     }
   }
 
+  static isTestConsoleOnly() {
+    const consoleOnlyMode = Cypress.env("consoleOnlyMode");
+
+    let isConsoleOnlyMode = false;
+
+    if (consoleOnlyMode != null) {
+      isConsoleOnlyMode = consoleOnlyMode == true || consoleOnlyMode == "true";
+    }
+
+    return cy.wrap(isConsoleOnlyMode, { log: false });
+  }
+
   static isApiConfigurationEnabled() {
     const enableApiConfiguration = Cypress.env("enableApiConfiguration");
 
@@ -526,25 +542,31 @@ export class Utils {
     }
   }
 
-  static unCheckIfChecked(locator: string) {
-    cy.get(locator)
-      .find("input")
-      .invoke("attr", "checked")
-      .then((checked) => {
-        if (checked !== "undefined" && checked) {
-          cy.get(locator).click();
+  static isChecked(locator: string) : Cypress.Chainable<boolean> {
+    return cy.get(locator)
+      .invoke("attr", "class")
+      .then((clazz) => {
+        if (clazz && clazz.includes("Mui-checked")) {
+          return cy.wrap(true);
+        } else {
+          return cy.wrap(false);
         }
       });
   }
 
-  static checkIfUnchecked(locator: string) {
-    cy.get(locator)
-      .find("input")
-      .invoke("attr", "checked")
-      .then((checked) => {
-        if (checked === "undefined" || !checked) {
-          cy.get(locator).click();
-        }
-      });
+  static unCheckIfChecked(locator: string) {
+    this.isChecked(locator).then((isChecked) => {
+      if (isChecked) {
+        cy.get(locator).click();
+      }
+    });
+  }
+
+  static checkIfUnchecked(locator: string) {   
+    this.isChecked(locator).then((isChecked) => {
+      if (!isChecked) {
+        cy.get(locator).click();
+      }
+    });
   }
 }

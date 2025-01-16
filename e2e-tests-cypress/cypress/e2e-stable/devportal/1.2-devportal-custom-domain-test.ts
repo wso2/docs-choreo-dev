@@ -36,6 +36,10 @@ describe("Create and deploy a component to test developer portal with custom dom
     console.login();
   });
 
+  it("Add or replace a developer portal custom domain", () => {
+    console.addOrReplaceCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
+  });
+
   it("Creating a project", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
@@ -68,10 +72,6 @@ describe("Create and deploy a component to test developer portal with custom dom
 
   it("Publish proxy", () => {
     proxy.publish();
-  });
-
-  it("Add or replace a developer portal custom domain", () => {
-    console.addOrReplaceCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
   });
 
   it("Login to devportal custom domain", () => {
@@ -118,10 +118,21 @@ describe("Create and deploy a component to test developer portal with custom dom
   });
 
   it("Add subscription", () => {
-    application.addSubscription(proxy.getName(), UsagePlan.Bronze);
+    application.addSubscription(proxy.getName(), UsagePlan.Unlimited);
   });
 
   it("Delete a consumer application", () => {
     proxy.deleteApplication_DevPortal(application);
+  });
+
+  it("Remove developer portal custom domain", () => {
+    cy.task("getData", Cypress.spec.name).then((metaData) => {
+      proxy = Proxy.fromMetaData(metaData as ProxyMetaData);
+    }).then(() => {
+      proxy.navigateToComponentInConsole();
+      // This step is added to free up the domain so that if the same test is run
+      // from another account the domain will be available for use
+      console.removeCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
+    });
   });
 });

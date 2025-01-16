@@ -97,7 +97,7 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
     private String devEnvClientId;
 
     @BeforeClass
-    public void setUp() throws URISyntaxException, TokenRetrievalException, IOException {
+    public void setUp_KeysetManagementTests() throws URISyntaxException, TokenRetrievalException, IOException {
 
         // Setup - Add an external IdP if not already added
 

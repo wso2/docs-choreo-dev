@@ -445,6 +445,14 @@ orgId="{{.ORG_ID}}"
 connection_string = "{{.CONNECTION_STRING}}"
 {{end}}
 
+{{range .AZURE_SERVICE_BUS_POOL}}
+[[choreo.azure_service_bus_pool]]
+id = {{.ID}}
+name = "{{.NAME}}"
+connection_string = "{{.CONNECTION_STRING}}"
+capacity = {{.CAPACITY}}
+{{end}}
+
 [choreo.azure_service_bus.org_cleanup]
 enabled = true
 worker_threads = 10
@@ -630,3 +638,17 @@ endpoint_url = "http://choreo-governance-service:8080"
 worker_count = "5"
 max_reties = "3"
 retry_delay = "2000"
+
+[[oauth.custom_grant_type]]
+grant_handler = "org.wso2.am.choreo.extensions.token.handler.pat.ChoreoPATGrantHandler"
+grant_validator = "org.wso2.am.choreo.extensions.token.handler.pat.ChoreoPATGrantValidator"
+name = "pat"
+
+[choreo.pat_handler]
+client_id="{{.PAT_CLIENT_ID}}"
+pat_service_url="{{.API_KEY_SERVICE_ENDPOINT_URL}}"
+
+[choreo.workflowMgtService]
+endpoint_url = "{{.WORKFLOW_MGT_ENDPOINT_URL | default ""}}"
+max_retries = "3"
+retry_delay = "1000"

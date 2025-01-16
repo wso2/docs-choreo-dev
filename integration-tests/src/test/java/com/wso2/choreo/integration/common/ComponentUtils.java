@@ -14,15 +14,21 @@
 package com.wso2.choreo.integration.common;
 
 import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.TestCaseFailedException;
+import com.consol.citrus.exceptions.CitrusRuntimeException;
 import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.http.message.HttpMessageHeaders;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.consol.citrus.websocket.client.WebSocketClientEndpointConfiguration;
+import com.consol.citrus.websocket.handler.CitrusWebSocketHandler;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.apimanager.ApiManager;
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.configmgt.ConfigManagement;
@@ -81,30 +87,39 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.testng.Assert;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static org.junit.Assert.fail;
 
 @Log4j2
 public class ComponentUtils {
 
     private static final String timestampRegexMatch = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}Z|\\d{2}.\\d{2}Z|\\d{2}.\\d{3}Z|\\d{2}.\\d{4}Z|\\d{2}.\\d{5}Z|\\d{2}.\\d{6}Z|\\d{2}.\\d{7}Z)";
     private static final String APIS_ENDPOINT = Constant.APIS_ENDPOINT;
+    private static final Logger log = LogManager.getLogger(ComponentUtils.class);
+
 
     private static final int MAX_DEPLOY_RETRY_COUNT = 5;
 
@@ -238,6 +253,17 @@ public class ComponentUtils {
                 .repositorySubPath(repo.getSubPath()).displayType(Constant.displayType.ballerinaService.name()).build();
     }
 
+    public static GraphqlDTO createBallerinaServiceComponentWithPublicURLRequest(String name, ChoreoProject project,
+            Repository repo) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+
+        return GraphqlDTO.builder().name(name).triggerID("null").srcGitRepoUrl(repo.getRepoUrl())
+                .projectId(project.getId()).orgId(orgId).orgHandler(orgHandle)
+                .repositoryType(Constant.NON_EMPTY_REPO_TYPE).repositoryBranch(repo.getBranch()).isPublicRepo(true)
+                .repositorySubPath(repo.getSubPath()).displayType(Constant.displayType.ballerinaService.name()).build();
+    }
+
     public static GraphqlDTO createByocComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
@@ -274,14 +300,24 @@ public class ComponentUtils {
                 .byocWebAppsConfig(webAppsConfig).build();
     }
 
-    public static GraphqlDTO createBuildpackComponentRequest(String name, ChoreoProject project, Repository repo) {
+    public static GraphqlDTO createBuildpackComponentRequest(String name, ChoreoProject project, Repository repo, Buildpack... buildpackType) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-        Buildpack buildpack = Buildpack.GOLANG;
+        Buildpack buildpack = buildpackType.length > 0  ?  buildpackType[0] : Buildpack.GOLANG;
 
         return GraphqlDTO.builder().name(name).srcGitRepoUrl(repo.getRepoUrl()).projectId(project.getId()).orgId(orgId)
                 .orgHandler(orgHandle).buildpackId(buildpack.getId()).languageVersion(buildpack.getVersion())
                 .buildContext(repo.getBuildContext()).build();
+    }
+
+    public static GraphqlDTO createBuildpackComponentRequestWithSecretRef(String name, ChoreoProject project, Repository repo, String secretRef, Buildpack... buildpackType) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        Buildpack buildpack = buildpackType.length > 0  ?  buildpackType[0] : Buildpack.GOLANG;
+
+        return GraphqlDTO.builder().name(name).srcGitRepoUrl(repo.getRepoUrl()).projectId(project.getId()).orgId(orgId)
+                .orgHandler(orgHandle).buildpackId(buildpack.getId()).languageVersion(buildpack.getVersion())
+                .buildContext(repo.getBuildContext()).secretRef(secretRef).build();
     }
 
     public static GraphqlDTO createGrpahQLComponentRequest(String name, ChoreoProject project, Repository repo) {
@@ -307,15 +343,24 @@ public class ComponentUtils {
 
     public static ChoreoProject createProject(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusClients,
-            String accessToken, String region) throws Exception {
+            String accessToken, String region, int orgId, String orgHandle) throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String projectName = NameGenerator.generateUniqueName(Constant.TEST_PROJECT_NAME_PREFIX);
         String projectHandler = NameGenerator.generateThreadUniqueName();
         ChoreoProject project = GraphQL.createProject(runner, appServiceClient, region, accessToken, projectName,
-                projectHandler);
+                projectHandler, orgId, orgHandle);
         Assert.assertNotNull(project.getId(), "Project ID is not null.");
         return project;
+    }
+
+    public static ChoreoProject createProject(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, String region) throws Exception {
+
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        return createProject(runner, citrusClients, accessToken, region, orgId, orgHandle);
     }
 
     public static ChoreoComponent createComponent(TestNGCitrusSpringSupport runner,
@@ -338,6 +383,70 @@ public class ComponentUtils {
             Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBuildpackComponent(runner,
                     appServiceClient,
                     dto, accessToken);
+            String projectId = responseDTO.get().getProjectId();
+            graphqlDTO = GraphqlDTO.builder().projectId(projectId)
+                    .componentHandler(responseDTO.get().getHandle()).build();
+            List<ChoreoComponent> components = GraphQL.getProjectComponents(runner, appServiceClient, projectId, accessToken);
+            String componentId = components.get(0).getId();
+            log.debug("Component Id: " + componentId);
+            Component.waitForAsyncComponentCreationSuccess(runner, appServiceClient, accessToken, componentId);
+        } else if (componentFlavour.equals(ComponentFlavour.PRISM_MOCK_SERVICE)) {
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createPrismMockComponent(runner,
+                    appServiceClient,
+                    dto, accessToken);
+            String projectId = responseDTO.get().getProjectId();
+            graphqlDTO = GraphqlDTO.builder().projectId(projectId)
+                    .componentHandler(responseDTO.get().getHandle()).build();
+            List<ChoreoComponent> components = GraphQL.getProjectComponents(runner, appServiceClient, projectId, accessToken);
+            String componentId = components.get(0).getId();
+            log.debug("Component Id: " + componentId);
+            Component.waitForAsyncComponentCreationSuccess(runner, appServiceClient, accessToken, componentId);
+        } else if (componentFlavour.equals(ComponentFlavour.WEBAPP)) {
+            dto.setComponentType("byocWebAppsDockerfileLess");
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createWebappComponent(runner,
+                    appServiceClient,
+                    dto, accessToken);
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandle()).build();
+        }
+
+        else {
+            String queryString = ObjectMapperUtil.mapObjectToString(
+                    "templates/graphql/requests/createUserManagedComponent.mustache", dto);
+
+            Optional<CreateComponentResponseDTO> responseDTO = GraphQL.createUserManagedComponent(runner,
+                    appServiceClient, queryString, dto.getProjectId(), accessToken);
+
+            Component.waitForComponentCreationSuccess(runner, appServiceClient, accessToken,
+                    responseDTO.get().getProjectId(),
+                    responseDTO.get().getId());
+
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandler()).build();
+        }
+
+        return GraphQL.retrieveComponent(runner, appServiceClient, accessToken,
+                graphqlDTO);
+    }
+
+        public static ChoreoComponent createComponentWithSecretRef(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, GraphqlDTO dto,
+            ComponentFlavour componentFlavour, String... branchName) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+
+        GraphqlDTO graphqlDTO;
+
+        if (componentFlavour.equals(ComponentFlavour.BYOC)) {
+            dto.setComponentType("byocService");
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBYOCComponent(runner, appServiceClient,
+                    dto, accessToken, branchName);
+
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandle()).build();
+        } else if (componentFlavour.equals(ComponentFlavour.BUILDPACK)) {
+            dto.setComponentType("buildpackService");
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBuildpackComponentWithSecretRef(runner, appServiceClient, dto, accessToken);
             String projectId = responseDTO.get().getProjectId();
             graphqlDTO = GraphqlDTO.builder().projectId(projectId)
                     .componentHandler(responseDTO.get().getHandle()).build();
@@ -488,7 +597,7 @@ public class ComponentUtils {
         }
 
         if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            ConfigManagement.addConfiguration(runner, appServiceClient, component, commitHistory, environments.get(0),
+            ConfigManagement.addConfiguration(runner, appServiceClient, component, sha, environments.get(0),
                     balconfigs);
         }
 
@@ -536,6 +645,44 @@ public class ComponentUtils {
 
         return componentDeploymentStatusDTO;
     }
+
+    public static ComponentDeploymentStatusDTO deployAndValidateBuiltComponentWithFlavour(TestNGCitrusSpringSupport runner,
+                                                                               Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent testComponent,
+                                                                               List<Environment> environments, ComponentFlavour componentFlavour,
+                                                                                          BalConfig... balconfigs) throws Exception {
+        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = null;
+        HttpClient choreoProjectsTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        List<Commit> commitHistory = GraphQL.getCommitHistory(runner, choreoProjectsTestClient, testComponent.getId(), accessToken,
+                testComponent.getRepository().getBranchApp());
+
+        Commit latestCommit = Commit.getLatestCommit(commitHistory);
+        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
+            ConfigManagement.addConfiguration(runner, choreoProjectsTestClient, testComponent, latestCommit.getSha(), environments.get(0),
+                    balconfigs);
+        }
+        for (int i = 0; i < MAX_DEPLOY_RETRY_COUNT; ++i) {
+            componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken,
+                    testComponent, latestCommit,
+                    environments);
+            try {
+                ComponentUtils.validateComponentDeployment(runner, citrusClients, accessToken, testComponent,
+                        latestCommit, environments);
+                break;
+            } catch (Exception e) {
+                if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
+                    log.error("DeployStatusByVersion failure detected, attempt number " + (i + 1), e);
+                } else {
+                    throw e;
+                }
+            }
+        }
+        if (componentDeploymentStatusDTO == null) {
+            throw new Exception("Component deployment failed");
+        }
+
+        return componentDeploymentStatusDTO;
+    }
+
 
     public static ComponentDeploymentStatusDTO validateComponentDeployment(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken,
@@ -740,9 +887,17 @@ public class ComponentUtils {
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
             List<Environment> environments, ComponentFlavour componentFlavour,
             BalConfig... balconfigs) throws Exception {
+        return promoteComponent(runner, citrusClients, accessToken, component, environments, componentFlavour, "",
+                balconfigs);
+    }
+
+    public static List<ComponentDeploymentStatusDTO> promoteComponent(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
+            List<Environment> environments, ComponentFlavour componentFlavour, String commitHash,
+            BalConfig... balconfigs) throws Exception {
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
         promotionStatus = promote(runner, citrusClients, accessToken, component, environments, componentFlavour,
-                balconfigs);
+                commitHash, balconfigs);
         return promotionStatus;
     }
 
@@ -751,25 +906,41 @@ public class ComponentUtils {
             List<Environment> environments, ComponentFlavour componentFlavour, ChoreoProject project,
             BalConfig... balconfigs) throws Exception {
 
+        return promoteComponent(runner, citrusClients, accessToken, component, environments, componentFlavour, project,
+                "", balconfigs);
+    }
+
+    public static List<ComponentDeploymentStatusDTO> promoteComponent(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
+            List<Environment> environments, ComponentFlavour componentFlavour, ChoreoProject project,
+            String commitHash, BalConfig... balconfigs) throws Exception {
+
         HttpClient apimClient = citrusClients.get(Endpoints.STS_ENDPOINT);
-        String query = "context:/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID) + "/"
-                + project.getHandler() + "/" + component.getName() + "/v1.0";
+        String apiContext = "/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID) + "/"
+                + project.getHandler() + "/" + component.getName();
+        String query = URLEncoder.encode("context:" + apiContext + " version:\"" + component.getLatestApiVersion().getApiVersion() + "\"", StandardCharsets.UTF_8);
         ApiManager.searchAPIByQuery(runner, apimClient, accessToken, query);
 
         List<ComponentDeploymentStatusDTO> promotionStatus = null;
         promotionStatus = promote(runner, citrusClients, accessToken, component, environments, componentFlavour,
-                balconfigs);
+                commitHash, balconfigs);
         return promotionStatus;
     }
 
     private static List<ComponentDeploymentStatusDTO> promote(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
-            List<Environment> environments, ComponentFlavour componentFlavour, BalConfig... balconfigs)
+            List<Environment> environments, ComponentFlavour componentFlavour, String commitHash, BalConfig... balconfigs)
             throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        List<Commit> commitHistory = GraphQL.getCommitHistory(runner, appServiceClient, component.getId(),
-                accessToken, component.getRepository().getBranchApp());
+
+        String commitHashToPromote = commitHash;
+        if (commitHashToPromote.isBlank()) {
+            List<Commit> commitHistory = GraphQL.getCommitHistory(runner, appServiceClient, component.getId(),
+                    accessToken, component.getRepository().getBranchApp());
+            commitHashToPromote = Commit.getLatestCommit(commitHistory).getSha();
+        }
+
         List<ComponentDeploymentStatusDTO> deploymentStatus = new ArrayList<>();
         int srcEnvIndex = 0;
         int destEnvIndex = 1;
@@ -790,15 +961,14 @@ public class ComponentUtils {
                     Map<String, String> argMap = new HashMap<>();
                     argMap.put("componentId", component.getId());
                     argMap.put("versionId", component.getLatestApiVersion().getId());
-                    argMap.put("sourceReleaseId", component.getReleaseIdByEnvironmentId(srcEnv.getId()));
+                    argMap.put("sourceReleaseId", component.getReleaseIdByEnvironmentId(srcEnv.getId(),component.getLatestApiVersion().getId()));
                     argMap.put("targetEnvironmentId", destEnv.getId());
                     validateEndpointExistence(runner, citrusClients, accessToken, component, srcEnv);
                     GraphQL.promoteEndpoints(runner, appServiceClient, accessToken, argMap);
                 }
 
                 if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-                    ConfigManagement.addConfiguration(runner, appServiceClient, component, commitHistory, destEnv,
-                            balconfigs);
+                    ConfigManagement.addConfiguration(runner, appServiceClient, component, commitHashToPromote, destEnv, balconfigs);
                 }
 
                 String componentId = component.getId();
@@ -812,7 +982,7 @@ public class ComponentUtils {
                 GraphQL.promoteComponent(runner, appServiceClient, accessToken, graphqlDTO);
                 SleepUtil.sleep(5);
                 ComponentDeploymentStatusDTO statusDTO = getComponentPromotionStatus(runner, componentId, latestVersionId,
-                        latestAppEnvId, commitHistory, appServiceClient, accessToken, component);
+                        latestAppEnvId, commitHashToPromote, appServiceClient, accessToken, component);
                 deploymentStatus.add(statusDTO);
 
                 if (displayType.equals(Constant.displayType.ballerinaService.name())
@@ -834,18 +1004,16 @@ public class ComponentUtils {
     }
 
     private static ComponentDeploymentStatusDTO getComponentPromotionStatus(TestNGCitrusSpringSupport runner,
-            String componentId, String latestVersionId, String latestAppEnvId, List<Commit> commitHistory,
+            String componentId, String latestVersionId, String latestAppEnvId, String commitHash,
             HttpClient appServiceClient, String accessToken, ChoreoComponent component)
             throws IOException, NoLatestCommitHashFoundException {
         ChoreoOrganization org = component.getOrganization();
         GraphqlDTO graphqlDT = GraphqlDTO.builder().componentId(componentId).orgHandler(org.getOrgHandle())
                 .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(latestAppEnvId).build();
-        Commit latestCommit = Commit.getLatestCommit(commitHistory);
-        String sha = latestCommit.getSha();
 
         Map<String, String> responseParams = new HashMap<>();
         responseParams.put("environmentId", latestAppEnvId);
-        responseParams.put("sha", sha);
+        responseParams.put("sha", commitHash);
         responseParams.put("versionId", latestVersionId);
 
         return GraphQL.getComponentDeploymentStatus(runner, appServiceClient, accessToken, graphqlDT, responseParams);
@@ -1016,8 +1184,56 @@ public class ComponentUtils {
                                 .message()
                                 .type(MessageType.JSON)
                                 .body(expectedResponse)));
+    }
 
-        TimeUnit.SECONDS.sleep(2);
+    /**
+     * Invoke API GET with validation with backoff retries when test failed
+     *
+     * @param runner             Test action runner
+     * @param apiKey             API Key
+     * @param invokeUrl          Invoke URL
+     * @param resource           API Resource
+     * @param expectedResponse   Expected response
+     * @param backOffFactor      Liner Backoff Factor
+     * @param maxNumberOfRetries Maximum Number of Retries
+     */
+    public static void invokeApiGETWithBackoffRetries(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
+                                    String expectedResponse, int backOffFactor, int maxNumberOfRetries) throws Exception {
+        int retryNumber = 0;
+        boolean shouldRetry;
+        do {
+            try {
+                runner.$(repeatOnError()
+                        .until("i = 3") //Reduced repeats based on response since manual backoff handles retries
+                        .index("i")
+                        .autoSleep(30000)
+                        .actions((http()
+                                        .client(invokeUrl)
+                                        .send()
+                                        .get(resource)
+                                        .message()
+                                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                                        .header("API-Key", apiKey)),
+                                http()
+                                        .client(invokeUrl)
+                                        .receive()
+                                        .response(HttpStatus.OK)
+                                        .message()
+                                        .type(MessageType.JSON)
+                                        .body(expectedResponse)));
+                shouldRetry = false;
+            } catch (TestCaseFailedException e) {
+                retryNumber++;
+                shouldRetry = retryNumber < maxNumberOfRetries;
+                if (retryNumber == maxNumberOfRetries) {
+                    throw new RuntimeException("Couldn't invoke url : " + invokeUrl + " resource : " + resource, e);
+                } else {
+                    //Using a linear backoff instead of exponential backoff to reduce the impact on test suite runtime
+                    TimeUnit.SECONDS.sleep((long) backOffFactor * retryNumber);
+                    log.debug(". Retry #{} for URL {} since invoke failed : {}", retryNumber, invokeUrl.concat(resource), e);
+                }
+            }
+        } while (shouldRetry);
     }
 
     /**
@@ -1056,6 +1272,39 @@ public class ComponentUtils {
         TimeUnit.SECONDS.sleep(2);
     }
 
+    public static JsonArray invokeApiGETResponse(TestActionRunner runner, String apiKey, String invokeUrl ,String resource) throws Exception {
+        // Test API Invocation
+        AtomicReference<JsonArray> apiResp = new AtomicReference<>();
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(30000)
+                .actions((http()
+                                .client(invokeUrl)
+                                .send()
+                                .get(resource)
+                                .message()
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .header("API-Key", apiKey)),
+                        http()
+                                .client(invokeUrl)
+                                .receive()
+                                .response()
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
+                                    String payload = message.getPayload(String.class);
+                                    JsonArray dataJsonArray = JsonParser.parseString(payload).getAsJsonArray();
+                                    apiResp.set(dataJsonArray);
+                                })));
+
+        return  apiResp.get();
+    }
+
     /**
      * Invoke API POST with validation
      *
@@ -1092,6 +1341,78 @@ public class ComponentUtils {
                                 .type(MessageType.JSON)
                                 .body(expectedResponse)
                                 ));
+    }
+
+    /**
+     * Invoke API POST
+     *
+     * @param runner           Test action runner
+     * @param apiKey           API Key
+     * @param invokeUrl        Invoke URL
+     * @param resource         API Resource
+     * @param requestBody      Request payload
+     *
+     */
+    public static JsonObject invokeApiPOST(TestActionRunner runner, String apiKey, String invokeUrl, String resource,
+                                     String requestBody, org.springframework.http.HttpStatus expectedHttpStatus) {
+        // Test API Invocation
+        AtomicReference<JsonObject> apiResp = new AtomicReference<>();
+        runner.$(repeatOnError()
+                .until("i = 20")
+                .index("i")
+                .autoSleep(30000)
+                .actions((http()
+                                .client(invokeUrl)
+                                .send()
+                                .post(resource)
+                                .message()
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .header("API-Key", apiKey)),
+                        http()
+                                .client(invokeUrl)
+                                .receive()
+                                .response()
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != expectedHttpStatus.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
+                                    String payload = message.getPayload(String.class);
+                                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                                    apiResp.set(dataJsonObject);
+                                })));
+
+        return  apiResp.get();
+                                     }
+     
+     /**
+     * Invoke WebSocket API with validation
+     *
+     * @param runner           Test action runner
+     * @param apiKey           API Key
+     * @param invokeUrl        Invoke URL
+     * @param resource         API Resource
+     * @param requestBody      Request payload
+     *
+     */
+    public static void invokeWSApi(TestActionRunner runner, String apiKey, String invokeUrl, String resource) {
+
+            WebSocketHttpHeaders headers = new WebSocketHttpHeaders();
+            headers.add("API-Key", apiKey);
+
+            WebSocketClientEndpointConfiguration webSocketEndpointConfiguration = new WebSocketClientEndpointConfiguration();
+            webSocketEndpointConfiguration.setEndpointUri(invokeUrl + "/" + resource);
+            webSocketEndpointConfiguration.setWebSocketHttpHeaders(headers);
+
+            try {
+                CitrusWebSocketHandler webSocketHandler = webSocketEndpointConfiguration.getHandler();
+            } catch (CitrusRuntimeException e) {
+                fail("Test failed due to CitrusRuntimeException: " + e.getMessage());
+            }
     }
 
     public static List<Environment> getEnvironments(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
@@ -1318,6 +1639,7 @@ public class ComponentUtils {
             Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoProject project, ChoreoComponent choreoComponent, Environment env)
             throws Exception {
+        SleepUtil.sleep(60); //Wait for some time to publish latest metrics to adx
         DPObsApiService.getProjectMetrics(runner, citrusDPClients, accessToken,
                 project, choreoComponent, env, true);
     }
@@ -1326,6 +1648,7 @@ public class ComponentUtils {
             Map<Endpoints, HttpClient> citrusDPClients,
             String accessToken, ChoreoComponent choreoComponent, Environment env, ChoreoProject project)
             throws Exception {
+        SleepUtil.sleep(60); //Wait for some time to publish latest metrics to adx
         DPObsApiService.getComponentAppMetrics(runner, citrusDPClients, accessToken,
                 choreoComponent, env, project);
     }
@@ -1379,16 +1702,16 @@ public class ComponentUtils {
 
         Environment environment = environments.get(0);
 
-        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-            Component.triggerConfigurableGeneration(runner, appServiceClient, component, commitHistory,
-                    component.getBranch());
-            ConfigManagement.addConfiguration(runner, appServiceClient, component, commitHistory, environment,
-                    balconfigs);
-        }
-
         Commit latestCommit = Commit.getLatestCommit(commitHistory);
         String shaDate = latestCommit.getAuthor().getDate();
         String sha = latestCommit.getSha();
+
+        if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
+            Component.triggerConfigurableGeneration(runner, appServiceClient, component, commitHistory,
+                    component.getBranch());
+            ConfigManagement.addConfiguration(runner, appServiceClient, component, sha, environment,
+                    balconfigs);
+        }
 
         String componentId = component.getId();
         ApiVersion apiVersion = component.getLatestApiVersion();
@@ -1437,8 +1760,11 @@ public class ComponentUtils {
             Environment srcEnv = environments.get(srcEnvIndex);
             Environment destEnv = environments.get(destEnvIndex);
 
+            Commit latestCommit = Commit.getLatestCommit(commitHistory);
+            String sha = latestCommit.getSha();
+
             if (componentFlavour.equals(ComponentFlavour.STANDARD)) {
-                ConfigManagement.addConfiguration(runner, cpProjectsClient, component, commitHistory, destEnv,
+                ConfigManagement.addConfiguration(runner, cpProjectsClient, component, sha, destEnv,
                         balconfigs);
             }
 
@@ -1456,9 +1782,6 @@ public class ComponentUtils {
             graphqlDTO = GraphqlDTO.builder().componentId(componentId).orgHandler(org.getOrgHandle())
                     .orgUuid(org.getOrgUUID()).versionId(latestVersionId).environmentId(latestAppEnvId).build();
 
-            Commit latestCommit = Commit.getLatestCommit(commitHistory);
-            String sha = latestCommit.getSha();
-
             Map<String, String> responseParams = new HashMap<>();
             responseParams.put("environmentId", latestAppEnvId);
             responseParams.put("sha", sha);
@@ -1475,41 +1798,42 @@ public class ComponentUtils {
     }
 
     public static Pair<Boolean, Integer> testDeploymentWithRateLimit(String invokeURL, String apiKey,
-            int repititionCount) throws Exception {
-
-        // Rate limiting counter resets based on the system clock.
-        long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
-        if (timeRemainingTillNextMinute < 15000) {
-            Thread.sleep(timeRemainingTillNextMinute + 5000);
-        }
+        int repetitionCount) throws Exception {
 
         boolean isRateLimitExceeded = false;
         int count = 0;
-        long startTime;
-        long endTime;
 
-        // Repeat the check until the rate limit is exceeded or all requests are sent
-        // within the same minute
-        while (!isRateLimitExceeded) {
+        for (int j = 0; j < 3; j++) {
+            // Synchronize with the start of the next minute if we're too close to the end
+            long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
+            if (timeRemainingTillNextMinute < 45000) {
+                Thread.sleep(timeRemainingTillNextMinute + 1000);
+            }
+
             count = 0;
-            startTime = System.currentTimeMillis();
-            for (int i = 0; i < repititionCount; i++) {
+            long startTime = System.currentTimeMillis();
+
+            for (int i = 0; i < repetitionCount; i++) {
                 Response dev = HttpClientUtil.httpGET(invokeURL, "", apiKey);
                 count++;
+
                 if (dev.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value()) {
                     isRateLimitExceeded = true;
                     break;
+                } else if (dev.getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
+                    throw new RuntimeException("API token for invokeURL : " + invokeURL + " is unauthorized");
                 }
+
                 Thread.sleep(500);
             }
-            endTime = System.currentTimeMillis();
 
-            // Break the loop if all requests are sent within the same minute
+            long endTime = System.currentTimeMillis();
+
+            // Break if all requests were sent within the same minute
             if (endTime / 60000 == startTime / 60000) {
                 break;
             }
         }
-
         return Pair.of(isRateLimitExceeded, count);
     }
 
@@ -1616,6 +1940,7 @@ public class ComponentUtils {
             apiVersions.add(existingVersion);
         }
         ApiVersion latestApiVersion = new ApiVersion();
+        latestApiVersion.setApiVersion(version);
         latestApiVersion.setLatest(true);
         latestApiVersion.setId(newDeploymentTrack.getId());
         latestApiVersion.setAppEnvVersions(apiVersions.get(0).getAppEnvVersions());
@@ -1711,5 +2036,29 @@ public class ComponentUtils {
 
         Component.configureLocalDevelopmentForManagedAuthentication(runner, client, projectId, componentId, releaseId,
                 localDevelopmentConfigureRequest, expectedStatus);
+    }
+
+    public static void testAPIReady(String invokeURL, String apiKey) throws Exception {
+        // Poll invoke URL for a maximum of 5 minutes till we get a status.ok
+        for (int i = 0; i < 50; i++) {
+            Response res = HttpClientUtil.httpGET(invokeURL, "", apiKey);
+            if (HttpStatus.OK.value() == res.getStatusCode()) {
+                break;
+            }
+            Thread.sleep(10000);
+        }
+
+    }
+
+    public static void waitForComponentInitialBuildComplete(TestNGCitrusSpringSupport runner, Map<Endpoints, 
+            HttpClient> citrusClients, String accessToken, ChoreoComponent component) throws Exception {
+    
+        GraphqlDTO dto = GraphqlDTO.builder()
+            .componentId(component.getId())
+            .latestVersionId(component.getLatestApiVersion().getId())
+            .build();
+        String runId = GraphQL.getRunId(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
+        Component.waitForComponentBuildDeployComplete(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, 
+            component.getProjectId(), component.getId(), runId, 50);
     }
 }

@@ -55,7 +55,7 @@ export class Service extends mixinBuild(
     this._deployService(
       this,
       shouldModifyEndpoint,
-      EndpointAccessibility.Project,
+      [EndpointAccessibility.Project],
       createDefaultSteps(1)
     );
   }
@@ -64,7 +64,7 @@ export class Service extends mixinBuild(
     this._deployService(
       this,
       shouldModifyEndpoint,
-      EndpointAccessibility.Public,
+      [EndpointAccessibility.Public],
       createDefaultSteps(1)
     );
   }
@@ -76,7 +76,7 @@ export class Service extends mixinBuild(
     this._deployService(
       this,
       shouldModifyEndpoint,
-      EndpointAccessibility.Public,
+      [EndpointAccessibility.Public],
       configs
     );
   }
@@ -97,7 +97,7 @@ export class Service extends mixinBuild(
     this._promoteService(
       this,
       shouldModifyEndpoint,
-      EndpointAccessibility.Project
+      [EndpointAccessibility.Project]
     );
   }
 
@@ -108,7 +108,7 @@ export class Service extends mixinBuild(
     this._promoteService(
       this,
       shouldModifyEndpoint,
-      EndpointAccessibility.Public,
+      [EndpointAccessibility.Public],
       configSteps
     );
   }
@@ -137,7 +137,7 @@ export class Service extends mixinBuild(
     this.sideMenu.navigateToDeploy();
     cy.get(TestIds.endpointConfigurationsButton).should("be.visible").click();
     cy.get(TestIds.rightDrawer)
-      .contains("div", "Pass User Context to Backend")
+      .contains("div", "Pass end-user attributes to upstream")
       .should("be.visible")
       .siblings("div")
       .eq(0)

@@ -1,5 +1,0 @@
-resources:
-  - ../../base/apim/certificates
-  - ../../base/apim/secret-provider-class
-
-namespace: choreo-apim

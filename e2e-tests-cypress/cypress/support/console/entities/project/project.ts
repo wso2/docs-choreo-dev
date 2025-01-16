@@ -37,6 +37,7 @@ import { IntegrationComponentData } from "../../../interfaces/integration-compon
 import { Byoc } from "../component/byoc-component";
 import { ByocComponent } from "../../../interfaces/choreo-components/byoc-component";
 import { _ComponentCreationWizard } from "../../ui-elements/wizards/component-creation-wizard";
+import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 
 export interface RepoInfo {
   readonly url: string;
@@ -53,22 +54,18 @@ export interface ProxyInfo {
   readonly isInternal?: boolean;
 }
 
-export interface ServiceInfo {
-  readonly displayName: string;
-  readonly repoUrl: string;
-  readonly buildPack: BuildPacks;
-  readonly repoName: string;
-  readonly repoTestid: string;
-  readonly ENDPOINT_NAME: string;
+export interface DirectoryInfo {
+  readonly directoryName: string;
+  readonly subDirectories?: string[];
+  readonly directoryTestid: string;
 }
 
-export interface ManualTriggerInfo {
+export interface ComponentInfo {
   readonly displayName: string;
   readonly repoUrl: string;
+  readonly branch?: string;
   readonly buildPack: BuildPacks;
-  readonly repoName: string;
-  readonly repoTestid: string;
-  readonly languageVersion: string;
+  readonly directoryInfo?: DirectoryInfo;
 }
 
 export interface WebAppInfo {
@@ -100,7 +97,8 @@ export class Project {
 
   private proxyCreationWizard = new _ProxyCreationWizard();
   private serviceCreationWizard = new _ComponentCreationWizard();
- 
+  private sideMenu = new ServiceLeftMenu();
+
   constructor(
     name: string,
     description: string,
@@ -254,6 +252,7 @@ export class Project {
 
   searchSampleService(searchString: string) {
     this.createComponentIfEmptyProject();
+    this.sideMenu.navigateToOverview();
     cy.get(TestIds.viewAllSamples).scrollIntoView().click();
     cy.get(TestIds.trySample).should("be.visible").click();
     cy.get(TestIds.sampleSearch).should("be.visible").type(searchString);
@@ -279,7 +278,6 @@ export class Project {
       triggerChannels: "",
       triggerId: null,
       srcGitRepoUrl: repoInfo.url,
-      initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",
@@ -348,7 +346,7 @@ export class Project {
     } else if (proxyInfo.oasFilePath !== undefined) {
       this.proxyCreationWizard.createFromOASFile(proxyInfo.oasFilePath);
     } else {
-      cy.get(TestIds.skipSource).should("be.visible").click();
+      cy.getUnstable(TestIds.skipSource).should("be.visible").click();
     }
 
     const proxyName = Utils.generateComponentName("oas");
@@ -373,37 +371,151 @@ export class Project {
     });
   }
 
-  createServiceComponentUI(serviceInfo: ServiceInfo): Cypress.Chainable<Service> {
+  createServiceComponentUI(
+    serviceInfo: ComponentInfo,
+    endpointName: string,
+    serviceName?: string
+  ): Cypress.Chainable<Service> {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
 
-    const serviceName = Utils.generateComponentName();
+    if (serviceName === undefined) {
+      serviceName = Utils.generateComponentName();
+    }
+
     this.serviceCreationWizard.enterServiceInfo(
       serviceName,
-      serviceInfo,
-      serviceInfo.repoUrl,
-      serviceInfo.repoName,
-      serviceInfo.repoTestid
+      serviceInfo
     );
 
-    return cy.wrap(new Service(serviceName, serviceInfo.ENDPOINT_NAME));
+    return cy.wrap(new Service(serviceName, endpointName));
   }
 
-  createManualTriggerUI(manualTriggerInfo: ManualTriggerInfo): Cypress.Chainable<ManualTrigger> {
+  createManualTriggerUI(
+    manualTriggerInfo: ComponentInfo, enterCustomInfo: () => void
+  ): Cypress.Chainable<ManualTrigger> {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.manualTriggerBuildPack).should("be.visible").click();
 
     const manualTriggerName = Utils.generateComponentName();
-    this.serviceCreationWizard.enterManualTriggerInfo(
+    this.serviceCreationWizard.enterTriggerInfo(
       manualTriggerName,
       manualTriggerInfo,
-      manualTriggerInfo.repoUrl,
-      manualTriggerInfo.repoName,
-      manualTriggerInfo.repoTestid
+      enterCustomInfo
     );
 
     return cy.wrap(new ManualTrigger(manualTriggerName));
   }
+
+  createTestRunnerUI(componentInfo: ComponentInfo, enterCustomInfo: () => void) {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.testRunnerBuildPack).should("be.visible").click();
+
+    const testRunnerName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterTestRunnerInfo(
+      testRunnerName,
+      componentInfo,
+      enterCustomInfo
+    );
+
+    return cy.url().then(() => {
+      return new TestRunner(testRunnerName);
+    });
+  }
+
+  createMIServiceComponentUI(
+    serviceInfo: ComponentInfo,
+    endpointName: string
+  ): Cypress.Chainable<Service> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
+
+    const serviceName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterMIServiceInfo(
+      serviceName,
+      serviceInfo
+    );
+
+    return cy.wrap(new Service(serviceName, endpointName));
+  }
+
+  createMIServiceEndpointComponentUI(
+    serviceInfo: ComponentInfo, endpointName: string
+  ): Cypress.Chainable<Service> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
+
+    const serviceName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterMIEndpointServiceInfo(
+      serviceName,
+      serviceInfo
+    );
+
+    return cy.wrap(new Service(serviceName, endpointName));
+  }
+
+  createScheduleTriggerUI(
+    scheduleTriggerInfo: ComponentInfo, enterCustomInfo: () => void
+  ): Cypress.Chainable<ScheduleTrigger> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.scheduleTriggerBuildPack).should("be.visible").click();
+
+    const scheduleTriggerName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterTriggerInfo(
+      scheduleTriggerName,
+      scheduleTriggerInfo,
+      enterCustomInfo
+    );
+
+    return cy.wrap(new ScheduleTrigger(scheduleTriggerName));
+  }
+
+  createGQLServiceComponentUI(
+    serviceInfo: ComponentInfo, endpointName: string
+  ): Cypress.Chainable<Service> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
+
+    const serviceName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterGQLServiceInfo(
+      serviceName,
+      serviceInfo
+    );
+
+    return cy.wrap(new Service(serviceName, endpointName));
+  }
+
+  createWebAppServiceComponentUI(
+    serviceInfo: ComponentInfo ,  enterBuildPackInfo: () => void
+  ): Cypress.Chainable<WebApp> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.webAppComponentCard).should("be.visible").click();
+
+    const serviceName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterWebAppServiceInfo(
+      serviceName,
+      serviceInfo,
+      enterBuildPackInfo,
+    );
+
+    return cy.wrap(new WebApp(serviceName));
+  }
+
+  createContainerizedServiceComponentUI(
+    serviceInfo: ComponentInfo, endpointName: string
+  ): Cypress.Chainable<Service> {
+    this.createComponentIfEmptyProject();
+    cy.get(TestIds.serviceBuildPack).should("be.visible").click();
+
+    const serviceName = Utils.generateComponentName();
+    this.serviceCreationWizard.enterContainerizedServiceInfo(
+      serviceName,
+      serviceInfo,
+    );
+
+    return cy.wrap(new Service(serviceName, endpointName));
+  }
+
 
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,
@@ -421,7 +533,6 @@ export class Project {
       triggerChannels: "",
       triggerId: null,
       srcGitRepoUrl: repoInfo.url,
-      initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",
@@ -454,7 +565,6 @@ export class Project {
       triggerChannels: "",
       triggerId: null,
       srcGitRepoUrl: repoInfo.url,
-      initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",
@@ -527,7 +637,6 @@ export class Project {
       accessibility: accessibility,
       projectName: this.name,
       srcGitRepoUrl: repoInfo.url,
-      initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",

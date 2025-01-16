@@ -12,7 +12,7 @@
  */
 
 import { cyGet } from "../../../commons/cy";
-import { Enums } from "../../../commons/enums";
+import { EndpointAccessibility, Enums } from "../../../commons/enums";
 import path from "path";
 import {
   MEDIUM_TIME,
@@ -26,6 +26,8 @@ import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu"
 import { Application } from "../application/application";
 import { _Stats } from "../../features/stats/stats";
 import { _Observability } from "../../features/observability/observability";
+import { GRAPHQL_URL } from "../../../commons/urls";
+import { login } from "../login/login";
 
 export interface DevPortalTryOut {
   resource: string;
@@ -42,8 +44,10 @@ export class Component {
   protected componentUrl: string = "";
   protected devPortalUrl: string = "";
 
+  private devEndpointUrls: Map<EndpointAccessibility, string> = new Map();
   private devEndpointUrl: string = "";
 
+  private prodEndpointUrls: Map<EndpointAccessibility, string> = new Map();
   private prodEndpointUrl: string = "";
 
   private devPortalMenu = new DevPortalLeftMenu();
@@ -91,20 +95,40 @@ export class Component {
     this.devPortalUrl = url;
   }
 
-  getDevEndpointUrl(): string {
-    return this.devEndpointUrl;
+  getDevEndpointUrl(endpointVisibility?: EndpointAccessibility): string {
+    if (endpointVisibility === undefined) {
+      return this.devEndpointUrl;
+    }
+
+    let url = this.devEndpointUrls.get(endpointVisibility);
+
+    if (url === undefined) {
+      throw new Error("Either deployment has not occured OR Dev endpoint URL is not set for " + endpointVisibility + " visibility");
+    }
+
+    return url;
   }
 
-  setDevEndpointUrl(url: string) {
-    this.devEndpointUrl = url;
+  setDevEndpointUrl(endpointVisibility: EndpointAccessibility, url: string) {
+    this.devEndpointUrls.set(endpointVisibility, url);
   }
 
-  getProdEndpointUrl(): string {
-    return this.prodEndpointUrl;
+  getProdEndpointUrl(endpointVisibility?: EndpointAccessibility): string {
+    if (endpointVisibility === undefined) {
+      return this.prodEndpointUrl;
+    }
+
+    let url = this.prodEndpointUrls.get(endpointVisibility);
+
+    if (url === undefined) {
+      throw new Error("Either promotion has not occured OR Prod endpoint URL is not set for " + endpointVisibility + " visibility");
+    }
+
+    return url;
   }
 
-  setProdEndpointUrl(url: string) {
-    this.prodEndpointUrl = url;
+  setProdEndpointUrl(endpointVisibility: EndpointAccessibility, url: string) {
+    this.prodEndpointUrls.set(endpointVisibility, url);
   }
 
   generateCredentials_DevPortal(
@@ -248,8 +272,24 @@ export class Component {
 
   navigateToComponentInConsole() {
     cy.log(this.getComponentUrl());
+
+    // For intercepting the latest access token
+    cy.intercept({
+      method: "POST",
+      url: GRAPHQL_URL,
+      times: 1,
+    }).as("gql");
+    
     cy.visit(this.getComponentUrl()).then(() => {
       cy.get(TestIds.backdropLoader, SHORT_TIME).should("not.exist");
+
+
+      cy.wait("@gql", MEDIUM_TIME).then((intercept) => {
+        // Update the latest access token
+        const header = intercept.request.headers["authorization"] as string;
+        const accessToken = header.replace("Bearer", "").trim();
+        login.updateAccessToken(accessToken);
+      });
     });
   }
 

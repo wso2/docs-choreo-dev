@@ -1,0 +1,11 @@
+{
+    "users":["IDP_USERSTORE_DB_USER","dev_mssql_ddl_user","dev_mssql_writer","dev_mssql_reader"],
+    "IDP_USERSTORE_DB_USER":"idp-userstore-db-mssql-password",
+    "IDP_USERSTORE_DB_USER_permissions":["SELECT","INSERT","UPDATE","DELETE","EXECUTE"],
+    "dev_mssql_writer":"database-user-DEV-MSSQL-WRITER",
+    "dev_mssql_writer_permissions":["SELECT","INSERT","UPDATE","DELETE"],
+    "dev_mssql_ddl_user":"database-user-DEV-MSSQL-DDL-USER",
+    "dev_mssql_ddl_user_permissions":["SELECT","INSERT","UPDATE","DELETE"],
+    "dev_mssql_reader":"database-user-DEV-MSSQL-READER",
+    "dev_mssql_reader_permissions":["SELECT"]
+}

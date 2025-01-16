@@ -13,7 +13,6 @@ export interface ComponentData extends AbsComponent {
   repositoryType?: string;
   sampleTemplate?: string;
   repositorySubPath?: string;
-  initializeAsBallerinaProject?: boolean;
   accessibility?: string;
   displayName?: string;
 }

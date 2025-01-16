@@ -133,4 +133,11 @@ export enum BuildPacks {
   Ballerina = "Ballerina",
   Go = "Go",
   MI = "MI",
+  WEBAPP = "WebApp",
+  DOCKER = "Docker"
+}
+
+export enum SecurityScheme {
+  ApiKey,
+  OAuth2,
 }

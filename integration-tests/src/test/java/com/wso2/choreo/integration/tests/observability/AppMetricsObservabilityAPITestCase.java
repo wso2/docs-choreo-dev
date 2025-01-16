@@ -98,7 +98,7 @@ public class AppMetricsObservabilityAPITestCase extends TestNGCitrusSpringSuppor
     @Test(dependsOnMethods = {"createComponent_AppMetricsObservabilityAPITestCase"})
     @CitrusTest
     public void deployComponent_AppMetricsObservabilityAPITestCase() throws Exception {
-        ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, choreoComponent,
+        deploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken, choreoComponent,
                 environments);
     }
 

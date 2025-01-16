@@ -41,7 +41,7 @@ export class Application {
 
     cy.wait("@getAllApis", VERY_SHORT_TIME).then(() => {
       cy.get(TestIds.apiSubscriptionSearch).should("be.visible").within(() => {
-        cy.getUnstable('button[title="Open"]').click();
+        cy.getUnstable('button[title="Open"]').should("be.visible").click();
         cy.get('input[value="Select API"]').click().type(`${apiName}`);
       });
 
@@ -52,29 +52,6 @@ export class Application {
 
       this.validateResubscribingApi(apiName);
     });
-  }
-
-  addPermissionToApplication(permissionName: string) {
-    cy.get(TestIds.applicationBar).should("be.visible").click();
-    cy.get(TestIds.search).trigger("mouseover");
-    cy.get(TestIds.searchAppText).type(this.name);
-    cy.get(TestIds.applicationList(this.name)).should("be.visible").click();
-    cy.get(TestIds.applicationTokenType).should("be.visible");
-    cy.contains(this.name).should("be.visible");
-    cy.get(TestIds.applicationEdit).should("be.visible").click();
-    cy.get(TestIds.permissionsField).should("be.visible").click().wait(2000);
-    cy.get('li[data-option-index="0"]')
-      .contains(permissionName)
-      .then((option) => {
-        option[0].click();
-      });
-    cy.contains(permissionName).should("be.visible");
-    cy.get(TestIds.createBtn).click();
-    cy.get(TestIds.createBtn).should("not.exist");
-    cy.contains(`Updating Application: ${this.name}`).should("be.visible");
-    cy.contains(`Updating Application: ${this.name}`)
-      .should("not.exist")
-      .wait(5000); // Extra wait because the application is not updated immediately
   }
 
   private validateResubscribingApi(apiName: string) {
@@ -95,7 +72,7 @@ export class Application {
 
     cy.wait("@getAllApisForResubscribe", VERY_SHORT_TIME).then(() => {
       cy.get(TestIds.apiSubscriptionSearch).should("be.visible").within(() => {
-        cy.getUnstable('button[title="Open"]').click();
+        cy.get('button[title="Open"]').should("be.visible").click();
         cy.get('input[value="Select API"]').click().type(`${apiName}`);
       });
 

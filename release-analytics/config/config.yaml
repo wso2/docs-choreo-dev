@@ -1,6 +1,6 @@
 bigquery:
   scopes: ["https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/bigquery"]
-  project: "choreo-releases"
+  project: "choreo-release-statistics-stg"
   dataset: "release_data"
 devops:
   url: "https://dev.azure.com/choreo-devops"

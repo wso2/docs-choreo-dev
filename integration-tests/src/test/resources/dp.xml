@@ -10,6 +10,7 @@
             <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithOperationRateLimit"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestBallerinaServiceDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestWebSocketServiceDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>
         </classes>
     </test>

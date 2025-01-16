@@ -14,19 +14,26 @@
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Service } from "../../../support/console/entities/component/service-component";
-import { Enums } from "../../../support/commons/enums";
-import { ConfigEntryStep } from "../../../support/commons/types";
+import { BuildPacks, EndpointAccessibility, Enums } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
+import { ConfigEntryStep } from "../../../support/commons/types";
 import { TestIds } from "../../../support/console/constants/TestIds";
+import { Utils } from "../../../support/commons/utils";
+import { marketplace, MarketPlaceFilter } from "../../../support/console/entities/marketplace/marketplace";
 
 describe("Verify Component visibility functionality", () => {
   const PROJECT_DESCRIPTION = "Component Visibility Test";
-  const ENDPOINT_NAME = "Readinglist";
-  const RESOURCE = "/books";
+  const PROJECT_EXPOSED_ENDPOINT_NAME = "Endpoint 8090";
+  const PUBLIC_EXPOSED_ENDPOINT_NAME = "Endpoint 9090";
+  const REPO_URL = "https://github.com/wso2/choreo-samples";
+  const PROJECT_EXPOSED_REPO_NAME = "greeting-service";
+  const PUBLIC_EXPOSED_REPO_NAME = "dynamic-endpoint-passthrough";
 
   let project: Project;
-  let service: Service;
-  let trigger: Service;
+  let projectExposedService: Service;
+  let publicExposedService: Service;
+
+  const OPERATION = "greeting";
 
   // This step is only encountered the first time a service component with a config is promoted.
   // However if due to an error the step is retried by Cypress this step will not be encountered.
@@ -45,7 +52,6 @@ describe("Verify Component visibility functionality", () => {
       throw new Error("args is undefined or empty");
     }
     cy.get('[data-cyid="invoke_url"]>input').type(args[0]);
-    cy.get('[data-cyid="invoke_resource"]>input').type(args[1]);
     cy.get('[data-cyid="btn-submit-configform"]').click();
   }
 
@@ -57,110 +63,122 @@ describe("Verify Component visibility functionality", () => {
     project = console.createNewProject(PROJECT_DESCRIPTION);
   });
 
-  it("Verify Ballerina service component creation", () => {
+  it("Creating a ballerina service from choreo samples", () => {
     project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/byor-service-app1",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((serviceComponent: Service) => {
-        project.visitComponent(serviceComponent.getName());
-        service = serviceComponent;
+      .createServiceComponentUI({
+        displayName: "",
+        repoUrl: REPO_URL,
+        buildPack: BuildPacks.Ballerina,
+        directoryInfo: { directoryName: PROJECT_EXPOSED_REPO_NAME, directoryTestid: PROJECT_EXPOSED_REPO_NAME }
+      },
+      PROJECT_EXPOSED_ENDPOINT_NAME)
+      .then((comp) => {
+        projectExposedService = comp;
       });
   });
 
-  it("Build the service", () => {
-    service.build();
+  it("Build the service with Project level visibility", () => {
+    projectExposedService.build();
   });
 
   it("Deploying the service with Project level visibility", () => {
-    service.deployProjectLevelAccessibility();
+    projectExposedService.deployProjectLevelAccessibility();
   });
 
   it("Promoting the service with Project level visibility", () => {
-    service.promoteProjectLevelAccessibility();
+    projectExposedService.promoteProjectLevelAccessibility();
   });
 
   it("Return to Project", () => {
-    service.goBackToProject();
+    projectExposedService.goBackToProject();
   });
 
-  it("Verify Service Trigger component creation", () => {
+  it("Creating passthrough ballerina service", () => {
     project
-      .createServiceComponent(
-        Enums.Accessibility.EXTERNAL,
-        {
-          url: "https://github.com/choreo-test-apps/service-to-service",
-          branch: "main",
-        },
-        ENDPOINT_NAME
-      )
-      .then((comp: Service) => {
-        project.visitComponent(comp.getName());
-        trigger = comp;
+    .createServiceComponentUI({
+      displayName: "",
+      repoUrl: REPO_URL,
+      buildPack: BuildPacks.Ballerina,
+      directoryInfo: { directoryName: PUBLIC_EXPOSED_REPO_NAME, directoryTestid: PUBLIC_EXPOSED_REPO_NAME }
+    },
+    PUBLIC_EXPOSED_ENDPOINT_NAME)
+      .then((comp) => {
+        publicExposedService = comp;
       });
   });
 
-  it("Build the trigger", () => {
-    trigger.build();
+  it("Build the service with Public level visibility", () => {
+    publicExposedService.build();
   });
 
-  it("Deploying the trigger", () => {
+  it("Deploy the service with Public level visibility", () => {
     const devServiceConfigs: string[] = [];
-    devServiceConfigs.push(service.getDevEndpointUrl());
-    devServiceConfigs.push(RESOURCE);
+    const url = Utils.replaceTrailingSlash(projectExposedService.getDevEndpointUrl(EndpointAccessibility.Project));
+    devServiceConfigs.push(url);
 
-    trigger.deployPublicLevelAccessibilityWithConfigs([
+    publicExposedService.deployPublicLevelAccessibilityWithConfigs([
       new ConfigEntryStep(addConfiguration, devServiceConfigs),
     ]);
   });
 
-  it("Promote the trigger", () => {
+  it("Promote the service with Public level visibility", () => {
     const prodServiceConfigs: string[] = [];
-    prodServiceConfigs.push(service.getProdEndpointUrl());
-    prodServiceConfigs.push(RESOURCE);
+    const url = Utils.replaceTrailingSlash(projectExposedService.getProdEndpointUrl(EndpointAccessibility.Project));
+    prodServiceConfigs.push(url);
 
-    trigger.promotePublicLevelAccessibility([
+    publicExposedService.promotePublicLevelAccessibility([
       new ConfigEntryStep(useDeployConfigsIfPrompted),
       new ConfigEntryStep(addConfiguration, prodServiceConfigs),
     ]);
   });
 
-  it("Invoke trigger in Dev", () => {
-    trigger
+  it("Verify test functionality using Swagger UI in Dev", () => {
+    publicExposedService
       .testConsole({
         env: Enums.Environment.DEVELOPMENT,
-        endpoint: ENDPOINT_NAME,
-        resourcePath: "invoke",
+        endpoint: PUBLIC_EXPOSED_ENDPOINT_NAME,
+        resourcePath: OPERATION,
         method: "get",
-        parentComponentId: "operations-default-getInvoke",
+        key: "name",
+        value: "User",
+        parentComponentId: "operations-default-getGreeting"
       })
       .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
-        expect(res.statusCode).to.be.eq(OK.toString());
+        expect(res.statusCode).to.be.equal(OK.toString());
+        expect(res.response).to.contain("User");
       });
   });
 
-  it("Invoke trigger in Prod", () => {
-    trigger
-      .testConsole({
-        env: Enums.Environment.PRODUCTION,
-        endpoint: ENDPOINT_NAME,
-        resourcePath: "invoke",
-        method: "get",
-        parentComponentId: "operations-default-getInvoke",
-      })
-      .then((res) => {
-        cy.fixture("books").then((books) => {
-          expect(res.response.toString()).to.include(books[1].title);
-        });
-        expect(res.statusCode).to.be.eq(OK.toString());
+  it("Verify test functionality using Swagger UI in Prod", () => {
+    publicExposedService
+    .testConsole({
+      env: Enums.Environment.PRODUCTION,
+      endpoint: PUBLIC_EXPOSED_ENDPOINT_NAME,
+      resourcePath: OPERATION,
+      method: "get",
+      key: "name",
+      value: "User",
+      parentComponentId: "operations-default-getGreeting"
+    })
+    .then((res) => {
+      expect(res.statusCode).to.be.equal(OK.toString());
+      expect(res.response).to.contain("User");
+    });
+  });
+
+  it("Verify Marketplace filter by Project", () => {
+    marketplace.filterBy([MarketPlaceFilter.Project]).then(() => {
+      marketplace.find(projectExposedService.getName()).then(() => {
+        marketplace.find(publicExposedService.getName(), 0);
       });
+    });
+  });
+
+  it("Verify Marketplace filter by Public", () => {
+    marketplace.filterBy([MarketPlaceFilter.Public]).then(() => {
+      marketplace.find(publicExposedService.getName()).then(() => {
+        marketplace.find(projectExposedService.getName(), 0);
+      });
+    });
   });
 });

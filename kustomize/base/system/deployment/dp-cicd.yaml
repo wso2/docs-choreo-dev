@@ -43,6 +43,8 @@ spec:
                 name: env-dp-cicd
             - configMapRef:
                 name: cm-dp-cicd
+            - secretRef:
+                name: secret-dp-cicd-docker-hub-users
           env:
             - name: DOCKER_REGISTRY_PAT
               valueFrom:
@@ -79,10 +81,25 @@ spec:
                 secretKeyRef:
                   key: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
                   name: secret-dp-cicd
+            - name: CHOREO_GITHUB_RUNNER_APP_OPAQUE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
+                  name: secret-dp-cicd
+            - name: AZURE_CONTAINER_REGISTRY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: AZURE-CONTAINER-REGISTRY-PASSWORD
+                  name: secret-dp-cicd
             - name: BUILDPACKS_BUILDER_IMAGE
               valueFrom:
                 configMapKeyRef:
                   key: BUILDPACKS_BUILDER_IMAGE
+                  name: common-env-variables
+            - name: UNIT_TEST_RUNNER_IMAGE
+              valueFrom:
+                configMapKeyRef:
+                  key: UNIT_TEST_RUNNER_IMAGE
                   name: common-env-variables
           securityContext:
             allowPrivilegeEscalation: false
@@ -120,6 +137,9 @@ spec:
             - name: secret-dp-cicd
               mountPath: "/mnt/csi/secret-dp-cicd"
               readOnly: true
+            - name: secret-dp-cicd-docker-hub-users
+              mountPath: /mnt/csi/secret-dp-cicd-docker-hub-users
+              readOnly: true
       volumes:
         - name: secret-dp-cicd
           csi:
@@ -127,6 +147,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-dp-cicd
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-dp-cicd-docker-hub-users
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-cicd-docker-hub-users
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always

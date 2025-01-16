@@ -2,6 +2,7 @@ resources:
   - alert-notification-service.yaml
   - alert-configuration-service.yaml
   - analytics-subscription.yaml
+  - api-key-service.yaml
   - api-server.yaml
   - app-service.yaml
   - audit-logging.yaml
@@ -23,7 +24,6 @@ resources:
   - dp-secret-manager.yaml
   - email-service.yaml
   - moesif-service.yaml
-  - negotiator.yaml
   - orgremover.yaml
   - platform-services-manager.yaml
   - quota-limiter.yaml
@@ -52,5 +52,7 @@ resources:
   - app-dev-authorization-service.yaml
   - cp-gw-adapter.yaml
   - choreo-url-management.yaml
+  - choreo-gcp-marketplace-client.yaml
   - choreo-aws-marketplace-client.yaml
   - configuration-schema-service.yaml
+  - sts-mgt-service.yaml

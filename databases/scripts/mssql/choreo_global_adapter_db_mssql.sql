@@ -40,3 +40,9 @@ CREATE TABLE ga_api_partition (
     UNIQUE(dataplane_id, gateway_accessibility_type, slot_id),
     PRIMARY KEY (api_uuid, apim_environment_name, dataplane_id, gateway_accessibility_type, org_id)
 );
+
+CREATE TABLE pdp_la_credentials (
+    id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    organization_uuid NVARCHAR(50) NOT NULL UNIQUE,
+    password NVARCHAR(255) NOT NULL
+);

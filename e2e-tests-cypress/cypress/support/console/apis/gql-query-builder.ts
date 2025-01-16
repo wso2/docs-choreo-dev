@@ -392,7 +392,6 @@ export class GraphQLQueryBuilder {
                                   repositorySubPath: "${componentData.repositorySubPath}",
                                   repositoryType: "${componentData.repositoryType}",
                                   repositoryBranch: "main",
-                                  initializeAsBallerinaProject: ${componentData.initializeAsBallerinaProject},
                                 } )
                                 {id, orgId, projectId, handler    }
                       }`,

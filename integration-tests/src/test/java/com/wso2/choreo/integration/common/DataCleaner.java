@@ -16,13 +16,10 @@ package com.wso2.choreo.integration.common;
 import com.wso2.choreo.integration.apis.marketplace.ConnectionService;
 import com.wso2.choreo.integration.common.ResourceAuthz.ResourceAuthzConstants;
 import com.wso2.choreo.integration.common.ResourceAuthz.ResourceAuthzUtils;
-import com.wso2.choreo.integration.common.appdevUserManagement.AppdevUserManagementUtils;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.config.Constant;
-import com.wso2.choreo.integration.models.appdevUserManagement.UserStore;
 import com.wso2.choreo.integration.models.marketplace.ConnectionInfo;
 import com.wso2.choreo.integration.models.resourceAuthorization.Group;
 import com.wso2.choreo.integration.models.resourceAuthorization.GroupWithUsersDTO;
@@ -34,8 +31,6 @@ import org.apache.logging.log4j.Logger;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -174,60 +169,16 @@ public class DataCleaner  {
 
             ResourceAuthzUtils.deleteRole(role.getHandle());
         }
-
-        // Delete existing user stores
-        deleteUserStores();
-    }
-
-    private static void deleteUserStores() throws TokenRetrievalException, IOException, URISyntaxException {
-
-        List<UserStore> userStores = AppdevUserManagementUtils.getAllUserStores();
-
-        if (userStores != null && !userStores.isEmpty()) {
-            for (UserStore userStore : userStores) {
-                try {
-                    AppdevUserManagementUtils.deleteUserStore(userStore.getUserStoreId());
-                } catch (Exception e) {
-                    log.error("Error occurred while deleting user store: " + userStore.getUserStoreId(), e);
-                }
-            }
-        }
     }
 
     private static boolean shouldGroupBeDeleted(String groupName) throws ParseException {
 
-        if (!groupName.startsWith(ResourceAuthzConstants.TestGroupData.GROUP_NAME_BASE)) {
-            return false;
-        }
-
-        String timestamp = groupName.split("_")[1];
-
-        return !isValidTimestamp(timestamp);
+        return groupName.startsWith(ResourceAuthzConstants.TestGroupData.GROUP_NAME_BASE);
     }
 
     private static boolean shouldRoleBeDeleted(String roleName) throws ParseException {
 
-        if (!(roleName.startsWith(ResourceAuthzConstants.TestRoleData.ROLE_DISPLAY_NAME_BASE) || roleName
-                .startsWith(ResourceAuthzConstants.ProjectViewAndOrgManageRoleData.ROLE_DISPLAY_NAME_BASE))) {
-            return false;
-        }
-
-        String timestamp = roleName.split("_")[1];
-
-        return !isValidTimestamp(timestamp);
-    }
-
-    private static boolean isValidTimestamp(String timestampString) throws ParseException {
-
-        try {
-            long timestamp = Long.parseLong(timestampString);
-            LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault());
-            LocalDateTime currentTime = LocalDateTime.now();
-            LocalDateTime oneHourLater = dateTime.plusHours(1);
-
-            return currentTime.isBefore(oneHourLater);
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return roleName.startsWith(ResourceAuthzConstants.TestRoleData.ROLE_DISPLAY_NAME_BASE) 
+            || roleName.startsWith(ResourceAuthzConstants.ProjectViewAndOrgManageRoleData.ROLE_DISPLAY_NAME_BASE);
     }
 }
