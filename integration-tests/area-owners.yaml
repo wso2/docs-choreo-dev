@@ -57,6 +57,9 @@ areaOwners:
   - testClass: com.wso2.choreo.integration.tests.dp.TestBallerinaServiceDp
     assignees:
       - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestWebSocketServiceDp
+    assignees:
+      - thushani@wso2.com
   - testClass: com.wso2.choreo.integration.tests.dp.TestBuildpackDp
     assignees:
       - janakas@wso2.com
