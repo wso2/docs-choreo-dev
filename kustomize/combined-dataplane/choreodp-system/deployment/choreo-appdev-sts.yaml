@@ -41,7 +41,7 @@ spec:
             - containerPort: 9000
               name: service-port
           readinessProbe:
-            initialDelaySeconds: 13 # Spring takes ~13 seconds to start up
+            initialDelaySeconds: 15 # Spring takes ~13 seconds to start up
             timeoutSeconds: 60
             periodSeconds: 10
             failureThreshold: 3
