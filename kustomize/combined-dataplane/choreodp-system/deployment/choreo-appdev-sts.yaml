@@ -41,9 +41,9 @@ spec:
             - containerPort: 9000
               name: service-port
           readinessProbe:
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15 # Spring takes ~13 seconds to start up
             timeoutSeconds: 60
-            periodSeconds: 60
+            periodSeconds: 10
             failureThreshold: 3
             successThreshold: 1
             httpGet:
@@ -61,10 +61,10 @@ spec:
           resources:
             limits:
               cpu: 750m
-              memory: 3Gi
+              memory: 1Gi
             requests:
               cpu: 350m
-              memory: 2Gi
+              memory: 512Mi
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
