@@ -22,12 +22,12 @@ spec:
           objectAlias: AZURE_LA_CLIENT_SECRET
           objectVersion: "{{.AZURE_LA_CLIENT_SECRET}}"
         - |
-          objectName: "{{.OPENSEARCH_PASSWORD_EU_OBJ_NAME}}"
+          objectName: "{{.OPENSEARCH_PASSWORD_EU_OBJ_NAME | default "obs-opensearch-log-controller-user-password-eu"}}"
           objectType: secret
           objectAlias: OPENSEARCH_PASSWORD_EU
           objectVersion: "{{.OPENSEARCH_PASSWORD_EU}}"
         - |
-          objectName: "{{.OPENSEARCH_PASSWORD_US_OBJ_NAME}}"
+          objectName: "{{.OPENSEARCH_PASSWORD_US_OBJ_NAME | default "obs-opensearch-log-controller-user-password-eastus2"}}"
           objectType: secret
           objectAlias: OPENSEARCH_PASSWORD_US
           objectVersion: "{{.OPENSEARCH_PASSWORD_US}}"
