@@ -1068,6 +1068,7 @@ configMapGenerator:
   - name: env-log-controller
     behavior: create
     literals:
+      - FETCH_VIOLATION_DATA_FROM_OPENSEARCH={{.FETCH_VIOLATION_DATA_FROM_OPENSEARCH | default "false"}}
       - LOG_LEVEL={{.LOG_LEVEL}}
       - REDIS_HOST={{.REDIS_HOST}}
       - AZURE_LA_CLIENT_ID={{.AZURE_LA_CLIENT_ID}}
