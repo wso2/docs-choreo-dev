@@ -108,8 +108,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: cm-feature-flags
-            - configMapRef:
-                name: cm-app-env
             - secretRef:
                 name: secret-apim-keystore-passwords
             - secretRef:
