@@ -25,6 +25,9 @@ rules:
       - configurables
       - configurables/finalizers
       - configurables/status
+      - configurations
+      - configurations/finalizers
+      - configurations/status
     verbs:
       - get
       - list

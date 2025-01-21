@@ -434,12 +434,12 @@ configMapGenerator:
       - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.35.yml"}}
       - BD_BYORV={{.BD_BYORV | default "v1.1.41"}}
       - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.41.yml"}}
-      - BD_BYOCV={{.BD_BYOCV | default "v1.0.32"}}
-      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.32.yml"}}
-      - BD_MIV={{.BD_MIV | default "v1.0.27"}}
-      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.27.yml"}}
-      - BD_BPV={{.BD_BPV | default "v0.12.18"}}
-      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.18.yml"}}
+      - BD_BYOCV={{.BD_BYOCV | default "v1.0.33"}}
+      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.33.yml"}}
+      - BD_MIV={{.BD_MIV | default "v1.0.30"}}
+      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.30.yml"}}
+      - BD_BPV={{.BD_BPV | default "v0.12.19"}}
+      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.19.yml"}}
       - BD_PMSV={{.BD_PMSV | default "v1.1.1"}}
       - BD_PMS_FP={{.BD_PMS_FP | default ".github/workflows/choreo-build-deploy_prism-mock-service_1.1.1.yml"}}
       - BD_IMAGE_PUSH_TEMPLATE_VERSION={{.BD_IMAGE_PUSH_TEMPLATE_VERSION | default "choreo-templates/choreo-image-push@v1.0.7"}}
@@ -477,6 +477,7 @@ configMapGenerator:
       - ENABLE_ASYNC_INITIAL_BUILD={{.ENABLE_ASYNC_INITIAL_BUILD | default "false"}}
       - ENABLE_SAVE_SRC_CONFIG_DETAILS={{.ENABLE_SAVE_SRC_CONFIG_DETAILS | default "true"}}
       - LATEST_COMPONENT_YAML_SCHEMA_VERSION={{.LATEST_COMPONENT_YAML_SCHEMA_VERSION | default "1.1"}}
+      - SOURCE_CONFIG_MIGRATION_DOC_LINK={{.SOURCE_CONFIG_MIGRATION_DOC_LINK | default "https://wso2.com/choreo/docs/develop-components/manage-component-source-configurations/#update-to-the-latest-source-configuration-file"}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
@@ -561,6 +562,8 @@ configMapGenerator:
       - REACT_APP_ORG_MANAGEMENT_API_URL={{.REACT_APP_ORG_MANAGEMENT_API_URL}}
       - REACT_APP_ORG_MANAGEMENT_API_URL_V2={{.REACT_APP_ORG_MANAGEMENT_API_URL_V2}}
       - REACT_APP_AUDIT_LOGGING_API_URL={{.REACT_APP_AUDIT_LOGGING_API_URL}}
+      - REACT_APP_AUDIT_LOGGING_API_BASE_URL={{.REACT_APP_AUDIT_LOGGING_API_BASE_URL}}
+      - REACT_APP_ENABLE_SEMANTIC_VERSIONED_AUDIT_LOGGING_API={{.REACT_APP_ENABLE_SEMANTIC_VERSIONED_AUDIT_LOGGING_API | default "false"}}
       - REACT_APP_COMPONENT_CREATION_STATUS_API_URL={{.REACT_APP_COMPONENT_CREATION_STATUS_API_URL}}
       - REACT_APP_COMPONENT_MANAGEMENT_API_URL={{.REACT_APP_COMPONENT_MANAGEMENT_API_URL}}
       - REACT_APP_COMPONENT_UTILS_API_URL={{.REACT_APP_COMPONENT_UTILS_API_URL}}
@@ -603,6 +606,7 @@ configMapGenerator:
       - REACT_APP_DISABLE_ENTERPRISE_LOGIN={{.REACT_APP_DISABLE_ENTERPRISE_LOGIN}}
       - REACT_GOOGLE_CAPTCHA_SITE_KEY={{.REACT_GOOGLE_CAPTCHA_SITE_KEY}}
       - REACT_DISABLE_GOOGLE_CAPTCHA={{.REACT_DISABLE_GOOGLE_CAPTCHA}}
+      - REACT_APP_ENABLE_GCP_SUBSCRIPTION_FEATURE={{.REACT_APP_ENABLE_GCP_SUBSCRIPTION_FEATURE}}
       - REACT_APP_ENABLE_DEMO_ORG_FEATURE={{.REACT_APP_ENABLE_DEMO_ORG_FEATURE}}
       - REACT_APP_DEMO_ORG_HANDLE={{.REACT_APP_DEMO_ORG_HANDLE}}
       - REACT_APP_DEMO_ORG_WEB_APP_URL={{.REACT_APP_DEMO_ORG_WEB_APP_URL}}
@@ -828,6 +832,7 @@ configMapGenerator:
       - REACT_APP_ENABLE_BUILD_STS_URL_FROM_DEFAULT_DOMAIN={{.REACT_APP_ENABLE_BUILD_STS_URL_FROM_DEFAULT_DOMAIN | default "false"}}
       - REACT_APP_PREVIEW_FEATURE_ENABLE_LIST={{.REACT_APP_PREVIEW_FEATURE_ENABLE_LIST | default ""}}
       - REACT_APP_COST_OPTIMIZATION_FEATURE={{.REACT_APP_COST_OPTIMIZATION_FEATURE  | default "false"}}
+      - REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL={{.REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL | default "https://wso2.com/choreo/docs/develop-components/manage-component-source-configurations/#update-to-the-latest-source-configuration-file"}}
   - name: env-dp-mizzen
     behavior: create
     literals:
@@ -927,6 +932,7 @@ configMapGenerator:
       - LOG_LEVEL={{.LOG_LEVEL}}
       - ENVIRONMENT={{.ENVIRONMENT}}
       - REGISTRY_NAMES={{.REGISTRY_NAMES}}
+      - AZURE_CLIENT_ID={{.AZURE_CLIENT_ID | default "08eae7d4-cdcb-400d-894e-b27d66419876"}}
   - name: env-proxy-deployer
     behavior: create
     literals:
@@ -962,6 +968,7 @@ configMapGenerator:
       - CHOREO_JWT_AUDIENCES={{.CHOREO_JWT_AUDIENCES}}
       - CHOREO_JWT_JWKS_URL={{.CHOREO_JWT_JWKS_URL}}
       - CHOREO_SYSTEM_ORG_UUID={{.CHOREO_SYSTEM_ORG_UUID}}
+      - PRICEID_TO_SALESFORCEID="{{.PRICEID_TO_SALESFORCEID}}"
   - name: env-cio-event-collector-service
     behavior: create
     literals:
@@ -1052,6 +1059,10 @@ configMapGenerator:
       - WEBSUB_HUB_BASE_URL={{.WEBSUB_HUB_BASE_URL | default ""}}
       - WEBSUB_HUB_TOPIC={{.WEBSUB_HUB_TOPIC | default ""}}
       - SIGNATURE_VALIDATION_ENABLED={{.SIGNATURE_VALIDATION_ENABLED | default "true"}}
+      - STS_MGT_SERVICE_BASE_URL=http://sts-mgt-service:3000/api/v1/sts-proxy
+      - APIM_CLIENT_KEY={{.APIM_CLIENT_KEY}}
+      - APIM_CLIENT_SECRET_FILE={{.APIM_CLIENT_SECRET_FILE | default "/mnt/csi/secret-api-key-svc/APIM_REST_API_CONSUMER_SECRET"}}
+      - APIM_CLIENT_BASE_URL={{.APIM_SERVICE_URL}}
   - name: env-log-controller
     behavior: create
     literals:

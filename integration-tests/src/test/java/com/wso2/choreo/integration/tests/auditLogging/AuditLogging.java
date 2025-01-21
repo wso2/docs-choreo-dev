@@ -69,7 +69,7 @@ public class AuditLogging extends TestNGCitrusSpringSupport {
     public void publishGraphQLAPIAuditEvents_AuditLoggingTests() throws Exception {
         projectA = ComponentUtils.createProject(this, citrusClients, accessToken, Constant.region.US.toString());
         TimeRangeISO timeRangeISO = AuditLoggingUtils.getTimeRangeISO(600);
-        AuditLogList auditLogList = AuditLoggingUtils.filterAuditLogsByTime(this, citrusClients, orgUuid,
+        AuditLogList auditLogList = AuditLoggingUtils.filterAuditLogsByTime(this, citrusClients,
                 timeRangeISO);
 
         boolean actionAndTypeFound = auditLogList.getList().stream()
@@ -82,7 +82,7 @@ public class AuditLogging extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void publishRuntimeAPIAuditEvents_AuditLoggingTests() throws Exception {
         TimeRangeISO timeRangeISO = AuditLoggingUtils.getTimeRangeISO(600);
-        AuditLogList auditLogList = AuditLoggingUtils.filterAuditLogsByTime(this, citrusClients, orgUuid,
+        AuditLogList auditLogList = AuditLoggingUtils.filterAuditLogsByTime(this, citrusClients,
                 timeRangeISO);
 
         boolean actionFound = auditLogList.getList().stream()
@@ -94,7 +94,7 @@ public class AuditLogging extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void publishAPIMProxyDeployerAPIAuditEvents_AuditLoggingTests() throws Exception {
         TimeRangeISO timeRangeISO = AuditLoggingUtils.getTimeRangeISO(600);
-        AuditLogList auditLogList = AuditLoggingUtils.filterAuditLogsByTime(this, citrusClients, orgUuid,
+        AuditLogList auditLogList = AuditLoggingUtils.filterAuditLogsByTime(this, citrusClients,
                 timeRangeISO);
 
         boolean actionAndComponentTypeFound = auditLogList.getList().stream()
@@ -108,7 +108,7 @@ public class AuditLogging extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void publishAPIMAPIAuditEvents_AuditLoggingTests() throws Exception {
         TimeRangeISO timeRangeISO = AuditLoggingUtils.getTimeRangeISO(600);
-        AuditLogList auditLogList = AuditLoggingUtils.filterAuditLogsByTime(this, citrusClients, orgUuid,
+        AuditLogList auditLogList = AuditLoggingUtils.filterAuditLogsByTime(this, citrusClients,
                 timeRangeISO);
 
         boolean actionFound = auditLogList.getList().stream()
@@ -119,14 +119,14 @@ public class AuditLogging extends TestNGCitrusSpringSupport {
     @Test
     @CitrusTest
     public void filterAuditLogsByOutcome_AuditLoggingTests() throws Exception {
-        AuditLoggingUtils.filterAuditLogsByOutcome(this, citrusClients, orgUuid,
+        AuditLoggingUtils.filterAuditLogsByOutcome(this, citrusClients,
                 List.of("succeeded", "failed"));
     }
 
     @Test
     @CitrusTest
     public void filterAuditLogsByUser_AuditLoggingTests() throws Exception {
-        AuditLoggingUtils.filterAuditLogsByUser(this, citrusClients, orgUuid,
+        AuditLoggingUtils.filterAuditLogsByUser(this, citrusClients,
                 List.of(userIdpId));
     }
 
@@ -134,7 +134,7 @@ public class AuditLogging extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void filterAuditLogsByProject_AuditLoggingTests() throws Exception {
         SleepUtil.sleep(10); // Wait for the audit logs to be generated
-        AuditLoggingUtils.filterAuditLogsByProject(this, citrusClients, orgUuid,
+        AuditLoggingUtils.filterAuditLogsByProject(this, citrusClients,
                 List.of(projectA.getId()));
     }
 
@@ -142,7 +142,6 @@ public class AuditLogging extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void filterAuditLogsByTime_AuditLoggingTests() throws Exception {
         TimeRangeISO timeRangeISO = AuditLoggingUtils.getTimeRangeISO(600);
-        AuditLoggingUtils.filterAuditLogsByTime(this, citrusClients, orgUuid,
-                timeRangeISO);
+        AuditLoggingUtils.filterAuditLogsByTime(this, citrusClients, timeRangeISO);
     }
 }

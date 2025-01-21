@@ -137,7 +137,7 @@ export class Service extends mixinBuild(
     this.sideMenu.navigateToDeploy();
     cy.get(TestIds.endpointConfigurationsButton).should("be.visible").click();
     cy.get(TestIds.rightDrawer)
-      .contains("div", "Pass User Context to Backend")
+      .contains("div", "Pass end-user attributes to upstream")
       .should("be.visible")
       .siblings("div")
       .eq(0)

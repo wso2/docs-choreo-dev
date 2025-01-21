@@ -19,6 +19,10 @@ spec:
           key: APP_DB_PASSWORD
         - objectName: SCIM2_API_PASSWORD
           key: SCIM2_API_PASSWORD
+        - objectName: MONGODB_PASSWORD
+          key: MONGODB_PASSWORD
+        - objectName: RUDDER_DB_PASSWORD
+          key: RUDDER_DB_PASSWORD
   parameters:
     objects: |
       array:
@@ -52,3 +56,13 @@ spec:
           objectType: secret
           objectAlias: SCIM2_API_PASSWORD
           objectVersion: "{{.SCIM2_API_PASSWORD}}"
+        - |
+          objectName: dp-project-manager-MONGODB-PASSWORD
+          objectType: secret
+          objectAlias: MONGODB_PASSWORD
+          objectVersion: "{{.MONGODB_PASSWORD}}"
+        - |
+          objectName: dp-CHOREO-RUDDER-MSSQL-PASSWORD
+          objectType: secret
+          objectAlias: RUDDER_DB_PASSWORD
+          objectVersion: "{{.RUDDER_DB_PASSWORD}}"
