@@ -29,6 +29,7 @@ configMapGenerator:
       - localLabel=""
       - environmentLabel=""
       - AZURE_SDK_GO_LOGGING=""
+      - ENABLE_PAID_ORGS_FROM_SUBSCRIPTION_SERVICE="false"
 
 commonLabels:
   cc.component: choreo-connect-adapter
