@@ -39,8 +39,6 @@ spec:
           image: choreocontrolplane.azurecr.io/choreoipaas/dp-keda-http-add-on-operator:latest
           args:
             - --leader-elect
-            # TODO(pedrotorres): remove after implementing new routing table
-            - --admin-port=9090
           env:
             # TODO(pedrotorres): remove after implementing new routing table
             - name: KEDAHTTP_INTERCEPTOR_SERVICE
@@ -59,8 +57,12 @@ spec:
               value: ""
           # TODO(pedrotorres): remove after implementing new routing table
           ports:
-            - name: admin
-              containerPort: 9090
+            - name: metrics
+              containerPort: 8080
+              protocol: TCP
+            - name: probes
+              containerPort: 8081
+              protocol: TCP
           # TODO(pedrotorres): set better default values avoiding overcommitment
           resources:
             requests:
@@ -84,12 +86,12 @@ spec:
           # added by choreo
           readinessProbe:
             tcpSocket:
-              port: 9090
+              port: 8081
             initialDelaySeconds: 20
             periodSeconds: 10
           livenessProbe:
             tcpSocket:
-              port: 9090
+              port: 8081
             initialDelaySeconds: 20
             periodSeconds: 10
           # added by choreo
