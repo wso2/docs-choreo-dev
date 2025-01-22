@@ -33,10 +33,6 @@ spec:
             - configMapRef:
                 name: env-proxy-deployer
           ports:
-            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
-              name: health
-            - containerPort: 9092      # To be used for public health check (external)
-              name: healthz
             - containerPort: 9095      # This is a temporary http gateway until the CORS issues fixed. https://github.com/ballerina-platform/ballerina-standard-library/issues/1475
               name: http-port
           readinessProbe:
@@ -46,7 +42,7 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: health
+              port: http-port
               path: /readiness
           livenessProbe:
             initialDelaySeconds: 30
@@ -55,7 +51,7 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: health
+              port: http-port
               path: /liveness
           resources:
             limits:
