@@ -216,6 +216,7 @@ configMapGenerator:
       - RUDDER_URL=http://dp-rudder
       - CICD_URL=http://dp-cicd
       - PROJECT_MANAGER_URL=http://dp-project-manager
+      - RESOURCE_REGISTRY_URL=http://resource-registry:9090
       - CLOUD_MANAGER_URL=http://dp-cloud-manager
       - PLATFORM_SERVICES_MANAGER_URL=http://platform-services-manager
       - PROXY_DEPLOYER_URL=http://choreo-apim-proxy-deployer:9095
