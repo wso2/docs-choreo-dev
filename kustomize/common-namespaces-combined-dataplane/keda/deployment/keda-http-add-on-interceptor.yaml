@@ -55,8 +55,6 @@ spec:
               value: "120000ms"
             - name: KEDA_CONDITION_WAIT_TIMEOUT
               value: "60s"
-            - name: KEDA_HTTP_DEPLOYMENT_CACHE_POLLING_INTERVAL_MS
-              value: "1000"
             - name: KEDA_HTTP_FORCE_HTTP2
               value: "false"
             - name: KEDA_HTTP_MAX_IDLE_CONNS
@@ -69,6 +67,10 @@ spec:
               value: "1s"
             - name: KEDA_SERVICE_UNAVAILABLE_RETRY
               value: "7" # 56s before giving up
+            - name: KEDA_HTTP_ENABLE_REQUEST_QUEUE_COOLDOWN
+              value: "true"
+            - name: KEDA_HTTP_ENDPOINTS_CACHE_POLLING_INTERVAL_MS
+              value: "250"
           ports:
             # TODO(pedrotorres): remove after implementing new routing table
             - name: admin
