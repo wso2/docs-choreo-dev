@@ -55,6 +55,8 @@ spec:
               value: "9090"
             - name: KEDA_HTTP_SCALER_TARGET_PENDING_REQUESTS_INTERCEPTOR
               value: "200"
+            - name: KEDA_HTTP_SCALER_STREAM_INTERVAL_MS
+              value: "1000"
           ports:
             - name: grpc
               containerPort: 9090
@@ -83,14 +85,20 @@ spec:
           # added by choreo
           readinessProbe:
             tcpSocket:
-              port: 9091
+              port: 9090
             initialDelaySeconds: 20
             periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 6
           livenessProbe:
             tcpSocket:
-              port: 9091
+              port: 9090
             initialDelaySeconds: 20
             periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 6
           # added by choreo
       serviceAccountName: keda-http-add-on-scaler
       terminationGracePeriodSeconds: 10
