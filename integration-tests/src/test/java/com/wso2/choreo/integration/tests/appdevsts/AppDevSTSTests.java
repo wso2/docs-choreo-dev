@@ -324,6 +324,15 @@ public class AppDevSTSTests extends TestNGCitrusSpringSupport {
         Assert.assertEquals(jwtClaimsSet.getSubject(), user.getUsername());
         Assert.assertEquals(jwtClaimsSet.getClaim("email"), user.getEmail());
         Assert.assertEquals(jwtClaimsSet.getIssuer(), getStsBaseUrl() + STSEndpoints.TOKEN);
+        Assert.assertTrue(jwtClaimsSet.getClaim("scope").toString().contains(UPDATED_PERMISSION));
+
+
+        SignedJWT idToken = SignedJWT.parse(tokenResponseDTO.getId_token());
+        JWTClaimsSet idTokenClaimsSet = idToken.getJWTClaimsSet();
+        Assert.assertEquals(idTokenClaimsSet.getSubject(), user.getUsername());
+        Assert.assertEquals(idTokenClaimsSet.getClaim("email"), user.getEmail());
+        Assert.assertEquals(idTokenClaimsSet.getIssuer(), getStsBaseUrl() + STSEndpoints.TOKEN);
+        Assert.assertNull(idTokenClaimsSet.getClaim("scope"));
     }
 
     private HttpClient createStsHttpClient() {

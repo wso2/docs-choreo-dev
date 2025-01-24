@@ -92,12 +92,12 @@ public class OAuthUtils {
 
         MultiValueMap<String, Object> oAuthRequest = new LinkedMultiValueMap<>();
         oAuthRequest.add(TokenParams.GRANT_TYPE, Grants.AUTHORIZATION_CODE);
+        oAuthRequest.add(TokenParams.CLIENT_ID, clientId);
         oAuthRequest.add(TokenParams.SCOPE, scopes);
         oAuthRequest.add(TokenParams.CODE, authCode);
         oAuthRequest.add(TokenParams.REDIRECT_URI, redirectUrl);
         oAuthRequest.add(TokenParams.CODE_VERIFIER, "47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU");
-        String basicAuthorizationHeader = getBasicAuthorizationHeader(clientId, clientSecret);
-        return OAuthService.invokeTokenCall(runner, httpClient, basicAuthorizationHeader, oAuthRequest);
+        return OAuthService.invokeTokenCall(runner, httpClient, "", oAuthRequest);
     }
 
     public static TokenResponseDTO invokeRefreshTokenFlow(TestActionRunner runner, HttpClient stsClient,
