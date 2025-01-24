@@ -321,6 +321,16 @@ public class ComponentUtils {
                 .buildContext(repo.getBuildContext()).build();
     }
 
+    public static GraphqlDTO createBuildpackComponentRequestWithSecretRef(String name, ChoreoProject project, Repository repo, String secretRef, Buildpack... buildpackType) {
+        String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
+        int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
+        Buildpack buildpack = buildpackType.length > 0  ?  buildpackType[0] : Buildpack.GOLANG;
+
+        return GraphqlDTO.builder().name(name).srcGitRepoUrl(repo.getRepoUrl()).projectId(project.getId()).orgId(orgId)
+                .orgHandler(orgHandle).buildpackId(buildpack.getId()).languageVersion(buildpack.getVersion())
+                .buildContext(repo.getBuildContext()).secretRef(secretRef).build();
+    }
+
     public static GraphqlDTO createGrpahQLComponentRequest(String name, ChoreoProject project, Repository repo) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
@@ -416,6 +426,70 @@ public class ComponentUtils {
             graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
                     .componentHandler(responseDTO.get().getHandler()).build();
 
+        }
+
+        else {
+            String queryString = ObjectMapperUtil.mapObjectToString(
+                    "templates/graphql/requests/createUserManagedComponent.mustache", dto);
+
+            Optional<CreateComponentResponseDTO> responseDTO = GraphQL.createUserManagedComponent(runner,
+                    appServiceClient, queryString, dto.getProjectId(), accessToken);
+
+            Component.waitForComponentCreationSuccess(runner, appServiceClient, accessToken,
+                    responseDTO.get().getProjectId(),
+                    responseDTO.get().getId());
+
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandler()).build();
+        }
+
+        return GraphQL.retrieveComponent(runner, appServiceClient, accessToken,
+                graphqlDTO);
+    }
+
+        public static ChoreoComponent createComponentWithSecretRef(TestNGCitrusSpringSupport runner,
+            Map<Endpoints, HttpClient> citrusClients,
+            String accessToken, GraphqlDTO dto,
+            ComponentFlavour componentFlavour, String... branchName) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+
+        GraphqlDTO graphqlDTO;
+
+        if (componentFlavour.equals(ComponentFlavour.BYOC)) {
+            dto.setComponentType("byocService");
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBYOCComponent(runner, appServiceClient,
+                    dto, accessToken, branchName);
+
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandle()).build();
+        } else if (componentFlavour.equals(ComponentFlavour.BUILDPACK)) {
+            dto.setComponentType("buildpackService");
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createBuildpackComponentWithSecretRef(runner, appServiceClient, dto, accessToken);
+            String projectId = responseDTO.get().getProjectId();
+            graphqlDTO = GraphqlDTO.builder().projectId(projectId)
+                    .componentHandler(responseDTO.get().getHandle()).build();
+            List<ChoreoComponent> components = GraphQL.getProjectComponents(runner, appServiceClient, projectId, accessToken);
+            String componentId = components.get(0).getId();
+            log.debug("Component Id: " + componentId);
+            Component.waitForAsyncComponentCreationSuccess(runner, appServiceClient, accessToken, componentId);
+        } else if (componentFlavour.equals(ComponentFlavour.PRISM_MOCK_SERVICE)) {
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createPrismMockComponent(runner,
+                    appServiceClient,
+                    dto, accessToken);
+            String projectId = responseDTO.get().getProjectId();
+            graphqlDTO = GraphqlDTO.builder().projectId(projectId)
+                    .componentHandler(responseDTO.get().getHandle()).build();
+            List<ChoreoComponent> components = GraphQL.getProjectComponents(runner, appServiceClient, projectId, accessToken);
+            String componentId = components.get(0).getId();
+            log.debug("Component Id: " + componentId);
+            Component.waitForAsyncComponentCreationSuccess(runner, appServiceClient, accessToken, componentId);
+        } else if (componentFlavour.equals(ComponentFlavour.WEBAPP)) {
+            dto.setComponentType("byocWebAppsDockerfileLess");
+            Optional<CreateByocComponentResponseDTO> responseDTO = GraphQL.createWebappComponent(runner,
+                    appServiceClient,
+                    dto, accessToken);
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandle()).build();
         }
 
         else {
@@ -594,6 +668,7 @@ public class ComponentUtils {
                                                                                Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent testComponent,
                                                                                List<Environment> environments, ComponentFlavour componentFlavour,
                                                                                           BalConfig... balconfigs) throws Exception {
+        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = null;
         HttpClient choreoProjectsTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         List<Commit> commitHistory = GraphQL.getCommitHistory(runner, choreoProjectsTestClient, testComponent.getId(), accessToken,
                 testComponent.getRepository().getBranchApp());
@@ -603,17 +678,24 @@ public class ComponentUtils {
             ConfigManagement.addConfiguration(runner, choreoProjectsTestClient, testComponent, latestCommit.getSha(), environments.get(0),
                     balconfigs);
         }
-
-        ComponentDeploymentStatusDTO componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken, testComponent, latestCommit,
-                environments);
-        try {
-            ComponentUtils.validateComponentDeployment(runner, citrusClients, accessToken, testComponent, latestCommit, environments);
-        } catch (Exception e) {
-            if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
-                log.error("DeployStatusByVersion failure detected", e);
-            } else {
-                throw e;
+        for (int i = 0; i < MAX_DEPLOY_RETRY_COUNT; ++i) {
+            componentDeploymentStatusDTO = ComponentUtils.deployBuiltComponent(runner, citrusClients, accessToken,
+                    testComponent, latestCommit,
+                    environments);
+            try {
+                ComponentUtils.validateComponentDeployment(runner, citrusClients, accessToken, testComponent,
+                        latestCommit, environments);
+                break;
+            } catch (Exception e) {
+                if (e.getCause() instanceof DeploymentStatusByVersionFailureException) {
+                    log.error("DeployStatusByVersion failure detected, attempt number " + (i + 1), e);
+                } else {
+                    throw e;
+                }
             }
+        }
+        if (componentDeploymentStatusDTO == null) {
+            throw new Exception("Component deployment failed");
         }
 
         return componentDeploymentStatusDTO;
@@ -1739,7 +1821,7 @@ public class ComponentUtils {
         boolean isRateLimitExceeded = false;
         int count = 0;
 
-        while (!isRateLimitExceeded) {
+        for (int j = 0; j < 3; j++) {
             // Synchronize with the start of the next minute if we're too close to the end
             long timeRemainingTillNextMinute = 60000 - (System.currentTimeMillis() % 60000);
             if (timeRemainingTillNextMinute < 45000) {

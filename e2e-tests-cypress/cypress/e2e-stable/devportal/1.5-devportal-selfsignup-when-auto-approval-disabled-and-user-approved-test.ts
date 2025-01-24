@@ -16,8 +16,6 @@ import { Utils } from "../../support/commons/utils";
 import { console } from "../../support/console/console";
 import { devPortal } from "../../support/console/devportal";
 
-const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
-
 describe("Self signup when auto approval disabled and user approved scenario", () => {
 
   it("Login to Console", () => {
@@ -42,7 +40,7 @@ describe("Self signup when auto approval disabled and user approved scenario", (
     let userDetails: UserDetails = Utils.generateUserDetails();
     cy.task('setData', { key: 'userDetails', value: userDetails as UserDetails });
 
-    devPortal.selfSignupToDevPortal(userDetails, CUSTOM_DOMAIN);
+    devPortal.selfSignupToDevPortal(userDetails);
   });
 
   it("Check Dev portal access for the approval pending self signup user", () => {
@@ -75,7 +73,7 @@ describe("Self signup when auto approval disabled and user approved scenario", (
 
   it("Signin approved self signup user to Dev portal", () => {
     cy.task('getData', 'userDetails').then((userDetails) => {
-      devPortal.signInToDevPortalWithApprovedUser(userDetails as UserDetails, CUSTOM_DOMAIN);
+      devPortal.signInToDevPortalWithApprovedUser(userDetails as UserDetails);
     });
   });
 });

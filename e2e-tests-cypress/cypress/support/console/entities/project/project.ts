@@ -278,7 +278,6 @@ export class Project {
       triggerChannels: "",
       triggerId: null,
       srcGitRepoUrl: repoInfo.url,
-      initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",
@@ -347,7 +346,7 @@ export class Project {
     } else if (proxyInfo.oasFilePath !== undefined) {
       this.proxyCreationWizard.createFromOASFile(proxyInfo.oasFilePath);
     } else {
-      cy.get(TestIds.skipSource).should("be.visible").click();
+      cy.getUnstable(TestIds.skipSource).should("be.visible").click();
     }
 
     const proxyName = Utils.generateComponentName("oas");
@@ -534,7 +533,6 @@ export class Project {
       triggerChannels: "",
       triggerId: null,
       srcGitRepoUrl: repoInfo.url,
-      initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",
@@ -567,7 +565,6 @@ export class Project {
       triggerChannels: "",
       triggerId: null,
       srcGitRepoUrl: repoInfo.url,
-      initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",
@@ -640,7 +637,6 @@ export class Project {
       accessibility: accessibility,
       projectName: this.name,
       srcGitRepoUrl: repoInfo.url,
-      initializeAsBallerinaProject: false,
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",

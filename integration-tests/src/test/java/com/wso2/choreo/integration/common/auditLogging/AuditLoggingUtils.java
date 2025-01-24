@@ -34,7 +34,7 @@ import java.util.Map;
 public class AuditLoggingUtils {
 
     public static AuditLogList filterAuditLogsByOutcome(TestActionRunner runner,
-                                                        Map<Endpoints, HttpClient> citrusClients, String orgUuid,
+                                                        Map<Endpoints, HttpClient> citrusClients,
                                                         List<String> outcomes)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
@@ -48,11 +48,11 @@ public class AuditLoggingUtils {
         auditLogRetrievalRequest.setSort("desc");
         auditLogRetrievalRequest.setOutcomes(outcomes);
 
-        return AuditLogsService.getAuditLogs(runner, choreoCPTestClient, orgUuid, auditLogRetrievalRequest);
+        return AuditLogsService.getAuditLogs(runner, choreoCPTestClient, auditLogRetrievalRequest);
     }
 
     public static AuditLogList filterAuditLogsByUser(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                                     String orgUuid, List<String> userIdpIds)
+                                                     List<String> userIdpIds)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -65,11 +65,11 @@ public class AuditLoggingUtils {
         auditLogRetrievalRequest.setSort("desc");
         auditLogRetrievalRequest.setUserIdpIds(userIdpIds);
 
-        return AuditLogsService.getAuditLogs(runner, choreoCPTestClient, orgUuid, auditLogRetrievalRequest);
+        return AuditLogsService.getAuditLogs(runner, choreoCPTestClient, auditLogRetrievalRequest);
     }
 
     public static AuditLogList filterAuditLogsByProject(TestActionRunner runner,
-                                                        Map<Endpoints, HttpClient> citrusClients, String orgUuid,
+                                                        Map<Endpoints, HttpClient> citrusClients,
                                                         List<String> projectIds)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
@@ -83,11 +83,11 @@ public class AuditLoggingUtils {
         auditLogRetrievalRequest.setSort("desc");
         auditLogRetrievalRequest.setProjectIds(projectIds);
 
-        return AuditLogsService.getAuditLogs(runner, choreoCPTestClient, orgUuid, auditLogRetrievalRequest);
+        return AuditLogsService.getAuditLogs(runner, choreoCPTestClient, auditLogRetrievalRequest);
     }
 
     public static AuditLogList filterAuditLogsByTime(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                                     String orgUuid, TimeRangeISO timeRangeISO)
+                                                     TimeRangeISO timeRangeISO)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         HttpClient choreoCPTestClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -98,7 +98,7 @@ public class AuditLoggingUtils {
         auditLogRetrievalRequest.setLimit(300);
         auditLogRetrievalRequest.setSort("desc");
 
-        return AuditLogsService.getAuditLogs(runner, choreoCPTestClient, orgUuid, auditLogRetrievalRequest);
+        return AuditLogsService.getAuditLogs(runner, choreoCPTestClient, auditLogRetrievalRequest);
     }
 
     public static TimeRangeISO getTimeRangeISO(long durationInMinutes) {

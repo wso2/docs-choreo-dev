@@ -4,14 +4,13 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "cypress-real-events": "^1.10.3",
-    "typescript": "^5.3.3",
-    "webpack": "^5.68.0"
+    "cypress-real-events": "^1.13.0",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.12.44",
-    "cypress": "^13.8.0",
-    "cypress-fail-fast": "^7.0.0"
+    "@cypress/code-coverage": "^3.13.9",
+    "cypress": "^13.16.1",
+    "cypress-fail-fast": "^7.1.1"
   },
   "scripts": {
     "pretest": "npm run clean:reports",

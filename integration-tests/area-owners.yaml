@@ -57,9 +57,15 @@ areaOwners:
   - testClass: com.wso2.choreo.integration.tests.dp.TestBallerinaServiceDp
     assignees:
       - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestWebSocketServiceDp
+    assignees:
+      - thushani@wso2.com
   - testClass: com.wso2.choreo.integration.tests.dp.TestBuildpackDp
     assignees:
       - janakas@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestBuildpackGitLabDp
+    assignees:
+      - yashodha@wso2.com
   - testClass: com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase
     assignees:
       - lakmal@wso2.com
@@ -203,6 +209,10 @@ areaOwners:
     assignees:
       - hansi@wso2.com
       - menaka@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.pat.PATManagementTests
+    assignees:
+      - mevan@wso2.com
+      - senthalan@wso2.com
   - testClass: com.wso2.choreo.integration.tests.appdevsts.AppDevSTSTests
     assignees:
       - suvin@wso2.com

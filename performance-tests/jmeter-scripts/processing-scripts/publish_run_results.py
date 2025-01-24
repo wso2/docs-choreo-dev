@@ -53,7 +53,65 @@ def get_drive_link(link_file_path):
         print(f"Error: Link file '{link_file_path}' does not exist.")
         sys.exit(1)
 
-def prepend_data_with_users_and_link(results_folder, link_file_path):
+def load_report_config(report_config_path):
+    """
+    Reads the report configuration file to extract the required column headers.
+    :param report_config_path: Path to the configuration file
+    :return: A list of column headers to be included
+    """
+    try:
+        with open(report_config_path, "r") as file:
+            required_columns = [line.strip() for line in file.readlines() if line.strip()]
+            return required_columns
+    except FileNotFoundError:
+        print(f"Error: Report config file '{report_config_path}' does not exist.")
+        sys.exit(1)
+
+
+def filter_csv_columns(csv_file_path, required_labels):
+    """
+    Filters the CSV file to include only rows where the Label column matches the required values.
+    :param csv_file_path: Path to the CSV file
+    :param required_labels: List of required Labels to include
+    :return: Filtered data (including the header)
+    """
+    try:
+        with open(csv_file_path, mode="r") as file:
+            reader = csv.reader(file)
+            all_data = list(reader)
+            if not all_data:
+                print(f"Error: CSV file '{csv_file_path}' is empty.")
+                sys.exit(1)
+            
+            if required_labels is None:
+                return all_data[1:]  # Skip the header row
+
+            # Extract the header
+            header = all_data[0]
+
+            # Find the index of the 'Label' column
+            if "Label" not in header:
+                print("Error: 'Label' column not found in the CSV file.")
+                sys.exit(1)
+            label_index = header.index("Label")
+
+            # Filter rows based on required Labels
+            filtered_data = [header]  # Include the header row
+            filtered_data += [
+                row for row in all_data[1:] if row[label_index] in required_labels
+            ]
+
+            if len(filtered_data) == 1:  # Only header remains
+                print("Error: No matching rows found in the CSV file for the required Labels.")
+                sys.exit(1)
+
+            return filtered_data[1:]
+    except FileNotFoundError:
+        print(f"Error: CSV file '{csv_file_path}' does not exist.")
+        sys.exit(1)
+
+
+def prepend_data_with_users_and_link(results_folder, link_file_path, sheet_name, report_config_path):
     """Prepends data with week, timestamp, users, and adds a link row under each data row."""
     # Derive file paths for CSV and log files
     csv_file_path = os.path.join(results_folder, "AggregateReport.csv")
@@ -66,6 +124,18 @@ def prepend_data_with_users_and_link(results_folder, link_file_path):
     if not os.path.exists(log_file_path):
         print(f"Error: Log file '{log_file_path}' does not exist.")
         sys.exit(1)
+
+    # Load the report configuration
+    if report_config_path is None:
+        required_columns = None
+    else:
+        required_columns = load_report_config(report_config_path)
+
+    
+    print(required_columns)
+
+    # Filter the CSV data based on the required columns
+    filtered_data = filter_csv_columns(csv_file_path, required_columns)
 
     # Load credentials from environment variable
     token_content = os.environ.get("GSHEET_TOKEN")
@@ -88,23 +158,18 @@ def prepend_data_with_users_and_link(results_folder, link_file_path):
         service = build("sheets", "v4", credentials=creds)
 
         # Ensure the target sheet exists
-        create_sheet_if_not_exists(service, SAMPLE_SPREADSHEET_ID, TARGET_SHEET_NAME)
+        create_sheet_if_not_exists(service, SAMPLE_SPREADSHEET_ID, sheet_name)
 
         # Read existing data from the sheet
         sheet = service.spreadsheets()
         result = sheet.values().get(
-            spreadsheetId=SAMPLE_SPREADSHEET_ID, range=f"{TARGET_SHEET_NAME}!A2:Z"
+            spreadsheetId=SAMPLE_SPREADSHEET_ID, range=f"{sheet_name}!A2:Z"
         ).execute()
         existing_values = result.get("values", [])
 
-        # Read the new data from the CSV file
-        new_data = []
-        with open(csv_file_path, mode="r") as file:
-            reader = csv.reader(file)
-            new_data = list(reader)
 
-        new_data = new_data[1:]  # Skip the header row
-
+        new_data = filtered_data  # Skip the header row
+        end_row_num = len(new_data) + 1;
         # Add week, timestamp, users, and link rows
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         week = get_week_monday(timestamp)  # Compute the week (Monday)
@@ -125,11 +190,12 @@ def prepend_data_with_users_and_link(results_folder, link_file_path):
         body = {"values": updated_values}
         sheet.values().update(
             spreadsheetId=SAMPLE_SPREADSHEET_ID,
-            range=f"{TARGET_SHEET_NAME}!A2",
+            range=f"{sheet_name}!A2",
             valueInputOption="RAW",
             body=body,
         ).execute()
 
+        
         merge_request = {
             "requests": [
                 {
@@ -137,7 +203,7 @@ def prepend_data_with_users_and_link(results_folder, link_file_path):
                         "range": {
                             "sheetId": None,  # Sheet ID will be resolved dynamically
                             "startRowIndex": 1,
-                            "endRowIndex": 3,
+                            "endRowIndex": end_row_num,
                             "startColumnIndex": 0,
                             "endColumnIndex": 1,  # Week column
                         },
@@ -149,7 +215,7 @@ def prepend_data_with_users_and_link(results_folder, link_file_path):
                         "range": {
                             "sheetId": None,
                             "startRowIndex": 1,
-                            "endRowIndex": 3,
+                            "endRowIndex": end_row_num,
                             "startColumnIndex": 1,
                             "endColumnIndex": 2,  # Timestamp column
                         },
@@ -164,7 +230,7 @@ def prepend_data_with_users_and_link(results_folder, link_file_path):
         sheet_id = next(
             sheet.get("properties", {}).get("sheetId")
             for sheet in sheets
-            if sheet.get("properties", {}).get("title") == TARGET_SHEET_NAME
+            if sheet.get("properties", {}).get("title") == sheet_name
         )
 
         # Update the merge request with the resolved sheet ID
@@ -209,11 +275,13 @@ def create_sheet_if_not_exists(service, spreadsheet_id, sheet_name):
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Usage: python3 write_to_sheet.py <results_folder> <link_file_path>")
+        print("Usage: python3 write_to_sheet.py <link_file_path> <sheet_name> <report_config>")
         sys.exit(1)
 
-    results_folder = sys.argv[1]
-    link_file_path = sys.argv[2]
+    results_folder = "results"
+    link_file_path = sys.argv[1]
+    sheet_name = sys.argv[2]
+    report_config_path = sys.argv[3] if len(sys.argv) > 3 else None
 
     if not os.path.exists(results_folder):
         print(f"Error: Results folder '{results_folder}' does not exist.")
@@ -223,4 +291,5 @@ if __name__ == "__main__":
         print(f"Error: Link file '{link_file_path}' does not exist.")
         sys.exit(1)
 
-    prepend_data_with_users_and_link(results_folder, link_file_path)
+
+    prepend_data_with_users_and_link(results_folder, link_file_path, sheet_name, report_config_path)

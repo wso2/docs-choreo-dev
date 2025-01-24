@@ -269,6 +269,8 @@ class PipelineReader:
             return "pdp"
         elif "SecurityIntegrationTests" in test_run.name:
             return "sec"
+        elif "ArgoIntegrationTests" in test_run.name:
+            return "argo"
         else:
             print("_map_test_type() Unrecognized test type: {}".format(test_run.name))
             sys.exit(1)

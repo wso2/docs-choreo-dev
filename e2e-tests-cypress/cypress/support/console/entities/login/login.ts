@@ -51,6 +51,7 @@ class Login {
       this.persistLogoutURL();
     });
     this.handleTermsOfUse();
+    this.handleCookiePolicy();
   }
 
   selfSignupOrgAdminlogin() {
@@ -68,6 +69,7 @@ class Login {
       this.persistLogoutURL();
     });
     this.handleTermsOfUse();
+    this.handleCookiePolicy();
   }
 
   enterpriseLogin() {
@@ -80,6 +82,7 @@ class Login {
       this.persistLogoutURL();
     });
     this.handleTermsOfUse();
+    this.handleCookiePolicy();
   }
 
   perfLogin() {
@@ -104,6 +107,7 @@ class Login {
     });
     this.selectRegion();
     this.handleTermsOfUse();
+    this.handleCookiePolicy();
     cy.wait(25000);
   }
 
@@ -405,6 +409,20 @@ class Login {
           cy.get(
             '[data-cyid="confirmation-dialog-primary-action-button"]'
           ).should("not.exist");
+          return;
+        } else {
+          cy.wait(1000, { log: false });
+        }
+      });
+    }
+  }
+
+  private handleCookiePolicy() {
+    for (let i = 0; i < 5; i++) {
+      cy.get("body", { log: false }).then((body) => {
+        if (body.find('[id="onetrust-banner-sdk"]').length > 0 && body.find('[id="onetrust-banner-sdk"]').is(":visible")) {
+          cy.get('[id="onetrust-button-group"]').contains("Accept All Cookies").should("be.visible").click();
+          cy.get('[id="onetrust-button-group"]').contains("Accept All Cookies").should("not.be.visible");
           return;
         } else {
           cy.wait(1000, { log: false });

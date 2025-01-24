@@ -23,6 +23,8 @@ spec:
           key: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
         - objectName: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
           key: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
+        - objectName: AZURE-CONTAINER-REGISTRY-PASSWORD
+          key: AZURE-CONTAINER-REGISTRY-PASSWORD
   parameters:
     objects: |
       array:
@@ -66,3 +68,8 @@ spec:
           objectType: secret
           objectAlias: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
           objectVersion: "{{.CHOREO_GITHUB_RUNNER_APP_OPAQUE_CLIENT_SECRET}}"
+        - |
+          objectName: choreo-dp-cicd-azure-cr-password
+          objectType: secret
+          objectAlias: AZURE-CONTAINER-REGISTRY-PASSWORD
+          objectVersion: "{{.AZURE_CONTAINER_REGISTRY_PASSWORD}}"
