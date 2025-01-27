@@ -61,6 +61,7 @@ enableCloudManagerHTTP11Client = {{.ENABLE_CLOUD_MANAGER_HTTP_11_CLIENT | defaul
 appdevStsUrl = "http://sts-mgt-service:3000"
 mizzenUrl = "http://dp-mizzen:80"
 enableChoreoAppdevSTSCreation = {{.ENABLE_CHOREO_APPDEV_STS_CREATION | default false}}
+enableCustomDeploymentPipelineFlow = {{.ENABLE_CUSTOM_DEPLOYMENT_PIPELINE_FLOW | default false}}
 
 [ballerina.log]
 level = "{{.LOG_LEVEL}}"
