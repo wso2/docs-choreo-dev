@@ -1023,6 +1023,11 @@ configMapGenerator:
       - PLATFORM_SVC_COST_PUBLISHING_ENABLE={{.PLATFORM_SVC_COST_PUBLISHING_ENABLE | default "false"}}
       - AWS_MARKETPLACE_CLIENT_URL="http://choreo-aws-marketplace-client:8080"
       - AWS_CHOREO_PRODUCT_CODE={{.AWS_CHOREO_PRODUCT_CODE | default "choreo"}}
+      - GCP_USAGE_REPORTING_ENABLED={{.GCP_USAGE_REPORTING_ENABLED | default false}}
+      - GCP_MARKETPLACE_CLIENT_URL={{.GCP_MARKETPLACE_CLIENT_URL | default "http://choreo-gcp-marketplace-client:8080"}}
+      - GCP_USAGE_REPORT_START_TIME={{.GCP_USAGE_REPORT_START_TIME | default "23:30:00"}}
+      - GCP_USAGE_REPORT_END_TIME={{.GCP_USAGE_REPORT_END_TIME | default "23:30:00"}}
+      - GCP_DIMENSION_ENTERPRISE_COMPONENT={{.GCP_DIMENSION_ENTERPRISE_COMPONENT | default "choreo.endpoints.choreo-public.cloud.goog/enterprise_component"}}
   - name: env-moesif-service
     behavior: create
     literals:
