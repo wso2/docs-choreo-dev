@@ -172,6 +172,7 @@ rules:
       - choreo.wso2.com
     resources:
       - configurables
+      - configurations
     verbs:
       - get
       - list
@@ -259,19 +260,6 @@ rules:
       - argoproj.io
     resources:
       - workflowtaskresults
-    verbs:
-      - get
-      - list
-      - watch
-      - create
-      - update
-      - patch
-      - delete
-      - deletecollection
-  - apiGroups:
-      - choreo.dev
-    resources:
-      - configurations
     verbs:
       - get
       - list
