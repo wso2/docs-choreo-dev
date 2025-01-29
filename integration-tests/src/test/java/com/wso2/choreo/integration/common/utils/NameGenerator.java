@@ -27,7 +27,7 @@ public class NameGenerator {
     public static String generateThreadUniqueNameWithPrefix(String prefix) {
         String timestamp = String.valueOf(new Date().getTime());
         long id = Thread.currentThread().getId();
-        return prefix.concat(String.valueOf(getNextInt())).concat(String.valueOf(id)).concat("T").concat(timestamp);
+        return prefix.concat(String.valueOf(getNextInt())).concat(String.valueOf(id)).concat("t").concat(timestamp);
     }
 
     private static synchronized int getNextInt() {
