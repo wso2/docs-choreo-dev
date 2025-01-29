@@ -16,32 +16,26 @@ package com.wso2.choreo.integration.tests.integrationComponent;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.google.gson.JsonArray;
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
 import com.wso2.choreo.integration.common.TestContext;
-import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
-import com.wso2.choreo.integration.common.exceptions.DeploymentStatusByVersionFailureException;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
-import com.wso2.choreo.integration.models.commithistory.Commit;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +90,7 @@ public class TestCreateIntegrationEventComponent extends TestNGCitrusSpringSuppo
     @Test(dependsOnMethods = {"createProject_TestCreateIntegrationEventComponent"})
     @CitrusTest
     public void createComponent_TestCreateIntegrationEventComponent() throws Exception {
-        String componentName = "IntegrationEventComponent".concat(String.valueOf(new Date().getTime()));
+        String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         final String repoName = "ipaas-mi-event-triggered";
         final String repoBranch = "main";
         String srcGitHubURL = Constant.GITHUB_URL.concat(githubOrg).concat("/").concat(repoName);
