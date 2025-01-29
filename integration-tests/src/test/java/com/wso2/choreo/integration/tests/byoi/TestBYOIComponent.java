@@ -12,28 +12,18 @@
  */
 package com.wso2.choreo.integration.tests.byoi;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 import com.consol.citrus.annotations.CitrusTest;
-import org.testng.Assert;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
-import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ApiVersion;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
@@ -43,8 +33,15 @@ import com.wso2.choreo.integration.models.devopsportalapi.Image;
 import com.wso2.choreo.integration.models.devopsportalapi.ThirdPartyContainerRegistryDTO;
 import com.wso2.choreo.integration.models.endpoints.ByoiEndpoint;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
-import com.wso2.choreo.integration.models.graphql.CreateByocComponentResponseDTO;
 import com.wso2.choreo.integration.models.graphql.CreateByoiComponentResponseDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class TestBYOIComponent extends TestNGCitrusSpringSupport {
 
@@ -111,10 +108,10 @@ public class TestBYOIComponent extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createProject_TestCreateBYOIComponent"})
     @CitrusTest
     public void createComponent_TestCreateBYOIComponent() throws Exception {
-
-        String componentName = "byoi-pet-store".concat(String.valueOf(new Date().getTime()));
+        String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         final String imageUrl = "choreoanonymouspullable.azurecr.io/pet-store:v0.9";
         GraphqlDTO graphqlDTO = ComponentUtils.createBYOIComponentRequest(componentName, projectId, imageUrl, containerRegistryId);
+
         Optional<CreateByoiComponentResponseDTO> byoiComponent = GraphQL.createBYOIComponent(this,
                 choreoProjectsTestClient, graphqlDTO, accessToken);
         componentHandler = byoiComponent.get().getHandle();
