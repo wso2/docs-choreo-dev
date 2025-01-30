@@ -839,6 +839,7 @@ configMapGenerator:
       - REACT_APP_PREVIEW_FEATURE_ENABLE_LIST={{.REACT_APP_PREVIEW_FEATURE_ENABLE_LIST | default ""}}
       - REACT_APP_COST_OPTIMIZATION_FEATURE={{.REACT_APP_COST_OPTIMIZATION_FEATURE  | default "false"}}
       - REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL={{.REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL | default "https://wso2.com/choreo/docs/develop-components/manage-component-source-configurations/#update-to-the-latest-source-configuration-file"}}
+      - REACT_APP_ENABLE_NON_BUILDPACK_BUILD_CONFIGS={{.REACT_APP_ENABLE_NON_BUILDPACK_BUILD_CONFIGS  | default "false"}}
   - name: env-dp-mizzen
     behavior: create
     literals:
