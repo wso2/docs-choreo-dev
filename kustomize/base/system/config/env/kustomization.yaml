@@ -375,6 +375,8 @@ configMapGenerator:
       - CHOREO_STS_MGT_URL=http://sts-mgt-service:3000/api/v1/sts-proxy
       - ENABLE_API_KEY_DEFAULT_SECURITY_SCHEME={{.ENABLE_API_KEY_DEFAULT_SECURITY_SCHEME | default "false"}}
       - FETCH_OAS_FROM_USER_APP_ENABLED_ORGS={{.FETCH_OAS_FROM_USER_APP_ENABLED_ORGS | default ""}}
+      - SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED={{.SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED | default "false"}}
+      - SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED_ORGS={{.SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED_ORGS | default "0044bc3b-a36e-41cf-8f81-431a99c7183d" }}
   - name: env-dp-helmhub
     behavior: create
     literals:
