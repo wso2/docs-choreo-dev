@@ -651,3 +651,6 @@ pat_service_url="{{.API_KEY_SERVICE_ENDPOINT_URL}}"
 endpoint_url = "{{.WORKFLOW_MGT_ENDPOINT_URL | default ""}}"
 max_retries = "3"
 retry_delay = "1000"
+
+[choreo.appdev.sts]
+management_service_url="{{.STS_MANAGEMENT_SERVICE_URL | default "http://localhost:3000/api/v1"}}"
