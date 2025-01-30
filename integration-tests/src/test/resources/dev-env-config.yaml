@@ -5,6 +5,9 @@ accountInfo:
   TEST_CHOREO_ORG_ID: 3752
   TEST_CHOREO_ORG_HANDLE: choreointegrationtestsuserdevdlwqo
   TEST_CHOREO_ORG_UUID: 31b9e3fe-4a92-4921-8be1-70f065b5b406
+  TEST_CHOREO_APP_DEV_STS_ORG_ID: 8825
+  TEST_CHOREO_APP_DEV_STS_ORG_HANDLE: choreodpstsintegrationtestuser
+  TEST_CHOREO_APP_DEV_STS_ORG_UUID: 2677c81b-79a8-4c2e-a55b-11a2af6ac8c7
 authInfo:
   STS_ENDPOINT: https://sts.preview-dv.choreo.dev
   STS_CLIENT_ID: szuIZKNy9KIaJxv5PDdM06RXfeca

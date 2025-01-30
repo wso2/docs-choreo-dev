@@ -47,15 +47,14 @@ public class AppdevAuthorizationService {
      *
      * @param runner            Citrus test runner
      * @param client            Citrus http client
+     * @param accessToken       Access token
      * @param createRoleRequest CreateRoleRequest object
      * @return CreateRoleResponseDTO object
-     * @throws TokenRetrievalException If an error occurs while retrieving the token
      * @throws IOException             If an error occurs while reading the response
-     * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static CreateRoleResponseDTO createRoleWithPermissions(TestActionRunner runner, HttpClient client,
-            HashMap<String, Object> createRoleRequest)
-            throws TokenRetrievalException, IOException, URISyntaxException {
+                                                                  String accessToken, HashMap<String, Object> createRoleRequest)
+            throws IOException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
         String requestBody = ObjectMapperUtil.mapToString(createRoleRequest);
@@ -70,7 +69,7 @@ public class AppdevAuthorizationService {
                                 .send()
                                 .post(getRolesEndpoint())
                                 .message()
-                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .contentType(String.valueOf(MediaType.APPLICATION_JSON))
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
                                 .body(requestBody),
@@ -256,15 +255,15 @@ public class AppdevAuthorizationService {
      *
      * @param runner           Citrus test runner
      * @param client           Citrus http client
+     * @param accessToken      Access token
      * @param mapGroupsRequest MapGroupsRequest object
      * @return RoleGroupMappingResponseDTO object
-     * @throws TokenRetrievalException If an error occurs while retrieving the token
      * @throws IOException             If an error occurs while reading the response
-     * @throws URISyntaxException      If an error occurs while creating the URI
      */
     public static RoleGroupMappingResponseDTO mapGroupsToRole(TestActionRunner runner, HttpClient client,
-            HashMap<String, Object> mapGroupsRequest)
-            throws TokenRetrievalException, IOException, URISyntaxException {
+                                                              String accessToken,
+                                                              HashMap<String, Object> mapGroupsRequest)
+            throws IOException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
         String requestBody = ObjectMapperUtil.mapToString(mapGroupsRequest);
@@ -279,7 +278,7 @@ public class AppdevAuthorizationService {
                                 .send()
                                 .post(getRoleGroupMappingEndpoint())
                                 .message()
-                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .contentType(String.valueOf(MediaType.APPLICATION_JSON))
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
                                 .body(requestBody),

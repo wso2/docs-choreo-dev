@@ -33,9 +33,6 @@ import com.wso2.choreo.integration.config.Configuration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -51,9 +48,17 @@ public class DataCleaner  {
         String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
 
         DevopsPortalApi.deletePreviousThirdPartyRegistryCredentials(tokenHandler.getTestTokenForCPAPIs(), orgUuid);
-        List<ChoreoProject> projects = org.getProjects(tokenHandler.getTestTokenForCPAPIs());
+        removeOldProjectData(org);
+        removeOldTestDataInOrgLevel(org);
+    }
 
-        log.info("Total number of projects: " + projects.size());
+    public static void removeOldProjectData(ChoreoOrganization org) throws Exception {
+
+        TokenHandler tokenHandler = TestContext.getTestUserTokenHandler();
+        String orgHandle = org.getOrgHandle();
+        List<ChoreoProject> projects = org.getProjects(tokenHandler.getTestTokenForCPAPIs(orgHandle));
+
+        log.info("Total number of projects: " + projects.size() + " in org: " + orgHandle);
 
         int numberOfTestProjects = 0;
         int numberOfTestProjectsDeleted = 0;
@@ -66,17 +71,17 @@ public class DataCleaner  {
                 ++numberOfTestProjects;
                 if (shouldProjectBeDeleted(project.getName())) {
                     //get all connections visible to that project
-                    ConnectionInfo[] connectionInfo= ConnectionService.getChoreoConnections(tokenHandler.getTestTokenForCPAPIs(),project.getId());
+                    ConnectionInfo[] connectionInfo= ConnectionService.getChoreoConnections(tokenHandler.getTestTokenForCPAPIs(orgHandle),project.getId());
                     for (ConnectionInfo connection: connectionInfo){
-                       ConnectionService.deleteChoreoConnection(tokenHandler.getTestTokenForCPAPIs(),connection.getGroupUuid());
+                       ConnectionService.deleteChoreoConnection(tokenHandler.getTestTokenForCPAPIs(orgHandle),connection.getGroupUuid());
                     }
-                    List<ChoreoComponent> components = project.getComponents(tokenHandler.getTestTokenForCPAPIs());
+                    List<ChoreoComponent> components = project.getComponents(tokenHandler.getTestTokenForCPAPIs(orgHandle));
 
                     for (ChoreoComponent component : components) {
-                        project.deleteComponent(tokenHandler.getTestTokenForCPAPIs(), component.getId());
+                        project.deleteComponent(tokenHandler.getTestTokenForCPAPIs(orgHandle), component.getId());
                     }
 
-                    if (org.deleteProject(tokenHandler.getTestTokenForCPAPIs(), project.getId())) {
+                    if (org.deleteProject(tokenHandler.getTestTokenForCPAPIs(orgHandle), project.getId())) {
                         ++numberOfTestProjectsDeleted;
                     }
                 }
@@ -84,8 +89,6 @@ public class DataCleaner  {
         }
         log.info("Total number of test projects: " + numberOfTestProjects);
         log.info("Total number of test projects deleted: " + numberOfTestProjectsDeleted);
-
-        removeOldTestDataInOrgLevel(org);
     }
 
     private static boolean shouldProjectBeDeleted(String projectName) throws ParseException {

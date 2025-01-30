@@ -22,7 +22,7 @@ import java.util.Map;
 
 import com.wso2.choreo.integration.apis.component.Component;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.common.utils.SleepUtil;
+import com.wso2.choreo.integration.common.TestContext;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -153,8 +153,9 @@ public class ManagedAuthenticationUtils {
     
         String releaseId = component.getReleaseIdForEnvironment(Constant.DEV_ENVIRONMENT);
 
-        return ComponentUtils.generateKeys(runner, appServiceClient, component.getProjectId(), component.getId(), 
-            environment.getId(), getTestKeygenRequest(releaseId));
+        return ComponentUtils.generateKeys(runner, appServiceClient, TestContext.getTestOrg().getOrgHandle(),
+                environment.getId(), component.getProjectId(), component.getId(),
+                Constant.displayType.byocWebAppsDockerfileLess.name(), getTestKeygenRequest(releaseId));
     }
 
     /**

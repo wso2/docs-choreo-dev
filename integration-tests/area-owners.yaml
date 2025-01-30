@@ -213,3 +213,7 @@ areaOwners:
     assignees:
       - mevan@wso2.com
       - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.appdevsts.AppDevSTSTests
+    assignees:
+      - suvin@wso2.com
+      - senthalan@wso2.com

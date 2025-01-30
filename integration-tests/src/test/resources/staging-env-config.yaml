@@ -5,6 +5,9 @@ accountInfo:
   TEST_CHOREO_ORG_ID:
   TEST_CHOREO_ORG_HANDLE: choreointegrationtestuserstage
   TEST_CHOREO_ORG_UUID:
+  TEST_CHOREO_APP_DEV_STS_ORG_ID: 0
+  TEST_CHOREO_APP_DEV_STS_ORG_HANDLE: ""
+  TEST_CHOREO_APP_DEV_STS_ORG_UUID: ""
 authInfo:
   STS_ENDPOINT: https://sts.st.choreo.dev
   STS_CLIENT_ID: 1B0Oi7faUDax7a41mfChRHx0ZDsa

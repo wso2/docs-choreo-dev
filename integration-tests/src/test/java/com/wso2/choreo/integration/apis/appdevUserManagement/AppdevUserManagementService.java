@@ -56,24 +56,26 @@ public class AppdevUserManagementService {
 
     /**
      * Create a user store in an environment
-     * 
+     *
      * @param runner                 Citrus test runner
      * @param client                 Citrus http client
+     * @param accessToken            Access token
+     * @param orgUuid                Organization UUID
      * @param environmentId          Environment ID
      * @param createUserStoreRequest Request body to create user store
      * @return CreateUserStoreResponseDTO
-     * @throws TokenRetrievalException If an error occurs while retrieving the token
-     * @throws IOException             If an error occurs while reading the response
-     * @throws URISyntaxException      If an error occurs while creating the URI
+     * @throws IOException        If an error occurs while reading the response
+     * @throws URISyntaxException If an error occurs while creating the URI
      */
     public static CreateUserStoreResponseDTO createUserStoreInEnvironment(TestActionRunner runner, HttpClient client,
-            String environmentId, LinkedMultiValueMap<String, Object> createUserStoreRequest)
-            throws TokenRetrievalException, IOException, URISyntaxException {
+                String accessToken, String orgUuid, String environmentId,
+                LinkedMultiValueMap<String, Object> createUserStoreRequest)
+            throws IOException, URISyntaxException {
         
         AtomicReference<String> responseDTO = new AtomicReference<>();
 
         URIBuilder uriBuilder = new URIBuilder(APPDEV_USER_STORE_MGT_BASE_PATH);
-        uriBuilder.addParameter("orgId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+        uriBuilder.addParameter("orgId", orgUuid);
         uriBuilder.addParameter("associateToEnv", environmentId);
 
         runner.$(repeatOnError()
@@ -86,7 +88,7 @@ public class AppdevUserManagementService {
                                 .send()
                                 .post(uriBuilder.build().toString())
                                 .message()
-                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .contentType(String.valueOf(MediaType.MULTIPART_FORM_DATA_VALUE))
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
                                 .body(createUserStoreRequest),
@@ -342,22 +344,21 @@ public class AppdevUserManagementService {
 
     /**
      * List user stores in all environments
-     * 
-     * @param runner         Citrus test runner
-     * @param client         Citrus http client
-     * @param environmentId  Environment ID
+     *
+     * @param accessToken Access token
+     * @param orgUuid     Organization UUID
      * @return List of UserStore objects
-     * @throws TokenRetrievalException If an error occurs while retrieving the token
-     * @throws IOException             If an error occurs while reading the response
-     * @throws URISyntaxException      If an error occurs while creating the URI
+     * @throws IOException        If an error occurs while reading the response
+     * @throws URISyntaxException If an error occurs while creating the URI
      */
-    public static List<UserStore> getAllUserStores() throws TokenRetrievalException, IOException, URISyntaxException {
+    public static List<UserStore> getAllUserStores(String accessToken, String orgUuid) throws IOException,
+            URISyntaxException {
 
         URIBuilder uriBuilder = new URIBuilder(getAppServiceEndpoint().concat(getUserStoreAssociationsEndpoint()));
-        uriBuilder.addParameter("orgId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+        uriBuilder.addParameter("orgId", orgUuid);
 
         HttpGet request = new HttpGet(uriBuilder.build().toString());
-        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, accessToken);
 
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
                 CloseableHttpResponse response = httpClient.execute(request)) {
@@ -375,19 +376,21 @@ public class AppdevUserManagementService {
 
     /**
      * Delete a user store
-     * 
+     *
+     * @param accessToken Access token
+     * @param orgUuid     Organization UUID
      * @param userStoreId User store ID
-     * @throws TokenRetrievalException If an error occurs while retrieving the token
-     * @throws IOException             If an error occurs while reading the response
-     * @throws URISyntaxException      If an error occurs while creating the URI
+     * @throws IOException        If an error occurs while reading the response
+     * @throws URISyntaxException If an error occurs while creating the URI
      */
-    public static void deleteUserStore(String userStoreId) throws TokenRetrievalException, IOException, URISyntaxException {
+    public static void deleteUserStore(String accessToken, String orgUuid, String userStoreId) throws IOException,
+            URISyntaxException {
 
         URIBuilder uriBuilder = new URIBuilder(getAppServiceEndpoint().concat(getUserStoreURL(userStoreId)));
-        uriBuilder.addParameter("orgId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+        uriBuilder.addParameter("orgId", orgUuid);
 
         HttpDelete request = new HttpDelete(uriBuilder.build().toString());
-        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, getAccessToken());
+        request.setHeader(org.apache.http.HttpHeaders.AUTHORIZATION, accessToken);
 
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
                 CloseableHttpResponse response = httpClient.execute(request)) {

@@ -38,6 +38,7 @@
              <class name="com.wso2.choreo.integration.tests.connections.DatabaseConnectionsTest"/>
             <class name="com.wso2.choreo.integration.tests.resourceAuthorization.ResourceAuthorizationTests"/>
             <class name="com.wso2.choreo.integration.tests.keysetmanagement.KeysetManagementTests"/>
+            <class name="com.wso2.choreo.integration.tests.appdevsts.AppDevSTSTests"/>
             <class name="com.wso2.choreo.integration.tests.managedAuthentication.ManagedAuthenticationTests"/>
             <class name="com.wso2.choreo.integration.tests.apim.internalEndpoints.InternalEndpoints" />
             <class name="com.wso2.choreo.integration.tests.managedAuthentication.localDevelopment.LocalDevelopmentTests" />

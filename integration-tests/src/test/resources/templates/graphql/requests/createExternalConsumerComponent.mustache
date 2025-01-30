@@ -1,0 +1,23 @@
+mutation {
+  createComponent(
+    component: {
+      name: "{{name}}"
+      orgId: {{orgId}}
+      orgHandler: "{{orgHandler}}"
+      displayName: "{{name}}"
+      displayType: "externalConsumer"
+      projectId: "{{projectId}}"
+      labels: ""
+      version: "1.0.0"
+      description: ""
+      apiId: ""
+      serviceAccessMode: "Organization"
+    }
+  ) {
+    id
+    orgId
+    projectId
+    handler
+    serviceAccessMode
+  }
+}

@@ -571,6 +571,55 @@ public class GraphQL extends ControlPlaneAPI {
         }
     }
 
+    public static Optional<CreateComponentResponseDTO> createExternalConsumerComponent(TestNGCitrusSpringSupport runner, HttpClient client,
+                                                                                           GraphqlDTO graphqlDTO,
+                                                                                           String accessToken) throws Exception {
+        graphqlDTO.setOrgId(graphqlDTO.getOrgId());
+        graphqlDTO.setOrgHandler(graphqlDTO.getOrgHandler());
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/createExternalConsumerComponent.mustache", graphqlDTO);
+        final String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+        AtomicReference<CreateComponentResponseDTO> responseDTO = new AtomicReference<>();
+        runner.variable("isComponentCreationSuccess", false);
+        runner.$(repeat()
+                .until("(i = 5) or ( ${isComponentCreationSuccess} = true )")
+                .index("i")
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .body(requestBody)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .type(MessageType.JSON)
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code == HttpStatus.OK.value()) {
+                                        context.setVariable("isComponentCreationSuccess", true);
+                                        responseDTO.set(ObjectMapperUtil.mapStringToObject(
+                                                CreateComponentResponseDTO.class, (String) message.getPayload(),
+                                                "createComponent"));
+                                    } else {
+                                        SleepUtil.sleep(5);
+                                    }
+                                })
+                )
+        );
+
+        if (responseDTO.get() == null) {
+            throw new ComponentCreationException("External component creation response retrieval failure.");
+        } else {
+            return Optional.of(responseDTO.get());
+        }
+    }
+
     public static List<Commit> getCommitHistory(TestNGCitrusSpringSupport runner, HttpClient client, String componentId,
                                                 String accessToken) throws Exception {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(componentId).build();
@@ -1292,7 +1341,6 @@ public class GraphQL extends ControlPlaneAPI {
                                                     if ("failure".equals(conclusion)) {
                                                         throw new DeploymentStatusByVersionFailureException("deploymentStatusByVersion[0].conclusion is failure");
                                                     }
-    
                                                     isPassed.set("success".equals(conclusion));
                                                     context.setVariable("deploymentSuccess", isPassed.get());
                                                 }

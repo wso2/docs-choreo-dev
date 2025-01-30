@@ -56,6 +56,8 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
  */
 public class KeysetManagementService {
 
+    public static final String APPDEV_STS_MANAGEMENT_SERVICE_BASE_PATH =
+            "choreo-appdev-sts-management-service/v1.0/sts-proxy/oauth-applications/";
     private static String APIM_APPDEV_BASE_PATH = "apim-appdev/v1.0/sts";
     private static String KEY_MANAGER_PUBLISHER_BASE_PATH = "api/am/publisher/v3/key-managers";
     private static String KEY_MANAGER_ADMIN_BASE_PATH = "api/am/admin/v2/key-managers";
@@ -65,6 +67,9 @@ public class KeysetManagementService {
      *
      * @param runner              Citrus test runner
      * @param client              Citrus http client
+     * @param accessToken         Access token
+     * @param orgUuid             Org UUID
+     * @param envId               Environment template Id
      * @param oAuthAppId          OAuth application ID
      * @param configUpdateRequest Configuration update request
      * @return OAuthAppUpdateResponseDTO
@@ -73,7 +78,8 @@ public class KeysetManagementService {
      * @throws URISyntaxException      If an error occurs while building the URI
      */
     public static OAuthAppUpdateResponseDTO updateKeysetConfigurations(TestActionRunner runner, HttpClient client,
-            String oAuthAppId, HashMap<String, Object> configUpdateRequest)
+                                                                       String accessToken, String orgUuid, String envId,
+                                                                       String oAuthAppId, HashMap<String, Object> configUpdateRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
         AtomicReference<String> responseDTO = new AtomicReference<>();
@@ -81,7 +87,8 @@ public class KeysetManagementService {
 
         String url = getConfigUpdateURL(oAuthAppId);
         URIBuilder uriBuilder = new URIBuilder(url);
-        uriBuilder.addParameter("organizationId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+        uriBuilder.addParameter("organizationId", orgUuid);
+        uriBuilder.addParameter("environmentId", envId);
 
         runner.$(repeatOnError()
                 .until("i = 5")
@@ -93,7 +100,7 @@ public class KeysetManagementService {
                                 .send()
                                 .put(uriBuilder.build().toString())
                                 .message()
-                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
                                 .contentType(String.valueOf(MediaType.APPLICATION_JSON))
                                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
                                 .body(requestBody),
@@ -376,7 +383,7 @@ public class KeysetManagementService {
 
     private static String getConfigUpdateURL(String oAuthAppId) {
 
-        return APIM_APPDEV_BASE_PATH + "/oauth-applications/" + oAuthAppId;
+        return APPDEV_STS_MANAGEMENT_SERVICE_BASE_PATH + oAuthAppId;
     }
 
     private static String getStsEndpoint() {

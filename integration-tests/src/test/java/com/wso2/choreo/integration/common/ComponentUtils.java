@@ -35,7 +35,6 @@ import com.wso2.choreo.integration.apis.configmgt.ConfigManagement;
 import com.wso2.choreo.integration.models.graphql.CreateNewDeploymentTrackResponseDTO;
 import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.apis.graphql.GraphQL;
-import com.wso2.choreo.integration.apis.keysetmanagement.KeysetManagementService;
 import com.wso2.choreo.integration.apis.observability.AuditLogsService;
 import com.wso2.choreo.integration.apis.observability.DPObsApiService;
 import com.wso2.choreo.integration.apis.proxydeployer.ProxyDeployer;
@@ -80,7 +79,6 @@ import com.wso2.choreo.integration.models.revision.RevisionWrapper;
 import com.wso2.choreo.integration.models.webhook.Trigger;
 import lombok.extern.log4j.Log4j2;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -300,6 +298,19 @@ public class ComponentUtils {
                 .byocWebAppsConfig(webAppsConfig).build();
     }
 
+    public static GraphqlDTO createExternalConsumerComponentRequest(String name, ChoreoProject project,
+                                                                    int orgId, String orgHandle) {
+
+        return GraphqlDTO.builder()
+                .name(name)
+                .displayType(name)
+                .orgId(orgId)
+                .orgHandler(orgHandle)
+                .projectId(project.getId())
+                .componentType(Constant.displayType.externalConsumer.name())
+                .build();
+    }
+
     public static GraphqlDTO createBuildpackComponentRequest(String name, ChoreoProject project, Repository repo, Buildpack... buildpackType) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
@@ -408,6 +419,13 @@ public class ComponentUtils {
                     dto, accessToken);
             graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
                     .componentHandler(responseDTO.get().getHandle()).build();
+        } else if (componentFlavour.equals(ComponentFlavour.EXTERNAL_CONSUMER)) {
+            Optional<CreateComponentResponseDTO> responseDTO = GraphQL.createExternalConsumerComponent(runner,
+                    appServiceClient,
+                    dto, accessToken);
+            graphqlDTO = GraphqlDTO.builder().projectId(responseDTO.get().getProjectId())
+                    .componentHandler(responseDTO.get().getHandler()).build();
+
         }
 
         else {
@@ -1899,18 +1917,23 @@ public class ComponentUtils {
                                 })));
     }
 
-    public static KeyGenResponseDTO generateKeys(TestActionRunner runner, HttpClient client,
-            String projectId, String componentId, String environmentId, HashMap<String, Object> keygenRequest)
+    public static KeyGenResponseDTO generateKeys(TestActionRunner runner, HttpClient client, String orgHandle,
+                                                 String environmentId, String projectId,
+                                                 String componentId, String componentType,
+                                                 HashMap<String, Object> keygenRequest)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return Component.generateKeys(runner, client, projectId, componentId, environmentId, keygenRequest);
+        return Component.generateKeys(runner, client, orgHandle, environmentId, projectId, componentId, componentType,
+                keygenRequest);
     }
 
-    public static KeyGenResponseDTO regenerateKeys(TestActionRunner runner, HttpClient client,
-            String projectId, String componentId, String environmentId, String oAuthAppId)
+    public static KeyGenResponseDTO regenerateKeys(TestActionRunner runner, HttpClient client, String orgHandle,
+                                                   String environmentId, String projectId, String componentId,
+                                                   String componentType, String oAuthAppId)
             throws TokenRetrievalException, IOException, URISyntaxException {
 
-        return Component.regenerateKeysets(runner, client, projectId, componentId, environmentId, oAuthAppId);
+        return Component.regenerateKeysets(runner, client, orgHandle, environmentId, projectId, componentId,
+                componentType, oAuthAppId);
     }
 
     public static void addExternalIdpKeys(TestActionRunner runner, HttpClient client, String projectId,

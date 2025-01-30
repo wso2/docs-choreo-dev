@@ -20,6 +20,8 @@
     <gson.version>2.10.1</gson.version>
     <google-api-gmail.version>v1-rev20211108-1.32.1</google-api-gmail.version>
     <google-oauth-client-jetty.version>1.32.1</google-oauth-client-jetty.version>
+    <jsoup.version>1.15.4</jsoup.version>
+    <nimbus-jose-jwt.version>9.37.3</nimbus-jose-jwt.version>
     <google-api-client.version>1.33.0</google-api-client.version>
     <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
   </properties>
@@ -238,6 +240,18 @@
       <groupId>com.consol.citrus</groupId>
       <artifactId>citrus-websocket</artifactId>
       <version>${citrus.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>${jsoup.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <version>${nimbus-jose-jwt.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

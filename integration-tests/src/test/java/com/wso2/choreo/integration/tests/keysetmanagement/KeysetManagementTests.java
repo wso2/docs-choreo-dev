@@ -29,35 +29,32 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.configurationservice.ConfigServiceUtils;
 import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants;
-import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementUtils;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.AppGwKeysetConfigNames;
-import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.ClientCredentialsAuthFlowParams;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.DefaultChoreoEnvironments;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.DefaultConfigGroups;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.ExternalIdpMappingParams;
-import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.KeyGenerationRequestParams;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.ModifiedOAuthAppConfig;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.TestIdpDefaults;
-import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.TestKeyGenRequestData;
 import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementConstants.TestProjectData;
+import com.wso2.choreo.integration.common.keysetmanagement.KeysetManagementUtils;
 import com.wso2.choreo.integration.common.oauth.OAuthConstants;
 import com.wso2.choreo.integration.common.oauth.OAuthUtils;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
+import com.wso2.choreo.integration.models.configservice.Configuration;
 import com.wso2.choreo.integration.models.configservice.ConfigurationGroup;
 import com.wso2.choreo.integration.models.devops.Dataplane;
 import com.wso2.choreo.integration.models.devops.EnvironmentWithClusters;
-import com.wso2.choreo.integration.models.configservice.Configuration;
 import com.wso2.choreo.integration.models.environments.Environment;
-import com.wso2.choreo.integration.models.keymanager.OAuthAppUpdateResponseDTO;
-import com.wso2.choreo.integration.models.oauth.ClientCredentialsResponseDTO;
 import com.wso2.choreo.integration.models.keymanager.DetailedKeyManager;
 import com.wso2.choreo.integration.models.keymanager.IdpAddRequestDTO;
 import com.wso2.choreo.integration.models.keymanager.IdpAddResponseDTO;
 import com.wso2.choreo.integration.models.keymanager.KMCertificate;
 import com.wso2.choreo.integration.models.keymanager.KeyGenResponseDTO;
 import com.wso2.choreo.integration.models.keymanager.KeyManager;
+import com.wso2.choreo.integration.models.keymanager.OAuthAppUpdateResponseDTO;
+import com.wso2.choreo.integration.models.oauth.TokenResponseDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,8 +160,8 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
         KeyGenResponseDTO keyGenResponse = ComponentUtils.generateKeys(this, appServiceClient,
-                testComponent.getProjectId(), testComponent.getId(), devEnvironment.getId(),
-                getTestKeygenRequest());
+                TestContext.getTestOrg().getOrgHandle(), devEnvironment.getId(), testComponent.getProjectId(),
+                testComponent.getId(), Constant.displayType.byocWebAppsDockerfileLess.name(), KeysetManagementUtils.getAppGenRequest());
 
         String clientId = getConfigValueFromGroup(this, appServiceClient,
                 DefaultConfigGroups.APP_GW_KEYSETS,
@@ -181,9 +178,11 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
     public void updateOAuthAppConfiguration_KeysetManagementTests() throws Exception {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
 
         OAuthAppUpdateResponseDTO updatedApp = KeysetManagementUtils.updateOAuthAppConfiguration(this, appServiceClient,
-                generatedKeys.getClientId(), getKeyManagerUpdateTestRequest());
+                accessToken, TestContext.getTestOrg().getOrgUUID(), devEnvironment.getTemplateId(),
+                generatedKeys.getClientId(), KeysetManagementUtils.getAppUpdateRequest());
 
         Assert.assertNotNull(updatedApp);
         Assert.assertEquals(updatedApp.getAppTokenExpiry(), ModifiedOAuthAppConfig.APP_TOKEN_EXPIRY);
@@ -201,10 +200,9 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
 
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
 
-        KeyGenResponseDTO regeneratedKeys = ComponentUtils.regenerateKeys(this,
-                appServiceClient,
-                testComponent.getProjectId(), testComponent.getId(), devEnvironment.getId(),
-                generatedKeys.getClientId());
+        KeyGenResponseDTO regeneratedKeys = ComponentUtils.regenerateKeys(this, appServiceClient,
+                TestContext.getTestOrg().getOrgHandle(), devEnvironment.getId(), testComponent.getProjectId(),
+                testComponent.getId(), Constant.displayType.byocWebAppsDockerfileLess.name(), generatedKeys.getClientId());
 
         String clientId = getConfigValueFromGroup(this, appServiceClient,
                 DefaultConfigGroups.APP_GW_KEYSETS,
@@ -220,21 +218,13 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void invokeClientCredentialsAuthFlowAndGetAccessToken_KeysetManagementTests() throws Exception {
 
-        String tokenEndpointURL = getTokenEndpointURL(devEnvironment.getChoreoEnv(),
-                getClusterDomain(this, devEnvironment));
-
-        HashMap<String, Object> oAuthClientCredentialsRequest = new HashMap<>() {
-            {
-                put(ClientCredentialsAuthFlowParams.GRANT_TYPE, OAuthConstants.CLIENT_CREDENTIALS_GRANT_TYPE);
-                put(ClientCredentialsAuthFlowParams.SCOPE, OAuthConstants.DEFAULT_CLIENT_CREDENTIALS_SCOPES);
-            }
-        };
+        String baseUrl = getStsBaseUrl(devEnvironment.getChoreoEnv(), getClusterDomain(this, devEnvironment));
+        HttpClient stsClient = OAuthUtils.createStsClient(baseUrl);
 
         Thread.sleep(2 * 60 * 1000);  // wait for cache invalidation
 
-        ClientCredentialsResponseDTO clientCredentialsResponse = OAuthUtils.invokeClientCredentialsAuthFlow(this,
-                tokenEndpointURL, generatedKeys.getClientId(), generatedKeys.getClientSecret(),
-                oAuthClientCredentialsRequest);
+        TokenResponseDTO clientCredentialsResponse = OAuthUtils.invokeClientCredentialsAuthFlow(this,
+                stsClient, generatedKeys.getClientId(), generatedKeys.getClientSecret());
 
         Assert.assertNotNull(clientCredentialsResponse.getAccess_token());
     }
@@ -423,37 +413,9 @@ public class KeysetManagementTests extends TestNGCitrusSpringSupport {
         return request;
     }
 
-    private static HashMap<String, Object> getTestKeygenRequest() {
-        return new HashMap<>() {
-            {
-                put(KeyGenerationRequestParams.APP_TOKEN_EXPIRY, TestKeyGenRequestData.APP_TOKEN_EXPIRY);
-                put(KeyGenerationRequestParams.CALLBACK_URLS, TestKeyGenRequestData.CALLBACK_URLS);
-                put(KeyGenerationRequestParams.GRANT_TYPES, TestKeyGenRequestData.GRANT_TYPES);
-                put(KeyGenerationRequestParams.PKCE_MANDATORY, TestKeyGenRequestData.PKCE_MANDATORY);
-                put(KeyGenerationRequestParams.PUBLIC_CLIENT, TestKeyGenRequestData.IS_PUBLIC_CLIENT);
-                put(KeyGenerationRequestParams.REFRESH_TOKEN_EXPIRY, TestKeyGenRequestData.REFRESH_TOKEN_EXPIRY);
-                put(KeyGenerationRequestParams.USER_TOKEN_EXPIRY, TestKeyGenRequestData.USER_TOKEN_EXPIRY);
-            }
-        };
-    }
-
-    private static HashMap<String, Object> getKeyManagerUpdateTestRequest() {
-        return new HashMap<>() {
-            {
-                put(KeyGenerationRequestParams.CALLBACK_URLS, ModifiedOAuthAppConfig.CALLBACK_URLS);
-                put(KeyGenerationRequestParams.GRANT_TYPES, ModifiedOAuthAppConfig.GRANT_TYPES);
-                put(KeyGenerationRequestParams.PKCE_MANDATORY, true);
-                put(KeyGenerationRequestParams.APP_TOKEN_EXPIRY, ModifiedOAuthAppConfig.APP_TOKEN_EXPIRY);
-                put(KeyGenerationRequestParams.PUBLIC_CLIENT, ModifiedOAuthAppConfig.IS_PUBLIC_CLIENT);
-                put(KeyGenerationRequestParams.REFRESH_TOKEN_EXPIRY, ModifiedOAuthAppConfig.REFRESH_TOKEN_EXPIRY);
-                put(KeyGenerationRequestParams.USER_TOKEN_EXPIRY, ModifiedOAuthAppConfig.USER_TOKEN_EXPIRY);
-            }
-        };
-    }
-
-    private static String getTokenEndpointURL(String choreoEnvironment, String region) {
+    private static String getStsBaseUrl(String choreoEnvironment, String region) {
         return "https://" + TestContext.getTestOrg().getOrgUUID() + "-" + choreoEnvironment + "." + region + "."
-                + OAuthConstants.DEFAULT_CHOREO_STS_DOMAIN + "/" + OAuthConstants.DEFAULT_TOKEN_ENDPOINT;
+                + OAuthConstants.DEFAULT_CHOREO_STS_DOMAIN;
     }
 
     private String getClusterDomain(TestActionRunner runner, Environment environment)

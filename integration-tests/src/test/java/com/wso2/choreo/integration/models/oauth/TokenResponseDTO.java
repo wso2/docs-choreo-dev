@@ -22,9 +22,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientCredentialsResponseDTO {
+public class TokenResponseDTO {
     private String access_token;
     private String scope;
     private String token_type;
     private int expires_in;
+    private String refresh_token;
+    private String id_token;
 }
