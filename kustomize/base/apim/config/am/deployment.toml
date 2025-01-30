@@ -568,6 +568,9 @@ enabled = {{.PROJECT_MANAGER_ENDPOINT_ENABLED | default false}}
 [choreo.cloud_manager]
 endpoint_url = "{{.CLOUD_MANAGER_ENDPOINT_URL}}"
 
+[choreo.mizzen]
+endpoint_url = "{{.MIZZEN_ENDPOINT_URL | default ""}}"
+
 [choreo.URLManager]
 endpoint_url = "{{.URL_MANAGER_ENDPOINT_URL}}"
 
