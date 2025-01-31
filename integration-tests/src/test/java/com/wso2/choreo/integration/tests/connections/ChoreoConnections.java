@@ -507,7 +507,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String serviceId = serviceFound.getServiceId();
         String connectionId = ConnectionService.createChoreoConnection(this, httpClient,
-                accessToken, connectionCreateReq, true,
+                accessToken, connectionCreateReq, false,
                 orgEndpointComponentDeployedEnvs, false);
         //update component-config.yaml file
         String serviceIdentifier = MarketplaceService.getChoreoServiceIdentifier(this,

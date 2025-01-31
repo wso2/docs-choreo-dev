@@ -64,7 +64,7 @@ public class ConnectionService extends ControlPlaneAPI {
     private static final Logger log = LogManager.getLogger();
 
     public static String createChoreoConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
-                                                ConnectionCreateRequest connectionReq, Boolean isPublisherSecured,
+                                                ConnectionCreateRequest connectionReq, Boolean isOauth2Secured,
                                                 List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs, 
                                                 boolean isWebApp ) throws IOException {
         String createChoreoConnectionURI = CONTEXT.concat("/configurations/service-configs/choreo-connections");
@@ -102,7 +102,7 @@ public class ConnectionService extends ControlPlaneAPI {
                                     String payload = message.getPayload(String.class);
                                     JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
                                     validateConnectionCreation (context, connectionJsonObject, connectionId,
-                                            isPublisherSecured, "isConnectionCreationSuccess",
+                                            isOauth2Secured, "isConnectionCreationSuccess",
                                             publisherDeployedEnvs, isWebApp);
                                 }
                                 )));
@@ -417,7 +417,7 @@ public class ConnectionService extends ControlPlaneAPI {
 
     public static void validateConnectionCreation(com.consol.citrus.context.TestContext context,
                                                   JsonObject connectionJsonObject, AtomicReference<String> connectionId,
-                                                  boolean isPublisherSecured, String contextVariableName,
+                                                  boolean isOauth2Secured, String contextVariableName,
                                                   List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs,
                                                   boolean isWebApp){
 
@@ -428,7 +428,7 @@ public class ConnectionService extends ControlPlaneAPI {
                 if (!isStageSuccess(envStatus, "Service Url resolved")) {
                     throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
                 }
-               if (isPublisherSecured && !isWebApp) {
+               if (isOauth2Secured && !isWebApp) {
                     if (!isStageSuccess(envStatus, "OAuth keys generated")) {
                         throw new ValidationException("Connection configurations are not resolved properly for environment: " + envId);
                     }
@@ -443,7 +443,7 @@ public class ConnectionService extends ControlPlaneAPI {
                     throw new ValidationException("Connection configurations are not properly partially created for " +
                             "environment: " + envId);
                 }
-                if (isPublisherSecured && !isWebApp) {
+                if (isOauth2Secured && !isWebApp) {
                     if (!isStageSuccess(envStatus, "OAuth keys generated")) {
                         throw new ValidationException("Connection configurations are not properly partially created for " +
                                 "environment: " + envId);                    }
