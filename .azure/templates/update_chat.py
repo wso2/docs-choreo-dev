@@ -21,10 +21,11 @@ def send_chat():
         space_token = os.environ.get("INTEGRATION_TEST_FAILURE_BOT_TOKEN")
         google_chat_url = os.environ.get("GOOGLE_CHAT_SPACES_URL", "chat.googleapis.com/v1/spaces")
         json_template_file = os.environ.get("JSON_CHAT_TEMPLATE_FILE")
+        build_id = os.environ.get("BUILD_ID")
 
         with open(json_template_file) as template_file:
                 app_message = template_file.read()
-        url = f'https://{google_chat_url}/{space_id}/messages?key={space_key}&token={space_token}&threadKey=IntTestNotification'
+        url = f'https://{google_chat_url}/{space_id}/messages?key={space_key}&token={space_token}&threadKey={build_id}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD'
         message_headers = {"Content-Type": "application/json; charset=UTF-8"}
         response = requests.post(url, app_message, headers=message_headers)
         print(response)
