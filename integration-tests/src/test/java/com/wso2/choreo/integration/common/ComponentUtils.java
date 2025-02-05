@@ -746,6 +746,15 @@ public class ComponentUtils {
         GraphQL.getDeploymentStatusByVersion(runner, appServiceClient, accessToken, graphqlDTO);
     }
 
+    public static void validateInitialBuild(TestNGCitrusSpringSupport runner,
+                                     Map<Endpoints, HttpClient> citrusClients, String accessToken,
+                                     ChoreoComponent component, Commit latestCommit,
+                                     List<Environment> environments) throws Exception {
+        HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        GraphqlDTO graphqlDTO = createDeploymentRequest(component, latestCommit, environments);
+        GraphQL.getBuildStatusByConclusionVersionV2(runner, appServiceClient, accessToken, graphqlDTO);
+    }
+
     public static ComponentDeploymentStatusDTO deployBuiltComponent(TestNGCitrusSpringSupport runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken,
             ChoreoComponent component, Commit latestCommit,
@@ -2075,13 +2084,12 @@ public class ComponentUtils {
 
     public static void waitForComponentInitialBuildComplete(TestNGCitrusSpringSupport runner, Map<Endpoints, 
             HttpClient> citrusClients, String accessToken, ChoreoComponent component) throws Exception {
-    
-        GraphqlDTO dto = GraphqlDTO.builder()
-            .componentId(component.getId())
-            .latestVersionId(component.getLatestApiVersion().getId())
-            .build();
-        String runId = GraphQL.getRunId(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
-        Component.waitForComponentBuildDeployComplete(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, 
-            component.getProjectId(), component.getId(), runId, 50);
+
+        List<Commit> commitHistory = GraphQL.getCommitHistory(runner,citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT),component.getId(),accessToken);
+        Commit latestCommit = Commit.getLatestCommit(commitHistory);
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(runner, citrusClients, accessToken,
+                component);
+        ComponentUtils.validateInitialBuild(runner,citrusClients,accessToken,component,latestCommit,environments);
+
     }
 }

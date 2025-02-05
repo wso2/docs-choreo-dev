@@ -1360,6 +1360,68 @@ public class GraphQL extends ControlPlaneAPI {
     }
 
     /**
+     * Get build status of the component by version with validation
+     *
+     * @param runner      Test action runner
+     * @param client      HTTP client
+     * @param accessToken Access token
+     * @param graphqlDTO  DTO
+     * @throws IOException If error occurred in object mapping
+     */
+    public static void getBuildStatusByConclusionVersionV2(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                           GraphqlDTO graphqlDTO) throws Exception {
+        String queryString = ObjectMapperUtil.mapObjectToString(
+                "templates/graphql/requests/deploymentStatusByVersion.mustache", graphqlDTO);
+        String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
+
+        runner.variable("isBuildSuccessful", false);
+        runner.$(repeatOnError()
+                .until("(i = 10) or ( ${isBuildSuccessful} = true )")
+                .index("i")
+                .autoSleep(60000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(Constant.GRAPHQL_ENDPOINT_SUFFIX)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .body(requestBody)
+                                .accept(MediaType.APPLICATION_JSON_VALUE),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Too many successive calls with response code != 200");
+                                    }
+                                    JsonArray deploymentStatusByVersion = new JsonParser().parse(message.getPayload(String.class))
+                                            .getAsJsonObject()
+                                            .getAsJsonObject("data")
+                                            .getAsJsonArray("deploymentStatusByVersion");
+                                    if (deploymentStatusByVersion.isEmpty()) {
+                                        throw new DeploymentStatusByVersionFailureException("deploymentStatusByVersion array is empty");
+                                    }
+                                    JsonObject latestDeploymentStatus = deploymentStatusByVersion.get(0).getAsJsonObject();
+                                    String status = latestDeploymentStatus.get("status").getAsString();
+                                    if (!"completed".equals(status)) {
+                                        throw new DeploymentStatusByVersionFailureException("build stage has not reached to completed stage");
+                                    }
+                                    String conclusionV2 = deploymentStatusByVersion.get(0).getAsJsonObject().get("conclusionV2").getAsString();
+                                    if ("failure".equals(conclusionV2)) {
+                                        throw new DeploymentStatusByVersionFailureException("deploymentStatusByVersion[0].conclusionV2 is failure");
+                                    }
+
+                                })
+                )
+        );
+    }
+
+    /**
      * Get deployment status of a failed component by version with validation
      *
      * @param runner      Test action runner
