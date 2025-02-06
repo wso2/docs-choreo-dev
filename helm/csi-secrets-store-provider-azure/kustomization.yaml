@@ -20,6 +20,10 @@ helmCharts:
             operator: Equal
             value: "spot"
             effect: NoSchedule
+          - key: argo-build
+            operator: Equal
+            value: dedicated
+            effect: NoSchedule
         priorityClassName: "secrets-store-csi-driver"
       secrets-store-csi-driver:
         syncSecret:
@@ -50,6 +54,10 @@ helmCharts:
             - key: kubernetes.azure.com/scalesetpriority
               operator: Equal
               value: "spot"
+              effect: NoSchedule
+            - key: argo-build
+              operator: Equal
+              value: dedicated
               effect: NoSchedule
           priorityClassName: "secrets-store-csi-driver"
     releaseName: csi-secrets-store-provider-azure
