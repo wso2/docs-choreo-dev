@@ -224,7 +224,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
 
         //deploy to dev environment
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, clientChoreoComponent);
-        ComponentDeploymentStatusDTO clientDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken, clientChoreoComponent, environments, ComponentFlavour.BUILDPACK);
+        ComponentDeploymentStatusDTO clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, clientChoreoComponent, environments, ComponentFlavour.BUILDPACK);
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponent,clientDeploymentStatusDTO);
         // invoke in dev
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
@@ -266,7 +266,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
 
         //deploy to dev environment
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, clientChoreoComponentNewVersion);
-        ComponentDeploymentStatusDTO clientDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken, clientChoreoComponentNewVersion, environments, ComponentFlavour.BUILDPACK);
+        ComponentDeploymentStatusDTO clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, clientChoreoComponentNewVersion, environments, ComponentFlavour.BUILDPACK);
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponentNewVersion,clientDeploymentStatusDTO);
        // invoke in dev
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
@@ -306,7 +306,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
 
         //deploy to dev environment
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, clientChoreoComponentNewVersion);
-        ComponentDeploymentStatusDTO clientDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken, clientChoreoComponentNewVersion, environments, ComponentFlavour.BUILDPACK);
+        ComponentDeploymentStatusDTO clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, clientChoreoComponentNewVersion, environments, ComponentFlavour.BUILDPACK);
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponentNewVersion,clientDeploymentStatusDTO);
         // invoke in dev
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,

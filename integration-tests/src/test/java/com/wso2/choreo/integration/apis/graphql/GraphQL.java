@@ -1369,7 +1369,7 @@ public class GraphQL extends ControlPlaneAPI {
      * @throws IOException If error occurred in object mapping
      */
     public static void getBuildStatusByConclusionVersionV2(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
-                                                           GraphqlDTO graphqlDTO) throws Exception {
+                                                           GraphqlDTO graphqlDTO, int sleepInterval) throws Exception {
         String queryString = ObjectMapperUtil.mapObjectToString(
                 "templates/graphql/requests/deploymentStatusByVersion.mustache", graphqlDTO);
         String requestBody = ObjectMapperUtil.mapToGraphQLQuery(queryString);
@@ -1378,7 +1378,7 @@ public class GraphQL extends ControlPlaneAPI {
         runner.$(repeatOnError()
                 .until("(i = 10) or ( ${isBuildSuccessful} = true )")
                 .index("i")
-                .autoSleep(60000)
+                .autoSleep(sleepInterval * 1000)
                 .actions(
                         http()
                                 .client(client)
@@ -1415,7 +1415,7 @@ public class GraphQL extends ControlPlaneAPI {
                                     if ("failure".equals(conclusionV2)) {
                                         throw new DeploymentStatusByVersionFailureException("deploymentStatusByVersion[0].conclusionV2 is failure");
                                     }
-
+                                    context.setVariable("isBuildSuccessful", true);
                                 })
                 )
         );
