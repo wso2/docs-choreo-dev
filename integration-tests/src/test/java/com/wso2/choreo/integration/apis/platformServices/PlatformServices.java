@@ -406,7 +406,7 @@ public class PlatformServices {
 
     public static void DeleteDatabaseCredentials(TestNGCitrusSpringSupport runner, HttpClient client, String dbServerId, String credentialId,
                                                  String accessToken) {
-        String resource = Constant.PSM_SUFFIX.concat("/").concat(dbServerId).concat("/credentials").concat(credentialId);
+        String resource = Constant.PSM_SUFFIX.concat("/").concat(dbServerId).concat("/credentials/").concat(credentialId);
         runner.$(repeatOnError()
                 .until("i = 5")
                 .index("i")
@@ -430,27 +430,6 @@ public class PlatformServices {
                                     }
                                 })
                 )
-        );
-
-
-        runner.$(http()
-                .client(client)
-                .send()
-                .delete(resource)
-                .message()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
-
-        runner.$(http().client(client)
-                .receive()
-                .response()
-                .message()
-                .validate((message, context) -> {
-                    int code = (int) message.getHeader(HTTP_STATUS_CODE);
-                    if (code != HttpStatus.OK.value() && code != HttpStatus.NOT_FOUND.value()) {
-                        throw new RuntimeException("Unexpected status code: " + code);
-                    }
-                })
         );
     }
 

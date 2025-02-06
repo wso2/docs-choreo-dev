@@ -735,7 +735,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         }
 
         if(deployedPublisherComponentStatus == null){
-            deployedPublisherComponentStatus = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken,
+            deployedPublisherComponentStatus = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                     deployedPublisherComponent,environments, ComponentFlavour.BYOC);
         }
 
@@ -793,7 +793,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
             ComponentUtils.validateEndpoints(this, citrusClients, accessToken, deployedPublisherComponent,
                     deployedPublisherComponentStatus);
             ConnectionService.createAndUseConnection(this,citrusClients,accessToken,deployedPublisherComponent.getName(),PUBLIC_SERVICE,project.getId(),createdClientComponent.getId(),environments,environments,repoName,"dev");
-            deployedClientComponentStatus = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken,
+            deployedClientComponentStatus = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                     createdClientComponent, environments, ComponentFlavour.BYOC);
         }
         Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
