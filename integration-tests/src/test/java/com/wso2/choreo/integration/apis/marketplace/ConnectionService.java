@@ -234,7 +234,7 @@ public class ConnectionService extends ControlPlaneAPI {
     public static void createProjectLevelConnection(Map<Endpoints, HttpClient> citrusClients, TestNGCitrusSpringSupport runner,
                                                     String accessToken, String serviceName, String networkVisibilityFilter,
                                                     String projectId , String connectionName, String connectionDescription,
-                                                    String requestingServiceVisibility, Boolean isPublisherSecured,
+                                                    String requestingServiceVisibility, Boolean isOauth2Secured,
                                                     List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs) throws IOException {
         String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
@@ -277,7 +277,7 @@ public class ConnectionService extends ControlPlaneAPI {
                 .requestingServiceVisibility(requestingServiceVisibility)
                 .orgIdInteger(orgId).build();
         String connectionId = ConnectionService.createChoreoConnection(runner, connectionServiceClient,
-                accessToken, connectionReq,isPublisherSecured,publisherDeployedEnvs,false);
+                accessToken, connectionReq, isOauth2Secured, publisherDeployedEnvs,false);
         Pattern UUID_REGEX =
                 Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
         Assert.assertTrue(UUID_REGEX.matcher(connectionId).matches());
