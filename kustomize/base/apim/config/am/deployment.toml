@@ -425,6 +425,7 @@ enable = false
 [[choreo.serviceProvider]]
 clientId="{{.CLIENT_ID}}"
 scopes="{{.SCOPES}}"
+isInternal="{{.IS_INTERNAL | default "false"}}"
 {{end}}
 
 [choreo.ChoreoTokenHandler]
