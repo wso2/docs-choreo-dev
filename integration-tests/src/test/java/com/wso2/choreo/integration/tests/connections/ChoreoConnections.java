@@ -577,10 +577,11 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         String connectionName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_CONNECTION_NAME);
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, orgEndpointServiceComponent, orgEndpointServiceDeploymentStatusDTO);
+        // api key is enabled by default for org level visibility services
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 orgEndpointServiceComponent.getName(), ORG_LVL_NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for a secured service with org visibility",ORGANIZATION_SERVICE,
-                true, orgEndpointComponentDeployedEnvs);
+                false, orgEndpointComponentDeployedEnvs);
     }
 
     @Test(dependsOnMethods = {"createProjectLevelConnectionToSecuredOrgService_TestChoreoConnections"})
