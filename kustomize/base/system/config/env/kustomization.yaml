@@ -369,7 +369,6 @@ configMapGenerator:
       - APIM_USER_FOR_OAUTH_APP_CREATION={{.APIM_USER_FOR_OAUTH_APP_CREATION | default ""}}
       - EU_DATA_PLANE_ID={{.EU_DATA_PLANE_ID | default ""}}
       - CILIUM_EGRESS_POLICY_ENABLED={{.CILIUM_EGRESS_POLICY_ENABLED | default "false"}}
-      - BUILD_STS_URL_FROM_DEFAULT_DOMAIN_ENABLED={{.BUILD_STS_URL_FROM_DEFAULT_DOMAIN_ENABLED | default "false"}}
       - STS_MANAGEMENT_SERVICE_ENABLED={{.STS_MANAGEMENT_SERVICE_ENABLED | default "false"}}
       - ENABLE_API_KEY_FOR_PUBLIC_APIS={{.ENABLE_API_KEY_FOR_PUBLIC_APIS | default "false"}}
       - CHOREO_STS_MGT_URL=http://sts-mgt-service:3000/api/v1/sts-proxy
@@ -428,7 +427,9 @@ configMapGenerator:
       - CUSTOMIZABLE_CI_PRE_ENABLED_ORGS={{.CUSTOMIZABLE_CI_PRE_ENABLED_ORGS}}
       - CUSTOMIZABLE_CI_ENABLED_PDP_ORGS={{.CUSTOMIZABLE_CI_ENABLED_PDP_ORGS | default ""}}
       - CUSTOMIZABLE_CI_ENABLED_FOR_FREE_TIER={{.CUSTOMIZABLE_CI_ENABLED_FOR_FREE_TIER | default "false"}}
+      - CUSTOMIZABLE_CI_ENABLED_FOR_PAID_CDP={{.CUSTOMIZABLE_CI_ENABLED_FOR_PAID_CDP | default "false"}}
       - CUSTOMIZABLE_CI_ENABLED_WORKFLOWS={{.CUSTOMIZABLE_CI_ENABLED_WORKFLOWS | default "" }}
+      - CUSTOMIZABLE_CI_ENABLED_WORKFLOWS_FOR_PAID_CDP={{.CUSTOMIZABLE_CI_ENABLED_WORKFLOWS_FOR_PAID_CDP | default "" }}
       - IS_CUSTOMIZABLE_CI_ENABLED_FOR_PAID_ORGS={{.IS_CUSTOMIZABLE_CI_ENABLED_FOR_PAID_ORGS | default "false"}}
       - CUSTOMIZABLE_CI_ENABLED_PDPS={{.CUSTOMIZABLE_CI_ENABLED_PDPS | default ""}}
       - BUILDPACKS_TEST_RUNNER_ENABLE={{.BUILDPACKS_TEST_RUNNER_ENABLE}}
@@ -439,14 +440,14 @@ configMapGenerator:
       - MI_BUILDPACKS_ENABLED_TEST_ORGS={{.MI_BUILDPACKS_ENABLED_TEST_ORGS}}
       - BD_CMV={{.BD_CMV | default "v1.1.35"}}
       - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.35.yml"}}
-      - BD_BYORV={{.BD_BYORV | default "v1.1.41"}}
-      - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.41.yml"}}
-      - BD_BYOCV={{.BD_BYOCV | default "v1.0.33"}}
-      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.33.yml"}}
-      - BD_MIV={{.BD_MIV | default "v1.0.30"}}
-      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.30.yml"}}
-      - BD_BPV={{.BD_BPV | default "v0.12.19"}}
-      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.19.yml"}}
+      - BD_BYORV={{.BD_BYORV | default "v1.1.42"}}
+      - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.42.yml"}}
+      - BD_BYOCV={{.BD_BYOCV | default "v1.0.34"}}
+      - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.34.yml"}}
+      - BD_MIV={{.BD_MIV | default "v1.0.31"}}
+      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.31.yml"}}
+      - BD_BPV={{.BD_BPV | default "v0.12.20"}}
+      - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.20.yml"}}
       - BD_PMSV={{.BD_PMSV | default "v1.1.1"}}
       - BD_PMS_FP={{.BD_PMS_FP | default ".github/workflows/choreo-build-deploy_prism-mock-service_1.1.1.yml"}}
       - BD_IMAGE_PUSH_TEMPLATE_VERSION={{.BD_IMAGE_PUSH_TEMPLATE_VERSION | default "choreo-templates/choreo-image-push@v1.0.7"}}
@@ -469,6 +470,7 @@ configMapGenerator:
       - CHOREO_GITHUB_RUNNER_APP_CLIENT_ID={{.CHOREO_GITHUB_RUNNER_APP_CLIENT_ID}}
       - CHOREO_GITHUB_RUNNER_APP_OPAQUE_CLIENT_ID={{.CHOREO_GITHUB_RUNNER_APP_OPAQUE_CLIENT_ID}}
       - MIZZEN_API_URL={{.MIZZEN_API_URL | default "http://dp-mizzen:80"}}
+      - SECRET_MANAGER_API_URL={{.SECRET_MANAGER_API_URL | default "http://dp-secret-manager:80"}}
       - USER_SERVICE_URL={{.USER_SERVICE_URL | default "app-service:8080"}}
       - ENABLE_SOURCE_CONFIG_VALIDATION={{.ENABLE_SOURCE_CONFIG_VALIDATION | default "false"}}
       - ENABLE_PRIVATE_REPO_BUILD_RESTRICTIONS_ON_FREE_TIER={{.ENABLE_PRIVATE_REPO_BUILD_RESTRICTIONS_ON_FREE_TIER | default "false"}}
@@ -837,7 +839,6 @@ configMapGenerator:
       - REACT_APP_ENABLE_STS_MANAGEMENT_SERVICE={{.REACT_APP_ENABLE_STS_MANAGEMENT_SERVICE | default "false"}}
       - REACT_APP_GH_PROXY_ENABLED_ORGS={{.REACT_APP_GH_PROXY_ENABLED_ORGS | default ""}}
       - REACT_APP_ENABLE_MULTI_VISIBILITY_SUPPORT={{.REACT_APP_ENABLE_MULTI_VISIBILITY_SUPPORT | default "false"}}
-      - REACT_APP_ENABLE_BUILD_STS_URL_FROM_DEFAULT_DOMAIN={{.REACT_APP_ENABLE_BUILD_STS_URL_FROM_DEFAULT_DOMAIN | default "false"}}
       - REACT_APP_PREVIEW_FEATURE_ENABLE_LIST={{.REACT_APP_PREVIEW_FEATURE_ENABLE_LIST | default ""}}
       - REACT_APP_COST_OPTIMIZATION_FEATURE={{.REACT_APP_COST_OPTIMIZATION_FEATURE  | default "false"}}
       - REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL={{.REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL | default "https://wso2.com/choreo/docs/develop-components/manage-component-source-configurations/#update-to-the-latest-source-configuration-file"}}
