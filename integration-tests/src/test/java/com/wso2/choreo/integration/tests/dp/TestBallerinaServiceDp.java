@@ -68,6 +68,7 @@ public class TestBallerinaServiceDp extends TestBase {
         GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto,
                 ComponentFlavour.STANDARD);
+        ComponentUtils.waitForComponentInitialBuildComplete(this, citrusClients, accessToken, choreoComponent);
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 choreoComponent);
 
