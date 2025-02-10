@@ -90,8 +90,7 @@ public class ManagedAuthenticationUtils {
                 dto, ComponentFlavour.WEBAPP);
         dto.setComponentId(component.getId());
         dto.setLatestVersionId(component.getLatestApiVersion().getId());
-        String runId = GraphQL.getRunId(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, dto);
-        Component.waitForComponentBuildDeployComplete(runner, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(), component.getId(), runId, 50);
+        ComponentUtils.waitForComponentInitialBuildComplete(runner, citrusClients, accessToken, component);
         Assert.assertNotNull(component);
         return component;
     }
