@@ -72,7 +72,6 @@ public class LocalDevelopmentTests extends TestNGCitrusSpringSupport {
 
         testComponent = ManagedAuthenticationUtils.createWebAppComponent(this, citrusClients, accessToken,
                 testProject);
-
         testComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 testComponent);
         testComponentDevEnv = testComponentEnvironments.stream()

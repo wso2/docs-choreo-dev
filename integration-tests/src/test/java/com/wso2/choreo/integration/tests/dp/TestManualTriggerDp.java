@@ -58,11 +58,7 @@ public class TestManualTriggerDp extends TestBase {
         dp.setChoreoComponent(choreoComponent);
         dto.setComponentId(choreoComponent.getId());
         dto.setLatestVersionId(choreoComponent.getLatestApiVersion().getId());
-        String runId = GraphQL.getRunId(this, citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT),
-                accessToken, dto);
-        Component.waitForComponentBuildDeployComplete(this,
-                citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT), accessToken, project.getId(),
-                choreoComponent.getId(), runId, 50);
+        ComponentUtils.waitForComponentInitialBuildComplete(this, citrusClients, accessToken, choreoComponent);
         Assert.assertNotNull(choreoComponent.getId());
 
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, choreoComponent);
