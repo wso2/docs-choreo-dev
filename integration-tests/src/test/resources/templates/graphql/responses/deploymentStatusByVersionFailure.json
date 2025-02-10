@@ -11,7 +11,8 @@
         "conclusion": "failure",
         "isAutoDeploy": false,
         "failureReason": 0,
-        "sourceCommitId": "@ignore@"
+        "sourceCommitId": "@ignore@",
+        "conclusionV2": "failure"
       }
     ]
   }
