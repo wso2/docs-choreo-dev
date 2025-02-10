@@ -433,6 +433,7 @@ appServiceUrl="{{.APP_SERVICE_URL}}"
 authzServiceUrl="{{.AUTHZ_SERVICE_URL}}"
 authzServiceEnabled={{.AUTHZ_SERVICE_ENABLED}}
 choreoControlPlaneOrgUuid="{{.CP_ORG_ID}}"
+choreoControlPlaneOrgHandle="{{.CP_ORG_HANDLE | default "choreosystem"}}"
 allowed_claims="aut, given_name, authenticated_idp, name, family_name, middle_name, nickname, updated_at, email, email_verified, groups, username, is_eidp"
 instanceBasedAuthzServiceEnabled={{.INSTANCE_BASED_AUTHZ_SERVICE_ENABLED}}
 instanceBasedAuthzServiceDisabledOrgs="{{.INSTANCE_BASED_AUTHZ_SERVICE_DISABLED_ORGS}}"
