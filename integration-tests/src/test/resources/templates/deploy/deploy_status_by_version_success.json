@@ -8,7 +8,8 @@
         "started_at": "@ignore@",
         "name": "Choreo Generated Build Deploy Action",
         "status": "completed",
-        "conclusion": "success"
+        "conclusion": "success",
+        "conclusionV2": "success"
       }
     ]
   }
