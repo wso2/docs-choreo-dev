@@ -62,6 +62,7 @@ public class TestBYOCDp extends TestBase {
 
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken,
                 dto, ComponentFlavour.BYOC);
+        ComponentUtils.waitForComponentInitialBuildComplete(this, citrusClients, accessToken, choreoComponent);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertNotNull(choreoComponent.getId());

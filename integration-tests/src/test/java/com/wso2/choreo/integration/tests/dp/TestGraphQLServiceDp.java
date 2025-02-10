@@ -59,6 +59,7 @@ public class TestGraphQLServiceDp extends TestBase {
         GraphqlDTO dto = ComponentUtils.createBallerinaServiceComponentRequest(componentName, project, repo);
 
         ChoreoComponent choreoComponent = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.STANDARD);
+        ComponentUtils.waitForComponentInitialBuildComplete(this, citrusClients, accessToken, choreoComponent);
         dp.setChoreoProject(project);
         dp.setChoreoComponent(choreoComponent);
         Assert.assertNotNull(choreoComponent.getId());
