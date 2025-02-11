@@ -239,7 +239,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 clientChoreoComponent);
-        clientDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken, clientChoreoComponent,
+        clientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, clientChoreoComponent,
                 environments, ComponentFlavour.BYOC);
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, clientChoreoComponent,
                 clientDeploymentStatusDTO);
@@ -826,7 +826,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deployNewServiceConsumerComponent_TestChoreoConnections() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        newClientDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken, newClientChoreoComponent,
+        newClientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken, newClientChoreoComponent,
                 newClientComponentEnvironments, ComponentFlavour.BYOC);
         ComponentUtils.validateEndpoints(this, citrusClients, accessToken, newClientChoreoComponent,
                 newClientDeploymentStatusDTO);
