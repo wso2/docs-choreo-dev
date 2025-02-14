@@ -57,6 +57,5 @@ resources:
   - choreo-aws-marketplace-client.yaml
   - configuration-schema-service.yaml
   - sts-mgt-service.yaml
-  - contract-service.yaml
 commonAnnotations:
   config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380
