@@ -2267,3 +2267,4 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 -- WORKFLOW-MANAGEMENT 
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Approve component promotion requests','choreo:workflow_component_promotion_approve','WORKFLOW-MANAGEMENT','Approve component promotion');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Approve APIM subscriptions','choreo:workflow_subscription_approve','WORKFLOW-MANAGEMENT','Approve API subscription requests');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create approval requests','choreo:workflow_request','WORKFLOW-MANAGEMENT','Create approval requests');
