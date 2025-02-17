@@ -1665,7 +1665,7 @@ CREATE TABLE [dbo].[permission]
     [id] [int] IDENTITY(1,1) NOT NULL ,
     [handle][varchar](255) NOT NULL,
     [display_name][varchar](255) NOT NULL,
-    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BILLING','CHOREO-DEVOPS','COMPONENT-MANAGEMENT','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS', 'ENVIRONMENT-MANAGEMENT','LOG-MANAGEMENT','OBSERVABILITY-MANAGEMENT','ON-PREM-KEYS','ORGANIZATION-MANAGEMENT','PROJECT-MANAGEMENT','USER-MANAGEMENT','ACCOUNT-MANAGE','URL-MANAGEMENT')),
+    [domain_area][varchar](50) NOT NULL CHECK (domain_area IN('APIM-ADMIN','APIM-PUBLISHER','APIM-SUBSCRIBER','BILLING','CHOREO-DEVOPS','COMPONENT-MANAGEMENT','CONFIGURATIONS-MANAGEMENT','CUSTOM-DOMAINS', 'ENVIRONMENT-MANAGEMENT','LOG-MANAGEMENT','OBSERVABILITY-MANAGEMENT','ON-PREM-KEYS','ORGANIZATION-MANAGEMENT','PROJECT-MANAGEMENT','USER-MANAGEMENT','ACCOUNT-MANAGE','URL-MANAGEMENT', 'WORKFLOW-MANAGEMENT')),
     [description] [varchar](255) NULL,
     [created_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     [updated_at] [datetime]   NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -2263,3 +2263,7 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Se
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Invitations','urn:choreosystem:usermanagement:invitation_delete', 'USER-MANAGEMENT','Delete Invitations');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Invitations','urn:choreosystem:usermanagement:invitation_manage','USER-MANAGEMENT','Manage Invitations');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Users','urn:choreosystem:usermanagement:user_manage','USER-MANAGEMENT','Add and remove users');
+
+-- WORKFLOW-MANAGEMENT 
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Approve component promotion requests','choreo:workflow_component_promotion_approve','WORKFLOW-MANAGEMENT','Approve component promotion');
+INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Approve APIM subscriptions','choreo:workflow_subscription_approve','WORKFLOW-MANAGEMENT','Approve API subscription requests');
