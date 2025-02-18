@@ -12,6 +12,9 @@ configDeployerHost="{{.CONFIG_DEPLOYER_HOST}}"
 [mizzen]
 mizzenHost="http://dp-mizzen:80"
 
+[rudder]
+rudderHost="http://dp-rudder:80"
+
 [database]
 dbHost="{{.GW_ADAPTER_DB_HOST}}"
 dbUsername="choreo_gateway_adapter_db_user"
