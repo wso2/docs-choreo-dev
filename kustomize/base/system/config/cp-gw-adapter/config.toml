@@ -8,9 +8,13 @@ namespace="apk"
 apimHost="{{.APIM_HOST}}"
 apimUsername="{{.APIM_USERNAME}}"
 configDeployerHost="{{.CONFIG_DEPLOYER_HOST}}"
+jwksURL="{{.JWKS_URL | default "https://sts.choreo.dev/oauth2/jwks"}}"
 
 [mizzen]
 mizzenHost="http://dp-mizzen:80"
+
+[rudder]
+rudderHost="http://dp-rudder:80"
 
 [database]
 dbHost="{{.GW_ADAPTER_DB_HOST}}"
