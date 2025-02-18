@@ -8,6 +8,7 @@ namespace="apk"
 apimHost="{{.APIM_HOST}}"
 apimUsername="{{.APIM_USERNAME}}"
 configDeployerHost="{{.CONFIG_DEPLOYER_HOST}}"
+jwksURL="{{.JWKS_URL | default "https://sts.preview-dv.choreo.dev/oauth2/jwks"}}"
 
 [mizzen]
 mizzenHost="http://dp-mizzen:80"
