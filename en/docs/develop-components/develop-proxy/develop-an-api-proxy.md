@@ -1,4 +1,4 @@
-# Develop an API Proxy
+# Develop an API Proxy from an OAS
 
 An API proxy acts as an intermediary between an existing API and Choreo, intercepting all requests made to the API. It also functions as a managed API, allowing you to apply essential API management features such as security policies and rate limiting.
 
@@ -71,7 +71,7 @@ Now you are ready to test the API proxy.
 
 ## Step 4: Test the API proxy
 
-Choreo allows you to test your API proxy using either the [integrated OpenAPI Console](../testing/test-rest-endpoints-via-the-openapi-console.md) or [cURL](../testing/test-apis-with-curl.md). In this guide, you will use the OpenAPI Console.
+Choreo allows you to test your API proxy using either the [integrated OpenAPI Console](../../testing/test-rest-endpoints-via-the-openapi-console.md) or [cURL](../testing/test-apis-with-curl.md). In this guide, you will use the OpenAPI Console.
 
 !!! tip
     Choreo enables OAuth 2.0 to secure APIs by default. Therefore, you need an access token to invoke an API.
@@ -90,7 +90,7 @@ Choreo allows you to test your API proxy using either the [integrated OpenAPI Co
 3. Expand the `GET /department/{departmentId}` resource and click **Try it Out**.
 4. Enter `1` as the **departmentId** and click **Execute**. You will see a response similar to the following:
 
-    ![API proxy response](../assets/img/develop-components/develop-a-rest-api-proxy/rest-api-proxy-response.png){.cInlineImage-full}
+    ![API proxy response](../../assets/img/develop-components/develop-a-rest-api-proxy/rest-api-proxy-response.png){.cInlineImage-full}
 
     This indicates that your API proxy is working as expected.
 
@@ -133,8 +133,8 @@ To generate credentials for the published API and invoke it via the Choreo Devel
     4. Expand the `GET /department/{departmentId}` resource and click **Try it out**.
     5. Enter `1` as the **departmentId** and click **Execute**. You will see a response similar to the following:
 
-        ![Try out response](../assets/img/develop-components/develop-a-rest-api-proxy/try-out-response.png){.cInlineImage-full}
+        ![Try out response](../../assets/img/develop-components/develop-a-rest-api-proxy/try-out-response.png){.cInlineImage-full}
 
 Now, you have gained hands-on experience creating, deploying, testing, and publishing an API proxy using Choreo API Manager.
 
-To learn more about the API management capabilities supported by Choreo API Manager, see [API Management](../api-management/lifecycle-management.md).
+To learn more about the API management capabilities supported by Choreo API Manager, see [API Management](../../api-management/lifecycle-management.md).
