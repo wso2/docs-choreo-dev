@@ -904,6 +904,7 @@ configMapGenerator:
       - UPTIME_CHECKS_PDP_APP_ID={{.UPTIME_CHECKS_PDP_APP_ID | default "dummyPdpAppId"}}
       - UPTIME_CHECKS_PDP_APP_CONSUMER_KEY={{.UPTIME_CHECKS_PDP_APP_CONSUMER_KEY | default "dummyPdpAppConsumerKey"}}
       - COMMON_PRIVATE_GA_URL={{.COMMON_PRIVATE_GA_URL}}
+      - SYSTEM_APIS_REPO_BRANCH={{.SYSTEM_APIS_REPO_BRANCH}}
   - name: env-dp-delete-manager
     behavior: create
     literals:
