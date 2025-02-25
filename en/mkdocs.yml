@@ -102,7 +102,7 @@ nav:
       - Develop Services:
           - Service Component Overview: develop-components/develop-services/service-component-overview.md
           - Develop a Service: develop-components/develop-services/develop-a-service.md
-          - Develop a service with Docker: develop-components/develop-services/develop-a-service-with-docker.md
+          - Develop a Service with Docker: develop-components/develop-services/develop-a-service-with-docker.md
           - Develop a Ballerina Service:  develop-components/develop-services/develop-a-ballerina-service.md
           - Expose a gRPC Endpoint via a Service: develop-components/develop-services/expose-a-grpc-endpoint-via-a-service.md
           - Expose a TCP Server via a Service: develop-components/develop-services/expose-a-tcp-server-via-a-service.md
@@ -111,8 +111,8 @@ nav:
           - Expose a Prism-Based Mock Server Using an OpenAPI Specification: develop-components/develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification.md
           - Expose a WebSocket Endpoint via a Service: develop-components/develop-services/expose-a-websocket-endpoint-via-a-service.md
       - Develop an API Proxy: 
-        - Develop a simple proxy: develop-components/develop-proxy/develop-an-api-proxy.md
-        - Develop a proxy from github repository: develop-components/develop-proxy/develop-an-gh-api-proxy.md
+        - Develop an API Proxy from Git Repository : develop-components/develop-proxy/develop-an-gh-api-proxy.md
+        - Develop an API Proxy from Scratch or OpenAPI Specification : develop-components/develop-proxy/develop-an-api-proxy.md
       - Develop Web Applications: 
           - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
           - Develop Web Applications Locally with Choreo’s Managed Authentication: develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md

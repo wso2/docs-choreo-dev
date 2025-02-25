@@ -1,4 +1,4 @@
-# Develop an API Proxy from a GH source
+# Develop an API Proxy from Git Repository
 
 An API proxy acts as an intermediary between an existing API and Choreo, intercepting all requests made to the API. It also functions as a managed API, allowing you to apply essential API management features such as security policies and rate limiting.
 
@@ -22,7 +22,7 @@ In this guide, you will:
 
 ## Step 1: Create an API proxy
 
-To create an API proxy, you can either choose from a github repository, upload an OpenAPI specification or provide an OpenAPI specification URL. In this guide, you will specify a URL to an OpenAPI definition of a sample API.
+To create an API proxy, you can either choose from a github repository, upload an OpenAPI specification or provide an OpenAPI specification URL. In this guide, you will choose the API definition from a Git source like Github repository.
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
@@ -36,8 +36,8 @@ To create an API proxy, you can either choose from a github repository, upload a
 
     | **Field**       | **Value**                                  |
     |-----------------|--------------------------------------------|
-    | **Component Display Name**| `Pet Service`                    |
-    | **Component Name**        | `pet-service`                    |
+    | **Component Display Name**| `Department Service`                    |
+    | **Component Name**        | `departmentService`                    |
     | **Description**           | `This is a sample pet store`     |
    
 6. Go to the **GitHub** tab.
@@ -57,7 +57,7 @@ To create an API proxy, you can either choose from a github repository, upload a
     | **Organization**       | Your GitHub account|
     | **Repository**         | choreo-samples     |
     | **Branch**             | **`main`**         |
-    | **API Directory**      | /choreo-samples/proxy-from-gh/pet-service |
+    | **API Directory**      | /choreo-samples/proxy-from-github/department-service |
 
 7. Specify the following values as API proxy details:
 
@@ -66,16 +66,26 @@ To create an API proxy, you can either choose from a github repository, upload a
 
     | **Field**       | **Value**                                  |
     |-----------------|--------------------------------------------|
-    | **Context**     | `pet/v1`                                   |
+    | **Context**     | `department-service/v1`                                   |
     | **Version**     | `V1.0`                                      |
-    | **Target**      | `https://samples.choreoapps.dev/company/pet-service`|
+    | **Target**      | `https://samples.choreoapps.dev/company/hr/department`|
 
 6. Click **Create**. This creates the API proxy component and takes you to the **Overview** page.
 
-## Step 2: Define resources for the API proxy
+!!! note
+    When you creating an API proxy by **pointing a git repository** , the Git source is considered as the **single source of truth**. So , the only way is to change API resources like resource addition, deletion of modifications should be done trought the Git source.
+
+## Step 2: Build
+
+!!! info
+    There is a initial build running immediately once after you create a proxy.
+
+1. On the project home page, click on the `Department Service` component you created. This takes you to the component overview page.
+2. In the left navigation menu, click **Build**.
+3. On the **Build** page, click **Build Latest**.
 
 !!! note
-    When you creating an API proxy by **pointing a github repository** , the GH source consider as the **single source of truth**. So , the only way is to change API resources like resource addition, deletion of modifications should be done trought the GH source.
+    The build process may take some time. You can track progress in the **Build Details** pane. Once complete, the build status changes to **Success**.
 
 ## Step 3: Deploy the API proxy
 
@@ -103,7 +113,7 @@ Choreo allows you to test your API proxy using either the [integrated OpenAPI Co
 
 1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
 2. Select **Development** from the environment drop-down list.
-3. Expand the `GET /department/{departmentId}` resource and click **Try it Out**.
+3. Expand the `GET /{departmentId}` resource and click **Try it Out**.
 4. Enter `1` as the **departmentId** and click **Execute**. You will see a response similar to the following:
 
     ![API proxy response](../../assets/img/develop-components/develop-a-rest-api-proxy/rest-api-proxy-response.png){.cInlineImage-full}
@@ -146,7 +156,7 @@ To generate credentials for the published API and invoke it via the Choreo Devel
     1. In the Developer Portal left navigation menu, click **Try Out**.
     2. In the **Endpoint** list, select **Development** as the environment to try out the API.
     3. Click **Get Test Key** to generate an access token.
-    4. Expand the `GET /department/{departmentId}` resource and click **Try it out**.
+    4. Expand the `GET /{departmentId}` resource and click **Try it out**.
     5. Enter `1` as the **departmentId** and click **Execute**. You will see a response similar to the following:
 
         ![Try out response](../../assets/img/develop-components/develop-a-rest-api-proxy/try-out-response.png){.cInlineImage-full}

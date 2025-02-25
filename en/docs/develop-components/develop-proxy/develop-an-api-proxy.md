@@ -1,4 +1,4 @@
-# Develop an API Proxy from an OAS
+# Develop an API Proxy from OpenAPI Specification or Scratch
 
 An API proxy acts as an intermediary between an existing API and Choreo, intercepting all requests made to the API. It also functions as a managed API, allowing you to apply essential API management features such as security policies and rate limiting.
 
