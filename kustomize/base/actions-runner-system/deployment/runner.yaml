@@ -8,6 +8,14 @@ spec:
   template:
     metadata: {}
     spec:
+      volumeMounts:
+        - name: docker-cache-volume
+          mountPath: /mnt/docker-cache
+      volumes:
+        - name: docker-cache-volume
+          hostPath:
+            path: /mnt/docker-cache
+            type: DirectoryOrCreate
       organization: choreo-userapps-gitops-prod
       image: choreocontrolplane.azurecr.io/choreoipaas/gh-runner:latest
       resources:
