@@ -32,6 +32,9 @@ CREATE TABLE api_key (
   apim_app_id CHAR(36),
   identifier VARCHAR(100),
   env_template_id CHAR(36),
+  api_id CHAR(36),
+  key_type VARCHAR(20) DEFAULT 'INTERNAL',
+  CONSTRAINT key_type_ck CHECK (key_type IN ('PRODUCTION', 'SANDBOX', 'INTERNAL')),
   CONSTRAINT api_key_id_fkey FOREIGN KEY (key_id) REFERENCES key (id) ON DELETE CASCADE,
-  CONSTRAINT api_key_unique_key UNIQUE (apim_app_id, identifier)
+  CONSTRAINT api_key_unique_key UNIQUE (apim_app_id, identifier, key_type)
 );

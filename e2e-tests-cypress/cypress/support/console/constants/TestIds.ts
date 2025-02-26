@@ -119,7 +119,7 @@ export namespace TestIds {
   export const noDataAvailable = '[data-cyid="table-listing-no-data-message"]';
   export const buildTime = '[data-cyid="build-time"]';
   export const build =
-    '[data-cyid="build-split-button-split-group-button-button"]';
+    '[data-cyid="build-latest-button"]';
   export const tableTitle = '[data-cyid="table-title"]';
   export const createComponent =
     '[data-cyid="create-multiple-components-split-toggle-button-button"]';
