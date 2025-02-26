@@ -35,6 +35,8 @@ class Console {
   static keyName = Utils.generateKeyName("key");
 
   login(loadingTime?: number) {
+    // For Enterprise login there seems to be some browser caching that can cause previous login session to continue
+    this.clearBrowserStorage();
     if (loadingTime === undefined) {
       login.login();
     } else {
@@ -44,7 +46,7 @@ class Console {
   }
 
   selfSignupOrgAdminLogin() {
-    login.selfSignupOrgAdminlogin();
+    login.login();
     return cy.wrap({});
   }
 
@@ -170,11 +172,15 @@ class Console {
 
   logout() {
     cy.request(login.getSignOutUrl()).then(() => {
-      cy.clearAllSessionStorage();
-      cy.clearLocalStorage();
-      cy.clearAllCookies();
-      cy.clearAllLocalStorage();
+      this.clearBrowserStorage();
     });
+  }
+
+  clearBrowserStorage() {
+    cy.clearAllSessionStorage();
+    cy.clearLocalStorage();
+    cy.clearAllCookies();
+    cy.clearAllLocalStorage
   }
 
   switchtOrg(orgName: string) {
@@ -300,11 +306,11 @@ class Console {
     this._orgSettings.addRole(roleName, roleDescription, roleTag);
   }
 
-  checkCurrentUserIsInGroup(group: string) {
+  checkCurrentUserIsInGroup(group: string, searchString: string) {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToUsers();
-    this._orgSettings.checkUserIsInGroup(login.getUserEmail(), group);
+    this._orgSettings.checkUserIsInGroup(searchString, group);
   }
 
   addGroup(group: string, description: string) {
@@ -349,11 +355,11 @@ class Console {
     this._orgSettings.deleteGroup(groupName);
   }
 
-  addCurrentUserToGroup(roleName: string) {
+  addCurrentUserToGroup(roleName: string, searchString: string) {
     this.navigateToHome();
     this.navigateToSettings();
     this.navigateToGroups();
-    this._orgSettings.addUserToGroup(login.getUserEmail(), roleName);
+    this._orgSettings.addUserToGroup(searchString, roleName);
   }
 
   addOrReplaceCustomDomain(domainName: string, type: CustomDomainType) {

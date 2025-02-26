@@ -14,6 +14,10 @@
 import { EndpointAccessibility, Enums } from "../../commons/enums";
 
 export namespace TestIds {
+  export const username = '[data-testid="login-page-username-input"]';
+  export const password = '[data-testid="login-page-password-input"]';
+  export const loginButton = '[data-testid="login-page-continue-login-button"]';
+  export const selfSignupComplete = '[data-testid="self-register-complete-page-header"]';
   export const logout = '[data-cyid="logout-button-button"]';
   export const userProfile = '[data-testid="header-user-profile-menu"]';
   export const orgPicker = '[data-cyid="org-picker-button"]'
