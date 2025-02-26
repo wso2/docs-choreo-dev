@@ -2165,8 +2165,8 @@ INSERT INTO permission (display_name, handle, domain_area, description) VALUES (
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Manage Devops Deployment','urn:choreosystem:choreodevopsportalapi:deployment_manage','CHOREO-DEVOPS','Manage devops deployment');
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Manage Devops Component','urn:choreosystem:choreodevopsportalapi:component_manage','CHOREO-DEVOPS','Manage devops component');
 
--- CHOREO-PLATFORM-ENGINEER
-INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Platform Engineer View','perspective:platform_engineer','CHOREO-PLATFORM-ENGINEER','View Choreo console as Platform Engineer');
+-- CHOREO-PLATFORM-ENGINEERING
+INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('Platform Engineer','platformengineer','CHOREO-PLATFORM-ENGINEERING','Perform platform engineering operations');
 
 -- COMPONENT-MANAGEMENT
 INSERT INTO permission (display_name, handle, domain_area, description) VALUES ('View Component Utilities Files','urn:choreosystem:componentutils:component_file_view','COMPONENT-MANAGEMENT','View component utilities files');
