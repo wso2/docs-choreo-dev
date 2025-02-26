@@ -83,7 +83,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private static String PROXY_COMPONENT_ENDPOINT;
     private static String PREV_CREATED_CLIENT_COMPONENT_SERVICE_NAME = "connections-consumer-one-";
     private static String DEPLOYED_COMPONENTS_PROJECT_NAME = "integration-test-project-V2";
-    private static String DEPLOYED_CLIENT_COMPONENT_SERVICE_NAME = "connections-consumer-two-";
+    private static String DEPLOYED_CLIENT_COMPONENT_SERVICE_NAME = "old-consumer-";
     private static final String NETWORK_VISIBILITY_FILTER = "org,public";
     private static final String ORG_LVL_NETWORK_VISIBILITY_FILTER = "org";
     private static final String PROJECT_LVL_NETWORK_VISIBILITY_FILTER = "project";
