@@ -440,8 +440,8 @@ configMapGenerator:
       - MI_BUILDPACKS_ENABLED_TEST_ORGS={{.MI_BUILDPACKS_ENABLED_TEST_ORGS}}
       - BD_CMV={{.BD_CMV | default "v1.1.35"}}
       - BD_CM_FP={{.BD_CM_FP | default ".github/workflows/choreo-build-deploy_cm_1.1.35.yml"}}
-      - BD_BYORV={{.BD_BYORV | default "v1.1.43"}}
-      - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.43.yml"}}
+      - BD_BYORV={{.BD_BYORV | default "v1.1.44"}}
+      - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.44.yml"}}
       - BD_BYOCV={{.BD_BYOCV | default "v1.0.34"}}
       - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.34.yml"}}
       - BD_MIV={{.BD_MIV | default "v1.0.31"}}
