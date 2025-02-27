@@ -486,6 +486,14 @@ choreoDemoOrg:
   role: ${DEMO_ORG_ROLE}
   demoOrgHandle: ${DEMO_ORG_HANDLE}
   demoOrgUUID: ${DEMO_ORG_UUID}
+pardotStaleUserHandling:
+  enable: {{.PARDOT_STALE_USER_HANDLING_ENABLED}}
+  pardot:
+    clientKey: ${PARDOT_STALE_USER_HANDLING_APP_KEY}
+    clientSecret: ${PARDOT_STALE_USER_HANDLING_APP_SECRET}
+    tokenURL: {{.PARDOT_STALE_USER_HANDLING_TOKEN_URL}}
+    pardotEndpoint: {{.PARDOT_STALE_USER_HANDLING_ENDPOINT}}
+    pardotSvcURL: {{.PARDOT_STALE_USER_HANDLING_SVC_URL}}
 salesforceLeadPardotConfig:
   enable: {{.SALESFORCE_LEAD_VIA_PARDOT_ENABLED}}
   pardot:

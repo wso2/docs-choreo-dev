@@ -27,6 +27,10 @@ spec:
           key: PARDOT_USER_LIST_REGISTRATION_APP_KEY
         - objectName: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
           key: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
+        - objectName: PARDOT_STALE_USER_HANDLING_APP_KEY
+          key: PARDOT_STALE_USER_HANDLING_APP_KEY
+        - objectName: PARDOT_STALE_USER_HANDLING_APP_SECRET
+          key: PARDOT_STALE_USER_HANDLING_APP_SECRET
         - objectName: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
           key: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
         - objectName: SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET
@@ -88,6 +92,16 @@ spec:
           objectType: secret
           objectAlias: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
           objectVersion: "{{.PARDOT_USER_LIST_REGISTRATION_APP_SECRET}}"
+        - |
+          objectName: app-service-stale-user-handling-pardot-app-key
+          objectType: secret
+          objectAlias: PARDOT_STALE_USER_HANDLING_APP_KEY
+          objectVersion: "{{.PARDOT_STALE_USER_HANDLING_APP_KEY}}"
+        - |
+          objectName: app-service-stale-user-handling-pardot-app-secret
+          objectType: secret
+          objectAlias: PARDOT_STALE_USER_HANDLING_APP_SECRET
+          objectVersion: "{{.PARDOT_STALE_USER_HANDLING_APP_SECRET}}"
         - |
           objectName: app-service-PARDOT-SF-NEW-LEAD-CREATION-APP-KEY
           objectType: secret
