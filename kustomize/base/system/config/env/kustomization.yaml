@@ -377,6 +377,7 @@ configMapGenerator:
       - SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED={{.SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED | default "false"}}
       - SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED_ORGS={{.SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED_ORGS | default "0044bc3b-a36e-41cf-8f81-431a99c7183d" }}
       - ENABLE_USER_PROVIDED_ENDPOINT={{.ENABLE_USER_PROVIDED_ENDPOINT | default "false"}}
+      - API_KEY_ENABLED_PDP_ORGS={{.API_KEY_ENABLED_PDP_ORGS | default ""}}
   - name: env-dp-helmhub
     behavior: create
     literals:
@@ -846,6 +847,7 @@ configMapGenerator:
       - REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL={{.REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL | default "https://wso2.com/choreo/docs/develop-components/manage-component-source-configurations/#update-to-the-latest-source-configuration-file"}}
       - REACT_APP_ENABLE_NON_BUILDPACK_BUILD_CONFIGS={{.REACT_APP_ENABLE_NON_BUILDPACK_BUILD_CONFIGS  | default "false"}}
       - REACT_APP_ENABLE_PULL_LATEST_SUBMODULES={{.REACT_APP_ENABLE_PULL_LATEST_SUBMODULES  | default "false"}}
+      - REACT_APP_API_KEY_SUPPORTED_PDP_ORGS={{.REACT_APP_API_KEY_SUPPORTED_PDP_ORGS | default ""}}
   - name: env-dp-mizzen
     behavior: create
     literals:
