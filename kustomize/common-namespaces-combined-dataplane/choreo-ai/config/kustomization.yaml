@@ -74,3 +74,13 @@ configMapGenerator:
       - TLS_ENABLED_REDIS={{.TLS_ENABLED_REDIS | default "true" }}
       - DATA_COLLECTOR_URL={{.DATA_COLLECTOR_URL}}
       - CHOREO_TOKEN_ENDPOINT={{.CHOREO_TOKEN_ENDPOINT}}
+  - name: env-cost-optimizer
+    behavior: create
+    literals:
+      - THANOS_QUERY_URL={{.THANOS_QUERY_URL | default http://thanos-querier.choreo-observability:10902/api/v1/query_range }}
+      - CPU_RATE_PER_HOUR={{.CPU_RATE_PER_HOUR | default 0.0139 }}
+      - RAM_RATE_PER_HOUR={{.RAM_RATE_PER_HOUR | default 0.00000000000647 }}
+      - LOG_LEVEL={{.LOG_LEVEL | default "INFO"}}
+      - REDIS_PORT={{.REDIS_PORT | default 6379}}
+      - BASE_REDIS_NODE={{.BASE_REDIS_NODE | default redis-cluster-{}.redis-cluster-headless.redis.svc.cluster.local}}
+      - NO_OF_REDIS_NODES={{.NO_OF_REDIS_NODES | default 6}}
