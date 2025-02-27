@@ -358,7 +358,7 @@ defaultRoles:
         - deployments
       permissions:
         # Choreo Platform Engineering
-        - perspective:platform_engineer
+        - choreo:platform_engineer
         # API Admin
         - apim:admin
         # APIM Publisher
