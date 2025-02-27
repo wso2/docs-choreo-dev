@@ -31,12 +31,24 @@ images = {
 
 def check_images_exist(image_dict):
     """
-    Check if all required images exist and return the missing ones.
+    Check if required images exist. Ignore missing images containing "error" in their filename.
+    Returns a dictionary of existing images and missing ones.
     """
-    missing_images = [name for name, path in image_dict.items() if not os.path.exists(path)]
+    existing_images = {}
+    missing_images = []
+
+    for name, path in image_dict.items():
+        if os.path.exists(path):
+            existing_images[name] = path
+        elif "error" in name:  # Skip missing error images
+            print(f"Skipping missing error image: {name}")
+        else:
+            missing_images.append(name)
+
     if missing_images:
-        print(f"Missing images: {', '.join(missing_images)}")
-    return missing_images
+        print(f"Missing critical images: {', '.join(missing_images)}. Email will still be sent.")
+
+    return existing_images, missing_images
 
 def create_email_body(images):
     # Extract image CIDs
@@ -168,7 +180,8 @@ def send_email():
     """
     Create and send the email with charts embedded as inline images.
     """
-    missing_images = check_images_exist(images)
+    # missing_images = check_images_exist(images)
+    existing_images, missing_images = check_images_exist(images)
     if missing_images:
         print("Missing images detected. Aborting email sending.")
         return
@@ -192,7 +205,8 @@ def send_email():
     msg['To'] = ", ".join(receiver)
 
     # Create a dictionary to store image CIDs
-    image_cids = {key: key for key in images.keys()}
+    # image_cids = {key: key for key in images.keys()}
+    image_cids = {key: key for key in existing_images.keys()}
 
     # Attach the email body
     email_body = create_email_body(image_cids)
@@ -200,7 +214,7 @@ def send_email():
     msg.attach(msgText)
 
     # Attach all images
-    for cid, path in images.items():
+    for cid, path in existing_images.items():
         if os.path.exists(path):  # Attach only existing images
             with open(path, 'rb') as img_file:
                 image = MIMEImage(img_file.read(), name=os.path.basename(path))

@@ -10,15 +10,64 @@ import matplotlib.colors as mcolors
 SAMPLE_SPREADSHEET_ID = "1sM_UfSTZ88fadSDXIWxLrPsmRhYUyCX1qVCP2Rm6BH0"
 TARGET_SHEET_NAME = "Summary"
 
+# Reusable: Check if the dataset contains at least one nonzero value
+def contains_nonzero_values(data):
+    """
+    Checks if the dataset contains at least one nonzero value.
+    
+    Parameters:
+        data (list of lists): The fetched Google Sheets data.
+
+    Returns:
+        bool: True if at least one value is nonzero, False otherwise.
+    """
+    if not data or len(data) < 2:  # Ensure data is valid and contains more than just headers
+        return False
+
+    # Extract numerical values, skipping headers and labels (first two columns)
+    values_only = [
+        float(value) for row in data[1:] for value in row[2:] 
+        if isinstance(value, (int, float)) or (isinstance(value, str) and value.replace('.', '', 1).isdigit())
+    ]
+
+    return any(value != 0 for value in values_only)  # True if at least one nonzero value exists
+
+
 # Reusable: Fetch data from a specified range
-def fetch_data(service, range_name):
+def fetch_data(service, range_name, filter_last_four_dates=False):
     try:
         result = service.spreadsheets().values().get(
             spreadsheetId=SAMPLE_SPREADSHEET_ID, range=f"{TARGET_SHEET_NAME}!{range_name}"
         ).execute()
         values = result.get("values", [])
         print(f"Fetched data from range {range_name}: {values}")
-        return values
+        
+        if filter_last_four_dates:
+            if not values or len(values) < 2:
+                print(f"No data found in range {range_name}.")
+                return None
+
+            # Extract the header row (column names, including dates)
+            header = values[0]
+
+        # Ensure there are enough columns
+            if len(header) < 6:  # At least "Step", "Label", and 4 date columns
+                print(f"Insufficient data columns in range {range_name}. Skipping...")
+                return None
+
+            # Get the last 4 date columns dynamically
+            last_four_dates = header[-4:]  # The last 4 column headers
+
+            # Determine indices of the last 4 dates
+            last_four_indices = [header.index(date) for date in last_four_dates]
+
+            # Filter the data: Keep only "Step", "Label", and the last 4 dates
+            filtered_data = [[row[0], row[1]] + [row[i] for i in last_four_indices] for row in values]
+
+            print(f"Filtered data (last 4 dates) from range {range_name}: {filtered_data}")
+            return filtered_data
+        else:
+            return values
     except HttpError as err:
         print(f"An error occurred while fetching data: {err}")
         return None
@@ -408,20 +457,20 @@ def main():
         create_grouped_bar_chart(latency_data, "Latency - 99th Percentile", "Latency (ms)", "20_latency_chart.png")
 
    # Fetch API invocation data
-    api_invocations = fetch_data(service, "B43:Z44")
+    api_invocations = fetch_data(service, "B43:Z44", True)
     if api_invocations:
         create_api_invocation_chart(api_invocations, "API Invocations - Throughput", "TPS", "api_invocations_tps_chart.png")
         add_api_invocation_chart_to_sheet(service, sheet_id, "B43:Z44", "API Invocations", "TPS")
 
    # Fetch API invocation data
-    api_invocations = fetch_data(service, "B46:Z48")
+    api_invocations = fetch_data(service, "B46:Z48", True)
     if api_invocations:
         create_api_invocation_chart(api_invocations, "API Invocations - Latency", "P99 Latency (ms)", "api_invocations_latency_chart.png")
         add_api_invocation_chart_to_sheet(service, sheet_id, "B46:Z48", "API Invocations - Latency", "P99 Latency (ms)")
 
-   # Fetch API invocation data
-    api_invocations = fetch_data(service, "B50:Z51")
-    if api_invocations:
+   # Fetch API invocation data - Errors
+    api_invocations = fetch_data(service, "B50:Z51", True)
+    if api_invocations and contains_nonzero_values(api_invocations):
         create_api_invocation_chart(api_invocations, "API Invocations - Errors", "Errors (%)", "api_invocations_error_chart.png")
         add_api_invocation_chart_to_sheet(service, sheet_id, "B50:Z51", "API Invocations - Errors", "Errors (%)")
 
