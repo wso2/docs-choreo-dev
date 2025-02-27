@@ -84,4 +84,3 @@ configMapGenerator:
       - REDIS_PORT={{.REDIS_PORT | default 6379}}
       - BASE_REDIS_NODE={{.BASE_REDIS_NODE | default redis-cluster-{}.redis-cluster-headless.redis.svc.cluster.local}}
       - NO_OF_REDIS_NODES={{.NO_OF_REDIS_NODES | default 6}}
-      - REDIS_HOST_URL={{.REDIS_HOST_URL | default choreo-dev-ai-api-test.redis.cache.windows.net:6380}}
