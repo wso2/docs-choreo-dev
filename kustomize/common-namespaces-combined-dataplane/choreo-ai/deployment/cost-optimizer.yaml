@@ -46,7 +46,7 @@ spec:
             successThreshold: 1
             httpGet:
               port: cost-opt-port
-              path: /readiness
+              path: /health
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 30
@@ -55,7 +55,7 @@ spec:
             successThreshold: 1
             httpGet:
               port: cost-opt-port
-              path: /liveness
+              path: /health
           ports:
             - containerPort: 8000
               name: cost-opt-port
