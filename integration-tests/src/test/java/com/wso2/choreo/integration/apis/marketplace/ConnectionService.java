@@ -178,6 +178,19 @@ public class ConnectionService extends ControlPlaneAPI {
         }
     }
 
+    public static void regenerateAPIKey(String accessToken, String connectionId, List<com.wso2.choreo.integration.models.environments.Environment> environments) throws IOException {
+        for (com.wso2.choreo.integration.models.environments.Environment environment : environments) {
+            String envId = environment.getTemplateId();
+            String regenerateAPIKeyURI = CHOREO_APP_SERVICE_URL.concat("/").concat(CONTEXT)
+                .concat("/configurations/service-configs/choreo-connections/")
+                .concat(connectionId).concat("/rotate-keys").concat("?environmentId=").concat(envId);
+            String payloadString = "{}";
+            Response response = HttpClientUtil.httpPOST(regenerateAPIKeyURI, payloadString, accessToken, "");
+            if (response.getStatusCode() != HttpStatus.CREATED.value()) {
+                log.warn("Error while regenerating the API key for connection " + connectionId + " in environment " + envId + " error is: " + response.getRes());
+            }
+        }
+    }
 
     public static ConnectionInfo[] getChoreoConnections(String accessToken, String projectId){
         String getChoreoConnectionsURI=CHOREO_APP_SERVICE_URL.concat("/")+CONTEXT.concat("/configurations/service-configs/connections").concat("?projectId=").concat(projectId);

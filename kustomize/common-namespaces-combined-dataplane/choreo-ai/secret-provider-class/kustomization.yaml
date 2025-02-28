@@ -16,6 +16,7 @@ resources:
   - marketplace-assistant.yaml
   - obs-assistant.yaml
   - testgpt.yaml
+  - cost-optimizer.yaml
 
 patches:
   - path: patch.json

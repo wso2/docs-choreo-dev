@@ -83,7 +83,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private static String PROXY_COMPONENT_ENDPOINT;
     private static String PREV_CREATED_CLIENT_COMPONENT_SERVICE_NAME = "connections-consumer-one-";
     private static String DEPLOYED_COMPONENTS_PROJECT_NAME = "integration-test-project-V2";
-    private static String DEPLOYED_CLIENT_COMPONENT_SERVICE_NAME = "connections-consumer-two-";
+    private static String DEPLOYED_CLIENT_COMPONENT_SERVICE_NAME = "old-consumer-";
     private static final String NETWORK_VISIBILITY_FILTER = "org,public";
     private static final String ORG_LVL_NETWORK_VISIBILITY_FILTER = "org";
     private static final String PROJECT_LVL_NETWORK_VISIBILITY_FILTER = "project";
@@ -113,6 +113,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
 
     private String componentLevelConnectionId;
     private String componentLevelNewConnectionId;
+    private String apiKeyConnectionId;
     private List<Environment> servicePublisherComponentEnvironments;
     private List<Environment> proxyPublisherComponentEnvironments;
     private List<Environment> orgEndpointComponentDeployedEnvs;
@@ -506,7 +507,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 ORGANIZATION_SERVICE, serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         String serviceId = serviceFound.getServiceId();
-        String connectionId = ConnectionService.createChoreoConnection(this, httpClient,
+        apiKeyConnectionId = ConnectionService.createChoreoConnection(this, httpClient,
                 accessToken, connectionCreateReq, false,
                 orgEndpointComponentDeployedEnvs, false);
         //update component-config.yaml file
@@ -514,7 +515,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 httpClient, accessToken, serviceId, ServiceVisibility.ORGANIZATION);
         Map<String, String> params = new HashMap<>();
         params.put("serviceIdentifier", serviceIdentifier);
-        params.put("connectionId", connectionId);
+        params.put("connectionId", apiKeyConnectionId);
         String updatedComponentConfigFileContent = MessageUtils.generateStringFromTemplate(
                 "templates/marketplace/component-config-api-key.mustache", params);
         String encodedFileContent = Base64.getEncoder().
@@ -582,6 +583,52 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 orgEndpointServiceComponent.getName(), ORG_LVL_NETWORK_VISIBILITY_FILTER, projectOne.getId(),
                 connectionName, "Project level Connection for a secured service with org visibility",ORGANIZATION_SERVICE,
                 false, orgEndpointComponentDeployedEnvs);
+    }
+
+    @Test(dependsOnMethods = {"invokeAPIStageForAPIKeyEnabledOrgService_TestChoreoConnections"})
+    @CitrusTest
+    public void regenerateAPIKeyForAPIKeyEnabledOrgService_TestChoreoConnections() throws Exception {
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
+                accessToken, apiKeyEnabledClientChoreoComponent);
+
+        ConnectionService.regenerateAPIKey(accessToken, apiKeyConnectionId, environments);
+    }
+
+    @Test(dependsOnMethods = {"regenerateAPIKeyForAPIKeyEnabledOrgService_TestChoreoConnections"})
+    @CitrusTest
+    public void invokeAPIDevForAPIKeyEnabledOrgServiceWithOldAPIKeys_TestChoreoConnections() throws Exception {
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
+                accessToken, apiKeyEnabledClientChoreoComponent);
+        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                apiKeyEnabledClientChoreoComponent, apiKeyEnabledClientDeploymentStatusDTO, environments);
+        ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(),
+                API_INVOCATION_REQUEST_URI, API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
+    }
+
+    @Test(dependsOnMethods = {"invokeAPIDevForAPIKeyEnabledOrgServiceWithOldAPIKeys_TestChoreoConnections"})
+    @CitrusTest
+    public void deployAPIKeyBasedServiceConsumerComponentAfterKeyRegeneration_TestChoreoConnections() throws Exception {
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        apiKeyEnabledClientComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
+                accessToken, apiKeyEnabledClientChoreoComponent);
+        apiKeyEnabledClientDeploymentStatusDTO = ComponentUtils.deployComponent(this, citrusClients, accessToken,
+                apiKeyEnabledClientChoreoComponent, apiKeyEnabledClientComponentEnvironments, ComponentFlavour.BYOC);
+        ComponentUtils.validateEndpoints(this, citrusClients, accessToken, apiKeyEnabledClientChoreoComponent,
+                apiKeyEnabledClientDeploymentStatusDTO);
+    }
+
+    @Test(dependsOnMethods = {"deployAPIKeyBasedServiceConsumerComponentAfterKeyRegeneration_TestChoreoConnections"})
+    @CitrusTest
+    public void invokeAPIDevForAPIKeyEnabledOrgServiceWithNewAPIKeys_TestChoreoConnections() throws Exception {
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients,
+                accessToken, apiKeyEnabledClientChoreoComponent);
+        Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
+                apiKeyEnabledClientChoreoComponent, apiKeyEnabledClientDeploymentStatusDTO, environments);
+        ComponentUtils.invokeApiPOST(this, invokeData.getRight().getApikey(), invokeData.getLeft(),
+                API_INVOCATION_REQUEST_URI, API_INVOCATION_REQUEST_BODY, REST_API_EXPECTED_RESPONSE, HttpStatus.ACCEPTED);
     }
 
     @Test(dependsOnMethods = {"createProjectLevelConnectionToSecuredOrgService_TestChoreoConnections"})

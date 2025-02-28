@@ -28,18 +28,20 @@ spec:
     kind: Deployment
     name: choreo-connect-deployment
   metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 75
-    - type: Resource
-      resource:
+    - type: ContainerResource
+      containerResource:
         name: memory
+        container: choreo-connect-router
         target:
           type: Utilization
           averageUtilization: 75
+    - type: ContainerResource
+      containerResource:
+        name: memory
+        container: choreo-connect-enforcer
+        target:
+          type: Utilization
+          averageUtilization: 90
     - type: ContainerResource
       containerResource:
         name: cpu

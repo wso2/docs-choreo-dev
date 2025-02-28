@@ -4,3 +4,4 @@ resources:
   - docs-assistant.yaml
   - marketplace-assistant.yaml
   - insights-assistant.yaml
+  - cost-optimizer.yaml
