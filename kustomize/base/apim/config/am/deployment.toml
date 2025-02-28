@@ -282,6 +282,20 @@ default=""
 name="isDpSystemApp"
 description="dataplane system application"
 
+[[apim.devportal.application_attributes]]
+required=false
+hidden=false
+default=""
+name="isManagementApp"
+description="management application for system apis"
+
+[[apim.devportal.application_attributes]]
+required=false
+hidden=false
+default=""
+name="isChoreoManaged"
+description="choreo managed management application"
+
 [apim.cors]
 allow_origins = "*"
 allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
@@ -659,3 +673,6 @@ retry_delay = "1000"
 
 [choreo.appdev.sts]
 management_service_url="{{.STS_MANAGEMENT_SERVICE_URL | default "http://localhost:3000/api/v1"}}"
+
+[choreo.api_key_service]
+endpoint_url="{{.API_KEY_SERVICE_ENDPOINT_URL | default ""}}"

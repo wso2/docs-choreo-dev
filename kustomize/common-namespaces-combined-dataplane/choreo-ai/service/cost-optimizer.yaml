@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: cost-optimizer
+  name: cost-optimizer
+spec:
+  ports:
+    - name: cost-opt-port
+      port: 8000
+      protocol: TCP
+      targetPort: cost-opt-port
+  selector:
+    choreo.component: cost-optimizer

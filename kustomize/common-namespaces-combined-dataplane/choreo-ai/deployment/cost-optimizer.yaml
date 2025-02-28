@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: "CKV_K8S_AZURE_WSO2_2=Linkerd is disable for dataplane"
+  labels:
+    choreo.component: cost-optimizer
+  name: cost-optimizer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: cost-optimizer
+  template:
+    metadata:
+      labels:
+        choreo.component: cost-optimizer
+        antiaffinity: cost-optimizer
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/cost-optimizer:latest
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - all
+          name: cost-optimizer
+          envFrom:
+            - configMapRef:
+                name: env-cost-optimizer
+            - secretRef:
+                name: secret-cost-optimizer
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: cost-opt-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: cost-opt-port
+              path: /liveness
+          ports:
+            - containerPort: 8000
+              name: cost-opt-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 400m
+              memory: 1000Mi
+            requests:
+              cpu: 200m
+              memory: 750Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - name: tmp-volume
+              mountPath: /tmp
+            - name: secret-cost-optimizer
+              mountPath: /mnt/csi/secret-cost-optimizer
+              readOnly: true
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}
+        - name: secret-cost-optimizer
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cost-optimizer
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  antiaffinity: cost-optimizer
+              topologyKey: kubernetes.io/hostname

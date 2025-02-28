@@ -137,10 +137,10 @@ spec:
           resources:
             requests:
               memory: "3.5Gi"
-              cpu: "1.5"
+              cpu: "750m"
             limits:
               memory: "3.5Gi"
-              cpu: "2"
+              cpu: "1"
           ports:
             - containerPort: 8081
             - containerPort: 9001
