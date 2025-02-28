@@ -847,6 +847,7 @@ configMapGenerator:
       - REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL={{.REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL | default "https://wso2.com/choreo/docs/develop-components/manage-component-source-configurations/#update-to-the-latest-source-configuration-file"}}
       - REACT_APP_ENABLE_NON_BUILDPACK_BUILD_CONFIGS={{.REACT_APP_ENABLE_NON_BUILDPACK_BUILD_CONFIGS  | default "false"}}
       - REACT_APP_ENABLE_PULL_LATEST_SUBMODULES={{.REACT_APP_ENABLE_PULL_LATEST_SUBMODULES  | default "false"}}
+      - REACT_APP_CONFIG_SCHEMA_API_URL={{.REACT_APP_CONFIG_SCHEMA_API_URL | default ""}}
       - REACT_APP_API_KEY_SUPPORTED_PDP_ORGS={{.REACT_APP_API_KEY_SUPPORTED_PDP_ORGS | default ""}}
   - name: env-dp-mizzen
     behavior: create
