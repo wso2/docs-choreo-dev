@@ -45,3 +45,15 @@ configMapGenerator:
       - BQ_PROJECT_ID={{.BQ_PROJECT_ID | default ""}}
       - BQ_DATASET_ID={{.BQ_DATASET_ID | default ""}}
       - ORG_MANAGER_SCOPE={{.ORG_MANAGER_SCOPE | default ""}}
+  - name: env-cost-optimizer-cp-cm
+    behavior: create
+    literals:
+      - DB_SERVER={{.DB_SERVER | default ""}}
+      - DB_USER=choreo_ai_copilot_db_user
+      - DB_PORT=1433
+      - DB_NAME=choreo_ai_copilot_db
+      - DB_PASSWORD_FILE=/mnt/csi/secret-copilot-datacollector/DB_PASSWORD
+      - GOOGLE_APPLICATION_CREDENTIALS=/mnt/csi/secret-copilot-datacollector/BQ_SERVICE_ACCOUNT_KEY
+      - BQ_PROJECT_ID={{.BQ_PROJECT_ID | default ""}}
+      - BQ_DATASET_ID={{.BQ_DATASET_ID | default ""}}
+      - ORG_MANAGER_SCOPE={{.ORG_MANAGER_SCOPE | default ""}}
