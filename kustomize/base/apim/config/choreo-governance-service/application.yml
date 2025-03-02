@@ -31,6 +31,7 @@ governance-service:
     disableDatabaseConnection: {{.DISABLE_DATABASE_CONNECTION | default true}}
     validateRulesetContent: {{.VALIDATE_RULESET_CONTENT | default false}}
     excludedOrgsFromAuthorization: {{.EXCLUDED_ORGS_FROM_AUTHORIZATION | default ""}}
+    enableAIGovernance: {{.ENABLE_AI_GOVERNANCE | default false}}
   endpoints:
     apimBasePath: "https://choreo-am-service:9443/api/am/publisher/v2"
     appService: {{.APP_SERVICE_BASE_URL}}
