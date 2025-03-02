@@ -296,6 +296,11 @@ default=""
 name="isChoreoManaged"
 description="choreo managed management application"
 
+[apim.devportal.v2]
+access_url = "{{.DEVPORTAL_V2_URL}}"
+access_header = "api-key"
+access_key = "$env{DEVPORTAL_V2_ACCESS_KEY}"
+
 [apim.cors]
 allow_origins = "*"
 allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
