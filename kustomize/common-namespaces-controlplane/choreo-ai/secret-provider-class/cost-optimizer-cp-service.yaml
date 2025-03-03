@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: cost-optimizer-cp-secret
+spec:
+  secretObjects:
+    - secretName: cost-optimizer-cp-secret
+      type: Opaque
+      data:
+        - objectName: DB_PASSWORD
+          key: DB_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-cost-optimizer-db-mssql-password
+          objectType: secret
+          objectAlias: DB_PASSWORD
+          objectVersion: "{{.DB_PASSWORD}}"
