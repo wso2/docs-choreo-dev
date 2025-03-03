@@ -52,11 +52,15 @@ jobs:
           pip install mkdocs-open-in-new-tab==1.0.3
           pip install mike==2.1.3
       - name: Deploy Documentation with mike
-        run: |         
+        run: | 
+          git fetch origin gh-pages-pe || echo "Branch gh-pages-pe does not exist yet"
+        
           # Deploy documentation using mike
-          mike deploy --config-file en/developer-docs/mkdocs.yml Developer latest --branch gh-pages-dev-pe --push
-          mike deploy --config-file en/pe-docs/mkdocs.yml "Platform Engineer" --branch gh-pages-dev-pe --push
-          mike set-default --config-file en/developer-docs/mkdocs.yml Developer --branch gh-pages-dev-pe --push
+          mike deploy --config-file en/developer-docs/mkdocs.yml Developer latest --branch gh-pages-pe --push
+          mike deploy --config-file en/pe-docs/mkdocs.yml "Platform Engineer" --branch gh-pages-pe --push
+          mike set-default --config-file en/developer-docs/mkdocs.yml Developer --branch gh-pages-pe --push
+          
+          git push origin HEAD:gh-pages-pe --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
