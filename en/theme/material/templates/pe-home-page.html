@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% import "partials/language.html" as lang with context %}
+<!doctype html>
+<html lang="{{ lang.t('language') }}" class="no-js">
+  {% block header %}  
+  {% if not palette is mapping %}
+  {% set palette = palette %}
+{% endif %}
+{% set scheme  = "default" %}
+{% set primary = "" %}
+{% set accent  = "" %}
+  {% set class = "md-header" %}
+<header class="{{ class }}" data-md-component="header" style="height: 13.5rem; position: relative;">
+  <nav class="md-header__inner md-grid md-header--shadow-nav" aria-label="{{ lang.t('header') }}" "
+  ">
+    <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
+      {% include "partials/logo.html" %}
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      {% include ".icons/material/menu" ~ ".svg" %}
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            {{ config.site_name }}
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            {% if page.meta and page.meta.title %}
+              {{ page.meta.title }}
+            {% else %}
+              {{ page.title }}
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+    {% if config.extra.alternate %}
+      <div class="md-header__option">
+        <div class="md-select">
+          {% set icon = config.theme.icon.alternate or "material/translate" %}
+          <button class="md-header__button md-icon" aria-label="{{ lang.t('select.language') }}">
+            {% include ".icons/" ~ icon ~ ".svg" %}
+          </button>
+          <div class="md-select__inner">
+            <ul class="md-select__list">
+              {% for alt in config.extra.alternate %}
+                <li class="md-select__item">
+                  <a href="{{ alt.link | url }}" hreflang="{{ alt.lang }}" class="md-select__link">
+                    {{ alt.name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    <div class="md-header__source">
+      {% include "partials/source.html" %}
+    </div>
+  </nav>
+  {% if "navigation.tabs.sticky" in features %}
+    {% if "navigation.tabs" in features %}
+      {% include "partials/tabs.html" %}
+    {% endif %}
+  {% endif %}
+  {% if "material/search" in config.plugins %}
+  <label class="md-header__button md-icon" for="__search">
+    {% include ".icons/material/magnify.svg" %}
+  </label>
+{% endif %} 
+ <section class="md-section">
+    <div class="md-grid md-typeset">
+      <div class="section01" style="display: block;  text-align: center; width: 70%;  flex-shrink: 0;min-width: 40%; max-height: 280px; max-width:100%; margin-left:10px; padding-top: 0.5rem; text-align: -webkit-center; margin:auto; margin-top: 1rem;margin-bottom: 1rem; ">
+        <h1 style="font-weight: 700; font-size: 43px; line-height: 48px; padding-top: 2.5rem;">How can we help?</h1>
+       </div> 
+       <div class="md-search" data-md-component="search" role="dialog" style="align-items:center; width: 100%; height: 100%;">
+        <label class="md-search__overlay" for="__search"></label>
+        <div class="md-search__inner md-search__inner-home" role="search" style="float: none; align-items: center; background-color: transparent;">
+          <form class="md-search__form md-search__form-home" name="search" style="background-color: #F0F1FB;">
+           
+            <!-- Search input -->
+            <input
+              type="text"
+              class="md-search__input md-search__input-home"
+              name="query"
+              id="query"
+              aria-label="{{ lang.t('search.placeholder') }}"
+              placeholder="Search for any topic in our documentation"
+              autocapitalize="off"
+              autocorrect="off"
+              autocomplete="off"
+              spellcheck="false"
+              padding-left="10px"
+              data-md-component="search-query"
+              required      
+            />
+            <br/>
+            <label class="md-search_label" for="search_input"> For example, </label>
+            <label class="md-search_label md-search_label2" for="search_input"> REST API, API Proxy, Services, DevOps </label>
+            <br />
+            <!-- Search options -->
+            <nav
+              class="md-search__options"
+              aria-label="{{ lang.t('search') }}"
+              style="width: inherit;"
+            >
+
+              <!-- Button to share search -->
+              {% if "search.share" in features %}
+                <a
+                  href="javascript:void(0)"
+                  class="md-search__icon md-icon"
+                  title="{{ lang.t('search.share') }}"
+                  aria-label="{{ lang.t('search.share') }}"
+                  data-clipboard
+                  data-clipboard-text=""
+                  data-md-component="search-share"
+                  tabindex="-1"
+                >
+                  {% include ".icons/material/share-variant.svg" %}
+                </a>
+              {% endif %}
+
+              <!-- Button to reset search -->
+              <button
+                type="reset"
+                class="md-search__icon md-icon"
+                title="{{ lang.t('search.reset') }}"
+                aria-label="{{ lang.t('search.reset') }}"
+                tabindex="-1"
+              >
+                {% include ".icons/material/close.svg" %}
+              </button>
+            </nav>
+
+      <!-- Search suggestions -->
+          {% if "search.suggest" in features %}
+            <div
+              class="md-search__suggest"
+              data-md-component="search-suggest"
+            ></div>
+          {% endif %}
+          </form>
+          <div class="md-search__output md-search__output-home">
+      <div class="md-search__scrollwrap"  style="width: inherit;" data-md-scrollfix>
+
+        <!-- Search results -->
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta" style=" padding-top: 1rem;">
+            {{ lang.t("search.result.initializer") }}
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+          </div>
+        </div>              
+      </div>
+    </div>
+ </section>
+ <style>
+  .md-header {
+    box-shadow: none !important;
+}
+
+.md-header--shadow{
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+.md-header--shadow-nav{
+    box-shadow: 0 0 0.2rem #0000001a, 0 0.2rem 0.4rem #0003;
+    transition: transform .25s cubic-bezier(.1,.7,.1,1),box-shadow .25s;
+}
+
+[data-md-toggle=search]:checked~.md-header .md-search_label {
+  visibility: hidden;
+}
+
+.md-section{
+   background-image: url('assets/img/home/background.svg') !important;
+   background-position-y: -24rem;
+}
+</style>
+</header>
+{% endblock %}
+{% block main_block %}
+{% if not palette is mapping %}
+{% set palette = palette %}
+{% endif %}
+{% set scheme  = "default" %}
+{% set primary = "" %}
+{% set accent  = "" %}
+{% block palette%}
+{% endblock %}
+<main class="md-main" data-md-component="main">
+
+  <div class="md-container-home data-md-component="container">
+  <div style="height: 5rem;"></div>
+  <div class="row md_home_link_container_row">
+    <div class="cText">
+        <a href="pe-menu-1">PE Menu 1</a>
+      </div>
+          </div>
+  </div>
+  </main>
+{% endblock %}
+{% block footer %}
+{% include "partials/footer_home.html" %}
+{% endblock %}
+
+</html>
