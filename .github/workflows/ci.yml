@@ -1,8 +1,8 @@
-name: ci 
+name: ci
 on:
   push:
     branches:
-     - dev
+      - PE-view
 permissions:
   contents: write
 jobs:
@@ -10,40 +10,46 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Configure Git Credentials
         run: |
-          git config --global user.email "choreo-cicd@wso2.com"
-          git config --global user.name "Choreo CI Agent"
+          git config --global user.email "hansijayanika@gmail.com"
+          git config --global user.name "hanzjk"
+
       - uses: actions/setup-python@v5
         with:
           python-version: 3.12
+
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+
       - uses: actions/cache@v4
         with:
           key: mkdocs-material-${{ env.cache_id }}
           path: .cache
           restore-keys: |
             mkdocs-material-
-      - run: |
+
+      - name: Install Dependencies
+        run: |
           echo "Installing Python dependencies"
-          pip install --upgrade pip  # Ensure pip is up-to-date
-          pip install zipp==3.0.0
-          pip install pathlib2==2.3.5
-          pip install -U --upgrade mkdocs==1.4.2
+          pip install --upgrade pip
+          pip install mike==2.0.0  # Install mike for versioning
+          pip install mkdocs==1.4.2
           pip install Pygments==2.14.0
           pip install pymdown-extensions==9.10
+          pip install mkdocs-material==9.1.2
           pip install mkdocs-minify-plugin==0.6.2
-          pip install mkdocs-markdownextradata-plugin==0.2.5
           pip install mkdocs-redirects==1.2.0
-          pip install pathlib==1.0.1
-          pip install -U mkdocs-material==9.1.2
-          pip install markdown-include==0.8.1
-          pip install markdown==3.2.1
           pip install mkdocs-exclude==1.0.2
-          pip install -U Jinja2==3.1.0
           pip install mkdocs-glightbox==0.3.4
           pip install mkdocs-include-markdown-plugin==1.0.0
           pip install mkdocs-open-in-new-tab==1.0.3
-      - run: mkdocs gh-deploy --config-file en/mkdocs.yml --force
+          pip install mike=2.1.3
+
+      - name: Deploy Documentation with mike
+        run: |
+          mike deploy --config-file developer-docs/mkdocs.yml Developer latest --branch gh-pages-pe --push
+          mike deploy --config-file pe-docs/mkdocs.yml "Platform Engineer" --branch gh-pages-pe --push
+          mike set-default --config-file developer-docs/mkdocs.yml Developer --branch gh-pages-pe --push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
