@@ -2,7 +2,7 @@ name: ci
 on:
   push:
     branches:
-      - PE-view
+      - PE
 permissions:
   contents: write
 jobs:
@@ -13,8 +13,8 @@ jobs:
 
       - name: Configure Git Credentials
         run: |
-          git config --global user.email "hansijayanika@gmail.com"
-          git config --global user.name "hanzjk"
+          git config --global user.email "choreo-cicd@wso2.com"
+          git config --global user.name "Choreo CI Agent"
 
       - uses: actions/setup-python@v5
         with:
