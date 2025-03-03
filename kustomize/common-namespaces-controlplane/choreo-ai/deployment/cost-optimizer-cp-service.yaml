@@ -54,7 +54,7 @@ spec:
               memory: 150Mi
           ports:
             - containerPort: 8080
-              name: cost-opt-cp-port
+              name: cost-cp-port
               protocol: TCP
           readinessProbe:
             initialDelaySeconds: 5
@@ -63,7 +63,7 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: cost-opt-cp-port
+              port: cost-cp-port
               path: /health
           livenessProbe:
             initialDelaySeconds: 10
@@ -72,7 +72,7 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: cost-opt-cp-port
+              port: cost-cp-port
               path: /health
           securityContext:
             runAsUser: 10500

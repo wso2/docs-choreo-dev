@@ -6,8 +6,8 @@ metadata:
   name: cost-optimizer-cp
 spec:
   ports:
-    - name: cost-opt-cp-port
+    - name: cost-cp-port
       port: 8080
-      targetPort: cost-opt-cp-port
+      targetPort: cost-cp-port
   selector:
     choreo.component: cost-optimizer-cp
