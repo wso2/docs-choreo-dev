@@ -351,6 +351,101 @@ defaultRoles:
         - {{.PERMISSION_COMPONENT_TRIGGER}}
         - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
         - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
+    - name: Choreo Platform Engineer
+      handle: choreo-platform-engineer
+      description: Users who perform tasks focusing on infrastructure, governance, service mesh, and monitoring.
+      tags:
+        - deployments
+      permissions:
+        # Choreo Platform Engineering
+        - choreo:platform_engineer
+        # API Admin
+        - apim:admin
+        # APIM Publisher
+        - apim:publisher_settings
+        - apim:api_view
+        - apim:tier_manage
+        - apim:api_manage
+        - apim:subscription_manage
+        # Choreo Devops
+        - choreo:deployment_manage
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_MANAGE}}
+        - {{.PERMISSION_DEVOPS_DEPLOYMENT_COMPONENT_MANAGE}}
+        # Component Management
+        - {{.PERMISSION_COMPONENT_TRIGGER}}
+        - {{.PERMISSION_COMPONENT_UTILS_TRIGGER}}
+        - {{.PERMISSION_COMPONENT_CONFIG_VIEW}}
+        - {{.PERMISSION_COMPONENT_LOGS_VIEW}}
+        - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
+        # Configurations Management
+        - {{.PERMISSION_GLOBAL_CONFIG_MANAGE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
+        - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
+        - {{.PERMISSION_GLOBAL_CONFIG_UPDATE}}
+        - {{.PERMISSION_CONFIG_MANAGE}}
+        - {{.PERMISSION_CONFIG_VIEW}}
+        - {{.PERMISSION_CONFIG_CREATE}}
+        - {{.PERMISSION_CONFIG_DELETE}}
+        # Environment Management
+        - choreo:non_prod_env_manage
+        - choreo:prod_env_manage
+        - apim:environment_manage
+        # Log Management
+        - {{.PERMISSION_LOG_MANAGEMENT_AUDIT_LOGS_VIEW}}
+        - {{.PERMISSION_LOG_MANAGEMENT_AUDIT_LOGS_MANAGE}}
+        # Observability Management
+        - choreo:insights_org_view
+        - choreo:log_view_non_prod
+        - choreo:log_view_prod
+        # Organization Management
+        - choreo:workflow_manage
+        - {{.PERMISSION_ORG_MANAGEMENT_ORG_MANAGE}}
+        - {{.PERMISSION_ORG_MANAGEMENT_THEME_MANAGE}}
+        - {{.PERMISSION_ORG_MANAGEMENT_THEME_VIEW}}
+        - {{.PERMISSION_ORG_MANAGEMENT_THEME_CREATE}}
+        - {{.PERMISSION_ORG_MANAGEMENT_THEME_DELETE}}
+        - {{.PERMISSION_ORG_MANAGEMENT_THEME_DEPLOY}}
+        - {{.PERMISSION_ORG_MANAGEMENT_SELF_SIGNUP_MANAGE}}
+        - {{.PERMISSION_SELF_SIGNUP_CONFIG_VIEW}}
+        - {{.PERMISSION_ORG_MANAGEMENT_SELF_SIGNUP_CONFIG_UPDATE}}
+        - {{.PERMISSION_SELF_SIGNUP_APPROVAL_VIEW}}
+        - {{.PERMISSION_ORG_MANAGEMENT_SELF_SIGNUP_APPROVAL_UPDATE}}
+        - {{.PERMISSION_ORG_MANAGEMENT_ENTERPRISE_LOGIN_CONFIG_MANAGE}}
+        - {{.PERMISSION_ORG_MANAGEMENT_ENTERPRISE_LOGIN_CONFIG_VIEW}}
+        # Project Management
+        - choreo:project_view
+        # URL Management
+        - choreo:domain_manage
+        - choreo:domain_view
+        - choreo:url_mapping_manage
+        - choreo:url_mapping_approve
+        - choreo:url_mapping_view
+        # User Management
+        - {{.PERMISSION_USER_MANAGEMENT_USER_VIEW}}
+        - {{.PERMISSION_USER_MANAGEMENT_USER_DELETE}}
+        - {{.PERMISSION_USER_MANAGEMENT_USER_UPDATE}}
+        - {{.PERMISSION_USER_MANAGEMENT_USER_MANAGE}}
+        - {{.PERMISSION_USER_MANAGEMENT_PERMISSION_VIEW}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_VIEW}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_CREATE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_UPDATE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_DELETE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MAPPING_MANAGE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_VIEW}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_CREATE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_UPDATE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_DELETE}}
+        - {{.PERMISSION_USER_MANAGEMENT_ROLE_MANAGE}}
+        - {{.PERMISSION_USER_MANAGEMENT_INVITATION_VIEW}}
+        - {{.PERMISSION_USER_MANAGEMENT_INVITATION_SEND}}
+        - {{.PERMISSION_USER_MANAGEMENT_INVITATION_DELETE}}
+        - {{.PERMISSION_USER_MANAGEMENT_INVITATION_MANAGE}}
+        # Workflow Management
+        - choreo:workflow_component_promotion_approve
+        - choreo:workflow_subscription_approve
+        - choreo:workflow_request
     - name: Viewer
       handle: viewer
       description: Users who have read only permissions
