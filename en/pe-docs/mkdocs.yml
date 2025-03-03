@@ -73,7 +73,87 @@ strict: false
 # Navigation
 nav:
   - Home: index.md
-  - PE Menu 1: pe-menu-1.md
+  - Introduction:
+      - Overview: overview.md
+      - Key Concepts: ""
+  - Getting Started:
+      - Prerequisites: ""
+      - Quickstart Guide: ""
+      - Onboarding Checklist: ""
+  - Create: ""
+  - DevOps and CICD:
+      - Continuous Integration:
+          - Configure Git/BitBucket/Gitlab: ""
+          - Build using inbuilt CI Pipeline: ""
+          - Bring your own Container Registry: ""
+      - Continuous Deployment:
+          - Manage Environments: ""
+          - Deploying an Application: ""
+      - Rollback and Recovery: ""
+      - Manage Configurations: ""
+      - Kubernetes Configurations:
+          - View Runtime Details: ""
+          - Configure Container Resources, Commands, and Arguments: ""
+          - Set Up Health Checks: ""
+          - Autoscale:
+              - Autoscale Component Replicas: ""
+              - Autoscale Components with Scale-to-Zero: ""
+          - Configure Storage: ""
+  - Monitoring:
+      - Cost Analysis: ""
+      - Logging View Logs:
+          - Build Pipeline Logs: ""
+          - Runtime Logs: ""
+          - Audit Logs: ""
+      - Application Insights:
+          - Insights Overview: ""
+          - Generate Custom Reports: ""
+      - Alerts: ""
+      - Integrate Choreo with Moesif: ""
+  - Administer:
+      - Control Access in the Choreo Console: ""
+      - Configure a Custom Domain for Your Organization: ""
+      - Configure Enterprise Login: ""
+      - Create API Subscription Plans: ""
+      - Review Workflow Approval Requests: ""
+      - Configure a User Store with the Built-In Identity Provider: ""
+      - Developer Portal:
+          - Customize the Developer Portal: ""
+          - Configure Self-Sign-Up: ""
+      - Manage Members of an Organization: ""
+  - API Management:
+      - Configure Identity Providers for Accessing APIs:
+          - Configure Asgardeo as an External IdP: ""
+          - Configure Azure as an External IdP: ""
+      - Developer Portal:
+          - Customize the Developer Portal: ""
+          - Configure Self-Sign-Up: ""
+  - Governance:
+      - Workflow approvals:
+          - Configure Approvals for Choreo Workflows: ""
+          - Review Workflow Approval Requests: ""
+      - API Governance: ""
+  - Choreo-Managed Databases and Caches:
+      - Overview: ""
+      - PostgreSQL: ""
+      - MySQL: ""
+      - Choreo-Managed Cache: ""
+      - Add Choreo-Managed Databases and Caches to the Marketplace: ""
+  - Integrate and Manage External Services:
+      - Integrate and Manage Third-Party Services: ""
+      - Integrate and Manage Generative AI Services: ""
+  - Networking:
+      - VPN: ""
+      - Egress Control: ""
+  - Delivery Insights:
+      - Configure DORA Metrics: ""
+      - View DORA Metrics: ""
+  - Choreo CLI: ""
+  - Advanced Topics:
+      - Work with the Choreo Insights API:
+          - Access the Choreo Insights API: ""
+          - Choreo Insights API: ""
+
 # Extensions
 # Extensions
 markdown_extensions:
