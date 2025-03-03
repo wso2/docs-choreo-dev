@@ -40,7 +40,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: ccost-optimizer-cp
+        - name: cost-optimizer-cp
           envFrom:
             - configMapRef:
                 name: env-cost-optimizer-cp-cm
