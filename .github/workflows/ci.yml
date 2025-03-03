@@ -44,7 +44,7 @@ jobs:
           pip install mkdocs-glightbox==0.3.4
           pip install mkdocs-include-markdown-plugin==1.0.0
           pip install mkdocs-open-in-new-tab==1.0.3
-          pip install mike=2.1.3
+          pip install mike==2.1.3
 
       - name: Deploy Documentation with mike
         run: |
