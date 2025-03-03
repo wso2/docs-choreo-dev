@@ -69,7 +69,7 @@ spec:
           objectAlias: DEVPORTAL_V2_ACCESS_KEY
           objectVersion: "{{.DEVPORTAL_V2_ACCESS_KEY}}"
         - |
-          objectName: apim-ai-client-secret
+          objectName: choreo-apim-ai-client-secret
           objectType: secret
           objectAlias: APIM_AI_CLIENT_SECRET
           objectVersion: "{{.APIM_AI_CLIENT_SECRET}}"
