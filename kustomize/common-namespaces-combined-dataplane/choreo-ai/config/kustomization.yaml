@@ -77,7 +77,7 @@ configMapGenerator:
   - name: env-cost-optimizer
     behavior: create
     literals:
-      - THANOS_QUERY_URL={{.THANOS_QUERY_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/query_range" }}
+      - THANOS_BASE_URL={{.THANOS_BASE_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/" }}
       - CPU_RATE_PER_HOUR={{.CPU_RATE_PER_HOUR | default "0.0139" }}
       - RAM_RATE_PER_HOUR={{.RAM_RATE_PER_HOUR | default "0.00000000000647" }}
       - LOG_LEVEL={{.LOG_LEVEL | default "INFO"}}
