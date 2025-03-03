@@ -23,6 +23,8 @@ spec:
           key: INSTANCE_BASED_AUTHZ_DISABLED_ORG_HANDLES
         - objectName: DEVPORTAL_V2_ACCESS_KEY
           key: DEVPORTAL_V2_ACCESS_KEY
+        - objectName: APIM_AI_CLIENT_SECRET
+          key: APIM_AI_CLIENT_SECRET
   parameters:
     objects: |
       array:
@@ -66,3 +68,8 @@ spec:
           objectType: secret
           objectAlias: DEVPORTAL_V2_ACCESS_KEY
           objectVersion: "{{.DEVPORTAL_V2_ACCESS_KEY}}"
+        - |
+          objectName: apim-ai-client-secret
+          objectType: secret
+          objectAlias: APIM_AI_CLIENT_SECRET
+          objectVersion: "{{.APIM_AI_CLIENT_SECRET}}"
