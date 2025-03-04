@@ -1,0 +1,10 @@
+configMapGenerator:
+  - name: cm-gateway-extension-server
+    behavior: create
+    files:
+      - config/Config.toml
+
+resources:
+  - deployment/gateway-extension-server.yaml
+  - service/gateway-extension-server.yaml
+  - hpa/gateway-extension-server.yaml
