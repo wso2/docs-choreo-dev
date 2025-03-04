@@ -38,9 +38,14 @@ governance-service:
     projectManager: {{.PROJECT_MANAGER_BASE_URL}}
     linterServiceBasePath: "http://choreo-linter-service:8080/linter-service"
     resourceAuthorizationService: {{.RESOURCE_AUTHORIZATION_SERVICE_BASE_URL}}
+    governanceAIServiceBasePath: {{.GOVERNANCE_AI_APP_BASE_URL}}
+    aiAppTokenEndpoint: {{.APIM_AI_APP_TOKEN_ENDPOINT_URL}}
   apim:
     superAdminUserName: {{.APIM_SUPER_ADMIN_USERNAME}}
     superAdminPassword: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_SUPER_ADMIN_PASSWORD)"
+  ai-service-app:
+    clientId: {{APIM_AI_CLIENT_SECRET}}
+    clientSecret: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_AI_CLIENT_SECRET)"
   default-rulesets:
     filePath: "/home/wso2/resources/default-rulesets"
   security:
