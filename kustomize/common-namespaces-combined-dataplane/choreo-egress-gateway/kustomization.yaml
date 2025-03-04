@@ -1,0 +1,7 @@
+resources:
+  - config
+  - deployment
+  - service
+  - hpa
+
+namespace: choreo-egress-gateway
