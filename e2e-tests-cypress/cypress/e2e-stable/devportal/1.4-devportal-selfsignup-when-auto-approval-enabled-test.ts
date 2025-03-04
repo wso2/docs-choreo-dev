@@ -18,12 +18,18 @@ import { devPortal } from "../../support/console/devportal";
 
 describe("Self signup when auto approval enabled scenario", () => {
 
+  const selfSignupOrg = Cypress.env("selfSignupOrgHandle");
+
+  after(() => {
+    console.logout();
+  });
+  
   it("Login to Console", () => {
-    console.selfSignupOrgAdminLogin();
+    console.login();
   });
 
   it("Switch to self signup enabled org", () => {
-    console.switchtOrg("choreoselfsignup").then(() => {;
+    console.switchtOrg(selfSignupOrg).then(() => {;
       console.removePendingDevportalSelfSignupRequests();
     });
   });
