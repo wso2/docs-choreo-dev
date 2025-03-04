@@ -8,6 +8,6 @@ spec:
   ports:
     - name: extension-server
       port: 5005
-      targetPort: extension-server
+      targetPort: 5005
   selector:
     choreo.component: choreo-gateway-extension-server
