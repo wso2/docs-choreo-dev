@@ -25,8 +25,8 @@ spec:
         - name: choreo-gateway-extension-server
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-gateway-extension-server:latest
           env:
-          - name: CONFIG_FILE_PATH
-            value: "app/Config.toml"
+            - name: CONFIG_FILE_PATH
+              value: "app/Config.toml"
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
