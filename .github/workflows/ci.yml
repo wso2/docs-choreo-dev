@@ -51,13 +51,23 @@ jobs:
           pip install mkdocs-include-markdown-plugin==1.0.0
           pip install mkdocs-open-in-new-tab==1.0.3
           pip install mike==2.1.3
-      - name: Deploy Documentation with mike
-        run: |         
-          # Deploy documentation using mike
-          mike deploy --config-file en/developer-docs/mkdocs.yml Developer latest --branch gh-pages-pe-test --push
-          mike deploy --config-file en/pe-docs/mkdocs.yml "Platform Engineer" --branch gh-pages-pe-test --push
+      - name: Deploy Developer Docs
+        run: |
+          mike deploy --config-file en/developer-docs/mkdocs.yml Developer latest --branch gh-pages-pe-test --push || \
+          (echo "Deploy failed, force pushing and retrying..." && \
+          git push origin gh-pages-pe-test --force && \
+          mike deploy --config-file en/developer-docs/mkdocs.yml Developer latest --branch gh-pages-pe-test --push)
+
+      - name: Deploy Platform Engineer Docs
+        run: |
+          mike deploy --config-file en/pe-docs/mkdocs.yml "Platform Engineer" --branch gh-pages-pe-test --push || \
+          (echo "Deploy failed, force pushing and retrying..." && \
+          git push origin gh-pages-pe-test --force && \
+          mike deploy --config-file en/pe-docs/mkdocs.yml "Platform Engineer" --branch gh-pages-pe-test --push)
+
+      - name: Set Developer as Default Version
+        run: |
           mike set-default --config-file en/developer-docs/mkdocs.yml Developer --branch gh-pages-pe-test --push
-          
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
