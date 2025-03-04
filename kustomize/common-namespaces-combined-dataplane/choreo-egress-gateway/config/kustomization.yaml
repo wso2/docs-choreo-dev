@@ -3,5 +3,3 @@ configMapGenerator:
     behavior: create
     files:
       - Config.toml
-
-	
