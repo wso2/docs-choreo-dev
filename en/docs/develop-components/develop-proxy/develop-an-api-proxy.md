@@ -27,29 +27,35 @@ To create an API proxy, you can either upload an OpenAPI specification or provid
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card. This opens the **Create an API Proxy** pane.
-4. Click **Skip Source** to define resources manually.
-5. Specify the following values as API proxy details:
+4. Enter the following details:
 
     !!! info
-        The **Name** field must be unique and cannot be changed after creation.
+        The **Component Name** field must be unique and cannot be changed after creation.
+
+    | **Field**                 | **Value**          |
+    |---------------------------|--------------------|
+    | **Component Display Name**| `Department Service`          |
+    | **Component Name**        | `departmentService`          |
+    | **Description**           | `Sample proxy for department service`     |
+
+5. Click **Create from scratch** tab to define resources manually.
+6. Specify the following values as API proxy details:
 
     | **Field**       | **Value**                                  |
     |-----------------|--------------------------------------------|
-    | **Display Name**| `HR API`                                   |
-    | **Name**        | `hr-api`                                   |
-    | **Context**     | `abc-hr`                                   |
+    | **Context**     | `department/v1`                                   |
     | **Version**     | `1.0`                                      |
-    | **Target**      | `https://samples.choreoapps.dev/company/hr`|
+    | **Target**      | `https://samples.choreoapps.dev/company/hr/department`|
     | **Access Mode** | **External**                               |
 
-6. Click **Create**. This creates the API proxy component and takes you to the **Overview** page.
+7. Click **Create**. This creates the API proxy component and takes you to the **Deploy** page.
 
 ## Step 2: Define resources for the API proxy
 
 To add a new resource that retrieves a department by the department ID, follow these steps:
 
 1. In the left navigation menu, click **Develop** and then click **Resources**.
-2. Select **GET** as the **HTTP Verb** and enter `/department/{departmentId}` as the **URI Pattern**.
+2. Select **GET** as the **HTTP Verb** and enter `/{departmentId}` as the **URI Pattern**.
 3. Click **+** to add the resource.
 4. Expand the added resource and specify the following values:
 
@@ -87,7 +93,7 @@ Choreo allows you to test your API proxy using either the [integrated OpenAPI Co
 
 1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
 2. Select **Development** from the environment drop-down list.
-3. Expand the `GET /department/{departmentId}` resource and click **Try it Out**.
+3. Expand the `GET /{departmentId}` resource and click **Try it Out**.
 4. Enter `1` as the **departmentId** and click **Execute**. You will see a response similar to the following:
 
     ![API proxy response](../../assets/img/develop-components/develop-a-rest-api-proxy/rest-api-proxy-response.png){.cInlineImage-full}
@@ -101,8 +107,8 @@ Now that you have a tested API proxy, you can publish it and make it available f
 ### Step 5.1: Apply rate limiting to the API proxy
 
 1. In the left navigation menu, click **Deploy**.
-2. Go to the required environment card and click the settings icon corresponding to **API Configuration**.
-3. In the **API Configuration** pane, click **Rate Limiting** to expand the section.
+2. Go to the required environment card and click the settings icon corresponding to **CORS, Rate Limiting and Resiliency**.
+3. In the **CORS, Rate Limiting and Resiliency** pane, click **Rate Limiting** to expand the section.
 4. Select **API Level** as the **Rate Limiting Level**.
 5. Specify appropriate values for the **Request Limit** and **Time Unit** fields. You can proceed with the default values.
 6. Click **Apply**. This applies the rate limiting level to the API proxy and redeploys it.
@@ -117,7 +123,7 @@ Now that you have a tested API proxy, you can publish it and make it available f
 
 To generate credentials for the published API and invoke it via the Choreo Developer Portal, follow these steps:
 
-1. In the **Lifecycle** page, click **Go to Devportal**. This takes you to the `HR API` in the Choreo Developer Portal.
+1. In the **Lifecycle** page, click **Go to Devportal**. This takes you to the `Department Service` in the Choreo Developer Portal.
 
 2. **Generate Credentials**:
     1. In the Developer Portal left navigation menu, click **Production** under **Credentials**.
@@ -130,7 +136,7 @@ To generate credentials for the published API and invoke it via the Choreo Devel
     1. In the Developer Portal left navigation menu, click **Try Out**.
     2. In the **Endpoint** list, select **Development** as the environment to try out the API.
     3. Click **Get Test Key** to generate an access token.
-    4. Expand the `GET /department/{departmentId}` resource and click **Try it out**.
+    4. Expand the `GET /{departmentId}` resource and click **Try it out**.
     5. Enter `1` as the **departmentId** and click **Execute**. You will see a response similar to the following:
 
         ![Try out response](../../assets/img/develop-components/develop-a-rest-api-proxy/try-out-response.png){.cInlineImage-full}

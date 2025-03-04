@@ -12,13 +12,15 @@ In this guide, you will:
 
 ## Prerequisites
 
-- If you're signing in to the Choreo Console for the first time, create an organization:
+1. If you're signing in to the Choreo Console for the first time, create an organization:
     1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
+
+2. Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample proxy source](https://github.com/wso2/choreo-samples/tree/main/proxy-from-github).  
 
 ## Step 1: Create an API proxy
 
@@ -27,8 +29,7 @@ You can create an API proxy either by selecting the source from a GitHub reposit
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card. This opens the **Create an API Proxy** pane.
-4. You will see the three options to create a proxy component and here we select GitHub option (selected by default).
-5. Specify the following values as component details:
+4. Specify the following values as component details:
 
     !!! info
         The **Component Name** field must be unique and cannot be changed after creation. This value is automatically generated, but you can edit it if necessary.
@@ -40,7 +41,7 @@ You can create an API proxy either by selecting the source from a GitHub reposit
     | **Component Name**        | `departmentService`                    |
     | **Description**           | `This is a sample proxy for department service`     |
    
-6. Go to the **GitHub** tab.
+5. Go to the **GitHub** tab.
     - Click **Authorize with GitHub** to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
@@ -70,7 +71,7 @@ You can create an API proxy either by selecting the source from a GitHub reposit
     | **Version**     | `V1.0`                                      |
     | **Target**      | `https://samples.choreoapps.dev/company/hr/department`|
 
-6. Click **Create**. This creates the API proxy component and takes you to the **Build** page.
+8. Click **Create**. This creates the API proxy component and takes you to the **Build** page.
 
 !!! note
     When you create an API proxy from a GitHub repository source, the GitHub source serves as the single source of truth. Therefore, any modifications, such as adding or deleting resources, must be made through the GitHub repository.
@@ -128,7 +129,7 @@ Now that you have a tested API proxy, you can publish it and make it available f
 
 1. In the left navigation menu, click **Deploy**.
 2. Go to the required environment card and click the settings icon corresponding to **API Configuration**.
-3. In the **API Configuration** pane, click **Rate Limiting** to expand the section.
+3. In the **CORS, Rate Limiting and Resiliency** pane, click **Rate Limiting** to expand the section.
 4. Select **API Level** as the **Rate Limiting Level**.
 5. Specify appropriate values for the **Request Limit** and **Time Unit** fields. You can proceed with the default values.
 6. Click **Apply**. This applies the rate limiting level to the API proxy and redeploys it.
@@ -143,7 +144,7 @@ Now that you have a tested API proxy, you can publish it and make it available f
 
 To generate credentials for the published API and invoke it via the Choreo Developer Portal, follow these steps:
 
-1. In the **Lifecycle** page, click **Go to Devportal**. This takes you to the `HR API` in the Choreo Developer Portal.
+1. In the **Lifecycle** page, click **Go to Devportal**. This takes you to the `Department Service` in the Choreo Developer Portal.
 
 2. **Generate Credentials**:
     1. In the Developer Portal left navigation menu, click **Production** under **Credentials**.
