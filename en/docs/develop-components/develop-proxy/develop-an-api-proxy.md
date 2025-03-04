@@ -1,4 +1,4 @@
-# Develop an API Proxy from OpenAPI Specification or Scratch
+# Develop an API Proxy from Scratch or by Uploading an OpenAPI Specification
 
 An API proxy acts as an intermediary between an existing API and Choreo, intercepting all requests made to the API. It also functions as a managed API, allowing you to apply essential API management features such as security policies and rate limiting.
 
@@ -135,6 +135,4 @@ To generate credentials for the published API and invoke it via the Choreo Devel
 
         ![Try out response](../../assets/img/develop-components/develop-a-rest-api-proxy/try-out-response.png){.cInlineImage-full}
 
-Now, you have gained hands-on experience creating, deploying, testing, and publishing an API proxy using Choreo API Manager.
-
-To learn more about the API management capabilities supported by Choreo API Manager, see [API Management](../../api-management/lifecycle-management.md).
+Now, you have gained hands-on experience creating, deploying, testing, and publishing an API proxy using Choreo.

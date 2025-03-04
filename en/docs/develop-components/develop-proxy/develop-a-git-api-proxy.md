@@ -1,4 +1,4 @@
-# Develop an API Proxy from Git Repository
+# Develop an API Proxy from a GitHub Repository Source
 
 An API proxy acts as an intermediary between an existing API and Choreo, intercepting all requests made to the API. It also functions as a managed API, allowing you to apply essential API management features such as security policies and rate limiting.
 
@@ -22,23 +22,23 @@ In this guide, you will:
 
 ## Step 1: Create an API proxy
 
-To create an API proxy, you can either choose from a github repository, upload an OpenAPI specification or provide an OpenAPI specification URL. In this guide, you will choose the API definition from a Git source like Github repository.
+You can create an API proxy either by selecting the source from a GitHub repository, uploading an OpenAPI specification file, or providing an OpenAPI specification URL. This guide demonstrates how to create an API proxy using a GitHub repository as the source.
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card. This opens the **Create an API Proxy** pane.
-4. You will see the three options to create a proxy component and here we select github option (selected by default).
+4. You will see the three options to create a proxy component and here we select GitHub option (selected by default).
 5. Specify the following values as component details:
 
     !!! info
-        The **Component Name** field must be unique and cannot be changed after creation.System will generate a unique name for you. But you are free to change the generated name.
+        The **Component Name** field must be unique and cannot be changed after creation. This value is automatically generated, but you can edit it if necessary.
         **Component Display Name** is a required field.
 
     | **Field**       | **Value**                                  |
     |-----------------|--------------------------------------------|
     | **Component Display Name**| `Department Service`                    |
     | **Component Name**        | `departmentService`                    |
-    | **Description**           | `This is a sample pet store`     |
+    | **Description**           | `This is a sample proxy for department service`     |
    
 6. Go to the **GitHub** tab.
     - Click **Authorize with GitHub** to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -70,15 +70,15 @@ To create an API proxy, you can either choose from a github repository, upload a
     | **Version**     | `V1.0`                                      |
     | **Target**      | `https://samples.choreoapps.dev/company/hr/department`|
 
-6. Click **Create**. This creates the API proxy component and takes you to the **Overview** page.
+6. Click **Create**. This creates the API proxy component and takes you to the **Build** page.
 
 !!! note
-    When you creating an API proxy by **pointing a git repository** , the Git source is considered as the **single source of truth**. So , the only way is to change API resources like resource addition, deletion of modifications should be done trought the Git source.
+    When you create an API proxy from a GitHub repository source, the GitHub source serves as the single source of truth. Therefore, any modifications, such as adding or deleting resources, must be made through the GitHub repository.
 
 ## Step 2: Build
 
 !!! info
-    There is a initial build running immediately once after you create a proxy.
+    An initial build starts automatically as soon as you create the API proxy.
 
 1. On the project home page, click on the `Department Service` component you created. This takes you to the component overview page.
 2. In the left navigation menu, click **Build**.
@@ -91,7 +91,7 @@ To create an API proxy, you can either choose from a github repository, upload a
 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Configure & Deploy**. This opens the **Configure & Deploy** pane.
-3. Select **External** as the API access mode and click **Deploy**. The **Development** card indicates the **Deployment Status** as **Active** when the API proxy is successfully deployed.
+3. Select **External** as the **API Access Mode** and click **Deploy**. The **Development** card indicates the **Deployment Status** as **Active** when the API proxy is successfully deployed.
 
 Now you are ready to test the API proxy.
 
@@ -161,6 +161,4 @@ To generate credentials for the published API and invoke it via the Choreo Devel
 
         ![Try out response](../../assets/img/develop-components/develop-a-rest-api-proxy/try-out-response.png){.cInlineImage-full}
 
-Now, you have gained hands-on experience creating, deploying, testing, and publishing an API proxy using Choreo API Manager.
-
-To learn more about the API management capabilities supported by Choreo API Manager, see [API Management](../../api-management/lifecycle-management.md).
+Now, you have gained hands-on experience creating, deploying, testing, and publishing an API proxy using Choreo.

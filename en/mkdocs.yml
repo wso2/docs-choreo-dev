@@ -111,8 +111,8 @@ nav:
           - Expose a Prism-Based Mock Server Using an OpenAPI Specification: develop-components/develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification.md
           - Expose a WebSocket Endpoint via a Service: develop-components/develop-services/expose-a-websocket-endpoint-via-a-service.md
       - Develop an API Proxy: 
-        - Develop an API Proxy from Git Repository : develop-components/develop-proxy/develop-a-git-api-proxy.md
-        - Develop an API Proxy from Scratch or OpenAPI Specification : develop-components/develop-proxy/develop-an-api-proxy.md
+        - Develop an API Proxy from Git Repository Source : develop-components/develop-proxy/develop-a-git-api-proxy.md
+        - Develop an API Proxy from Scratch or by Uploading an OpenAPI Specification : develop-components/develop-proxy/develop-an-api-proxy.md
       - Develop Web Applications: 
           - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
           - Develop Web Applications Locally with Choreo’s Managed Authentication: develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md
