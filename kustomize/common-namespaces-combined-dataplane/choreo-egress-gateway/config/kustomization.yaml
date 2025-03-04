@@ -1,0 +1,6 @@
+configMapGenerator:
+  - name: cm-gateway-extension-server
+    behavior: create
+    files:
+      - Config.toml
+	
