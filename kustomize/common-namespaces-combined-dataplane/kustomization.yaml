@@ -3,3 +3,4 @@ resources:
   - choreo-observability
   - keda
   - tools
+  - choreo-egress-gateway
