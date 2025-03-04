@@ -40,7 +40,7 @@ spec:
               mountPath: /app/Config.toml
           ports:
             - containerPort: 5005
-              name: extension-server
+              name: server
               protocol: TCP
           readinessProbe:
             initialDelaySeconds: 5
