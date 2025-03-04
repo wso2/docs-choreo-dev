@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - PE
+    paths:
+      - "en/developer-docs/**"
 permissions:
   contents: write
 jobs:
@@ -10,27 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Configure Git Credentials
         run: |
-          git config --global user.email "hansijayanika@gmail.com"
-          git config --global user.name "hanzjk"
-
+          git config --global user.email "choreo-cicd@wso2.com"
+          git config --global user.name "Choreo CI Agent"
       - uses: actions/setup-python@v5
         with:
           python-version: 3.12
-
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
-
       - uses: actions/cache@v4
         with:
           key: mkdocs-material-${{ env.cache_id }}
           path: .cache
           restore-keys: |
             mkdocs-material-
-
-      - name: Install Dependencies
-        run: |
+      - run: |
           echo "Installing Python dependencies"
           pip install --upgrade pip  # Ensure pip is up-to-date
           pip install zipp==3.0.0
@@ -50,24 +46,6 @@ jobs:
           pip install mkdocs-glightbox==0.3.4
           pip install mkdocs-include-markdown-plugin==1.0.0
           pip install mkdocs-open-in-new-tab==1.0.3
-          pip install mike==2.1.3
-      - name: Deploy Developer Docs
-        run: |
-          mike deploy --config-file en/developer-docs/mkdocs.yml Developer latest --branch gh-pages-pe-test --push || \
-          (echo "Deploy failed, force pushing and retrying..." && \
-          git push origin gh-pages-pe-test --force && \
-          mike deploy --config-file en/developer-docs/mkdocs.yml Developer latest --branch gh-pages-pe-test --push)
-
-      - name: Deploy Platform Engineer Docs
-        run: |
-          mike deploy --config-file en/pe-docs/mkdocs.yml "Platform Engineer" --branch gh-pages-pe-test --push || \
-          (echo "Deploy failed, force pushing and retrying..." && \
-          git push origin gh-pages-pe-test --force && \
-          mike deploy --config-file en/pe-docs/mkdocs.yml "Platform Engineer" --branch gh-pages-pe-test --push)
-
-      - name: Set Developer as Default Version
-        run: |
-          mike set-default --config-file en/developer-docs/mkdocs.yml Developer --branch gh-pages-pe-test --push
-
+      - run: mkdocs gh-deploy --config-file en/developer-docs/mkdocs.yml --remote-branch gh-pages-dev --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
