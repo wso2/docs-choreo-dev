@@ -23,9 +23,6 @@ spec:
           type: RuntimeDefault
       containers:
         - name: choreo-gateway-extension-server
-          envFrom:
-            - configMapRef:
-                name: cm-gateway-extension-server
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-gateway-extension-server:latest
           securityContext:
             runAsUser: 10500
