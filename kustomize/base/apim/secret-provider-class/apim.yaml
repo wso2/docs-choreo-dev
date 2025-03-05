@@ -21,6 +21,10 @@ spec:
           key: APIM_DASHBOARD_USER_PWD_SHA256
         - objectName: INSTANCE_BASED_AUTHZ_DISABLED_ORG_HANDLES
           key: INSTANCE_BASED_AUTHZ_DISABLED_ORG_HANDLES
+        - objectName: DEVPORTAL_V2_ACCESS_KEY
+          key: DEVPORTAL_V2_ACCESS_KEY
+        - objectName: APIM_AI_CLIENT_SECRET
+          key: APIM_AI_CLIENT_SECRET
   parameters:
     objects: |
       array:
@@ -59,3 +63,13 @@ spec:
           objectType: secret
           objectAlias: INSTANCE_BASED_AUTHZ_DISABLED_ORG_HANDLES
           objectVersion: "{{.INSTANCE_BASED_AUTHZ_DISABLED_ORG_HANDLES}}"
+        - |
+          objectName: devportal-v2-access-key
+          objectType: secret
+          objectAlias: DEVPORTAL_V2_ACCESS_KEY
+          objectVersion: "{{.DEVPORTAL_V2_ACCESS_KEY}}"
+        - |
+          objectName: choreo-apim-ai-client-secret
+          objectType: secret
+          objectAlias: APIM_AI_CLIENT_SECRET
+          objectVersion: "{{.APIM_AI_CLIENT_SECRET}}"

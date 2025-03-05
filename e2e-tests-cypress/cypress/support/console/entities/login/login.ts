@@ -40,8 +40,7 @@ class Login {
     this.setBrowserLocalStorage();
     this.setBrowserCookie();
     this.registerNetworkCallsForInterception();
-    const { username, password } = this.readUserCredentialsFromEnv();
-    this.enterUserCredentials(username, password);
+    this.enterEnterpriseUserCredentials();
     const handle = this.readConfiguredOrgHandle();
     this.persistOrgs(handle);
     this.persistAccessToken();
@@ -235,18 +234,21 @@ class Login {
     const signInButton = 'button[id="enterprise-sign-in"]';
     cy.visit(Login.enterpriseLoginUrl);
     cy.get(signInButton).should("be.visible", MEDIUM_TIME);
+    this.handleCookiePolicy();
     cy.get(signInButton).click();
-    cy.get("[data-cyid=sign-in-with-enterprise]").type(
-      Cypress.env("enterpriseIDPUsername")
-    );
-    cy.contains("Continue").click();
 
-    cy.get('input[id="username"]').should("be.visible", MEDIUM_TIME);
-    cy.get(Login.username).type(Cypress.env("enterpriseIDPUsername"));
-    cy.get(Login.password).type(Cypress.env("enterpriseIDPPassword"), {
+    const username = Cypress.env("enterpriseIDPUsername")
+
+    cy.log(`Username: ${username}`);
+
+    cy.get("[data-cyid=sign-in-with-enterprise]").type(username);
+    cy.contains("Continue").click();
+    
+    cy.get(TestIds.username).should("be.visible", MEDIUM_TIME).type(username);
+    cy.get(TestIds.password).type(Cypress.env("enterpriseIDPPassword"), {
       log: false,
     });
-    cy.contains("Continue").click({ force: true });
+    cy.get(TestIds.loginButton).click();
   }
 
   private registerNetworkCallsForInterception() {

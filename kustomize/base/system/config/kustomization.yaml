@@ -536,6 +536,8 @@ configMapGenerator:
       - RIS_SCHEDULER_URL=http://cp-rrs:9095
       - SELF_URL=http://pdp-manager:80
       - APP_SERVICE_GRPC_ADDRESS=app-service:8080
+      - DB_USER=choreo_pdp_manager_db_user
+      - DB_NAME=choreo_pdp_manager_db
   - name: cm-file-resource-registry
     behavior: create
     files:

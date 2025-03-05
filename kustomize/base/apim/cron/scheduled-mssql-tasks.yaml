@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: scheduled-mssql-tasks
 spec:
-  schedule: "30 4 * * 1"
+  schedule: "30 4 * * *"
   concurrencyPolicy: Replace
   successfulJobsHistoryLimit: 1
   jobTemplate:

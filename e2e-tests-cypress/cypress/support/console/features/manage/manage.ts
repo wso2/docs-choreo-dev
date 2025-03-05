@@ -256,7 +256,8 @@ export function mixinManage<T extends Types.Constructor>(
           if (val !== visibility) {
             cy.get(TestIds.apiVisibility).should("be.visible").click();
             cy.get(TestIds.apiVisibility).find('input').clear().type(visibility).type('{downArrow}').type('{enter}');
-            cy.get(TestIds.apiInfoSave).should("be.enabled").click({ force: true });
+            cy.get(TestIds.dialogPrimaryAction).should("be.visible").click();
+            cy.get(TestIds.dialogPrimaryAction).should("not.exist");
             cy.get(TestIds.backdropLoader).should("not.exist");
             cy.get(TestIds.apiInfoSave).should("be.disabled");
             cy.get(TestIds.apiVisibility)
