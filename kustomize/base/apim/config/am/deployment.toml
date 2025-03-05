@@ -681,3 +681,11 @@ management_service_url="{{.STS_MANAGEMENT_SERVICE_URL | default "http://localhos
 
 [choreo.api_key_service]
 endpoint_url="{{.API_KEY_SERVICE_ENDPOINT_URL | default ""}}"
+
+[apim.ai]
+enable = "{{.APIM_AI_ENABLE}}"
+client_id = "{{.APIM_AI_CLIENT_ID}}"
+client_secret = "$env{APIM_AI_CLIENT_SECRET}"
+token_endpoint = "{{.APIM_AI_TOKEN_ENDPOINT}}"
+devportal_theming.endpoint = "{{.APIM_AI_DEVPORTAL_THEMING_ENDPOINT}}"
+api_design.endpoint =  "{{.APIM_AI_API_DESIGN_ENDPOINT}}"
