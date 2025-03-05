@@ -19,26 +19,26 @@ To configure enterprise login for your Choreo organization, follow the steps giv
 
 - **If you do not have a support account with us yet**, send an email to `choreo-help@wso2.com` requesting to enable enterprise login for your organization.
 
-  !!! tip
-      Ensure you include the following information in the request:
+!!! tip
+    Ensure you include the following information in the request:
 
-            - Organization name or handle. For example, “Stark Industries” or “starkindustries”.
-            - Email domains specific to your organization. For example, “@stark.com”, “@starkindustries.com”, and “@stark.eu.
+    - Organization name or handle. For example, “Stark Industries” or “starkindustries”.
+    - Email domains specific to your organization. For example, “@stark.com”, “@starkindustries.com”, and “@stark.eu.
 
-  !!! note "Sample email"
-  Subject : [Stark Industries] Configure enterprise login
+!!! note "Sample email"
+    Subject : [Stark Industries] Configure enterprise login
 
-            Hi CS team,
+    Hi CS team,
 
-            I need to configure enterprise login for my organization. Can you please do the necessary configurations to proceed?
+    I need to configure enterprise login for my organization. Can you please do the necessary configurations to proceed?
 
-            My organization details are as follows:
+    My organization details are as follows:
 
-                - Organization name: Stark Industries
-                - Organization handle:  starkindustries
-                - Email domains specific to my organization: “@stark.com”, “@starkindustries.com”, and “@stark.eu”
+    - Organization name: Stark Industries
+    - Organization handle:  starkindustries
+    - Email domains specific to my organization: “@stark.com”, “@starkindustries.com”, and “@stark.eu”
 
-            Thank you.
+    Thank you.
 
   The Choreo support team will perform the necessary configurations and respond to you with a verification code. You must sign in to your domain host account and configure the DNS record for your email domain with the following values:
 
@@ -115,16 +115,16 @@ Before you proceed with the configuration, make sure you complete the following:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
-3. In the left navigation menu, click **Settings**. This opens the organization-level settings page.
-4. In the **Access Control** tab, click **Groups**.
+3. In the left navigation menu, click **User Management Settings**. 
+4. Click on **Groups** tab.
 5. Click **Manage IdP Group Mapping**.
    ![Group mapping](../assets/img/administer/enterprise-login/group-mapping.png)
 
 6. Click the edit icon corresponding to the Choreo group you want to map to the enterprise IdP group.
 7. In the **IdP Group Name** field, specify the exact name you configured in the enterprise IdP and enter to add it.
 
-   !!! tip
-   If there is a change to the IdP group mapping, it takes effect from the next login session onwards.
+!!! tip
+    If there is a change to the IdP group mapping, it takes effect from the next login session onwards.
 
 8. Click **Save**.
 
