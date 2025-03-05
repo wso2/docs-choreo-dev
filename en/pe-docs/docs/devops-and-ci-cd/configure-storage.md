@@ -26,7 +26,7 @@ Follow these steps to create a temporary storage space for your container:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to create a temporary storage.
-3. In the left navigation menu, click **DevOps** and then click **Storage**.
+3. In the left navigation menu, click **K8s Operations** and then click **Storage**.
 4. Click **+ Create**.
 5. In the **Create a Volume Mount** pane, specify a name for the volume and select **Empty Directory (In-Memory)**.
 
@@ -60,7 +60,7 @@ Follow these steps to create a persistent storage space for your container:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to create a persistent storage.
-3. In the left navigation menu, click **DevOps** and then click **Storage**.
+3. In the left navigation menu, click **K8s Operations** and then click **Storage**.
 4. Click **+ Create**.
 5. In the **Create a Volume Mount** pane, specify a name for the volume and select **Persistent Volume**.
 6. Select a **Storage Class**.

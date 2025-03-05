@@ -15,7 +15,7 @@ To configure an egress policy at the organization level, follow these steps:
     - **Allow All**: Allows all egress traffic by default. You can selectively block traffic to specific IP ranges.
     - **Deny All**: Blocks all egress traffic by default. You can selectively allow traffic to specific IP ranges or domains.
 
-      !!! note
+    !!! note
 
              - Once you select an egress control type and create a rule, you cannot change the type. To change the type, you must delete existing rules.
              - Egress rules you add can disrupt your application if they block traffic to required destinations. Ensure you add rules appropriately to prevent such disruptions.

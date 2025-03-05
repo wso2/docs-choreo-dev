@@ -17,7 +17,7 @@ Follow these steps to update container configurations:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to edit container configurations.
-3. In the left navigation menu, click **DevOps** and then click **Containers**.
+3. In the left navigation menu, click **K8s Operations** and then click **Containers**.
 4. On the **Containers** page, click **Edit** to update the corresponding container configuration.
 5. Apply the necessary changes and click **Save**.
 
