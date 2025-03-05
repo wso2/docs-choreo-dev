@@ -6,7 +6,7 @@ resources:
   - deployment
   - service
   - hpa
-  - crds 
+  - crds
   - namespace.yaml
 
 namespace: choreo-egress-gateway
