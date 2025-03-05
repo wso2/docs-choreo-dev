@@ -134,14 +134,20 @@ nav:
           - Review Workflow Approval Requests: ""
       - API Governance: ""
   - Choreo-Managed Databases and Caches:
-      - Overview: ""
-      - PostgreSQL: ""
-      - MySQL: ""
-      - Choreo-Managed Cache: ""
-      - Add Choreo-Managed Databases and Caches to the Marketplace: ""
+      - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
+      - PostgreSQL: manage-databases-and-caches/choreo-managed-postgresql-databases.md
+      - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
+      - Choreo-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
+      - Add Choreo-Managed Databases and Caches to the Marketplace: manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md
+  - Choreo-Managed Message Brokers:
+      - Overview: manage-message-brokers/choreo-managed-message-brokers.md
+      - Kafka:
+          - Create Choreo-Managed Kafka Services: manage-message-brokers/create-choreo-managed-kafka-services.md
+          - Configure a Kafka Service: manage-message-brokers/configure-a-kafka-service.md
+          - Monitor a Kafka Service: manage-message-brokers/monitor-a-kafka-service.md
   - Integrate and Manage External Services:
-      - Integrate and Manage Third-Party Services: ""
-      - Integrate and Manage Generative AI Services: ""
+      - Integrate and Manage Third-Party Services: integrate-and-manage-external-services/integrate-and-manage-third-party-services.md
+      - Integrate and Manage Generative AI Services: integrate-and-manage-external-services/integrate-and-manage-gen-ai-services.md
   - Networking:
       - VPN: ""
       - Egress Control: ""
