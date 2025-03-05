@@ -38,6 +38,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /app/Config.toml
+              subPath: Config.toml
           ports:
             - containerPort: 5005
               name: server
