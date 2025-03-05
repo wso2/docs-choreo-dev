@@ -75,7 +75,7 @@ nav:
   - Home: index.md
   - Introduction:
       - What is Choreo?: what-is-choreo.md
-  - Quick Start Guide
+  - Quick Start Guide: ""
   - Choreo Concepts:
       - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
       - Organization: choreo-concepts/organization.md
