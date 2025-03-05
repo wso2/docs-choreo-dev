@@ -74,65 +74,58 @@ strict: false
 nav:
   - Home: index.md
   - Introduction:
-      - Overview: overview.md
-      - Key Concepts: ""
-  - Getting Started:
-      - Prerequisites: ""
-      - Quickstart Guide: ""
-      - Onboarding Checklist: ""
-  - Create: ""
-  - DevOps and CICD:
+      - What is Choreo?: what-is-choreo.md
+  - Quick Start Guide
+  - Choreo Concepts:
+      - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
+      - Organization: choreo-concepts/organization.md
+      - Project: choreo-concepts/project.md
+      - Component: choreo-concepts/component.md
+      - Endpoint: choreo-concepts/endpoint.md
+      - CI/CD: choreo-concepts/ci-cd.md
+      - Deployment Tracks: choreo-concepts/deployment-tracks.md
+      - Connections: choreo-concepts/connections.md
+      - Data Planes: choreo-concepts/data-planes.md
+      - Environments: choreo-concepts/environments.md
+      - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
+  - Configure Dataplane:
+      - Provision and Configure Private Data Planes in Choreo: configure-dataplane/provision-dataplane-for-private-dataplanes.md
+      - Configure a Custom Domain for Your Organization: administer/configure-a-custom-domain-for-your-organization.md
+  - DevOps and CI/CD:
       - Continuous Integration:
-          - Configure Git/BitBucket/Gitlab: ""
-          - Build using inbuilt CI Pipeline: ""
-          - Bring your own Container Registry: ""
+          - Set Up Git Provider Authentication for Choreo Deployments: develop-components/develop-components-with-git.md
+          - Build Applications with Choreo’s Built-In CI Pipeline: devops-and-ci-cd/build-using-inbuilt-ci-pipeline.md
+          - Use Your Own Container Registry with Choreo: devops-and-ci-cd/bring-your-own-container-registry.md
       - Continuous Deployment:
-          - Manage Environments: ""
-          - Deploying an Application: ""
-      - Rollback and Recovery: ""
-      - Manage Configurations: ""
+          - Manage Choreo Environments: devops-and-ci-cd/manage-environments.md
+          - Deploy Applications in Choreo: devops-and-ci-cd/deploying-an-application.md
+          - Rollback and Recover Deployments in Choreo: devops-and-ci-cd/rollback-and-recovery.md
+      - Manage Configurations and Secrets in Choreo: devops-and-ci-cd/manage-configurations-and-secrets.md
       - Kubernetes Configurations:
-          - View Runtime Details: ""
-          - Configure Container Resources, Commands, and Arguments: ""
-          - Set Up Health Checks: ""
+          - View Kubernetes Runtime Details in Choreo: devops-and-ci-cd/view-runtime-details.md
+          - Configure Kubernetes Container Resources, Commands, and Arguments: devops-and-ci-cd/configure-container-resources-commands-and-arguments.md
+          - Set Up Kubernetes Health Checks in Choreo: devops-and-ci-cd/set-up-health-checks.md
           - Autoscale:
-              - Autoscale Component Replicas: ""
-              - Autoscale Components with Scale-to-Zero: ""
-          - Configure Storage: ""
-  - Monitoring:
-      - Cost Analysis: ""
-      - Logging View Logs:
-          - Build Pipeline Logs: ""
-          - Runtime Logs: ""
-          - Audit Logs: ""
-      - Application Insights:
-          - Insights Overview: ""
-          - Generate Custom Reports: ""
-      - Alerts: ""
-      - Integrate Choreo with Moesif: ""
-  - Administer:
-      - Control Access in the Choreo Console: ""
-      - Configure a Custom Domain for Your Organization: ""
-      - Configure Enterprise Login: ""
-      - Create API Subscription Plans: ""
-      - Review Workflow Approval Requests: ""
-      - Configure a User Store with the Built-In Identity Provider: ""
-      - Developer Portal:
-          - Customize the Developer Portal: ""
-          - Configure Self-Sign-Up: ""
-      - Manage Members of an Organization: ""
+              - Autoscale Component Replicas in Choreo: devops-and-ci-cd/autoscale/autoscale-component-replicas.md
+              - Autoscale Components with Scale-to-Zero in Choreo: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
+          - Configure Kubernetes Storage in Choreo: devops-and-ci-cd/configure-storage.md
   - API Management:
       - Configure Identity Providers for Accessing APIs:
-          - Configure Asgardeo as an External IdP: ""
-          - Configure Azure as an External IdP: ""
+          - Set Up Asgardeo as an External IdP for Choreo APIs: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
+          - Set Up Azure AD as an External IdP for Choreo APIs: administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md
       - Developer Portal:
-          - Customize the Developer Portal: ""
-          - Configure Self-Sign-Up: ""
+          - Customize the Choreo Developer Portal: administer/customize-the-developer-portal.md
+          - Configure Self-Sign-Up for Choreo Developer Portal: administer/configure-self-sign-up.md
+  - User Management:
+      - Control Access in the Choreo Console: administer/control-access-in-the-choreo-console.md
+      - Configure Enterprise Login for Choreo: administer/configure-enterprise-login.md
+      - Set Up a User Store with Choreo’s Built-In Identity Provider: administer/configure-a-user-store-with-built-in-idp.md
+      - Manage Organization Members in Choreo: administer/manage-members-of-an-organization.md
   - Governance:
-      - Workflow approvals:
-          - Configure Approvals for Choreo Workflows: ""
-          - Review Workflow Approval Requests: ""
-      - API Governance: ""
+      - Workflow Approvals:
+          - Configure Approvals for Choreo Workflows: administer/configure-approvals-for-choreo-workflows.md
+          - Review Workflow Approval Requests in Choreo: administer/review-workflow-approval-requests.md
+      - API Governance in Choreo: governance/api-governance.md
   - Choreo-Managed Databases and Caches:
       - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
       - PostgreSQL: manage-databases-and-caches/choreo-managed-postgresql-databases.md
@@ -146,19 +139,40 @@ nav:
           - Configure a Kafka Service: manage-message-brokers/configure-a-kafka-service.md
           - Monitor a Kafka Service: manage-message-brokers/monitor-a-kafka-service.md
   - Integrate and Manage External Services:
-      - Integrate and Manage Third-Party Services: integrate-and-manage-external-services/integrate-and-manage-third-party-services.md
-      - Integrate and Manage Generative AI Services: integrate-and-manage-external-services/integrate-and-manage-gen-ai-services.md
-  - Networking:
-      - VPN: ""
-      - Egress Control: ""
+      - Integrate and Manage Third-Party Services in Choreo: integrate-and-manage-external-services/integrate-and-manage-third-party-services.md
+      - Integrate and Manage Generative AI Services in Choreo: integrate-and-manage-external-services/integrate-and-manage-gen-ai-services.md
+  - Network Access:
+      - Configure VPNs on Choreo Cloud Data Plane: devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane.md
+      - Control Egress Traffic for Your Choreo Organization: administer/control-egress-traffic-for-your-organization.md
+  - Monitoring:
+      - Cost Analysis: monitoring/cost-analysis.md
+      - Logging:
+          - View Application Logs in Choreo: monitoring-and-insights/view-logs.md
+          - Build Pipeline Logs in Choreo: monitoring/logging/build-pipeline-logs.md
+          - Runtime Logs in Choreo: monitoring/logging/runtime-logs.md
+          - Audit Logs in Choreo: monitoring/logging/audit-logs.md
+      - Application Insights:
+          - Choreo Insights Overview: monitoring-and-insights/insights-overview.md
+          - Generate Custom Reports in Choreo: monitoring-and-insights/generate-custom-reports.md
+          - Integrate Choreo with Moesif for Analytics: monitoring-and-insights/integrate-choreo-with-moesif.md
+          - Work with the Choreo Insights API:
+              - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
+              - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md
+      - Configure Alerts in Choreo: monitoring-and-insights/alerts/configure-alerts.md
   - Delivery Insights:
-      - Configure DORA Metrics: ""
-      - View DORA Metrics: ""
-  - Choreo CLI: ""
-  - Advanced Topics:
-      - Work with the Choreo Insights API:
-          - Access the Choreo Insights API: ""
-          - Choreo Insights API: ""
+      - Configure DORA Metrics in Choreo: monitoring-and-insights/delivery-insights/configure-dora-metrics.md
+      - View DORA Metrics in Choreo: monitoring-and-insights/delivery-insights/view-dora-metrics.md
+  - Choreo CLI:
+      - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
+      - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md
+      - Manage Authentication with Personal Access Tokens in Choreo CLI: choreo-cli/manage-authentication-with-personal-access-tokens.md
+  - References:
+      - FAQ: references/faq.md
+      - Choreo Limitations: references/choreo-limitations.md
+      - Troubleshoot Choreo: references/troubleshoot-choreo.md
+      - Private Data Plane Security Levels: references/private-data-plane-security-levels.md
+      - Private Data Plane Management Models: references/private-data-plane-management-models.md
+      - Choreo Platform Service Billing and Upgrades: references/choreo-platform-services-billing-and-upgrades.md
 
 # Extensions
 # Extensions
