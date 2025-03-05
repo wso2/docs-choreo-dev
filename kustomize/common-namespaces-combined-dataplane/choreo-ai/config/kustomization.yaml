@@ -85,3 +85,8 @@ configMapGenerator:
       - BASE_REDIS_NODE={{.BASE_REDIS_NODE | default "redis-cluster-{}.redis-cluster-headless.redis.svc.cluster.local"}}
       - NO_OF_REDIS_NODES={{.NO_OF_REDIS_NODES | default "6"}}
       - SCOPE_CONFIG={{.SCOPE_CONFIG | default "choreo:deployment_manage"}}
+  - name: env-cost-optimizer-dp-daily-cron-cm
+    behavior: create
+    literals:
+      - THANOS_BASE_URL={{.THANOS_BASE_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/" }}
+      - RECOMMENDATION_ENDPOINT_URL={{.RECOMMENDATION_ENDPOINT_URL | default "http://cost-optimizer:8000" }}
