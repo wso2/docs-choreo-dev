@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-pdp-manager-temp
+spec:
+  secretObjects:
+    - secretName: secret-pdp-manager
+      type: Opaque
+      data:
+        - objectName: AZURE_SP_CLIENT_SECRET
+          key: AZURE_SP_CLIENT_SECRET
+        - objectName: AZURE_SUBSCRIPTION_MANAGEMENT_SP_CLIENT_SECRET
+          key: AZURE_SUBSCRIPTION_MANAGEMENT_SP_CLIENT_SECRET
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: pdp-manager-client-secret
+          objectType: secret
+          objectAlias: AZURE_SP_CLIENT_SECRET
+          objectVersion: "{{ .AZURE_SP_CLIENT_SECRET }}"
+        - |
+          objectName: pdp-manager-subscription-mgmt-client-secret
+          objectType: secret
+          objectAlias: AZURE_SUBSCRIPTION_MANAGEMENT_SP_CLIENT_SECRET
+          objectVersion: "{{ .AZURE_SUBSCRIPTION_MANAGEMENT_SP_CLIENT_SECRET }}"
