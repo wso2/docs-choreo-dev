@@ -291,6 +291,7 @@ export class OrganizationSettings {
     cy.contains("td", roleName).trigger("mouseover");
     cy.get(TestIds.deleteRole).click();
     cy.get(TestIds.confirmDelete).click();
+    cy.get(TestIds.progressBar).should("not.exist");
     cy.contains("td", roleName).should("not.exist");
   }
 

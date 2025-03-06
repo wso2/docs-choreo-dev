@@ -43,6 +43,8 @@ spec:
                 name: cm-pdp-manager
             - secretRef:
                 name: secret-pdp-manager
+            - secretRef:
+                name: secret-pdp-manager-temp
           securityContext:
             allowPrivilegeEscalation: false
             seccompProfile:
@@ -79,6 +81,9 @@ spec:
             - name: secret-pdp-manager
               mountPath: /mnt/csi/secret-pdp-manager
               readOnly: true
+            - name: secret-pdp-manager-temp
+              mountPath: /mnt/csi/secret-pdp-manager-temp
+              readOnly: true
       volumes:
         - name: secret-pdp-manager
           csi:
@@ -86,6 +91,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-pdp-manager
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-pdp-manager-temp
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-pdp-manager-temp
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always

@@ -279,6 +279,7 @@ configMapGenerator:
       - DEV_PORTAL_INGRESS_CLASS_NAME={{.DEV_PORTAL_INGRESS_CLASS_NAME}}
       - DEV_PORTAL_INTER_CLUSTER_URL={{.DEV_PORTAL_INTER_CLUSTER_URL}}
       - JOB_ACTIVE_DEADLINE_SECONDS={{.JOB_ACTIVE_DEADLINE_SECONDS | default "360"}}
+      - JOB_BACKOFF_LIMIT={{.JOB_BACKOFF_LIMIT | default "0"}}
       - ALERT_SERVICE_URL={{.ALERT_SERVICE_URL}}
       - CHOREO_ST_ENDPOINT={{.CHOREO_ST_ENDPOINT}}
       - CHOREO_IDP_ID={{.CHOREO_IDP_ID}}
@@ -376,7 +377,6 @@ configMapGenerator:
       - FETCH_OAS_FROM_USER_APP_ENABLED_ORGS={{.FETCH_OAS_FROM_USER_APP_ENABLED_ORGS | default ""}}
       - SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED={{.SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED | default "false"}}
       - SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED_ORGS={{.SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED_ORGS | default "0044bc3b-a36e-41cf-8f81-431a99c7183d" }}
-      - ENABLE_USER_PROVIDED_ENDPOINT={{.ENABLE_USER_PROVIDED_ENDPOINT | default "false"}}
       - API_KEY_ENABLED_PDP_ORGS={{.API_KEY_ENABLED_PDP_ORGS | default ""}}
   - name: env-dp-helmhub
     behavior: create
@@ -431,6 +431,7 @@ configMapGenerator:
       - CUSTOMIZABLE_CI_ENABLED_WORKFLOWS={{.CUSTOMIZABLE_CI_ENABLED_WORKFLOWS | default "" }}
       - CUSTOMIZABLE_CI_ENABLED_WORKFLOWS_FOR_PAID_CDP={{.CUSTOMIZABLE_CI_ENABLED_WORKFLOWS_FOR_PAID_CDP | default "" }}
       - CUSTOMIZABLE_CI_DISABLE_ORGS={{.CUSTOMIZABLE_CI_DISABLE_ORGS | default ""}}
+      - ARGO_RESOURCE_LIMITS_ENABLED={{.ARGO_RESOURCE_LIMITS_ENABLED | default "true"}}
       - IS_CUSTOMIZABLE_CI_ENABLED_FOR_PAID_ORGS={{.IS_CUSTOMIZABLE_CI_ENABLED_FOR_PAID_ORGS | default "false"}}
       - CUSTOMIZABLE_CI_ENABLED_PDPS={{.CUSTOMIZABLE_CI_ENABLED_PDPS | default ""}}
       - BUILDPACKS_TEST_RUNNER_ENABLE={{.BUILDPACKS_TEST_RUNNER_ENABLE}}
@@ -445,8 +446,8 @@ configMapGenerator:
       - BD_BYOR_FP={{.BD_BYOR_FP | default ".github/workflows/choreo-build-deploy_byor_1.1.44.yml"}}
       - BD_BYOCV={{.BD_BYOCV | default "v1.0.34"}}
       - BD_BYOC_FP={{.BD_BYOC_FP | default ".github/workflows/choreo-build-deploy_byoc_1.0.34.yml"}}
-      - BD_MIV={{.BD_MIV | default "v1.0.31"}}
-      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.31.yml"}}
+      - BD_MIV={{.BD_MIV | default "v1.0.32"}}
+      - BD_MI_FP={{.BD_MI_FP | default ".github/workflows/choreo-build-deploy_mi_1.0.32.yml"}}
       - BD_BPV={{.BD_BPV | default "v0.12.20"}}
       - BD_BP_FP={{.BD_BP_FP | default ".github/workflows/choreo-build-deploy_buildpack_0.12.20.yml"}}
       - BD_PMSV={{.BD_PMSV | default "v1.1.1"}}
@@ -908,6 +909,29 @@ configMapGenerator:
       - UPTIME_CHECKS_PDP_APP_CONSUMER_KEY={{.UPTIME_CHECKS_PDP_APP_CONSUMER_KEY | default "dummyPdpAppConsumerKey"}}
       - COMMON_PRIVATE_GA_URL={{.COMMON_PRIVATE_GA_URL}}
       - SYSTEM_APIS_REPO_BRANCH={{.SYSTEM_APIS_REPO_BRANCH}}
+      - APIM_DEFAULT_PDP_SYSTEM_USER={{.APIM_DEFAULT_PDP_SYSTEM_USER}}
+      - ONE_CLICK_PDP_ENABLED={{.ONE_CLICK_PDP_ENABLED | default "false"}}
+      - ONE_CLICK_PDP_ENABLED_FOR_ALL_ORGS={{.ONE_CLICK_PDP_ENABLED_FOR_ALL_ORGS | default "false"}}
+      - ONE_CLICK_PDP_ENABLED_ORGS={{.ONE_CLICK_PDP_ENABLED_ORGS | default ""}}
+      - DB_CONN_ENABLED={{.DB_CONN_ENABLED | default "false"}}
+      - DB_HOST={{.DB_HOST | default ""}}
+      - AZURE_DEVOPS_ORGANIZATION_URL={{.AZURE_DEVOPS_ORGANIZATION_URL | default ""}}
+      - VULTR_PDP_PIPELINE_PROJECT_ID={{.VULTR_PDP_PIPELINE_PROJECT_ID | default ""}}
+      - VULTR_PDP_STAGE1_PIPELINE_ID={{.VULTR_PDP_STAGE1_PIPELINE_ID | default ""}}
+      - VULTR_PDP_STAGE2_PIPELINE_ID={{.VULTR_PDP_STAGE2_PIPELINE_ID | default ""}}
+      - AZURE_PDP_PIPELINE_PROJECT_ID={{.AZURE_PDP_PIPELINE_PROJECT_ID | default ""}}
+      - AZURE_PDP_STAGE1_PIPELINE_ID={{.AZURE_PDP_STAGE1_PIPELINE_ID | default ""}}
+      - AZURE_PDP_STAGE3_PIPELINE_ID={{.AZURE_PDP_STAGE3_PIPELINE_ID | default ""}}
+      - AZURE_PDP_STAGE4_PIPELINE_ID={{.AZURE_PDP_STAGE4_PIPELINE_ID | default ""}}
+      - AZURE_PDP_PIPELINE_REPO_BRANCH={{.AZURE_PDP_PIPELINE_REPO_BRANCH | default ""}}
+      - AZURE_SP_CLIENT_ID={{.AZURE_SP_CLIENT_ID | default ""}}
+      - AZURE_SP_TENANT_ID={{.AZURE_SP_TENANT_ID | default ""}}
+      - AZURE_PDP_REGISTRATION_KV_NAME={{.AZURE_PDP_REGISTRATION_KV_NAME | default ""}}
+      - INFRA_SETUP_CONTROL_PLANE_VARIABLE_GROUP_NAME={{.INFRA_SETUP_CONTROL_PLANE_VARIABLE_GROUP_NAME | default ""}}
+      - AZURE_SUBSCRIPTION_MANAGEMENT_SP_CLIENT_ID={{.AZURE_SUBSCRIPTION_MANAGEMENT_SP_CLIENT_ID | default ""}}
+      - AZURE_SUBSCRIPTION_MANAGEMENT_SP_TENANT_ID={{.AZURE_SUBSCRIPTION_MANAGEMENT_SP_TENANT_ID | default ""}}
+      - APIM_ADMIN_USERNAME={{.APIM_ADMIN_USERNAME | default ""}}
+      - REDIS_HOST={{.REDIS_HOST | default ""}}
   - name: env-dp-delete-manager
     behavior: create
     literals:

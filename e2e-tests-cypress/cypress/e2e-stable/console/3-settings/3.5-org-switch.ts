@@ -17,9 +17,15 @@ before(() => {
   console.login();
 });
 
+after(() => {
+  console.logout();
+});
+
 describe("Verify org switch functionality", () => {
+  const selfSignupOrg = Cypress.env("selfSignupOrgHandle");
+
   it("switch org", () => {
-    console.switchtOrg("choreorbactestuser");
+    console.switchtOrg(selfSignupOrg);
   });
 
   it("Search a project in switched org", () => {

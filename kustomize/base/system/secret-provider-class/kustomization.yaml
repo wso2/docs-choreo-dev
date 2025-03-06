@@ -77,6 +77,7 @@ resources:
   - opentelemetry-collector.yaml
   - resource-registry-db.yaml
   - pdp-manager.yaml
+  - pdp-manager-temp.yaml
   - crypto-key-service-ingress-tls.yaml
   - usage-handler-service-ingress-tls.yaml
   - choreo-platform-services-manager.yaml

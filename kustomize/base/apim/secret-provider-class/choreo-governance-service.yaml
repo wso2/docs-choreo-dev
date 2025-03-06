@@ -27,6 +27,8 @@ spec:
           key: CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD
         - objectName: APIM_SUPER_ADMIN_PASSWORD
           key: APIM_SUPER_ADMIN_PASSWORD
+        - objectName: APIM_AI_CLIENT_SECRET
+          key: APIM_AI_CLIENT_SECRET
   parameters:
     objects: |
       array:
@@ -40,3 +42,8 @@ spec:
           objectType: secret
           objectAlias: APIM_SUPER_ADMIN_PASSWORD
           objectVersion: "{{.APIM_SUPER_ADMIN_PASSWORD}}"
+        - |
+          objectName: choreo-apim-ai-client-secret
+          objectType: secret
+          objectAlias: APIM_AI_CLIENT_SECRET
+          objectVersion: "{{.APIM_AI_CLIENT_SECRET}}"
