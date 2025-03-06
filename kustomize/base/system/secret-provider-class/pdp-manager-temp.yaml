@@ -4,7 +4,7 @@ metadata:
   name: secret-pdp-manager-temp
 spec:
   secretObjects:
-    - secretName: secret-pdp-manager
+    - secretName: secret-pdp-manager-temp
       type: Opaque
       data:
         - objectName: AZURE_SP_CLIENT_SECRET
