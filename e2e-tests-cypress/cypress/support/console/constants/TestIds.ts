@@ -62,7 +62,7 @@ export namespace TestIds {
   export const deploymentStatusChip = '[data-cyid="deployment-status-chip"]';
   export const availableEndpoints = '[data-testid="Endpoints-env-artifact"]';
   export const apiConfiguration =
-    '[data-testid="API Configuration-env-artifact"]';
+    '[data-testid="CORS, Rate Limiting and Resiliency-env-artifact"]';
   export const rightDrawerButton = '[data-cyid="deploy-right-drawer-icon-button"]';  
   export const attachPolicy = '[data-cyid="attach-policy-button-button"]';
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
