@@ -161,12 +161,13 @@ VALUES('API_SUBSCRIPTION', 'API Subscription', 'Creation or update of an API sub
 -- 3. URL_CUSTOMIZATION
 
 INSERT INTO public.workflow_definition
-(id, "name", description, approver_permission, execute_upon_approval, allow_parallel_requests, scope, request_format_schema)
+(id, "name", description, approver_types, approver_permission, execute_upon_approval, allow_parallel_requests, scope, request_format_schema)
 VALUES
     (
         'URL_CUSTOMIZATION',
         'URL Customization',
         'Apply URL customization to a component',
+        'ROLE,USER',
         'choreo:workflow_url_mapping_approve',
         true,
         false,
