@@ -65,8 +65,9 @@ window.Settings = {
     intelligentRoutingFeatureEnabled: {{.INTELLIGENT_ROUTING_FEATURE_ENABLED}},
     choreoInbuiltKeyManagerFeatureEnabled: {{.CHOREO_INBUILT_KEY_MANAGER_FEATURE_ENABLED}},
     customSubscriptionPolicyHandlingOrg: '{{.CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG | default ""}}',
-    apiTryoutTestKeyEnabled: '{{.API_TRYOUT_TEST_KEY_ENABLED | default false}}',
-    apiKeyFeatureEnabled: '{{.API_KEY_FEATURE_ENABLED | default false}}',
+    apiTryoutTestKeyEnabled: {{.API_TRYOUT_TEST_KEY_ENABLED | default false}},
+    apiKeyFeatureEnabled: {{.API_KEY_FEATURE_ENABLED | default false}},
+    devPortalIdPConfigurationFeatureEnabled: {{.DEV_PORTAL_IDP_CONFIGURATION_FEATURE_ENABLED | default false}},
 }
 
 const currentHost = window.location.hostname;
@@ -94,7 +95,8 @@ if (isCustomDomain) {
         intelligentRoutingFeatureEnabled: true,
         choreoInbuiltKeyManagerFeatureEnabled: false,
         customSubscriptionPolicyHandlingOrg: '{{.CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG | default ""}}',
-        apiTryoutTestKeyEnabled: '{{.API_TRYOUT_TEST_KEY_ENABLED | default false}}',
-        apiKeyFeatureEnabled: '{{.API_KEY_FEATURE_ENABLED | default false}}',
+        apiTryoutTestKeyEnabled: {{.API_TRYOUT_TEST_KEY_ENABLED | default false}},
+        apiKeyFeatureEnabled: {{.API_KEY_FEATURE_ENABLED | default false}},
+        devPortalIdPConfigurationFeatureEnabled: {{.DEV_PORTAL_IDP_CONFIGURATION_FEATURE_ENABLED | default false}},
     }
 }
