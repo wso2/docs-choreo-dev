@@ -850,6 +850,7 @@ configMapGenerator:
       - REACT_APP_ENABLE_PULL_LATEST_SUBMODULES={{.REACT_APP_ENABLE_PULL_LATEST_SUBMODULES  | default "false"}}
       - REACT_APP_CONFIG_SCHEMA_API_URL={{.REACT_APP_CONFIG_SCHEMA_API_URL | default ""}}
       - REACT_APP_API_KEY_SUPPORTED_PDP_ORGS={{.REACT_APP_API_KEY_SUPPORTED_PDP_ORGS | default ""}}
+      - REACT_APP_COST_OPTIMIZATION_CP_URL={{.REACT_APP_COST_OPTIMIZATION_CP_URL | default ""}}
   - name: env-dp-mizzen
     behavior: create
     literals:
