@@ -29,4 +29,4 @@ websubhubUrl = "{{.WEBSUBHUB_URL | default ""}}"
 topic= "{{.WEBSUBHUB_TOPIC | default ""}}"
 feature_flag_appdev_sts={{.FEATURE_FLAG_APPDEV_STS | default false}}
 feature_flag_default_env_idp_config={{.FEATURE_FLAG_DEFAULT_ENV_IDP_CONFIG | default false}}
-default_idp_id={{.DEFAULT_IDP_ID | default ""}}
+default_idp_id="{{.DEFAULT_IDP_ID | default ""}}"
