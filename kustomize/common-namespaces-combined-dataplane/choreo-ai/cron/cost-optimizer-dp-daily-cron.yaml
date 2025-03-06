@@ -6,7 +6,7 @@ metadata:
   labels:
     choreo.component: cost-optimizer-dp-daily-cron
 spec:
-  schedule: "*/15 * * * *"
+  schedule: "0 1 * * *"
   successfulJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
   jobTemplate:
