@@ -90,3 +90,8 @@ configMapGenerator:
     literals:
       - THANOS_BASE_URL={{.THANOS_BASE_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/" }}
       - RECOMMENDATION_ENDPOINT_URL={{.RECOMMENDATION_ENDPOINT_URL | default "http://cost-optimizer:8000" }}
+  - name: env-cost-optimizer-dp-monthly-cron-cm
+    behavior: create
+    literals:
+      - THANOS_BASE_URL={{.THANOS_BASE_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/" }}
+      - COST_OPTIMIZER_URL={{.COST_OPTIMIZER_URL | default "http://cost-optimizer:8000" }}
