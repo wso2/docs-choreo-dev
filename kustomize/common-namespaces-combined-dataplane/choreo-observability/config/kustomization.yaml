@@ -99,7 +99,6 @@ configMapGenerator:
     literals:
       - DATAPLANE_ID="{{.DATAPLANE_ID}}"
       - CLOUD_VENDOR="azure"
-
   - name: choreo-alerting-api-conf
     behavior: create
     literals:

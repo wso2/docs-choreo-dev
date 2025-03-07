@@ -16,4 +16,3 @@ spec:
       targetPort: 8081
       name: webhook
   type: ClusterIP
-  
