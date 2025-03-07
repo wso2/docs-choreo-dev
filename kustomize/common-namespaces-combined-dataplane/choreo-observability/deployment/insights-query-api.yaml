@@ -28,13 +28,17 @@ spec:
         - name: insights-query-api
           envFrom:
             - configMapRef:
-                name: choreo-analytics-query-api-conf
+                name: insights-query-api-cm
+            - configMapRef:
+                name: insights-query-api-env
+            - secretRef:
+                name: insights-api-opensearch-password
           env:
             - name: OPENSEARCH_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: opensearch-http-passwd
-                  key: opensearch-http-passwd
+                  name: insights-api-opensearch-password
+                  key: insights-api-opensearch-password
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
@@ -44,42 +48,56 @@ spec:
               drop:
                 - all
           volumeMounts:
-            - name: opensearch-http-passwd
-              mountPath: "/mnt/csi/opensearch-password"
+            - name: insights-api-opensearch-password
+              mountPath: "/mnt/csi/analytics-api-opensearch-password"
               readOnly: true
           ports:
             - containerPort: 8080
               name: query-api-port
               protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /readiness
-              port: query-api-port
-            initialDelaySeconds: 60
-            periodSeconds: 20
-            timeoutSeconds: 10
           livenessProbe:
-            httpGet:
-              path: /liveness
-              port: query-api-port
             initialDelaySeconds: 30
             periodSeconds: 20
             timeoutSeconds: 10
-
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /liveness
+              port: query-api-port
+          readinessProbe:
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            periodSeconds: 20
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /readiness
+              port: query-api-port
           resources:
             limits:
               cpu: 500m
-              memory: 800Mi
+              memory: 1200Mi
             requests:
-              cpu: 250m
-              memory: 500Mi
+              cpu: 300m
+              memory: 1Gi
       volumes:
-        - name: opensearch-http-passwd
+        - name: insights-api-opensearch-password
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: opensearch-http-passwd
+              secretProviderClass: insights-api-opensearch-password
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
+      serviceAccountName: dp-analytics-query-api
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - analytics-query-api
+              topologyKey: kubernetes.io/hostname

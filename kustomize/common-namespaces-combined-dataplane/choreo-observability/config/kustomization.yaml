@@ -99,3 +99,17 @@ configMapGenerator:
     literals:
       - DATAPLANE_ID="{{.DATAPLANE_ID}}"
       - CLOUD_VENDOR="azure"
+  - name: insights-query-api-env
+    behavior: create
+    literals:
+      - JWKS_URL={{.JWKS_URL}}
+      - OPENSEARCH_HOST={{.OPENSEARCH_HOST}}
+      - OPENSEARCH_PORT={{.OPENSEARCH_PORT}}
+      - OPENSEARCH_USERNAME={{.OPENSEARCH_USERNAME}}
+      - LOG_LEVEL={{.LOG_LEVEL}}
+      - GRAPHQL_API_BASE_URL={{.GRAPHQL_API_BASE_URL}}
+      - ORGANIZATION_SERVICE_URL={{.ORGANIZATION_SERVICE_URL}}
+      - APIM_SERVICE_URL={{.APIM_SERVICE_URL}}
+      - DEBUG={{.DEBUG}}
+      - SKIP_AUTH={{.SKIP_AUTH}}
+      - SUPPORTED_COMPONENTS={{.SUPPORTED_COMPONENTS}}

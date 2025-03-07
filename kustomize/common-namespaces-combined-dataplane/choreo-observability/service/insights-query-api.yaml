@@ -11,3 +11,4 @@ spec:
     - name: query-api-port
       port: 8080
       targetPort: query-api-port
+  type: ClusterIP
