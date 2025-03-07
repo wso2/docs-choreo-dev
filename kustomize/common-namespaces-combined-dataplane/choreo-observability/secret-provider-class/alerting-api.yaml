@@ -35,9 +35,8 @@ spec:
           objectType: secret
           objectAlias: NOTIFICATION_SERVICE_CLIENT_SECRET
           objectVersion: {{.NOTIFICATION_SERVICE_CLIENT_SECRET}}
-        - | 
+        - |
           objectName: {{.NOTIFICATION_SERVICE_CLIENT_ID_OBJ_NAME | default "obs-notification-service-client-id"}}
           objectType: secret
           objectAlias: NOTIFICATION_SERVICE_CLIENT_ID
           objectVersion: {{.NOTIFICATION_SERVICE_CLIENT_ID}}
-
