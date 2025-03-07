@@ -157,3 +157,51 @@ VALUES('API_SUBSCRIPTION', 'API Subscription', 'Creation or update of an API sub
             "extractfrom": "apiInfo.apiVersion"
         }
     }');
+
+-- 3. URL_CUSTOMIZATION
+
+INSERT INTO public.workflow_definition
+(id, "name", description, approver_types, approver_permission, execute_upon_approval, allow_parallel_requests, scope, request_format_schema)
+VALUES
+    (
+        'URL_CUSTOMIZATION',
+        'URL Customization',
+        'Apply URL customization to a component',
+        'ROLE,USER',
+        'choreo:workflow_url_mapping_approve',
+        true,
+        false,
+        'ORGANIZATION',
+        '{
+        "projectName": {
+            "displayName": "Project Name",
+            "dataType": "string",
+            "required": true,
+            "extractfrom": "projectName"
+        },
+        "componentName": {
+            "displayName": "Component Name",
+            "dataType": "string",
+            "required": true,
+            "extractfrom": "componentName"
+        },
+        "environmentName": {
+            "displayName": "Environment Name",
+            "dataType": "string",
+            "required": true,
+            "extractfrom": "environmentName"
+        },
+        "customUrl": {
+            "displayName": "Custom URL",
+            "dataType": "string",
+            "required": true,
+            "extractfrom": "customUrl.url"
+        },
+        "type": {
+            "displayName": "Type",
+            "dataType": "string",
+            "required": true,
+            "extractfrom": "type"
+        }
+        }'
+    );
