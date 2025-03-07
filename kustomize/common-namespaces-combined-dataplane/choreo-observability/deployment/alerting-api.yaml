@@ -43,27 +43,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: choreo-alerting-api-conf
-          env:
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-alert-api
-                  key: REDIS_PASSWORD
-            - name: OPENSEARCH_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-alert-api
-                  key: OPENSEARCH_PASSWORD
-            - name: NOTIFICATION_SERVICE_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: secret-alert-api
-                  key: NOTIFICATION_SERVICE_CLIENT_SECRET
-            - name: NOTIFICATION_SERVICE_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: secret-alert-api
-                  key: NOTIFICATION_SERVICE_CLIENT_ID
+            - secretRef:
+                name: secret-alert-api
           volumeMounts:
             - name: alerting-api-spc
               mountPath: "/mnt/secrets"
