@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: insights-query-api
+  name: insights-query-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: insights-query-api
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: insights-query-api
+        antiaffinity: insights-query-api
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: insights-query-api
+          envFrom:
+            - configMapRef:
+                name: choreo-analytics-query-api-conf
+          env:
+            - name: OPENSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: opensearch-http-passwd
+                  key: opensearch-http-passwd
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: opensearch-http-passwd
+              mountPath: "/mnt/csi/opensearch-password"
+              readOnly: true
+          ports:
+            - containerPort: 8080
+              name: query-api-port
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: query-api-port
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: query-api-port
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 10
+
+          resources:
+            limits:
+              cpu: 500m
+              memory: 800Mi
+            requests:
+              cpu: 250m
+              memory: 500Mi
+      volumes:
+        - name: opensearch-http-passwd
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: opensearch-http-passwd
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
