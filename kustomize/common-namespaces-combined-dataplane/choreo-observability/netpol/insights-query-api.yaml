@@ -1,25 +1,43 @@
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
 metadata:
   name: allow-rules-insights-query-api
 spec:
-  podSelector:
+  endpointSelector:
     matchLabels:
       choreo.component: insights-query-api
-  policyTypes:
-    - Egress
-    - Ingress
-  egress:
-    - to:
-        - ipBlock:
-            cidr: 0.0.0.0/0  # Allow all egress traffic
-            except:
-              - 169.254.169.254/32  # Except egress to Azure VM metadata endpoint
   ingress:
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: choreo-apim
-          podSelector:
-            matchLabels:
-              cc.component: choreo-connect-deployment
+    - fromEndpoints:
+        - matchLabels:
+            cc.component: choreo-connect-deployment
+            k8s:io.kubernetes.pod.namespace: dev-choreo-apim
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s:k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+    - toEndpoints:
+        # Allow egress from query API to OpenSearch
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: choreo-observability
+            app.kubernetes.io/name: opensearch
+        # Allow egress from query API to the operator based OpenSearch
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: choreo-observability
+            opster.io/opensearch-cluster: opensearch
+      toPorts:
+        - ports:
+            - port: "9200"
+              protocol: TCP
+    - toFQDNs:
+        - matchName: sts.preview-dv.choreo.dev
+        - matchName: apis.preview-dv.choreo.dev
+        - matchName: appv2.preview-dv.choreo.dev

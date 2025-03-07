@@ -17,6 +17,7 @@ spec:
       labels:
         choreo.component: insights-query-api
         antiaffinity: insights-query-api
+        app: insights-query-api
       annotations:
         linkerd.io/inject: enabled
         config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
@@ -26,19 +27,16 @@ spec:
           type: RuntimeDefault
       containers:
         - name: insights-query-api
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-analytics-api:latest
           envFrom:
             - configMapRef:
-                name: insights-query-api-cm
-            - configMapRef:
                 name: insights-query-api-env
-            - secretRef:
-                name: insights-api-opensearch-password
           env:
             - name: OPENSEARCH_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: insights-api-opensearch-password
-                  key: insights-api-opensearch-password
+                  name: opensearch-http-passwd
+                  key: opensearch-http-passwd
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
@@ -48,8 +46,8 @@ spec:
               drop:
                 - all
           volumeMounts:
-            - name: insights-api-opensearch-password
-              mountPath: "/mnt/csi/analytics-api-opensearch-password"
+            - name: opensearch-http-passwd
+              mountPath: "/mnt/csi/opensearch-password"
               readOnly: true
           ports:
             - containerPort: 8080
@@ -81,12 +79,12 @@ spec:
               cpu: 300m
               memory: 1Gi
       volumes:
-        - name: insights-api-opensearch-password
+        - name: opensearch-http-passwd
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: insights-api-opensearch-password
+              secretProviderClass: opensearch-http-passwd
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
