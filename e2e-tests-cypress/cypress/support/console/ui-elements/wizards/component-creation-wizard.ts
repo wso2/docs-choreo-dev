@@ -18,24 +18,27 @@ import { BuildPacks } from "../../../commons/enums";
 
 export class _ComponentCreationWizard {
   enterServiceInfo(name: string, serviceInfo: ComponentInfo) {
-    cy.get(TestIds.serviceDisplayName)
-      .eq(0)
-      .within(() => cy.get("input").clear().type(name));
-
+    cy.get(TestIds.ThirdPartyGITCard).should("be.visible").click();
     this.createFromGHUrl(serviceInfo.repoUrl);
-    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
+    cy.wait(4000);
     this.selectProjectDirectory(serviceInfo.directoryInfo);
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
+      cy.get(TestIds.serviceDisplayName)
+       .eq(0)
+      .within(() => cy.get("input").clear().type(name));
     this.createComponent(name);
+     
   }
 
   enterTriggerInfo(name: string, manualTriggerInfo: ComponentInfo, enterCustomInfo: () => void) {
+    cy.get(TestIds.ThirdPartyGITCard).should("be.visible").click();
+    this.createFromGHUrl(manualTriggerInfo.repoUrl);
+    cy.wait(4000);
+    this.selectProjectDirectory(manualTriggerInfo.directoryInfo);
+    this.handleBuildPackSelectionFromService(manualTriggerInfo.buildPack);
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
-
-    this.createFromGHUrl(manualTriggerInfo.repoUrl);
-    this.handleBuildPackSelectionFromService(manualTriggerInfo.buildPack);
-    this.selectProjectDirectory(manualTriggerInfo.directoryInfo);
     cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
     enterCustomInfo();
     this.createComponent(name);
@@ -70,44 +73,45 @@ export class _ComponentCreationWizard {
   }
 
   enterTestRunnerInfo(name: string, testRunnerInfo: ComponentInfo, enterCustomInfo: () => void) {
+    cy.get(TestIds.ThirdPartyGITCard).should("be.visible").click();
+    this.createFromGHUrl(testRunnerInfo.repoUrl);
+    cy.wait(4000);
+    this.selectProjectDirectory(testRunnerInfo.directoryInfo);
+    this.handleBuildPackSelectionFromService(testRunnerInfo.buildPack);
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
-
-    this.createFromGHUrl(testRunnerInfo.repoUrl);
-    this.handleBuildPackSelectionFromService(testRunnerInfo.buildPack);
-    this.selectProjectDirectory(testRunnerInfo.directoryInfo);
     cy.get(TestIds.languageVersionDropDown).should("be.visible").click();
     enterCustomInfo();
     this.createComponent(name);
   }
 
   enterMIServiceInfo(name: string, serviceInfo: ComponentInfo) {
+    cy.get(TestIds.ThirdPartyGITCard).should("be.visible").click();
+    this.createFromGHUrl(serviceInfo.repoUrl);
+    cy.wait(4000);
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
-
-    this.createFromGHUrl(serviceInfo.repoUrl);
-    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    this.selectProjectDirectory(serviceInfo.directoryInfo);
     this.createComponent(name);
   }
 
   enterMIEndpointServiceInfo(name: string, serviceInfo: ComponentInfo) {
+    cy.get(TestIds.ThirdPartyGITCard).should("be.visible").click();
+    this.createFromGHUrl(serviceInfo.repoUrl);
+    cy.wait(4000);
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
-
-    this.createFromGHUrl(serviceInfo.repoUrl);
-
     cy.get(".MuiAutocomplete-endAdornment > .MuiButtonBase-root").click();
     cy.wait(4000);
     if (serviceInfo.branch !== undefined) {
       cy.get("li").contains(serviceInfo.branch).click();
     }
-
-    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    this.selectProjectDirectory(serviceInfo.directoryInfo);
     this.createComponent(name);
   }
 
@@ -128,25 +132,26 @@ export class _ComponentCreationWizard {
   }
 
   enterGQLServiceInfo(name: string, serviceInfo: ComponentInfo) {
+    cy.get(TestIds.ThirdPartyGITCard).should("be.visible").click();
+    this.createFromGHUrl(serviceInfo.repoUrl);
+    cy.wait(4000);
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
-
-    this.createFromGHUrl(serviceInfo.repoUrl);
-    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    this.selectProjectDirectory(serviceInfo.directoryInfo);
     this.createComponent(name);
   }
 
   enterContainerizedServiceInfo(name: string, serviceInfo: ComponentInfo) {
+    cy.get(TestIds.ThirdPartyGITCard).should("be.visible").click();
+    this.createFromGHUrl(serviceInfo.repoUrl);
+    cy.wait(4000);
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
-
-    this.createFromGHUrl(serviceInfo.repoUrl);
-    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    this.selectProjectDirectory(serviceInfo.directoryInfo);
-
     cy.get(TestIds.projectDirectoryEdit).should("be.visible").eq(1).click();
     this.searchDockerFile("Dockerfile");
     cy.get(TestIds.continueButton).should("be.enabled").click();
