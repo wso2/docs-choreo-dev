@@ -45,16 +45,6 @@ class Console {
     return cy.wrap({});
   }
 
-  selfSignupOrgAdminLogin() {
-    login.login();
-    return cy.wrap({});
-  }
-
-  enterpriseLogin() {
-    login.enterpriseLogin();
-    return cy.wrap({});
-  }
-
   getDevPortalUrl(): Cypress.Chainable<string> {
     return cy
       .get(TestIds.choreoHomeDevPortalLink)
