@@ -16,6 +16,7 @@ resources:
   - opensearch.yaml
   - opensearch-http-password.yaml
   - sys-obsapi-spc.yaml
+  - alerting-api.yaml
 
 patches:
   - path: patch.json

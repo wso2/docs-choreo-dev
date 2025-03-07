@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: choreo-alerting-api
+  namespace: choreo-observability
+subjects:
+  - kind: ServiceAccount
+    name: choreo-alerting-api
+    namespace: choreo-observability
+roleRef:
+  kind: Role
+  name: choreo-alerting-api
+  apiGroup: rbac.authorization.k8s.io
+  
