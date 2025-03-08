@@ -31,12 +31,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: insights-query-api-env
-          env:
-            - name: OPENSEARCH_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: insights-api-opensearch-password
-                  key: OPENSEARCH_PASSWORD
+            - secretRef:
+                name: insights-api-opensearch-password
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
@@ -46,8 +42,8 @@ spec:
               drop:
                 - all
           volumeMounts:
-            - name: opensearch-http-passwd
-              mountPath: "/mnt/csi/opensearch-password"
+            - name: insights-api-opensearch-password
+              mountPath: "/mnt/csi/insights-api-opensearch-password"
               readOnly: true
           ports:
             - containerPort: 8080
@@ -79,12 +75,12 @@ spec:
               cpu: 300m
               memory: 1Gi
       volumes:
-        - name: opensearch-http-passwd
+        - name: insights-api-opensearch-password
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: opensearch-http-passwd
+              secretProviderClass: insights-api-opensearch-password
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
