@@ -4,3 +4,4 @@ resources:
   - obsapi-v2.yaml
   - sys-obsapi.yaml
   - alerting-api.yaml
+  - insights-query-api.yaml

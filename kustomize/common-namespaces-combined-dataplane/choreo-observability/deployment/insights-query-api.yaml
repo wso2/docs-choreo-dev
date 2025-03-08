@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: insights-query-api
+  name: insights-query-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: insights-query-api
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: insights-query-api
+        antiaffinity: insights-query-api
+        app: insights-query-api
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: insights-query-api
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-analytics-api:latest
+          envFrom:
+            - configMapRef:
+                name: insights-query-api-env
+          env:
+            - name: OPENSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: insights-api-opensearch-password
+                  key: OPENSEARCH_PASSWORD
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: opensearch-http-passwd
+              mountPath: "/mnt/csi/opensearch-password"
+              readOnly: true
+          ports:
+            - containerPort: 8080
+              name: query-api-port
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /liveness
+              port: query-api-port
+          readinessProbe:
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            periodSeconds: 20
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /readiness
+              port: query-api-port
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1200Mi
+            requests:
+              cpu: 300m
+              memory: 1Gi
+      volumes:
+        - name: opensearch-http-passwd
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: opensearch-http-passwd
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: dp-analytics-query-api
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - analytics-query-api
+              topologyKey: kubernetes.io/hostname

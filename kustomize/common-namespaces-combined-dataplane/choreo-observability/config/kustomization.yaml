@@ -117,3 +117,17 @@ configMapGenerator:
       - NOTIFICATION_SERVICE_STS_ENDPOINT={{.NOTIFICATION_SERVICE_STS_ENDPOINT}}
       - NOTIFICATION_SERVICE_TOKEN_ENDPOINT="/token"
       - NOTIFICATION_SERVICE_URL={{.NOTIFICATION_SERVICE_URL}}
+  - name: insights-query-api-env
+    behavior: create
+    literals:
+      - JWKS_URL={{.JWKS_URL}}
+      - OPENSEARCH_HOST={{.OPENSEARCH_HOST | default "opensearch-cluster-master"}}
+      - OPENSEARCH_PORT={{.OPENSEARCH_PORT | default "9200"}}
+      - OPENSEARCH_USERNAME={{.OPENSEARCH_USERNAME | default "admin"}}
+      - GRAPHQL_API_BASE_URL={{.GRAPHQL_API_BASE_URL | default "https://apis.choreo.dev/projects/1.0.0/graphql"}}
+      - ORGANIZATION_SERVICE_URL={{.ORGANIZATION_SERVICE_URL | default "https://apis.choreo.dev/orgs/1.0.0/orgs"}}
+      - APIM_SERVICE_URL={{.APIM_SERVICE_URL | default "https://sts.choreo.dev/api/am"}}
+      - APPV2_SERVICE_URL={{.APPV2_SERVICE_URL | default "https://appv2.choreo.dev/orgs"}}
+      - DEBUG={{.DEBUG | default false}}
+      - SKIP_AUTH={{.SKIP_AUTH | default false}}
+      - SUPPORTED_COMPONENTS={{.SUPPORTED_COMPONENTS | default "byocService,byoiService,buildpackService,byocRestApi"}}
