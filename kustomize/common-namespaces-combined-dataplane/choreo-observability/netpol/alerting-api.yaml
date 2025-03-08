@@ -1,0 +1,78 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-rules-choreo-alerting-api
+  namespace: choreo-observability
+spec:
+  endpointSelector:
+    matchLabels:
+      choreo.component: choreo-alerting-api
+  egress:
+    - toCIDRSet:
+        - cidr: 0.0.0.0/0
+          except:
+            - 169.254.169.254/32
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s:k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: choreo-observability
+            app.kubernetes.io/name: opensearch
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: choreo-observability
+            opster.io/opensearch-cluster: opensearch
+      toPorts:
+        - ports:
+            - port: "9200"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            choreo.group: kube-prometheus-stack
+            k8s:io.kubernetes.pod.namespace: choreo-observability
+    # Allow access to Redis ClusterIP service
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: redis
+            app.kubernetes.io/name: redis
+      toPorts:
+        - ports:
+            - port: "6379"
+              protocol: TCP
+    # Allow access to Redis Headless service (important for cluster mode)
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: redis
+            app.kubernetes.io/instance: redis-cluster
+      toPorts:
+        - ports:
+            - port: "6379"
+              protocol: TCP
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: dev-choreo-apim
+            cc.component: choreo-connect-deployment
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: choreo-observability
+            app.kubernetes.io/name: opensearch
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: choreo-observability
+            opster.io/opensearch-cluster: opensearch
+        - matchLabels:
+            choreo.group: kube-prometheus-stack
+            k8s:io.kubernetes.pod.namespace: choreo-observability
+      toPorts:
+        - ports:
+            - port: "8081"
+              protocol: TCP
