@@ -58,5 +58,5 @@ configMapGenerator:
     behavior: create
     literals:
       - RUDDER_SERVICE_URL={{.RUDDER_SERVICE_URL | default ""}}
-      - CP_COST_SERVICE_URL="http://cost-optimizer-cp.choreo-ai.svc.cluster.local:8080"
+      - CP_COST_SERVICE_URL={{.CP_COST_SERVICE_URL | default ""}}
       - AUTO_APPLY_COST_THRESHOLD={{.AUTO_APPLY_COST_THRESHOLD | default "0.2"}}

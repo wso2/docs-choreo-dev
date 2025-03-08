@@ -340,7 +340,6 @@ export class Project {
   createProxyComponent(proxyInfo: ProxyInfo) {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.proxyBuildPack).should("be.visible").click();
-
     if (proxyInfo.oasUrl !== undefined) {
       this.proxyCreationWizard.createFromOASUrl(proxyInfo.oasUrl);
     } else if (proxyInfo.oasFilePath !== undefined) {

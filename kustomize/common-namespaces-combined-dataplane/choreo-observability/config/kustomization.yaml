@@ -99,6 +99,24 @@ configMapGenerator:
     literals:
       - DATAPLANE_ID="{{.DATAPLANE_ID}}"
       - CLOUD_VENDOR="azure"
+  - name: choreo-alerting-api-conf
+    behavior: create
+    literals:
+      - LOG_LEVEL=INFO
+      - OPENSEARCH_USERNAME=alerting-api
+      - OPENSEARCH_URL=https://opensearch.choreo-observability.svc.cluster.local:9200
+      - PROMETHEUS_URL=https://choreo-system-prometheus.choreo-observability.svc.cluster.local:9090
+      - PROMETHEUS_NAMESPACE=choreo-observability
+      - REDIS_CLUSTERS="redis-cluster-0,redis-cluster-1,redis-cluster-2,redis-cluster-3,redis-cluster-4,redis-cluster-5"
+      - REDIS_SERVICE="redis-cluster-headless.redis.svc.cluster.local"
+      - REDIS_PORT=6379
+      - REDIS_USERNAME="alerting_api_user"
+      - ALERT_API_BASEURL=https://choreo-alerting-service.choreo-observability.svc.cluster.local:8080
+      - OBS_MANAGER_URL={{.OBS_MANAGER_URL}}
+      - CHANNEL_ID="choreo-userapps-alerting-api-webhook"
+      - NOTIFICATION_SERVICE_STS_ENDPOINT={{.NOTIFICATION_SERVICE_STS_ENDPOINT}}
+      - NOTIFICATION_SERVICE_TOKEN_ENDPOINT="/token"
+      - NOTIFICATION_SERVICE_URL={{.NOTIFICATION_SERVICE_URL}}
   - name: insights-query-api-env
     behavior: create
     literals:
