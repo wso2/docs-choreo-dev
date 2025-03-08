@@ -2,7 +2,7 @@
 
 ![CIO dashboard](../../assets/img/monitoring-and-insights/engineering-insights/cio-dashboard.png){.cInlineImage-full}
 
-You can view DORA metrics in Choreo to use as KPIs to measure your organization's DevOps team's performance. Choreo enables this feature by default for all organizations. DORA includes the following four key metrics that are regarded as the most important metrics to indicate team performance:
+You can view DORA metrics in Choreo to use as Key Performer Indicators (KPIs) to measure your organization's DevOps team's performance. Choreo enables this feature by default for all organizations. DORA includes the following four key metrics that are regarded as the most important metrics to indicate team performance:
 
 - Deployment Frequency: How often an organization successfully releases to production
 - Lead Time for Changes: The amount of time it takes a commit to get into production
@@ -17,9 +17,10 @@ Choreo enables two DORA metrics by default; deployment frequency and lead time f
 To configure the CIO dashboard by enabling the other two metrics, follow the steps below:
 
 1. Sign in to Choreo using your Google, GitHub, or Microsoft account.
-2. On the left navigation menu, click **Insights** and then click on **Delivery** tab.
-3. Scroll to the bottom of the dashboard and click **Configure**.
-4. Select your incident management system. Currently, Choreo only supports GitHub. 
+2. In the Choreo Console header, go to the **Organization** list and select your organization. 
+3. On the left navigation menu, click **Insights** and then click on **Delivery**.
+4. Scroll to the bottom of the dashboard and click **Configure**.
+5. Select your incident management system. Currently, Choreo only supports GitHub. 
 
 ## Configuring GitHub as the incident management system
 
@@ -70,7 +71,7 @@ Choreo extracts deployment information from the relevant incident and generates 
  
 #### Get deployment details
 
-1. On the Choreo Console header, select the project and the component for which the incident was reported.
+1. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component** for which the incident was reported.
 2. On the left navigation menu, click **DevOps** and then click on **CD Pipelines**
 3. On the **Production Environment** card, click **Deployment History**.
 4. On the right-hand side panel, select the relevant deployment, and click **Release details** to copy the deployment details to the clipboard. 
@@ -90,6 +91,6 @@ That's it! You have successfully configured your CIO dashboard to include the DO
 
 ## Edit configurations
 
-   ![Edit configurations](../../assets/img/monitoring-and-insights/engineering-insights/edit-configurations.png){.cInlineImage-small}
+   ![Edit configurations](../../assets/img/monitoring-and-insights/engineering-insights/edit-configurations.png)
 
    You can edit or override the configurations you made via the edit option in the dashboard. 

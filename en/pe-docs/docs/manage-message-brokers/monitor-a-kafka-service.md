@@ -6,7 +6,12 @@ You can monitor the health and performance of your Kafka services via the servic
 
 Service metrics provide real-time insights into the performance of your Kafka service.
 
-To view service metrics for a Kafka service, go to the **Metrics** tab on the service details page.
+To view service metrics for a Kafka service, follow the steps given below: 
+
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the Choreo Console header, go to the **Organization** list and select your organization. 
+3. On the left navigation menu, click **DB & Services** and then click on **Message Brokers**.
+4. Click on the required message broker and go to the **Metrics** tab on the service details page.
 
 The service metrics include the following:
 

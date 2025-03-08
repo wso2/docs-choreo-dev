@@ -8,6 +8,13 @@ Choreo allows you to automatically scale your component replicas up or down in n
 
 ![Scale component replicas](../../assets/img/devops-and-ci-cd/scaling/scaling-view.png){.cInlineImage-full}
 
+Follow these steps to configure autoscaling for a component:
+
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component** for which you want to configure autoscaling.
+3. In the left navigation menu, click **K8s Operations** and then click **Scaling**.
+4. On the **Scaling** page, you can change the scaling parameters.
+
 The following parameters allow you to scale component replicas:
 
 - **Min replicas**: The minimum number of replicas to run at any given time. It is recommended to keep the value at a minimum of `2`.

@@ -2,11 +2,11 @@
 
 Generative AI (GenAI) services leverage advanced machine learning models to create original content such as text, images, music, or code, by identifying and learning patterns from existing data. Powered by deep neural networks and other machine learning models, these services can generate human-like outputs in various formats. This versatility makes GenAI ideal for tasks such as content creation, image generation, conversation automation, etc. 
 
-Choreo enables seamless integration with GenAI services, allowing you to incorporate these capabilities within your applications.
+Choreo enables seamless integration with GenAI services, allowing the developers to incorporate these capabilities within their applications.
 
 ## Register a GenAI service
 
-To use a GenAI service in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing you to consume it via a Connection.
+To seamlessly integrate a GenAI service into an application deployed in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing developers to consume it via a Connection.
 
 You can register a GenAI service at two levels:
 
@@ -47,6 +47,7 @@ To register a GenAI service, follow these steps:
 ### Step 3: Add configurations
 
 1. Under **Add Configurations**, enter details for the service.
+
     !!! note 
          - The configuration details to enter vary depending on the selected service provider.
          - To successfully register a service, ensure you provide all the required configurations.
@@ -57,11 +58,6 @@ Once registered, the GenAI service is automatically listed in the Internal Marke
 
 If you want to remove the service from the Internal Marketplace, see [Remove a GenAI service from the Internal Marketplace](#remove-a-genai-service-from-the-internal-marketplace).
 
-## Discover GenAI services
-
-The GenAI services you register are discoverable via the Internal Marketplace for you to consume via a Connection.
-
-For details on consuming a GenAI service via a connection, see [Create a Connection](../develop-components/sharing-and-reusing/create-a-connection.md).
 
 ## Manage GenAI services
 

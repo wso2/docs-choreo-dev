@@ -1,12 +1,12 @@
 # Integrate and Manage Third-Party Services
 
-Third-party services are external applications, platforms, or APIs you can integrate with your system to enhance its functionality, extend capabilities, or provide specialized features. These services are developed and maintained by external entities, providing expertise in specific domains outside your application's core focus.
+Third-party services are external applications, platforms, or APIs you can integrate with your system to enhance its functionality, extend capabilities, or provide specialized features. These services are developed and maintained by external entities, providing expertise in specific domains outside your application's core focus. Once the third party services are registered, the developers can discover these third party APIs and use them in their applications.
 
 The following topics walk you through the steps to seamlessly register, manage, and consume third-party services, adhering to API-first principles.
 
 ## Register a third-party service in Choreo
 
-To use a third-party service in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing you to consume it via a Connection.
+To use a third-party service in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing developers to consume it via a Connection.
 
 You can register a third-party service at two levels:
 
@@ -84,12 +84,6 @@ When you define all required parameter values for at least one endpoint, the ser
 If you want to remove a third-party service from the Internal Marketplace, see [Remove a third-party service from the Internal Marketplace](#remove-a-third-party-service-from-the-internal-marketplace).
  
 For details on managing third-party services, see [Manage third-party service](#manage-third-party-services).
-
-## Discover third-party services
-
-The third-party services you register are discoverable via the Internal Marketplace to consume via a Connection.
-
-For details on consuming a third-party service via a connection, see [Create a Connection](../develop-components/sharing-and-reusing/create-a-connection.md#create-a-connection-to-an-external-service).
 
 ## Manage third-party services
 

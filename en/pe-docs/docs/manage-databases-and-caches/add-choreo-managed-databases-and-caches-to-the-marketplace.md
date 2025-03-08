@@ -41,9 +41,6 @@ To register credentials for a database, follow these steps:
 
 - On the **Databases** tab, click **+Add to Marketplace** corresponding to the database you want to add. 
 
-Once the database is added to the Marketplace, it can be consumed via a connection. For details on creating a connection to a Choreo-managed database, see [Create a connection to a database](../develop-components/sharing-and-reusing/create-a-connection.md).
-
+Once the database is added to the Marketplace, it can be consumed via a connection.
 !!! note 
      To remove a database or cache that you added to the Marketplace, click the corresponding **Remove from Marketplace**. This action prevents new connections to the removed database, but existing connections remain unaffected.
-
-For details on using a database connection in your component, see [Use a Database Connection in Your Component](../develop-components/sharing-and-reusing/use-a-database-connection-in-your-component.md).
