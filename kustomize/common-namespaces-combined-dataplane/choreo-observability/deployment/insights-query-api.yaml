@@ -84,7 +84,6 @@ spec:
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always
-      serviceAccountName: dp-analytics-query-api
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
