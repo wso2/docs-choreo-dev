@@ -36,7 +36,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: insights-api-opensearch-password
-                  key: insights-api-opensearch-password
+                  key: OPENSEARCH_PASSWORD
           securityContext:
             runAsUser: 10500
             runAsGroup: 10500
