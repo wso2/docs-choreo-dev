@@ -81,11 +81,10 @@ Follow the steps given below to assign the **Developer** role to the **Engineeri
 4. On the **Groups** tab, search for the **Engineering Project Developer** group and click the corresponding edit icon.
 5. Click **Roles** tab and then click on **+Add Roles**.
 6. In the **Add Roles to Group in Project** dialog that opens, click the **Roles** list and select **Developer**.
-7. Click **Add**. This assigns the **Developer** role to the group. You should see the mapping level as **Project (Engineering Project)** as follows, indicating the scope of the mapping:
+7. Click **Add**. This assigns the **Developer** role to the group. You should see the mapping level as **Project (Engineering Project)** indicating the scope of the mapping.
 
-   ![Mapping level](../assets/img/administer/mapping-level.png)
 
-   This means that you have granted developer access to users in the Engineering Project Developer group in the scope of the Engineering Project.
+This means that you have granted developer access to users in the Engineering Project Developer group in the scope of the Engineering Project.
 
 Now that you have set up access control, you can proceed to add users to the new group.
 

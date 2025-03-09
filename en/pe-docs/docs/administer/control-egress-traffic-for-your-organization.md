@@ -23,7 +23,6 @@ To configure an egress policy at the organization level, follow these steps:
              - Egress policies apply across all environments in an organization.
              - Egress policies do not apply to API proxies.
 
-    ![Configure an organization-level egress policy](../assets/img/administer/configure-an-organization-level-egress-policy.png)
 
 ## Override the organization-level egress policy at the project level
 
@@ -40,4 +39,3 @@ To override the organization-level egress policy at the project level, follow th
    - If the **Allow All** egress control type is selected at the organization level, you can add project-level deny rules to further restrict traffic.
    - If the **Deny All** egress control type is selected at the organization level, you can remove allow rules inherited from the organization level to further restrict traffic.
 
-   ![Add project-level rules](../assets/img/administer/add-project-level-rules.png)

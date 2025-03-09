@@ -115,17 +115,16 @@ Before you proceed with the configuration, make sure you complete the following:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
-3. In the left navigation menu, click **User Management Settings**. 
-4. Click on **Groups** tab.
-5. Click **Manage IdP Group Mapping**.
+3. In the left navigation menu, click **User Management Settings** and then click **Groups**. 
+4. Click **Manage IdP Group Mapping**.
    ![Group mapping](../assets/img/administer/enterprise-login/group-mapping.png)
 
-6. Click the edit icon corresponding to the Choreo group you want to map to the enterprise IdP group.
-7. In the **IdP Group Name** field, specify the exact name you configured in the enterprise IdP and enter to add it.
+5. Click the edit icon corresponding to the Choreo group you want to map to the enterprise IdP group.
+6. In the **IdP Group Name** field, specify the exact name you configured in the enterprise IdP and enter to add it.
 
 !!! tip
     If there is a change to the IdP group mapping, it takes effect from the next login session onwards.
 
-8. Click **Save**.
+7. Click **Save**.
 
 By following these steps, you have successfully configured role-based access control for enterprise login in Choreo, allowing users from the external IdP to have the appropriate permission.
