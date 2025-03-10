@@ -8,7 +8,7 @@ To configure an egress policy at the organization level, follow these steps:
 
 1.  Sign in to the [Choreo Console](https://console.choreo.dev/).
 2.  In the Choreo Console header, go to the **Organization** list and select your organization.
-3.  In the left navigation menu, click **Governance**, then click the **Egress Control** tab.
+3.  In the left navigation menu, click **Governance**, then click **Egress Control**.
 4.  Click **+ Create** to add a new egress policy
 5.  Select the type of egress control to apply and add the required rules:
 
@@ -32,7 +32,7 @@ To override the organization-level egress policy at the project level, follow th
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console header, go to the **Project** list and select your project.
-3.  In the left navigation menu, click **Governance**, then click the **Egress Control** tab.
+3.  In the left navigation menu, click **Governance**, then click **Egress Control**.
 4. You will see that the organization-level egress policy is enforced by default.
 5. Add required project-level rules to further restrict egress traffic.
 

@@ -59,29 +59,27 @@ Follow the steps given below to create a project:
 Follow the steps given below to create a group with the name `Engineering Project Developer`:
 
 1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your project.
-2. In the left navigation menu, click **User Management**.
-3. Then click the **Groups** tab.
-4. Click **+ Create Group**.
-5. Enter a group name and group description. You can enter the values given below:
+
+2. In the left navigation menu, click **User Management** and then click **Groups**.
+3. Click **+ Create Group**.
+4. Enter a group name and group description. You can enter the values given below:
 
    | **Field**             | **Value**                                                      |
    | --------------------- | -------------------------------------------------------------- |
    | **Group Name**        | `Engineering Project Developer`                                |
    | **Group Description** | `Users with development access within the engineering project` |
-
-6. Click **Create**.
+5. Click **Create**.
 
 ### Step 3: Assign roles to the group
 
 Follow the steps given below to assign the **Developer** role to the **Engineering Project Developer** group that you created:
 
 1. In the Choreo Console, go to the top navigation menu, click the **Project** list, and select the **Engineering Project** that you created.
-2. In the left navigation menu, click **User Management**.
-3. Click the **Groups** tab.
-4. On the **Groups** tab, search for the **Engineering Project Developer** group and click the corresponding edit icon.
-5. Click **Roles** tab and then click on **+Add Roles**.
-6. In the **Add Roles to Group in Project** dialog that opens, click the **Roles** list and select **Developer**.
-7. Click **Add**. This assigns the **Developer** role to the group. You should see the mapping level as **Project (Engineering Project)** indicating the scope of the mapping.
+2. In the left navigation menu, click **User Management** and then click **Groups**.
+3. On the **Groups** page, search for the **Engineering Project Developer** group and click the corresponding edit icon.
+4. Click **Roles** tab and then click on **+Add Roles**.
+5. In the **Add Roles to Group in Project** dialog that opens, click the **Roles** list and select **Developer**.
+6. Click **Add**. This assigns the **Developer** role to the group. You should see the mapping level as **Project (Engineering Project)** indicating the scope of the mapping.
 
 
 This means that you have granted developer access to users in the Engineering Project Developer group in the scope of the Engineering Project.
@@ -97,7 +95,7 @@ There are two approaches you can follow to add users to the group.
 Follow the steps given below to add a new user as a project developer:
 
 1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your project.
-2. In the left navigation menu, click **User Management**, then click the **Users** tab.
+2. In the left navigation menu, click **User Management**, then click **Users** .
 3. Click **+Invite Users**.
 4. In the **Invite Users** dialog,
     1. Specify the email addresses of the users in the **Emails** field.
@@ -109,7 +107,7 @@ Follow the steps given below to add a new user as a project developer:
 Follow the steps given below to add an existing user as a project developer:
 
 1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your project.
-2. In the left navigation menu, click **User Management**, then click the **Users** tab.
+2. In the left navigation menu, click **User Management**, then click **Users** .
 3. Search for the existing user you want to add to the **Engineering Project Developer** group.
 4. Click the edit icon corresponding to the user.
 5. Click **+Assign Groups**.

@@ -115,7 +115,7 @@ Before you proceed with the configuration, make sure you complete the following:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
-3. In the left navigation menu, click **User Management Settings** and then click **Groups**. 
+3. In the left navigation menu, click **User Management** and then click **Groups**. 
 4. Click **Manage IdP Group Mapping**.
    ![Group mapping](../assets/img/administer/enterprise-login/group-mapping.png)
 
