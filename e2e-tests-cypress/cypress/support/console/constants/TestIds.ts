@@ -52,6 +52,7 @@ export namespace TestIds {
   export const componentDeleteConfirm =
     '[data-cyid="delete-confirmation-dialog-content"]';
   export const componentSelector = '[data-cyid="component-selector-button"]';
+  export const branchSelect = '[data-cyid="org-repo-select"]';
   export const confirmName = '[data-cyid="confirm-name"]';
   export const next = '[data-cyid="btn-next-button"]';
   export const deploy = '[data-cyid="access-mode-wizard-deploy-button"]';
