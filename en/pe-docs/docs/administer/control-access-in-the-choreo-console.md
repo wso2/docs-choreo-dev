@@ -100,8 +100,8 @@ Follow the steps given below to add a new user as a project developer:
 2. In the left navigation menu, click **User Management**, then click the **Users** tab.
 3. Click **+Invite Users**.
 4. In the **Invite Users** dialog,
-   1. Specify the email addresses of the users in the **Emails** field.
-   2. Click the **Groups** list and select **Engineering Project Developer**.
+    1. Specify the email addresses of the users in the **Emails** field.
+    2. Click the **Groups** list and select **Engineering Project Developer**.
 5. Click **Invite**.
 
 #### Add an existing user as a project developer
