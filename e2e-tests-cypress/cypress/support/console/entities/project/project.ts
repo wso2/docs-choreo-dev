@@ -170,7 +170,10 @@ export class Project {
       .then((body) => {
         if (body.find(TestIds.componentTable).length > 0) {
           this.searchComponent(name);
-          cy.get(TestIds.componentTable)
+
+          cy.get("body").then((body) => {
+          if (body.find(TestIds.componentTable).length > 0) {
+            cy.get(TestIds.componentTable)
             .find("tbody")
             .within((tbody) => {
               if (tbody.find("tr").length > 0) {
@@ -191,7 +194,10 @@ export class Project {
                 });
               }
             });
-          this.clearComponentSearch();
+          }
+        });
+        
+        this.clearComponentSearch();
         }
       })
       .then(() => {
@@ -774,7 +780,7 @@ export class Project {
 
   private goToComponentListing() {
     cy.get(TestIds.listing).should("be.visible").click();
-    cy.contains("Create").should("exist");
+    cy.get(TestIds.createComponent).should("be.visible");
   }
 
   private searchComponent(name: string) {

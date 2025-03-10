@@ -173,6 +173,7 @@ export namespace TestIds {
   export const getTestKey = '[data-testid="get-test-key-btn"]';
   export const accessToken = '[data-testid="accessTokenInput"]';
   export const apiNameDevPortal = '[data-testid="txt-api-name"]';
+  export const oauth2SecurityScheme = '[data-cyid="sec-scheme-oauth2-check-box"]';
   export const addScopeBtnV2 = '[data-cyid="scope-add-icon-button"]';
   export const addScopeBtn = '[data-testid="scope-add-icon-button"]';
   export const addNewScope = '[data-testid="scope-add-new-btn"]';
