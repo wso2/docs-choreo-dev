@@ -113,7 +113,6 @@ configMapGenerator:
       - REDIS_USERNAME="alerting_api_user"
       - ALERT_API_BASEURL=https://choreo-alerting-service.choreo-observability.svc.cluster.local:8080
       - OBS_MANAGER_URL={{.OBS_MANAGER_URL}}
-      - CHANNEL_ID="choreo-userapps-alerting-api-webhook"
       - BYPASS_COMPONENT_LIST={{.BYPASS_COMPONENT_LIST}}
       - NOTIFICATION_SERVICE_STS_ENDPOINT={{.NOTIFICATION_SERVICE_STS_ENDPOINT}}
       - NOTIFICATION_SERVICE_TOKEN_ENDPOINT="/token"
