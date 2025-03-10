@@ -20,7 +20,7 @@ In this guide, you will:
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-2. Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample proxy source](https://github.com/wso2/choreo-samples/tree/main/proxy-from-github).  
+2. Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample proxy source](https://github.com/wso2/choreo-samples/tree/main/department-api-proxy-from-github).  
 
 ## Step 1: Create an API proxy
 
@@ -29,7 +29,38 @@ You can create an API proxy either by selecting the source from a GitHub reposit
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card. This opens the **Create an API Proxy** pane.
-4. Specify the following values as component details:
+
+4. Click on **Authorize With GitHub** card under **Connect your own repository** section to connect your GitHub account.
+    - If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+
+    !!! note
+        The **Choreo GitHub App** requires the following permissions:
+         - Read and write access to code and pull requests.
+         - Read access to issues and metadata.
+        
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.    
+
+5. Enter the following repository details:
+
+    | **Field**              | **Value**          |
+    |------------------------|--------------------|
+    | **Organization**       | Your GitHub account|
+    | **Repository**         | choreo-samples     |
+    | **Branch**             | **`main`**         |
+    | **API Directory**      | /choreo-samples/department-api-proxy-from-github |
+
+6. Specify the following values as API proxy details:
+
+    !!! info
+        The **Context** field must be unique and cannot be changed after creation.**Version** and **Target** are mandatory fields. **Target** can be changed at any time after the creation.
+
+    | **Field**       | **Value**                                  |
+    |-----------------|--------------------------------------------|
+    | **Context**     | `department-service`                                   |
+    | **Version**     | `v1.0`                                      |
+    | **Target**      | `https://samples.choreoapps.dev/company/hr`|
+
+7. Specify the following values as component details:
 
     !!! info
         The **Component Name** field must be unique and cannot be changed after creation. This value is automatically generated, but you can edit it if necessary.
@@ -39,37 +70,7 @@ You can create an API proxy either by selecting the source from a GitHub reposit
     |-----------------|--------------------------------------------|
     | **Component Display Name**| `Department Service`                    |
     | **Component Name**        | `departmentService`                    |
-    | **Description**           | `This is a sample proxy for department service`     |
-   
-5. Go to the **GitHub** tab.
-    - Click **Authorize with GitHub** to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
-
-    !!! note
-        The **Choreo GitHub App** requires the following permissions:
-         - Read and write access to code and pull requests.
-         - Read access to issues and metadata.
-        
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.    
-
-6. Enter the following repository details:
-
-    | **Field**              | **Value**          |
-    |------------------------|--------------------|
-    | **Organization**       | Your GitHub account|
-    | **Repository**         | choreo-samples     |
-    | **Branch**             | **`main`**         |
-    | **API Directory**      | /choreo-samples/proxy-from-github/department-service |
-
-7. Specify the following values as API proxy details:
-
-    !!! info
-        The **Context** field must be unique and cannot be changed after creation.**Version** and **Target** are mandatory fields. **Target** can be changed at any time after the creation.
-
-    | **Field**       | **Value**                                  |
-    |-----------------|--------------------------------------------|
-    | **Context**     | `department-service/v1`                                   |
-    | **Version**     | `V1.0`                                      |
-    | **Target**      | `https://samples.choreoapps.dev/company/hr/department`|
+    | **Description**           | `This is a sample proxy for department service`     |    
 
 8. Click **Create**. This creates the API proxy component and takes you to the **Build** page.
 
