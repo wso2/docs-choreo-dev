@@ -2,24 +2,8 @@ package linter
 
 import (
 	"encoding/json"
-	"os"
 	"testing"
 )
-
-func TestSample(t *testing.T) {
-	tmpDir := t.TempDir()
-
-	f, err := os.CreateTemp(tmpDir, "data.json")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer f.Close()
-
-	err = os.WriteFile(f.Name(), []byte(`{ "key" : "value" }`), 0755)
-	if err != nil {
-		t.Fatal(err)
-	}
-}
 
 // Test cases
 func TestValidateSequenceOrder(t *testing.T) {
@@ -72,7 +56,14 @@ func TestValidateSequenceOrder(t *testing.T) {
 	// Run each test case
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := ValidateSequenceOrder(tt.steps)
+
+			stepsJSON, err := json.Marshal(tt.steps)
+			if err != nil {
+				t.Fatalf("Failed to marshal steps: %v", err)
+			}
+
+			err = ValidateSequenceOrder(string(stepsJSON))
+
 			if tt.expectSuccess && err != nil {
 				t.Errorf("Expected success but got error: %v", err)
 			} else if !tt.expectSuccess && err == nil {
@@ -122,15 +113,8 @@ var jsonData = `
 
 // Test case for validating JSON data
 func TestValidateSequenceOrderWithJSON(t *testing.T) {
-	// Parse the JSON data into a slice of Steps
-	var steps []Step
-	err := json.Unmarshal([]byte(jsonData), &steps)
-	if err != nil {
-		t.Fatalf("Failed to parse JSON: %v", err)
-	}
-
-	// Validate sequence order
-	err = ValidateSequenceOrder(steps)
+	// Validate sequence order with the JSON string
+	err := ValidateSequenceOrder(jsonData)
 
 	// Check if validation passed
 	if err != nil {

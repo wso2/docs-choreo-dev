@@ -3,7 +3,6 @@ package linter
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 )
 
 // Step struct to match JSON structure
@@ -22,7 +21,13 @@ var dependencies = map[string][]string{
 	"InvokeProdEndpoint": {"Promote"},
 }
 
-func ValidateSequenceOrder(steps []Step) error {
+func ValidateSequenceOrder(content string) error {
+	var steps []Step
+	err := json.Unmarshal([]byte(content), &steps)
+	if err != nil {
+		return fmt.Errorf("ERROR: JSON Unmarshal failed: %v", err)
+	}
+
 	seen := make(map[string]bool)
 
 	for _, step := range steps {
@@ -39,31 +44,4 @@ func ValidateSequenceOrder(steps []Step) error {
 		seen[step.Function] = true
 	}
 	return nil
-}
-
-func main() {
-	data, err := os.ReadFile("data.json")
-	if err != nil {
-		fmt.Println("Error reading file:", err)
-		return
-	}
-
-	// Parse JSON into struct
-	var steps []Step
-	err = json.Unmarshal(data, &steps)
-	if err != nil {
-		fmt.Println("Error parsing JSON:", err)
-		return
-	}
-
-	// Validate the sequence order
-	if err := ValidateSequenceOrder(steps); err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	// If validation passes, print steps
-	for _, step := range steps {
-		fmt.Printf("Executing: Sequence %d, Function: %s\n", step.Sequence, step.Function)
-	}
 }
