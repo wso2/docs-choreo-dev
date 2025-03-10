@@ -1,2 +1,3 @@
 resources:
   - cost-optimizer-dp-daily-cron.yaml
+  - cost-optimizer-dp-monthly-cron.yaml
