@@ -521,7 +521,7 @@ organizationCleanUp:
     topic: ${ORG_REMOVER_REQUEST_TOPIC}
   publisher:
     topic: ${ORG_REMOVER_RESULT_TOPIC}
-  userDeletionEnabled: ${USER_DELETION_ENABLED}
+  userDeletionEnabled: {{.USER_DELETION_ENABLED}}
 anonymousCleanup:
   taskInterval: 0
   expiryDays: 7
