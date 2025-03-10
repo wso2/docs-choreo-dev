@@ -313,6 +313,7 @@ export namespace TestIds {
     '[data-cyid="component-listing-auto-forcused-search-search-field"]';
   export const searchDomain =
     '[data-cyid="search-expandable-right-auto-forcused-search-search-field"]';
+  export const envFilter = '[data-testid="env-filter"]';
   export const domainTable = '[data-cyid="domains-list"]';
   export const deleteDomain = '[data-cyid="domain-delete-icon-button"]';
   export const addDomain = '[data-cyid="domains-add-button"]';
