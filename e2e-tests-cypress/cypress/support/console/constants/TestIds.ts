@@ -442,6 +442,7 @@ export namespace TestIds {
   export const dockerFileSelect = '[data-cyid="subPath-greeting-service-go/Dockerfile"]';
   export const connectionServiceCard = '[data-cyid="choreo-service-card-button"]';
   export const ThirdPartyGITCard = '[data-cyid="public-repository-card-button"]';
+  export const ViewAllComponentsButton = '[data-cyid="view-all-component-types-button"]';
 }
 
 

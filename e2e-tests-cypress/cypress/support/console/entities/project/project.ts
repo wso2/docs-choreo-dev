@@ -408,6 +408,7 @@ export class Project {
 
   createTestRunnerUI(componentInfo: ComponentInfo, enterCustomInfo: () => void) {
     this.createComponentIfEmptyProject();
+    cy.get(TestIds.ViewAllComponentsButton).should("be.visible").click();
     cy.get(TestIds.testRunnerBuildPack).should("be.visible").click();
 
     const testRunnerName = Utils.generateComponentName();
@@ -457,6 +458,7 @@ export class Project {
     scheduleTriggerInfo: ComponentInfo, enterCustomInfo: () => void
   ): Cypress.Chainable<ScheduleTrigger> {
     this.createComponentIfEmptyProject();
+    cy.get(TestIds.ViewAllComponentsButton).should("be.visible").click();
     cy.get(TestIds.scheduleTriggerBuildPack).should("be.visible").click();
 
     const scheduleTriggerName = Utils.generateComponentName();
