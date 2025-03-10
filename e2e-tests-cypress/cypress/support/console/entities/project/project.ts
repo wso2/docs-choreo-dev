@@ -807,8 +807,7 @@ export class Project {
   }
 
   private selectEnvironment(env: Enums.Environment) {
-    cy.contains("Environment").should("be.visible");
-    cy.contains("Environment").next().click();
+    cy.get(TestIds.envFilter).should("be.visible").click();
     cy.contains(env).click();
   }
 

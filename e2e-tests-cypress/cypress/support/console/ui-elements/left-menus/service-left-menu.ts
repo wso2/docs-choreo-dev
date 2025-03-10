@@ -117,7 +117,10 @@ export class ServiceLeftMenu extends LeftMenu {
 
   navigateToUsageInsights() {
     this.scrollToTopOfMenu();
-    this.navigateToMenuItem('[data-cyid="usage-insights"]');
+    this.navigateToSubMenu(
+      "[data-cyid=insights]",
+      new Array('[data-cyid="usage-insights"]')
+    );
   }
 
   navigateToExecute() {
