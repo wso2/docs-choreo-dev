@@ -430,7 +430,6 @@ class Console {
 
   searchProject(projectName: string): Project {
     this.navigateToHome();
-    cy.get(TestIds.searchIcon).click();
     cy.get(TestIds.projectSearch)
       .should("be.visible")
       .type(`${projectName}{enter}`);

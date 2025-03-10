@@ -36,7 +36,7 @@ export namespace TestIds {
   export const projectCard = '[data-cyid="create-project-card"]';
   export const searchIcon = '[data-cyid="search-icon-icon-button"]';
   export const projectSearch =
-    '[data-cyid="page-action-auto-forcused-search-search-field"]';
+    '[data-cyid="project-search-bar-input"]';
   export const viewAllSamples = '[data-cyid="view-all-samples-btn-button"]';
   export const trySample = '[data-cyid="component-select-tab-try-a-sample"]';
   export const sampleSearch = '[data-cyid="samples-search-bar-input"]';
