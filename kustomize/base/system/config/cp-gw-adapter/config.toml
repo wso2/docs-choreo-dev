@@ -9,6 +9,9 @@ apimHost="{{.APIM_HOST}}"
 apimUsername="{{.APIM_USERNAME}}"
 configDeployerHost="{{.CONFIG_DEPLOYER_HOST}}"
 jwksURL="{{.JWKS_URL | default "https://sts.choreo.dev/oauth2/jwks"}}"
+issuer="{{.ISSUER | default "https://sts.choreo.dev:443/oauth2/token"}}"
+internalJwksURL="{{.INTERNAL_JWKS_URL | default "https://sts.choreo.dev/api/am/publisher/v2/internal-key/jwks"}}"
+internalIssuer="{{.INTERNAL_ISSUER | default "https://sts.choreo.dev:443/api/am/publisher/v2/apis/internal-key"}}"
 
 [mizzen]
 mizzenHost="http://dp-mizzen:80"
