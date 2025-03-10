@@ -18,12 +18,12 @@
 site_name: ""
 site_description: Choreo Learning Portal
 site_author: WSO2
-site_url: https://wso2.com/choreo/docs
+site_url: https://wso2.com/choreo/docs/platform-engineer
 
 # Repository
 repo_name: wso2/docs-choreo-dev
 repo_url: https://github.com/wso2/docs-choreo-dev/
-edit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/
+edit_uri: https://github.com/wso2/docs-choreo-dev/edit/PE/en/pe-docs
 dev_addr: localhost:8000
 
 # Copyright
