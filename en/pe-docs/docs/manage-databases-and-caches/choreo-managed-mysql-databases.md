@@ -18,13 +18,17 @@ Follow the steps below to create a Choreo-managed MySQL database:
 7. Select the service plan.
   - Service plans vary in the dedicated CPU, memory (RAM), storage space allocated for your database, the backup retention periods, and high-availability configurations for production use cases.
 
+!!! Note -
+      Once the database is created, you can add it to the marketplace so developers can discover these databases and use them in their applications. For more details, see [Add Choreo-Managed Databases and Caches to the Marketplace.](../add-choreo-managed-databases-and-caches-to-the-marketplace) 
+
 ## Connect to your Choreo-managed MySQL database
 
 To connect to your Choreo-managed MySQL database, consider the following guidelines:
 
+- MySQL databases accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
+
 - You can use any MySQL driver, ORM, or supported generic SQL library (may depend on the programming language) to connect to the database.
 - You can find the connection parameters in the **Overview** section in the Choreo Console under the relevant database.
-- MySQL databases accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
 
 ## High Availability and Automatic Backups
 

@@ -27,13 +27,17 @@ Follow the steps below to create a Choreo-managed PostgreSQL vector database:
 3. In the left navigation menu, click **DB & Services** and then **Vector Databases**.
 4. Follow steps 4 onwards in the [Create a Choreo-managed PostgreSQL database](#create-a-choreo-managed-postgresql-database) section.
 
+!!! Note -
+      Once the database is created, you can add it to the marketplace so developers can discover these databases and use them in their applications. For more details, see [Add Choreo-Managed Databases and Caches to the Marketplace.](../add-choreo-managed-databases-and-caches-to-the-marketplace) 
+
+
 ## Connecting to your Choreo-managed PostgreSQL database
 
 To connect to your Choreo-managed PostgreSQL database, consider the following guidelines:
 
+- PostgreSQL databases accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
 - You can use any PostgreSQL driver, ORM, or supported generic SQL library (may depend on the programming language) to connect to the database.
 - The connection parameters can be found in the **Overview** section in the Choreo Console under the relevant database.
-- PostgreSQL databases accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
 
 
 ## High Availability and Automatic Backups

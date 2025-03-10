@@ -21,13 +21,16 @@ Follow the steps below to create a Choreo-Managed Cache:
     - Service plans vary in terms of dedicated CPU, memory (RAM), and storage space allocated for your data store, as well as high-availability configurations for production use cases.
 8. Click **Create**.
 
+!!! Note -
+      Once the Choreo-Managed Cache is created, you can add it to the marketplace so developers can discover these and use them in their applications. For more details, see [Add Choreo-Managed Databases and Caches to the Marketplace.](../add-choreo-managed-databases-and-caches-to-the-marketplace) 
+
 ## Connect to your Choreo-Managed Cache
 
 To connect to your Choreo-Managed Cache, follow these guidelines:
 
-- Use any legacy Redis® OSS compatible driver (in any programming language) to connect to your Choreo-Managed Cache.
-- You can find the connection parameters in the **Overview** section in the Choreo Console under the relevant database. Note that Choreo-Managed Cache enforces TLS.
 - Choreo-Managed Cache instances accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
+- Use any legacy Redis® OSS compatible driver (in any programming language) to connect to your Choreo-Managed Cache.
+- You can find the connection parameters in the **Overview** section in the Choreo Console. Note that Choreo-Managed Cache enforces TLS.
 
 ## High availability and automatic backups
 

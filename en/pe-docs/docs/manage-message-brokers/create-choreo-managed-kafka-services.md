@@ -23,3 +23,11 @@ Follow the steps below to create a Choreo-managed Kafka service:
 8. Select a service plan.
    - Service plans differ based on the allocation of CPU, memory (RAM), and storage for your Kafka server, as well as backup retention periods and high-availability options suited for production environments.
 9. Click **Create**. This creates the Kafka service and takes you to the **Overview** tab on the service details page.
+
+## Connect to your Choreo-managed Kafka service
+
+- By default, Kafka services accept traffic from the internet. However, if you want to restrict access to specific IP addresses or CIDR blocks, you can configure the necessary advanced settings.
+
+- Choreo secures Kafka connections via client certificate authentication.
+
+- To connect to your Choreo-managed Kafka service, use the connection parameters from the **Overview** tab on the service details page. 
