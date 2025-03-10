@@ -382,18 +382,17 @@ export class Project {
       serviceName = Utils.generateComponentName();
     }
 
-    this.serviceCreationWizard.enterServiceInfo(
-      serviceName,
-      serviceInfo
-    );
+    this.serviceCreationWizard.enterServiceInfo(serviceName, serviceInfo);
 
     return cy.wrap(new Service(serviceName, endpointName));
   }
 
   createManualTriggerUI(
-    manualTriggerInfo: ComponentInfo, enterCustomInfo: () => void
+    manualTriggerInfo: ComponentInfo,
+    enterCustomInfo: () => void
   ): Cypress.Chainable<ManualTrigger> {
     this.createComponentIfEmptyProject();
+    cy.get(TestIds.ViewAllComponentsButton).should("be.visible").click();
     cy.get(TestIds.manualTriggerBuildPack).should("be.visible").click();
 
     const manualTriggerName = Utils.generateComponentName();
@@ -406,7 +405,10 @@ export class Project {
     return cy.wrap(new ManualTrigger(manualTriggerName));
   }
 
-  createTestRunnerUI(componentInfo: ComponentInfo, enterCustomInfo: () => void) {
+  createTestRunnerUI(
+    componentInfo: ComponentInfo,
+    enterCustomInfo: () => void
+  ) {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.ViewAllComponentsButton).should("be.visible").click();
     cy.get(TestIds.testRunnerBuildPack).should("be.visible").click();
@@ -431,16 +433,14 @@ export class Project {
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
 
     const serviceName = Utils.generateComponentName();
-    this.serviceCreationWizard.enterMIServiceInfo(
-      serviceName,
-      serviceInfo
-    );
+    this.serviceCreationWizard.enterMIServiceInfo(serviceName, serviceInfo);
 
     return cy.wrap(new Service(serviceName, endpointName));
   }
 
   createMIServiceEndpointComponentUI(
-    serviceInfo: ComponentInfo, endpointName: string
+    serviceInfo: ComponentInfo,
+    endpointName: string
   ): Cypress.Chainable<Service> {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
@@ -455,10 +455,10 @@ export class Project {
   }
 
   createScheduleTriggerUI(
-    scheduleTriggerInfo: ComponentInfo, enterCustomInfo: () => void
+    scheduleTriggerInfo: ComponentInfo,
+    enterCustomInfo: () => void
   ): Cypress.Chainable<ScheduleTrigger> {
     this.createComponentIfEmptyProject();
-    cy.get(TestIds.ViewAllComponentsButton).should("be.visible").click();
     cy.get(TestIds.scheduleTriggerBuildPack).should("be.visible").click();
 
     const scheduleTriggerName = Utils.generateComponentName();
@@ -472,22 +472,21 @@ export class Project {
   }
 
   createGQLServiceComponentUI(
-    serviceInfo: ComponentInfo, endpointName: string
+    serviceInfo: ComponentInfo,
+    endpointName: string
   ): Cypress.Chainable<Service> {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
 
     const serviceName = Utils.generateComponentName();
-    this.serviceCreationWizard.enterGQLServiceInfo(
-      serviceName,
-      serviceInfo
-    );
+    this.serviceCreationWizard.enterGQLServiceInfo(serviceName, serviceInfo);
 
     return cy.wrap(new Service(serviceName, endpointName));
   }
 
   createWebAppServiceComponentUI(
-    serviceInfo: ComponentInfo ,  enterBuildPackInfo: () => void
+    serviceInfo: ComponentInfo,
+    enterBuildPackInfo: () => void
   ): Cypress.Chainable<WebApp> {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.webAppComponentCard).should("be.visible").click();
@@ -496,14 +495,15 @@ export class Project {
     this.serviceCreationWizard.enterWebAppServiceInfo(
       serviceName,
       serviceInfo,
-      enterBuildPackInfo,
+      enterBuildPackInfo
     );
 
     return cy.wrap(new WebApp(serviceName));
   }
 
   createContainerizedServiceComponentUI(
-    serviceInfo: ComponentInfo, endpointName: string
+    serviceInfo: ComponentInfo,
+    endpointName: string
   ): Cypress.Chainable<Service> {
     this.createComponentIfEmptyProject();
     cy.get(TestIds.serviceBuildPack).should("be.visible").click();
@@ -511,12 +511,11 @@ export class Project {
     const serviceName = Utils.generateComponentName();
     this.serviceCreationWizard.enterContainerizedServiceInfo(
       serviceName,
-      serviceInfo,
+      serviceInfo
     );
 
     return cy.wrap(new Service(serviceName, endpointName));
   }
-
 
   createManualTriggerComponent(
     accessibility: Enums.Accessibility,
