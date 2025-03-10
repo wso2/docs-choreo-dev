@@ -60,6 +60,6 @@ configMapGenerator:
   - name: env-cost-optimizer-cp-cron-cm
     behavior: create
     literals:
+      - CP_COST_SERVICE_URL={{.CP_COST_SERVICE_URL | default "http://cost-optimizer-cp.choreo-ai:8080"}}
       - RUDDER_SERVICE_URL={{.RUDDER_SERVICE_URL | default ""}}
-      - CP_COST_SERVICE_URL={{.CP_COST_SERVICE_URL | default ""}}
       - AUTO_APPLY_COST_THRESHOLD={{.AUTO_APPLY_COST_THRESHOLD | default "0.2"}}
