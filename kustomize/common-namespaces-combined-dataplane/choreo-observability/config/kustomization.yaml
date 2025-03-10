@@ -102,7 +102,7 @@ configMapGenerator:
   - name: choreo-alerting-api-conf
     behavior: create
     literals:
-      - LOG_LEVEL={{.LOG_LEVEL}}
+      - LOG_LEVEL={{.LOG_LEVEL | default "INFO"}}
       - OPENSEARCH_USERNAME=alerting-api
       - OPENSEARCH_URL=https://opensearch.choreo-observability.svc.cluster.local:9200
       - PROMETHEUS_URL=https://choreo-system-prometheus.choreo-observability.svc.cluster.local:9090
