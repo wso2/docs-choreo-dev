@@ -533,6 +533,7 @@ configMapGenerator:
       - SOURCE_CONFIG_MIGRATION_DOC_LINK={{.SOURCE_CONFIG_MIGRATION_DOC_LINK | default "https://wso2.com/choreo/docs/develop-components/manage-component-source-configurations/#update-to-the-latest-source-configuration-file"}}
       - ENABLE_GET_BUILD_CONFIG_FROM_BUILDPACK_DETAILS={{.ENABLE_GET_BUILD_CONFIG_FROM_BUILDPACK_DETAILS | default "true"}}
       - DISABLE_CONFIGURABLE_CHECK_ALERT={{.DISABLE_CONFIGURABLE_CHECK_ALERT | default "false"}}
+      - CONFIGURABLE_ALERT_ENABLED_ORGS={{.CONFIGURABLE_ALERT_ENABLED_ORGS | default ""}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
