@@ -68,7 +68,7 @@ public class RestApiChoreoComponent extends ChoreoComponent {
         HttpGet request = new HttpGet(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
-        request.setHeader("API-Key", apiKey);
+        request.setHeader("Test-Key", apiKey);
 
         while (iteration < count) {
             try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
