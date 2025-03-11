@@ -113,10 +113,11 @@ configMapGenerator:
       - REDIS_USERNAME="alerting_api_user"
       - ALERT_API_BASEURL=https://choreo-alerting-service.choreo-observability.svc.cluster.local:8080
       - OBS_MANAGER_URL={{.OBS_MANAGER_URL}}
-      - BYPASS_COMPONENT_LIST={{.BYPASS_COMPONENT_LIST}}
+      - BYPASS_COMPONENT_LIST={{.BYPASS_COMPONENT_LIST | default ""}}
       - NOTIFICATION_SERVICE_STS_ENDPOINT={{.NOTIFICATION_SERVICE_STS_ENDPOINT}}
       - NOTIFICATION_SERVICE_TOKEN_ENDPOINT="/token"
       - NOTIFICATION_SERVICE_URL={{.NOTIFICATION_SERVICE_URL}}
+      - CHOREO_PORTAL_URL={{.CHOREO_PORTAL_URL}}
   - name: insights-query-api-env
     behavior: create
     literals:
