@@ -12,6 +12,8 @@ jwksURL="{{.JWKS_URL | default "https://sts.choreo.dev/oauth2/jwks"}}"
 issuer="{{.ISSUER | default "https://sts.choreo.dev:443/oauth2/token"}}"
 internalJwksURL="{{.INTERNAL_JWKS_URL | default "https://sts.choreo.dev/api/am/publisher/v2/internal-key/jwks"}}"
 internalIssuer="{{.INTERNAL_ISSUER | default "https://sts.choreo.dev:443/api/am/publisher/v2/apis/internal-key"}}"
+asgardeoJWKSTemplate="{{.ASGARDEO_JWKS_URL | default "https://api.asgardeo.io/t/%s/oauth2/jwks"}}"
+asgardeoIssuerTemplate="{{.ASGARDEO_ISSUER_URL | default "https://api.asgardeo.io/t/%s/oauth2/token"}}"
 
 [mizzen]
 mizzenHost="http://dp-mizzen:80"
@@ -21,6 +23,9 @@ rudderHost="http://dp-rudder:80"
 
 [configSvc]
 configSvcHost="http://configuration-service:8080"
+
+[appSvc]
+appSvcHost="http://app-service:8080"
 
 [database]
 dbHost="{{.GW_ADAPTER_DB_HOST}}"
