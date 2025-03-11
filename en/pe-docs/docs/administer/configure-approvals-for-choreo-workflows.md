@@ -34,7 +34,7 @@ Click the respective tab for details on permissions depending on the workflow fo
 To set up an approval process for a workflow, follow these steps:
 
 !!! note 
-     - Platform Engineers can designate specific roles and assignees to review and respond to requests associated with each workflow.
+     - Platform engineers can designate specific roles and assignees to review and respond to requests associated with each workflow.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console header, go to the **Organization** list and select your organization.
