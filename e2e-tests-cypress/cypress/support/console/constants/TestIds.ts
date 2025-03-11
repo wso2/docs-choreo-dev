@@ -244,6 +244,24 @@ export namespace TestIds {
   export const applicationSelect = '[data-testid="application-selector"]';
   export const applicationSelectItem = (application: string) =>
     `[data-value="${application}"]`;
+
+  export const testKeyRadio = '[id="test-key-radio-btn"]';
+  export const appllicationKeyRadio = '[id="application-key-radio-btn"]';
+  export const apiKey = '[id="api-key-radio-btn"]';
+
+  export const getTryoutKeyTypeSelector = (keyType: Enums.ApiTryoutKeyType) => {
+    switch (keyType) {
+      case Enums.ApiTryoutKeyType.TEST_KEY:
+        return testKeyRadio;
+      case Enums.ApiTryoutKeyType.APPLICATION_KEY:
+        return appllicationKeyRadio;
+      case Enums.ApiTryoutKeyType.API_KEY:
+        return apiKey;
+      default:
+        return testKeyRadio;
+    }
+  }
+  
   export const value = (value: string) => `[value=${value}]`;
   export const search = '[data-testid="search-btn"]';
   export const searchAppText =
