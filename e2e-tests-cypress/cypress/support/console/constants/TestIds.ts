@@ -36,7 +36,7 @@ export namespace TestIds {
   export const projectCard = '[data-cyid="create-project-card"]';
   export const searchIcon = '[data-cyid="search-icon-icon-button"]';
   export const projectSearch =
-    '[data-cyid="page-action-auto-forcused-search-search-field"]';
+    '[data-cyid="project-search-bar-input"]';
   export const viewAllSamples = '[data-cyid="view-all-samples-btn-button"]';
   export const trySample = '[data-cyid="component-select-tab-try-a-sample"]';
   export const sampleSearch = '[data-cyid="samples-search-bar-input"]';
@@ -52,6 +52,7 @@ export namespace TestIds {
   export const componentDeleteConfirm =
     '[data-cyid="delete-confirmation-dialog-content"]';
   export const componentSelector = '[data-cyid="component-selector-button"]';
+  export const branchSelect = '[data-cyid="org-repo-select"]';
   export const confirmName = '[data-cyid="confirm-name"]';
   export const next = '[data-cyid="btn-next-button"]';
   export const deploy = '[data-cyid="access-mode-wizard-deploy-button"]';
@@ -172,6 +173,7 @@ export namespace TestIds {
   export const getTestKey = '[data-testid="get-test-key-btn"]';
   export const accessToken = '[data-testid="accessTokenInput"]';
   export const apiNameDevPortal = '[data-testid="txt-api-name"]';
+  export const oauth2SecurityScheme = '[data-cyid="sec-scheme-oauth2-check-box"]';
   export const addScopeBtnV2 = '[data-cyid="scope-add-icon-button"]';
   export const addScopeBtn = '[data-testid="scope-add-icon-button"]';
   export const addNewScope = '[data-testid="scope-add-new-btn"]';
@@ -313,6 +315,7 @@ export namespace TestIds {
     '[data-cyid="component-listing-auto-forcused-search-search-field"]';
   export const searchDomain =
     '[data-cyid="search-expandable-right-auto-forcused-search-search-field"]';
+  export const envFilter = '[data-testid="env-filter"]';
   export const domainTable = '[data-cyid="domains-list"]';
   export const deleteDomain = '[data-cyid="domain-delete-icon-button"]';
   export const addDomain = '[data-cyid="domains-add-button"]';
@@ -441,6 +444,8 @@ export namespace TestIds {
   export const dockerSearchBox = '[data-cyid="project-directory-search-search-bar"]';
   export const dockerFileSelect = '[data-cyid="subPath-greeting-service-go/Dockerfile"]';
   export const connectionServiceCard = '[data-cyid="choreo-service-card-button"]';
+  export const ThirdPartyGITCard = '[data-cyid="public-repository-card-button"]';
+  export const ViewAllComponentsButton = '[data-cyid="view-all-component-types-button"]';
 }
 
 

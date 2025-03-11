@@ -89,7 +89,7 @@ public class TestClientJWTValidation extends TestNGCitrusSpringSupport {
                 get(apiInvocationRequestURI).
                 message().
                 header(HttpHeaders.ACCEPT, "text/plain").
-                header("API-Key", devApiKey);
+                header("Test-Key", devApiKey);
 
         http().client(invokeUrlDev).
                 receive().

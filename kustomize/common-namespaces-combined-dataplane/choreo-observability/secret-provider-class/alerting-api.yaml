@@ -1,0 +1,42 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-alert-api
+  namespace: choreo-observability
+spec:
+  provider: azure
+  secretObjects:
+    - secretName: secret-alert-api
+      type: Opaque
+      data:
+        - objectName: OPENSEARCH_PASSWORD
+          key: OPENSEARCH_PASSWORD
+        - objectName: REDIS_PASSWORD
+          key: REDIS_PASSWORD
+        - objectName: NOTIFICATION_SERVICE_CLIENT_SECRET
+          key: NOTIFICATION_SERVICE_CLIENT_SECRET
+        - objectName: NOTIFICATION_SERVICE_CLIENT_ID
+          key: NOTIFICATION_SERVICE_CLIENT_ID
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: {{.OPENSEARCH_PASSWORD_OBJ_NAME | default "obs-opensearch-password"}}
+          objectType: secret
+          objectAlias: OPENSEARCH_PASSWORD
+          objectVersion: {{.OPENSEARCH_PASSWORD}}
+        - |
+          objectName: {{.REDIS_PASSWORD_OBJ_NAME | default "obs-redis-password"}}
+          objectType: secret
+          objectAlias: REDIS_PASSWORD
+          objectVersion: {{.REDIS_PASSWORD}}
+        - |
+          objectName: {{.NOTIFICATION_SERVICE_CLIENT_SECRET_OBJ_NAME | default "obs-notification-service-client-secret"}}
+          objectType: secret
+          objectAlias: NOTIFICATION_SERVICE_CLIENT_SECRET
+          objectVersion: {{.NOTIFICATION_SERVICE_CLIENT_SECRET}}
+        - |
+          objectName: {{.NOTIFICATION_SERVICE_CLIENT_ID_OBJ_NAME | default "obs-notification-service-client-id"}}
+          objectType: secret
+          objectAlias: NOTIFICATION_SERVICE_CLIENT_ID
+          objectVersion: {{.NOTIFICATION_SERVICE_CLIENT_ID}}
