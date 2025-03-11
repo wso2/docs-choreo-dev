@@ -25,7 +25,7 @@ rudderHost="http://dp-rudder:80"
 configSvcHost="http://configuration-service:8080"
 
 [appSvc]
-appSvcHost="http://app-service:8080"
+appSvcHost="app-service:8080"
 
 [database]
 dbHost="{{.GW_ADAPTER_DB_HOST}}"
