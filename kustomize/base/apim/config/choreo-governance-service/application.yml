@@ -48,6 +48,8 @@ governance-service:
     clientSecret: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_AI_CLIENT_SECRET)"
   default-rulesets:
     filePath: "/home/wso2/resources/default-rulesets"
+  default-documents:
+    filePath: "/home/wso2/resources/default-documents"
   security:
     privilegedClients:
       - clientId: "{{.GITHUB_RUNNER_APP_CLIENT_ID}}"
