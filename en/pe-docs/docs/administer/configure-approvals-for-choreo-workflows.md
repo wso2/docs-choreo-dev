@@ -14,7 +14,7 @@ Click the respective tab for details on permissions depending on the workflow fo
 
 === "Environment promotion"
 
-     To review and respond to environment promotion approval requests, a user must have the following permissions. Platform Engineers must ensure that users designated to review and respond to approval requests have these permissions:
+     To review and respond to environment promotion approval requests, a user must have the following permissions. Platform engineers must ensure that users designated to review and respond to approval requests have these permissions:
 
       - **WORKFLOW-MANAGEMENT**: 
           - Approve component promotion requests: Grants access to review and approve the promotion of components to critical environments.
