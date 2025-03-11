@@ -4,7 +4,7 @@ In organizations leveraging Microsoft Azure Active Directory (Azure AD) for iden
 
 !!! note
     - You must have **Manage Admin Operations** permission under **APIM-ADMIN** Permission group to approve component promotion requests.
-    - These identity provider settings are for consuming the components deployed within your organization, not for authenticating developers who signing in to the Choreo Console.
+    - These identity provider settings are used for authentication within components deployed in your organization. They do not apply to authenticating organization members signing into the Choreo Console.
 
 
 
