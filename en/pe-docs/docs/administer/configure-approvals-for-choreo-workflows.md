@@ -14,7 +14,7 @@ Click the respective tab for details on permissions depending on the workflow fo
 
 === "Environment promotion"
 
-     To review and respond to environment promotion approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:
+     To review and respond to environment promotion approval requests, a user must have the following permissions. Platform Engineers must ensure that users designated to review and respond to approval requests have these permissions:
 
       - **WORKFLOW-MANAGEMENT**: 
           - Approve component promotion requests: Grants access to review and approve the promotion of components to critical environments.
@@ -22,7 +22,7 @@ Click the respective tab for details on permissions depending on the workflow fo
 
 === "API subscription"
 
-     To review and respond to API subscription approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:
+     To review and respond to API subscription approval requests, a user must have the following permissions. Platform Engineers must ensure that users designated to review and respond to approval requests have these permissions:
 
       - **WORKFLOW-MANAGEMENT**:
           - Approve API subscriptions: Grants access to review and approve API subscription workflow requests.
@@ -33,9 +33,8 @@ Click the respective tab for details on permissions depending on the workflow fo
 
 To set up an approval process for a workflow, follow these steps:
 
-!!! note
-     - You must have administrator privileges in Choreo to configure workflow approvals.
-     - Administrators can designate specific roles and assignees to review and respond to requests associated with each workflow.
+!!! note 
+     - Platform Engineers can designate specific roles and assignees to review and respond to requests associated with each workflow.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console header, go to the **Organization** list and select your organization.
@@ -59,4 +58,4 @@ Once you enable the approval process for a workflow, see the following details o
 
 === "API subscription"
 
-     Once you configure an approval process for API subscription, administrators can select the **Approval required** checkbox to create or update subscription plans to require approval. API consumers using these plans must request approval to proceed. An authorized approver must then [review and approve the request](./review-workflow-approval-requests.md) before the subscription is granted.
+     Once you configure an approval process for API subscription, platform engineers can select the **Approval required** checkbox to create or update subscription plans to require approval. API consumers using these plans must request approval to proceed. An authorized approver must then [review and approve the request](./review-workflow-approval-requests.md) before the subscription is granted.

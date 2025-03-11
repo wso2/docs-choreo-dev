@@ -5,7 +5,7 @@ The Developer Portal allows API consumers to find and consume APIs with ease. Yo
 To customize the Developer Portal theme, follow the steps given below:
 
 !!! Note - 
-    To customize the Developer Portal theme for an organization, you need to be an admin user of that organization. - You cannot undo a change and restore or revert to a previous version of the theme. However, you can reset it to the default theme.
+    To customize the Developer Portal theme for an organization, you must have **Manage Custom Theme**, **Create Custom Theme**, **View Custom Theme**, **Delete Custom Theme** and/or **Deploy Custom Theme**  permission/permissions under **ORGANIZATION-MANAGEMENT** permission group respectively. - You cannot undo a change and restore or revert to a previous version of the theme. However, you can reset it to the default theme.
 
 1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using a Google/ GitHub/ Microsoft account.
 

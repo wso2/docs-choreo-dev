@@ -3,14 +3,16 @@
 In organizations leveraging Microsoft Azure Active Directory (Azure AD) for identity and access management (IAM), integrating it with Choreo offers powerful API access control. This control hinges on the use of API scopes. That is, it enables the restriction of access to a designated group of users. This document guide you step-by-step to configure Azure AD as your external IdP.
 
 !!! note
-    These identity provider settings are for consuming the components deployed within your organization, not for authenticating developers who signing in to the Choreo Console.
+    - You must have **Manage Admin Operations** permission under **APIM-ADMIN** Permission group to approve component promotion requests.
+    - These identity provider settings are for consuming the components deployed within your organization, not for authenticating developers who signing in to the Choreo Console.
+
+
 
 ## Prerequisites
 
 Before you try out this guide, be sure you have the following:
 
 - An Azure Active Directory account:  If you don’t already have one,  setup an Azure Active Directory account at [https://azure.microsoft.com/en-gb/](https://azure.microsoft.com/en-gb/).
-- Administrator rights to your Choreo organization: You need this to configure the Azure AD account in your organization.
 
 ## Add Azure Active Directory as an external IdP in Choreo
 
