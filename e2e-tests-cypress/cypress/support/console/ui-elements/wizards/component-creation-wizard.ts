@@ -122,13 +122,16 @@ export class _ComponentCreationWizard {
     serviceInfo: ComponentInfo,
     enterBuildPackInfo: () => void
   ) {
+    cy.get(TestIds.ThirdPartyGITCard).should("be.visible").click();
+    this.createFromGHUrl(serviceInfo);
+
+    this.selectProjectDirectory(serviceInfo.directoryInfo);
+    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
+
     cy.get(TestIds.serviceDisplayName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
 
-    this.createFromGHUrl(serviceInfo);
-    this.handleBuildPackSelectionFromService(serviceInfo.buildPack);
-    this.selectProjectDirectory(serviceInfo.directoryInfo);
     enterBuildPackInfo();
     this.createComponent(name);
   }

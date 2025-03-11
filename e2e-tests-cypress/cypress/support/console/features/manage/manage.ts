@@ -130,10 +130,21 @@ export function mixinManage<T extends Types.Constructor>(
         .find(TestIds.viewArtifact)
         .click();
 
-      cy.get(TestIds.addScopeBtnV2).should("be.visible").click();
-
+      Utils.checkIfUnchecked(TestIds.oauth2SecurityScheme).then(() => {
+        cy.get(TestIds.addScopeBtnV2).should("be.visible").click();
+      });
+      
       permissions.forEach((permission) => {
-        this.addPermissionV2(permission);
+        Utils.checkIfUnchecked(TestIds.oauth2SecurityScheme).then(() => {
+          this.addPermissionV2(permission);
+        });
+      });
+
+      Utils.checkIfUnchecked(TestIds.oauth2SecurityScheme).then(() => {
+        cy.get(TestIds.selectAllScopesV2).should("be.visible");
+        permissions.forEach((permission) => {
+          cy.get(TestIds.scopeItem(permission)).should("be.visible");
+        });
       });
     }
 
@@ -277,8 +288,6 @@ export function mixinManage<T extends Types.Constructor>(
       cy.get(TestIds.addNewScopeV2).should("be.disabled");
       cy.get(TestIds.scopeTextInputV2).type(permission);
       cy.get(TestIds.addNewScopeV2).should("be.enabled").click().wait(1000);
-      cy.get(TestIds.selectAllScopesV2).should("be.visible");
-      cy.get(TestIds.scopeItem(permission)).should("be.visible");
     }
 
     private saveUsagePlans(component: Component, plans: UsagePlan[]) {
