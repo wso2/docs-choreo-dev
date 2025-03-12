@@ -526,6 +526,14 @@ balCentral:
 subscriptions:
   enable: ${IS_SUBSCRIPTIONS_ENABLED}
   freeStepQuota: ${FREE_STEP_QUOTA}
+  subscriptionTierIds:
+    choreoFreeTierId: {{.CHOREO_FREE_TIER_ID}}
+    devantFreeTierId: {{.DEVANT_FREE_TIER_ID}}
+    bijiraFreeTierId: {{.BIJIRA_FREE_TIER_ID}}
+  subscriptionTypes:
+    choreoSubscriptionType: "choreo-subscription"
+    devantSubscriptionType: "devant-subscription"
+    bijiraSubscriptionType: "bijira-subscription"
 permissions:
   roleManage: {{.PERMISSION_CHOREO_ROLE_MANAGE}}
   devEnvManage: choreo:non_prod_env_manage
