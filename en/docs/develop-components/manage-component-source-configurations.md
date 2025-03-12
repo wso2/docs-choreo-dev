@@ -27,6 +27,225 @@ The source configuration file must be committed to your repository within the `.
 
 Click the respective tab to view the structure for your current configuration file version:
 
+=== "Version 1.2"
+
+    ``` yaml
+    # +required The configuration file schema version
+    schemaVersion: 1.2
+
+    # +optional Incoming connection details for the component
+    endpoints:
+      # +required Unique name for the endpoint.
+      # This name will be used when generating the managed API
+      - name: greeter-sample
+        # +optional Display name for the endpoint.
+        displayName: Go Greeter Sample
+        # +required Service section has the user service endpoint details
+        service:
+          # +optional Context (base path) of the API that gets exposed via the endpoint.
+          basePath: /greeting-service
+          # +required Numeric port value that gets exposed via the endpoint
+          port: 9090
+        # +required Type of traffic that the endpoint is accepting.
+        # Allowed values: REST, GraphQL, WS, GRPC, TCP, UDP.
+        type: REST
+        # +optional Network level visibilities of the endpoint.
+        # Accepted values: Project|Organization|Public(Default).
+        networkVisibilities: 
+          - Public
+          - Organization
+        # +optional Path to the schema definition file. Defaults to wild card route if not provided
+        # This is only applicable to REST or WS endpoint types.
+        # The path should be relative to the docker context.
+        schemaFilePath: openapi.yaml
+      
+      # +optional Outgoing connection details for the component.
+      dependencies:
+        # +optional Defines the connection references from the Internal Marketplace.
+        connectionReferences:
+          # +required Name of the connection.
+          - name: hr-connection
+            # +required service identifer of the dependent component.
+            resourceRef: service:/HRProject/UserComponent/v1/ad088/PUBLIC
+      
+      # +optional Defines runtime configurations
+      configurations:
+        # +optional List of environment variables to be injected into the component.
+        env:
+          # +required Name of the environment variable
+          - name: HR_SERVICE_URL
+            # +required value source
+            # Allowed value sources: connectionRef, configForm
+            valueFrom:
+              # +required Choreo connection value source
+              connectionRef:
+                # +required Choreo connection name to refer the value from
+                name: hr-connection
+                # +required Choreo connection configuration key to refer the value from
+                key: ServiceURL
+          - name: DB_USER
+            # +required value source
+            # Allowed value sources: connectionRef, configForm
+            valueFrom:
+              # +required config form value source
+              configForm:
+                  # +optional display name inside the config form, name will be shown in config form if not specified
+                  displayName: DB User
+                  # +optional default value is true if not specified
+                  required: false
+                  # +optional default value is string if not specified
+                  # Allowed types - number, boolean, secret
+                  type: string
+        # +optional List of files to be injected into the component from config form
+        file:
+          # +required Name of the file
+          - name: application.yaml
+            # +required path that file to be mounted
+            mountPath: /src/resources
+            # +required file type
+            # Supported types - yaml, json and toml
+            type: yaml
+            # +required define keys of the file
+            values:
+              # keys of the file
+              # +required at least one key
+              - name: logging
+                # +required value source
+                # Allowed value sources: connectionRef, configForm
+                valueFrom:
+                  # +required config form value source
+                  configForm:
+                    # +optional display name inside the config form, name will be shown in config form if not specified
+                    displayName: Logging
+                    # +optional default value is string if not specified
+                    # Allowed types - string, number, boolean, secret, object, array
+                    type: object
+                    # +required if type is object or array
+                    # define the properties of the object
+                    properties:
+                      # +required sub key of the object
+                      - name: logger_name
+                        # +optional display name inside the config form, name will be shown in config form if not specified
+                        displayName: Logger Name
+                      # +required sub key of the object
+                      - name: level
+                        # +optional display name inside the config form, name will be shown in config form if not specified
+                        displayName: Level
+                        # +optional define enum list for value selection
+                        values:
+                          - info
+                          - debug
+              # keys of the file
+              - name: users
+                # +optional display name inside the config form, name will be shown in config form if not specified
+                displayName: Users
+                # +optional default value is string if not specified
+                # Allowed types - string, number, boolean, secret, object, array
+                type: array
+                # +required if type is array
+                items:
+                  # +optional default value is string if not specified
+                  type: object
+                  # +required if type is object or array
+                  # define the properties of the object
+                  properties:
+                    - name: name
+                    - name: description
+                      required: false
+                    - name: age
+                      type: number
+                    - name: address
+                      type: object
+                      properties:
+                        - name: street
+                        - name: city
+    ```
+
+    The descriptor-based approach of the `component.yaml` file simplifies and streamlines endpoint and connection configuration management. The use of versioned schemas ensures backward compatibility, providing a seamless transition with future updates.
+
+    You can define the following root-level configurations via the `component.yaml` file:
+
+    | Configuration        | Required     | Description                                                              |
+    |----------------------|--------------|--------------------------------------------------------------------------|
+    | **schemaVersion**    | Required     | The version of the `component.yaml` file. Defaults to the latest version.|
+    | **endpoints**        | Optional     | The list of endpoint configurations.                                     |
+    | **dependencies**     | Optional     | The list of dependency configurations.                                   |
+    | **configurations**    | Optional     | The runtime configuration definitions.                                   |
+
+    ### Endpoint configurations
+    In the `endpoints` section of the `component.yaml` file, you can define multiple service endpoint configurations. Each endpoint must have a unique name and the required fields specified in the schema overview.
+
+    !!! tip "Why have a unique name?"
+          When you define multiple endpoints, the `endpoint.name` is appended to the Choreo-generated URL. A unique name ensures the endpoint is easily recognizable and readable within the URL.
+          
+    | Configuration        | Required     | Description                                                                                             |
+    |----------------------|--------------|---------------------------------------------------------------------------------------------------------|
+    | **name**             | Required     | A unique identifier for the endpoint within the service component. Avoid using excessively long names.  |
+    | **displayName**      | Optional     | A display name for the endpoint.                                                                        |
+    | **service**          | Required     | Service details for the endpoint.                                                                       |
+    | **.basePath**        | Required     | The base path of the API exposed via this endpoint.                                                     |
+    | **.port**            | Required     | The numeric port value exposed via this endpoint.                                                       |
+    | **type**             | Required     | The type of traffic the endpoint accepts. For example, `REST`, `GraphQL`, `WS`, `gRPC`, `UDP`, or `TCP`.|
+    | **networkVisibilities** | Required | The network-level visibility of the endpoint. For example, project, organization, or public.             |
+    | **schemaFilePath** | Required | The file path to the swagger definition  or AsyncAPI 2.0 specification file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, or **WSO2 MI** buildpacks. For REST or WebSocket endpoint types, when using the **Ballerina** or **Dockerfile** buildpack, the path should be relative to the component root or Docker context. |
+
+    ### Dependency configurations
+
+    In the `dependencies` section of the `component.yaml` file, you can define multiple connection configurations under `dependencies.connectionReferences`. You can use the connection reference generated in the inline developer guide when creating a connection. For instructions on copying [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/), see the inline developer guide displayed during connection creation.
+
+    You must include the following configurations in the `dependencies.connectionReferences` schema:
+
+    | Configuration        | Required     | Description                                                                      |
+    |----------------------|--------------|----------------------------------------------------------------------------------|
+    | **name**             | Required     | The name given to the connection.                                                |
+    | **resourceRef**      | Required     | A unique, human-readable identifier for the service you are connecting.          |
+
+
+    !!! note
+        Choreo automatically generates connection configurations when you create a connection. The properties such as **name** and **resourceRef** are automatically generated. The configurations required to establish the connection will be injected into Choreo-defined environment variables.
+
+        To use custom environment variable names instead of Choreo's default ones, add the dependency as a `serviceReference` in your `component.yaml v1.1` file. You can copy the `serviceReference` section from the `component.yaml v1.0` tab and paste it under `dependencies` in your `component.yaml v1.1` file, which maintains backward compatibility with the v1.0 format.
+
+    ### Runtime configurations
+    In the `configurations` section of the `component.yaml` file, you can define runtime configurations for the component. These configurations currently support defining configurations shown in the configuration form and environment variable injection related to dependencies.
+
+    #### Environment variable injection related to dependencies
+    
+    | Configuration                 | Required     | Description                                                                       |
+    |-------------------------------|--------------|-----------------------------------------------------------------------------------|
+    | **env**                       | Optional     | An array of env variable configurations.                                          |
+    | **name**                      | Required     | A unique name for the environment variable, starting with a letter or an underscore, and containing only letters, numbers, or underscores. |
+    | **valueFrom**                 | Required     | The source of the environment variable value.                                     |
+    | **connectionRef**             | Required     | Connection reference value source definition.                                     |
+    | **name**                      | Required     | The name of the Choreo connection to reference the value from.                    |
+    | **key**                       | Required     | The Choreo connection configuration key to reference the value from. For details on available keys, see [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/) or the inline developer guide. |
+
+    !!! note
+        Runtime configurations are supported starting from `component.yaml v1.1`.
+
+        When an environment variable value is specified using `connectionRef`, the connection's environment variable is renamed to the environment variable name defined in the `configurations` section. For example, in the sample `component.yaml` file given above, the `CHOREO_HR_CONNECTION_SERVICEURL` variable in the `hr-connection` is renamed to `HR_SERVICE_URL`.
+
+    #### Configuration Form
+
+    | Configuration                 | Required     | Description                                                                       |
+    |-------------------------------|--------------|-----------------------------------------------------------------------------------|
+    | **env**                       | Optional     | An array of env variable configurations.                                          |
+    | **file**                      | Optional     | An array of file configurations.                                                  |
+    | **name**                      | Required     | A unique name for the environment variable, starting with a letter or an underscore, and containing only letters, numbers, or underscores. |
+    | **mountPath**                 | Required     | Path that file to be mounted in the container                                     |
+    | **valueFrom**                 | Required     | The source of the configuration form.                                             |
+    | **values**                    | Required     | Required under file section. File key-values definition                           |
+    | **configForm**                | Required     | Configuration form value source definition                                        |
+    | **displayName**               | Optional     | The display name of the defined key in configuration form                         |
+    | **type**                      | Optional     | The type of value. Supported types are string, number, boolean, secret, object and array. Default type is string when not specified. If this is under file array section. Supported types are yaml,json and toml and type is required|
+    | **required**                  | Optional     | Define whether the value is required or not for the key. Default to true when not specified |
+    | **properties**                | Optional     | Required if type is an object. Definition for defining the sub properties of the object                      |
+    | **items**                     | Optional     | Required if type is an array. Definition for defining the array                  |
+ 
+    !!! note
+        Configuration form is supported starting from component.yaml v1.2.
+      
+
 === "Version 1.1"
 
     ``` yaml
