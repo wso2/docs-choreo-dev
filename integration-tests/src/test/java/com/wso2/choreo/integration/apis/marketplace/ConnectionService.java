@@ -306,8 +306,8 @@ public class ConnectionService extends ControlPlaneAPI {
         ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
     }
 
-    public static void enableAPIKeySecurityForAPI(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
-                                            String apiId, String accessToken) {
+    public static void enableOAuth2SecurityForAPI(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                                  String apiId, String accessToken) {
 
         HttpClient httpClient = citrusClients.get(Endpoints.STS_ENDPOINT);
         JsonObject apiInfo = ApiManager.getApi(runner,httpClient,accessToken,apiId);
@@ -315,7 +315,7 @@ public class ConnectionService extends ControlPlaneAPI {
             apiInfo.remove("securityScheme");
         }
         JsonArray securityScheme = new JsonArray();
-        securityScheme.add("api_key");
+        securityScheme.add("oauth2");
         apiInfo.add("securityScheme",securityScheme);
         ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
     }
