@@ -26,7 +26,7 @@ Follow below steps to deploy a component,
 
 ## Auto Deploy on Build
 
-When **Auto Deploy on Build** is enabled, it triggers an automatic deployment of your application to the first lower-level environment upon the completion of each successful build.
+When **Auto Deploy on Build** is enabled, it triggers an automatic deployment of your application to the first environment upon the completion of each successful build.
 
 !!! Note -
     The **Auto Deploy on Build** feature, is disabled by default. To enable this feature, toggle on the Auto Deploy on Build option in the **Setup** card.
@@ -42,7 +42,7 @@ Follow below steps to promote a component to a higher level environment:
 1.  Sign in to the [Choreo Console](https://console.choreo.dev/).
 2.  In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3.  From the left navigation, Click **DevOps** and then click **CD Pipelines**
-4.  Click the **Promote** button on the required lower-level environment card from which the promotion is initiated5.
+4.  Click the **Promote** button on the required environment card from which the promotion is initiated.
 5.  In the **Configuration Types** pane, you can either provide new values for the configurations or use the **Development configuration**.
 
 !!! Note -
