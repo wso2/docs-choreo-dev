@@ -96,6 +96,7 @@ nav:
       - Configure VPNs on Cloud Data Plane: ''
       - Credentials:
             - Set Up Git Provider Authentication: develop-components/develop-components-with-git.md
+            - Use Your Own Container Registry with Choreo: develop-components/bring-your-own-image.md
   - User Management: 
       - Users:
             - Manage  Members of an Organization: administer/manage-members-of-an-organization.md
