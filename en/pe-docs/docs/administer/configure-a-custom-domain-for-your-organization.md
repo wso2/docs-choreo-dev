@@ -16,7 +16,7 @@ Choreo allows platform engineers to add custom domains for their organizations. 
 To add a custom domain for your organization, follow the steps given below:
 
 !!! info "Note"
-     To add a custom domain, you must have **URL Management** permission. The **Choreo Platform Engineer** role, by default, contains that permission.
+     To add a custom domain, you must have **Manage Custom Domains** permission under **URL Management** permission group.
 
 1.  Sign in to the [Choreo Console](https://console.choreo.dev/).
 2.  In the top navigation menu, click the **Organization** list and select your organization.
@@ -138,7 +138,8 @@ When a developer requests a custom URL, the request will be listed in the organi
 To approve a custom URL mapping, follow the steps given below:
 
 !!! info "Note"
-     To approve custom URL requests, you must have **URL Management** permission. The **Choreo Platform Engineer** role, by default, contains that permission.
+     To approve custom URL requests, you must have **Approve URL Mappings** permission under **URL Management** permission group.
+
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the top navigation menu, click the **Organization** list and select your organization.
