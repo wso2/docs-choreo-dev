@@ -1,23 +1,23 @@
-# Configure CIO Dashboard
+# Delivery Insights
 
-![CIO dashboard](../../assets/img/monitoring-and-insights/engineering-insights/cio-dashboard.png){.cInlineImage-full}
+![Delivery insights dashboard](../../assets/img/monitoring-and-insights/engineering-insights/delivery-insights-dashboard.png){.cInlineImage-full}
 
-You can view DORA metrics in Choreo to use as Key Performer Indicators (KPIs) to measure your organization's DevOps team's performance. Choreo enables this feature by default for all organizations. DORA includes the following four key metrics that are regarded as the most important metrics to indicate team performance:
+You can view delivery insights in Choreo to use as Key Performer Indicators (KPIs) to measure your organization's DevOps team's performance. Choreo enables this feature by default for all organizations. Delivery insights includes the following four key metrics (DORA metrics) that are regarded as the most important metrics to indicate team performance:
 
 - Deployment Frequency: How often an organization successfully releases to production
 - Lead Time for Changes: The amount of time it takes a commit to get into production
 - Change Failure Rate: The percentage of deployments causing a failure in production
-- Time to Restore Service: How long it takes an organization to recover from a failure in production
+- Mean Time to Recovery: How long it takes an organization to recover from a failure in production
 
 
-Choreo enables two DORA metrics by default; deployment frequency and lead time for change.
+Choreo enables two insights by default; deployment frequency and lead time for change.
 
-## Configure the CIO Dashboard with all metrics
+## Configure the Delivery Insights dashboard with all metrics
 
-To configure the CIO dashboard by enabling the other two metrics, follow the steps below:
+To configure the dashboard by enabling the other two metrics, follow the steps below:
 
-1. Sign in to Choreo using your Google, GitHub, or Microsoft account.
-2. In the Choreo Console header, go to the **Organization** list and select your organization. 
+1. Sign in to [Choreo](https://console.choreo.dev/).
+2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization. 
 3. On the left navigation menu, click **Insights** and then click on **Delivery**.
 4. Scroll to the bottom of the dashboard and click **Configure**.
 5. Select your incident management system. Currently, Choreo only supports GitHub. 
@@ -63,7 +63,7 @@ The filter label allows Choreo to scrape issues associated with that label.
 
 Once you configure the labels, click **Save**.
 
-Choreo will enable incident data publishing in the background once you save. Once completed, DORA metric charts will appear in the CIO dashboard for **Mean Time To Recover** and **Change Failure Rate**. If there are any issues in the configuration, the configure banner will reappear, and the user can proceed to reconfigure.
+Choreo will enable incident data publishing in the background once you save. Once completed, the metric charts will appear in the delivery insights dashboard for **Mean Time To Recover** and **Change Failure Rate**. If there are any issues in the configuration, the configure banner will reappear, and the user can proceed to reconfigure.
 
 ### Step 4: Enrich incident tickets with deployment information
 
@@ -84,10 +84,10 @@ Choreo extracts deployment information from the relevant incident and generates 
 2. Paste the deployment information you copied (in step 4 under the section `Get deployment details`) at the end of the issue body.
 3. Click **Save**.
 
-That's it! You have successfully configured your CIO dashboard to include the DORA metrics. 
+That's it! You have successfully configured your delivery insights dashboard to include all DORA metrics. 
 
 !!! note
-    The CIO Dashboard is expected to reflect the latest statistics within approximately 30 minutes.
+    The delivery insights dashboard is expected to reflect the latest statistics within approximately 30 minutes.
 
 ## Edit configurations
 
