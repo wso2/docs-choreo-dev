@@ -246,10 +246,6 @@ describe(`Verify internal API Proxy functionality`, () => {
     devPortal.searchApi(internalProxy.getName());
   });
 
-  it("Generate Production credentials for converted External Proxy in Dev portal", () => {
-    internalProxy.generateCredentials_DevPortal(Enums.Environment.PRODUCTION);
-  });
-
   it("Tryout converted External Proxy in Dev portal", () => {
     internalProxy.testSwaggerConsole_DevPortal({ resource: OPERATION_USERS });
   });

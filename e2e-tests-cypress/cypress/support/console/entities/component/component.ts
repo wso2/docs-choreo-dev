@@ -33,6 +33,7 @@ export interface DevPortalTryOut {
   resource: string;
   application?: string;
   env?: Enums.Environment.PRODUCTION | Enums.Environment.DEVELOPMENT;
+  keyType?: Enums.ApiTryoutKeyType;
 }
 
 /**
@@ -181,6 +182,12 @@ export class Component {
 
     if (devPortalTryOut.env !== undefined) {
       TryOut.selectEndpoint(devPortalTryOut.env);
+    }
+
+    if (devPortalTryOut.keyType !== undefined) {
+      cy.wait(3000);
+      cy.get(TestIds.getTryoutKeyTypeSelector(devPortalTryOut.keyType)).scrollIntoView();
+      cy.get(TestIds.getTryoutKeyTypeSelector(devPortalTryOut.keyType)).click().wait(3000);
     }
 
     if (devPortalTryOut.application !== undefined) {
