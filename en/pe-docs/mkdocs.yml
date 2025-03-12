@@ -99,14 +99,14 @@ nav:
   - User Management: 
       - Users:
             - Manage  Members of an Organization: administer/manage-members-of-an-organization.md
+            - Configure Enterprise Login for Choreo: administer/configure-enterprise-login.md
       - Groups & Roles:
             - Control Access in the Choreo Console: administer/control-access-in-the-choreo-console.md
-            - Configure Enterprise Login for Choreo: administer/configure-enterprise-login.md
   - DevOps:
       - CI Pipelines:
           - Build Applications with Built-In CI Pipeline: devops-and-ci-cd/configure-choreo-ci-pipeline.md
           - Integrate Unit Tests into the CI Pipeline: develop-components/integrate-unit-tests-into-the-build-pipeline.md
-          - CI Pipeline logs: ''
+          - CI Pipeline logs: 'devops-and-ci-cd/build-logs.md'
       - CD Pipelines:
           - Deploy Applications with Built-In CD Pipeline: devops-and-ci-cd/deploying-an-application.md
           - Configure CD Pipelines: ''
