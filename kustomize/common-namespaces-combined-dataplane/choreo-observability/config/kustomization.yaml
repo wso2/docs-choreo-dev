@@ -118,6 +118,7 @@ configMapGenerator:
       - NOTIFICATION_SERVICE_TOKEN_ENDPOINT="/token"
       - NOTIFICATION_SERVICE_URL={{.NOTIFICATION_SERVICE_URL}}
       - CHOREO_PORTAL_URL={{.CHOREO_PORTAL_URL}}
+      - STOP_ALERTING={{.STOP_ALERTING | default "false"}}
   - name: insights-query-api-env
     behavior: create
     literals:
