@@ -171,11 +171,11 @@ INSERT INTO tierV2 (id,name,description,is_paid,created_at,is_internal) VALUES
      (N'ac5b54f5-d665-4515-ae17-95eac201ecaa',N'Developer Infrastructure',N'Tier for infrastructure costs associated with Developer Paid users',1,1689683632,0),
      (N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'Team Infrastructure',N'Tier for infrastructure costs associated with new PAYG users',1,1689683632,0),
      (N'3fa450c2-d47f-4fcb-9711-9727815cd0ee',N'Developer Platform Services',N'Tier for platform services costs associated with Developer users',1,1689683632,0),
-     (N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'Team Platform Services',N'Tier for platform services costs associated with PAYG users',1,1689683632,0)
+     (N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'Team Platform Services',N'Tier for platform services costs associated with PAYG users',1,1689683632,0),
      (N'01efff00-032a-1e3e-b071-3ac566d13e0e',N'Starter Tier',N'Bijira Starter Tier for free users',0,1741778689,0),
      (N'01efff00-032a-1e3e-a268-2f9a210a4ca1',N'Pay-As-You-Go',N'Bijira Pay-As-You-Go for paid users',1,1741778689,0),
      (N'01efff00-032a-1e3e-bfeb-8eb913027aef',N'Enterprise',N'Bijira Enterprise for enterprise users',1,1741778689,0),
-     (N'01efff00-032a-1e3e-98d7-c354c2553e4b',N'Support',N'Bijira Support plan for paid users',1,1741778689,0)
+     (N'01efff00-032a-1e3e-98d7-c354c2553e4b',N'Support',N'Bijira Support plan for paid users',1,1741778689,0),
      (N'01efff00-032a-1e3e-8699-213ad7ff9e4e',N'Starter Tier',N'Devant Starter Tier for free users',0,1741778689,0),
      (N'01efff00-032a-1e3e-96dd-3c225a36d60c',N'Pay-As-You-Go',N'Devant Pay-As-You-Go for paid users',1,1741778689,0),
      (N'01efff00-032a-1e3e-97b5-461ca87e0d5b',N'Enterprise',N'Devant Enterprise for enterprise users',1,1741778689,0),
