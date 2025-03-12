@@ -53,8 +53,6 @@ Once Choreo deploys a component with configurations, the configurations become i
 
 ### Promote a component to a higher environment
 
-Choreo builds a container once per GitHub commit and then promotes it to subsequent higher environments.
-
 You can go to the **CD Pipelines** page of a component and promote it manually across environments.
 
 ## Configurations

@@ -4,6 +4,8 @@ Using Choreo, you can easily deploy applications written in different language f
 
 After building your application, you can deploy it from the **CD Pipelines** page. On this page, you can access the CD pipeline of the selected component.
 
+## Trigger a deployment
+
 Follow below steps to deploy a component,
 
 1.  Sign in to the [Choreo Console](https://console.choreo.dev/).
@@ -32,8 +34,6 @@ When **Auto Deploy on Build** is enabled, it triggers an automatic deployment of
     The **Auto Deploy on Build** feature, is disabled by default. To enable this feature, toggle on the Auto Deploy on Build option in the **Setup** card.
 
 ## Promoting a component to a higher environment
-
-Choreo builds a container once per GitHub commit and then promotes it to subsequent higher environments.
 
 You can go to the CD Pipelines page of a component and manually promote it across environments.
 
