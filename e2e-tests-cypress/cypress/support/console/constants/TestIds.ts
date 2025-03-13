@@ -464,6 +464,13 @@ export namespace TestIds {
   export const connectionServiceCard = '[data-cyid="choreo-service-card-button"]';
   export const ThirdPartyGITCard = '[data-cyid="public-repository-card-button"]';
   export const ViewAllComponentsButton = '[data-cyid="view-all-component-types-button"]';
+  export const OASUploadProxy = '[data-cyid="upload-oas-card-button"]';
+  export const proxyName = '[data-cyid="new-component-display-name"]';
+  export const Endpoint = '[data-cyid="new-component-target"]';
+  export const ProxyCreateButton = '[data-cyid="Create-button"]';
+  export const ProxyCreateFromScratch = '[data-cyid="from-scratch-card-button"]';
+
 }
+
 
 

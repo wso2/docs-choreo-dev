@@ -22,13 +22,13 @@ export class _ProxyCreationWizard {
   }
 
   createFromOASFile(filepath: string) {
+    cy.get(TestIds.OASUploadProxy).should("be.visible").click();
     cy.get(TestIds.upload).click();
 
     cy.fixture(filepath).as("oasFile");
     cy.get(TestIds.filepathEntry).selectFile("@oasFile", {
       force: true,
     });
-    cy.getUnstable(TestIds.next).should("be.visible").click();
   }
 
   enterProxyDetails(
@@ -36,10 +36,10 @@ export class _ProxyCreationWizard {
     basePath: string,
     proxyInfo: ProxyInfo
   ): string {
-    cy.get(TestIds.apiName)
+    cy.get(TestIds.proxyName)
       .eq(0)
       .within(() => cy.get("input").clear().type(name));
-    cy.get(TestIds.apiVersion).clear().type(proxyInfo.version);
+      
     cy.get(TestIds.apiBasePath).within(() =>
       cy.get("input").clear().type(basePath)
     );
@@ -47,11 +47,11 @@ export class _ProxyCreationWizard {
     let endpointUrl: string | undefined;
 
     if (proxyInfo.endpointUrl !== "") {
-      cy.get(TestIds.apiEndpoint).within(() =>
+      cy.get(TestIds.Endpoint).within(() =>
         cy.get("input").clear().type(proxyInfo.endpointUrl)
       );
     } else {
-      cy.get(TestIds.apiEndpoint).within(() =>
+      cy.get(TestIds.Endpoint).within(() =>
         cy
           .get("input")
           .invoke("val")
@@ -64,7 +64,7 @@ export class _ProxyCreationWizard {
     if (proxyInfo.isInternal !== undefined && proxyInfo.isInternal) {
       cy.get(TestIds.internalAccessMode).click();
     }
-    cy.getUnstable(TestIds.createButton).should("be.enabled").click();
+    cy.getUnstable(TestIds.ProxyCreateButton).should("be.enabled").eq(1).click();
 
     cy.get(TestIds.backdropLoader).should("not.exist");
     cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist").then(() => {
