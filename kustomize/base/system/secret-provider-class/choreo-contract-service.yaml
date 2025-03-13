@@ -13,7 +13,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: choreo-contract-service-gh-access-token
+          objectName: contract-service-github-pat
           objectType: secret
           objectAlias: GITHUB_TOKEN
           objectVersion: "{{.CHOREO_CONTRACT_SERVICE_GH_TOKEN}}"
