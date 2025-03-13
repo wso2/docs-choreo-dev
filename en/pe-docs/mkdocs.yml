@@ -93,7 +93,7 @@ nav:
             - Manage Environments: infrastructure/environments/manage-environments.md
       - Domains:
             - Configure a Custom Domain for Your Organization: infrastructure/domains/configure-a-custom-domain-for-your-organization.md
-      - Configure VPNs on Cloud Data Plane: ''
+      - Configure VPNs on Cloud Data Plane: 'infrastructure/configure-vpns-on-the-choreo-cloud-data-plane.md'
       - Credentials:
             - Set Up Git Provider Authentication: infrastructure/credentials/develop-components-with-git.md
             - Use Your Own Container Registry: infrastructure/credentials/bring-your-own-image.md
