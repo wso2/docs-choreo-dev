@@ -51,7 +51,6 @@ export interface ProxyInfo {
   readonly endpointUrl: string;
   readonly oasUrl?: string;
   readonly oasFilePath?: string;
-  readonly isInternal?: boolean;
 }
 
 export interface DirectoryInfo {
