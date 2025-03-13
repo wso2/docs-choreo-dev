@@ -86,6 +86,7 @@ resources:
   - choreo-aws-marketplace-client.yaml
   - sts-mgt-service.yaml
   - choreo-org-activity-cron-secret.yaml
+  - choreo-contract-service.yaml
 
 patches:
   - path: patch.json
