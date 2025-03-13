@@ -17,8 +17,8 @@ import { SHORT_TIME } from "../../../commons/timeouts";
 
 export class _ProxyCreationWizard {
   createFromOASUrl(url: string) {
+    cy.get(TestIds.OASUploadProxy).should("be.visible").click();
     cy.get(TestIds.oasUrlEntry).should("be.visible").type(url);
-    cy.getUnstable(TestIds.next).should("be.visible").click();
   }
 
   createFromOASFile(filepath: string) {
