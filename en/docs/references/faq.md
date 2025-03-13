@@ -33,7 +33,7 @@ You can find information about our support plans, including `free`, `basic`, and
 If you have a log monitoring product or service, such as Azure Monitor, you can use it together with Choreo. Note: The log monitoring tool is not included in the infrastructure cost.
 
 ### Q: What is the maximum request payload size supported by Choreo?
-Choreo allows a maximum request payload size of 10 MB. 
+Choreo allows a maximum request payload size of 50 MB.
 
 ### Q: What source control software does Choreo support?
 Choreo now supports GitHub, Bitbucket and GitLab. 
@@ -58,13 +58,13 @@ When an organization admin onboards a new organization in Choreo, they can choos
 ## Security and data protection
 
 ### Q: How is data managed in Choreo?
-Choreo manages data using WSO2 containers and Kubernetes clusters, which provide scalability, resilience, and security. Find out more [here](https://wso2.cachefly.net/wso2/sites/all/2023/pdf/wso2-public-cloud-data-protection-faq.pdf).
+Choreo manages data using WSO2 containers and Kubernetes clusters, which provide scalability, resilience, and security. Find out more [here](https://wso2.cachefly.net/wso2/sites/all/trust/wso2-public-cloud-data-protection-faq.pdf).
 
 ### Q: What is the WSO2 Subprocessor list?
-This is a detailed list of all subprocessors used by WSO2, including their name, location, and purpose. This information is updated frequently to ensure compliance with data protection regulations and is found [here](https://wso2.cachefly.net/wso2/sites/all/2023/pdf/wso2-subprocessor-list.pdf).
+This is a detailed list of all subprocessors used by WSO2, including their name, location, and purpose. This information is updated frequently to ensure compliance with data protection regulations and is found [here](https://wso2.cachefly.net/wso2/sites/all/trust/wso2-public-cloud-subprocessor-list.pdf).
 
 ### Q: How do we secure WSO2 Private and Public Clouds?
-WSO2 uses a range of security controls and design patterns to protect against several threats, including internal attacks, software supply chain attacks, service and platform attacks, and more. Find out more regarding this [here](https://wso2.cachefly.net/wso2/sites/all/2023/pdf/securing-wso2-private-and-public-clouds.pdf).
+WSO2 uses a range of security controls and design patterns to protect against several threats, including internal attacks, software supply chain attacks, service and platform attacks, and more. For more details, see [Cloud Security Process](https://security.docs.wso2.com/en/latest/security-processes/cloud-security-process/).
 
 ### Q: How can I connect a Choreo component with a protected third-party application?
 To connect a Choreo component with a third-party application, it is necessary to establish seamless communication between the component and the protected third-party application, especially when connecting to external databases like MySQL, MSSQL, PGSQL, Oracle DB, etc.

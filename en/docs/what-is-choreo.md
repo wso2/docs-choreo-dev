@@ -1,6 +1,6 @@
 # What is Choreo?
 
-Choreo is an internal developer platform designed to redefine how you create digital experiences. It empowers you to seamlessly design, develop, deploy, and govern cloud-native applications, unlocking innovation while reducing time-to-market.
+Choreo is an internal developer platform designed to redefine how you create digital experiences. It empowers you to seamlessly design, develop, deploy, and govern cloud-native applications, unlocking innovation while reducing time-to-market. Just add developers to Choreo while maintaining operational control.
 
 ## Key capabilities of Choreo
 

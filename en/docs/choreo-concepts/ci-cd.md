@@ -24,6 +24,8 @@ Choreo auto-generates build pipelines that may slightly differ depending on the 
 - Pushes the container image to a container registry. In the cloud data plane, Choreo pushes the image to a Choreo-managed registry. If it is a private data plane organization, Choreo pushes the image to a registry that you own.
 - Updates service endpoints and API specifications from the provided repository if applicable.
 
+In addition to these steps, some buildpacks support integrating unit tests into the build pipeline. For more details, see [Integrate Unit Tests into the Build Pipeline](../develop-components/integrate-unit-tests-into-the-build-pipeline.md).
+
 ### Repeatable builds
 
 Choreo can replicate builds from an identical code version (Git commit). This means that multiple builds initiated from the same Git commit will generate Docker images with the same behavior.
@@ -34,6 +36,9 @@ Choreo can replicate builds from an identical code version (Git commit). This me
 ### Trigger a build
 
 On the **Build** page, click **Build Latest**. If necessary, you have the option to select a particular commit and build an image.
+
+!!! note
+    Admin and Choreo DevOps users can trigger builds using specific tags from the connected Git repository. However, this action bypasses the standard branch-based deployment process and should only be used for critical, time-sensitive scenarios, as it can disrupt deployment track integrity.
 
 If you want to automatically trigger a build with each commit, you can enable **Auto Build on Commit**.
 

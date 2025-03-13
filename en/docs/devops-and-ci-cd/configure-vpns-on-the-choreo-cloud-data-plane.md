@@ -84,7 +84,10 @@ Follow the steps given below to create a project:
 #### Step 1.2: Create the Tailscale proxy component
 
 1. On the project home page, click **Service** under **Create a Component**.
-2. Enter a display name, component name, and a description for the service. For this guide, let's enter the following values:
+2. Click the **Container Registry** from the **Connect a Docker Image** section
+3. In the **Container Registry** list, select **Choreo Samples Registry**.
+4. Click the **Tailscale Proxy** card.
+5. Enter a display name, component name, and a description for the service. For this guide, let's enter the following values:
 
     |Field                 |     Value                |
     |----------------------|--------------------------|
@@ -92,9 +95,6 @@ Follow the steps given below to create a project:
     |Component Name        | tailscale-proxy          |
     |Description           | Tailscale proxy component|
 
-3. Click the **Container Registry** tab.
-4. In the **Container Registry** list, select **Choreo Samples Registry**.
-5. Click the **Tailscale Proxy** card.
 6. Click **Create**.
 
 Now you have successfully created the Tailscale proxy. You can proceed to configure and deploy it.
@@ -118,8 +118,19 @@ To configure and deploy the component, follow the steps given below:
 
 1. In the left navigation menu, click **Deploy**.
 2. On the **Build Area** card, click **Configure &  Deploy**.
-3. In the **Environment Configurations** pane that opens, click **+ Add** and add the `TS_AUTH_KEY` environment variable as a secret. To add the environment variable, you must obtain an authentication key from your Tailscale network.
-    - For details on how to obtain an authentication key from your Tailscale network, see [Auth keys](https://tailscale.com/kb/1085/auth-keys) in the Tailscale documentation.
+3. In the **Environment Configurations** pane that opens, click **+ Add** and add the `TS_AUTH_KEY` environment variable as a secret. To add the environment variable, you must obtain an authentication key from your Tailscale network. For details on how to obtain an authentication key from your Tailscale network, see [Auth keys](https://tailscale.com/kb/1085/auth-keys) in the Tailscale documentation.
+
+    !!! info "Note"
+        The authentication keys obtained from your Tailscale network have an expiration date and require periodic rotation. To avoid manual rotation, you can generate non-expiring authentication keys using OAuth clients. For details, see [Generating long-lived auth keys](https://tailscale.com/kb/1215/oauth-clients#generating-long-lived-auth-keys) in the Tailscale documentation.
+        
+        Follow these steps if you want to add an OAuth client secret to the Tailscale proxy component instead of the `TS_AUTH_KEY` environment variable as a secret:
+
+         1. Define a tag named `choreo-vpn` in your Tailscale ACLs. For details, see [Define a tag](https://tailscale.com/kb/1068/tags#define-a-tag) in the Tailscale documentation.
+         2. Create an [OAuth client](https://tailscale.com/kb/1215/oauth-clients) with the following scope, ensuring it is assigned to the `choreo-vpn` tag:
+             - Keys → Auth Keys → write
+         3. Generate the OAuth client and copy the client secret.
+         4. Set the client secret as an environment variable named `OAUTH_CLIENT_SECRET`.
+
 4. Click **Next**.
 5. In the **File Mount** pane that opens, click **+ Add**.
 6. To mount a configuration file to the Tailscale proxy component and specify the port mapping for the TCP forward proxy running there, do the following:

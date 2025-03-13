@@ -108,6 +108,7 @@ WebApps
 cron
 deployment.toml
 subpath
+helloworld
 codebase
 libs
 work-with-the-micro-integrator-runtime-in-choreo

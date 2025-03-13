@@ -58,17 +58,9 @@ Let's get started!
 ## Step 2: Create a service component
 
 1. On the project home page, click **Service** under **Create a Component**.
-2. Enter the following details:
+2. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    | **Field**                 | **Value**              |
-    |---------------------------|------------------------|
-    | **Component Display Name**| Book List              |
-    | **Description**           | Gets the book list     |
-
-3. Go to the **GitHub** tab.
-4. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
-
-    Alternatively, paste the [Choreo sample Book List Service repository](https://github.com/wso2/choreo-sample-book-list-service) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo sample Book List Service repository](https://github.com/wso2/choreo-sample-book-list-service) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
         The **Choreo GitHub App** requires:
@@ -77,23 +69,30 @@ Let's get started!
 
         You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
 
-5. Enter the following information:
+3. Enter the following information:
 
     | **Field**             | **Description**                  |
     |-----------------------|----------------------------------|
     | **Organization**      | Your GitHub account              |
     | **Repository**        | choreo-sample-book-list-service  |
     | **Branch**            | main                             |
+    | **Component Directory** | /                 |
 
-6. Select the **NodeJS** buildpack.
-7. Enter the following details:
+4. Select the **NodeJS** buildpack.
+5. Enter the following details:
 
     | **Field**                    | **Description**   |
     |------------------------------|-------------------|    
-    | **NodeJS Project Directory** | /                 |
     | **Language Version**         | 20.x.x            |
 
-8. Click **Create**.
+6. Enter the following details for Display name and Description:
+
+    | **Field**                 | **Value**              |
+    |---------------------------|------------------------|
+    | **Component Display Name**| Book List              |
+    | **Description**           | Gets the book list     |
+
+7. Click **Create**.
 
 You have successfully created a Service component using the NodeJS buildpack. Now, let's build and deploy the service.
 

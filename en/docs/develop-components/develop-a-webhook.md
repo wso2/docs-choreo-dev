@@ -29,11 +29,9 @@ To create a Webhook component, follow these steps:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your preferred method.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Webhook** card.
-4. In the **Create a Webhook** pane, specify a name and description for the component.
-5. Go to the **GitHub** tab.
-6. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+4. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
         The **Choreo GitHub App** requires:
@@ -42,18 +40,18 @@ To create a Webhook component, follow these steps:
 
         You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
 
-7. Select the **Access Mode** depending on your requirement.
-8. Enter the following information:
+5. Enter the following information:
 
     | **Field**                     | **Description**    |
     |-------------------------------|--------------------|
     | **GitHub Account**            | Your account       |
     | **GitHub Repository**         | choreo-samples     |
     | **Branch**                    | main               |
-    | **Buildpack**                 | Ballerina          |
-    | **Project Path**              | `github-event-to-email-webhook` |
+    | **Component Path**              | `github-event-to-email-webhook` |
 
-9. Click **Create**.
+6. Select **Ballerina** as the build pack.
+7. Provide a display name, a unique name and description for the component.
+8. Click **Create**.
 
 Choreo creates the Webhook component with the sample implementation and opens the component **Overview** page.
 

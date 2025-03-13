@@ -5,9 +5,10 @@ Choreo allows you to develop and deploy applications using your preferred progra
 A REST API is a web service that adheres to Representational State Transfer (REST) principles, using HTTP methods to access and manage resources. This guide walks you through building a Ballerina service component, deploying it on Choreo, and testing it with an HTTP client application.
 
 In this guide, you will:
-- Build a simple greeting service using a sample implementation. The service has a single resource named `greet` that accepts a query parameter as input.
-- Deploy the service in Choreo.
-- Test the service.
+
+ - Build a simple greeting service using a sample implementation. The service has a single resource named `greet` that accepts a query parameter as input.
+ - Deploy the service in Choreo.
+ - Test the service.
 
 ## Prerequisites
 
@@ -41,7 +42,27 @@ To create a Ballerina service component, follow these steps:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-4. Provide a display name, a unique name, and a description for the service component:
+4. Click **Authorize with GitHub** to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+
+    !!! note
+        The **Choreo GitHub App** requires the following permissions:
+        - Read and write access to code and pull requests.
+        - Read access to issues and metadata.
+        
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
+
+5. Provide the following repository details:
+
+    | **Field**              | **Value**          |
+    |------------------------|--------------------|
+    | **Organization**       | Your GitHub account|
+    | **Repository**         | choreo-samples     |
+    | **Branch**             | **`main`**         |
+    |**Component Directory** | `/greeting-service` |
+
+6. Select **Ballerina** as the buildpack.
+
+7. Provide a display name, a unique name, and a description for the service component:
 
     !!! info
         The **Component Name** field specifies a unique identifier for the component. This name cannot be changed after creation.
@@ -51,28 +72,6 @@ To create a Ballerina service component, follow these steps:
     | **Component Display Name**| `Ballerina Greetings`   |
     | **Component Name**        | `ballerina-greetings`   |
     | **Description**           | Send greetings          |
-
-5. Connect to GitHub:
-   - Go to the **GitHub** tab.
-   - Click **Authorize with GitHub** to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
-
-    !!! note
-        The **Choreo GitHub App** requires the following permissions:
-        - Read and write access to code and pull requests.
-        - Read access to issues and metadata.
-        
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
-
-6. Provide the following repository details:
-
-    | **Field**              | **Value**          |
-    |------------------------|--------------------|
-    | **Organization**       | Your GitHub account|
-    | **Repository**         | choreo-samples     |
-    | **Branch**             | **`main`**         |
-
-7. Select **Ballerina** as the buildpack.
-   - In the **Ballerina Project Directory**, specify `/greeting-service`.
 
 8. Click **Create**. This creates the component and takes you to the **Overview** page.
 

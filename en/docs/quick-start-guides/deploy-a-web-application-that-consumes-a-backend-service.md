@@ -150,7 +150,37 @@ Now that the `Reading List Service` is deployed and available in the Choreo Mark
 1. In the Choreo Console header, click the **Project** list and select the project you created in Step 1.
 2. On the project home page, click **+ Create** under **Component Listing**.
 3. Click the **Web Application** card.
-4. Enter the following details:
+4. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo sample Book List Service repository](https://github.com/wso2/choreo-sample-book-list-service) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+
+    !!! note
+        The **Choreo GitHub App** requires:
+
+        - Read and write access to code and pull requests.
+        - Read access to issues and metadata.
+
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
+
+5. Enter the following information:
+
+    | **Field**             | **Description**                  |
+    |-----------------------|----------------------------------|
+    | **Organization**      | Your GitHub account              |
+    | **Repository**        | choreo-sample-book-list-app      |
+    | **Branch**            | main                             |
+    | **Component Directory** | /choreo-sample-book-list-app/reading-list-front-end-with-managed-auth |
+
+6. Select **React** as the buildpack because the sample front-end application is a React application built with Vite.
+7. Enter the following details:
+
+    | **Field**             | **Value**               |
+    |-----------------------|-------------------------|
+    | **Build Command**     | npm install && npm run build         |
+    | **Build Path**        | dist                                 |
+    | **Node Version**      | 18                                   |
+
+8. Enter the following details:
 
     !!! info
         The **Component Name** field must be unique and cannot be changed after creation.
@@ -161,37 +191,8 @@ Now that the `Reading List Service` is deployed and available in the Choreo Mark
     | **Component Name**        | reading-list-web-app                           |
     | **Description**           | Front-end application for the reading list service |
 
-5. Go to the **GitHub** tab.
-6. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, paste the [Choreo sample Book List Service repository](https://github.com/wso2/choreo-sample-book-list-service) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
-
-    !!! note
-        The **Choreo GitHub App** requires:
-        - Read and write access to code and pull requests.
-        - Read access to issues and metadata.
-
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
-
-7. Enter the following information:
-
-    | **Field**             | **Description**                  |
-    |-----------------------|----------------------------------|
-    | **Organization**      | Your GitHub account              |
-    | **Repository**        | choreo-sample-book-list-app      |
-    | **Branch**            | main                             |
-
-8. Select **React** as the buildpack because the sample front-end application is a React application built with Vite.
-9. Enter the following details:
-
-    | **Field**             | **Value**               |
-    |-----------------------|-------------------------|
-    | **Project Directory** | /choreo-sample-book-list-app/reading-list-front-end-with-managed-auth |
-    | **Build Command**     | npm install && npm run build         |
-    | **Build Path**        | dist                                 |
-    | **Node Version**      | 18                                   |
-
-10. Click **Create**. This initializes the component with the implementation from your GitHub repository and takes you to the **Overview** page of the component.
+9. Click **Create**. This initializes the component with the implementation from your GitHub repository and takes you to the **Overview** page of the component.
 
 ### Step 6.2: Create a connection between the web application and the deployed service
 

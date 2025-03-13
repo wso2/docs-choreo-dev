@@ -86,6 +86,7 @@ nav:
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
+      - Consume an API hosted in Choreo: tutorials/consume-an-api-hosted-in-choreo.md
   - Choreo Concepts:
       - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
       - Organization: choreo-concepts/organization.md
@@ -129,7 +130,8 @@ nav:
       - Develop Components With Git: develop-components/develop-components-with-git.md
       - Bring Your Own Image: develop-components/bring-your-own-image.md
       - Deploy an Application with Buildpacks: develop-components/deploy-an-application-with-buildpacks.md
-      - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md  
+      - Deploy a Containerized Application: develop-components/deploy-a-containerized-application.md
+      - Integrate Unit Tests into the Build Pipeline: develop-components/integrate-unit-tests-into-the-build-pipeline.md
       - Share and Reuse Components:
           - Create a Connection: develop-components/sharing-and-reusing/create-a-connection.md
           - Use a Connection in Your Service: develop-components/sharing-and-reusing/use-a-connection-in-your-service.md
@@ -173,6 +175,7 @@ nav:
         - Autoscale Components with Scale-to-Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
+      - Manage Continuous Deployment Pipelines: devops-and-ci-cd/manage-continuous-deployment-pipelines.md
       - Configure VPNs on the Choreo Cloud Data Plane: devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane.md
   - Testing: 
       - Test REST Endpoints via the OpenAPI Console: testing/test-rest-endpoints-via-the-openapi-console.md
@@ -187,6 +190,7 @@ nav:
       - Share Applications: consuming-services/share-applications.md
       - Manage Subscription: consuming-services/manage-subscription.md
       - Generate an Access Token: consuming-services/generate-an-access-token.md
+      - Manage API Keys: consuming-services/manage-api-keys.md
   - API Management:
       - Lifecycle Management: api-management/lifecycle-management.md
       - Documents: api-management/documents.md
