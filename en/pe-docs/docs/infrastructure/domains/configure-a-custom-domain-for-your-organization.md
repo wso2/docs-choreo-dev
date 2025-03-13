@@ -11,8 +11,6 @@ Choreo allows platform engineers to add custom domains for their organizations. 
 
 ## Configure a custom domain for an organization
 
-### Add a custom domain
-
 To add a custom domain for your organization, follow the steps given below:
 
 !!! info "Note"
@@ -126,7 +124,7 @@ The custom domain you added will be available to the entity types in the specifi
 
 If you want to view the entity types that use a particular custom domain, click the specific custom domain listed in the **Active Domains** tab.
 
-### Configure a custom URL for a component
+## Configure a custom URL for a component
 
 When an platform engineer adds custom domains for specific environments, developers can request any available custom domain to configure a custom URL for a component in a specific environment.
 
