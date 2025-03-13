@@ -61,9 +61,6 @@ export class _ProxyCreationWizard {
       );
     }
 
-    if (proxyInfo.isInternal !== undefined && proxyInfo.isInternal) {
-      cy.get(TestIds.internalAccessMode).click();
-    }
     cy.getUnstable(TestIds.ProxyCreateButton).should("be.enabled").eq(1).click();
 
     cy.get(TestIds.backdropLoader).should("not.exist");
