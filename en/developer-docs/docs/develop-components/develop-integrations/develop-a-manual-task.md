@@ -38,20 +38,13 @@ In this guide, you will:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Manual Task** card.
-4. Enter a unique name and description for the component. You can use the following values:
-
-    | **Field**          | **Value**                        |
-    | ------------------ | -------------------------------- |
-    | **Component Name** | `WeatherToEmail`                 |
-    | **Description**    | `My first manual task`           |
-
-5. Go to the **GitHub** tab.
 6. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
         The **Choreo GitHub App** requires:
+
         - Read and write access to code and pull requests.
         - Read access to issues and metadata.
 
@@ -64,12 +57,21 @@ In this guide, you will:
     | **Organization**      | Your GitHub account                                  |
     | **Repository**        | `choreo-samples`                                     |
     | **Branch**            | `main`                                               |
-    | **Buildpack**         | **Ballerina**                                        |
-    | **Project Directory** | `weather-to-email-integration`                       |
+    | **Component Directory** | `weather-to-email-integration`                       |
+
+8. Select **Ballerina** as the **Build Pack**.
 
     !!! tip
         - **Buildpack** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the buildpack. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the buildpack.
-        - **Project Directory** specifies the location of the project to build the component.
+        - **Component Directory** specifies the location of the project to build the component.
+
+4. Enter a unique name and description for the component. You can use the following values:
+
+    | **Field**          | **Value**                        |
+    | ------------------ | -------------------------------- |
+    | **Component Name** | `WeatherToEmail`                 |
+    | **Description**    | `My first manual task`           |
+
 
 8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 

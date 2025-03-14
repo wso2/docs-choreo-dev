@@ -149,18 +149,19 @@ Follow the guidelines below based on your container registry:
 1. In the left navigation, click **Overview** and select your project. Alternatively, select your project from the **Project** list in the Choreo Console header. 
 2. Under **Component Listing** click **+ Create**.
 3. Select your component type (BYOI is only available for Service, Web Application, Scheduled Task, or Manual Task components). 
-4. Enter a display name, a unique name, and a description for the component.
-    
-    !!! info
-         In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
-
-5. Click either the **Docker Hub** tab or the **Container Registry** tab depending on your vendor.
-6. Under **Deploy an image from Container Registry/Docker Hub**, select the container registry you have registered in [Step 1](#step-1-register-a-container-registry).
-7. Enter the full image URL. The image URL format in general is as follows:
+4. From the Create Component pane, select the **Container Registry** under the **Connect a Docker Image** section.
+5. Under **Deploy an image from Container Registry/Docker Hub**, select the container registry you have registered in [Step 1](#step-1-register-a-container-registry).
+6. Enter the full image URL. The image URL format in general is as follows:
    `[container-registry-host]/[repository-name]/[image-name]:[tag]`
 
     !!! tip
         When a public image from Docker Hub lacks a specified repository name, it typically defaults to `/library/`. For example, you can access the public Nginx image `https://hub.docker.com/_/nginx` as `registry.hub.docker.com/library/nginx:1.25`.
+
+7. Enter a display name, a unique name, and a description for the component.
+    
+    !!! info
+         In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
+
 
 ## Step 3: Deploy the component in Choreo
 

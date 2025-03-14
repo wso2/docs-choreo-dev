@@ -8,7 +8,7 @@ Below are key limitations when working with APIs in Choreo:
 
 |Resource                             |  Limit                                                                                      |
 |-------------------------------------|---------------------------------------------------------------------------------------------|
-| Maximum request payload             |  10 MB                                                                                      |
+| Maximum request payload             |  50 MB                                                                                      |
 | URL size                            |  2 KB                                                                                       |
 | Request header                      | <ul><li>Request Headers total: 40 KB</li><li>Max Single Request header: 10 KB</li></ul>     |
 | Total request duration              | <ul><li>Minimum: 10 seconds</li><li>Default: 1 minute</li><li>Maximum: 5 minutes</li></ul>  |

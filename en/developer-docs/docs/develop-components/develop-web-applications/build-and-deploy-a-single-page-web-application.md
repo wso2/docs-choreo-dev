@@ -43,11 +43,9 @@ Follow the steps below to create a sample Web Application component and deploy i
 1. Sign in to the Choreo Console at [https://console.choreo.dev/login/](https://console.choreo.dev/login/). This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Web Application** card.
-4. In the **Create a Web Application** pane, specify a name and description for the component. Enter a unique name and description.
-5. Go to the **GitHub** tab.
 6. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
         The **Choreo GitHub App** requires:
@@ -63,13 +61,13 @@ Follow the steps below to create a sample Web Application component and deploy i
     | **GitHub Account**        | Your account           |
     | **GitHub Repository**     | choreo-samples         |
     | **Branch**                | main                   |
+    | **Component Directory**     | /react-single-page-app |
 
 8. Select **React** as the **Buildpack**.
 9. Enter the following information:
 
     | **Field**                 | **Description**        |
     |---------------------------|------------------------|
-    | **Project Directory**     | /react-single-page-app |
     | **Build Command**         | `npm run build`        |
     | **Build Path**            | `build`                |
     | **Node Version**          | `18`                   |
@@ -77,6 +75,7 @@ Follow the steps below to create a sample Web Application component and deploy i
     !!! tip
         Managed authentication is enabled by default when you create a web application using **React**, **Angular**, or **Vue.js** buildpacks. To learn how to set up authentication for your web application with Choreo's managed authentication, see [Secure Web Applications with Managed Authentication](../../authentication-and-authorization/secure-web-applications-with-managed-authentication.md).
 
+4. Specify a display name, a unique name and description for the component.
 10. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 
 You have successfully created a Web Application component from the source code. Now let's build and deploy the web application.

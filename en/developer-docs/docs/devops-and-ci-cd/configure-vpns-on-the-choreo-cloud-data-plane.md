@@ -83,8 +83,11 @@ Follow the steps given below to create a project:
 
 #### Step 1.2: Create the Tailscale proxy component
 
-1. On the project home page, click **Service** under **Create a Component**.
-2. Enter a display name, component name, and a description for the service. For this guide, let's enter the following values:
+1. On the project home page, click **+ Create**, and select the **Service** card to create a service component.
+2. Click the **Container Registry** from the **Connect a Docker Image** section
+3. In the **Container Registry** list, select **Choreo Samples Registry**.
+4. Click the **Tailscale Proxy** card.
+5. Enter a display name, component name, and a description for the service. For this guide, let's enter the following values:
 
     |Field                 |     Value                |
     |----------------------|--------------------------|
@@ -92,9 +95,6 @@ Follow the steps given below to create a project:
     |Component Name        | tailscale-proxy          |
     |Description           | Tailscale proxy component|
 
-3. Click the **Container Registry** tab.
-4. In the **Container Registry** list, select **Choreo Samples Registry**.
-5. Click the **Tailscale Proxy** card.
 6. Click **Create**.
 
 Now you have successfully created the Tailscale proxy. You can proceed to configure and deploy it.

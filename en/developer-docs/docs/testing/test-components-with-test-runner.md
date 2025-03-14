@@ -23,6 +23,72 @@ You can develop tests in a language of your choice and execute them within the C
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. Click **+Create** in the **Component Listing** section. 
 3. Click the **Test Runner** card.
+6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+
+    !!! note
+           The **Choreo GitHub App** requires the following permissions:
+
+           - Read and write access to code and pull requests.
+           - Read access to issues and metadata.
+             
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
+
+7. Under **Connect a Git Repository**, enter the following information:
+
+    | **Field**              | **Value**          |
+    |------------------------|--------------------|
+    | **Organization**       | Your GitHub account|
+    | **GitHub Repository**  | choreo-samples     |
+    | **Branch**             | **`main`**         |
+    | **Component Directory**| `/test-runner-go`  |
+
+    You also can select a different language:
+
+
+    === "Go"
+
+        | Field                | Value           |
+        | -------------------- | --------------- |
+        | Component Directory | /test-runner-go |
+        | Language Version     | 1.x             |
+    
+    === "JavaScript"
+
+        | Field             | Value                   |
+        | ----------------- | ----------------------- |
+        | Component Directory | /test-runner-javascript |
+        | Language Version  | 18.x.x                  |
+
+    === "Python"
+
+        | Field             | Value                   |
+        | ----------------- | ----------------------- |
+        | Component Directory | /test-runner-python |
+        | Language Version  | 3.10.x                  |
+
+    === "Java"
+
+        | Field             | Value                   |
+        | ----------------- | ----------------------- |
+        | Component Directory | /test-runner-java |
+        | Language Version  | 17                 |
+
+    === "Dockerfile"
+
+        For programming languages that doesn't support buildpacks or for advanced use cases, you can define your own Dockerfile and run test workloads. Refer to <BYOC link> for more information.
+
+    === "Postman"
+
+        | Field             | Value                   |
+        | ----------------- | ----------------------- |
+        | Component Directory | /postman-collection-dir |
+
+
+6. Under **Buildpack**, select a buildpack based on the language of your choice.
+7. Based on the buildpack you chose, go to the relevant tab above and enter the respective values for the **Language version** field
+
 4. Enter a display name, unique name, and description for the test runner component. For this guide, enter the following values:
     
     !!! info
@@ -34,68 +100,6 @@ You can develop tests in a language of your choice and execute them within the C
     | Component Name           | `go-test-runner`                |
     | Description              | `Test Runner implemented in Go` |
 
-5. Go to the **GitHub** tab.
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
-
-    Alternatively, you can paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
-
-    !!! note
-           The **Choreo GitHub App** requires the following permissions:
-
-           - Read and write access to code and pull requests.
-           - Read access to issues and metadata.
-             
-           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
-
-7. Under **Connect Your Repository**, enter the following information:
-
-    | **Field**              | **Value**          |
-    |------------------------|--------------------|
-    | **Organization**       | Your GitHub account|
-    | **GitHub Repository**  | choreo-samples     |
-    | **Branch**             | **`main`**         |
-
-6. Under **Buildpack**, select a buildpack based on the language of your choice.
-7. Based on the buildpack you chose, go to the relevant tab below and enter the respective values for the **Project directory** and **Language version** fields:
-
-    === "Go"
-
-        | Field                | Value           |
-        | -------------------- | --------------- |
-        | Go Project Directory | /test-runner-go |
-        | Language Version     | 1.x             |
-    
-    === "JavaScript"
-
-        | Field             | Value                   |
-        | ----------------- | ----------------------- |
-        | Project Directory | /test-runner-javascript |
-        | Language Version  | 18.x.x                  |
-
-    === "Python"
-
-        | Field             | Value                   |
-        | ----------------- | ----------------------- |
-        | Project Directory | /test-runner-python |
-        | Language Version  | 3.10.x                  |
-
-    === "Java"
-
-        | Field             | Value                   |
-        | ----------------- | ----------------------- |
-        | Project Directory | /test-runner-java |
-        | Language Version  | 17                 |
-
-    === "Dockerfile"
-
-        For programming languages that doesn't support buildpacks or for advanced use cases, you can define your own Dockerfile and run test workloads. Refer to <BYOC link> for more information.
-
-    === "Postman"
-
-        | Field             | Value                   |
-        | ----------------- | ----------------------- |
-        | Postman Directory | /postman-collection-dir |
-    
 8. Click **Create**. 
 
 You have successfully created a Test Runner component using a buildpack of your choice. Now let's build and run the tests.

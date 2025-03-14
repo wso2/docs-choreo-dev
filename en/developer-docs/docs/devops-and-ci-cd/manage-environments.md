@@ -27,7 +27,7 @@ To create a new environment, follow the steps given below:
     - **Mark environment as a Production environment**: Select if you want this environment to be a production environment.
   
         !!!tip
-            In Choreo, you can have multiple non-production and production environments. To work in a production environment, you must have privileged permissions to access and deploy to production environments. 
+            In Choreo, you can have multiple non-production and production environments. To work in a production environment, you must have privileged permissions to access and deploy to production environments.
 
 ## Delete an environment
 

@@ -23,13 +23,13 @@ To create a new environment, follow the steps given below:
    - **Name**: A display name for the new environment.
    - **Data Plane** - The data plane to create the new environment.
 
-     !!!tip
+!!!tip
      The **Data Plane** list displays all the private data planes registered under your organization along with **consumed** Choreo cloud data planes.
 
    - **DNS Prefix**: A DNS prefix to identify the exposed APIs in the environment. Here, the base domain depends on the custom domain attached to the API gateways provisioned on the selected data plane.
    - **Mark environment as a Production environment**: Select if you want this environment to be a production environment.
 
-     !!!tip
+!!!tip
      In Choreo, you can have multiple non-production and production environments. To work in a production environment, you must have privileged permissions to access and deploy to production environments.
 
 ## Delete an environment

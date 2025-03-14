@@ -170,21 +170,9 @@ To create a Ballerina service component, follow these steps:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-4. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
-    
-    !!! info
-         In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
+4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
-    | **Field**                 | **Value**               |
-    |---------------------------|-------------------------|
-    | **Component Display Name**| `Ballerina Reading List`|
-    | **Component Name**        | `ballerina-reading-list`|
-    | **Description**           | Manage a reading list   |
-    
-5. Click the **GitHub** tab.
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
-
-    Alternatively, you can paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
 
     !!! note
            The **Choreo GitHub App** requires the following permissions:
@@ -194,22 +182,29 @@ To create a Ballerina service component, follow these steps:
              
            You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
-7. Under **Connect Your Repository**, enter the following information:
+5. Under **Connect a Git Repository**, enter the following information:
 
     | **Field**               | **Value**               |
     |-------------------------|-------------------------|
     | **Organization**        | Your GitHub account     |
     | **GitHub Repository**   | **`choreo-samples`**    |
     | **Branch**              | **`main`**              |
+    | **Component Directory**| `reading-list-graphql`    |.
 
-8. Select **Ballerina** as the buildpack.
-9. Enter the following information:
+6. Select **Ballerina** as the buildpack.
+
+7. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
     
-    | **Field**                      | **Value**                 |
-    |--------------------------------|---------------------------|
-    | **Ballerina Project Directory**| `reading-list-graphql`    |.
+    !!! info
+         In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
-10. Click **Create**. This creates the component and takes you to the **Overview** page of the component.
+    | **Field**                 | **Value**               |
+    |---------------------------|-------------------------|
+    | **Component Display Name**| `Ballerina Reading List`|
+    | **Component Name**        | `ballerina-reading-list`|
+    | **Description**           | Manage a reading list   |
+
+8. Click **Create**. This creates the component and takes you to the **Overview** page of the component.
 
 You have successfully created a service component that exposes a GraphQL API written in the Ballerina language. Next, let's build and deploy the service.
 

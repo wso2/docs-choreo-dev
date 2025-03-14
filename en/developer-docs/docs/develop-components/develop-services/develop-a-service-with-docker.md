@@ -3,9 +3,10 @@
 Choreo allows you to create and deploy applications in any language. This guide demonstrates how to develop and deploy a containerized service component using a Dockerfile.
 
 In this guide, you will:
-- Create a containerized service component using a sample service implementation. The sample service has a single resource named `greet` that accepts a query parameter as input.
-- Deploy the service in Choreo using a Dockerfile. The service will run on port 9090.
-- Test the service.
+
+ - Create a containerized service component using a sample service implementation. The sample service has a single resource named `greet` that accepts a query parameter as input.
+ - Deploy the service in Choreo using a Dockerfile. The service will run on port 9090.
+ - Test the service.
 
 If you want to create a service component that exposes a Ballerina service, see [Develop a Ballerina Service](develop-a-ballerina-service.md).
 
@@ -46,7 +47,39 @@ To create a containerized service component, follow these steps:
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-4. Provide a display name, a unique name, and a description for the service component:
+4. Click **Authorize with GitHub** to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+
+    !!! note
+        The **Choreo GitHub App** requires the following permissions:
+         - Read and write access to code and pull requests.
+         - Read access to issues and metadata.
+        
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
+
+5. Enter the following repository details:
+
+    | **Field**              | **Value**          |
+    |------------------------|--------------------|
+    | **Organization**       | Your GitHub account|
+    | **Repository**         | choreo-samples     |
+    | **Branch**             | `main`         |
+    | **Component Directory** | `/greeting-service-go`         |
+
+6. Select **Docker** as the buildpack.
+7. Enter the following details:
+
+    | **Field**                | **Value**                        |
+    |--------------------------|----------------------------------|
+    | **Dockerfile**           | `/greeting-service-go/Dockerfile`|
+
+    !!! info
+        1. To successfully build your container with Choreo, explicitly define a user ID (UID) under the `USER` instruction in your Dockerfile. For reference, see the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/greeter/Dockerfile).
+           - A valid User ID is a numeric value between 10000-20000 (e.g., `10001` or `10500`).
+           - Usernames are invalid and should not be used (e.g., `my-custom-user-12221` or `my-custom-user`).
+
+        2. The Dockerfile used in this guide is a multi-stage Dockerfile, which keeps the final image size small and allows building the application with specific versions of tools and libraries.
+
+8. Provide a display name, a unique name, and a description for the service component:
 
     !!! info
         The **Component Name** field specifies a unique identifier for the component. This name cannot be changed after creation.
@@ -56,39 +89,6 @@ To create a containerized service component, follow these steps:
     | **Component Display Name**| `Greetings`        |
     | **Component Name**        | `greetings`        |
     | **Description**           | Send greetings     |
-
-5. Go to the **GitHub** tab.
-    - Click **Authorize with GitHub** to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
-
-    !!! note
-        The **Choreo GitHub App** requires the following permissions:
-         - Read and write access to code and pull requests.
-         - Read access to issues and metadata.
-        
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
-
-6. Enter the following repository details:
-
-    | **Field**              | **Value**          |
-    |------------------------|--------------------|
-    | **Organization**       | Your GitHub account|
-    | **Repository**         | choreo-samples     |
-    | **Branch**             | **`main`**         |
-
-7. Select **Docker** as the buildpack.
-8. Enter the following details:
-
-    | **Field**                | **Value**                        |
-    |--------------------------|----------------------------------|
-    | **Docker Context**       | `/greeting-service-go`           |
-    | **Dockerfile**           | `/greeting-service-go/Dockerfile`|
-
-    !!! info
-        1. To successfully build your container with Choreo, explicitly define a user ID (UID) under the `USER` instruction in your Dockerfile. For reference, see the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/greeter/Dockerfile).
-           - A valid User ID is a numeric value between 10000-20000 (e.g., `10001` or `10500`).
-           - Usernames are invalid and should not be used (e.g., `my-custom-user-12221` or `my-custom-user`).
-
-        2. The Dockerfile used in this guide is a multi-stage Dockerfile, which keeps the final image size small and allows building the application with specific versions of tools and libraries.
 
 9. Click **Create**. This creates the component and takes you to the **Overview** page.
 

@@ -45,9 +45,7 @@ For a video tutorial, see [Deploy a Static Web App on Choreo](https://www.youtub
 ## Step 2: Create a web application component
 
 1. On the project home page, click **Web Application** under **Create a Component**.
-2. Enter a unique name and description for the web application.
-3. Go to the **GitHub** tab.
-4. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+2. Select **Authorize with GitHub** from the **Connect a Git Repository** section to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     Alternatively, paste the [choreo-sample-todo-list-app repository](https://github.com/wso2/choreo-sample-todo-list-app) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
@@ -58,7 +56,7 @@ For a video tutorial, see [Deploy a Static Web App on Choreo](https://www.youtub
 
         You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
 
-5. Enter the following information:
+3. Enter the following information:
 
     | **Field**                    | **Value**                   |
     |------------------------------|-----------------------------|
@@ -66,8 +64,8 @@ For a video tutorial, see [Deploy a Static Web App on Choreo](https://www.youtub
     | **Repository**               | choreo-sample-todo-list-app |
     | **Branch**                   | main                        |
 
-6. Select **NodeJS** as the **Buildpack**.
-7. Enter the following details:
+4. Select **NodeJS** as the **Buildpack**.
+5. Enter the following details:
 
     | **Field**                    | **Value**                   |
     |------------------------------|-----------------------------|
@@ -75,7 +73,9 @@ For a video tutorial, see [Deploy a Static Web App on Choreo](https://www.youtub
     | **Language Version**         | 20.x.x                      |
     | **Port**                     | 8080                        |
 
-8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
+6. Enter a unique name and description for the web application.
+
+7. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
 
 Now let's build and deploy the web application.
 

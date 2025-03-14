@@ -27,17 +27,7 @@ In this guide, you will:
 
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-
-4. Provide a unique name and description for the component:
-
-    | **Field**          | **Value**              |
-    |--------------------|------------------------|
-    | **Component Name** | `Hello World`          |
-    | **Description**    | `Hello World REST API` |
-
-5. Connect to GitHub:
-   - Go to the **GitHub** tab.
-   - Click **Authorize with GitHub** to connect your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+4. Click **Authorize with GitHub** to connect your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
         The **Choreo GitHub App** requires the following permissions:
@@ -46,17 +36,25 @@ In this guide, you will:
         
         You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
 
-6. Enter the following repository details:
+5. Enter the following repository details:
 
     | **Field**             | **Description**              |
     |-----------------------|----------------------------- |
     | **Organization**      | Your GitHub account          |
     | **Repository**        | `choreo-samples`            |
     | **Branch**            | **`main`**                   |
-    | **Buildpack**         | **WSO2 MI** (since you're creating the REST API from a [WSO2 Integration Studio](https://wso2.com/micro-integrator/) project) |
-    | **Project Directory** | `hello-world-mi`             |
+    | **Component Directory** | `hello-world-mi`             |
 
-6. Click **Create**. Choreo initializes the component with the sample integration.
+6. Select WSO2 MI as the build pack (since you're creating the REST API from a [WSO2 Integration Studio](https://wso2.com/micro-integrator/) project).
+
+7. Provide a unique name and description for the component:
+
+    | **Field**          | **Value**              |
+    |--------------------|------------------------|
+    | **Component Name** | `Hello World`          |
+    | **Description**    | `Hello World REST API` |
+
+8. Click **Create**. Choreo initializes the component with the sample integration.
 
 ## Step 2: Deploy the integration component
 

@@ -59,8 +59,11 @@ Let's get started.
 
 1.  Sign in to the [Choreo Console](https://console.choreo.dev/).
 2.  In the Choreo Console top navigation menu, select the **Organization**, and then the **Project**.
-3.  In the **Component Listing** pane, click  **+ Create New**, and select the **Service** card to create a service component.
-4. Enter a display name, component name, and a description for the service. For this guide, let's enter the following values:
+3.  On the project home page, click **+ Create**, and select the **Service** card to create a service component.
+4. Click the **Container Registry** from the **Connect a Docker Image** section
+5. In the **Container Registry** list, select **Choreo Samples Registry**.
+6. Click the **Tailscale Proxy** card.
+7. Enter a display name, component name, and a description for the service. For this guide, let's enter the following values:
 
     |Field                 |     Value                |
     |----------------------|--------------------------|
@@ -68,9 +71,6 @@ Let's get started.
     |Component Name        | tailscale-proxy          |
     |Description           | Tailscale proxy component|
 
-5. Click the **Container Registry** tab.
-6. In the **Container Registry** list, select **Choreo Samples Registry**.
-7. Click the **Tailscale Proxy** card.
 8. Click **Create**.
 
 Now you have successfully created the Tailscale proxy. You can proceed to configure and deploy it.
