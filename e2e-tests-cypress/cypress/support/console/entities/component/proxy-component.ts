@@ -121,8 +121,8 @@ export class Proxy extends mixinDevelop(
     this._removeDefaultResources(this);
   }
 
-  deploy() {
-    this._deploy(this);
+  deploy(visibility?: Enums.Accessibility) {
+    this._deploy(this, visibility);
   }
 
   promote() {

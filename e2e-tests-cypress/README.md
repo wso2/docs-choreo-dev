@@ -136,7 +136,7 @@ parameters:
 
 	1. Ensure that the local instance of Choreo Console has been started and is accessible via `https://localhost:3000`
     2. Navigate to the `e2e-tests-cypress` directory
-    3. Run `npm install` - only for first time
+    3. Run `npm install` to ensure that you have the latest dependecies installed
     4. Change the following in `cypress.env.json` if you are working on front-end local dev server
         - The following URLs should be updated to include `https://localhost:3000` - your front-end serving url
             - `loginURL: "https://localhost:3000/login?fidp=choreoe2etest"`
@@ -145,40 +145,14 @@ parameters:
             - `baseUrl: "https://localhost:3000"`
             - `apimSvcURL: "https://localhost:3000"`
 
-    5. Ensure that you have the following environment variables set(refer
-       to [Getting idpUsername and idpPassword](#getting-idpusername-and-idppassword) section for more details)
-        - `choreoIDPUsername` - Your IDP username
-        - `choreoIDPUsername` - Your IDP password
-        - `choreoOrgHandle` - Your organization handle
+    5. A number of shared Enterprise login accounts available to use for executing Cypress tests. Contact the Release Team
+	   to obtain these details and use it to set the following environment variables,
+        - `cypress_enterpriseIDPUsername` - username value
+        - `cypress_enterpriseIDPPassword` - password value
+        - `choreoOrgHandle` - org handle value
 		- `cypress_overridenNewAppSvcURL` - "https://apis.preview-dv.choreo.dev"
 
     6. Run in E2E tests in either [Interactive mode](#interactive-mode) or [Headless mode](#headless-mode).
-
-- ### Getting idpUsername and idpPassword
-
-    1. Logout of Choreo dev and goto `https://consolev2.preview-dv.choreo.dev`
-    2. Open browser dev tools and open network tab (and tick "Preserve log" checkbox)
-    3. Login to Choreo
-    4. Observe network tab in dev tools and locate first `token` response(The token returned by Asgardeo or the relevant
-       IDP)
-    5. Copy `access_token` value (the JWT) from `preview` section
-    6. Do a curl using the JWT as Authorization header
-       ```
-       curl --header "Authorization: <JWT>" -L app.preview-dv.choreo.dev/internaltools/resetIdpPassword
-       ```
-    7. Copy the `idpUsername` and `idpPassword` from the response and export them as the following environment variables
-       ```
-       export choreoIDPUsername=<Your idpUsername>
-       export choreoIDPUsername=<Your idpPassword>
-       ```
-    8. Find the specific Organization Handle of the Organizations you are a member of, that you wish to execute tests
-       against. You can find this by navigating to the `https://consolev2.preview-dv.choreo.dev` and selecting the
-       organization from the drop down. The organization handle will be the last part of the URL. For example, if the
-       URL is `https://consolev2.preview-dv.choreo.dev/organizations/abc`, the organization handle will be `abc`.
-       Export the organization handle as an environment variable as follows.
-       ```
-       export choreoOrgHandle=<Your Organization Handle>
-       ```
 
 - ### Debugging
 

@@ -54,9 +54,12 @@ configMapGenerator:
       - DB_NAME=choreo_cost_optimizer_db
       - DB_PASSWORD_FILE=/mnt/csi/secret-cost-optimizer-cp/DB_PASSWORD
       - SCOPE={{.SCOPE | default "choreo:deployment_manage"}}
+      - MIZZEN_BASE_URL={{.MIZZEN_BASE_URL | default ""}}
+      - DPCOST_SERVICE_BASE_URL={{.DPCOST_SERVICE_BASE_URL | default "http://cost-optimizer.choreo-ai:8000"}}
+      - DATAPLANE_IDS={{.DATAPLANE_IDS | default ""}}
   - name: env-cost-optimizer-cp-cron-cm
     behavior: create
     literals:
+      - CP_COST_SERVICE_URL={{.CP_COST_SERVICE_URL | default "http://cost-optimizer-cp.choreo-ai:8080"}}
       - RUDDER_SERVICE_URL={{.RUDDER_SERVICE_URL | default ""}}
-      - CP_COST_SERVICE_URL="http://cost-optimizer-cp.choreo-ai.svc.cluster.local:8080"
       - AUTO_APPLY_COST_THRESHOLD={{.AUTO_APPLY_COST_THRESHOLD | default "0.2"}}

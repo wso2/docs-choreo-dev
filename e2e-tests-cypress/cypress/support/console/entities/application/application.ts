@@ -71,8 +71,10 @@ export class Application {
     cy.get(TestIds.devPortalBackdropLoader).should("not.exist");
 
     cy.wait("@getAllApisForResubscribe", VERY_SHORT_TIME).then(() => {
+      cy.contains("Subscription created successfully").should("be.visible");
+      cy.contains("Subscription created successfully", VERY_SHORT_TIME).should("not.exist");
       cy.get(TestIds.apiSubscriptionSearch).should("be.visible").within(() => {
-        cy.get('button[title="Open"]').should("be.visible").click();
+        cy.getUnstable('button[title="Open"]').should("be.visible").click();
         cy.get('input[value="Select API"]').click().type(`${apiName}`);
       });
 

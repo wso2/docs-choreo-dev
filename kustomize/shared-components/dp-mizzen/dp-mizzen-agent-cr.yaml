@@ -269,3 +269,44 @@ rules:
       - patch
       - delete
       - deletecollection
+  - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - httproutes
+      - backendtlspolicies
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection
+  - apiGroups:
+      - gateway.envoyproxy.io
+    resources:
+      - backends
+      - securitypolicies
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection
+  - apiGroups:
+      - gateway.choreo.dev
+    resources:
+      - gatewayextensionpolicies
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection

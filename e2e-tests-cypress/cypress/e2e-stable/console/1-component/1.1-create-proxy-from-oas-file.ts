@@ -17,7 +17,7 @@ import {
   Proxy,
   ProxyMetaData,
 } from "../../../support/console/entities/component/proxy-component";
-import { Enums, UsagePlan } from "../../../support/commons/enums";
+import { Enums, SecurityScheme, UsagePlan } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
 import { Application } from "../../../support/console/entities/application/application";
 import { devPortal } from "../../../support/console/devportal";
@@ -59,6 +59,10 @@ describe("Create Proxy from OAS file", () => {
           value: proxy.getMetaData(),
         });
       });
+  });
+
+  it("Enable OAuth2 security", () => {
+    proxy.enableSecurityScemes([SecurityScheme.OAuth2]);
   });
 
   it("Deploy proxy", () => {
@@ -199,7 +203,7 @@ describe("Create Proxy from OAS file", () => {
       if (!testConsoleOnly) {
         proxy.testSwaggerConsole_DevPortal({
           resource: RESOURCE,
-          application: application.getName(),
+          keyType: Enums.ApiTryoutKeyType.APPLICATION_KEY,
         });
       } else {
         cy.log(`Skipping Devportal step due to testConsoleOnly: ${testConsoleOnly}`);
@@ -234,5 +238,9 @@ describe("Create Proxy from OAS file", () => {
 
   it("Verifying project insights in Prod", () => {
     project.verifyUsageInsights(Enums.Environment.PRODUCTION);
+  });
+
+  it('Clean up created data', () => {
+    console.cleanUpData();
   });
 });
