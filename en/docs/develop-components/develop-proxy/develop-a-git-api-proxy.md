@@ -49,7 +49,7 @@ You can create an API proxy either by selecting the source from a GitHub reposit
     | **Branch**             | **`main`**         |
     | **API Directory**      | /choreo-samples/department-api-proxy-from-github |
 
-6. Specify the following values as API proxy details:
+6. Specify the following values as Proxy Metadata:
 
     !!! info
         The **Context** field must be unique and cannot be changed after creation.**Version** and **Target** are mandatory fields. **Target** can be changed at any time after the creation.
@@ -60,7 +60,7 @@ You can create an API proxy either by selecting the source from a GitHub reposit
     | **Version**     | `v1.0`                                      |
     | **Target**      | `https://samples.choreoapps.dev/company/hr`|
 
-7. Specify the following values as component details:
+7. Specify the following values as component Details:
 
     !!! info
         The **Component Name** field must be unique and cannot be changed after creation. This value is automatically generated, but you can edit it if necessary.
