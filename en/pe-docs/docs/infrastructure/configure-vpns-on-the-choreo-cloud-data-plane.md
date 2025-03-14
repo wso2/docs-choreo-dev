@@ -51,45 +51,16 @@ Let's get started.
 - Understand the basics of [how Tailscale works](https://tailscale.com/blog/how-tailscale-works).
 - Have a Tailscale account (Tailnet). There are multiple plans available for you to set up your Tailscale network. For details, see [Tailscale plans](https://tailscale.com/pricing).
 - Install Tailscale and connect your private data center or server to it, so that your private services are accessible via your Tailscale network. To quickly get started with Tailscale, see the [Tailscale quickstart](https://tailscale.com/kb/1017/install).
-- If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
-    2. Enter a unique organization name. For example, `Stark Industries`.
-    3. Read and accept the privacy policy and terms of use.
-    4. Click **Create**.
-
-    This creates the organization and opens the organization home page.
-
-### Step 1: Create the Tailscale proxy
-
-#### Step 1.1: Create a project 
-
-Follow the steps given below to create a project:
-
-1. Sign in to the [Choreo Console](https://console.choreo.dev/). 
-2.  In the top navigation menu, click the **Organization** list and select your organization.
-3. Click on the **Projects** list in top menu and then click  **+ Create Project**.
-4. Enter a display name, unique name, and description for the project. You can enter the values given below:
-
-    !!! info
-         In the **Name** field, you must specify a name to uniquely identify your project in various contexts. The value is editable only at the time you create the project. You cannot change the name after you create the project.
-
-    | **Field**                | **Value**                          |
-    |--------------------------|------------------------------------|
-    | **Project Display Name** | Tailscale Proxy Project            |
-    | **Name**                 | tailscale-proxy-project            |
-    | **Project Description**  | My Tailscale project               |
-
-5. Click **Create**. This creates the project and takes you to the project home page.
-
-#### Step 1.2: Create the Tailscale proxy component
-
+### Step 1: Create the Tailscale proxy component
 
 !!! Note -
     Component creation is not available for the **Platform Engineer** role. Switch to the **Developer** perspective to create a component.
 
-1. In the **Component Listing** pane, click  **+ Create New**, and select the **Service** card to create a service component.
-2. Enter a display name, component name, and a description for the service. For this guide, let's enter the following values:
+1.  Sign in to the [Choreo Console](https://console.choreo.dev/).
+2.  In the Choreo Console top navigation menu, select the **Organization**, and then the **Project**.
+3.  In the **Component Listing** pane, click  **+ Create New**, and select the **Service** card to create a service component.
+4. Enter a display name, component name, and a description for the service. For this guide, let's enter the following values:
 
     |Field                 |     Value                |
     |----------------------|--------------------------|
@@ -97,10 +68,10 @@ Follow the steps given below to create a project:
     |Component Name        | tailscale-proxy          |
     |Description           | Tailscale proxy component|
 
-3. Click the **Container Registry** tab.
-4. In the **Container Registry** list, select **Choreo Samples Registry**.
-5. Click the **Tailscale Proxy** card.
-6. Click **Create**.
+5. Click the **Container Registry** tab.
+6. In the **Container Registry** list, select **Choreo Samples Registry**.
+7. Click the **Tailscale Proxy** card.
+8. Click **Create**.
 
 Now you have successfully created the Tailscale proxy. You can proceed to configure and deploy it.
 
