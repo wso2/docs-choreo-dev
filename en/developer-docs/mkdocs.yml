@@ -179,6 +179,7 @@ nav:
           - Autoscale Components with Scale-to-Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
+      - Manage Configuration Groups: devops-and-ci-cd/manage-configuration-groups.md
       - Manage Continuous Deployment Pipelines: devops-and-ci-cd/manage-continuous-deployment-pipelines.md
       - Configure VPNs on the Choreo Cloud Data Plane: devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane.md
   - Testing:
