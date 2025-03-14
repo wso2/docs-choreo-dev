@@ -1386,8 +1386,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
-        Configure CD Pipelines
+      <a href="../../../devops/cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
+        Manage CD Pipelines
       </a>
     </li>
   
@@ -1396,6 +1396,34 @@ document.addEventListener('DOMContentLoaded', function() {
           
         </ul>
       </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Infra Pipelines
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        External CI
+      </a>
     </li>
   
 
@@ -2949,19 +2977,19 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="create-a-new-environment">Create a new environment<a class="headerlink" href="#create-a-new-environment" title="Permanent link">&para;</a></h2>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
 <ul>
-<li>To create additional environments, you must have a Choreo subscription or a private data plane.</li>
-<li>To create a new environment in a private data plane organization, you must have the <code>ENVIRONMENT-MANAGEMENT</code> permission. By default, <code>ENVIRONMENT-MANAGEMENT</code> permission is granted to Admin and Choreo DevOps roles.</li>
+<li>To create a new environment in a private data plane organization, you must have the <code>ENVIRONMENT-MANAGEMENT</code> permission. By default, <code>ENVIRONMENT-MANAGEMENT</code> permission is granted to Admin, Choreo Platform Engineer and Choreo DevOps roles.</li>
 </ul>
 <p>To create a new environment, follow the steps given below:</p>
 <ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a> and select the <strong>Organization</strong>.</li>
+<li>Sign in to <a href="https://console.choreo.dev/">Choreo</a>.</li>
+<li>In the Choreo Console, go to the top navigation menu and click <strong>Organization</strong>. Then select your organization.</li>
 <li>In the left navigation menu, click <strong>Infrastructure</strong> and then click <strong>Environments</strong>.</li>
-</ol>
-<p>!!!note
-   Environment creation and deletion are only available in the organization level.</p>
-<ol>
 <li>
 <p>On the <strong>Environments</strong> page, click <strong>Create</strong> and specify the following details to create a new environment:</p>
+<ul>
+<li><strong>Name</strong>: A display name for the new environment.</li>
+<li><strong>Data Plane</strong> - The data plane to create the new environment.</li>
+</ul>
 </li>
 <li>
 <p><strong>Name</strong>: A display name for the new environment.</p>
@@ -2987,8 +3015,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>Environment deletion is a permanent, non-reversible operation.</p>
 </div>
 <ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a> and switch to your organization using top navigation menu.</li>
-<li>In the left navigation menu, click <strong>Infrastructure</strong> and then click <strong>Environments</strong>.</li>
+<li>Sign in to <a href="https://console.choreo.dev/">Choreo</a>.</li>
+<li>In the Choreo Console, go to the top navigation menu and click <strong>Organization</strong>. Then select your organization.</li>
+<li>In the left navigation menu, click <strong>Infrastructure</strong> and then click <strong>Environments</strong>. </li>
 <li>In the <strong>Environments</strong> list, click the delete icon corresponding to the environment you want to delete. This displays a confirmation dialog with details on the impact of deletion.</li>
 <li>Review the details, then type the environment name to confirm the deletion.</li>
 <li>Click <strong>Delete</strong>.</li>

@@ -181,6 +181,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://wso2.com/choreo/docs/devops/cd-pipelines/manage-continuous-deployment-pipelines/</loc>
+         <lastmod>2025-03-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://wso2.com/choreo/docs/devops/ci-pipelines/build-logs/</loc>
          <lastmod>2025-03-14</lastmod>
          <changefreq>daily</changefreq>
