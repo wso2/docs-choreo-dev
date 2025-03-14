@@ -155,6 +155,7 @@ Follow the steps below to configure your CI/build pipeline:
 4. Generate a token for your CI pipeline from the **Manage Tokens** section.
 
 !!! note -
-      The tokens are bound to a specific component. - It is recommended to reference the token from a secure location available to your CI pipeline. For example, use a GitHub secret if you are using GitHub Actions.
+      - The tokens are bound to a specific component. 
+      - It is recommended to reference the token from a secure location available to your CI pipeline. For example, use a GitHub secret if you are using GitHub Actions.
 
 5. To trigger an automatic deployment to your development environment, you can initiate an HTTP POST request to the Choreo webhook endpoint with the updated image details. Alternatively, you can use the provided Webhook snippets. This action will seamlessly deploy the image to the development environment.

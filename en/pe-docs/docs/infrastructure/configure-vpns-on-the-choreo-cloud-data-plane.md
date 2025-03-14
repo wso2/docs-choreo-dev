@@ -117,11 +117,12 @@ To configure and deploy the component, follow the steps given below:
            8080: "100.108.78.93:8090"
            8081: "100.108.78.93:1433"
        ```
-        !!! note
+    !!! note
             In this sample configuration, the TCP traffic arriving at port 8080 on your Tailscale proxy will be forwarded to port 8090 on the node with IP address 100.108.78.93 in your Tailscale network. Similarly, port 8081 will map to the corresponding address. You can find the IP addresses of your nodes on the [Tailscale machines](https://login.tailscale.com/admin/machines) page in your Tailscale network's admin console or via the Tailscale clients running on your machine.
 7. Click **Next**.
 8. In the **Endpoints** pane that opens, click **+ Add** and edit the `endpoints.yaml` configuration to expose your Tailscale proxy as a service. The following is a sample `endpoints.yaml` configuration you can use:
-    !!! note
+
+!!! note
         The sample `endpoints.yaml` file given below defines two project-level endpoints. These endpoints can be used by other components within the same project to access the services. If you want to directly expose your private endpoint via the Choreo gateway either with the **Public** or **Organization** visibility, you can set the `networkVisibility` property of the endpoint to `Public` or `Organization`.
     ``` yaml
     version: 0.1
@@ -139,7 +140,8 @@ To configure and deploy the component, follow the steps given below:
     ```
 9. Click **Save**.
 10. Click **Next** and then click **Deploy**.
-    !!! note
+    
+!!! note
         Deploying the component may take a while. You can track the progress by observing the logs. Once the deployment is complete, the build status changes to **Active** on the **Development** environment card.
 When the component is deployed, you can observe a new node connected to your Tailscale network. To view this, go to the [Tailscale machines](https://login.tailscale.com/admin/machines) page of your Tailscale coordination server.
 
