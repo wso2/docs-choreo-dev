@@ -12,10 +12,10 @@ spec:
     solvers:
       - dns01:
           azureDNS:
-            clientID: a4e699a7-cad0-435a-8c38-e39710172ac4
+            clientID: 6634629f-e772-4b83-84f1-a3e9cedd4c1d
             clientSecretSecretRef:
               key: client-secret
-              name: bijira-secret-azuredns-config
+              name: choreo-secret-azuredns-config
             environment: AzurePublicCloud
             hostedZoneName: bijira.dev
             resourceGroupName: CHOREO-DNS-RG
