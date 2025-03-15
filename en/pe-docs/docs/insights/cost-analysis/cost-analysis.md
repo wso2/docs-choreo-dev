@@ -6,59 +6,57 @@ The Choreo cost optimization feature provides detailed cost insights across your
 
 ## Organization Level
 
-![Organization level dashboard 1](figures/CostInsights_Org_Level_01.png)
-![Organization level dashboard 2](figures/CostInsights_Org_Level_02.png)
-![Organization level dashboard 3](figures/CostInsights_Org_Level_03.png)
+![Organization level dashboard](../../assets/img/cost-analysis/OrganizationLevel.png)
 
 At the Organization level, Choreo provides key insights into overall cost savings and resource efficiency across all your projects. You can view the following metrics and visualizations:
 
 * **Monthly Savings Summary**
 
-  <img src="figures/monthly_savings_summary.png" alt="Monthly savings summary chart" style="width:200px; height:auto;">
+  <img src="../../assets/img/cost-analysis/monthly_savings_summary.png" alt="Monthly savings summary chart" style="width:200px; height:auto;">
 
 
   This chart visualizes the percentage of cost savings achieved (by manual or automatic application of recommendations) compared to missed savings (potential savings missed due to recommendations not being applied) up to the current date. You should aim to maximize the saved cost and minimize missed savings.
 
 * **Total Monthly Savings**
 
-  <img src="figures/total_monthly_savings.png" alt="Total monthly savings card" style="width:300px; height:auto;">
+  <img src="../../assets/img/cost-analysis/total_monthly_savings.png" alt="Total monthly savings card" style="width:300px; height:auto;">
 
 
   This card shows the cost saved in the current month through manual or automatic application of recommendations. It includes a breakdown for Production and Non-Production environments, with a dropdown showing savings for each respective environment.
 
 * **Monthly Missed Savings**
 
-  <img src="figures/monthly_missed_savings.png" alt="Monthly missed savings card" style="width:300px; height:auto;">
+  <img src="../../assets/img/cost-analysis/monthly_missed_savings.png" alt="Monthly missed savings card" style="width:300px; height:auto;">
 
   This card displays the potential cost savings that were missed due to the failure to apply recommendations, whether manually or automatically. It provides a breakdown of these missed savings for both production and non-production environments, listing values for each individual environment. It is recommended to keep these missed savings as minimal as possible.
 
 * **Annual Savings**
 
-    <img src="figures/annual_savings.png" alt="Annual savings card" style="width:300px; height:auto;">
+    <img src="../../assets/img/cost-analysis/annual_savings.png" alt="Annual savings card" style="width:300px; height:auto;">
 
   This card shows accumulated savings throughout the year. It combines the savings completed through the end of the previous month with savings achieved up to the present day of the current month. This demonstrates that a fully cost-optimized organization with no savings for the current month has achieved this state by saving costs in previous months.
 
 * **Monthly CPU and Memory Cost**
 
-  <img src="figures/monthly_cost.png" alt="Monthly CPU and Memory cost card" style="width:300px; height:auto;">
+  <img src="../../assets/img/cost-analysis/monthly_cost.png" alt="Monthly CPU and Memory cost card" style="width:300px; height:auto;">
 
   This card shows the cost incurred for CPU and Memory allocation across all components in your organization. It includes a percentage change compared to the previous month to indicate cost trends.
 
 * **Estimated Monthly Cost**
 
-  <img src="figures/estimated_monthly_cost.png" alt="Estimated monthly cost card" style="width:300px; height:auto;">
+  <img src="../../assets/img/cost-analysis/estimated_monthly_cost.png" alt="Estimated monthly cost card" style="width:300px; height:auto;">
 
   This card shows the forecasted cost at the end of the month, with an environmental breakdown, regardless of which day of the month you view it.
 
 * **Monthly CPU and Memory Efficiency**
 
-  <img src="figures/resource_efficiency.png" alt="Monthly CPU and Memory efficiency card" style="width:300px; height:auto;">
+  <img src="../../assets/img/cost-analysis/resource_efficiency.png" alt="Monthly CPU and Memory efficiency card" style="width:300px; height:auto;">
 
   This card shows the percentage utilization of CPU and Memory compared to allocation. This metric indicates your resource optimization level, which directly reflects cost optimization. The breakdown of CPU and Memory efficiencies provides individual understanding of each resource's optimization. The percentage change shown compares current efficiency to last month's efficiency with an arrow indicating increase or decrease.
 
 * **Cost Analysis Plot**
 
-   <img src="figures/cost_analysis.png" alt="Cost analysis plot" style="width:700px; height:auto;">
+   <img src="../../assets/img/cost-analysis/cost_analysis.png" alt="Cost analysis plot" style="width:700px; height:auto;">
 
   The plot consists of three lines:
 
@@ -70,7 +68,7 @@ At the Organization level, Choreo provides key insights into overall cost saving
 
 * **Cost Savings (Deployments Summary)**
 
-  <img src="figures/deployment_summary.png" alt="Deployments summary cards" style="width:700px; height:auto;">
+  <img src="../../assets/img/cost-analysis/deployment_summary.png" alt="Deployments summary cards" style="width:700px; height:auto;">
 
   Under the Cost Savings section, these cards provide a summary of all deployments in your organization:
 
@@ -83,7 +81,7 @@ At the Organization level, Choreo provides key insights into overall cost saving
 
 * **Cost Savings (Project Summary)**
 
-  <img src="figures/project_summary.png" alt="Project summary table" style="width:700px; height:auto;">
+  <img src="../../assets/img/cost-analysis/project_summary.png" alt="Project summary table" style="width:700px; height:auto;">
 
   This table under the Cost Savings section includes a summary of all projects in your organization. Each row represents a project with columns showing:
   * Saved Cost after applying recommendations automatically/manually
@@ -95,33 +93,30 @@ At the Organization level, Choreo provides key insights into overall cost saving
 
 ## Project Level
 
-![Project level dashboard 1](figures/CostInsights_Proj_Level_01.png)
-![Project level dashboard 2](figures/CostInsights_Proj_Level_02.png)
-![Project level dashboard 3](figures/CostInsights_Proj_Level_03.png)
+![Project level dashboard](../../assets/img/cost-analysis/ProjectLevel.png)
 
 The Project Level view is similar to the Organization Level, with all monthly metrics focused on the selected project. The charts, cards, plots, and tables follow the same format as the Organization Level.
 
 An additional feature at this level is the ability to toggle auto-apply for each component in the Cost Savings (Component Summary) table, or for all components. This simplifies the process of enabling auto-application of recommendations across all components in a project.
 
- <img src="figures/component_summary.png" alt="Deployments summary cards" style="width:700px; height:auto;">
+ <img src="../../assets/img/cost-analysis/component_summary.png" alt="Deployments summary cards" style="width:700px; height:auto;">
 
 
 These toggles enable automatic application of recommendations for all deployments in the selected components.
 
 ## Component Level
 
-![Component level dashboard 1](figures/CostInsights_Comp_Level_01.png)
-![Component level dashboard 2](figures/CostInsights_Comp_Level_02.png)
+![Component level dashboard](../../assets/img/cost-analysis/ComponentLevel.png)
 
 The Component Level differs from both Organization and Project levels. At the Component Level, you can access the release level through both deployment track (version) and environment configuration as shown:
 
- <img src="figures/release_selection.png" alt="Release selection" style="width:300px; height:auto;">
+ <img src="../../assets/img/cost-analysis/release_selection.png" alt="Release selection" style="width:300px; height:auto;">
 
 At the Release Level within the Component Level, you can view:
 
 * **Component details and Optimization Configurations**
 
-   <img src="figures/component_details.png" alt="Component details card" style="width:600px; height:auto;">
+   <img src="../../assets/img/cost-analysis/component_details.png" alt="Component details card" style="width:600px; height:auto;">
 
   This card shows configuration data for the deployment, including number of replicas, scale to zero settings, and horizontal pod auto-scaling that can be configured in DevOps.
 
@@ -130,7 +125,7 @@ At the Release Level within the Component Level, you can view:
 
     Auto Apply Recommendations: 
     
-    When enabled, this toggle automatically implements resource right-sizing recommendations daily. The system checks if the release has any recommendations that would save more than $0.01, and if found, applies them without requiring manual intervention. This feature helps maintain continuous cost efficiency without constant monitoring.
+    When enabled, this toggle automatically implements resource right-sizing recommendations daily. Every 24 hours the system automatically checks if the release has any recommendations that would save more than $0.01, and if found, applies them without requiring manual intervention. This feature helps maintain continuous cost efficiency without constant monitoring.
 
 
     Safety Buffer: 
@@ -148,21 +143,21 @@ At the Release Level within the Component Level, you can view:
 
 * **Monthly Cost, Missed Savings, Efficiency and Estimated Cost**
 
-  <img src="figures/component_metrics_cards.png" alt="Component metrics cards" style="width:600px; height:auto;">
+  <img src="../../assets/img/cost-analysis/component_metrics_cards.png" alt="Component metrics cards" style="width:600px; height:auto;">
 
   These cards summarize the cost and resource metrics similar to those at the Organization and Project levels.
 
 * **CPU Metrics Analysis**
 
-  <img src="figures/cpu_metrics.png" alt="CPU metrics chart" style="width:600px; height:auto;">
+  <img src="../../assets/img/cost-analysis/cpu_metrics.png" alt="CPU metrics chart" style="width:600px; height:auto;">
 
 * **Memory Metrics Analysis**
 
-  <img src="figures/memory_metrics.png" alt="Memory metrics chart" style="width:600px; height:auto;">
+  <img src="../../assets/img/cost-analysis/memory_metrics.png" alt="Memory metrics chart" style="width:600px; height:auto;">
 
 * **Recommendations**
 
-  <img src="figures/recommendations.png" alt="Memory metrics chart" style="width:600px; height:auto;">
+  <img src="../../assets/img/cost-analysis/recommendations.png" alt="Memory metrics chart" style="width:600px; height:auto;">
 
   The system provides **automated** and **manual** recommendations for cost reduction.
 
