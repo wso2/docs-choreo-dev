@@ -236,6 +236,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://wso2.com/choreo/docs/infrastructure/dataplanes/data-planes/</loc>
+         <lastmod>2025-03-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://wso2.com/choreo/docs/infrastructure/domains/configure-a-custom-domain-for-your-organization/</loc>
          <lastmod>2025-03-15</lastmod>
          <changefreq>daily</changefreq>
