@@ -12,20 +12,20 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/choreo/docs/choreo-concepts/resource-hierarchy/">
+        <link rel="canonical" href="https://wso2.com/choreo/docs/devops/manage-configuration-groups/">
       
       
-        <link rel="prev" href="../../what-is-choreo/">
+        <link rel="prev" href="../cd-pipelines/manage-continuous-deployment-pipelines/">
       
       
-        <link rel="next" href="../organization/">
+        <link rel="next" href="../../governance/workflows/configure-approvals-for-choreo-workflows/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Resource Hierarchy - </title>
+        <title>Manage Configuration Groups - </title>
       
     
     
@@ -140,7 +140,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#resource-hierarchy" class="md-skip">
+        <a href="#manage-configuration-groups" class="md-skip">
           Skip to content
         </a>
       
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Resource Hierarchy
+              Manage Configuration Groups
             
           </span>
         </div>
@@ -602,16 +602,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
       
       
       
@@ -620,7 +620,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           Choreo Concepts
@@ -631,66 +631,11 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Resource Hierarchy
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
         Resource Hierarchy
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#organizations-and-data-planes" class="md-nav__link">
-    Organizations and data planes
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#environments-and-data-planes" class="md-nav__link">
-    Environments and data planes
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#components-and-environments" class="md-nav__link">
-    Components and environments
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -702,7 +647,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../organization/" class="md-nav__link">
+      <a href="../../choreo-concepts/organization/" class="md-nav__link">
         Organization
       </a>
     </li>
@@ -716,7 +661,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../data-planes/" class="md-nav__link">
+      <a href="../../choreo-concepts/data-planes/" class="md-nav__link">
         Data Planes
       </a>
     </li>
@@ -730,7 +675,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../environments/" class="md-nav__link">
+      <a href="../../choreo-concepts/environments/" class="md-nav__link">
         Environments
       </a>
     </li>
@@ -744,7 +689,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-cd/" class="md-nav__link">
+      <a href="../../choreo-concepts/ci-cd/" class="md-nav__link">
         CI/CD
       </a>
     </li>
@@ -758,7 +703,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../choreo-marketplace/" class="md-nav__link">
+      <a href="../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
         Choreo Marketplace
       </a>
     </li>
@@ -772,7 +717,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../project/" class="md-nav__link">
+      <a href="../../choreo-concepts/project/" class="md-nav__link">
         Project
       </a>
     </li>
@@ -786,7 +731,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../component/" class="md-nav__link">
+      <a href="../../choreo-concepts/component/" class="md-nav__link">
         Component
       </a>
     </li>
@@ -800,7 +745,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../deployment-tracks/" class="md-nav__link">
+      <a href="../../choreo-concepts/deployment-tracks/" class="md-nav__link">
         Deployment Tracks
       </a>
     </li>
@@ -814,7 +759,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../endpoint/" class="md-nav__link">
+      <a href="../../choreo-concepts/endpoint/" class="md-nav__link">
         Endpoint
       </a>
     </li>
@@ -828,7 +773,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../connections/" class="md-nav__link">
+      <a href="../../choreo-concepts/connections/" class="md-nav__link">
         Connections
       </a>
     </li>
@@ -1228,16 +1173,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
       
       
       
@@ -1246,7 +1191,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           DevOps
@@ -1288,7 +1233,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops/ci-pipelines/configure-choreo-ci-pipeline/" class="md-nav__link">
+      <a href="../ci-pipelines/configure-choreo-ci-pipeline/" class="md-nav__link">
         Build Applications with Built-In CI Pipeline
       </a>
     </li>
@@ -1302,7 +1247,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
+      <a href="../ci-pipelines/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
         Integrate Unit Tests into the CI Pipeline
       </a>
     </li>
@@ -1316,7 +1261,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops/ci-pipelines/build-logs/" class="md-nav__link">
+      <a href="../ci-pipelines/build-logs/" class="md-nav__link">
         CI Pipeline logs
       </a>
     </li>
@@ -1366,7 +1311,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops/cd-pipelines/deploying-an-application/" class="md-nav__link">
+      <a href="../cd-pipelines/deploying-an-application/" class="md-nav__link">
         Deploy Applications with Built-In CD Pipeline
       </a>
     </li>
@@ -1380,7 +1325,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops/cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
+      <a href="../cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
         Manage CD Pipelines
       </a>
     </li>
@@ -1399,11 +1344,86 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../devops/manage-configuration-groups/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Manage Configuration Groups
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Manage Configuration Groups
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-configuration-group" class="md-nav__link">
+    Create a configuration group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#link-and-use-configuration-groups" class="md-nav__link">
+    Link and use configuration groups
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#view-edit-a-configuration-group" class="md-nav__link">
+    View &amp; edit a configuration group
+  </a>
+  
+    <nav class="md-nav" aria-label="View &amp; edit a configuration group">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#edit-the-configuration-group" class="md-nav__link">
+    Edit the configuration group
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete-a-configuration-group" class="md-nav__link">
+    Delete a configuration group
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2894,22 +2914,42 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#organizations-and-data-planes" class="md-nav__link">
-    Organizations and data planes
+  <a href="#create-a-configuration-group" class="md-nav__link">
+    Create a configuration group
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#environments-and-data-planes" class="md-nav__link">
-    Environments and data planes
+  <a href="#link-and-use-configuration-groups" class="md-nav__link">
+    Link and use configuration groups
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#components-and-environments" class="md-nav__link">
-    Components and environments
+  <a href="#view-edit-a-configuration-group" class="md-nav__link">
+    View &amp; edit a configuration group
+  </a>
+  
+    <nav class="md-nav" aria-label="View &amp; edit a configuration group">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#edit-the-configuration-group" class="md-nav__link">
+    Edit the configuration group
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete-a-configuration-group" class="md-nav__link">
+    Delete a configuration group
   </a>
   
 </li>
@@ -2929,7 +2969,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
   
-    <a href="https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/choreo-concepts/resource-hierarchy.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/devops/manage-configuration-groups.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
     </a>
@@ -2938,28 +2978,151 @@ document.addEventListener('DOMContentLoaded', function() {
     
       
     
-    <a href="https://github.com/wso2/docs-choreo-dev/raw/dev/en/docs/choreo-concepts/resource-hierarchy.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/wso2/docs-choreo-dev/raw/dev/en/docs/devops/manage-configuration-groups.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
   
 
 
-<h1 id="resource-hierarchy">Resource Hierarchy<a class="headerlink" href="#resource-hierarchy" title="Permanent link">&para;</a></h1>
-<p>The following diagram depicts the high-level resources and their relationships in Choreo.</p>
-<p><a class="glightbox" href="../../assets/img/choreo-concepts/resource-hierarchy.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Resource hierarchy" class="cInlineImage-full" src="../../assets/img/choreo-concepts/resource-hierarchy.png" /></a></p>
-<h2 id="organizations-and-data-planes">Organizations and data planes<a class="headerlink" href="#organizations-and-data-planes" title="Permanent link">&para;</a></h2>
-<p>Data planes are connected to the organization and are available for all projects within the organization. When you create an environment in a project, the data plane connected to the organization is linked with an automatically generated Kubernetes namespace.</p>
-<h2 id="environments-and-data-planes">Environments and data planes<a class="headerlink" href="#environments-and-data-planes" title="Permanent link">&para;</a></h2>
-<p>Choreo allows multiple Kubernetes clusters to be associated with an environment. This enables you to build highly resilient and resource-efficient solutions that utilize multiple clusters. Choreo synchronizes your applications and workloads between associated clusters in an environment, allowing you to perform multi-cluster deployment with a single click.</p>
-<p>The following diagram illustrates how multiple clusters associate with different environments:</p>
-<p><a class="glightbox" href="../../assets/img/choreo-concepts/environments-and-dataplanes.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Environments and dataplanes" class="cInlineImage-full" src="../../assets/img/choreo-concepts/environments-and-dataplanes.png" /></a></p>
-<div class="admonition info">
-<p class="admonition-title">Note</p>
-<p>It is not necessary to use a different cluster per environment. You can create multiple environments on the same cluster. The above diagram is an example of a specific solution. Your application architecture may require a different configuration than what is depicted.</p>
+<h1 id="manage-configuration-groups">Manage Configuration Groups<a class="headerlink" href="#manage-configuration-groups" title="Permanent link">&para;</a></h1>
+<p>Choreo allows you to create Configuration Groups to efficiently manage reusable configurations across components within your organization. A Configuration Group is a collection of key-value pairs, where values can be defined for multiple environments. This feature ensures consistency and simplifies the management of configurations across environments.</p>
+<p>Configuration groups can be defined at organization level and link to components at deployment time. Once linked, Choreo automatically resolves and mounts the configurations to the respective environments on deployment. You can either link a configuration group to inject the configurations as environment variables or file mounts.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<ul>
+<li>All configuration group values are encrypted and stored in environment-specific key vaults.</li>
+<li>Management of configuration groups is restricted to users with Choreo Admin, DevOps, and Platform Engineer roles.</li>
+<li>Developers can discover configuration groups available within the organization via the <strong>Choreo Internal Marketplace</strong>.</li>
+</ul>
 </div>
-<h2 id="components-and-environments">Components and environments<a class="headerlink" href="#components-and-environments" title="Permanent link">&para;</a></h2>
-<p>Components belong to a project in Choreo, and environments are provisioned per project. When a component is deployed, it is deployed as a container to the specified environment. Once deployed, you can promote the container image across the environments available in the project.</p>
+<h2 id="create-a-configuration-group">Create a configuration group<a class="headerlink" href="#create-a-configuration-group" title="Permanent link">&para;</a></h2>
+<p>To create a new configuration group, follow the steps given below:</p>
+<ol>
+<li>In the <a href="https://console.choreo.dev/">Choreo Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>.</li>
+<li>
+<p>On the <strong>Configuration Groups</strong> page, click <strong>Create</strong> and specify the following details to create a new configuration group:</p>
+<ul>
+<li><strong>Name</strong>: A name for the configuration group (Unique within the organization).</li>
+<li><strong>Description</strong>: A description for the configuration group (Optional).</li>
+<li>
+<p><strong>Define Keys</strong>: Define the keys for the configuration group.</p>
+<ul>
+<li>Configuration keys uniquely identify values in a configuration group. You can map these keys to environment variables or file mounts during deployment. Each key must be unique within the group.</li>
+</ul>
+</li>
+<li>
+<p><strong>Assign Values</strong>: Define values by environment for the keys defined.</p>
+<ul>
+<li>By default, all the environments are grouped together allowing you to manage configuration smoothly. You can separate and manage configuration values for each environment as needed.</li>
+</ul>
+</li>
+<li>
+<p><strong>Create</strong>: Click <strong>Create</strong> to create the configuration group. </p>
+</li>
+</ul>
+</li>
+<li>
+<p>Now you can link this configuration group to any component within the organization.</p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>Configuration groups created will be listed in the <strong>Choreo Internal Marketplace</strong>, improving visibility and discoverability for developers.</li>
+<li>All configuration groups will also be listed in the component deployment drawers, allowing developers to easily link them during deployment.</li>
+</ul>
+</div>
+<h2 id="link-and-use-configuration-groups">Link and use configuration groups<a class="headerlink" href="#link-and-use-configuration-groups" title="Permanent link">&para;</a></h2>
+<p>The configuration groups created at organization level can be linked to any component within the organization. A configuration group can be linked as <strong>Environment Variables</strong> or <strong>File Mounts</strong> at deployment time.</p>
+<p>Linking a configuration group will inject the values defined in the group during deployment. The values are mapped to environment variable names or file names based on the keys defined in the configuration group. If needed, you can customize the environment variable name or file name by updating the mapping at deployment.</p>
+<p>To link a configuration group to a component, follow the steps given below:</p>
+<ol>
+<li>Navigate to the component you want to link the configuration group using top navigation menu.</li>
+<li>On the left navigation menu, click <strong>DevOps</strong> and click <strong>CD Pipelines</strong>. </li>
+<li>Click <strong>Configure &amp; Deploy</strong>, this will open the configuration and deployment wizard.</li>
+<li>
+<p>In the wizard, link the configuration groups as <strong>Environment Variables</strong> or <strong>File Mounts</strong>, based on your requirements.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Environment Variables</label><label for="__tabbed_1_2">File Mounts</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ul>
+<li>Choose the configuration group you want to link to the component.</li>
+<li>Click <strong>Link</strong> to link the configuration group to the component.</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<ul>
+<li>Choose the configuration group you want to link to the component.</li>
+<li>
+<p>Specify the <strong>Mount Path</strong> to mount the configuration files.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All configurations within the selected configuration group will be mounted as individual files to the specified mount path/directory.</p>
+</div>
+</li>
+<li>
+<p>Click <strong>Link</strong> to link the configuration group to the component.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Complete the deployment wizard by providing the required details and click <strong>Deploy</strong> to deploy the component with the updated configurations.</p>
+</li>
+</ol>
+<h2 id="view-edit-a-configuration-group">View &amp; edit a configuration group<a class="headerlink" href="#view-edit-a-configuration-group" title="Permanent link">&para;</a></h2>
+<p>To view &amp; edit a configuration group, follow the steps given below:</p>
+<ol>
+<li>In the <a href="https://console.choreo.dev/">Choreo Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>. </li>
+<li>
+<p>In the <strong>Configuration Groups</strong> list, select the desired configuration group to view.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>Only non-sensitive configuration values are displayed in the view mode.</li>
+<li>Updating the configuration group will not affect the current deployment; changes will be applied when the component is redeployed.</li>
+</ul>
+</div>
+</li>
+</ol>
+<h3 id="edit-the-configuration-group">Edit the configuration group<a class="headerlink" href="#edit-the-configuration-group" title="Permanent link">&para;</a></h3>
+<p>Configuration keys and values within a configuration group can be modified, and these changes will take effect when the components using the configuration group are redeployed.</p>
+<p>To edit the configuration group definition, click <strong>Edit the Configuration Group</strong> and make the necessary updates:</p>
+<ul>
+<li>Add or remove configuration keys.</li>
+<li>Update the configuration group's display name and description.</li>
+</ul>
+<p>To edit the configuration values, click the edit icon in the corresponding set of environments and modify the required details:</p>
+<ul>
+<li>Update configuration values.</li>
+<li>Add a new set of configuration values.</li>
+<li>Add or remove environments from an existing set.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul>
+<li><strong>Adding a new environment:</strong> Non-sensitive configuration values will be copied to the new environment, but sensitive values will not be. As a result, sensitive values will be cleared across all environments in the set. <strong>New values must be provided for sensitive configurations.</strong></li>
+<li><strong>Removing an environment:</strong> All configuration values for the removed environment will be deleted.</li>
+</ul>
+</div>
+<h2 id="delete-a-configuration-group">Delete a configuration group<a class="headerlink" href="#delete-a-configuration-group" title="Permanent link">&para;</a></h2>
+<p>To delete a configuration group, follow the steps given below:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Deleting a configuration group is a permanent, non-reversible action. Ensure that the configuration group is not linked to any component before deleting it.</p>
+</div>
+<ol>
+<li>In the <a href="https://console.choreo.dev/">Choreo Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>. </li>
+<li>In the <strong>Configuration Groups</strong> list, click the delete icon next to the configuration group you want to delete. This will display a confirmation dialog with details about the impact of the deletion.</li>
+<li>Review the details, then type the configuration group name to confirm the deletion.</li>
+<li>Click <strong>Delete</strong>.</li>
+</ol>
 
 
 
@@ -2986,7 +3149,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../what-is-choreo/" class="md-footer__link md-footer__link--prev" aria-label="Previous: What is Choreo?" rel="prev">
+          <a href="../cd-pipelines/manage-continuous-deployment-pipelines/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Manage CD Pipelines" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -2995,20 +3158,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                What is Choreo?
+                Manage CD Pipelines
               </div>
             </div>
           </a>
         
         
           
-          <a href="../organization/" class="md-footer__link md-footer__link--next" aria-label="Next: Organization" rel="next">
+          <a href="../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-footer__link md-footer__link--next" aria-label="Next: Configure Approvals for Choreo Workflows" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                Organization
+                Configure Approvals for Choreo Workflows
               </div>
             </div>
             <div class="md-footer__button md-icon">
