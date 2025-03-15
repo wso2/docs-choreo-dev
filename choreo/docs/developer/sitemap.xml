@@ -611,6 +611,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://wso2.com/choreo/docs/monitoring-and-insights/alerts-overview/</loc>
+         <lastmod>2025-03-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://wso2.com/choreo/docs/monitoring-and-insights/generate-custom-reports/</loc>
          <lastmod>2025-03-15</lastmod>
          <changefreq>daily</changefreq>
@@ -632,11 +637,6 @@
     </url>
     <url>
          <loc>https://wso2.com/choreo/docs/monitoring-and-insights/view-logs/</loc>
-         <lastmod>2025-03-15</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://wso2.com/choreo/docs/monitoring-and-insights/alerts/configure-alerts/</loc>
          <lastmod>2025-03-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
