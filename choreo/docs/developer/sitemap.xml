@@ -271,7 +271,12 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wso2.com/choreo/docs/consuming-services/consuming-a-sevice/</loc>
+         <loc>https://wso2.com/choreo/docs/consuming-services/consume-an-api-key-secured-service/</loc>
+         <lastmod>2025-03-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wso2.com/choreo/docs/consuming-services/consume-an-oauth2-secured-service/</loc>
          <lastmod>2025-03-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -286,7 +291,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://wso2.com/choreo/docs/consuming-services/discovering-an-api-devportal/</loc>
+         <lastmod>2025-03-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://wso2.com/choreo/docs/consuming-services/generate-an-access-token/</loc>
+         <lastmod>2025-03-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wso2.com/choreo/docs/consuming-services/manage-api-keys/</loc>
          <lastmod>2025-03-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -727,6 +742,11 @@
     </url>
     <url>
          <loc>https://wso2.com/choreo/docs/testing/test-websocket-endpoints-via-the-websocket-console/</loc>
+         <lastmod>2025-03-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wso2.com/choreo/docs/tutorials/consume-an-api-hosted-in-choreo/</loc>
          <lastmod>2025-03-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
