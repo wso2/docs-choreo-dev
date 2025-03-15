@@ -19,6 +19,7 @@ site_name: ""
 site_description: Choreo Learning Portal
 site_author: WSO2
 site_url: https://wso2.com/choreo/docs
+site_dir: site/developer
 
 # Perspective dropdown configurations
 show_perspective_dropdown: true
@@ -92,6 +93,7 @@ nav:
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
+      - Consume an API hosted in Choreo: tutorials/consume-an-api-hosted-in-choreo.md
   - Choreo Concepts:
       - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
       - Organization: choreo-concepts/organization.md
@@ -178,6 +180,7 @@ nav:
           - Autoscale Components with Scale-to-Zero: devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero.md
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
+      - Manage Configuration Groups: devops-and-ci-cd/manage-configuration-groups.md
       - Manage Continuous Deployment Pipelines: devops-and-ci-cd/manage-continuous-deployment-pipelines.md
       - Configure VPNs on the Choreo Cloud Data Plane: devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane.md
   - Testing:
@@ -188,7 +191,9 @@ nav:
       - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
       - Test Components with Test Runner: testing/test-components-with-test-runner.md
   - Consuming Services:
-      - Consume a Service: consuming-services/consuming-a-sevice.md
+      - Consume a Service: 
+          - Consume a service secured with API key: consuming-services/consume-an-api-key-secured-service.md
+          - Consume a service secured with OAuth2: consuming-services/consume-an-oauth2-secured-service.md
       - Manage Application: consuming-services/manage-application.md
       - Share Applications: consuming-services/share-applications.md
       - Manage Subscription: consuming-services/manage-subscription.md
@@ -208,12 +213,12 @@ nav:
       - Rename API Display Name: api-management/rename-api-display-name.md
   - Monitoring and Insights:
       - Observability Overview: monitoring-and-insights/observability-overview.md
+      - Alert Overview: monitoring-and-insights/alerts-overview.md
       - Delivery Insights:
           - Configure DORA Metrics: monitoring-and-insights/delivery-insights/configure-dora-metrics.md
           - View DORA Metrics: monitoring-and-insights/delivery-insights/view-dora-metrics.md
       - Usage Insights:
           - Insights Overview: monitoring-and-insights/insights-overview.md
-          - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
           - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
       - View Logs: monitoring-and-insights/view-logs.md
       - Work with the Choreo Insights API:
@@ -422,6 +427,7 @@ plugins:
         "api-management/api-policies.md": "https://wso2.com/choreo/docs/api-management/api-policies/about-api-policies/"
         "develop-components/develop-services/expose-a-websocket-endpoint-via-a-nodejs-service.md": "https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-websocket-endpoint-via-a-service/"
         "manage-databases-and-caches/billing-for-platform-services.md": "https://wso2.com/choreo/docs/references/choreo-platform-services-billing-and-upgrades/"
+        "consuming-services/consuming-a-sevice-oauth2.md": "https://wso2.com/choreo/docs/consuming-services/consuming-a-sevice/"
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css
