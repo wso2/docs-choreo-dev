@@ -7,7 +7,6 @@ The Choreo cost optimization feature provides detailed cost insights across your
 All metrics, visualizations, and analytics displayed across the Organization, Project, and Component levels reflect data for the current month, from the first day up to the current date. This provides you with up-to-date insights into your resource utilization and cost efficiency.
 Monthly figures show the accumulated data for the current month so far, while comparisons to previous month are also available in some metrics. This approach gives you both immediate visibility into current spending patterns and understanding the trend compared to last month for optimization decisions.
 
-
 You can use this information to track ongoing cost optimization efforts and make timely adjustments to your resource allocations within the current billing cycle.
 
 ## Organization Level
