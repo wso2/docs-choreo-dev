@@ -213,12 +213,12 @@ nav:
       - Rename API Display Name: api-management/rename-api-display-name.md
   - Monitoring and Insights:
       - Observability Overview: monitoring-and-insights/observability-overview.md
+      - Alert Overview: monitoring-and-insights/alerts-overview.md
       - Delivery Insights:
           - Configure DORA Metrics: monitoring-and-insights/delivery-insights/configure-dora-metrics.md
           - View DORA Metrics: monitoring-and-insights/delivery-insights/view-dora-metrics.md
       - Usage Insights:
           - Insights Overview: monitoring-and-insights/insights-overview.md
-          - Configure Alerts: monitoring-and-insights/alerts/configure-alerts.md
           - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
       - View Logs: monitoring-and-insights/view-logs.md
       - Work with the Choreo Insights API:
