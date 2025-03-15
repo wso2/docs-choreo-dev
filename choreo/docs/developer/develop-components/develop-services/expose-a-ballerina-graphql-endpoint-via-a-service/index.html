@@ -4099,6 +4099,51 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
 <li>Click the <strong>Service</strong> card.</li>
 <li>
+<p>To allow Choreo to connect to your GitHub account, click <strong>Authorize with GitHub</strong>. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
+<p>Alternatively, select the <strong>Use Public GitHub Repository</strong> option and paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field to connect to it without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. However, authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a> is necessary if you want to enable <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> for the component.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <strong>Choreo GitHub App</strong> requires the following permissions:</p>
+<ul>
+<li>Read and write access to code and pull requests.</li>
+<li>Read access to issues and metadata.</li>
+</ul>
+<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.</p>
+</div>
+</li>
+<li>
+<p>Under <strong>Connect a Git Repository</strong>, enter the following information:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Organization</strong></td>
+<td>Your GitHub account</td>
+</tr>
+<tr>
+<td><strong>GitHub Repository</strong></td>
+<td><strong><code>choreo-samples</code></strong></td>
+</tr>
+<tr>
+<td><strong>Branch</strong></td>
+<td><strong><code>main</code></strong></td>
+</tr>
+<tr>
+<td><strong>Component Directory</strong></td>
+<td><code>reading-list-graphql</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Select <strong>Ballerina</strong> as the buildpack.</p>
+</li>
+<li>
 <p>Enter a display name, a unique name, and a description for the service component. You can enter the values given below:</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
@@ -4123,67 +4168,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <tr>
 <td><strong>Description</strong></td>
 <td>Manage a reading list</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Click the <strong>GitHub</strong> tab.</p>
-</li>
-<li>
-<p>To allow Choreo to connect to your GitHub account, click <strong>Authorize with GitHub</strong>. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
-<p>Alternatively, you can paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field to connect to it without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. However, authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a> is necessary if you want to enable <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> for the component.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <strong>Choreo GitHub App</strong> requires the following permissions:</p>
-<ul>
-<li>Read and write access to code and pull requests.</li>
-<li>Read access to issues and metadata.</li>
-</ul>
-<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.</p>
-</div>
-</li>
-<li>
-<p>Under <strong>Connect Your Repository</strong>, enter the following information:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Organization</strong></td>
-<td>Your GitHub account</td>
-</tr>
-<tr>
-<td><strong>GitHub Repository</strong></td>
-<td><strong><code>choreo-samples</code></strong></td>
-</tr>
-<tr>
-<td><strong>Branch</strong></td>
-<td><strong><code>main</code></strong></td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Select <strong>Ballerina</strong> as the buildpack.</p>
-</li>
-<li>
-<p>Enter the following information:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Ballerina Project Directory</strong></td>
-<td><code>reading-list-graphql</code></td>
 </tr>
 </tbody>
 </table>

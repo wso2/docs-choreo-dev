@@ -3949,10 +3949,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <h1 id="develop-a-ballerina-service">Develop a Ballerina Service<a class="headerlink" href="#develop-a-ballerina-service" title="Permanent link">&para;</a></h1>
 <p>Choreo allows you to develop and deploy applications using your preferred programming language. This guide demonstrates how to deploy a service component that exposes a REST API using the <a href="https://ballerina.io/">Ballerina language</a>. No prior knowledge of Ballerina is required to follow this guide.</p>
 <p>A REST API is a web service that adheres to Representational State Transfer (REST) principles, using HTTP methods to access and manage resources. This guide walks you through building a Ballerina service component, deploying it on Choreo, and testing it with an HTTP client application.</p>
-<p>In this guide, you will:
-- Build a simple greeting service using a sample implementation. The service has a single resource named <code>greet</code> that accepts a query parameter as input.
-- Deploy the service in Choreo.
-- Test the service.</p>
+<p>In this guide, you will:</p>
+<ul>
+<li>Build a simple greeting service using a sample implementation. The service has a single resource named <code>greet</code> that accepts a query parameter as input.</li>
+<li>Deploy the service in Choreo.</li>
+<li>Test the service.</li>
+</ul>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
@@ -4004,39 +4006,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
 <li>Click the <strong>Service</strong> card.</li>
 <li>
-<p>Provide a display name, a unique name, and a description for the service component:</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>The <strong>Component Name</strong> field specifies a unique identifier for the component. This name cannot be changed after creation.</p>
-</div>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Component Display Name</strong></td>
-<td><code>Ballerina Greetings</code></td>
-</tr>
-<tr>
-<td><strong>Component Name</strong></td>
-<td><code>ballerina-greetings</code></td>
-</tr>
-<tr>
-<td><strong>Description</strong></td>
-<td>Send greetings</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Connect to GitHub:</p>
-</li>
-<li>Go to the <strong>GitHub</strong> tab.</li>
-<li>
 <p>Click <strong>Authorize with GitHub</strong> to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -4068,6 +4037,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <td><strong>Branch</strong></td>
 <td><strong><code>main</code></strong></td>
 </tr>
+<tr>
+<td><strong>Component Directory</strong></td>
+<td><code>/greeting-service</code></td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -4075,7 +4048,33 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>Select <strong>Ballerina</strong> as the buildpack.</p>
 </li>
 <li>
-<p>In the <strong>Ballerina Project Directory</strong>, specify <code>/greeting-service</code>.</p>
+<p>Provide a display name, a unique name, and a description for the service component:</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The <strong>Component Name</strong> field specifies a unique identifier for the component. This name cannot be changed after creation.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Component Display Name</strong></td>
+<td><code>Ballerina Greetings</code></td>
+</tr>
+<tr>
+<td><strong>Component Name</strong></td>
+<td><code>ballerina-greetings</code></td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Send greetings</td>
+</tr>
+</tbody>
+</table>
 </li>
 <li>
 <p>Click <strong>Create</strong>. This creates the component and takes you to the <strong>Overview</strong> page.</p>

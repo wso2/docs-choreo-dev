@@ -3947,16 +3947,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
 <li>Click the <strong>Service</strong> card.</li>
 <li>
-<p>Enter a display name, a unique name, and a description for the service component.</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>In the <strong>Component Name</strong> field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.</p>
-</div>
-</li>
-<li>
-<p>Click the <strong>GitHub</strong> tab.</p>
-</li>
-<li>
 <p>To allow Choreo to connect to your GitHub account, click <strong>Authorize with GitHub</strong>. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
 <p>Alternatively, you can paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field to connect to it without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. However, authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a> is necessary if you want to enable <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> for the component.</p>
 <div class="admonition note">
@@ -3970,7 +3960,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </li>
 <li>
-<p>Under <strong>Connect Your Repository</strong>, enter the following information:</p>
+<p>Under <strong>Connect a Git Repository</strong>, enter the following information:</p>
 <table>
 <thead>
 <tr>
@@ -3991,14 +3981,26 @@ document.addEventListener('DOMContentLoaded', function() {
 <td><strong>Branch</strong></td>
 <td><strong><code>main</code></strong></td>
 </tr>
+<tr>
+<td><strong>Component Directory</strong></td>
+<td><code>prism-mock-service</code></td>
+</tr>
 </tbody>
 </table>
 </li>
 <li>
 <p>Select <strong>Prism Mock</strong> as the buildpack.</p>
 </li>
-<li>Select <code>prism-mock-service</code> as the <strong>Project Directory</strong>.</li>
-<li>Click <strong>Create</strong>. This creates the component and takes you to the <strong>Overview</strong> page of the component.</li>
+<li>
+<p>Enter a display name, a unique name, and a description for the service component.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>In the <strong>Component Name</strong> field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.</p>
+</div>
+</li>
+<li>
+<p>Click <strong>Create</strong>. This creates the component and takes you to the <strong>Overview</strong> page of the component.</p>
+</li>
 </ol>
 <h2 id="step-2-build-and-deploy-the-component">Step 2: Build and deploy the component<a class="headerlink" href="#step-2-build-and-deploy-the-component" title="Permanent link">&para;</a></h2>
 <p>Now that you have successfully created the Prism mock service, it's time to build and deploy it.</p>

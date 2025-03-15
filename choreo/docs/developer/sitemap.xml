@@ -281,6 +281,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://wso2.com/choreo/docs/consuming-services/consuming-a-service-apikey/</loc>
+         <lastmod>2025-03-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://wso2.com/choreo/docs/consuming-services/create-a-subscription/</loc>
          <lastmod>2025-03-15</lastmod>
          <changefreq>daily</changefreq>

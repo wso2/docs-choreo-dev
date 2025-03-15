@@ -4242,45 +4242,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>On the project home page, click <strong>+ Create</strong> under <strong>Component Listing</strong>.</li>
 <li>Click the <strong>Web Application</strong> card.</li>
 <li>
-<p>Enter the following details:</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>The <strong>Component Name</strong> field must be unique and cannot be changed after creation.</p>
-</div>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Component Display Name</strong></td>
-<td>Reading List Web App</td>
-</tr>
-<tr>
-<td><strong>Component Name</strong></td>
-<td>reading-list-web-app</td>
-</tr>
-<tr>
-<td><strong>Description</strong></td>
-<td>Front-end application for the reading list service</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Go to the <strong>GitHub</strong> tab.</p>
-</li>
-<li>
 <p>Click <strong>Authorize with GitHub</strong> to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
-<p>Alternatively, paste the <a href="https://github.com/wso2/choreo-sample-book-list-service">Choreo sample Book List Service repository</a> URL in the <strong>Provide Repository URL</strong> field. However, enabling <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> requires authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
+<p>Alternatively, select the <strong>Use Public GitHub Repository</strong> option and paste the <a href="https://github.com/wso2/choreo-sample-book-list-service">Choreo sample Book List Service repository</a> URL in the <strong>Provide Repository URL</strong> field. However, enabling <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> requires authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <strong>Choreo GitHub App</strong> requires:
-- Read and write access to code and pull requests.
-- Read access to issues and metadata.</p>
+<p>The <strong>Choreo GitHub App</strong> requires:</p>
+<ul>
+<li>Read and write access to code and pull requests.</li>
+<li>Read access to issues and metadata.</li>
+</ul>
 <p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.</p>
 </div>
 </li>
@@ -4306,6 +4276,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <td><strong>Branch</strong></td>
 <td>main</td>
 </tr>
+<tr>
+<td><strong>Component Directory</strong></td>
+<td>/choreo-sample-book-list-app/reading-list-front-end-with-managed-auth</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -4323,10 +4297,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </thead>
 <tbody>
 <tr>
-<td><strong>Project Directory</strong></td>
-<td>/choreo-sample-book-list-app/reading-list-front-end-with-managed-auth</td>
-</tr>
-<tr>
 <td><strong>Build Command</strong></td>
 <td>npm install &amp;&amp; npm run build</td>
 </tr>
@@ -4337,6 +4307,35 @@ document.addEventListener('DOMContentLoaded', function() {
 <tr>
 <td><strong>Node Version</strong></td>
 <td>18</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Enter the following details:</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The <strong>Component Name</strong> field must be unique and cannot be changed after creation.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Component Display Name</strong></td>
+<td>Reading List Web App</td>
+</tr>
+<tr>
+<td><strong>Component Name</strong></td>
+<td>reading-list-web-app</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Front-end application for the reading list service</td>
 </tr>
 </tbody>
 </table>

@@ -3948,10 +3948,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h1 id="develop-a-service-with-docker">Develop a Service with Docker<a class="headerlink" href="#develop-a-service-with-docker" title="Permanent link">&para;</a></h1>
 <p>Choreo allows you to create and deploy applications in any language. This guide demonstrates how to develop and deploy a containerized service component using a Dockerfile.</p>
-<p>In this guide, you will:
-- Create a containerized service component using a sample service implementation. The sample service has a single resource named <code>greet</code> that accepts a query parameter as input.
-- Deploy the service in Choreo using a Dockerfile. The service will run on port 9090.
-- Test the service.</p>
+<p>In this guide, you will:</p>
+<ul>
+<li>Create a containerized service component using a sample service implementation. The sample service has a single resource named <code>greet</code> that accepts a query parameter as input.</li>
+<li>Deploy the service in Choreo using a Dockerfile. The service will run on port 9090.</li>
+<li>Test the service.</li>
+</ul>
 <p>If you want to create a service component that exposes a Ballerina service, see <a href="../develop-a-ballerina-service/">Develop a Ballerina Service</a>.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ol>
@@ -4010,39 +4012,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
 <li>Click the <strong>Service</strong> card.</li>
 <li>
-<p>Provide a display name, a unique name, and a description for the service component:</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>The <strong>Component Name</strong> field specifies a unique identifier for the component. This name cannot be changed after creation.</p>
-</div>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Component Display Name</strong></td>
-<td><code>Greetings</code></td>
-</tr>
-<tr>
-<td><strong>Component Name</strong></td>
-<td><code>greetings</code></td>
-</tr>
-<tr>
-<td><strong>Description</strong></td>
-<td>Send greetings</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Go to the <strong>GitHub</strong> tab.</p>
-<ul>
-<li>Click <strong>Authorize with GitHub</strong> to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</li>
-</ul>
+<p>Click <strong>Authorize with GitHub</strong> to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <strong>Choreo GitHub App</strong> requires the following permissions:
@@ -4071,7 +4041,11 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 <tr>
 <td><strong>Branch</strong></td>
-<td><strong><code>main</code></strong></td>
+<td><code>main</code></td>
+</tr>
+<tr>
+<td><strong>Component Directory</strong></td>
+<td><code>/greeting-service-go</code></td>
 </tr>
 </tbody>
 </table>
@@ -4089,10 +4063,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><strong>Docker Context</strong></td>
-<td><code>/greeting-service-go</code></td>
-</tr>
 <tr>
 <td><strong>Dockerfile</strong></td>
 <td><code>/greeting-service-go/Dockerfile</code></td>
@@ -4112,6 +4082,35 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 </ol>
 </div>
+</li>
+<li>
+<p>Provide a display name, a unique name, and a description for the service component:</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The <strong>Component Name</strong> field specifies a unique identifier for the component. This name cannot be changed after creation.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Component Display Name</strong></td>
+<td><code>Greetings</code></td>
+</tr>
+<tr>
+<td><strong>Component Name</strong></td>
+<td><code>greetings</code></td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Send greetings</td>
+</tr>
+</tbody>
+</table>
 </li>
 <li>
 <p>Click <strong>Create</strong>. This creates the component and takes you to the <strong>Overview</strong> page.</p>

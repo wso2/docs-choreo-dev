@@ -4056,32 +4056,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <ol>
 <li>On the project home page, click <strong>Service</strong> under <strong>Create a Component</strong>.</li>
 <li>
-<p>Enter the following details:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Component Display Name</strong></td>
-<td>Book List</td>
-</tr>
-<tr>
-<td><strong>Description</strong></td>
-<td>Gets the book list</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Go to the <strong>GitHub</strong> tab.</p>
-</li>
-<li>
 <p>Click <strong>Authorize with GitHub</strong> to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
-<p>Alternatively, paste the <a href="https://github.com/wso2/choreo-sample-book-list-service">Choreo sample Book List Service repository</a> URL in the <strong>Provide Repository URL</strong> field. However, enabling <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> requires authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
+<p>Alternatively, select the <strong>Use Public GitHub Repository</strong> option and paste the <a href="https://github.com/wso2/choreo-sample-book-list-service">Choreo sample Book List Service repository</a> URL in the <strong>Provide Repository URL</strong> field. However, enabling <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> requires authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <strong>Choreo GitHub App</strong> requires:
@@ -4112,6 +4088,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <td><strong>Branch</strong></td>
 <td>main</td>
 </tr>
+<tr>
+<td><strong>Component Directory</strong></td>
+<td>/</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -4129,12 +4109,29 @@ document.addEventListener('DOMContentLoaded', function() {
 </thead>
 <tbody>
 <tr>
-<td><strong>NodeJS Project Directory</strong></td>
-<td>/</td>
-</tr>
-<tr>
 <td><strong>Language Version</strong></td>
 <td>20.x.x</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Enter the following details for Display name and Description:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Component Display Name</strong></td>
+<td>Book List</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Gets the book list</td>
 </tr>
 </tbody>
 </table>

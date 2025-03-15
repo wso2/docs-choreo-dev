@@ -3956,13 +3956,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="admonition-title">Note</p>
 <p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.</p>
 </div>
-<p>Alternatively, you can connect a public repository without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. You can paste a public repository URL in the <strong>Provide Repository URL</strong> field at the time of component creation.</p>
+<p>Alternatively, you can connect a public repository without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. Select the <strong>Third-Party GitHub Repository</strong> and paste a public repository URL in the <strong>Public Repository URL</strong> field at the time of component creation.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application becomes essential if you want to enable <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> for the component. If you own the repository, you can subsequently authorize it with the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application to enable <strong>Auto Deploy</strong>.</p>
 </div>
 <p>After granting access to the required repositories, you can choose a repository and an associated branch to connect to the Choreo component.
-For the containerized application deployments, you should select the <strong>Dockerfile</strong> as the <strong>Buildpack</strong> and provide <strong>Dockerfile Path</strong> and <a href="https://docs.docker.com/build/building/context/#path-context"><strong>Docker Context Path</strong></a> for the Docker build.</p>
+For the containerized application deployments, you should select the <a href="https://docs.docker.com/build/building/context/#path-context"><strong>Component Directory</strong></a>, <strong>Dockerfile</strong> as the <strong>Buildpack</strong> and provide <strong>Dockerfile Path</strong> for the Docker build.</p>
 <p><a class="glightbox" href="../../assets/img/develop-components/deploy/create-component-connected-repo.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Connected Dockerfile Repository" class="cInlineImage-full" src="../../assets/img/develop-components/deploy/create-component-connected-repo.png" /></a></p>
 <p>The following table describes the individual fields in the <strong>Create Component</strong> pane.</p>
 <table>
@@ -3994,8 +3994,8 @@ For the containerized application deployments, you should select the <strong>Doc
 <td>The path to your Dockerfile. This path is defined relative to the repository root.<br/>For example, if the Dockerfile is at the repository root, the value for this field is <code>/Dockerfile</code>.</td>
 </tr>
 <tr>
-<td><strong>Docker Context Path</strong></td>
-<td>The Docker build context path. To include the repository root, leave the default <code>/</code> value.</td>
+<td><strong>Component Directory</strong></td>
+<td>The component directory path. To include the repository root, leave the default <code>/</code> value.</td>
 </tr>
 <tr>
 <td><strong>Port*</strong></td>

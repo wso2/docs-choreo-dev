@@ -4086,7 +4086,7 @@ For example, <code>&lt;docker-context-path&gt;/.choreo/component.yaml</code>.</l
 <a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w">        </span><span class="c1"># +required service identifer of the dependent component.</span>
 <a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w">        </span><span class="nt">resourceRef</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">service:/HRProject/UserComponent/v1/ad088/PUBLIC</span>
 <a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w">  </span><span class="c1"># +optional Defines runtime configurations</span>
-<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w">  </span><span class="nt">configuration</span><span class="p">:</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w">  </span><span class="nt">configurations</span><span class="p">:</span>
 <a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="w">    </span><span class="c1"># +optional List of environment variables to be injected into the component.</span>
 <a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
 <a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="w">      </span><span class="c1"># +required Name of the environment variable</span>
@@ -4129,7 +4129,7 @@ For example, <code>&lt;docker-context-path&gt;/.choreo/component.yaml</code>.</l
 <td>The list of dependency configurations.</td>
 </tr>
 <tr>
-<td><strong>configuration</strong></td>
+<td><strong>configurations</strong></td>
 <td>Optional</td>
 <td>The runtime configuration definitions.</td>
 </tr>
@@ -4222,7 +4222,7 @@ For example, <code>&lt;docker-context-path&gt;/.choreo/component.yaml</code>.</l
 <p>To use custom environment variable names instead of Choreo's default ones, add the dependency as a <code>serviceReference</code> in your <code>component.yaml v1.1</code> file. You can copy the <code>serviceReference</code> section from the <code>component.yaml v1.0</code> tab and paste it under <code>dependencies</code> in your <code>component.yaml v1.1</code> file, which maintains backward compatibility with the v1.0 format.</p>
 </div>
 <h3 id="runtime-configurations">Runtime configurations<a class="headerlink" href="#runtime-configurations" title="Permanent link">&para;</a></h3>
-<p>In the <code>configuration</code> section of the <code>component.yaml</code> file, you can define runtime configurations for the component. These configurations currently support environment variable injection related to dependencies.</p>
+<p>In the <code>configurations</code> section of the <code>component.yaml</code> file, you can define runtime configurations for the component. These configurations currently support environment variable injection related to dependencies.</p>
 <table>
 <thead>
 <tr>
@@ -4267,7 +4267,7 @@ For example, <code>&lt;docker-context-path&gt;/.choreo/component.yaml</code>.</l
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Runtime configurations are supported starting from <code>component.yaml v1.1</code>.</p>
-<p>When an environment variable value is specified using <code>connectionRef</code>, the connection's environment variable is renamed to the environment variable name defined in the <code>configuration</code> section. For example, in the sample <code>component.yaml</code> file given above, the <code>CHOREO_HR_CONNECTION_SERVICEURL</code> variable in the <code>hr-connection</code> is renamed to <code>HR_SERVICE_URL</code>.</p>
+<p>When an environment variable value is specified using <code>connectionRef</code>, the connection's environment variable is renamed to the environment variable name defined in the <code>configurations</code> section. For example, in the sample <code>component.yaml</code> file given above, the <code>CHOREO_HR_CONNECTION_SERVICEURL</code> variable in the <code>hr-connection</code> is renamed to <code>HR_SERVICE_URL</code>.</p>
 </div>
 </div>
 <div class="tabbed-block">

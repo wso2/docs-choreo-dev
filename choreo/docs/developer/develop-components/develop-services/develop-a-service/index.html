@@ -4008,7 +4008,67 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
 <li>Click the <strong>Service</strong> card.</li>
 <li>
+<p>Click <strong>Authorize with GitHub</strong> to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
+<p>Alternatively, select the <strong>Use Public GitHub Repository</strong> option and paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Public Repository URL</strong> field. However, enabling <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> requires authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <strong>Choreo GitHub App</strong> requires:
+- Read and write access to code and pull requests.
+- Read access to issues and metadata.</p>
+<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.</p>
+</div>
+</li>
+<li>
+<p>Under <strong>Connect a Git Repository</strong>, enter the following details:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Organization</strong></td>
+<td>Your GitHub account</td>
+</tr>
+<tr>
+<td><strong>GitHub Repository</strong></td>
+<td>choreo-samples</td>
+</tr>
+<tr>
+<td><strong>Branch</strong></td>
+<td>main</td>
+</tr>
+<tr>
+<td><strong>Component Directory</strong></td>
+<td><code>/greeting-service-go</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Select <strong>Go</strong> as the buildpack.</p>
+</li>
+<li>
 <p>Enter the following details:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Language Version</strong></td>
+<td>1.x</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Provide component display name, name and description:</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>The <strong>Component Name</strong> field must be unique and cannot be changed after creation.</p>
@@ -4032,69 +4092,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <tr>
 <td><strong>Description</strong></td>
 <td>Send greetings</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Go to the <strong>GitHub</strong> tab.</p>
-</li>
-<li>
-<p>Click <strong>Authorize with GitHub</strong> to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
-<p>Alternatively, paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field. However, enabling <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> requires authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <strong>Choreo GitHub App</strong> requires:
-- Read and write access to code and pull requests.
-- Read access to issues and metadata.</p>
-<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.</p>
-</div>
-</li>
-<li>
-<p>Under <strong>Connect Your Repository</strong>, enter the following details:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Organization</strong></td>
-<td>Your GitHub account</td>
-</tr>
-<tr>
-<td><strong>GitHub Repository</strong></td>
-<td>choreo-samples</td>
-</tr>
-<tr>
-<td><strong>Branch</strong></td>
-<td>main</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Select <strong>Go</strong> as the buildpack.</p>
-</li>
-<li>
-<p>Enter the following details:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Go Project Directory</strong></td>
-<td><code>/greeting-service-go</code></td>
-</tr>
-<tr>
-<td><strong>Language Version</strong></td>
-<td>1.x</td>
 </tr>
 </tbody>
 </table>

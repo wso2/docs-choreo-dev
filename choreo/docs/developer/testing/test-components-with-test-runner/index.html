@@ -3889,6 +3889,158 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Click <strong>+Create</strong> in the <strong>Component Listing</strong> section. </li>
 <li>Click the <strong>Test Runner</strong> card.</li>
 <li>
+<p>To allow Choreo to connect to your GitHub account, click <strong>Authorize with GitHub</strong>. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
+<p>Alternatively, select the <strong>Use Public GitHub Repository</strong> option and paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field to connect to it without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. However, authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a> is necessary if you want to enable <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> for the component.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <strong>Choreo GitHub App</strong> requires the following permissions:</p>
+<ul>
+<li>Read and write access to code and pull requests.</li>
+<li>Read access to issues and metadata.</li>
+</ul>
+<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.</p>
+</div>
+</li>
+<li>
+<p>Under <strong>Connect a Git Repository</strong>, enter the following information:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Organization</strong></td>
+<td>Your GitHub account</td>
+</tr>
+<tr>
+<td><strong>GitHub Repository</strong></td>
+<td>choreo-samples</td>
+</tr>
+<tr>
+<td><strong>Branch</strong></td>
+<td><strong><code>main</code></strong></td>
+</tr>
+<tr>
+<td><strong>Component Directory</strong></td>
+<td><code>/test-runner-go</code></td>
+</tr>
+</tbody>
+</table>
+<p>You also can select a different language:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Go</label><label for="__tabbed_1_2">JavaScript</label><label for="__tabbed_1_3">Python</label><label for="__tabbed_1_4">Java</label><label for="__tabbed_1_5">Dockerfile</label><label for="__tabbed_1_6">Postman</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Component Directory</td>
+<td>/test-runner-go</td>
+</tr>
+<tr>
+<td>Language Version</td>
+<td>1.x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Component Directory</td>
+<td>/test-runner-javascript</td>
+</tr>
+<tr>
+<td>Language Version</td>
+<td>18.x.x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Component Directory</td>
+<td>/test-runner-python</td>
+</tr>
+<tr>
+<td>Language Version</td>
+<td>3.10.x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Component Directory</td>
+<td>/test-runner-java</td>
+</tr>
+<tr>
+<td>Language Version</td>
+<td>17</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tabbed-block">
+<p>For programming languages that doesn't support buildpacks or for advanced use cases, you can define your own Dockerfile and run test workloads. Refer to <BYOC link> for more information.</p>
+</div>
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Component Directory</td>
+<td>/postman-collection-dir</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Under <strong>Buildpack</strong>, select a buildpack based on the language of your choice.</p>
+</li>
+<li>
+<p>Based on the buildpack you chose, go to the relevant tab above and enter the respective values for the <strong>Language version</strong> field</p>
+</li>
+<li>
 <p>Enter a display name, unique name, and description for the test runner component. For this guide, enter the following values:</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
@@ -3916,156 +4068,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 </tbody>
 </table>
-</li>
-<li>
-<p>Go to the <strong>GitHub</strong> tab.</p>
-</li>
-<li>
-<p>To allow Choreo to connect to your GitHub account, click <strong>Authorize with GitHub</strong>. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
-<p>Alternatively, you can paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field to connect to it without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. However, authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a> is necessary if you want to enable <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> for the component.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <strong>Choreo GitHub App</strong> requires the following permissions:</p>
-<ul>
-<li>Read and write access to code and pull requests.</li>
-<li>Read access to issues and metadata.</li>
-</ul>
-<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.</p>
-</div>
-</li>
-<li>
-<p>Under <strong>Connect Your Repository</strong>, enter the following information:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Organization</strong></td>
-<td>Your GitHub account</td>
-</tr>
-<tr>
-<td><strong>GitHub Repository</strong></td>
-<td>choreo-samples</td>
-</tr>
-<tr>
-<td><strong>Branch</strong></td>
-<td><strong><code>main</code></strong></td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Under <strong>Buildpack</strong>, select a buildpack based on the language of your choice.</p>
-</li>
-<li>
-<p>Based on the buildpack you chose, go to the relevant tab below and enter the respective values for the <strong>Project directory</strong> and <strong>Language version</strong> fields:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Go</label><label for="__tabbed_1_2">JavaScript</label><label for="__tabbed_1_3">Python</label><label for="__tabbed_1_4">Java</label><label for="__tabbed_1_5">Dockerfile</label><label for="__tabbed_1_6">Postman</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Go Project Directory</td>
-<td>/test-runner-go</td>
-</tr>
-<tr>
-<td>Language Version</td>
-<td>1.x</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="tabbed-block">
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Project Directory</td>
-<td>/test-runner-javascript</td>
-</tr>
-<tr>
-<td>Language Version</td>
-<td>18.x.x</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="tabbed-block">
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Project Directory</td>
-<td>/test-runner-python</td>
-</tr>
-<tr>
-<td>Language Version</td>
-<td>3.10.x</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="tabbed-block">
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Project Directory</td>
-<td>/test-runner-java</td>
-</tr>
-<tr>
-<td>Language Version</td>
-<td>17</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="tabbed-block">
-<p>For programming languages that doesn't support buildpacks or for advanced use cases, you can define your own Dockerfile and run test workloads. Refer to <BYOC link> for more information.</p>
-</div>
-<div class="tabbed-block">
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Postman Directory</td>
-<td>/postman-collection-dir</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
 </li>
 <li>
 <p>Click <strong>Create</strong>. </p>

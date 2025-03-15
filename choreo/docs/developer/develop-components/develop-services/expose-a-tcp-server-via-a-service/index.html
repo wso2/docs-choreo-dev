@@ -4113,6 +4113,84 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
 <li>Click the <strong>Service</strong> card.</li>
 <li>
+<p>To allow Choreo to connect to your GitHub account, click <strong>Authorize with GitHub</strong>. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
+<p>Alternatively, select the <strong>Use Public GitHub Repository</strong> option and paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field to connect to it without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. However, authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a> is necessary if you want to enable <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> for the component.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <strong>Choreo GitHub App</strong> requires the following permissions:</p>
+<ul>
+<li>Read and write access to code and pull requests.</li>
+<li>Read access to issues and metadata.</li>
+</ul>
+<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.</p>
+</div>
+</li>
+<li>
+<p>Under <strong>Connect a Git Repository</strong>, enter the following information:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Organization</strong></td>
+<td>Your GitHub account</td>
+</tr>
+<tr>
+<td><strong>GitHub Repository</strong></td>
+<td><strong><code>choreo-samples</code></strong></td>
+</tr>
+<tr>
+<td><strong>Branch</strong></td>
+<td><strong><code>main</code></strong></td>
+</tr>
+<tr>
+<td><strong>Component Directory</strong></td>
+<td><code>docker-tcp-service</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Select <strong>Docker</strong> as the buildpack.</p>
+</li>
+<li>
+<p>Enter the following information:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dockerfile</strong></td>
+<td><code>docker-tcp-service/Dockerfile.server</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<ol>
+<li>
+<p>To successfully build your container with Choreo, it is essential to explicitly define a User ID (UID) under the USER instruction in your Dockerfile. For reference, see the <a href="https://github.com/wso2/choreo-samples/blob/main/docker-tcp-service/Dockerfile.server">sample Dockerfile</a>.
+To ensure that the defined USER instruction is valid, it must conform to the following conditions:</p>
+<ul>
+<li>A valid User ID is a numeric value between 10000-20000, such as <code>10001</code> or <code>10500</code>.</li>
+<li>Usernames are considered invalid and should not be used. For example, <code>my-custom-user-12221</code> or <code>my-custom-user</code> are invalid User IDs.</li>
+</ul>
+</li>
+<li>
+<p>The Dockerfile utilized in this guide is a multi-stage Dockerfile, which is designed to keep the final image size small and provides the ability to build the application with a specific version of tools and libraries.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
 <p>Enter a display name, a unique name, and a description for the service component. You can enter the values given below:</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
@@ -4140,87 +4218,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 </tbody>
 </table>
-</li>
-<li>
-<p>Click the <strong>GitHub</strong> tab.</p>
-</li>
-<li>
-<p>To allow Choreo to connect to your GitHub account, click <strong>Authorize with GitHub</strong>. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
-<p>Alternatively, you can paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field to connect to it without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. However, authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a> is necessary if you want to enable <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> for the component.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <strong>Choreo GitHub App</strong> requires the following permissions:</p>
-<ul>
-<li>Read and write access to code and pull requests.</li>
-<li>Read access to issues and metadata.</li>
-</ul>
-<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.</p>
-</div>
-</li>
-<li>
-<p>Under <strong>Connect Your Repository</strong>, enter the following information:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Organization</strong></td>
-<td>Your GitHub account</td>
-</tr>
-<tr>
-<td><strong>GitHub Repository</strong></td>
-<td><strong><code>choreo-samples</code></strong></td>
-</tr>
-<tr>
-<td><strong>Branch</strong></td>
-<td><strong><code>main</code></strong></td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Select <strong>Docker</strong> as the buildpack.</p>
-</li>
-<li>
-<p>Enter the following information:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Docker Context</strong></td>
-<td><code>docker-tcp-service</code></td>
-</tr>
-<tr>
-<td><strong>Dockerfile</strong></td>
-<td><code>docker-tcp-service/Dockerfile.server</code></td>
-</tr>
-</tbody>
-</table>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<ol>
-<li>
-<p>To successfully build your container with Choreo, it is essential to explicitly define a User ID (UID) under the USER instruction in your Dockerfile. For reference, see the <a href="https://github.com/wso2/choreo-samples/blob/main/docker-tcp-service/Dockerfile.server">sample Dockerfile</a>.
-To ensure that the defined USER instruction is valid, it must conform to the following conditions:</p>
-<ul>
-<li>A valid User ID is a numeric value between 10000-20000, such as <code>10001</code> or <code>10500</code>.</li>
-<li>Usernames are considered invalid and should not be used. For example, <code>my-custom-user-12221</code> or <code>my-custom-user</code> are invalid User IDs.</li>
-</ul>
-</li>
-<li>
-<p>The Dockerfile utilized in this guide is a multi-stage Dockerfile, which is designed to keep the final image size small and provides the ability to build the application with a specific version of tools and libraries.</p>
-</li>
-</ol>
-</div>
 </li>
 <li>
 <p>Click <strong>Create</strong>. This creates the component and takes you to the <strong>Overview</strong> page of the component.</p>
@@ -4281,6 +4278,68 @@ To ensure that the defined USER instruction is valid, it must conform to the fol
 <li>Go to the <strong>Component Listing</strong> section and click <strong>+ Create</strong>.</li>
 <li>Click the <strong>Manual Task</strong> card.</li>
 <li>
+<p>To allow Choreo to connect to your GitHub account, click <strong>Authorize with GitHub</strong>. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
+<p>Alternatively, select the <strong>Use Public GitHub Repository</strong> option and paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field to connect to it without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. However, authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a> is necessary if you want to enable <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> for the component.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <strong>Choreo GitHub App</strong> requires the following permissions:</p>
+<ul>
+<li>Read and write access to code and pull requests.</li>
+<li>Read access to issues and metadata.</li>
+</ul>
+<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.</p>
+</div>
+</li>
+<li>
+<p>Under <strong>Connect a Git Repository</strong>, enter the following information:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Organization</strong></td>
+<td>Your GitHub account</td>
+</tr>
+<tr>
+<td><strong>GitHub Repository</strong></td>
+<td><strong><code>choreo-samples</code></strong></td>
+</tr>
+<tr>
+<td><strong>Branch</strong></td>
+<td><strong><code>main</code></strong></td>
+</tr>
+<tr>
+<td><strong>Docker Context</strong></td>
+<td><code>docker-tcp-service</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Select <strong>Docker</strong> as the buildpack.</p>
+</li>
+<li>
+<p>Enter the following information:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dockerfile</strong></td>
+<td><code>docker-tcp-service/Dockerfile.client</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
 <p>Enter a display name, a unique name, and a description for the component. You can enter the values given below:</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
@@ -4305,71 +4364,6 @@ To ensure that the defined USER instruction is valid, it must conform to the fol
 <tr>
 <td><strong>Description</strong></td>
 <td><code>Receive greetings</code></td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Click the <strong>GitHub</strong> tab.</p>
-</li>
-<li>
-<p>To allow Choreo to connect to your GitHub account, click <strong>Authorize with GitHub</strong>. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
-<p>Alternatively, you can paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field to connect to it without requiring authorization from the <a href="https://github.com/marketplace/choreo-apps">Choreo Apps</a> GitHub application. However, authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a> is necessary if you want to enable <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> for the component.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <strong>Choreo GitHub App</strong> requires the following permissions:</p>
-<ul>
-<li>Read and write access to code and pull requests.</li>
-<li>Read access to issues and metadata.</li>
-</ul>
-<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.</p>
-</div>
-</li>
-<li>
-<p>Under <strong>Connect Your Repository</strong>, enter the following information:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Organization</strong></td>
-<td>Your GitHub account</td>
-</tr>
-<tr>
-<td><strong>GitHub Repository</strong></td>
-<td><strong><code>choreo-samples</code></strong></td>
-</tr>
-<tr>
-<td><strong>Branch</strong></td>
-<td><strong><code>main</code></strong></td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Select <strong>Docker</strong> as the buildpack.</p>
-</li>
-<li>
-<p>Enter the following information:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Docker Context</strong></td>
-<td><code>docker-tcp-service</code></td>
-</tr>
-<tr>
-<td><strong>Dockerfile</strong></td>
-<td><code>docker-tcp-service/Dockerfile.client</code></td>
 </tr>
 </tbody>
 </table>

@@ -3940,11 +3940,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in using your preferred method.</li>
 <li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
 <li>Click the <strong>Webhook</strong> card.</li>
-<li>In the <strong>Create a Webhook</strong> pane, specify a name and description for the component.</li>
-<li>Go to the <strong>GitHub</strong> tab.</li>
 <li>
 <p>Click <strong>Authorize with GitHub</strong> to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
-<p>Alternatively, paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field. However, enabling <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> requires authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
+<p>Alternatively, select the <strong>Use Public GitHub Repository</strong> option and paste the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> URL in the <strong>Provide Repository URL</strong> field. However, enabling <a href="https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy"><strong>Auto Deploy</strong></a> requires authorizing the repository with the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <strong>Choreo GitHub App</strong> requires:
@@ -3952,9 +3950,6 @@ document.addEventListener('DOMContentLoaded', function() {
 - Read access to issues and metadata.</p>
 <p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.</p>
 </div>
-</li>
-<li>
-<p>Select the <strong>Access Mode</strong> depending on your requirement.</p>
 </li>
 <li>
 <p>Enter the following information:</p>
@@ -3979,19 +3974,17 @@ document.addEventListener('DOMContentLoaded', function() {
 <td>main</td>
 </tr>
 <tr>
-<td><strong>Buildpack</strong></td>
-<td>Ballerina</td>
-</tr>
-<tr>
-<td><strong>Project Path</strong></td>
+<td><strong>Component Path</strong></td>
 <td><code>github-event-to-email-webhook</code></td>
 </tr>
 </tbody>
 </table>
 </li>
 <li>
-<p>Click <strong>Create</strong>.</p>
+<p>Select <strong>Ballerina</strong> as the build pack.</p>
 </li>
+<li>Provide a display name, a unique name and description for the component.</li>
+<li>Click <strong>Create</strong>.</li>
 </ol>
 <p>Choreo creates the Webhook component with the sample implementation and opens the component <strong>Overview</strong> page.</p>
 <h2 id="step-2-deploy">Step 2: Deploy<a class="headerlink" href="#step-2-deploy" title="Permanent link">&para;</a></h2>
