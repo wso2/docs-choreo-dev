@@ -44,10 +44,10 @@ Linking a configuration group will inject the values defined in the group during
 
 To link a configuration group to a component, follow the steps given below:
 
-1. Navigate to the component you want to link the configuration group.
-2. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
-3. On the **CD Pipeline** page, click **Configure & Deploy**, this will open the configuration and deployment wizard.
-4. In the wizard, link the configuration groups as **Environment Variables** or **File Mounts**, based on your requirements.
+1. Navigate to the component you want to link the configuration group using top navigation menu.
+2. On the left navigation menu, click **DevOps** and click **CD Pipelines**. 
+3. Click **Configure & Deploy**, this will open the configuration and deployment wizard.
+3. In the wizard, link the configuration groups as **Environment Variables** or **File Mounts**, based on your requirements.
 
     === "Environment Variables"
 
@@ -64,7 +64,7 @@ To link a configuration group to a component, follow the steps given below:
 
         - Click **Link** to link the configuration group to the component.
 
-5. Complete the deployment wizard by providing the required details and click **Deploy** to deploy the component with the updated configurations.
+4. Complete the deployment wizard by providing the required details and click **Deploy** to deploy the component with the updated configurations.
 
 ## View & edit a configuration group
 

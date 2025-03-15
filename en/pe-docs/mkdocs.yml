@@ -23,8 +23,8 @@ site_dir: site/platform-engineer
 
 # Perspective dropdown configurations
 show_perspective_dropdown: true
-developer_docs_path: /developer
-pe_docs_path: /platform-engineer
+developer_docs_path: /choreo/docs/developer
+pe_docs_path: /choreo/docs/platform-engineer
 
 # Repository
 repo_name: wso2/docs-choreo-dev
@@ -94,7 +94,7 @@ nav:
       - Endpoint: choreo-concepts/endpoint.md
       - Connections: choreo-concepts/connections.md
   - Infrastructure:
-      - Data Planes: ''
+      - Data Planes: 'infrastructure/dataplanes/data-planes.md'
       - Environments:
             - Manage Environments: infrastructure/environments/manage-environments.md
       - Domains:
@@ -117,7 +117,7 @@ nav:
       - CD Pipelines:
           - Deploy Applications with Built-In CD Pipeline: devops/cd-pipelines/deploying-an-application.md
           - Manage CD Pipelines: 'devops/cd-pipelines/manage-continuous-deployment-pipelines.md'
-      - Configuration Groups : 'devops/configuration-groups/manage-configuration-groups.md'
+      - Manage Configuration Groups: devops/manage-configuration-groups.md
   - Governance:
       - Workflows:
           - Configure Approvals for Choreo Workflows: governance/workflows/configure-approvals-for-choreo-workflows.md
