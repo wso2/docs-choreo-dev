@@ -156,7 +156,7 @@ nav:
           - Work with the Choreo Insights API:
               - Access the Choreo Insights API: insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
               - Choreo Insights API: insights/work-with-choreo-insights-api/choreo-insights-api.md
-      - Cost Analysis: insights/cost-analysis/cost-analysis.md
+      - Cost Insights: insights/cost-optimization/cost-optimization.md
   - Observability:
       - Alerts: 
           - Configure Alerts: observability/alerts/configure-alerts.md
