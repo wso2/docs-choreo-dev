@@ -1,4 +1,4 @@
-# Configure Alerts
+# Alerts Overview
 
 This section explains how you can configure alerts for your Choreo components. Setting up alerts allows you to proactively monitor your components ecosystem and take corrective measures when necessary.
 
@@ -98,7 +98,7 @@ Follow these steps to configure an alert:
 2. In the Choreo left menu, click **Observability** and then click **Alerts**.
 3. Click **Create Alert Rule** to create a new alert rule.
 
-    ![Create Alert Rule](../../assets/img/monitoring-and-insights/alerts/alert-creation.png){.cInlineImage-full}
+    ![Create Alert Rule](../assets/img/monitoring-and-insights/alerts/alert-creation.png){.cInlineImage-full}
 
 4. Select the **[Alert Type](#alert-types)** you want to create.
 5. Select the **Environment** you want to create the alert for.
@@ -138,4 +138,4 @@ You can click on an alert to expand it and see more details of the triggered ale
 
 When an alert is triggered, **recipients** added to the alert rule receive an email with **alert details** including a direct **Alert View link** to Choreo console.
 
-![Email Notification](../../assets/img/monitoring-and-insights/alerts/email-notification.png){.cInlineImage-full}
+![Email Notification](../assets/img/monitoring-and-insights/alerts/email-notification.png){.cInlineImage-full}

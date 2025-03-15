@@ -1,4 +1,4 @@
-# Consume a Service
+# Consume an OAuth2 Secured Service
 
 Choreo is a platform that allows you to create, deploy, and consume services seamlessly. The Choreo Developer Portal simplifies the process of discovering and using APIs for developers. 
 
@@ -36,11 +36,11 @@ The API overview page displays subscribed versions of the API along with subscri
 
 ## Create an application
 
-{% include "create-an-application.md" %}
+{% include "../consuming-services/create-an-application.md" %}
 
 ## Subscribe to an API
 
-{% include "create-a-subscription.md" %}
+{% include "../consuming-services/create-a-subscription.md" %}
 
 ## Consume the API via your web application
 

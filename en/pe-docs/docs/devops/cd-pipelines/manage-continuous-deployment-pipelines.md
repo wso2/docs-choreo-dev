@@ -15,11 +15,11 @@ To create a new pipeline, follow the steps given below:
 1. Sign in to [Choreo](https://console.choreo.dev/).
 2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization.
 3. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
-4. On the **CD Pipelines** page, click **Create Pipeline** and specify the following details required to create a new pipeline:
+4. On the **CD Pipelines** page, click **+ Create Pipeline** and specify the following details required to create a new pipeline:
    
     - **Name**: A display name for the new pipeline.
     - **Mark as Default**: Select if you want to assign this new pipeline as the default pipeline for all new projects.
-5. Click **Add Environment** and add required environments for the pipeline according to the preferred environment sequence.
+5. Click **+ Add Environment** and add required environments for the pipeline according to the preferred environment sequence.
 6. Click **Create**.
 
 ## Edit a continuous deployment pipeline
@@ -72,7 +72,7 @@ To add a pipeline to a project, follow the steps given below:
 2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization.
 3. Click the project you want to add the pipeline.
 4. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
-5. Click **Add** and select the pipelines you want to add to the project.
+5. Click **+ Add** and select the pipelines you want to add to the project.
 6. Click **Add**.
 
 

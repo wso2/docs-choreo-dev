@@ -8,18 +8,17 @@ The environments are listed in the order of deployment and promotion. The initia
 
 ### Prerequisites
 
-- To create additional environments, you must have a Choreo subscription or a private data plane.
-- To create a new environment in a private data plane organization, you must have the `ENVIRONMENT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin and Choreo DevOps roles.
+- To create a new environment in a private data plane organization, you must have the `ENVIRONMENT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, Choreo Platform Engineer and Choreo DevOps roles.
 
 To create a new environment, follow the steps given below:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/) and select the **Organization**.
-2. In the left navigation menu, click **Infrastructure** and then click **Environments**.
-
-   !!!note
-   Environment creation and deletion are only available in the organization level.
-
-3. On the **Environments** page, click **Create** and specify the following details to create a new environment:
+1. Sign in to [Choreo](https://console.choreo.dev/).
+2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization.
+3. In the left navigation menu, click **Infrastructure** and then click **Environments**.
+4. On the **Environments** page, click **Create** and specify the following details to create a new environment:
+   
+    - **Name**: A display name for the new environment.
+    - **Data Plane** - The data plane to create the new environment.
 
    - **Name**: A display name for the new environment.
    - **Data Plane** - The data plane to create the new environment.
@@ -40,8 +39,9 @@ To delete an environment, follow the steps given below:
 !!! warning
     Environment deletion is a permanent, non-reversible operation.
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/) and switch to your organization using top navigation menu.
-2. In the left navigation menu, click **Infrastructure** and then click **Environments**.
-3. In the **Environments** list, click the delete icon corresponding to the environment you want to delete. This displays a confirmation dialog with details on the impact of deletion.
-4. Review the details, then type the environment name to confirm the deletion.
-5. Click **Delete**.
+1. Sign in to [Choreo](https://console.choreo.dev/).
+2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization.
+3. In the left navigation menu, click **Infrastructure** and then click **Environments**. 
+4. In the **Environments** list, click the delete icon corresponding to the environment you want to delete. This displays a confirmation dialog with details on the impact of deletion.
+5. Review the details, then type the environment name to confirm the deletion.
+6. Click **Delete**.
