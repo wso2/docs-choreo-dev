@@ -241,6 +241,8 @@ Click the respective tab to view the structure for your current configuration fi
     | **required**                  | Optional     | Define whether the value is required or not for the key. Default to true when not specified |
     | **properties**                | Optional     | Required if type is an object. Definition for defining the sub properties of the object                      |
     | **items**                     | Optional     | Required if type is an array. Definition for defining the array                  |
+
+    Refer 
  
     !!! note
         Configuration form is supported starting from component.yaml v1.2.
