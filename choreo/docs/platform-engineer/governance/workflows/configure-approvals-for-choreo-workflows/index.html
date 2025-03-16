@@ -2941,7 +2941,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Environment promotion</label><label for="__tabbed_1_2">API subscription</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>To review and respond to environment promotion approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:</p>
+<p>To review and respond to environment promotion approval requests, a user must have the following permissions. Platform engineers must ensure that users designated to review and respond to approval requests have these permissions:</p>
 <ul>
 <li><strong>WORKFLOW-MANAGEMENT</strong>: <ul>
 <li>Approve component promotion requests: Grants access to review and approve the promotion of components to critical environments.</li>
@@ -2951,7 +2951,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul>
 </div>
 <div class="tabbed-block">
-<p>To review and respond to API subscription approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:</p>
+<p>To review and respond to API subscription approval requests, a user must have the following permissions. Platform engineers must ensure that users designated to review and respond to approval requests have these permissions:</p>
 <ul>
 <li><strong>WORKFLOW-MANAGEMENT</strong>:<ul>
 <li>Approve API subscriptions: Grants access to review and approve API subscription workflow requests.</li>
@@ -2968,8 +2968,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
-<li>You must have administrator privileges in Choreo to configure workflow approvals.</li>
-<li>Administrators can designate specific roles and assignees to review and respond to requests associated with each workflow.</li>
+<li>Platform engineers can designate specific roles and assignees to review and respond to requests associated with each workflow.</li>
 </ul>
 </div>
 <ol>
@@ -2999,7 +2998,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>Once you configure an approval process for environment promotion, developers must submit a request for approval to use the workflow. An authorized assignee must then <a href="../../approvals/review-workflow-approval-requests/">review and approve the request</a> for a developer to proceed with the task related to the workflow.</p>
 </div>
 <div class="tabbed-block">
-<p>Once you configure an approval process for API subscription, administrators can select the <strong>Approval required</strong> checkbox to create or update subscription plans to require approval. API consumers using these plans must request approval to proceed. An authorized approver must then <a href="../../approvals/review-workflow-approval-requests/">review and approve the request</a> before the subscription is granted.</p>
+<p>Once you configure an approval process for API subscription, platform engineers can select the <strong>Approval required</strong> checkbox to create or update subscription plans to require approval. API consumers using these plans must request approval to proceed. An authorized approver must then <a href="./review-workflow-approval-requests.md">review and approve the request</a> before the subscription is granted.</p>
 </div>
 </div>
 </div>
