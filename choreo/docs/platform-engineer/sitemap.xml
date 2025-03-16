@@ -181,7 +181,7 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wso2.com/choreo/docs/devops/cd-pipelines/deploying-an-application/</loc>
+         <loc>https://wso2.com/choreo/docs/devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline/</loc>
          <lastmod>2025-03-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -191,12 +191,12 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wso2.com/choreo/docs/devops/ci-pipelines/build-logs/</loc>
+         <loc>https://wso2.com/choreo/docs/devops/ci-pipelines/ci-pipeline-logs/</loc>
          <lastmod>2025-03-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wso2.com/choreo/docs/devops/ci-pipelines/configure-choreo-ci-pipeline/</loc>
+         <loc>https://wso2.com/choreo/docs/devops/ci-pipelines/configure-ci-pipeline/</loc>
          <lastmod>2025-03-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -226,12 +226,12 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wso2.com/choreo/docs/infrastructure/credentials/bring-your-own-image/</loc>
+         <loc>https://wso2.com/choreo/docs/infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments/</loc>
          <lastmod>2025-03-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wso2.com/choreo/docs/infrastructure/credentials/develop-components-with-git/</loc>
+         <loc>https://wso2.com/choreo/docs/infrastructure/credentials/use-your-own-container-registry/</loc>
          <lastmod>2025-03-16</lastmod>
          <changefreq>daily</changefreq>
     </url>

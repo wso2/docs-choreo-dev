@@ -12,20 +12,20 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/choreo/docs/devops/cd-pipelines/deploying-an-application/">
+        <link rel="canonical" href="https://wso2.com/choreo/docs/devops/ci-pipelines/configure-ci-pipeline/">
       
       
-        <link rel="prev" href="../../ci-pipelines/build-logs/">
+        <link rel="prev" href="../../../user-management/groups-and-roles/control-access-in-the-choreo-console/">
       
       
-        <link rel="next" href="../manage-continuous-deployment-pipelines/">
+        <link rel="next" href="../integrate-unit-tests-into-the-build-pipeline/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Deploy Applications with Built-In CD Pipeline - </title>
+        <title>Configure CI Pipeline - </title>
       
     
     
@@ -140,7 +140,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#deploy-applications-with-built-in-cd-pipeline" class="md-skip">
+        <a href="#configure-ci-pipeline" class="md-skip">
           Skip to content
         </a>
       
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Deploy Applications with Built-In CD Pipeline
+              Configure CI Pipeline
             
           </span>
         </div>
@@ -981,7 +981,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../infrastructure/credentials/develop-components-with-git/" class="md-nav__link">
+      <a href="../../../infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments/" class="md-nav__link">
         Set Up Git Provider Authentication
       </a>
     </li>
@@ -995,7 +995,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../infrastructure/credentials/bring-your-own-image/" class="md-nav__link">
+      <a href="../../../infrastructure/credentials/use-your-own-container-registry/" class="md-nav__link">
         Use Your Own Container Registry
       </a>
     </li>
@@ -1202,84 +1202,6 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-      
-      
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1" >
-      
-      
-      
-        <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
-          CI Pipelines
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_6_1">
-          <span class="md-nav__icon md-icon"></span>
-          CI Pipelines
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../ci-pipelines/configure-choreo-ci-pipeline/" class="md-nav__link">
-        Build Applications with Built-In CI Pipeline
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../ci-pipelines/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
-        Integrate Unit Tests into the CI Pipeline
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../ci-pipelines/build-logs/" class="md-nav__link">
-        CI Pipeline logs
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -1289,19 +1211,19 @@ document.addEventListener('DOMContentLoaded', function() {
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
       
       
       
-        <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
-          CD Pipelines
+        <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+          CI Pipelines
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_6_2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6_1">
           <span class="md-nav__icon md-icon"></span>
-          CD Pipelines
+          CI Pipelines
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -1321,12 +1243,12 @@ document.addEventListener('DOMContentLoaded', function() {
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Deploy Applications with Built-In CD Pipeline
+          Configure CI Pipeline
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Deploy Applications with Built-In CD Pipeline
+        Configure CI Pipeline
       </a>
       
         
@@ -1345,50 +1267,43 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#trigger-a-deployment" class="md-nav__link">
-    Trigger a deployment
+  <a href="#trigger-a-build" class="md-nav__link">
+    Trigger a Build
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#auto-deploy-on-build" class="md-nav__link">
-    Auto Deploy on Build
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#promoting-a-component-to-a-higher-environment" class="md-nav__link">
-    Promoting a component to a higher environment
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configurations" class="md-nav__link">
-    Configurations
-  </a>
-  
-    <nav class="md-nav" aria-label="Configurations">
+    <nav class="md-nav" aria-label="Trigger a Build">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#environment-independent-configurations" class="md-nav__link">
-    Environment-Independent Configurations
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#environment-specific-configurations" class="md-nav__link">
-    Environment-specific configurations
+  <a href="#repeatable-builds" class="md-nav__link">
+    Repeatable builds
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-logs" class="md-nav__link">
+    Build logs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-build-on-commit" class="md-nav__link">
+    Auto Build on Commit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-ci-pipeline-variables-and-secrets" class="md-nav__link">
+    Configure CI Pipeline Variables and Secrets.
+  </a>
   
 </li>
       
@@ -1407,7 +1322,85 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../manage-continuous-deployment-pipelines/" class="md-nav__link">
+      <a href="../integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
+        Integrate Unit Tests into the CI Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ci-pipeline-logs/" class="md-nav__link">
+        CI Pipeline logs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+          CD Pipelines
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          CD Pipelines
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
+        Deploy Applications using Choreo CD Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
         Manage CD Pipelines
       </a>
     </li>
@@ -2907,50 +2900,43 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#trigger-a-deployment" class="md-nav__link">
-    Trigger a deployment
+  <a href="#trigger-a-build" class="md-nav__link">
+    Trigger a Build
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#auto-deploy-on-build" class="md-nav__link">
-    Auto Deploy on Build
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#promoting-a-component-to-a-higher-environment" class="md-nav__link">
-    Promoting a component to a higher environment
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configurations" class="md-nav__link">
-    Configurations
-  </a>
-  
-    <nav class="md-nav" aria-label="Configurations">
+    <nav class="md-nav" aria-label="Trigger a Build">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#environment-independent-configurations" class="md-nav__link">
-    Environment-Independent Configurations
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#environment-specific-configurations" class="md-nav__link">
-    Environment-specific configurations
+  <a href="#repeatable-builds" class="md-nav__link">
+    Repeatable builds
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-logs" class="md-nav__link">
+    Build logs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-build-on-commit" class="md-nav__link">
+    Auto Build on Commit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-ci-pipeline-variables-and-secrets" class="md-nav__link">
+    Configure CI Pipeline Variables and Secrets.
+  </a>
   
 </li>
       
@@ -2969,7 +2955,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
   
-    <a href="https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/devops/cd-pipelines/deploying-an-application.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/devops/ci-pipelines/configure-ci-pipeline.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
     </a>
@@ -2978,83 +2964,72 @@ document.addEventListener('DOMContentLoaded', function() {
     
       
     
-    <a href="https://github.com/wso2/docs-choreo-dev/raw/dev/en/docs/devops/cd-pipelines/deploying-an-application.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/wso2/docs-choreo-dev/raw/dev/en/docs/devops/ci-pipelines/configure-ci-pipeline.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
   
 
 
-<h1 id="deploy-applications-with-built-in-cd-pipeline">Deploy Applications with Built-In CD Pipeline<a class="headerlink" href="#deploy-applications-with-built-in-cd-pipeline" title="Permanent link">&para;</a></h1>
-<p>Using Choreo, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, etc.) on shared or private data planes.</p>
-<p>After building your application, you can deploy it from the <strong>CD Pipelines</strong> page. On this page, you can access the CD pipeline of the selected component.</p>
-<h2 id="trigger-a-deployment">Trigger a deployment<a class="headerlink" href="#trigger-a-deployment" title="Permanent link">&para;</a></h2>
-<p>Follow below steps to deploy a component,</p>
+<h1 id="configure-ci-pipeline">Configure CI Pipeline<a class="headerlink" href="#configure-ci-pipeline" title="Permanent link">&para;</a></h1>
+<p>Choreo has built in CI pipeline so that the developers and platform engineers do not need to worry about creating docker images and saving in a container registry on their own. The developers could visit the build page from their component view and then build the component so that it would be ready for the deployment. As a platform engineer you may need to enforce configurations on this build pipeline. Each component would have its own build page, and you configure them separately.</p>
+<p>More Information can be found in <a href="../../../choreo-concepts/ci-cd/">CI-CD concept</a> document. </p>
+<h2 id="trigger-a-build">Trigger a Build<a class="headerlink" href="#trigger-a-build" title="Permanent link">&para;</a></h2>
+<p>You can trigger a build from past commit or the latest commit.</p>
 <ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the Choreo Console top navigation menu, select the <strong>Organization</strong>, then the <strong>Project</strong> and finally the relevant <strong>Component</strong>.</li>
-<li>From the left navigation, Click <strong>DevOps</strong> and then click <strong>CD Pipelines</strong></li>
+<li>In the Choreo Console top navigation menu, select the <strong>Organization</strong>, then the <strong>Project</strong> and finally the relevant <strong>Component</strong>. </li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>CI Pipelines</strong>. </li>
 <li>
-<p>The setup card will contain the latest built image</p>
-<div class="admonition tip -">
-<p class="admonition-title">Tip</p>
-<p>Click on the image in the <strong>Setup</strong> card to select a different image instead of the latest build.</p>
-</div>
-</li>
-<li>
-<p>To deploy your application, you can use one of the following options :</p>
-<ol>
-<li>
-<p><strong>Configure &amp; Deploy</strong>: This option allows you to set up specific configurations for your component before deploying it. In the subsequent steps after clicking <strong>Configure &amp; Deploy</strong>, you can set environment variables, configure file mounts, and adjust endpoint settings.</p>
-<ul>
-<li>Environment variables : Apply environment-specific variables via the <strong>Environment Configurations</strong> pane</li>
-<li>File mounts : Apply a file mount via the <strong>File Mount</strong> pane</li>
-<li>Endpoint settings: Configure endpoint settings via the <strong>Endpoint Details</strong> pane.</li>
-</ul>
-</li>
-<li>
-<p><strong>Deploy</strong>: This option initiates the deployment process using the existing configurations without making any changes.</p>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="auto-deploy-on-build">Auto Deploy on Build<a class="headerlink" href="#auto-deploy-on-build" title="Permanent link">&para;</a></h2>
-<p>When <strong>Auto Deploy on Build</strong> is enabled, it triggers an automatic deployment of your application to the first environment upon the completion of each successful build.</p>
-<div class="admonition note -">
+<p>On the <strong>CI Pipelines</strong> page, click <strong>Build Latest</strong>.</p>
+<div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <strong>Auto Deploy on Build</strong> feature, is disabled by default. To enable this feature, toggle on the Auto Deploy on Build option in the <strong>Setup</strong> card.</p>
+<p>The build process may take some time. You can track progress in the <strong>Build Details</strong> pane. Once complete, the build status changes to <strong>Success</strong>.</p>
 </div>
-<h2 id="promoting-a-component-to-a-higher-environment">Promoting a component to a higher environment<a class="headerlink" href="#promoting-a-component-to-a-higher-environment" title="Permanent link">&para;</a></h2>
-<p>You can go to the CD Pipelines page of a component and manually promote it across environments.</p>
-<p>Follow below steps to promote a component to a higher level environment:</p>
+</li>
+</ol>
+<p>Alternatively, you can pick a specific commit and trigger a build too. Click on <strong>Show Commits</strong>. Select the commit you want to build and Click <strong>Build</strong>.</p>
+<p>Another option you have is to build from a tag. Click on the down arrow next to <strong>Show Commits</strong> button. Then from the dropdown menu, select <strong>Show Tags</strong>. Click on <strong>Show Tags</strong> button.Finally, select the tag you want to pick and Click <strong>Build</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note<p>Users can trigger builds using specific tags from the connected Git repository. However, this action bypasses the standard branch-based deployment process and should only be used for critical, time-sensitive scenarios, as it can disrupt deployment track integrity.</p>
+</p>
+</div>
+<p>To configure build pipeline, click <strong>Build Configurations</strong>. The configurations would be specific to the type of component. For certain components, you can configure build time environment variables too. 
+<!-- TODO: (VirajSalaka) Find out the component types which has environment variables has support --></p>
+<h3 id="repeatable-builds">Repeatable builds<a class="headerlink" href="#repeatable-builds" title="Permanent link">&para;</a></h3>
+<p>Choreo can replicate builds from an identical code version (Git commit). This means that multiple builds initiated from the same Git commit will generate Docker images with the same behavior.</p>
+<h2 id="build-logs">Build logs<a class="headerlink" href="#build-logs" title="Permanent link">&para;</a></h2>
+<p>To view Build Logs for a component,</p>
 <ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
 <li>In the Choreo Console top navigation menu, select the <strong>Organization</strong>, then the <strong>Project</strong> and finally the relevant <strong>Component</strong>.</li>
-<li>From the left navigation, Click <strong>DevOps</strong> and then click <strong>CD Pipelines</strong></li>
-<li>Click the <strong>Promote</strong> button on the required environment card from which the promotion is initiated.</li>
-<li>In the <strong>Configuration Types</strong> pane, you can either provide new values for the configurations or use the <strong>Development configuration</strong>.</li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>CI Pipelines</strong>. </li>
+<li>You can view build logs for specific builds on the <strong>CI Pipelines</strong> page.</li>
+<li>To view details of a specific build, click <strong>View Details</strong> corresponding to the build.</li>
 </ol>
-<div class="admonition note -">
-<p class="admonition-title">Note</p>
-<p>If you have configured any default values for the configurable variables, selecting Use default configuration values allows you to proceed with those values. If not, specify values for the configurable variables.</p>
-</div>
+<h2 id="auto-build-on-commit">Auto Build on Commit<a class="headerlink" href="#auto-build-on-commit" title="Permanent link">&para;</a></h2>
+<p>With Auto Build on Commit, you can configure the build pipeline to be triggered once a new commit is available in the repository's selected branch. </p>
 <ol>
+<li>In the Choreo Console top navigation menu, select the <strong>Organization</strong>, then the <strong>Project</strong> list and finally the relevant <strong>Component</strong>. </li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>CI Pipelines</strong>. </li>
 <li>
-<p>When promoting the component, you can modify environment-specific configurations (environment variables, file mount etc) in the subsequent steps of the promotion flow.</p>
-</li>
-<li>
-<p>Click <strong>Promote</strong>.</p>
+<p>On the <strong>CI Pipelines</strong> page, toggle <strong>Auto Build on Commit</strong> radio button.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If the developer created a component by providing an opensource repository without authorizing Github, you would see a button <strong>Configure Auto Build</strong> instead of  <strong>Auto Build on Commit</strong> radio button. Click <strong>Configure Auto Build</strong>. Then it would redirect to github login page and ask to authorize <strong>WSO2 Cloud App</strong>. Once you authorize, you would be redirected back to same page. Now you would see a button <strong>Add Repository</strong> instead of <strong>Configure Auto Build</strong>. Click on <strong>Add Repository</strong>. It would redirect to github again asking to install and authorize WSO2 Cloud App for provided set of repositories. You can pick the repositories you would like to authorize and finally click <strong>Install and Authorize</strong>. After that, <strong>Auto Build on Commit</strong> radio button would appear. </p>
+</div>
+<!-- TODO: (VirajSalaka) link the auto deploy on build-->
+
 </li>
 </ol>
-<div class="admonition tip -">
-<p class="admonition-title">Tip</p>
-<p>Choreo supports workflow approvals, allowing organizations to enforce approval processes before a component is promoted to a higher environment. For more details, see <a href="../../../governance/workflows/configure-approvals-for-choreo-workflows/">Configure Approvals for Choreo Workflows</a></p>
-</div>
-<h2 id="configurations">Configurations<a class="headerlink" href="#configurations" title="Permanent link">&para;</a></h2>
-<h3 id="environment-independent-configurations">Environment-Independent Configurations<a class="headerlink" href="#environment-independent-configurations" title="Permanent link">&para;</a></h3>
-<p>These configurations apply to all environments. To change environment-independent configurations, make the necessary configuration changes via the <strong>Setup</strong> card, and then trigger a new deployment to the initial environment. Once deployed, you can promote the component to higher environments. <strong>Endpoint configurations</strong> can be managed from the <strong>Setup</strong> card.</p>
-<h3 id="environment-specific-configurations">Environment-specific configurations<a class="headerlink" href="#environment-specific-configurations" title="Permanent link">&para;</a></h3>
-<p>These configurations apply to a particular environment. To change environment-specific configurations, make the necessary configuration changes via the specific environment card, and trigger a new deployment. From the environment card, you can manage <strong>Configs &amp; Secret</strong> and <strong>Scaling</strong> options.</p>
+<!-- TODO: (VirajSalaka) mention the limits on build images a paid user can have -->
+
+<h2 id="configure-ci-pipeline-variables-and-secrets">Configure CI Pipeline Variables and Secrets.<a class="headerlink" href="#configure-ci-pipeline-variables-and-secrets" title="Permanent link">&para;</a></h2>
+<p>Choreo supports adding and updating configurations like environment variables and secrets related to your CI Pipeline. To apply such configurations to the CI pipeline of a component,</p>
+<ol>
+<li>In the Choreo Console top navigation menu, select the <strong>Organization</strong>, then the <strong>Project</strong> and finally the relevant <strong>Component</strong>.</li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>CI Pipelines</strong>. </li>
+<li>On the <strong>CI Pipelines</strong> page, click <strong>Build Variables and Secrets</strong>.</li>
+<li>In the slide-in window appears in right, you can add or edit environment variables. </li>
+</ol>
 
 
 
@@ -3081,7 +3056,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../ci-pipelines/build-logs/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CI Pipeline logs" rel="prev">
+          <a href="../../../user-management/groups-and-roles/control-access-in-the-choreo-console/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Control Access in the Choreo Console" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -3090,20 +3065,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                CI Pipeline logs
+                Control Access in the Choreo Console
               </div>
             </div>
           </a>
         
         
           
-          <a href="../manage-continuous-deployment-pipelines/" class="md-footer__link md-footer__link--next" aria-label="Next: Manage CD Pipelines" rel="next">
+          <a href="../integrate-unit-tests-into-the-build-pipeline/" class="md-footer__link md-footer__link--next" aria-label="Next: Integrate Unit Tests into the CI Pipeline" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                Manage CD Pipelines
+                Integrate Unit Tests into the CI Pipeline
               </div>
             </div>
             <div class="md-footer__button md-icon">
