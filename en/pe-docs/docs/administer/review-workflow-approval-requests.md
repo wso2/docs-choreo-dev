@@ -3,7 +3,7 @@
 In Choreo, Platform Engineers can [configure approvals for workflows](./configure-approvals-for-choreo-workflows.md) and assign specific users as approvers.
 
 !!! note
-     - You must have **Approve Component Promotion Requests** permission under **WORKFLOW-MANAGEMENT** Permission group to approve component promotion requests. 
+     - You must have **Approve Component Promotion Requests** permission under **WORKFLOW-MANAGEMENT** permission group to approve component promotion requests. 
      - You must have **Approve API Subscriptions** permission under **WORKFLOW-MANAGEMENT** Permission group to approve subscription requests. 
 
 If you are assigned as an authorized reviewer for a particular workflow approval request, you will receive an email notification when a request is submitted for approval. The email includes a summary of the request and a link to the **Approvals** page in the Choreo Console, where you can review the details and either approve or reject the request.
