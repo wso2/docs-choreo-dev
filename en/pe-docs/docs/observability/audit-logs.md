@@ -1,4 +1,4 @@
-# Audit Logs in Choreo
+# Audit Logs
 
 Audit logs, also called audit trails, enhance security, ensure compliance, provide operational insights, and help manage risks. 
 

@@ -1,4 +1,4 @@
-# Runtime Logs in Choreo
+# Runtime Logs
 
 Choreo runtime logs provide insights into both project and component-level logs, covering application and gateway logs. These logs streamline the debugging process by centralizing diverse log sources.
 

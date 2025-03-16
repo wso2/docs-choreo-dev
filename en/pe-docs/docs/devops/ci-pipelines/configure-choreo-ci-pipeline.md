@@ -1,4 +1,4 @@
-# Configure a CI Pipeline
+# Configure Choreo CI Pipeline
 
 Choreo has built in CI pipeline so that the developers and platform engineers do not need to worry about creating docker images and saving in a container registry on their own. The developers could visit the build page from their component view and then build the component so that it would be ready for the deployment. As a platform engineer you may need to enforce configurations on this build pipeline. Each component would have its own build page, and you configure them separately.
 
