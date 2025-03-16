@@ -59,106 +59,67 @@ Click the respective tab to view the structure for your current configuration fi
         # The path should be relative to the docker context.
         schemaFilePath: openapi.yaml
       
-      # +optional Outgoing connection details for the component.
-      dependencies:
-        # +optional Defines the connection references from the Internal Marketplace.
-        connectionReferences:
-          # +required Name of the connection.
-          - name: hr-connection
-            # +required service identifer of the dependent component.
-            resourceRef: service:/HRProject/UserComponent/v1/ad088/PUBLIC
+    # +optional Outgoing connection details for the component.
+    dependencies:
+      # +optional Defines the connection references from the Internal Marketplace.
+      connectionReferences:
+        # +required Name of the connection.
+        - name: hr-connection
+          # +required service identifer of the dependent component.
+          resourceRef: service:/HRProject/UserComponent/v1/ad088/PUBLIC
       
-      # +optional Defines runtime configurations
-      configurations:
-        # +optional List of environment variables to be injected into the component.
-        env:
-          # +required Name of the environment variable
-          - name: HR_SERVICE_URL
-            # +required value source
-            # Allowed value sources: connectionRef, configForm
-            valueFrom:
-              # +required Choreo connection value source
-              connectionRef:
-                # +required Choreo connection name to refer the value from
-                name: hr-connection
-                # +required Choreo connection configuration key to refer the value from
-                key: ServiceURL
-          - name: DB_USER
-            # +required value source
-            # Allowed value sources: connectionRef, configForm
-            valueFrom:
-              # +required config form value source
-              configForm:
-                  # +optional display name inside the config form, name will be shown in config form if not specified
-                  displayName: DB User
-                  # +optional default value is true if not specified
-                  required: false
-                  # +optional default value is string if not specified
-                  # Allowed types - number, boolean, secret
-                  type: string
-        # +optional List of files to be injected into the component from config form
-        file:
-          # +required Name of the file
-          - name: application.yaml
-            # +required path that file to be mounted
-            mountPath: /src/resources
-            # +required file type
-            # Supported types - yaml, json and toml
-            type: yaml
-            # +required define keys of the file
-            values:
-              # keys of the file
-              # +required at least one key
-              - name: logging
-                # +required value source
-                # Allowed value sources: connectionRef, configForm
-                valueFrom:
-                  # +required config form value source
-                  configForm:
-                    # +optional display name inside the config form, name will be shown in config form if not specified
-                    displayName: Logging
-                    # +optional default value is string if not specified
-                    # Allowed types - string, number, boolean, secret, object, array
-                    type: object
-                    # +required if type is object or array
-                    # define the properties of the object
-                    properties:
-                      # +required sub key of the object
-                      - name: logger_name
-                        # +optional display name inside the config form, name will be shown in config form if not specified
-                        displayName: Logger Name
-                      # +required sub key of the object
-                      - name: level
-                        # +optional display name inside the config form, name will be shown in config form if not specified
-                        displayName: Level
-                        # +optional define enum list for value selection
-                        values:
-                          - info
-                          - debug
-              # keys of the file
-              - name: users
+    # +optional Defines runtime configurations
+    configurations:
+      # +optional List of environment variables to be injected into the component.
+      env:
+        # +required Name of the environment variable
+        - name: HR_SERVICE_URL
+          # +required value source
+          # Allowed value sources: connectionRef, configForm
+          valueFrom:
+            # +required Choreo connection value source
+            connectionRef:
+              # +required Choreo connection name to refer the value from
+              name: hr-connection
+              # +required Choreo connection configuration key to refer the value from
+              key: ServiceURL
+        - name: DB_USER
+          # +required value source
+          # Allowed value sources: connectionRef, configForm
+          valueFrom:
+            # +required config form value source
+            configForm:
                 # +optional display name inside the config form, name will be shown in config form if not specified
-                displayName: Users
+                displayName: DB User
+                # +optional default value is true if not specified
+                required: false
                 # +optional default value is string if not specified
-                # Allowed types - string, number, boolean, secret, object, array
-                type: array
-                # +required if type is array
-                items:
+                # Allowed types - string, number, boolean, secret
+                type: string
+      # +optional List of files to be injected into the component from config form
+      file:
+        # +required Name of the file
+        - name: application.yaml
+          # +required path that file to be mounted
+          mountPath: /src/resources
+          # +required file type
+          # Supported types - yaml, json and toml
+          type: yaml
+          # +required define keys of the file
+          values:
+            # keys of the file
+            # +required at least one key
+            - name: version
+              # +required value source
+              # Allowed value sources: connectionRef, configForm
+              valueFrom:
+                # +required config form value source
+                configForm:
+                  # +optional display name inside the config form, name will be shown in config form if not specified
+                  displayName: Version
                   # +optional default value is string if not specified
-                  type: object
-                  # +required if type is object or array
-                  # define the properties of the object
-                  properties:
-                    - name: name
-                    - name: description
-                      required: false
-                    - name: age
-                      type: number
-                    - name: address
-                      type: object
-                      properties:
-                        - name: street
-                        - name: city
+                  # Allowed types - string, number, boolean, secret, object, array
+                  type: number
     ```
 
     The descriptor-based approach of the `component.yaml` file simplifies and streamlines endpoint and connection configuration management. The use of versioned schemas ensures backward compatibility, providing a seamless transition with future updates.
@@ -236,13 +197,8 @@ Click the respective tab to view the structure for your current configuration fi
     | **valueFrom**                 | Required     | The source of the configuration form.                                             |
     | **values**                    | Required     | Required under file section. File key-values definition                           |
     | **configForm**                | Required     | Configuration form value source definition                                        |
-    | **displayName**               | Optional     | The display name of the defined key in configuration form                         |
-    | **type**                      | Optional     | The type of value. Supported types are string, number, boolean, secret, object and array. Default type is string when not specified. If this is under file array section. Supported types are yaml,json and toml and type is required|
-    | **required**                  | Optional     | Define whether the value is required or not for the key. Default to true when not specified |
-    | **properties**                | Optional     | Required if type is an object. Definition for defining the sub properties of the object                      |
-    | **items**                     | Optional     | Required if type is an array. Definition for defining the array                  |
 
-    Refer 
+    Refer [use configuration form](./use-configuration-form.md) for more details on defining configurations in configuration form.
  
     !!! note
         Configuration form is supported starting from component.yaml v1.2.
