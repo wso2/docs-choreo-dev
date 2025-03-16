@@ -316,6 +316,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://wso2.com/choreo/docs/observability/private-data-plane-logs/</loc>
+         <lastmod>2025-03-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://wso2.com/choreo/docs/observability/runtime-logs/</loc>
          <lastmod>2025-03-16</lastmod>
          <changefreq>daily</changefreq>
