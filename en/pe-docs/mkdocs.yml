@@ -21,11 +21,6 @@ site_author: WSO2
 site_url: https://wso2.com/choreo/docs
 site_dir: site/platform-engineer
 
-# Perspective dropdown configurations
-show_perspective_dropdown: true
-developer_docs_path: /choreo/docs/developer/
-pe_docs_path: /choreo/docs/platform-engineer/
-
 # Repository
 repo_name: wso2/docs-choreo-dev
 repo_url: https://github.com/wso2/docs-choreo-dev/
@@ -158,7 +153,7 @@ nav:
           - Work with the Choreo Insights API:
               - Access the Choreo Insights API: insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
               - Choreo Insights API: insights/work-with-choreo-insights-api/choreo-insights-api.md
-      - Cost Insights: insights/cost-optimization/cost-optimization.md
+      - Cost Insights: insights/cost-optimization.md
   - Observability:
       - Alerts: 
           - Configure Alerts: observability/alerts/configure-alerts.md
@@ -167,7 +162,6 @@ nav:
   - API Management:
       - Developer Portal:
           - Customize the Choreo Developer Portal: api-management/developer-portal/customize-the-developer-portal.md
-          - Configure Self-Sign-Up for Choreo Developer Portal: api-management/developer-portal/configure-self-sign-up.md
       - API Analytics:
           - Integrate Choreo with Moesif for Analytics: api-management/api-analytics/integrate-choreo-with-moesif.md   
       - Consumer IDPs:
@@ -249,6 +243,10 @@ extra:
       link: https://github.com/wso2
   version:
     provider: mike
+  # Perspective dropdown configurations
+  show_perspective_dropdown: true
+  developer_docs_path: /choreo/docs/developer/
+  pe_docs_path: /choreo/docs/platform-engineer/
 #site_version: 1.0.0
 #base_path: http://localhost:8000
 

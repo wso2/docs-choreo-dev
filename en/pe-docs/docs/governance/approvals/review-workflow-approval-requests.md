@@ -1,6 +1,6 @@
 # Review Workflow Approval Requests
 
-In Choreo, Platform Engineers can [configure approvals for workflows](./configure-approvals-for-choreo-workflows.md) and assign specific users as approvers.
+In Choreo, Platform Engineers can [configure approvals for workflows](../workflows/configure-approvals-for-choreo-workflows.md) and assign specific users as approvers.
 
 !!! note
      - You must have **Approve Component Promotion Requests** permission under **WORKFLOW-MANAGEMENT** permission group to approve component promotion requests. 

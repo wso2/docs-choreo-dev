@@ -21,11 +21,6 @@ site_author: WSO2
 site_url: https://wso2.com/choreo/docs
 site_dir: site/developer
 
-# Perspective dropdown configurations
-show_perspective_dropdown: true
-developer_docs_path: /choreo/docs/developer/
-pe_docs_path: /choreo/docs/platform-engineer/
-
 # Repository
 repo_name: wso2/docs-choreo-dev
 repo_url: https://github.com/wso2/docs-choreo-dev/
@@ -454,6 +449,10 @@ extra:
       link: https://github.com/wso2
   version:
     provider: mike
+  # Perspective dropdown configurations
+  show_perspective_dropdown: true
+  developer_docs_path: /choreo/docs/developer/
+  pe_docs_path: /choreo/docs/platform-engineer/
 #site_version: 1.0.0
 #base_path: http://localhost:8000
 

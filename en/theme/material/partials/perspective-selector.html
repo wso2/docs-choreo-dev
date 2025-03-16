@@ -1,4 +1,4 @@
-{% if config.show_perspective_dropdown %}
+{% if config.extra.show_perspective_dropdown %}
 <div class="md-dropdown">
     <!-- Get docs path from config -->
     {% set pe_path = config.pe_docs_path | d('/choreo/docs/platform-engineer') %}
@@ -27,8 +27,8 @@
       <button class="md-dropdown__button">Developer</button>
     </noscript>
     <div class="md-dropdown__menu">
-        <a href="{{ config.developer_docs_path | d('/choreo/docs/developer') }}" class="md-dropdown__item">Developer</a>
-        <a href="{{ config.pe_docs_path | d('/choreo/docs/platform-engineer') }}" class="md-dropdown__item">Platform Engineer</a>
+        <a href="{{ config.extra.developer_docs_path | d('/choreo/docs/developer') }}" class="md-dropdown__item">Developer</a>
+        <a href="{{ config.extra.pe_docs_path | d('/choreo/docs/platform-engineer') }}" class="md-dropdown__item">Platform Engineer</a>
     </div>
 </div>
 {% endif %}

@@ -58,4 +58,4 @@ Once you enable the approval process for a workflow, see the following details o
 
 === "API subscription"
 
-     Once you configure an approval process for API subscription, platform engineers can select the **Approval required** checkbox to create or update subscription plans to require approval. API consumers using these plans must request approval to proceed. An authorized approver must then [review and approve the request](./review-workflow-approval-requests.md) before the subscription is granted.
+     Once you configure an approval process for API subscription, platform engineers can select the **Approval required** checkbox to create or update subscription plans to require approval. API consumers using these plans must request approval to proceed. An authorized approver must then [review and approve the request](../approvals/review-workflow-approval-requests.md) before the subscription is granted.
