@@ -426,6 +426,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://wso2.com/choreo/docs/develop-components/develop-proxy/develop-an-api-proxy-from-a-github-repository-source/</loc>
+         <lastmod>2025-03-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wso2.com/choreo/docs/develop-components/develop-proxy/develop-an-api-proxy-from-scratch/</loc>
+         <lastmod>2025-03-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://wso2.com/choreo/docs/develop-components/develop-services/develop-a-ballerina-service/</loc>
          <lastmod>2025-03-16</lastmod>
          <changefreq>daily</changefreq>
