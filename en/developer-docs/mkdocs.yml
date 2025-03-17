@@ -115,6 +115,7 @@ nav:
           - Expose a WebSocket Endpoint via a Service: develop-components/develop-services/expose-a-websocket-endpoint-via-a-service.md
       - Develop an API Proxy:
           - Develop an API Proxy from Scratch : develop-components/develop-proxy/develop-an-api-proxy-from-scratch.md 
+          - Develop an API Proxy from Open API Specification : develop-components/develop-proxy/develop-an-api-proxy-from-an-oas.md
           - Develop an API Proxy from Git Repository Source : develop-components/develop-proxy/develop-an-api-proxy-from-a-github-repository-source.md
       - Develop Web Applications:
           - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
