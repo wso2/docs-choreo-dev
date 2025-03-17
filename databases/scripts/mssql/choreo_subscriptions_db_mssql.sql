@@ -200,8 +200,10 @@ INSERT INTO threshold(id,tier_id,threshold,billing_provider) values
     (N'01ef74c3-e4ed-1a96-9b98-f03cb81c2fec',N'9819cdd6-d2df-47cb-8954-8c1a80cb06cc',N'{"components": 0}','aws'), 
     (N'01ef74c3-a821-1b20-9035-de544eaf403a',N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'{"components": 0}','aws'), 
     (N'01ef74c3-a821-1b20-9b8f-68548979e518',N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'{"components": 0}','aws'),
-    (N'01efff35-363b-19a6-a69d-7699fba96770',N'01efff00-032a-1e3e-b071-3ac566d13e0e',N'{"apis": 5, "transactions": 10000}',NULL),
-    (N'01efff35-363b-19a6-9c48-465545eefbc9',N'01efff00-032a-1e3e-a268-2f9a210a4ca1',N'{"apis": 5}',N'stripe'),
-    (N'01efff35-363b-19a6-b433-0277eebe7ff7',N'01efff00-032a-1e3e-a268-2f9a210a4ca1',N'{"apis": 5}',N'stripe'),
-    (N'01efff35-363b-19a6-8a85-717d8a8e5710',N'01efff00-032a-1e3e-8699-213ad7ff9e4e',N'{"integrations": 5}',NULL);
+    ('01efff35-363b-19a6-a69d-7699fba96770','01efff00-032a-1e3e-b071-3ac566d13e0e','{"apis": 5, "transactions": 10000}',NULL),
+    ('01efff35-363b-19a6-9c48-465545eefbc9','01efff00-032a-1e3e-a268-2f9a210a4ca1','{"apis": 5}','stripe'),
+    ('01efff35-363b-19a6-8a85-717d8a8e5710','01efff00-032a-1e3e-8699-213ad7ff9e4e','{"integrations": 5}',NULL),
+    ('01f0017a-2bbe-1126-a976-a7334fe5703f','01efff00-032a-1e3e-96dd-3c225a36d60c','{"integrations": 0}','stripe'),
+    ('01f0017a-2bbe-1126-8e54-56453766802b','01efff00-032a-1e3e-98d7-c354c2553e4b','{"apis": 5}','stripe'),
+    ('01f0017a-2bbe-1126-bd1a-a60f3149f980','01efff00-032a-1e3e-a6c0-32a167db637c','{"integrations": 0}','stripe');
 GO
