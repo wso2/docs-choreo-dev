@@ -401,6 +401,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://wso2.com/choreo/docs/develop-components/use-configuration-form/</loc>
+         <lastmod>2025-03-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://wso2.com/choreo/docs/develop-components/work-with-the-micro-integrator-runtime-in-choreo/</loc>
          <lastmod>2025-03-17</lastmod>
          <changefreq>daily</changefreq>
