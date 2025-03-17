@@ -225,7 +225,7 @@ describe("Create proxy using existing url", () => {
   });
 
   it("Add subscription", () => {
-    application.addSubscription(proxy.getName(), UsagePlan.Unlimited);
+    application.addSubscription(proxy.getName(), UsagePlan.Bronze);
   });
 
   it("Find API in devportal custom domain", () => {

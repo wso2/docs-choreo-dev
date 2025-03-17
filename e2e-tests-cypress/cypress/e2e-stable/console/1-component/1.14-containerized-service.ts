@@ -40,16 +40,15 @@ describe("Verify containerized service functionality", () => {
   let byoc: Service;
 
   function addConfiguration() {
-    cy.get(TestIds.addConfig).click();
+    cy.get(TestIds.addConfigButton).click();
     cy.wait(1000);
     cy.log(`Typing CONFIG_KEY: ${CONFIG_KEY}`);
     cy.get(TestIds.addConfigKey).should("be.visible").type(CONFIG_KEY);
     cy.get(TestIds.addConfigValue).should("be.visible").type(CONFIG_VALUE);
     cy.get(TestIds.configSave).click();
-    cy.get(TestIds.addConfig).click();
+    cy.get(TestIds.addConfigButton).click();
     cy.get(TestIds.addConfigKey).type(SECRET_KEY);
     cy.get(TestIds.addConfigValue).type(SECRET_VALUE);
-    cy.get(TestIds.keyValueCheckBox).click();
     cy.get(TestIds.configSave).click();
     cy.get(TestIds.nextButton).click();
     cy.get(TestIds.fileMount).click();
