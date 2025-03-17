@@ -278,7 +278,7 @@ export namespace TestIds {
   export const refreshTasks = '[data-cyid="refresh-tasks-button"]';
   export const executionCount = '[data-cyid="total-executions-count"]';
   export const link = '[data-cyid="btn-link-button"]';
-  export const mountPath = '[data-cyid="mount-path"]';
+  export const mountPath = '[data-cyid="adhoc-config-file-editor-mount-path"]';
   export const formConfigField =
     '[class="view-lines monaco-mouse-cursor-text"]';
   export const appUrl = '[data-cyid="app-url-link"]';
@@ -319,14 +319,14 @@ export namespace TestIds {
   export const warningBanner = '[data-testid="warning-banner"]';
   export const addConfig = '[data-cyid="add-new-button"]';
   export const addConfigKey =
-    '[data-cyid="key-value-card-add-new-new-input-name"]';
+    '[data-cyid="env-config-add-new-new-input-name"]';
   export const addConfigValue =
-    '[data-cyid="key-value-card-add-new-new-input-value"]';
+    '[data-cyid="env-config-add-new-new-input-value"]';
   export const configSave = '[data-cyid="key-value-save-button"]';
   export const keyValueCheckBox =
     '[data-cyid="key-value-card-add-new-secret-check-box"]';
   export const nextButton = '[data-testid="btn-next"]';
-  export const fileMount = '[data-cyid="file-mount-upload-button"]';
+  export const fileMount = '[data-cyid="file-config-section-add-config-button"]';
   export const addNewConfigs = '[data-cyid="promote-selector-default-configs"]';
   export const copyConfigs = '[data-cyid="promote-selector-copy-configs"]';
   export const componentSearchBox =
@@ -469,7 +469,7 @@ export namespace TestIds {
   export const Endpoint = '[data-cyid="new-component-target"]';
   export const ProxyCreateButton = '[data-cyid="Create-button"]';
   export const ProxyCreateFromScratch = '[data-cyid="from-scratch-card-button"]';
-
+  export const addConfigButton = '[data-cyid="env-config-section-add-config-button"]';
 }
 
 
