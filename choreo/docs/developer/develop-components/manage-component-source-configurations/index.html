@@ -4283,7 +4283,7 @@ For example, <code>&lt;docker-context-path&gt;/.choreo/component.yaml</code>.</l
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Choreo automatically generates connection configurations when you create a connection. The properties such as <strong>name</strong> and <strong>resourceRef</strong> are automatically generated. The configurations required to establish the connection will be injected into Choreo-defined environment variables.</p>
-<p>To use custom environment variable names instead of Choreo's default ones, add the dependency as a <code>serviceReference</code> in your <code>component.yaml v1.1</code> file. You can copy the <code>serviceReference</code> section from the <code>component.yaml v1.0</code> tab and paste it under <code>dependencies</code> in your <code>component.yaml v1.1</code> file, which maintains backward compatibility with the v1.0 format.</p>
+<p>If you'd like to use custom environment variable names instead of the default Choreo-defined ones, you can rename them in the <code>configurations</code> section of the <code>component.yaml v1.1</code> file.</p>
 </div>
 <h3 id="runtime-configurations">Runtime configurations<a class="headerlink" href="#runtime-configurations" title="Permanent link">&para;</a></h3>
 <p>In the <code>configurations</code> section of the <code>component.yaml</code> file, you can define runtime configurations for the component. These configurations currently support environment variable injection related to dependencies.</p>
