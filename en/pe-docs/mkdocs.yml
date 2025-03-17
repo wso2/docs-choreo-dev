@@ -1,0 +1,253 @@
+# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# WSO2 Inc. licenses this file to you under the Apache License,
+# Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+# Project information
+site_name: ""
+site_description: Choreo Learning Portal
+site_author: WSO2
+site_url: https://wso2.com/choreo/docs
+site_dir: site/platform-engineer
+
+# Repository
+repo_name: wso2/docs-choreo-dev
+repo_url: https://github.com/wso2/docs-choreo-dev/
+edit_uri: https://github.com/wso2/docs-choreo-dev/edit/dev/en/docs/
+dev_addr: localhost:8000
+
+# Copyright
+copyright: ©2023 WSO2 LLC.
+
+# Configuration
+theme:
+  name: material
+  custom_dir: ../theme/material
+  logo: assets/images/logo.png
+  font:
+    text: Montserrat
+  favicon: assets/images/favicon.png
+  features:
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
+    - content.action.view
+    - version.selector
+  language: "en"
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to dark mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to system preference
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    logo: logo
+#Breaks build if there's a warning
+strict: false
+# Navigation
+nav:
+  - Home: index.md
+  - Introduction:
+      - What is Choreo?: what-is-choreo.md
+  - Choreo Concepts:
+      - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
+      - Organization: choreo-concepts/organization.md
+      - Data Planes: choreo-concepts/data-planes.md
+      - Environments: choreo-concepts/environments.md
+      - CI/CD: choreo-concepts/ci-cd.md
+      - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
+      - Project: choreo-concepts/project.md
+      - Component: choreo-concepts/component.md
+      - Deployment Tracks: choreo-concepts/deployment-tracks.md
+      - Endpoint: choreo-concepts/endpoint.md
+      - Connections: choreo-concepts/connections.md
+  - Infrastructure:
+      - Data Planes: 'infrastructure/dataplanes/data-planes.md'
+      - Environments:
+            - Manage Environments: infrastructure/environments/manage-environments.md
+      - Domains:
+            - Configure a Custom Domain for Your Organization: infrastructure/domains/configure-a-custom-domain-for-your-organization.md
+      - Configure VPNs on Cloud Data Plane: 'infrastructure/configure-vpns-on-the-choreo-cloud-data-plane.md'
+      - Credentials:
+            - Set Up Git Provider Authentication: infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments.md
+            - Use Your Own Container Registry: infrastructure/credentials/use-your-own-container-registry.md
+  - User Management: 
+      - Users:
+            - Manage  Members of an Organization: user-management/users/manage-members-of-an-organization.md
+            - Configure Enterprise Login: user-management/users/configure-enterprise-login.md
+      - Groups & Roles:
+            - Control Access in the Choreo Console: user-management/groups-and-roles/control-access-in-the-choreo-console.md
+  - DevOps:
+      - CI Pipelines:
+          - Configure CI Pipeline: devops/ci-pipelines/configure-ci-pipeline.md
+          - Integrate Unit Tests into the CI Pipeline: devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline.md
+          - CI Pipeline logs: 'devops/ci-pipelines/ci-pipeline-logs.md'
+      - CD Pipelines:
+          - Deploy Applications using Choreo CD Pipeline: devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline.md
+          - Manage CD Pipelines: 'devops/cd-pipelines/manage-continuous-deployment-pipelines.md'
+      - Manage Configuration Groups: devops/manage-configuration-groups.md
+  - Governance:
+      - Workflows:
+          - Configure Approvals for Choreo Workflows: governance/workflows/configure-approvals-for-choreo-workflows.md
+      - Egress Control:
+          - Control Egress Traffic for Your Choreo Organization: governance/egress-control/control-egress-traffic-for-your-organization.md
+      - Approvals:
+          - Review Workflow Approval Requests: governance/approvals/review-workflow-approval-requests.md
+  - DB & Services:
+      - Database & Vector Databases:
+          - Overview: db-and-services/databases/choreo-managed-databases-and-caches.md
+          - PostgreSQL: db-and-services/databases/choreo-managed-postgresql-databases.md
+          - MySQL: db-and-services/databases/choreo-managed-mysql-databases.md
+          - Choreo-Managed Cache: db-and-services/databases/choreo-managed-caches.md
+          - Add Choreo-Managed Databases and Caches to the Marketplace: db-and-services/databases/add-choreo-managed-databases-and-caches-to-the-marketplace.md
+      - Third-Party Services: db-and-services/external-services/integrate-and-manage-third-party-services.md
+      - Message Brokers:
+          - Overview: db-and-services/message-brokers/choreo-managed-message-brokers.md
+          - Create Choreo-Managed Kafka Services: db-and-services/message-brokers/create-choreo-managed-kafka-services.md
+          - Configure a Kafka Service: db-and-services/message-brokers/configure-a-kafka-service.md
+          - Monitor a Kafka Service: db-and-services/message-brokers/monitor-a-kafka-service.md
+      - Gen AI Services: db-and-services/external-services/integrate-and-manage-gen-ai-services.md
+  - K8s Operations:
+      - Runtime:
+          - View Kubernetes Runtime Details: k8s-operations/runtime/view-runtime-details.md
+      - Containers:
+          - Configure Kubernetes Container Resources, Commands, and Arguments: k8s-operations/containers/configure-container-resources-commands-and-arguments.md
+      - K8s Configurations and Secrets: k8s-operations/manage-configurations-and-secrets.md
+      - Health Checks: k8s-operations/set-up-health-checks.md
+      - Scaling:
+            - Autoscale Component Replicas: k8s-operations/scaling/autoscale-component-replicas.md
+            - Autoscale Components with Scale-to-Zero: k8s-operations/scaling/autoscale-components-with-scale-to-zero.md
+      - Storage: k8s-operations/storage/configure-storage.md
+  - Insights:
+      - Delivery Insights:
+          - Configure Delivery Insights: insights/delivery-insights/configure-delivery-insights.md
+          - View Delivery Insights: insights/delivery-insights/view-delivery-insights.md
+      - Integrate External Insights Platforms:
+          - Work with the Choreo Insights API:
+              - Access the Choreo Insights API: insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
+              - Choreo Insights API: insights/work-with-choreo-insights-api/choreo-insights-api.md
+      - Cost Insights: insights/cost-optimization.md
+  - Observability:
+      - Alerts: 
+          - Configure Alerts: observability/alerts/configure-alerts.md
+      - Runtime Logs: observability/runtime-logs.md
+      - Private Data Plane Logs: observability/private-data-plane-logs.md
+      - Audit Logs: observability/audit-logs.md
+  - API Management:
+      - Developer Portal:
+          - Customize the Choreo Developer Portal: api-management/developer-portal/customize-the-developer-portal.md
+      - API Analytics:
+          - Integrate Choreo with Moesif for Analytics: api-management/api-analytics/integrate-choreo-with-moesif.md   
+      - Consumer IDPs:
+          - Set Up a User Store with Choreo’s Built-In Identity Provider: api-management/consumer-idps/configure-a-user-store-with-built-in-idp.md
+          - Set Up Asgardeo as an External IdP for Choreo APIs: api-management/consumer-idps/configure-asgardeo-as-an-external-idp.md
+          - Set Up Azure AD as an External IdP for Choreo APIs: api-management/consumer-idps/configure-azure-ad-as-an-external-idp.md
+  - Choreo CLI:
+      - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
+      - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md
+      - Manage Authentication with Personal Access Tokens in Choreo CLI: choreo-cli/manage-authentication-with-personal-access-tokens.md
+  - References:
+      - FAQ: references/faq.md
+      - Choreo Limitations: references/choreo-limitations.md
+      - Troubleshoot Choreo: references/troubleshoot-choreo.md
+      - Private Data Plane Security Levels: references/private-data-plane-security-levels.md
+      - Private Data Plane Management Models: references/private-data-plane-management-models.md
+      - Choreo Platform Service Billing and Upgrades: references/choreo-platform-services-billing-and-upgrades.md
+
+# Extensions
+# Extensions
+markdown_extensions:
+  - markdown.extensions.admonition
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      pygments_lang_class: true
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.snippets:
+      base_path: docs
+  - attr_list
+plugins:
+  - search
+  - include-markdown
+  - glightbox
+  - open-in-new-tab
+  - markdownextradata: {}
+extra_css:
+  # - assets/lib/highlightjs/default.min.css
+  # - assets/css/theme.css
+  # - assets/css/prism.css
+  # - assets/lib/json-formatter/json-formatter.css
+
+  - assets/lib/highlightjs/styles/vs.min.css
+  - assets/css/blue-palette-alt2.css
+  - assets/css/choreotheme.css
+  - assets/lib/json-formatter/json-formatter.css
+  - assets/css/config-catalog.css
+  - assets/lib/fontawesome-free-6.3.0-web/css/all.min.css
+extra_javascript:
+  - assets/lib/json-formatter/json-formatter.umd.js
+  - assets/lib/highlightjs/highlight.min.js
+  # - assets/js/theme.js
+  #- assets/js/prism-ballerina.js
+  - assets/js/choreotheme.js
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/wso2
+  version:
+    provider: mike
+  # Perspective dropdown configurations
+  show_perspective_dropdown: true
+  developer_docs_path: /choreo/docs/developer/
+  pe_docs_path: /choreo/docs/platform-engineer/
+#site_version: 1.0.0
+#base_path: http://localhost:8000
+

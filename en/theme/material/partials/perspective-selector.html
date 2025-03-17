@@ -1,0 +1,150 @@
+{% if config.extra.show_perspective_dropdown %}
+<div class="md-dropdown">
+    <!-- Get docs path from config -->
+    {% set pe_path = config.pe_docs_path | d('/choreo/docs/platform-engineer') %}
+    <!-- Inline script to set the button text based only on current URL path -->
+    <script>
+      (function() {
+        try {
+          var currentPath = window.location.pathname;
+          var selectedRole = "Developer"; // Default role
+          
+          // Use the PE path from config
+          var pePath = "{{ pe_path }}";
+          
+          // If we're on the platform engineer path, select that role
+          if (currentPath.includes(pePath)) {
+            selectedRole = "Platform Engineer";
+          }
+          // Set the button text based on the current URL path
+          document.write('<button class="md-dropdown__button">' + selectedRole + '</button>');
+        } catch (e) {
+          document.write('<button class="md-dropdown__button">Developer</button>');
+        }
+      })();
+    </script>
+    <noscript>
+      <button class="md-dropdown__button">Developer</button>
+    </noscript>
+    <div class="md-dropdown__menu">
+        <a href="{{ config.extra.developer_docs_path | d('/choreo/docs/developer') }}" class="md-dropdown__item">Developer</a>
+        <a href="{{ config.extra.pe_docs_path | d('/choreo/docs/platform-engineer') }}" class="md-dropdown__item">Platform Engineer</a>
+    </div>
+</div>
+{% endif %}
+<!-- Add CSS styles for the dropdown -->
+<style>
+/* MkDocs Material dropdown styles */
+.md-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+.md-dropdown__button {
+    display: inline-flex;
+    align-items: center;
+    color: var(--md-primary-fg-color--light);
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.md-dropdown__button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.md-dropdown__button:focus {
+    border-color: var(--md-accent-fg-color);
+}
+
+.md-dropdown__button::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid var(--md-primary-fg-color--light);
+    margin-left: 8px;
+}
+
+.md-dropdown__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    min-width: 180px;
+    max-height: 0;
+    overflow: hidden;
+    background-color: var(--md-default-bg-color);
+    border-radius: 4px;
+    box-shadow: var(--md-shadow-z3);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.md-dropdown.active .md-dropdown__menu {
+    max-height: 300px;
+    opacity: 1;
+    transform: translateY(5px);
+    pointer-events: auto;
+}
+
+.md-dropdown__item {
+    display: block;
+    padding: 8px 8px;
+    color: var(--md-default-fg-color);
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    line-height: 1.5rem;
+}
+
+.md-dropdown__item:hover {
+    background-color: var(--md-accent-fg-color--transparent);
+}
+
+.md-dropdown__item.active {
+    background-color: var(--md-accent-fg-color--transparent);
+    color: var(--md-accent-fg-color);
+}
+</style>
+<!-- Add JavaScript for dropdown functionality -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdown = document.querySelector('.md-dropdown');
+    const button = dropdown.querySelector('.md-dropdown__button');
+    
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        dropdown.classList.toggle('active');
+    });
+    
+    // Close when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
+    
+    // Option selection - just navigate, no state to store
+    const items = dropdown.querySelectorAll('.md-dropdown__item');
+    
+    // Set active class based on button text
+    const buttonText = button.textContent.trim();
+    items.forEach(item => {
+        if (item.textContent.trim() === buttonText) {
+            items.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+        }
+    });
+});
+</script>
