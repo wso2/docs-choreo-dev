@@ -1799,26 +1799,6 @@ document.addEventListener('DOMContentLoaded', function() {
     Configure endpoints
   </a>
   
-    <nav class="md-nav" aria-label="Configure endpoints">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#configure-endpoints-with-buildpacks-except-ballerina" class="md-nav__link">
-    Configure endpoints with buildpacks (except Ballerina)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configure-endpoints-with-the-ballerina-buildpack" class="md-nav__link">
-    Configure endpoints with the Ballerina buildpack
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1839,6 +1819,13 @@ document.addEventListener('DOMContentLoaded', function() {
           <li class="md-nav__item">
   <a href="#change-the-default-endpoint-of-a-component" class="md-nav__link">
     Change the default endpoint of a component
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-a-ui-defined-endpoint" class="md-nav__link">
+    Edit a UI-Defined Endpoint
   </a>
   
 </li>
@@ -3916,26 +3903,6 @@ document.addEventListener('DOMContentLoaded', function() {
     Configure endpoints
   </a>
   
-    <nav class="md-nav" aria-label="Configure endpoints">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#configure-endpoints-with-buildpacks-except-ballerina" class="md-nav__link">
-    Configure endpoints with buildpacks (except Ballerina)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configure-endpoints-with-the-ballerina-buildpack" class="md-nav__link">
-    Configure endpoints with the Ballerina buildpack
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -3956,6 +3923,13 @@ document.addEventListener('DOMContentLoaded', function() {
           <li class="md-nav__item">
   <a href="#change-the-default-endpoint-of-a-component" class="md-nav__link">
     Change the default endpoint of a component
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-a-ui-defined-endpoint" class="md-nav__link">
+    Edit a UI-Defined Endpoint
   </a>
   
 </li>
@@ -4034,12 +4008,18 @@ document.addEventListener('DOMContentLoaded', function() {
 </tbody>
 </table>
 <h2 id="configure-endpoints_1">Configure endpoints<a class="headerlink" href="#configure-endpoints_1" title="Permanent link">&para;</a></h2>
-<p>The method of defining endpoints depends on the buildpack. For buildpacks other than <code>Ballerina</code> and <code>WSO2 MI</code>, it is required to have an <code>component.yaml</code> file in project root directory to create the Service component.</p>
-<h3 id="configure-endpoints-with-buildpacks-except-ballerina">Configure endpoints with buildpacks (except Ballerina)<a class="headerlink" href="#configure-endpoints-with-buildpacks-except-ballerina" title="Permanent link">&para;</a></h3>
-<p>When you build a service component using any other buildpacks(Java, Python, NodeJS, Ruby, PHP, Go, Dockerfile, etc) other than Ballerina and WSO2 MI, you can configure the endpoint details with the <code>component.yaml</code> source configuration file. You must place this file inside the <code>.choreo</code> directory at the build context path and commit it to the source repository.</p>
-<p>To learn about the <code>component.yaml</code> file, see <a href="../manage-component-source-configurations/#overview-of-the-componentyaml-file">Overview of the component.yaml file</a>.</p>
-<h3 id="configure-endpoints-with-the-ballerina-buildpack">Configure endpoints with the Ballerina buildpack<a class="headerlink" href="#configure-endpoints-with-the-ballerina-buildpack" title="Permanent link">&para;</a></h3>
-<p>When you create a service component with the <code>Ballerina buildpack</code>, Choreo automatically detects the endpoint details for REST APIs. You can override the auto-generated endpoint configuration by providing the <code>component.yaml</code> file in the source directory.</p>
+<p>The method of defining endpoints depends on the buildpack.</p>
+<ul>
+<li>For <code>Ballerina</code> and <code>WSO2 MI</code> buildpacks, Choreo automatically detects the endpoint details for REST APIs.</li>
+<li>
+<p>For all other buildpacks (Java, Python, NodeJS, Ruby, PHP, Go, Dockerfile, etc.), you can configure endpoints in one of the following ways:</p>
+<ul>
+<li><strong>Using the Choreo Console</strong>: If a <code>component.yaml</code> file is not present, you can define a basic endpoint configuration during component creation.</li>
+<li><strong>Using the component.yaml file</strong>: You can manually configure endpoint details by defining them in a <code>component.yaml</code> file, placing it inside the <code>.choreo</code> directory at the build context path, and committing it to the source repository.</li>
+</ul>
+</li>
+</ul>
+<p>You can override UI-defined and auto-generated endpoints by providing a <code>component.yaml</code> file in the <code>.choreo</code> directory, which will take priority over other configurations.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Automatic endpoint generation is not supported for dynamic endpoint parameters such as variable ports. Therefore, you must use an <code>component.yaml</code> file to define dynamic endpoint parameters.</p>
@@ -4085,6 +4065,23 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>In the <strong>Endpoint Details</strong> pane that opens, click the <strong>Default Endpoint</strong> list, select the endpoint you want to set as the default endpoint, and then click <strong>Update</strong>.</li>
 <li>Click <strong>Deploy</strong>. This deploys the component with the selected endpoint as the default, and the default URL will now correspond to this endpoint.  </li>
 </ol>
+<h3 id="edit-a-ui-defined-endpoint">Edit a UI-Defined Endpoint<a class="headerlink" href="#edit-a-ui-defined-endpoint" title="Permanent link">&para;</a></h3>
+<p>If you defined an endpoint during component creation, you can edit it later by following these steps:</p>
+<ol>
+<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
+<li>In the <strong>Component Listing</strong> pane, click on the component for which you want to update the endpoint.</li>
+<li>In the left navigation menu, click <strong>Deploy</strong>.</li>
+<li>On the <strong>Deploy</strong> page, go to the <strong>Set Up</strong> card and click <strong>Configure &amp; Deploy</strong>.</li>
+<li>In the <strong>Environment Configurations</strong> pane that opens, click <strong>Next</strong>.</li>
+<li>In the <strong>File Mount</strong> pane that opens, click <strong>Next</strong>.</li>
+<li>In the <strong>Endpoint Details</strong> pane that opens, locate the endpoint you want to edit.</li>
+<li>Click the <strong>Edit</strong> icon next to the endpoint, modify the editable fields, and click <strong>Update</strong>.</li>
+<li>Click <strong>Deploy</strong> to apply the changes.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you commit a <code>component.yaml</code> file, build the component, and proceed with deployment, the endpoints will be generated from the <code>component.yaml</code> file and will take priority. In this case, the endpoint cannot be edited through the UI. To modify the endpoint, you must update the<code>component.yaml</code> file.</p>
+</div>
 
 
 
