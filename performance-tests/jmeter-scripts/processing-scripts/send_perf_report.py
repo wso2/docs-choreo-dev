@@ -128,8 +128,7 @@ def create_email_body(images):
     <div class="subtitle">Latency Variation</div>
     <div class="chart-container">
         <img src="cid:{latency_200}" alt="200 Latency Chart" class="chart">
-        <br><br>
-        <img src="cid:{latency_200_mins}" alt="200 Latency Minutes Chart" class="chart">
+        <img src="cid:{latency_200_mins}" alt="200 Latency Minutes Chart" class="chart" style="margin-left: 20px;">
     </div>
 
     <div class="separator"></div>
