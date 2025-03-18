@@ -20,9 +20,9 @@ def get_week_monday(date_str):
 # List of all required and optional images
 images = {
     "20_tps_chart": "20_tps_chart.png",
-    "20_tpm_chart": "200_tpm_chart.png",
+    "20_tpm_chart": "20_tpm_chart.png",
     "20_latency_chart": "20_latency_chart.png",
-    "20_latency_mins_chart": "200_latency_mins_chart.png",
+    "20_latency_mins_chart": "20_latency_mins_chart.png",
     "200_tps_chart": "200_tps_chart.png",
     "200_tpm_chart": "200_tpm_chart.png",
     "200_latency_chart": "200_latency_chart.png",
