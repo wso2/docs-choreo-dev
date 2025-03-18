@@ -20,9 +20,13 @@ def get_week_monday(date_str):
 # List of all required and optional images
 images = {
     "20_tps_chart": "20_tps_chart.png",
+    "20_tpm_chart": "200_tpm_chart.png",
     "20_latency_chart": "20_latency_chart.png",
+    "20_latency_mins_chart": "200_latency_mins_chart.png",
     "200_tps_chart": "200_tps_chart.png",
+    "200_tpm_chart": "200_tpm_chart.png",
     "200_latency_chart": "200_latency_chart.png",
+    "200_latency_mins_chart": "200_latency_mins_chart.png",
     "200_error_chart": "200_error_chart.png",  # Optional
     "api_invocations_tps_chart": "api_invocations_tps_chart.png",
     "api_invocations_latency_chart": "api_invocations_latency_chart.png",
@@ -53,9 +57,13 @@ def check_images_exist(image_dict):
 def create_email_body(images):
     # Extract image CIDs
     tps_20 = images.get('20_tps_chart', '')
+    tpm_20 = images.get('20_tpm_chart', '')
     latency_20 = images.get('20_latency_chart', '')
+    latency_20_mins = images.get('20_latency_mins_chart', '')   
     tps_200 = images.get('200_tps_chart', '')
+    tpm_200 = images.get('200_tpm_chart', '')
     latency_200 = images.get('200_latency_chart', '')
+    latency_200_mins = images.get('200_latency_mins_chart', '')
     error_200 = images.get('200_error_chart', '')
     tps_api = images.get('api_invocations_tps_chart', '')
     latency_api = images.get('api_invocations_latency_chart', '')
@@ -99,26 +107,29 @@ def create_email_body(images):
     </p>
 
     <div class="section-title">Results for 20 Concurrency</div>
-    <div class="subtitle">TPS Variation</div>
+    <div class="subtitle">Throughput Variation</div>
     <div class="chart-container">
         <img src="cid:{tps_20}" alt="20 TPS Chart" class="chart">
+        <img src="cid:{tpm_20}" alt="20 TPM Chart" class="chart" style="margin-left: 20px;">
     </div>
     <div class="subtitle">Latency Variation</div>
     <div class="chart-container">
         <img src="cid:{latency_20}" alt="20 Latency Chart" class="chart">
+        <img src="cid:{latency_20_mins}" alt="20 Latency Minutes Chart" class="chart" style="margin-left: 20px;">
     </div>
 
     <div class="section-title">Results for 200 Concurrency</div>
-    <div class="subtitle">TPS and Error Variation</div>
-    <div>
-        <div>
+    <div class="subtitle">Throughput and Error Variation</div>
+    <div class="chart-container">
             <img src="cid:{tps_200}" alt="200 TPS Chart" class="chart">
-        </div>
-        {"<div><img src='cid:" + error_200 + "' alt='200 Error Chart' class='chart'></div>" if error_200 else ""}
+            <img src="cid:{tpm_200}" alt="200 TPM Chart" class="chart"  style="margin-left: 20px;">
     </div>
+    {"<div class='chart-container'><img src='cid:" + error_200 + "' alt='200 Error Chart' class='chart'></div>" if error_200 else ""}
     <div class="subtitle">Latency Variation</div>
     <div class="chart-container">
         <img src="cid:{latency_200}" alt="200 Latency Chart" class="chart">
+        <br><br>
+        <img src="cid:{latency_200_mins}" alt="200 Latency Minutes Chart" class="chart">
     </div>
 
     <div class="separator"></div>
