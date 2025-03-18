@@ -63,7 +63,7 @@ To create an API proxy, you can either upload an OpenAPI specification or provid
 1. In the left navigation menu, click **Develop** and then click **Resources**.
 
 !!! note
-    You can **add/remove** resources or **modify** existing resources by the functionalities of the **Resources** page.
+    You can **add/remove** resources or **modify** existing resources with the existing functionalities of the **Resources** page.
 
 ## Step 3: Deploy the API proxy
 
