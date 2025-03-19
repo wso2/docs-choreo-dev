@@ -52,7 +52,7 @@ spec:
             - containerPort: 9090      # To be used for readiness/liveness probes (internal)
               name: health-port
           readinessProbe:
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             timeoutSeconds: 15
             periodSeconds: 10
             failureThreshold: 3
