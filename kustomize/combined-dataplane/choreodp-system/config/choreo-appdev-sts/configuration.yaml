@@ -43,8 +43,8 @@ services:
     url: {{.CONTROL_PLANE_TOKEN_SERVICE_URL}}
     consumerKey: {{.CONTROL_PLANE_TOKEN_SERVICE_CONSUMER_KEY}}
     consumerSecret: {{.CONTROL_PLANE_TOKEN_SERVICE_CONSUMER_SECRET | default "/mnt/csi/choreo-appdev-sts-secrets/cp-consumer-secret.txt"}}
-  stsManagementService:
-    url: {{.STS_MANAGEMENT_SERVICE_URL}}
+  choreoTokenRevokeService:
+    url: {{.CHOREO_TOKEN_REVOKE_SERVICE_URL}}
 httpClient:
   maxTotal: {{.HTTP_CLIENT_MAX_TOTAL | default 100}}
   defaultMaxPerRoute: {{.HTTP_CLIENT_DEFAULT_MAX_PER_ROUTE | default 10}}
