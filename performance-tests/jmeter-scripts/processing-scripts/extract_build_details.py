@@ -103,9 +103,9 @@ def process_jtl_file(jtl_file, output_csv, build_filter):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process JMeter JTL files and extract build information.")
-    parser.add_argument("jtl_file", nargs="?", default="result-tree.jtl", help="Path to the JTL file (default: result-tree.jtl)")
+    parser.add_argument("--input", nargs="?", default="result-tree.jtl", help="Path to the JTL file (default: result-tree.jtl)")
     parser.add_argument("--buildType", choices=["initialBuild", "lastBuild"], help="Filter by build type (optional)")
     parser.add_argument("--output", default="jmeter_summary.csv", help="Output CSV file (default: jmeter_summary.csv)")
 
     args = parser.parse_args()
-    process_jtl_file(args.jtl_file, args.output, args.buildType)
+    process_jtl_file(args.input, args.output, args.buildType)
