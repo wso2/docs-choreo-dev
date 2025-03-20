@@ -14,49 +14,42 @@
 package project
 
 import (
-	"choreo-integration-test-runner/choreo"
 	"choreo-integration-test-runner/choreo/internal/api"
-	"choreo-integration-test-runner/choreo/internal/validator"
 	"choreo-integration-test-runner/helper/name"
-	req "choreo-integration-test-runner/model/request"
+	"choreo-integration-test-runner/model/request"
 	"choreo-integration-test-runner/runner"
-	"context"
 	"errors"
-	"fmt"
 
 	"github.com/go-resty/resty/v2"
 )
 
-type Project struct {
-	placeholder string
+type project struct {
+	sequence int
+	params   map[string]string
 }
 
-func (p *Project) CreateProject(ctx context.Context, sequence int, params map[string]string) {
-	ctx, ok := validator.PreExecutionSetup(ctx, sequence, params, p)
-
-	if !ok {
-		return
+func CreateProject(sequence int, params map[string]string) *project {
+	return &project{
+		sequence: sequence,
+		params:   params,
 	}
-
-	client := choreo.GetClient(ctx)
-
-	state := choreo.GetState(ctx)
-	funcState := state.FunctionStates[sequence]
-
-	p.createProject(client, state, &funcState, params)
-
-	choreo.SetState(ctx, state)
-
-	fmt.Printf("state Inside: %v\n", state)
 }
 
-func (p *Project) createProject(client *resty.Client, state *runner.State, funcState *[]runner.Run, params map[string]string) {
-	orgId := state.OrgHolder.OrgId
-	orgHandler := state.OrgHolder.OrgHandler
+func (p *project) GetParams() map[string]string {
+	return p.params
+}
+
+func (p *project) GetSequence() int {
+	return p.sequence
+}
+
+func (p *project) Execute(client *resty.Client, state *runner.SpecState, actionState *runner.ActionState, params map[string]string) runner.ExecutionResult {
+	orgId := state.GetOrgId()
+	orgHandler := state.GetOrgHandler()
 
 	name := name.NewName("autotest")
 
-	req := req.CreateProject{
+	req := request.CreateProject{
 		Name:           name.NameWithSeparators(),
 		Description:    params["description"],
 		ProjectHandler: name.Name(),
@@ -67,22 +60,27 @@ func (p *Project) createProject(client *resty.Client, state *runner.State, funcS
 
 	resp, status := api.CreateProject(client, req)
 
-	fmt.Println("status: ", status)
-
 	if status.IsFailed() {
-		*funcState = append(*funcState, runner.Run{
+		actionState.Runs = append(actionState.Runs, runner.Run{
 			RunState: runner.Failed,
 			Reason:   status.GetMessage(),
 		})
 	} else {
-		state.ProjectHolder[p.placeholder] = *resp
-		*funcState = append(*funcState, runner.Run{
+		placeholder := params["placeholder"]
+
+		state.SetProject(placeholder, *resp)
+		actionState.Runs = append(actionState.Runs, runner.Run{
 			RunState: runner.Success,
 		})
 	}
+
+	return runner.ExecutionResult{
+		Response:           nil,
+		IsValidateResponse: false,
+	}
 }
 
-func (p *Project) Sanitize(state *runner.State, params map[string]string) error {
+func (p *project) SanitizeParams(params map[string]string) error {
 	mandatoryFields := []string{"description", "region", "placeholder"}
 	for _, field := range mandatoryFields {
 		if _, ok := params[field]; !ok {
@@ -90,7 +88,13 @@ func (p *Project) Sanitize(state *runner.State, params map[string]string) error 
 		}
 	}
 
-	p.placeholder = params["placeholder"]
+	return nil
+}
 
+func (p *project) GetSubAction() runner.SubAction {
+	return nil
+}
+
+func (p *project) GetResponseGenerator() runner.ResponseGenerator {
 	return nil
 }

@@ -77,13 +77,13 @@ func renderTemplate(tmpl *template.Template, model any) (*bytes.Buffer, error) {
 }
 
 func loadTemplates(fs embed.FS, dir string, templateStore map[string]*template.Template) error {
-	request, err := fs.ReadDir(dir)
+	files, err := fs.ReadDir(dir)
 
 	if err != nil {
 		return fmt.Errorf("failed to read directory %s in loadTemplates(): %w", dir, err)
 	}
 
-	for _, f := range request {
+	for _, f := range files {
 		if f.IsDir() {
 			continue
 		}

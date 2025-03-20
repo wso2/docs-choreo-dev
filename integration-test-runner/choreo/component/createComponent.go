@@ -15,102 +15,138 @@ package component
 
 import (
 	"bytes"
-	"choreo-integration-test-runner/choreo"
 	"choreo-integration-test-runner/choreo/internal/api"
-	"choreo-integration-test-runner/choreo/internal/validator"
 	"choreo-integration-test-runner/helper/name"
 	"choreo-integration-test-runner/model/request"
-	res "choreo-integration-test-runner/model/response"
 	"choreo-integration-test-runner/runner"
+
 	"choreo-integration-test-runner/template"
-	"context"
 	"errors"
 
 	"github.com/go-resty/resty/v2"
 )
 
-type CreateComponent struct {
-	project     *res.CreateProject
-	placeholder string
-	orgId       int
+type responseGenerator struct {
+	orgId     int
+	projectId string
+	handler   string
 }
 
-func (c *CreateComponent) CreateComponent(ctx context.Context, sequence int, params map[string]string) {
-	ctx, ok := validator.PreExecutionSetup(ctx, sequence, params, c)
+type component struct {
+	sequence          int
+	params            map[string]string
+	componentDetails  componentDetails
+	responseGenarator responseGenerator
+}
 
+func CreateComponent(sequence int, params map[string]string) *component {
+	return &component{
+		sequence:         sequence,
+		params:           params,
+		componentDetails: componentDetails{},
+	}
+}
+
+func (c *component) GetParams() map[string]string {
+	return c.params
+}
+func (c *component) GetSequence() int {
+	return c.sequence
+}
+
+func (c *component) Execute(client *resty.Client, state *runner.SpecState, actionState *runner.ActionState, params map[string]string) runner.ExecutionResult {
+	projectPlaceholder := params["project"]
+	project, ok := state.GetProject(projectPlaceholder)
 	if !ok {
-		return
+		actionState.Runs = append(actionState.Runs, runner.Run{
+			RunState: runner.Failed,
+			Reason:   "Project with placeholder `" + projectPlaceholder + "` not found",
+		})
+		return runner.ExecutionResult{
+			Response:           nil,
+			IsValidateResponse: false,
+		}
 	}
 
-	client := choreo.GetClient(ctx)
-
-	state := choreo.GetState(ctx)
-	funcState := state.FunctionStates[sequence]
-
-	c.createComponent(client, state, &funcState, params)
-}
-
-func (c *CreateComponent) createComponent(client *resty.Client, state *runner.State, funcState *[]runner.Run, params map[string]string) {
 	name := name.NewName("autotest")
 
 	request := request.CreateComponent{
 		Name:              name.NameWithSeparators(),
 		Description:       params["description"],
-		OrgId:             c.orgId,
+		OrgId:             state.GetOrgId(),
+		OrgHandler:        state.GetOrgHandler(),
+		DisplayName:       name.NameWithSeparators(),
 		DisplayType:       params["displayType"],
-		ProjectId:         c.project.Project.Id,
+		ProjectId:         project.Project.Id,
 		Accessibility:     params["accessibility"],
-		SrcGitRepoURL:     params["srcGitRepoURL"],
+		SrcGitRepoUrl:     params["srcGitRepoURL"],
 		RepositorySubPath: params["repositorySubPath"],
 		RepositoryBranch:  params["repositoryBranch"],
 		IsPublicRepo:      params["isPublicRepo"] == "true",
 	}
 
-	response, rawResponse, status := api.CreateComponent(client, request)
+	response, status := api.CreateComponent(client, request)
 
 	if status.IsFailed() {
-		*funcState = append(*funcState, runner.Run{
+		actionState.Runs = append(actionState.Runs, runner.Run{
 			RunState: runner.Failed,
 			Reason:   status.GetMessage(),
 		})
 	} else {
-		if validator.ValidateResponse(state, funcState, rawResponse, c) {
-			state.ComponentResponseHolder[c.placeholder] = *response
-			state.ComponentRequestHolder[c.placeholder] = request
+		placeholder := params["placeholder"]
+		rawResponse := status.GetRawResponse()
+
+		state.SetComponentResponse(placeholder, *response)
+		state.SetComponentRequest(placeholder, request)
+
+		c.responseGenarator = responseGenerator{
+			orgId:     state.GetOrgId(),
+			projectId: project.Project.Id,
+			handler:   response.Component.Handler,
 		}
+
+		return runner.ExecutionResult{
+			Response:           rawResponse,
+			IsValidateResponse: true,
+		}
+	}
+
+	return runner.ExecutionResult{
+		Response:           nil,
+		IsValidateResponse: false,
 	}
 }
 
-func (c *CreateComponent) Sanitize(state *runner.State, params map[string]string) error {
-	mandatoryFields := []string{"placeholder", "description", "orgName", "displayType", "project", "accessibility", "srcGitRepoURL", "repositorySubPath", "repositoryBranch", "isPublicRepo"}
+func (c *component) SanitizeParams(params map[string]string) error {
+	mandatoryFields := []string{"placeholder", "displayType", "project",
+		"accessibility", "srcGitRepoURL", "repositorySubPath", "repositoryBranch", "isPublicRepo"}
+
 	for _, field := range mandatoryFields {
 		if _, ok := params[field]; !ok {
 			return errors.New(field + " is required")
 		}
 	}
 
-	projectPlaceholder := params["project"]
-	project, ok := state.ProjectHolder[projectPlaceholder]
-	if !ok {
-		return errors.New("Project with placeholder `" + projectPlaceholder + "` not found")
-	}
-
-	c.project = &project
-	c.placeholder = params["placeholder"]
-	c.orgId = state.OrgHolder.OrgId
-
 	return nil
 }
 
-func (c *CreateComponent) ReadExpectedResponse() (*bytes.Buffer, error) {
+func (c *component) GetSubAction() runner.SubAction {
+	return &c.componentDetails
+}
+
+func (c *component) GetResponseGenerator() runner.ResponseGenerator {
+	return &c.responseGenarator
+}
+
+func (c *responseGenerator) GenExpectedResponse() (*bytes.Buffer, error) {
 	expected := struct {
 		OrgId     int
 		ProjectId string
 		Handler   string
 	}{
 		OrgId:     c.orgId,
-		ProjectId: c.project.Project.Id,
-		Handler:   c.placeholder,
+		ProjectId: c.projectId,
+		Handler:   c.handler,
 	}
 
 	return template.PopulateResponseTemplate("createComponent", expected)

@@ -14,7 +14,7 @@
 package auth
 
 import (
-	"choreo-integration-test-runner/choreo/internal/api/config"
+	"choreo-integration-test-runner/config"
 	"context"
 	"fmt"
 	"strings"
