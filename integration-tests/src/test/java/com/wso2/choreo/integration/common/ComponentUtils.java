@@ -752,7 +752,7 @@ public class ComponentUtils {
                                      List<Environment> environments) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         GraphqlDTO graphqlDTO = createDeploymentRequest(component, latestCommit, environments);
-        GraphQL.getBuildStatusByConclusionVersionV2(runner, appServiceClient, accessToken, graphqlDTO,120);
+        GraphQL.getBuildStatusByConclusionVersionV2(runner, appServiceClient, accessToken, graphqlDTO,60);
     }
 
     public static ComponentDeploymentStatusDTO deployBuiltComponent(TestNGCitrusSpringSupport runner,

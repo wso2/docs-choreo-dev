@@ -28,6 +28,7 @@ import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.models.marketplace.CommonResource;
 import com.wso2.choreo.integration.models.marketplace.ServiceInfo;
 import com.wso2.choreo.integration.models.marketplace.ServiceVisibility;
+import com.wso2.choreo.integration.models.marketplace.SourceConfigurationFileTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -98,9 +99,9 @@ public class MarketplaceService {
     }
 
     public static String getChoreoServiceIdentifier(TestActionRunner runner, HttpClient client, String accessToken,
-                                                    String serviceId, ServiceVisibility visibility) {
+                                                    String serviceId, ServiceVisibility visibility, SourceConfigurationFileTypes fileType) {
         String resourceURL = CONTEXT.concat("/services/").concat(serviceId).
-                concat("/dependencyId").concat("?visibility=").concat(visibility.toString());
+                concat("/dependencyId").concat("?visibility=").concat(visibility.toString()).concat("?configFileType=".concat(fileType.toString()));
         AtomicReference<String> serviceIdentifier = new AtomicReference<>();
         runner.$(http()
                 .client(client)

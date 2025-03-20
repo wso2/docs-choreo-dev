@@ -1,0 +1,38 @@
+schemaVersion: "1.1"
+endpoints:
+  - name: reward-management-api-5c6
+    displayName: Reward Management API
+    service:
+        basePath: /
+        port: 8080
+    type: REST
+    networkVisibilities:
+    - Project
+    - Public
+    schemaFilePath: openapi.json
+dependencies:
+    connectionReferences:
+    - name: {{connectionName}}
+      resourceRef: {{resourceRef}}
+configurations:
+    env:
+     - name: LOYALTY_API_URL
+       valueFrom:
+            connectionRef:
+                name: {{connectionName}}
+                key: ServiceURL
+     - name: CLIENT_ID
+       valueFrom:
+            connectionRef:
+                name: {{connectionName}}
+                key: ConsumerKey
+     - name: CLIENT_SECRET
+       valueFrom:
+           connectionRef:
+                name: {{connectionName}}
+                key: ConsumerSecret
+     - name: TOKEN_URL
+       valueFrom:
+          connectionRef:
+                name: {{connectionName}}
+                key: TokenURL
