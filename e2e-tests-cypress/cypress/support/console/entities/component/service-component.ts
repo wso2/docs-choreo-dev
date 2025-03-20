@@ -47,6 +47,10 @@ export class Service extends mixinBuild(
     this._build(this);
   }
 
+  buildWithUnitTests() {
+    this._buildWithUnitTests(this);
+  }
+
   isSuccessfulBuildExists(): Cypress.Chainable<boolean> {
     return this._isSuccessfulBuildExists();
   }

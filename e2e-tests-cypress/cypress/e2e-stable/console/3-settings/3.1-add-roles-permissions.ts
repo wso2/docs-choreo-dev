@@ -21,6 +21,7 @@ describe("Add roles and permissions", () => {
   const groupDescription = "This Group is created by E2E test run.";
   const roleDescription = "This Role is created by E2E test run.";
   const roleTag = "testRoleTag";
+  const searchString = "choreo-test-user";
 
   it("Login to Console", () => {
     console.login();
@@ -46,11 +47,11 @@ describe("Add roles and permissions", () => {
   });
 
   it("Add a member to the group", () => {
-    console.addCurrentUserToGroup(newGroup);
+    console.addCurrentUserToGroup(newGroup, searchString);
   });
 
   it("Check member is in group", () => {
-    console.checkCurrentUserIsInGroup(newGroup);
+    console.checkCurrentUserIsInGroup(newGroup, searchString);
   });
 
   it("Delete created group and role", () => {

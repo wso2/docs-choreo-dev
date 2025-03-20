@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { CustomDomainType, Enums, UsagePlan } from "../../support/commons/enums";
+import { CustomDomainType, Enums, SecurityScheme, UsagePlan } from "../../support/commons/enums";
 import { console } from "../../support/console/console";
 import { Project } from "../../support/console/entities/project/project";
 import { Application } from "../../support/console/entities/application/application";
@@ -20,6 +20,7 @@ import {
   ProxyMetaData,
 } from "../../support/console/entities/component/proxy-component";
 import { devPortal } from "../../support/console/devportal";
+import { Utils } from "../../support/commons/utils";
 
 const CUSTOM_DOMAIN = Cypress.env("devportalCustomDomain");
 const Filepath = "apis/generation_oas.yaml";
@@ -62,6 +63,10 @@ describe("Create and deploy a component to test developer portal with custom dom
       });
   });
 
+  it("Enable OAuth2 security", () => {
+    proxy.enableSecurityScemes([SecurityScheme.OAuth2]);
+  });
+
   it("Deploy API Proxy", () => {
     proxy.deploy();
   });
@@ -86,14 +91,34 @@ describe("Create and deploy a component to test developer portal with custom dom
     devPortal.searchApi(proxy.getName());
   });
 
-  it("Generate credentials for SANDBOX env", () => {
-    proxy.generateCredentials_DevPortal(Enums.Environment.SANDBOX);
+  it("Create a consumer application", () => {
+    application = proxy.createApplication_DevPortal();
+  });
+
+  it("Generate subscription credentials", () => {
+    application.generateCredentials(Enums.Environment.SANDBOX);
+    application.generateCredentials(Enums.Environment.PRODUCTION);
+  });
+
+  it("Add subscription", () => {
+    application.addSubscription(proxy.getName(), UsagePlan.Bronze);
+  });
+
+  it("Navigate back to Proxy in Dev Portal", () => {
+    Utils.isTestConsoleOnly().then((testConsoleOnly) => {
+      if (!testConsoleOnly) {
+        devPortal.searchApi(proxy.getName());
+      } else {
+        cy.log(`Skipping Devportal step due to testConsoleOnly: ${testConsoleOnly}`);
+      }
+    });
   });
 
   it("Tryout API in Development env", () => {
     proxy.testSwaggerConsole_DevPortal({
       resource: OPERATION_USERS,
       env: Enums.Environment.DEVELOPMENT,
+      keyType: Enums.ApiTryoutKeyType.APPLICATION_KEY,
     });
   });
 
@@ -101,6 +126,7 @@ describe("Create and deploy a component to test developer portal with custom dom
     proxy.testSwaggerConsole_DevPortal({
       resource: OPERATION_USERS,
       env: Enums.Environment.PRODUCTION,
+      keyType: Enums.ApiTryoutKeyType.APPLICATION_KEY,
     });
   });
 
@@ -134,5 +160,9 @@ describe("Create and deploy a component to test developer portal with custom dom
       // from another account the domain will be available for use
       console.removeCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
     });
+  });
+
+  it('Clean up created data', () => {
+    console.cleanUpData();
   });
 });

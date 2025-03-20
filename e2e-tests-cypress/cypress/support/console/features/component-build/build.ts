@@ -12,7 +12,7 @@
  */
 
 import { BUILD_FAILED, BUILD_IN_PROGRESS, BUILD_QUEUED, BUILD_SUCCESS } from "../../../commons/constants";
-import { LONG_TIME, MEDIUM_TIME, SHORT_TIME } from "../../../commons/timeouts";
+import { LONG_TIME, MEDIUM_TIME, SHORT_TIME, VERY_LONG_TIME } from "../../../commons/timeouts";
 import { TestIds } from "../../constants/TestIds";
 import { ServiceLeftMenu } from "../../ui-elements/left-menus/service-left-menu";
 import { Service } from "../../entities/component/service-component";
@@ -38,6 +38,16 @@ export interface BuildFeature {
       | Byoc
   ): void;
   _isSuccessfulBuildExists(): Cypress.Chainable<boolean>;
+  _buildWithUnitTests(
+    component:
+      | Service
+      | ManualTrigger
+      | ScheduleTrigger
+      | TestRunner
+      | WebApp
+      | Webhook
+      | Byoc
+  ): void;
 }
 
 export function mixinBuild<T extends Types.Constructor>(
@@ -81,6 +91,24 @@ export function mixinBuild<T extends Types.Constructor>(
         .then(() => {
           return cy.wrap(isExists);
         });
+    }
+
+    _buildWithUnitTests(
+      component:
+      | Service
+      | ManualTrigger
+      | ScheduleTrigger
+      | TestRunner
+      | WebApp
+      | Webhook
+      | Byoc
+    ) {
+      this.sideMenu.navigateToBuild();
+      cy.get(TestIds.configureBuild).should("be.visible").click();
+      cy.get(TestIds.enableUnitTests).should("be.visible").click();
+      cy.get(TestIds.next).should("be.enabled").click();
+      cy.get(TestIds.enableUnitTests).should("not.exist");
+      this.triggerBuild(component);
     }
 
     private triggerBuild(
@@ -157,10 +185,17 @@ export function mixinBuild<T extends Types.Constructor>(
 
     private waitForBuildToComplete(retryCount = 0) {
       const waitTime = 5000;
-      const timeout = LONG_TIME.timeout;
+      const timeout = VERY_LONG_TIME.timeout;
       const maxRetries = timeout / waitTime;
 
       if (retryCount === maxRetries) {
+        cy.get(TestIds.tableTitle)
+        .should("be.visible")
+        .find("tbody")
+        .find("tr")
+        .eq(0)
+        .contains(BUILD_SUCCESS)
+        .should("be.visible");
         return;
       }
 

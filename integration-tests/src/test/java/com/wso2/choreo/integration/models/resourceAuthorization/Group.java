@@ -33,4 +33,5 @@ public class Group {
     private String updatedAt;
     private String uuid;
     private String assignedRoleCount;
+    private boolean defaultGroup;
 }

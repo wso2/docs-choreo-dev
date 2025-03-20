@@ -20,9 +20,13 @@ def get_week_monday(date_str):
 # List of all required and optional images
 images = {
     "20_tps_chart": "20_tps_chart.png",
+    "20_tpm_chart": "20_tpm_chart.png",
     "20_latency_chart": "20_latency_chart.png",
+    "20_latency_mins_chart": "20_latency_mins_chart.png",
     "200_tps_chart": "200_tps_chart.png",
+    "200_tpm_chart": "200_tpm_chart.png",
     "200_latency_chart": "200_latency_chart.png",
+    "200_latency_mins_chart": "200_latency_mins_chart.png",
     "200_error_chart": "200_error_chart.png",  # Optional
     "api_invocations_tps_chart": "api_invocations_tps_chart.png",
     "api_invocations_latency_chart": "api_invocations_latency_chart.png",
@@ -31,19 +35,35 @@ images = {
 
 def check_images_exist(image_dict):
     """
-    Check if all required images exist and return the missing ones.
+    Check if required images exist. Ignore missing images containing "error" in their filename.
+    Returns a dictionary of existing images and missing ones.
     """
-    missing_images = [name for name, path in image_dict.items() if not os.path.exists(path)]
+    existing_images = {}
+    missing_images = []
+
+    for name, path in image_dict.items():
+        if os.path.exists(path):
+            existing_images[name] = path
+        elif "error" in name:  # Skip missing error images
+            print(f"Skipping missing error image: {name}")
+        else:
+            missing_images.append(name)
+
     if missing_images:
-        print(f"Missing images: {', '.join(missing_images)}")
-    return missing_images
+        print(f"Missing critical images: {', '.join(missing_images)}. Email will still be sent.")
+
+    return existing_images, missing_images
 
 def create_email_body(images):
     # Extract image CIDs
     tps_20 = images.get('20_tps_chart', '')
+    tpm_20 = images.get('20_tpm_chart', '')
     latency_20 = images.get('20_latency_chart', '')
+    latency_20_mins = images.get('20_latency_mins_chart', '')   
     tps_200 = images.get('200_tps_chart', '')
+    tpm_200 = images.get('200_tpm_chart', '')
     latency_200 = images.get('200_latency_chart', '')
+    latency_200_mins = images.get('200_latency_mins_chart', '')
     error_200 = images.get('200_error_chart', '')
     tps_api = images.get('api_invocations_tps_chart', '')
     latency_api = images.get('api_invocations_latency_chart', '')
@@ -87,26 +107,28 @@ def create_email_body(images):
     </p>
 
     <div class="section-title">Results for 20 Concurrency</div>
-    <div class="subtitle">TPS Variation</div>
+    <div class="subtitle">Throughput Variation</div>
     <div class="chart-container">
         <img src="cid:{tps_20}" alt="20 TPS Chart" class="chart">
+        <img src="cid:{tpm_20}" alt="20 TPM Chart" class="chart" style="margin-left: 20px;">
     </div>
     <div class="subtitle">Latency Variation</div>
     <div class="chart-container">
         <img src="cid:{latency_20}" alt="20 Latency Chart" class="chart">
+        <img src="cid:{latency_20_mins}" alt="20 Latency Minutes Chart" class="chart" style="margin-left: 20px;">
     </div>
 
     <div class="section-title">Results for 200 Concurrency</div>
-    <div class="subtitle">TPS and Error Variation</div>
-    <div>
-        <div>
+    <div class="subtitle">Throughput and Error Variation</div>
+    <div class="chart-container">
             <img src="cid:{tps_200}" alt="200 TPS Chart" class="chart">
-        </div>
-        {"<div><img src='cid:" + error_200 + "' alt='200 Error Chart' class='chart'></div>" if error_200 else ""}
+            <img src="cid:{tpm_200}" alt="200 TPM Chart" class="chart"  style="margin-left: 20px;">
     </div>
+    {"<div class='chart-container'><img src='cid:" + error_200 + "' alt='200 Error Chart' class='chart'></div>" if error_200 else ""}
     <div class="subtitle">Latency Variation</div>
     <div class="chart-container">
         <img src="cid:{latency_200}" alt="200 Latency Chart" class="chart">
+        <img src="cid:{latency_200_mins}" alt="200 Latency Minutes Chart" class="chart" style="margin-left: 20px;">
     </div>
 
     <div class="separator"></div>
@@ -168,7 +190,8 @@ def send_email():
     """
     Create and send the email with charts embedded as inline images.
     """
-    missing_images = check_images_exist(images)
+    # missing_images = check_images_exist(images)
+    existing_images, missing_images = check_images_exist(images)
     if missing_images:
         print("Missing images detected. Aborting email sending.")
         return
@@ -192,7 +215,8 @@ def send_email():
     msg['To'] = ", ".join(receiver)
 
     # Create a dictionary to store image CIDs
-    image_cids = {key: key for key in images.keys()}
+    # image_cids = {key: key for key in images.keys()}
+    image_cids = {key: key for key in existing_images.keys()}
 
     # Attach the email body
     email_body = create_email_body(image_cids)
@@ -200,7 +224,7 @@ def send_email():
     msg.attach(msgText)
 
     # Attach all images
-    for cid, path in images.items():
+    for cid, path in existing_images.items():
         if os.path.exists(path):  # Attach only existing images
             with open(path, 'rb') as img_file:
                 image = MIMEImage(img_file.read(), name=os.path.basename(path))

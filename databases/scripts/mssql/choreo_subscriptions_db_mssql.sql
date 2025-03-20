@@ -127,7 +127,7 @@ BEGIN
         created_at BIGINT DEFAULT DATEDIFF_BIG(MILLISECOND,'1970-01-01 00:00:00.000', SYSUTCDATETIME()),
         threshold_id VARCHAR(128) DEFAULT '01ee409e-cdfd-13d6-86c6-1a523acc861b',
         email_type VARCHAR(128) NOT NULL DEFAULT N'non-corporate',
-        PRIMARY KEY (org_id, tier_id),
+        PRIMARY KEY (org_id, tier_id,subscription_type),
         UNIQUE (id),
         CONSTRAINT FK_TierSubscriptionV2 FOREIGN KEY (tier_id) REFERENCES tierV2(id),
         CONSTRAINT FK_ThresholdSubscriptionV2 FOREIGN KEY (threshold_id) REFERENCES threshold(id)
@@ -171,7 +171,15 @@ INSERT INTO tierV2 (id,name,description,is_paid,created_at,is_internal) VALUES
      (N'ac5b54f5-d665-4515-ae17-95eac201ecaa',N'Developer Infrastructure',N'Tier for infrastructure costs associated with Developer Paid users',1,1689683632,0),
      (N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'Team Infrastructure',N'Tier for infrastructure costs associated with new PAYG users',1,1689683632,0),
      (N'3fa450c2-d47f-4fcb-9711-9727815cd0ee',N'Developer Platform Services',N'Tier for platform services costs associated with Developer users',1,1689683632,0),
-     (N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'Team Platform Services',N'Tier for platform services costs associated with PAYG users',1,1689683632,0);
+     (N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'Team Platform Services',N'Tier for platform services costs associated with PAYG users',1,1689683632,0),
+     (N'01efff00-032a-1e3e-b071-3ac566d13e0e',N'Starter Tier',N'Bijira Starter Tier for free users',0,1741778689,0),
+     (N'01efff00-032a-1e3e-a268-2f9a210a4ca1',N'Pay-As-You-Go',N'Bijira Pay-As-You-Go for paid users',1,1741778689,0),
+     (N'01efff00-032a-1e3e-bfeb-8eb913027aef',N'Enterprise',N'Bijira Enterprise for enterprise users',1,1741778689,0),
+     (N'01efff00-032a-1e3e-98d7-c354c2553e4b',N'Support',N'Bijira Support plan for paid users',1,1741778689,0),
+     (N'01efff00-032a-1e3e-8699-213ad7ff9e4e',N'Starter Tier',N'Devant Starter Tier for free users',0,1741778689,0),
+     (N'01efff00-032a-1e3e-96dd-3c225a36d60c',N'Pay-As-You-Go',N'Devant Pay-As-You-Go for paid users',1,1741778689,0),
+     (N'01efff00-032a-1e3e-97b5-461ca87e0d5b',N'Enterprise',N'Devant Enterprise for enterprise users',1,1741778689,0),
+     (N'01efff00-032a-1e3e-a6c0-32a167db637c',N'Support',N'Devant Support plan for paid users',1,1741778689,0);
 GO
 
 INSERT INTO threshold(id,tier_id,threshold,billing_provider) values
@@ -191,5 +199,11 @@ INSERT INTO threshold(id,tier_id,threshold,billing_provider) values
     (N'01ef74c3-e4ed-1a96-b720-4f010f9f2055',N'c971b211-bc44-4f35-90ad-4d62b313b466',N'{"components": 0}','aws'), 
     (N'01ef74c3-e4ed-1a96-9b98-f03cb81c2fec',N'9819cdd6-d2df-47cb-8954-8c1a80cb06cc',N'{"components": 0}','aws'), 
     (N'01ef74c3-a821-1b20-9035-de544eaf403a',N'01ee409e-cdfd-13d6-86c6-1a523acc861b',N'{"components": 0}','aws'), 
-    (N'01ef74c3-a821-1b20-9b8f-68548979e518',N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'{"components": 0}','aws');
+    (N'01ef74c3-a821-1b20-9b8f-68548979e518',N'd3bd7035-162d-49dd-8b20-2f8bf095a889',N'{"components": 0}','aws'),
+    ('01efff35-363b-19a6-a69d-7699fba96770','01efff00-032a-1e3e-b071-3ac566d13e0e','{"apis": 5, "transactions": 10000}',NULL),
+    ('01efff35-363b-19a6-9c48-465545eefbc9','01efff00-032a-1e3e-a268-2f9a210a4ca1','{"apis": 5}','stripe'),
+    ('01efff35-363b-19a6-8a85-717d8a8e5710','01efff00-032a-1e3e-8699-213ad7ff9e4e','{"integrations": 5}',NULL),
+    ('01f0017a-2bbe-1126-a976-a7334fe5703f','01efff00-032a-1e3e-96dd-3c225a36d60c','{"integrations": 0}','stripe'),
+    ('01f0017a-2bbe-1126-8e54-56453766802b','01efff00-032a-1e3e-98d7-c354c2553e4b','{"apis": 5}','stripe'),
+    ('01f0017a-2bbe-1126-bd1a-a60f3149f980','01efff00-032a-1e3e-a6c0-32a167db637c','{"integrations": 0}','stripe');
 GO

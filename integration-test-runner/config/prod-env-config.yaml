@@ -1,0 +1,59 @@
+accountInfo:
+  TEST_USER_EMAIL: choreo-integration-test-user-prod@wso2.com@carbon.super
+  #TEST_USER_PASSWORD:
+  #TEST_CHOREO_ORG_ID:
+  TEST_USER_IDP_ID: 85128232-a1c4-4cb2-9828-46f414db52f5
+  TEST_CHOREO_ORG_HANDLE: choreointegrationtestuserprod
+  #TEST_CHOREO_ORG_UUID:
+  TEST_CHOREO_APP_DEV_STS_ORG_ID: 0
+  TEST_CHOREO_APP_DEV_STS_ORG_HANDLE: ""
+  TEST_CHOREO_APP_DEV_STS_ORG_UUID: ""
+authInfo:
+  STS_ENDPOINT: https://sts.choreo.dev
+  ASGARDEO_ENDPOINT: https://api.asgardeo.io
+  #ASGARDEO_CLIENT_ID:
+  #ASGARDEO_CLIENT_SECRET:
+  #CP_APP_CLIENT_ID:
+  #CP_APP_CLIENT_SECRET:
+common:
+  REGIONS: EU,US,IND
+  CHOREO_ENDPOINT: https://app.choreo.dev
+  CHOREO_NEW_APP_SERVICE_ENDPOINT: https://apis.choreo.dev
+  CHOREO_CP_GW_ENDPOINT: https://choreocontrolplane.choreo.dev/93tu
+  BAL_REGISTRY_URL: https://api.central.ballerina.io/2.0/registry
+  GITHUB_ENDPOINT: https://api.github.com
+  GITHUB_ORG: choreo-test-apps
+  GITHUB_TEST_USER_ORG: choreo-integration-test-user-prod
+  GITLAB_SECRETREF: 96eb6aab-4b84-4bfd-b051-f347c2464605
+  #GITHUB_TEST_USER_PAT:
+  #GITHUB_PAT:
+  GMAIL_API_CK: 412441153337-r3a3sj5ecba3a04aqlb3l05ro25tf08l.apps.googleusercontent.com
+  #GMAIL_API_CS:
+  #GMAIL_API_REFRESH_TOKEN:
+  COMMIT_LIST_EXAMPLE_RESPONSE: templates/getCommitList/query_get_commit_list_success_prod.json
+  TOKEN_SCOPES: prod-scopes.yaml
+  IS_PDP_ENABLED: false
+insights:
+  INSIGHTS_ENDPOINT: https://analytics-event-auth.st.choreo.dev
+  INSIGHTS_ONPREM_KEY: cae0f0d0-11f3-4603-86ab-2a38eac3f155
+alerts:
+  #ALERT_MAIL_IMAP_PASS:
+  ALERT_ORG_UUID: cde82885-2dee-492a-be36-60e13f7aab81
+  ALERT_RELEASE_ID: 156f5be1-9d3e-44e9-8dc2-50f37e6c21da
+selfSignup:
+  SELF_SIGNUP_ORG_UUID: 9d7cc542-6693-4bc5-a0d0-33c02b4471df
+  SELF_SIGNUP_ORG_ID: 43557
+  SELF_SIGNUP_ORG_HANDLE: choreoselfsignup
+  SELF_SIGNUP_ORG_ADMIN_EMAIL: samchoreots@gmail.com@carbon.super
+  #SELF_SIGNUP_ORG_ADMIN_PASSWORD:
+themeManagement:
+  THEME_ENDPOINT: https://apis.choreo.dev
+  CDN_THEME_ENDPOINT: https://choreoproddevportalcdn36.blob.core.windows.net/
+logs:
+  CHOREO_SYSTEM_API_PREFIX: https://5659b6b7-1063-41ed-8e39-d91857699255-systemapis.
+  CHOREO_US_DP_URL: e1-us-east-azure.choreoapis.dev
+  CHOREO_EU_DP_URL: e1-eu-north-azure.choreoapis.dev
+resourceAuthorization:
+  RESOURCE_AUTHZ_USER_EMAIL: choreo-authz-test-user@wso2.com@carbon.super
+  RESOURCE_AUTHZ_USER_UUID: 294cd5cd-8997-4e73-8a90-7441fc14a97f
+  # RESOURCE_AUTHZ_USER_PASSWORD:

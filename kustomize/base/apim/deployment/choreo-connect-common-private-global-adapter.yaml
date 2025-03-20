@@ -79,7 +79,7 @@ spec:
               readOnly: true
             - name: log-volume
               mountPath: logs
-          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-common-private-global-adapter:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connect-global-adapter-v2:latest
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false

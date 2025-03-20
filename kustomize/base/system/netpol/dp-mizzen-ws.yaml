@@ -19,3 +19,10 @@ spec:
         - podSelector:
             matchLabels:
               app.kubernetes.io/instance: controlplane-internal-nginx-ingress
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: choreo-ai
+          podSelector:
+            matchLabels:
+              choreo.component: cost-optimizer-cp

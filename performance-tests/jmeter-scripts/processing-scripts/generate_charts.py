@@ -10,15 +10,64 @@ import matplotlib.colors as mcolors
 SAMPLE_SPREADSHEET_ID = "1sM_UfSTZ88fadSDXIWxLrPsmRhYUyCX1qVCP2Rm6BH0"
 TARGET_SHEET_NAME = "Summary"
 
+# Reusable: Check if the dataset contains at least one nonzero value
+def contains_nonzero_values(data):
+    """
+    Checks if the dataset contains at least one nonzero value.
+
+    Parameters:
+        data (list of lists): The fetched Google Sheets data.
+
+    Returns:
+        bool: True if at least one value is nonzero, False otherwise.
+    """
+    if not data or len(data) < 2:  # Ensure data is valid and contains more than just headers
+        return False
+
+    # Extract numerical values, skipping headers and labels (first two columns)
+    values_only = [
+        float(value) for row in data[1:] for value in row[2:]
+        if isinstance(value, (int, float)) or (isinstance(value, str) and value.replace('.', '', 1).isdigit())
+    ]
+
+    return any(value != 0 for value in values_only)  # True if at least one nonzero value exists
+
+
 # Reusable: Fetch data from a specified range
-def fetch_data(service, range_name):
+def fetch_data(service, range_name, filter_last_four_dates=False):
     try:
         result = service.spreadsheets().values().get(
             spreadsheetId=SAMPLE_SPREADSHEET_ID, range=f"{TARGET_SHEET_NAME}!{range_name}"
         ).execute()
         values = result.get("values", [])
         print(f"Fetched data from range {range_name}: {values}")
-        return values
+
+        if filter_last_four_dates:
+            if not values or len(values) < 2:
+                print(f"No data found in range {range_name}.")
+                return None
+
+            # Extract the header row (column names, including dates)
+            header = values[0]
+
+        # Ensure there are enough columns
+            if len(header) < 6:  # At least "Step", "Label", and 4 date columns
+                print(f"Insufficient data columns in range {range_name}. Skipping...")
+                return None
+
+            # Get the last 4 date columns dynamically
+            last_four_dates = header[-4:]  # The last 4 column headers
+
+            # Determine indices of the last 4 dates
+            last_four_indices = [header.index(date) for date in last_four_dates]
+
+            # Filter the data: Keep only "Step", "Label", and the last 4 dates
+            filtered_data = [[row[0], row[1]] + [row[i] for i in last_four_indices] for row in values]
+
+            print(f"Filtered data (last 4 dates) from range {range_name}: {filtered_data}")
+            return filtered_data
+        else:
+            return values
     except HttpError as err:
         print(f"An error occurred while fetching data: {err}")
         return None
@@ -206,7 +255,77 @@ def add_api_invocation_chart_to_sheet(service, sheet_id, data_range, title, ylab
     print(f"Chart '{title}' added successfully to Google Sheets: {response}")
 
 # Reusable: Create grouped bar chart locally
-def create_grouped_bar_chart(data, title, ylabel, output_file):
+def create_grouped_bar_chart1(data, title, ylabel, output_file, bar_width=None, x_spacing=None, x_lim=None, figsize=(12, 8)):
+    header = data[0]
+    rows = data[1:]
+
+    # Extract steps and last four date columns
+    steps = [row[1] for row in rows]
+    date_columns = header[2:]
+    last_four_dates = date_columns[-4:]
+
+    # Prepare data for the grouped bar chart
+    chart_data = []
+    for row in rows:
+        chart_row = [float(row[header.index(date)]) for date in last_four_dates]
+        chart_data.append(chart_row)
+
+    # Ensure consistent x-axis spacing
+    if x_spacing is None:
+        x_spacing = np.arange(len(steps))
+
+    # Compute bar width dynamically based on the first chart
+    if bar_width is None:
+        bar_width = min(0.8 / len(x_spacing), 0.2)  # Scale dynamically but cap at 0.2
+
+    # Define color palette
+    color_palette = list(mcolors.TABLEAU_COLORS.values())[:len(last_four_dates)]
+
+    # Create figure and axis
+    fig, ax = plt.subplots(figsize=figsize)
+
+    # Plot bars
+    for i, (date, color) in enumerate(zip(last_four_dates, color_palette)):
+        data_for_date = [chart_row[i] for chart_row in chart_data]
+        ax.bar(
+            x_spacing + (i - 1.5) * bar_width,
+            data_for_date,
+            bar_width,
+            label=date,
+            color=color,
+            zorder=3
+        )  # Bars above the grid
+
+    # Force the same x-axis scale to prevent wide bars
+    if x_lim is not None:
+        ax.set_xlim(x_lim)
+
+    # Set background and grid
+    ax.set_facecolor('#f7f7f7')
+    ax.yaxis.grid(color='black', linestyle='-', linewidth=0.7, zorder=1)
+    ax.xaxis.set_major_locator(plt.MultipleLocator(1))
+    ax.xaxis.grid(color='black', linestyle='-', linewidth=0.7, zorder=1)
+    ax.set_axisbelow(True)
+
+    # Labels and title
+    ax.set_ylabel(ylabel, fontsize=12)
+    ax.set_title(title, fontsize=14, weight='bold')
+    ax.set_xticks(x_spacing)
+    ax.set_xticklabels(steps, rotation=45, ha="right", fontsize=10)
+
+    # Add legend
+    legend = ax.legend(frameon=True, loc='upper left', fontsize=10)
+    legend.get_frame().set_alpha(0.8)
+    legend.get_frame().set_facecolor('#eeeeee')
+
+    # Save chart
+    plt.tight_layout()
+    plt.savefig(output_file)
+    print(f"Chart saved as {output_file}")
+
+    return bar_width, x_spacing, ax.get_xlim()  # Return bar width, x-spacing, and x-limits
+
+def create_grouped_bar_chart(data, title, ylabel, output_file, x_lim=None,):
 
     header = data[0]
     rows = data[1:]
@@ -225,6 +344,10 @@ def create_grouped_bar_chart(data, title, ylabel, output_file):
     x = np.arange(len(steps))  # Positions for the steps
     width = 0.2  # Width of each bar in the group
 
+    # Adjust x-position if there's only one operation (center it)
+    if len(steps) == 1:
+        x = np.array([0.5])  # Center at 0.5 instead of 0
+
     # Define a subtle color palette (pastel colors)
     color_palette = list(mcolors.TABLEAU_COLORS.values())[:len(last_four_dates)]
 
@@ -241,6 +364,11 @@ def create_grouped_bar_chart(data, title, ylabel, output_file):
             zorder=3
         )  # Bars above the grid
 
+    # Force the same x-axis scale to prevent wide bars
+    if x_lim is not None:
+        ax.set_xlim(x_lim)
+    elif len(steps) == 1:
+        ax.set_xlim(0, 1)  # Adjust the x-axis for a single bar
     # Set a light grey background
     ax.set_facecolor('#f7f7f7')
 
@@ -265,7 +393,7 @@ def create_grouped_bar_chart(data, title, ylabel, output_file):
     plt.tight_layout()
     plt.savefig(output_file)
     print(f"Chart saved as {output_file}")
-    return output_file
+    return ax.get_xlim()
 
 # Reusable: Add a chart to Google Sheets
 def add_chart_to_sheet(service, sheet_id, data_range, title, ylabel):
@@ -381,49 +509,74 @@ def main():
 
     delete_existing_charts(service, sheet_id)
 
-    # TPS Chart
+    # TPS Chart - 200 Users
     tps_data = fetch_data(service, "B1:Z6")
     if tps_data:
-        create_grouped_bar_chart(tps_data, "TPS Variation", "TPS", "200_tps_chart.png")
-        add_chart_to_sheet(service, sheet_id, "B1:Z6", "TPS Variation (200 Users)", "TPS")
+        x_lim = create_grouped_bar_chart(tps_data, "Throughput Variation", "TPS", "200_tps_chart.png", None);
+        # add_chart_to_sheet(service, sheet_id, "B1:Z6", "Throughput Variation (200 Users)", "TPS")
 
-    # Latency Chart
-    latency_data = fetch_data(service, "B8:Z13")
+    # TPM Chart - 200 Users
+    tpm_data = fetch_data(service, "B8:Z9")
+    if tpm_data:
+        create_grouped_bar_chart(tpm_data, "Throughput Variation", "TPM", "200_tpm_chart.png", x_lim);
+        # add_chart_to_sheet(service, sheet_id, "B8:Z9", "Throughput Variation (200 Users)", "TPS")
+
+    # Latency Chart - 200 Users - In ms
+    latency_data = fetch_data(service, "B11:Z16")
     if latency_data:
-        create_grouped_bar_chart(latency_data, "Latency - 99th Percentile", "Latency (ms)", "200_latency_chart.png")
-        add_chart_to_sheet(service, sheet_id, "B8:Z13", "Latency Variation (200 Users)", "Latency (ms)")
+        x_lim = create_grouped_bar_chart(latency_data, "Latency - 99th Percentile", "Latency (ms)", "200_latency_chart.png", None);
+        # add_chart_to_sheet(service, sheet_id, "B11:Z16", "Latency Variation (200 Users)", "Latency (ms)")
 
-    # Error rates
-    error_data = fetch_data(service, "B15:Z20")
+    # Latency Chart - 200 Users - In minutes
+    latency_data_mins = fetch_data(service, "B18:Z19")
+    if latency_data_mins:
+        create_grouped_bar_chart(latency_data_mins, "Duration - 99th Percentile", "Duration (mins)", "200_latency_mins_chart.png", x_lim);
+        # add_chart_to_sheet(service, sheet_id, "B18:Z19", "Latency Variation (200 Users)", "Duration (mins)")
+
+    # Error rates - 200 Users
+    error_data = fetch_data(service, "B21:Z27")
     if error_data:
-        create_grouped_bar_chart(error_data, "Error Rate", "Percentage (%)", "200_error_chart.png")
-        add_chart_to_sheet(service, sheet_id, "B15:Z20", "Error Rate (200 Users)", "Percentage (%)")
+        create_grouped_bar_chart(error_data, "Error Rate", "Percentage (%)", "200_error_chart.png", None);
+        # add_chart_to_sheet(service, sheet_id, "B21:Z27", "Error Rate (200 Users)", "Percentage (%)")
 
-    tps_data = fetch_data(service, "B22:Z27")
+    # TPS Chart - 20 Users
+    tps_data = fetch_data(service, "B29:Z34")
     if tps_data:
-        create_grouped_bar_chart(tps_data, "TPS Variation", "TPS", "20_tps_chart.png")
+        create_grouped_bar_chart(tps_data, "Throughput Variation", "TPS", "20_tps_chart.png", None);
 
-    latency_data = fetch_data(service, "B29:Z34")
+    # TPM Chart - 20 Users
+    tpm_data = fetch_data(service, "B36:Z37")
+    if tpm_data:
+        create_grouped_bar_chart(tpm_data, "Throughput Variation", "TPM", "20_tpm_chart.png", x_lim);
+
+    # Latency Chart - 20 Users - In ms
+    latency_data = fetch_data(service, "B39:Z44")
     if tps_data:
-        create_grouped_bar_chart(latency_data, "Latency - 99th Percentile", "Latency (ms)", "20_latency_chart.png")
+        create_grouped_bar_chart(latency_data, "Latency - 99th Percentile", "Latency (ms)", "20_latency_chart.png", None);
+
+    # Latency Chart - 20 Users - In minutes
+    latency_data_mins = fetch_data(service, "B46:Z47")
+    if latency_data_mins:
+        create_grouped_bar_chart(latency_data_mins, "Duration - 99th Percentile", "Duration (mins)", "20_latency_mins_chart.png", x_lim);
+
 
    # Fetch API invocation data
-    api_invocations = fetch_data(service, "B43:Z44")
+    api_invocations = fetch_data(service, "B57:Z58", True)
     if api_invocations:
-        create_api_invocation_chart(api_invocations, "API Invocations - Throughput", "TPS", "api_invocations_tps_chart.png")
-        add_api_invocation_chart_to_sheet(service, sheet_id, "B43:Z44", "API Invocations", "TPS")
+        create_api_invocation_chart(api_invocations, "API Invocations - Throughput", "TPS", "api_invocations_tps_chart.png");
+        # add_api_invocation_chart_to_sheet(service, sheet_id, "B53:Z54", "API Invocations", "TPS")
 
    # Fetch API invocation data
-    api_invocations = fetch_data(service, "B46:Z48")
+    api_invocations = fetch_data(service, "B60:Z62", True)
     if api_invocations:
-        create_api_invocation_chart(api_invocations, "API Invocations - Latency", "P99 Latency (ms)", "api_invocations_latency_chart.png")
-        add_api_invocation_chart_to_sheet(service, sheet_id, "B46:Z48", "API Invocations - Latency", "P99 Latency (ms)")
+        create_api_invocation_chart(api_invocations, "API Invocations - Latency", "P99 Latency (ms)", "api_invocations_latency_chart.png");
+        # add_api_invocation_chart_to_sheet(service, sheet_id, "B60:Z62", "API Invocations - Latency", "P99 Latency (ms)")
 
-   # Fetch API invocation data
-    api_invocations = fetch_data(service, "B50:Z51")
-    if api_invocations:
-        create_api_invocation_chart(api_invocations, "API Invocations - Errors", "Errors (%)", "api_invocations_error_chart.png")
-        add_api_invocation_chart_to_sheet(service, sheet_id, "B50:Z51", "API Invocations - Errors", "Errors (%)")
+   # Fetch API invocation data - Errors
+    api_invocations = fetch_data(service, "B64:Z65", True)
+    if api_invocations and contains_nonzero_values(api_invocations):
+        create_api_invocation_chart(api_invocations, "API Invocations - Errors", "Errors (%)", "api_invocations_error_chart.png");
+        # add_api_invocation_chart_to_sheet(service, sheet_id, "B64:Z65", "API Invocations - Errors", "Errors (%)")
 
 if __name__ == "__main__":
     main()

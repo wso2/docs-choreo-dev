@@ -47,6 +47,7 @@ import com.wso2.choreo.integration.models.marketplace.*;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import com.wso2.choreo.integration.models.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -188,6 +189,13 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         publicEndpointServiceDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken,
                 publicEndpointServiceComponent, servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
         SVC_COMPONENT_SERVICE_NAME = publicEndpointServiceComponent.getName();
+        if (StringUtils.isNotBlank(publicEndpointServiceDeploymentStatusDTO.getApiId())) {
+            ConnectionService.enableOAuth2SecurityForAPI(this, citrusClients,
+                    publicEndpointServiceDeploymentStatusDTO.getApiId(), accessToken);
+            publicEndpointServiceDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(
+                    this, citrusClients, accessToken, publicEndpointServiceComponent,
+                    servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
+        }
     }
 
     // Create a new service consumer component
@@ -415,6 +423,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         proxyComponent = componentDetail.getLeft();
         proxyPublisherComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 proxyComponent);
+        ConnectionService.enableOAuth2SecurityForAPI(this, citrusClients, proxyApiId, accessToken);
         proxyAPIBuild = ComponentUtils.deployProxyComponent(this, citrusClients, accessToken,
                 proxyComponent, proxyPublisherComponentEnvironments.subList(0, 1));
     }

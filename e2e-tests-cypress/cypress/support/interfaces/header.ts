@@ -1,3 +1,3 @@
 export interface Header{
-    "api-key":string
+    "test-key":string
 }

@@ -1,0 +1,5 @@
+[server]
+port="5005"
+
+[kvResolver]
+serviceURL= "{{.KV_RESOLVER_SERVICE_URL | default "http://dp-kv-resolver.prod-choreodp-system"}}"

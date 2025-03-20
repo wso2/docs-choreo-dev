@@ -74,3 +74,26 @@ configMapGenerator:
       - TLS_ENABLED_REDIS={{.TLS_ENABLED_REDIS | default "true" }}
       - DATA_COLLECTOR_URL={{.DATA_COLLECTOR_URL}}
       - CHOREO_TOKEN_ENDPOINT={{.CHOREO_TOKEN_ENDPOINT}}
+  - name: env-cost-optimizer
+    behavior: create
+    literals:
+      - THANOS_BASE_URL={{.THANOS_BASE_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/" }}
+      - CPU_RATE_PER_HOUR={{.CPU_RATE_PER_HOUR | default "0.0139" }}
+      - RAM_RATE_PER_HOUR={{.RAM_RATE_PER_HOUR | default "0.00000000000647" }}
+      - LOG_LEVEL={{.LOG_LEVEL | default "INFO"}}
+      - REDIS_PORT={{.REDIS_PORT | default "6379"}}
+      - BASE_REDIS_NODE={{.BASE_REDIS_NODE | default "redis-cluster-{}.redis-cluster-headless.redis.svc.cluster.local"}}
+      - NO_OF_REDIS_NODES={{.NO_OF_REDIS_NODES | default "6"}}
+      - SCOPE_CONFIG={{.SCOPE_CONFIG | default "choreo:deployment_manage"}}
+  - name: env-cost-optimizer-dp-daily-cron-cm
+    behavior: create
+    literals:
+      - THANOS_BASE_URL={{.THANOS_BASE_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/" }}
+      - RECOMMENDATION_ENDPOINT_URL={{.RECOMMENDATION_ENDPOINT_URL | default "http://cost-optimizer:8000" }}
+      - BATCH_SIZE={{.BATCH_SIZE | default "10"}}
+  - name: env-cost-optimizer-dp-monthly-cron-cm
+    behavior: create
+    literals:
+      - THANOS_BASE_URL={{.THANOS_BASE_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/" }}
+      - COST_OPTIMIZER_URL={{.COST_OPTIMIZER_URL | default "http://cost-optimizer:8000" }}
+      - BATCH_SIZE={{.BATCH_SIZE | default "10"}}

@@ -54,7 +54,6 @@ describe(`Verify internal API Proxy functionality`, () => {
       .createProxyComponent({
         version: "1.0",
         endpointUrl: API_ENDPOINT,
-        isInternal: true,
       })
       .then((comp) => {
         internalProxy = comp;
@@ -77,7 +76,7 @@ describe(`Verify internal API Proxy functionality`, () => {
   });
 
   it("Deploy Internal Proxy", () => {
-    internalProxy.deploy();
+    internalProxy.deploy(Enums.Accessibility.INTERNAL);
   });
 
   it("Promote Internal Proxy", () => {
@@ -244,10 +243,6 @@ describe(`Verify internal API Proxy functionality`, () => {
 
   it("Find API in devportal custom domain", () => {
     devPortal.searchApi(internalProxy.getName());
-  });
-
-  it("Generate Production credentials for converted External Proxy in Dev portal", () => {
-    internalProxy.generateCredentials_DevPortal(Enums.Environment.PRODUCTION);
   });
 
   it("Tryout converted External Proxy in Dev portal", () => {

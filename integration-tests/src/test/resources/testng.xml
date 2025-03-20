@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="choreoIntegrationTests" parallel="classes" thread-count="6">
+<suite name="choreoIntegrationTests" parallel="classes" thread-count="10">
     <test name="choreo">
         <classes>
             <class name="com.wso2.choreo.integration.common.TestContext"/>
@@ -50,6 +50,7 @@
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPI"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI"/>
             <class name="com.wso2.choreo.integration.tests.pat.PATManagementTests"/>
+            <class name="com.wso2.choreo.integration.tests.thirdpartyServices.ThirdPartyServices"/>
         </classes>
     </test>
 </suite>

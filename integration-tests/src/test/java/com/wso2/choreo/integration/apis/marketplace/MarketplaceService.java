@@ -27,8 +27,12 @@ import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.models.marketplace.CommonResource;
 import com.wso2.choreo.integration.models.marketplace.ServiceInfo;
+import com.wso2.choreo.integration.models.marketplace.ServiceStatus;
 import com.wso2.choreo.integration.models.marketplace.ServiceVisibility;
 import com.wso2.choreo.integration.models.marketplace.SourceConfigurationFileTypes;
+import com.wso2.choreo.integration.models.marketplace.ThirdPartyService;
+import com.wso2.choreo.integration.models.marketplace.ThirdPartyServiceCreateResponse;
+import com.wso2.choreo.integration.models.marketplace.ThirdPartyServiceEndpointConfig;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,7 +41,9 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
@@ -167,5 +173,190 @@ public class MarketplaceService {
                 )
         );
         return databases.get();
+    }
+
+    public static ThirdPartyServiceCreateResponse createThirdPartyService(
+            TestNGCitrusSpringSupport runner, HttpClient client, String accessToken, ThirdPartyService payload) {
+
+        String payloadString = ObjectMapperUtil.mapObjectToString(payload);
+        String resourceURL = CONTEXT.concat("/services/");
+        AtomicReference<ThirdPartyServiceCreateResponse> responseReference = new AtomicReference<>();
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(resourceURL)
+                .message()
+                .body(payloadString)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http().client(client)
+                .receive()
+                .response()
+                .message()
+                .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.CREATED.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
+                    ThirdPartyServiceCreateResponse thirdPartyServiceCreateResponse = ObjectMapperUtil.mapStringToObject(ThirdPartyServiceCreateResponse.class, (String) message.getPayload());
+
+                    responseReference.set(thirdPartyServiceCreateResponse);
+                        }
+                )
+        );
+        return responseReference.get();
+    }
+
+    public static ThirdPartyService getServiceById(
+            TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+            String serviceId) throws IOException {
+
+        String resourceURL = CONTEXT.concat("/services/").concat(serviceId);
+        AtomicReference<ThirdPartyService> responseReference = new AtomicReference<>();
+        runner.$(http()
+                .client(client)
+                .send()
+                .get(resourceURL)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http().client(client)
+                .receive()
+                .response()
+                .message()
+                .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
+                            responseReference.set(ObjectMapperUtil.mapStringToObject(ThirdPartyService.class, (String) message.getPayload()));
+                        }
+                )
+        );
+        return responseReference.get();
+    }
+
+    public static String updateServiceStatus(
+            TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+            String serviceId, ServiceStatus status) throws IOException {
+
+        String resourceURL = CONTEXT.concat("/services/").concat(serviceId).concat("/status");
+        AtomicReference<String> responseReference = new AtomicReference<>();
+        runner.$(http()
+                .client(client)
+                .send()
+                .put(resourceURL)
+                .queryParam("status", status.name())
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http().client(client)
+                .receive()
+                .response()
+                .message()
+                .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
+                            responseReference.set(message.getPayload(String.class));
+                        }
+                )
+        );
+        return responseReference.get();
+    }
+
+    public static String deleteThirdPartyService(
+            TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+            String serviceId) throws IOException {
+
+        String resourceURL = CONTEXT.concat("/services/").concat(serviceId);
+        AtomicReference<String> responseReference = new AtomicReference<>();
+        runner.$(http()
+                .client(client)
+                .send()
+                .delete(resourceURL)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http().client(client)
+                .receive()
+                .response()
+                .message()
+                .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
+                            responseReference.set(message.getPayload(String.class));
+                        }
+                )
+        );
+        return responseReference.get();
+    }
+    public static void createThirdPartyServiceEndpoints(
+            TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+            String serviceId, String connectionSchemaId, ThirdPartyServiceEndpointConfig endpointConfig) throws IOException {
+
+        String resourceURL = CONTEXT.concat("/services/").concat(serviceId).concat("/connection-schemas/")
+                .concat(connectionSchemaId).concat("/config");
+        runner.$(http()
+                .client(client)
+                .send()
+                .post(resourceURL)
+                .message().body(ObjectMapperUtil.mapObjectToString(endpointConfig))
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http().client(client)
+                .receive()
+                .response()
+                .message()
+                .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.CREATED.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
+
+                        }
+                )
+        );
+    }
+
+    public static Map<String, ArrayList<String>> getThirdPartyServiceEndpointForEnv(
+            TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+            String serviceId, String connectionSchemaId, String[] environments) throws IOException {
+
+        String resourceURL = CONTEXT.concat("/services/").concat(serviceId).concat("/connection-schemas/")
+                .concat(connectionSchemaId).concat("/config/").concat(String.join(",", environments));
+        AtomicReference<Map<String, ArrayList<String>>> responseReference = new AtomicReference<>();
+        runner.$(http()
+                .client(client)
+                .send()
+                .get(resourceURL)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        runner.$(http().client(client)
+                .receive()
+                .response()
+                .message()
+                .validate((message, context) -> {
+                            int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                            if (code != HttpStatus.OK.value()) {
+                                throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                            }
+                            responseReference.set(ObjectMapperUtil.mapStringToObject(Map.class, (String) message.getPayload()));
+                        }
+                )
+        );
+        return responseReference.get();
     }
 }
