@@ -512,6 +512,65 @@ public class ConnectionService extends ControlPlaneAPI {
      return  connection.get();
     }
 
+
+    public static ThirdPartyServiceConnectionResponse createThirdPartyServiceConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                                ThirdPartyConnectionCreationRequest connectionReq) throws IOException {
+        String createChoreoConnectionURI = CONTEXT.concat("/configurations/service-configs/third-party-connections");
+        String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
+        runner.variable("isConnectionCreationSuccess", false);
+        AtomicReference<ThirdPartyServiceConnectionResponse> connection = new AtomicReference<>();
+        runner.$(repeatOnError()
+                .until("(i = 5) or ( ${isConnectionCreationSuccess} = true )")
+                .index("i")
+                .autoSleep(10000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(createChoreoConnectionURI)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .queryParam("wellKnownService", "true")
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestPayload),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response()
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.CREATED.value()) {
+                                        throw new ValidationException("Connection creation failed with status code: " + code);
+                                    }
+                                    ThirdPartyServiceConnectionResponse connectionResponse = ObjectMapperUtil.mapStringToObject(ThirdPartyServiceConnectionResponse.class, message.getPayload(String.class));
+                                    connection.set(connectionResponse);
+                                    validateThirdPartyServiceConnection(connectionResponse);
+                                })));
+        return  connection.get();
+    }
+
+    public static void validateThirdPartyServiceConnection(ThirdPartyServiceConnectionResponse thirdPartyServiceConnectionResponse) {
+        if (thirdPartyServiceConnectionResponse.getGroupUuid() == null) {
+            throw new ValidationException("Group UUID is not found in the response");
+        }
+        if (thirdPartyServiceConnectionResponse.getName() == null) {
+            throw new ValidationException("Name is not found in the response");
+        }
+        if (thirdPartyServiceConnectionResponse.getServiceName() == null) {
+            throw new ValidationException("Service Name is not found in the response");
+        }
+        if (thirdPartyServiceConnectionResponse.getSchemaName() == null) {
+            throw new ValidationException("Schema Name is not found in the response");
+        }
+        if (thirdPartyServiceConnectionResponse.getEnvMapping() == null) {
+            throw new ValidationException("Environment Mapping is not found in the response");
+        }
+        if (thirdPartyServiceConnectionResponse.getConfigurations() == null) {
+            throw new ValidationException("Configurations is not found in the response");
+        }
+    }
+
     // validate whether we are connected to the correct database in each environment
     public static void ValidateDatabaseConnection(JsonArray appointmentsList, JsonObject appointment, String keyName) throws Exception {
         boolean appointmentFound = false;
