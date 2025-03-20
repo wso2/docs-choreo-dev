@@ -159,7 +159,7 @@ spec:
           readinessProbe:
             exec:
               command: ["sh", "check_health.sh"]
-            initialDelaySeconds: 8
+            initialDelaySeconds: 20
             periodSeconds: 5
             timeoutSeconds: 5
         - name: choreo-connect-router

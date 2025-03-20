@@ -50,6 +50,7 @@ import com.wso2.choreo.integration.models.marketplace.ServiceVisibility;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIBuild;
 import com.wso2.choreo.integration.models.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -83,7 +84,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private static String PROXY_COMPONENT_ENDPOINT;
     private static String PREV_CREATED_CLIENT_COMPONENT_SERVICE_NAME = "connections-consumer-one-";
     private static String DEPLOYED_COMPONENTS_PROJECT_NAME = "integration-test-project-V2";
-    private static String DEPLOYED_CLIENT_COMPONENT_SERVICE_NAME = "connections-consumer-two-";
+    private static String DEPLOYED_CLIENT_COMPONENT_SERVICE_NAME = "old-consumer-";
     private static final String NETWORK_VISIBILITY_FILTER = "org,public";
     private static final String ORG_LVL_NETWORK_VISIBILITY_FILTER = "org";
     private static final String PROJECT_LVL_NETWORK_VISIBILITY_FILTER = "project";
@@ -168,6 +169,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         projectOne = ComponentUtils.createProject(this, citrusClients, accessToken,
                 Constant.region.US.toString());
     }
+
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
     @CitrusTest
     public void createServicePublisherComponent_TestChoreoConnections() throws Exception {
@@ -182,6 +184,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         publicEndpointServiceComponent = 
                 ConnectionUtils.createByocComponent(this, citrusClients, accessToken, componentName, projectOne, repo);
     }
+
     @Test(dependsOnMethods = {"createServicePublisherComponent_TestChoreoConnections"})
     @CitrusTest
     public void deployServicePublisherComponent_TestChoreoConnections() throws Exception {
@@ -191,7 +194,15 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         publicEndpointServiceDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(this, citrusClients, accessToken,
                 publicEndpointServiceComponent, servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
         SVC_COMPONENT_SERVICE_NAME = publicEndpointServiceComponent.getName();
+        if (StringUtils.isNotBlank(publicEndpointServiceDeploymentStatusDTO.getApiId())) {
+            ConnectionService.enableOAuth2SecurityForAPI(this, citrusClients,
+                    publicEndpointServiceDeploymentStatusDTO.getApiId(), accessToken);
+            publicEndpointServiceDeploymentStatusDTO = ComponentUtils.deployAndValidateBuiltComponentWithFlavour(
+                    this, citrusClients, accessToken, publicEndpointServiceComponent,
+                    servicePublisherComponentEnvironments, ComponentFlavour.BYOC);
+        }
     }
+
     @Test(dependsOnMethods = {"createProject_TestChoreoConnections"})
     @CitrusTest
     public void createServiceConsumerComponent_TestChoreoConnections() throws Exception {
@@ -234,6 +245,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
         GitHub.mergeNewCode(repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent, null);
     }
+
     @Test(dependsOnMethods = {"createComponentLevelConnection_TestChoreoConnections"})
     @CitrusTest
     public void deployServiceConsumerComponent_TestChoreoConnections() throws Exception {
@@ -412,6 +424,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         proxyComponent = componentDetail.getLeft();
         proxyPublisherComponentEnvironments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 proxyComponent);
+        ConnectionService.enableOAuth2SecurityForAPI(this, citrusClients, proxyApiId, accessToken);
         proxyAPIBuild = ComponentUtils.deployProxyComponent(this, citrusClients, accessToken,
                 proxyComponent, proxyPublisherComponentEnvironments.subList(0, 1));
     }

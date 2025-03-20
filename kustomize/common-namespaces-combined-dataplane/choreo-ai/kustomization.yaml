@@ -19,6 +19,7 @@ kind: Kustomization
 
 resources:
   - config
+  - cron
   - deployment
   - hpa
   - pdb

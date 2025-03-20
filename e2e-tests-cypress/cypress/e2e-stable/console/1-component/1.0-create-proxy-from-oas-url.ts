@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums } from "../../../support/commons/enums";
+import { Enums, SecurityScheme, UsagePlan } from "../../../support/commons/enums";
 import {
   Proxy,
   ProxyMetaData,
@@ -21,6 +21,7 @@ import { console } from "../../../support/console/console";
 import { OK } from "../../../support/commons/http";
 import { devPortal } from "../../../support/console/devportal";
 import { Utils } from "../../../support/commons/utils";
+import { Application } from "../../../support/console/entities/application/application";
 
 describe("Create proxy using existing url", () => {
   const PROJECT_DESCRIPTION = "Proxy from oas URL";
@@ -35,6 +36,7 @@ describe("Create proxy using existing url", () => {
     "https://9f3f5ca2-c1f2-43e7-afbe-a15714138b57-dev.e1-us-east-azure.choreoapis.dev/mgch/petstore/petstore-9f2/v1.0";
   let project: Project;
   let proxy: Proxy;
+  let application: Application;
 
   it("Login to Console", () => {
     console.login();
@@ -60,6 +62,10 @@ describe("Create proxy using existing url", () => {
           value: proxy.getMetaData(),
         });
       });
+  });
+
+  it("Enable OAuth2 security", () => {
+    proxy.enableSecurityScemes([SecurityScheme.OAuth2]);
   });
 
   it("Remove additional resources and save", () => {
@@ -209,6 +215,19 @@ describe("Create proxy using existing url", () => {
     });
   });
 
+  it("Create a consumer application", () => {
+    application = proxy.createApplication_DevPortal();
+  });
+
+  it("Generate subscription credentials", () => {
+    application.generateCredentials(Enums.Environment.SANDBOX);
+    application.generateCredentials(Enums.Environment.PRODUCTION);
+  });
+
+  it("Add subscription", () => {
+    application.addSubscription(proxy.getName(), UsagePlan.Bronze);
+  });
+
   it("Find API in devportal custom domain", () => {
     Utils.isTestConsoleOnly().then((testConsoleOnly) => {
       if (!testConsoleOnly) {
@@ -219,20 +238,10 @@ describe("Create proxy using existing url", () => {
     });
   });
 
-  it("Generate Production credentials for proxy in Dev portal", () => {
-    Utils.isTestConsoleOnly().then((testConsoleOnly) => {
-      if (!testConsoleOnly) {
-        proxy.generateCredentials_DevPortal(Enums.Environment.PRODUCTION);
-      } else {
-        cy.log(`Skipping Devportal step due to testConsoleOnly: ${testConsoleOnly}`);
-      }
-    });
-  });
-
   it("Tryout proxy in Dev portal", () => {
     Utils.isTestConsoleOnly().then((testConsoleOnly) => {
       if (!testConsoleOnly) {
-        proxy.testSwaggerConsole_DevPortal({ resource: RESOURCE });
+        proxy.testSwaggerConsole_DevPortal({ resource: RESOURCE, keyType: Enums.ApiTryoutKeyType.APPLICATION_KEY });
       } else {
         cy.log(`Skipping Devportal step due to testConsoleOnly: ${testConsoleOnly}`);
       }

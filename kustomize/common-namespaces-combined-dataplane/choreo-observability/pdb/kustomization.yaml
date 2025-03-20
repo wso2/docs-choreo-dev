@@ -3,3 +3,4 @@ resources:
   - obsapi.yaml
   - obsapi-v2.yaml
   - sys-obsapi.yaml
+  - insights-query-api.yaml

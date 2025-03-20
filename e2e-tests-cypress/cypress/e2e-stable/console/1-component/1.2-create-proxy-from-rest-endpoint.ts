@@ -14,7 +14,7 @@
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Proxy } from "../../../support/console/entities/component/proxy-component";
-import { Enums } from "../../../support/commons/enums";
+import { Enums, SecurityScheme } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
 
 describe("Create Proxy from REST endpoint", () => {
@@ -49,6 +49,10 @@ describe("Create Proxy from REST endpoint", () => {
       .then((comp) => {
         proxy = comp;
       });
+  });
+
+  it("Enable OAuth2 security", () => {
+    proxy.enableSecurityScemes([SecurityScheme.OAuth2]);
   });
 
   it("Remove default resources", () => {
@@ -241,5 +245,9 @@ describe("Create Proxy from REST endpoint", () => {
   it("Stop component", () => {
     proxy.stopDeployment();
     proxy.stopPromotion();
+  });
+
+  it('Clean up created data', () => {
+    console.cleanUpData();
   });
 });

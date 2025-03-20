@@ -1,0 +1,70 @@
+/*
+ * Copyright © 2025 WSO2 LLC. (http://www.wso2.com).
+ *
+ * This software is the property of WSO2 LLC and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
+package config
+
+//go:generate stringer -type=Definition
+type Definition int
+
+const (
+	_begin_def_ Definition = iota
+	CHOREO_ENDPOINT
+	CHOREO_NEW_APP_SERVICE_ENDPOINT
+	STS_ENDPOINT
+	ASGARDEO_ENDPOINT
+	CHOREO_CP_GW_ENDPOINT
+	BAL_REGISTRY_URL
+	TEST_USER_EMAIL
+	TEST_USER_PASSWORD
+	TEST_USER_IDP_ID
+	ASGARDEO_CLIENT_ID
+	ASGARDEO_CLIENT_SECRET
+	CP_APP_CLIENT_ID
+	CP_APP_CLIENT_SECRET
+	TEST_CHOREO_ORG_HANDLE
+	TEST_CHOREO_ORG_ID
+	TEST_CHOREO_ORG_UUID
+	TEST_CHOREO_APP_DEV_STS_ORG_ID
+	TEST_CHOREO_APP_DEV_STS_ORG_UUID
+	TEST_CHOREO_APP_DEV_STS_ORG_HANDLE
+	GITHUB_ENDPOINT
+	GITHUB_ORG
+	GITHUB_TEST_USER_ORG
+	GITHUB_PAT
+	GITHUB_TEST_USER_PAT
+	GITLAB_SECRETREF
+	INSIGHTS_ENDPOINT
+	INSIGHTS_ONPREM_KEY
+	ALERT_MAIL_IMAP_PASS
+	ALERT_ORG_UUID
+	ALERT_RELEASE_ID
+	COMMIT_LIST_EXAMPLE_RESPONSE
+	TOKEN_SCOPES
+	GMAIL_API_CK
+	GMAIL_API_CS
+	GMAIL_API_REFRESH_TOKEN
+	SELF_SIGNUP_ORG_UUID
+	SELF_SIGNUP_ORG_ID
+	SELF_SIGNUP_ORG_HANDLE
+	SELF_SIGNUP_ORG_ADMIN_EMAIL
+	SELF_SIGNUP_ORG_ADMIN_PASSWORD
+	THEME_ENDPOINT
+	CDN_THEME_ENDPOINT
+	CHOREO_SYSTEM_API_PREFIX
+	CHOREO_US_DP_URL
+	CHOREO_EU_DP_URL
+	RESOURCE_AUTHZ_USER_EMAIL
+	RESOURCE_AUTHZ_USER_UUID
+	RESOURCE_AUTHZ_USER_PASSWORD
+	_end_def_
+)

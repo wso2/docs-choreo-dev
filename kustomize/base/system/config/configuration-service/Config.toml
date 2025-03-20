@@ -5,6 +5,7 @@ externalHealthCheckPort = 8082
 maxHeaderSize = 65536
 secretManagerUrl = "http://dp-secret-manager:80"
 cloudManagerUrl = "http://dp-cloud-manager:80"
+resourceRegistryUrl = "http://resource-registry:9090"
 dbHost = "{{.DB_HOST}}"
 dbUsername = "{{.DB_USERNAME}}"
 dbName = "{{.DB_NAME}}"

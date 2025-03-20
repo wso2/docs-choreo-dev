@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { Enums, UsagePlan } from "../../support/commons/enums";
+import { Enums, SecurityScheme, UsagePlan } from "../../support/commons/enums";
 import { console } from "../../support/console/console";
 import { Project } from "../../support/console/entities/project/project";
 import {
@@ -20,6 +20,7 @@ import {
 } from "../../support/console/entities/component/proxy-component";
 import { devPortal } from "../../support/console/devportal";
 import { Application } from "../../support/console/entities/application/application";
+import { Utils } from "../../support/commons/utils";
 
 describe("API overview comment and rating scenario", () => {
   const PROJECT_DESCRIPTION = "sample oas flow scenario";
@@ -57,6 +58,10 @@ describe("API overview comment and rating scenario", () => {
           value: proxy.getMetaData(),
         });
       });
+  });
+
+  it("Enable OAuth2 security", () => {
+    proxy.enableSecurityScemes([SecurityScheme.OAuth2]);
   });
 
   it("Deploy API Proxy", () => {
@@ -99,24 +104,6 @@ describe("API overview comment and rating scenario", () => {
     proxy.addRating_DevPortal(4);
   });
 
-  it("Generate credentials for SANDBOX env", () => {
-    proxy.generateCredentials_DevPortal(Enums.Environment.SANDBOX);
-  });
-
-  it("Tryout API in Development env", () => {
-    proxy.testSwaggerConsole_DevPortal({
-      resource: OPERATION_USERS,
-      env: Enums.Environment.DEVELOPMENT,
-    });
-  });
-
-  it("Tryout API in Production env", () => {
-    proxy.testSwaggerConsole_DevPortal({
-      resource: OPERATION_USERS,
-      env: Enums.Environment.PRODUCTION,
-    });
-  });
-
   it("Verify the downloaded SDK file", () => {
     proxy.downloadSdk_DevPortal(proxy.getName() + "_v1.0_android.zip");
   });
@@ -134,6 +121,32 @@ describe("API overview comment and rating scenario", () => {
     application.addSubscription(proxy.getName(), UsagePlan.Bronze);
   });
 
+  it("Navigate back to Proxy in Dev Portal", () => {
+    Utils.isTestConsoleOnly().then((testConsoleOnly) => {
+      if (!testConsoleOnly) {
+        devPortal.searchApi(proxy.getName());
+      } else {
+        cy.log(`Skipping Devportal step due to testConsoleOnly: ${testConsoleOnly}`);
+      }
+    });
+  });
+
+  it("Tryout API in Development env", () => {
+    proxy.testSwaggerConsole_DevPortal({
+      resource: OPERATION_USERS,
+      env: Enums.Environment.DEVELOPMENT,
+      keyType: Enums.ApiTryoutKeyType.APPLICATION_KEY
+    });
+  });
+
+  it("Tryout API in Production env", () => {
+    proxy.testSwaggerConsole_DevPortal({
+      resource: OPERATION_USERS,
+      env: Enums.Environment.PRODUCTION,
+      keyType: Enums.ApiTryoutKeyType.APPLICATION_KEY
+    });
+  });
+
   it("Delete a consumer application", () => {
     proxy.deleteApplication_DevPortal(application);
   });
@@ -142,5 +155,9 @@ describe("API overview comment and rating scenario", () => {
     proxy.navigateToComponentInConsole();
     proxy.stopDeployment();
     proxy.stopPromotion();
+  });
+
+  it('Clean up created data', () => {
+    console.cleanUpData();
   });
 });

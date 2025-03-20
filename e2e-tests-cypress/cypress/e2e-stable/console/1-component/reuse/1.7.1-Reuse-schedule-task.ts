@@ -45,6 +45,7 @@ describe("Create Reusable Schedule Trigger", () => {
             url: "https://github.com/choreo-test-apps/schedule-trigger",
             branch: "main",
           },
+          SCHEDULE_NAME
         )
         .then((comp: ScheduleTrigger) => {
           project.visitComponent(SCHEDULE_NAME);

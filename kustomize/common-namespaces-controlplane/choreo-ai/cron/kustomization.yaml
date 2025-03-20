@@ -1,2 +1,3 @@
 resources:
   - docs-updater.yaml
+  - cost-optimizer-cp-daily-cron.yaml
