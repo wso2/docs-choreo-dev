@@ -13,32 +13,51 @@
 
 package response
 
+type AppEnvVersion struct {
+	EnvironmentID string  `json:"environmentId"`
+	ReleaseID     string  `json:"releaseId"`
+	Release       Release `json:"release"`
+}
+
+type Release struct {
+	ID            string          `json:"id"`
+	Metadata      ReleaseMetadata `json:"metadata"`
+	EnvironmentID string          `json:"environmentId"`
+	Environment   interface{}     `json:"environment"`
+	GitHash       interface{}     `json:"gitHash"`
+	GitOpsHash    interface{}     `json:"gitOpsHash"`
+}
+
+type ReleaseMetadata struct {
+	ChoreoEnv string `json:"choreoEnv"`
+}
+
 type APIVersion struct {
-	APIVersion        string   `json:"apiVersion"`
-	ProxyName         string   `json:"proxyName"`
-	ProxyURL          string   `json:"proxyUrl"`
-	ProxyId           string   `json:"proxyId"`
-	Id                string   `json:"id"`
-	State             *string  `json:"state"`
-	Latest            bool     `json:"latest"`
-	Branch            *string  `json:"branch"`
-	Accessibility     string   `json:"accessibility"`
-	VersionId         *string  `json:"versionId"`
-	AppEnvVersions    []string `json:"appEnvVersions"`
-	AutoDeployEnabled bool     `json:"autoDeployEnabled"`
+	APIVersion        string          `json:"apiVersion"`
+	ProxyName         string          `json:"proxyName"`
+	ProxyURL          string          `json:"proxyUrl"`
+	ProxyId           string          `json:"proxyId"`
+	Id                string          `json:"id"`
+	State             interface{}     `json:"state"`
+	Latest            bool            `json:"latest"`
+	Branch            interface{}     `json:"branch"`
+	Accessibility     string          `json:"accessibility"`
+	VersionId         interface{}     `json:"versionId"`
+	AppEnvVersions    []AppEnvVersion `json:"appEnvVersions"`
+	AutoDeployEnabled bool            `json:"autoDeployEnabled"`
 }
 
 type DeploymentTrack struct {
-	Id                string  `json:"id"`
-	CreatedAt         string  `json:"createdAt"`
-	UpdatedAt         string  `json:"updatedAt"`
-	APIVersion        string  `json:"apiVersion"`
-	Branch            *string `json:"branch"`
-	Description       *string `json:"description"`
-	ComponentId       string  `json:"componentId"`
-	Latest            bool    `json:"latest"`
-	VersionStrategy   string  `json:"versionStrategy"`
-	AutoDeployEnabled bool    `json:"autoDeployEnabled"`
+	Id                string      `json:"id"`
+	CreatedAt         string      `json:"createdAt"`
+	UpdatedAt         string      `json:"updatedAt"`
+	APIVersion        string      `json:"apiVersion"`
+	Branch            interface{} `json:"branch"`
+	Description       interface{} `json:"description"`
+	ComponentId       string      `json:"componentId"`
+	Latest            bool        `json:"latest"`
+	VersionStrategy   string      `json:"versionStrategy"`
+	AutoDeployEnabled bool        `json:"autoDeployEnabled"`
 }
 
 type Component struct {
@@ -48,20 +67,20 @@ type Component struct {
 	Description             string            `json:"description"`
 	DisplayType             string            `json:"displayType"`
 	DisplayName             string            `json:"displayName"`
-	OwnerName               *string           `json:"ownerName"`
+	OwnerName               interface{}       `json:"ownerName"`
 	OrgId                   int               `json:"orgId"`
 	OrgHandler              string            `json:"orgHandler"`
 	Version                 string            `json:"version"`
 	Labels                  []string          `json:"labels"`
 	CreatedAt               string            `json:"createdAt"`
 	ProjectId               string            `json:"projectId"`
-	ApiId                   *string           `json:"apiId"`
+	ApiId                   interface{}       `json:"apiId"`
 	HttpBased               bool              `json:"httpBased"`
 	IsMigrationCompleted    bool              `json:"isMigrationCompleted"`
 	SkipDeploy              bool              `json:"skipDeploy"`
 	EndpointShortURLEnabled bool              `json:"endpointShortUrlEnabled"`
 	IsUnifiedConfigMapping  bool              `json:"isUnifiedConfigMapping"`
-	ServiceAccessMode       *string           `json:"serviceAccessMode"`
+	ServiceAccessMode       interface{}       `json:"serviceAccessMode"`
 	APIVersions             []APIVersion      `json:"apiVersions"`
 	DeploymentTracks        []DeploymentTrack `json:"deploymentTracks"`
 }

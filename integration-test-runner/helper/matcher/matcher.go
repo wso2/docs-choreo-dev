@@ -97,7 +97,7 @@ func compareValues(expectedMap map[string]interface{}, actualMap map[string]inte
 						fmt.Sprintf("Expected values '%s' does not match actual value '%s'", value, actualValue))
 				}
 			case map[string]interface{}: // Object type
-				ok, err := isObjectEquals(value.(map[string]interface{}), actualValue.(map[string]interface{}))
+				ok, err := isObjectContains(value.(map[string]interface{}), actualValue.(map[string]interface{}))
 
 				if err != nil {
 					return err
@@ -134,7 +134,7 @@ func compareArrays(array1 []interface{}, array2 []interface{}) (bool, error) {
 			switch v1.(type) {
 			case map[string]interface{}: // Object type
 				var err error
-				isFound[i], err = isObjectEquals(v1.(map[string]interface{}), v2.(map[string]interface{}))
+				isFound[i], err = isObjectContains(v1.(map[string]interface{}), v2.(map[string]interface{}))
 				if err != nil {
 					return false, err
 				}
@@ -171,20 +171,16 @@ func compareArrays(array1 []interface{}, array2 []interface{}) (bool, error) {
 	return true, nil
 }
 
-func isObjectEquals(object1 map[string]interface{}, object2 map[string]interface{}) (bool, error) {
-	if len(object1) != len(object2) {
-		return false, nil
-	}
-
-	for k1, v1 := range object1 {
-		v2, ok := object2[k1]
+func isObjectContains(subObject map[string]interface{}, target map[string]interface{}) (bool, error) {
+	for k1, v1 := range subObject {
+		v2, ok := target[k1]
 
 		if !ok {
 			return false, nil
 		} else {
 			switch v1.(type) {
 			case map[string]interface{}: // Object type
-				ok, err := isObjectEquals(v1.(map[string]interface{}), v2.(map[string]interface{}))
+				ok, err := isObjectContains(v1.(map[string]interface{}), v2.(map[string]interface{}))
 
 				if err != nil || !ok {
 					return ok, err

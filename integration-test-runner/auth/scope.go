@@ -11,7 +11,7 @@
  * associated services.
  */
 
-package scope
+package auth
 
 import (
 	"embed"

@@ -16,26 +16,29 @@ package status
 type Status struct {
 	isFailed    bool
 	isRetryable bool
-	message     string
+	rawResponse []byte
+	errorStr    string
 }
 
-func NewSuccessStatus() Status {
-	return Status{}
-}
-
-func NewPermFailedStatus(message string) Status {
+func NewSuccessStatus(response []byte) Status {
 	return Status{
-		isFailed:    true,
-		isRetryable: false,
-		message:     message,
+		rawResponse: response,
 	}
 }
 
-func NewTempFailedStatus(message string) Status {
+func NewPermFailedStatus(errorStr string) Status {
+	return Status{
+		isFailed:    true,
+		isRetryable: false,
+		errorStr:    errorStr,
+	}
+}
+
+func NewTempFailedStatus(errorStr string) Status {
 	return Status{
 		isFailed:    true,
 		isRetryable: true,
-		message:     message,
+		errorStr:    errorStr,
 	}
 }
 
@@ -48,5 +51,9 @@ func (s *Status) IsRetryable() bool {
 }
 
 func (s *Status) GetMessage() string {
-	return s.message
+	return s.errorStr
+}
+
+func (s *Status) GetRawResponse() []byte {
+	return s.rawResponse
 }

@@ -36,5 +36,5 @@ func GetOrgs(client *resty.Client) (*res.GetOrgs, status.Status) {
 		return nil, status.NewTempFailedStatus(res.Status())
 	}
 
-	return &response, status.NewSuccessStatus()
+	return &response, status.NewSuccessStatus(res.Body())
 }

@@ -49,14 +49,14 @@ func CreateProject(client *resty.Client, model req.CreateProject) (*res.CreatePr
 
 	data := response["data"]
 
-	return &data, status.NewSuccessStatus()
+	return &data, status.NewSuccessStatus(res.Body())
 }
 
-func CreateComponent(client *resty.Client, model req.CreateComponent) (*res.CreateComponent, []byte, status.Status) {
+func CreateComponent(client *resty.Client, model req.CreateComponent) (*res.CreateComponent, status.Status) {
 	buf, err := template.PopulateRequestTemplate("createComponent", model)
 
 	if err != nil {
-		return nil, []byte{}, status.NewPermFailedStatus(err.Error())
+		return nil, status.NewPermFailedStatus(err.Error())
 	}
 
 	var response map[string]res.CreateComponent
@@ -70,23 +70,23 @@ func CreateComponent(client *resty.Client, model req.CreateComponent) (*res.Crea
 		Post(graphql)
 
 	if err != nil {
-		return nil, []byte{}, status.NewPermFailedStatus(err.Error())
+		return nil, status.NewPermFailedStatus(err.Error())
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return nil, res.Body(), status.NewTempFailedStatus(res.Status())
+		return nil, status.NewTempFailedStatus(res.Status())
 	}
 
 	data := response["data"]
 
-	return &data, res.Body(), status.NewSuccessStatus()
+	return &data, status.NewSuccessStatus(res.Body())
 }
 
-func GetComponentDetails(client *resty.Client, model req.GetComponentDetails) (*res.GetComponentDetails, []byte, status.Status) {
+func GetComponentDetails(client *resty.Client, model req.GetComponentDetails) (*res.GetComponentDetails, status.Status) {
 	buf, err := template.PopulateRequestTemplate("getComponentDetails", model)
 
 	if err != nil {
-		return nil, []byte{}, status.NewPermFailedStatus(err.Error())
+		return nil, status.NewPermFailedStatus(err.Error())
 	}
 
 	var response map[string]res.GetComponentDetails
@@ -100,23 +100,23 @@ func GetComponentDetails(client *resty.Client, model req.GetComponentDetails) (*
 		Post(graphql)
 
 	if err != nil {
-		return nil, []byte{}, status.NewPermFailedStatus(err.Error())
+		return nil, status.NewPermFailedStatus(err.Error())
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return nil, res.Body(), status.NewTempFailedStatus(res.Status())
+		return nil, status.NewTempFailedStatus(res.Status())
 	}
 
 	data := response["data"]
 
-	return &data, res.Body(), status.NewSuccessStatus()
+	return &data, status.NewSuccessStatus(res.Body())
 }
 
-func GetCommitHistory(client *resty.Client, model req.GetCommitHistory) (*res.GetCommitHistory, []byte, status.Status) {
+func GetCommitHistory(client *resty.Client, model req.GetCommitHistory) (*res.GetCommitHistory, status.Status) {
 	buf, err := template.PopulateRequestTemplate("getCommitHistory", model)
 
 	if err != nil {
-		return nil, []byte{}, status.NewPermFailedStatus(err.Error())
+		return nil, status.NewPermFailedStatus(err.Error())
 	}
 
 	var response map[string]res.GetCommitHistory
@@ -130,24 +130,24 @@ func GetCommitHistory(client *resty.Client, model req.GetCommitHistory) (*res.Ge
 		Post(graphql)
 
 	if err != nil {
-		return nil, []byte{}, status.NewPermFailedStatus(err.Error())
+		return nil, status.NewPermFailedStatus(err.Error())
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return nil, res.Body(), status.NewTempFailedStatus(res.Status())
+		return nil, status.NewTempFailedStatus(res.Status())
 	}
 
 	data := response["data"]
 
-	return &data, res.Body(), status.NewSuccessStatus()
+	return &data, status.NewSuccessStatus(res.Body())
 
 }
 
-func GetDeploymentEnvironments(client *resty.Client, model req.GetDeploymentEnvironments) (*res.GetDeploymentEnvironments, []byte, status.Status) {
+func GetDeploymentEnvironments(client *resty.Client, model req.GetDeploymentEnvironments) (*res.GetDeploymentEnvironments, status.Status) {
 	buf, err := template.PopulateRequestTemplate("getDeploymentEnvironments", model)
 
 	if err != nil {
-		return nil, []byte{}, status.NewPermFailedStatus(err.Error())
+		return nil, status.NewPermFailedStatus(err.Error())
 	}
 
 	var response map[string]res.GetDeploymentEnvironments
@@ -161,23 +161,23 @@ func GetDeploymentEnvironments(client *resty.Client, model req.GetDeploymentEnvi
 		Post(graphql)
 
 	if err != nil {
-		return nil, []byte{}, status.NewPermFailedStatus(err.Error())
+		return nil, status.NewPermFailedStatus(err.Error())
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return nil, res.Body(), status.NewTempFailedStatus(res.Status())
+		return nil, status.NewTempFailedStatus(res.Status())
 	}
 
 	data := response["data"]
 
-	return &data, res.Body(), status.NewSuccessStatus()
+	return &data, status.NewSuccessStatus(res.Body())
 }
 
-func GetDeploymentStatusByVersion(client *resty.Client, model req.GetDeploymentStatusByVersion) (*res.GetDeploymentStatusByVersion, []byte, status.Status) {
+func GetDeploymentStatusByVersion(client *resty.Client, model req.GetDeploymentStatusByVersion) (*res.GetDeploymentStatusByVersion, status.Status) {
 	buf, err := template.PopulateRequestTemplate("getDeploymentStatusByVersion", model)
 
 	if err != nil {
-		return nil, []byte{}, status.NewPermFailedStatus(err.Error())
+		return nil, status.NewPermFailedStatus(err.Error())
 	}
 
 	var response map[string]res.GetDeploymentStatusByVersion
@@ -191,14 +191,14 @@ func GetDeploymentStatusByVersion(client *resty.Client, model req.GetDeploymentS
 		Post(graphql)
 
 	if err != nil {
-		return nil, []byte{}, status.NewPermFailedStatus(err.Error())
+		return nil, status.NewPermFailedStatus(err.Error())
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return nil, res.Body(), status.NewTempFailedStatus(res.Status())
+		return nil, status.NewTempFailedStatus(res.Status())
 	}
 
 	data := response["data"]
 
-	return &data, res.Body(), status.NewSuccessStatus()
+	return &data, status.NewSuccessStatus(res.Body())
 }

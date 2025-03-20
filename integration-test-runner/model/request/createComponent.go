@@ -22,7 +22,7 @@ type CreateComponent struct {
 	DisplayType       string
 	ProjectId         string
 	Accessibility     string
-	SrcGitRepoURL     string
+	SrcGitRepoUrl     string
 	RepositorySubPath string
 	RepositoryBranch  string
 	IsPublicRepo      bool

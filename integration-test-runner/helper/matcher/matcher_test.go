@@ -376,3 +376,95 @@ func TestJsonMatchChoreoComplexFail(t *testing.T) {
 		t.Error("JsonMatch passed when it should have failed")
 	}
 }
+
+func TestJsonMatchChoreoSubset(t *testing.T) {
+	expected := `{
+					"component": {
+						"createdAt": "@ignore@",
+						"displayName": "autotest8d68-1742109031",
+						"displayType": "ballerinaService",
+						"handler": "autotest8d68-1742109031",
+						"id": "@ignore@",
+						"labels": [],
+						"name": "autotest8d68-1742109031",
+						"orgHandler": "choreointegrationtestsuserdevdlwqo",
+						"orgId": 3752,
+						"projectId": "63d2a016-225f-4c96-9583-6a3220c998cb",
+						"version": "v1.0"
+					}
+				}`
+
+	actual := `{
+					"component": {
+						"apiId": null,
+						"apiVersions": [
+									{
+										"environmentId": "8375d194-8e6a-4440-a7eb-f6b116ccb8ca",
+										"releaseId": "089be22c-c117-4cc4-9661-0071bfc14e27",
+										"release": {
+											"id": "089be22c-c117-4cc4-9661-0071bfc14e27",
+											"metadata": {
+											"choreoEnv": "prod"
+											},
+											"environmentId": "8375d194-8e6a-4440-a7eb-f6b116ccb8ca",
+											"environment": null,
+											"gitHash": null,
+											"gitOpsHash": null
+										}
+									},
+									{
+										"environmentId": "45ea2d80-c80d-45bb-880b-d3a7d24889c1",
+										"releaseId": "6a2e5e29-da3e-4f5b-b5f3-837103693bab",
+										"release": {
+											"id": "6a2e5e29-da3e-4f5b-b5f3-837103693bab",
+											"metadata": {
+											"choreoEnv": "dev"
+											},
+											"environmentId": "45ea2d80-c80d-45bb-880b-d3a7d24889c1",
+											"environment": null,
+											"gitHash": null,
+											"gitOpsHash": null
+										}
+									}
+								],
+						"createdAt": "2025-03-16T07:10:33.1885945Z",
+						"description": " ",
+						"displayName": "autotest8d68-1742109031",
+						"displayType": "ballerinaService",
+						"handler": "autotest8d68-1742109031",
+						"httpBased": false,
+						"id": "7e50a062-ec93-45b5-b9ed-c60bce63980a",
+						"isMigrationCompleted": false,
+						"labels": [],
+						"name": "autotest8d68-1742109031",
+						"orgHandler": "choreointegrationtestsuserdevdlwqo",
+						"orgId": 3752,
+						"ownerName": "null",
+						"projectId": "63d2a016-225f-4c96-9583-6a3220c998cb",
+						"repository":  {
+								"nameApp": "byor-service-app1",
+								"nameConfig": "8251aa127efa-autotest0795-1742029503-configs",
+								"branch": "main",
+								"branchApp": "main",
+								"organizationApp": "choreo-test-apps",
+								"organizationConfig": "choreo-userapps-gitops-dev",
+								"isUserManage": true,
+								"appSubPath": "",
+								"byocBuildConfig": null
+							},
+						"version": "v1.0"
+					}
+				}`
+
+	result, err := JsonMatch([]byte(expected), []byte(actual))
+
+	if err != nil {
+		t.Error("JsonMatch failed with error", err)
+	}
+
+	if result.Match == false {
+		for _, msg := range result.ErrorMsgs {
+			t.Error("JsonMatch failed for complex json: ", msg)
+		}
+	}
+}

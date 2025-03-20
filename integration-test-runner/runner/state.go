@@ -21,12 +21,19 @@ import (
 type OrgHolder struct {
 	OrgId      int
 	OrgHandler string
+	OrgUuid    string
+}
+
+type EnvKey struct {
+	OrgUuid   string
+	ProjectId string
 }
 
 type RunState int
 
 const (
 	Success RunState = iota
+	Progressing
 	Failed
 	Skipped
 )
@@ -36,30 +43,110 @@ type Run struct {
 	Reason   string
 }
 
-type State struct {
-	UnrecoverableError            error
-	OrgHolder                     OrgHolder
-	ProjectHolder                 map[string]response.CreateProject
-	ComponentRequestHolder        map[string]request.CreateComponent
-	ComponentResponseHolder       map[string]response.CreateComponent
-	ComponentDetailResponseHolder map[string]response.GetComponentDetails
-	FunctionStates                map[int][]Run
+type ActionState struct {
+	Runs []Run
 }
 
-func NewState(orgHolder *OrgHolder, sequences []int) *State {
-	state := &State{
-		OrgHolder:                     *orgHolder,
-		UnrecoverableError:            nil,
-		ProjectHolder:                 make(map[string]response.CreateProject),
-		ComponentRequestHolder:        make(map[string]request.CreateComponent),
-		ComponentResponseHolder:       make(map[string]response.CreateComponent),
-		ComponentDetailResponseHolder: make(map[string]response.GetComponentDetails),
-		FunctionStates:                make(map[int][]Run),
+type SpecState struct {
+	unrecoverableError  error
+	orgHolder           OrgHolder
+	projects            map[string]response.CreateProject
+	componentReq        map[string]request.CreateComponent
+	componentRes        map[string]response.CreateComponent
+	componentDetailsRes map[string]response.GetComponentDetails
+	environments        map[EnvKey]response.GetDeploymentEnvironments
+	actionStates        map[int]ActionState
+}
+
+func NewState(orgHolder *OrgHolder, sequences []int) *SpecState {
+	state := &SpecState{
+		orgHolder:           *orgHolder,
+		unrecoverableError:  nil,
+		projects:            make(map[string]response.CreateProject),
+		componentReq:        make(map[string]request.CreateComponent),
+		componentRes:        make(map[string]response.CreateComponent),
+		componentDetailsRes: make(map[string]response.GetComponentDetails),
+		environments:        make(map[EnvKey]response.GetDeploymentEnvironments),
+		actionStates:        make(map[int]ActionState),
 	}
 
 	for _, sequence := range sequences {
-		state.FunctionStates[sequence] = make([]Run, 1)
+		state.actionStates[sequence] = ActionState{Runs: make([]Run, 1)}
 	}
 
 	return state
+}
+
+func (s *SpecState) SetUnrecoverableError(err error) {
+	s.unrecoverableError = err
+}
+
+func (s *SpecState) GetUnrecoverableError() error {
+	return s.unrecoverableError
+}
+
+func (s *SpecState) GetOrgId() int {
+	return s.orgHolder.OrgId
+}
+
+func (s *SpecState) GetOrgHandler() string {
+	return s.orgHolder.OrgHandler
+}
+
+func (s *SpecState) GetOrgUuid() string {
+	return s.orgHolder.OrgUuid
+}
+
+func (s *SpecState) GetProject(placeholder string) (response.CreateProject, bool) {
+	project, ok := s.projects[placeholder]
+	return project, ok
+}
+
+func (s *SpecState) GetComponentRequest(placeholder string) (request.CreateComponent, bool) {
+	component, ok := s.componentReq[placeholder]
+	return component, ok
+}
+
+func (s *SpecState) GetComponentResponse(placeholder string) (response.CreateComponent, bool) {
+	component, ok := s.componentRes[placeholder]
+	return component, ok
+}
+
+func (s *SpecState) GetComponentDetailsResponse(placeholder string) (response.GetComponentDetails, bool) {
+	component, ok := s.componentDetailsRes[placeholder]
+	return component, ok
+}
+
+func (s *SpecState) GetDeploymentEnvironments(envKey EnvKey) (response.GetDeploymentEnvironments, bool) {
+	env, ok := s.environments[envKey]
+	return env, ok
+}
+
+func (s *SpecState) SetProject(placeholder string, project response.CreateProject) {
+	s.projects[placeholder] = project
+}
+
+func (s *SpecState) SetComponentRequest(placeholder string, component request.CreateComponent) {
+	s.componentReq[placeholder] = component
+}
+
+func (s *SpecState) SetComponentResponse(placeholder string, component response.CreateComponent) {
+	s.componentRes[placeholder] = component
+}
+
+func (s *SpecState) SetComponentDetailsResponse(placeholder string, component response.GetComponentDetails) {
+	s.componentDetailsRes[placeholder] = component
+}
+
+func (s *SpecState) SetDeploymentEnvironments(envKey EnvKey, env response.GetDeploymentEnvironments) {
+	s.environments[envKey] = env
+}
+
+func (s *SpecState) GetActionState(sequence int) (*ActionState, bool) {
+	actionState, ok := s.actionStates[sequence]
+	return &actionState, ok
+}
+
+func (s *SpecState) SetActionState(sequence int, actionState ActionState) {
+	s.actionStates[sequence] = actionState
 }
