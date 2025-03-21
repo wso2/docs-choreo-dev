@@ -28,15 +28,15 @@ To create an API proxy, you can either upload an OpenAPI specification or provid
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card. This opens the **Create an API Proxy** pane.
 4. Select **Upload API Specification** option. 
-5. Click on **Try with sample URL** to go ahead the with a sample Open API Specification file.
+5. Click on **Try with sample URL** to go ahead with the sample Open API Specification.
 
     !!! info
-        If you have a specification file downloaded into your local machine , then simply upload it instead of using the sample.
+        To streamline the process, if you already have a specification file saved on your device, simply upload it directly instead of relying on the sample.
 
 6. Specify the following values as Proxy Metadata:
 
     !!! note
-        Values will auto populate according to the data in the uploaded/selected specification file.
+        Values will auto populate according to the data in the uploaded/selected specification file. Following values are for the sample provided by choreo.
 
 
     | **Field**       | **Value**                                  |
@@ -58,14 +58,7 @@ To create an API proxy, you can either upload an OpenAPI specification or provid
 
 8. Click **Create**. This creates the API proxy component and takes you to the **Deploy** page.
 
-## Step 2: Define resources for the API proxy
-
-1. In the left navigation menu, click **Develop** and then click **Resources**.
-
-!!! note
-    You can **add/remove** resources or **modify** existing resources with the existing functionalities of the **Resources** page.
-
-## Step 3: Deploy the API proxy
+## Step 2: Deploy the API proxy
 
 1. In the left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Configure & Deploy**. This opens the **Configure & Deploy** pane.
@@ -73,7 +66,7 @@ To create an API proxy, you can either upload an OpenAPI specification or provid
 
 Now you are ready to test the API proxy.
 
-## Step 4: Test the API proxy
+## Step 3: Test the API proxy
 
 Choreo allows you to test your API proxy using either the [integrated OpenAPI Console](../../testing/test-rest-endpoints-via-the-openapi-console.md) or [cURL](../../testing/test-apis-with-curl.md). In this guide, you will use the OpenAPI Console.
 
@@ -98,11 +91,11 @@ Choreo allows you to test your API proxy using either the [integrated OpenAPI Co
 
     This indicates that your API proxy is working as expected.
 
-## Step 5: Manage the API proxy
+## Step 4: Manage the API proxy
 
 Now that you have a tested API proxy, you can publish it and make it available for application developers to consume. In this guide, you will apply rate limiting to the API and publish it.
 
-### Step 5.1: Apply rate limiting to the API proxy
+### Step 4.1: Apply rate limiting to the API proxy
 
 1. In the left navigation menu, click **Deploy**.
 2. Go to the required environment card and click the settings icon corresponding to **CORS, Rate Limiting and Resiliency**.
@@ -111,13 +104,13 @@ Now that you have a tested API proxy, you can publish it and make it available f
 5. Specify appropriate values for the **Request Limit** and **Time Unit** fields. You can proceed with the default values.
 6. Click **Apply**. This applies the rate limiting level to the API proxy and redeploys it.
 
-### Step 5.2: Publish the API proxy
+### Step 4.2: Publish the API proxy
 
 1. In the left navigation menu, click **Lifecycle** under **Manage**. This takes you to the **Lifecycle** page.
 2. Click **Publish**.
 3. In the **Publish API** dialog, click **Confirm** to proceed with publishing the API. If you want to change the display name, make the necessary changes and then click **Confirm**. This changes the API lifecycle state to **Published**.
 
-## Step 6: Invoke the API
+## Step 5: Invoke the API
 
 To generate credentials for the published API and invoke it via the Choreo Developer Portal, follow these steps:
 
