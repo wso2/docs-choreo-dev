@@ -181,7 +181,11 @@ def prepend_data_with_users_and_link(results_folder, link_file_path, sheet_name,
             data_row = [week, timestamp, users_value] + row
             new_data_with_metadata.append(data_row)
 
-        new_data_with_metadata[1][2] = drive_link
+        
+        if len(new_data_with_metadata) == 1:
+            new_data_with_metadata.append(["" for _ in range(len(new_data_with_metadata[0]))])
+        if len(new_data_with_metadata) > 1 and len(new_data_with_metadata[1]) > 2:
+            new_data_with_metadata[1][2] = drive_link
         # Add an empty row as a buffer
         empty_row = ["" for _ in range(len(new_data_with_metadata[0]))]
         updated_values = new_data_with_metadata + [empty_row] + existing_values
