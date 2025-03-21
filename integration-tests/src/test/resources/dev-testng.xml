@@ -50,6 +50,7 @@
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPI"/>
             <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI"/>
             <class name="com.wso2.choreo.integration.tests.pat.PATManagementTests"/>
+            <class name="com.wso2.choreo.integration.tests.thirdpartyServices.ThirdPartyServices"/>
         </classes>
     </test>
 </suite>
