@@ -351,13 +351,13 @@ public class ConnectionService extends ControlPlaneAPI {
     public static ConnectionInfo createConnection(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
                                       String requestedServiceName, ServiceVisibility requestedServiceVisibility, String projectId,
                                      String clientChoreoComponentId, List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
-                                     List<com.wso2.choreo.integration.models.environments.Environment> servicePublisherComponentEnvironments, String networkVisibilityFilter) throws IOException {
+                                     List<com.wso2.choreo.integration.models.environments.Environment> servicePublisherComponentEnvironments, String networkVisibilityFilter, Boolean isOauth2Secured, Boolean isWebapp) throws IOException {
 
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,runner,accessToken,requestedServiceName,networkVisibilityFilter,"");
         ConnectionCreateRequest connectionCreationReq= ConnectionService.createConnectionCreationReq(clientComponentEnvironments,projectId,clientChoreoComponentId,requestedServiceVisibility,serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionInfo connection = ConnectionService.createChoreoConnection(runner, httpClient,
-                accessToken, connectionCreationReq, true, servicePublisherComponentEnvironments, false);
+                accessToken, connectionCreationReq, isOauth2Secured, servicePublisherComponentEnvironments, isWebapp);
 
         return connection;
     }
@@ -373,14 +373,14 @@ public class ConnectionService extends ControlPlaneAPI {
         String serviceIdentifier = MarketplaceService.getChoreoServiceIdentifier(runner, httpClient, accessToken, serviceId, requestedServiceVisibility, fileType);
         if (fileType.equals(SourceConfigurationFileTypes.COMPONENT_CONFIG)){
             connectionIdentifier = connection.getGroupUuid();
-        } else if (fileType.equals(SourceConfigurationFileTypes.COMPONENT_V1D1)) {
+        } else if (fileType.equals(SourceConfigurationFileTypes.COMPONENT_V11)) {
             connectionIdentifier = connection.getName();
         }
-        UpdateSourceConfigurationFile(repoName, githubOrgName, branchName.length > 0 ? branchName[0] : "main" ,connectionIdentifier, serviceIdentifier, fileType, ".choreo", templatePath);
+        updateSourceConfigurationFile(repoName, githubOrgName, branchName.length > 0 ? branchName[0] : "main" ,connectionIdentifier, serviceIdentifier, fileType, ".choreo", templatePath);
 
     }
 
-    public static void UpdateSourceConfigurationFile(String repoName, String githubOrgName, String branchName, String connectionIdentifier, String serviceIdentifier,
+    public static void updateSourceConfigurationFile(String repoName, String githubOrgName, String branchName, String connectionIdentifier, String serviceIdentifier,
                                                      SourceConfigurationFileTypes fileType, String choreoFolderPath, String sourceConfigFileTemplatePath) throws IOException {
         Map<String, String> options = new HashMap<>();
         options.put("orgName", githubOrgName);
@@ -396,7 +396,7 @@ public class ConnectionService extends ControlPlaneAPI {
             if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
                 throw new ValidationException("Error while updating component-config.yaml file" + mergeCodeResp.getRes());
             }
-        } else if (fileType == SourceConfigurationFileTypes.COMPONENT_V1D0){
+        } else if (fileType == SourceConfigurationFileTypes.COMPONENT_V10){
             Map<String, String> params = new HashMap<>();
             params.put("serviceIdentifier", serviceIdentifier);
             params.put("connectionId", connectionIdentifier);
@@ -407,7 +407,7 @@ public class ConnectionService extends ControlPlaneAPI {
             if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
                 throw new ValidationException("Error while updating component.yaml v1.0 file" + mergeCodeResp.getRes());
             }
-        } else if (fileType == SourceConfigurationFileTypes.COMPONENT_V1D1){
+        } else if (fileType == SourceConfigurationFileTypes.COMPONENT_V11){
             Map<String, String> params = new HashMap<>();
             params.put("resourceRef", serviceIdentifier);
             params.put("connectionName", connectionIdentifier);

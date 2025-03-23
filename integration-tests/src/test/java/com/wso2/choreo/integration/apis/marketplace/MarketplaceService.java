@@ -107,7 +107,7 @@ public class MarketplaceService {
     public static String getChoreoServiceIdentifier(TestActionRunner runner, HttpClient client, String accessToken,
                                                     String serviceId, ServiceVisibility visibility, SourceConfigurationFileTypes fileType) {
         String resourceURL = CONTEXT.concat("/services/").concat(serviceId).
-                concat("/dependencyId").concat("?visibility=").concat(visibility.toString()).concat("?configFileType=".concat(fileType.toString()));
+                concat("/dependencyId").concat("?visibility=").concat(visibility.toString()).concat("&configFileType=".concat(fileType.toString().toLowerCase()));
         AtomicReference<String> serviceIdentifier = new AtomicReference<>();
         runner.$(http()
                 .client(client)

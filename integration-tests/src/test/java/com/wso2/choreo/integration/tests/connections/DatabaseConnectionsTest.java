@@ -54,8 +54,6 @@ import java.util.*;
  * Tests related to Choreo database connections creation and usage.
  */
 public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
-    private static final String GH_TEST_USER_ORG = Configuration.getConfig(ConfigDefinition.GITHUB_TEST_USER_ORG);
-
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
     HttpClient httpClient;
@@ -101,10 +99,12 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
     private final String COMPONENT_V1D0_TEMPLATE_FILE_PATH = "templates/connectionManagement/sourceConfigurationFiles/databaseConnections/componentv10.mustache";
     private final String COMPONENT_V1D1_TEMPLATE_FILE_PATH = "templates/connectionManagement/sourceConfigurationFiles/databaseConnections/componentv11.mustache";
 
+    private String GH_TEST_USER_ORG = "";
+
     @BeforeClass
     public void setup_TestDatabaseConnectionsTestCase() throws Exception {
-        String GITHUB_ORG = Configuration.getConfig(ConfigDefinition.GITHUB_TEST_USER_ORG);
-        CLIENT_COMPONENT_REPO_URL = "https://github.com/".concat(GITHUB_ORG).concat("/choreo-samples");
+        GH_TEST_USER_ORG = Configuration.getConfig(ConfigDefinition.GITHUB_TEST_USER_ORG);
+        CLIENT_COMPONENT_REPO_URL = "https://github.com/".concat(GH_TEST_USER_ORG).concat("/choreo-samples");
         orgUUID = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
         httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
@@ -222,8 +222,8 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
     @Test(dependsOnMethods = {"createDatabaseConnection_TestDatabaseConnections"})
     @CitrusTest
     public void consumeDatabaseConnectionWithComponentFileV11_TestDatabaseConnections() throws Exception {
-        ConnectionService.UpdateSourceConfigurationFile(REPO_NAME, GH_TEST_USER_ORG, "main", databaseConnection.getName(), "database:".concat(mysqlDatabaseServerName).concat("/").concat(devDatabaseName),
-                    SourceConfigurationFileTypes.COMPONENT_V1D1, CLIENT_COMPONENT_CHOREO_FOLDER_PATH, COMPONENT_V1D1_TEMPLATE_FILE_PATH);
+        ConnectionService.updateSourceConfigurationFile(REPO_NAME, GH_TEST_USER_ORG, "main", databaseConnection.getName(), "database:".concat(mysqlDatabaseServerName).concat("/").concat(devDatabaseName),
+                    SourceConfigurationFileTypes.COMPONENT_V11, CLIENT_COMPONENT_CHOREO_FOLDER_PATH, COMPONENT_V1D1_TEMPLATE_FILE_PATH);
 
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         DatabaseServer dbServer = PlatformServices.getDatabaseServer(this,httpClient,mysqlDatabaseServer.getId(),orgUUID,accessToken);
@@ -267,8 +267,8 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
         repository.setBranchApp("component-yaml-v10");
         clientChoreoComponentNewVersion.setRepository(repository);
 
-        ConnectionService.UpdateSourceConfigurationFile(REPO_NAME, GH_TEST_USER_ORG,  "component-yaml-v10", databaseConnection.getGroupUuid(), "database:".concat(devDatabaseName),
-                SourceConfigurationFileTypes.COMPONENT_V1D0, CLIENT_COMPONENT_CHOREO_FOLDER_PATH, COMPONENT_V1D0_TEMPLATE_FILE_PATH);
+        ConnectionService.updateSourceConfigurationFile(REPO_NAME, GH_TEST_USER_ORG,  "component-yaml-v10", databaseConnection.getGroupUuid(), "database:".concat(devDatabaseName),
+                SourceConfigurationFileTypes.COMPONENT_V10, CLIENT_COMPONENT_CHOREO_FOLDER_PATH, COMPONENT_V1D0_TEMPLATE_FILE_PATH);
 
         //deploy to dev environment
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken, clientChoreoComponentNewVersion);
@@ -307,7 +307,7 @@ public class DatabaseConnectionsTest extends TestNGCitrusSpringSupport {
         repository.setBranchApp("component-config-yaml");
         clientChoreoComponentNewVersion.setRepository(repository);
 
-        ConnectionService.UpdateSourceConfigurationFile(REPO_NAME, GH_TEST_USER_ORG, "component-config-yaml", databaseConnection.getGroupUuid(), "database:".concat(devDatabaseName),
+        ConnectionService.updateSourceConfigurationFile(REPO_NAME, GH_TEST_USER_ORG, "component-config-yaml", databaseConnection.getGroupUuid(), "database:".concat(devDatabaseName),
                     SourceConfigurationFileTypes.COMPONENT_CONFIG, CLIENT_COMPONENT_CHOREO_FOLDER_PATH, COMPONENT_CONFIG_TEMPLATE_FILE_PATH);
 
         //deploy to dev environment
