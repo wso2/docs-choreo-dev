@@ -17,14 +17,11 @@ import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import com.wso2.choreo.integration.apis.github.GitHub;
 import com.wso2.choreo.integration.apis.marketplace.ConnectionService;
-import com.wso2.choreo.integration.apis.marketplace.MarketplaceService;
 import com.wso2.choreo.integration.common.APICreator;
 import com.wso2.choreo.integration.common.ComponentFlavour;
 import com.wso2.choreo.integration.common.ComponentUtils;
 import com.wso2.choreo.integration.common.Endpoints;
-import com.wso2.choreo.integration.common.MessageUtils;
 import com.wso2.choreo.integration.common.TestContext;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
@@ -55,7 +52,7 @@ import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import java.nio.charset.StandardCharsets;
+
 import java.util.*;
 
 /**
@@ -132,7 +129,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     private String API_NEW_VERSION_INVOCATION_REQUEST_BODY;
     private String REST_API_EXPECTED_RESPONSE;
 
-    private final String COMPONENT_V1D1_TEMPLATE_FILE_PATH = "templates/connectionManagement/sourceConfigurationFiles/serviceConnections/componentv11.mustache";
+    private final String COMPONENT_V1D2_TEMPLATE_FILE_PATH = "templates/connectionManagement/sourceConfigurationFiles/serviceConnections/componentv12.mustache";
     private final String COMPONENT_CONFIG_API_KEY_TEMPLATE_FILE_PATH = "templates/connectionManagement/sourceConfigurationFiles/serviceConnections/component-config-api-key.mustache";
 
     @Autowired
@@ -226,7 +223,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 clientComponentEnvironments, servicePublisherComponentEnvironments.subList(0,1),NETWORK_VISIBILITY_FILTER, true, false);
         componentLevelConnectionId = connection.getGroupUuid();
         ConnectionService.addConnectionToConfigurationFile(this, citrusClients, accessToken, publicEndpointServiceComponent.getName(),
-                NETWORK_VISIBILITY_FILTER, GH_ORG, repoName, SourceConfigurationFileTypes.COMPONENT_V11, COMPONENT_V1D1_TEMPLATE_FILE_PATH, connection, PUBLIC_SERVICE);
+                NETWORK_VISIBILITY_FILTER, GH_ORG, repoName, SourceConfigurationFileTypes.COMPONENT_V12, COMPONENT_V1D2_TEMPLATE_FILE_PATH, connection, PUBLIC_SERVICE);
     }
 
     // Deploy the created consumer component to dev environment
@@ -458,7 +455,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 newClientChoreoComponent);
 
         ConnectionService.addConnectionToConfigurationFile(this, citrusClients, accessToken, proxyComponent.getName(),
-    NETWORK_VISIBILITY_FILTER, GH_ORG, repoName, SourceConfigurationFileTypes.COMPONENT_V11, COMPONENT_V1D1_TEMPLATE_FILE_PATH, projectLevelConn, PUBLIC_SERVICE);
+    NETWORK_VISIBILITY_FILTER, GH_ORG, repoName, SourceConfigurationFileTypes.COMPONENT_V12, COMPONENT_V1D2_TEMPLATE_FILE_PATH, projectLevelConn, PUBLIC_SERVICE);
     }
 
     // Deploy the created client component with a connection to a proxy publisher
@@ -963,7 +960,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     ConnectionInfo connection = ConnectionService.createConnection(this, citrusClients, accessToken, deployedPublisherComponent.getName(), PUBLIC_SERVICE, projectOne.getId(), createdClientComponent.getId(),
         environments, environments, NETWORK_VISIBILITY_FILTER, true, false);
         ConnectionService.addConnectionToConfigurationFile(this, citrusClients, accessToken, deployedPublisherComponent.getName(),
-                NETWORK_VISIBILITY_FILTER, GH_ORG, repoName, SourceConfigurationFileTypes.COMPONENT_V11, COMPONENT_V1D1_TEMPLATE_FILE_PATH, connection, PUBLIC_SERVICE);
+                NETWORK_VISIBILITY_FILTER, GH_ORG, repoName, SourceConfigurationFileTypes.COMPONENT_V12, COMPONENT_V1D2_TEMPLATE_FILE_PATH, connection, PUBLIC_SERVICE);
             deployedClientComponentStatus = ComponentUtils.deployComponent(this, citrusClients, accessToken,
                     createdClientComponent, environments, ComponentFlavour.BYOC);
         }

@@ -106,8 +106,13 @@ public class MarketplaceService {
 
     public static String getChoreoServiceIdentifier(TestActionRunner runner, HttpClient client, String accessToken,
                                                     String serviceId, ServiceVisibility visibility, SourceConfigurationFileTypes fileType) {
+        SourceConfigurationFileTypes configFileType = fileType;
+        // connection snippet will be same for all component.yaml v1.X versions
+        if (configFileType.equals(SourceConfigurationFileTypes.COMPONENT_V12)){
+            configFileType = SourceConfigurationFileTypes.COMPONENT_V11;
+        }
         String resourceURL = CONTEXT.concat("/services/").concat(serviceId).
-                concat("/dependencyId").concat("?visibility=").concat(visibility.toString()).concat("&configFileType=".concat(fileType.toString().toLowerCase()));
+                concat("/dependencyId").concat("?visibility=").concat(visibility.toString()).concat("&configFileType=".concat(configFileType.toString().toLowerCase()));
         AtomicReference<String> serviceIdentifier = new AtomicReference<>();
         runner.$(http()
                 .client(client)

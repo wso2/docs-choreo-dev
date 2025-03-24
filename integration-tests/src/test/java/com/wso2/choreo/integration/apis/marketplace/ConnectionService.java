@@ -14,7 +14,6 @@
 package com.wso2.choreo.integration.apis.marketplace;
 
 import com.consol.citrus.TestActionRunner;
-import com.consol.citrus.context.TestContext;
 import com.consol.citrus.exceptions.ValidationException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
@@ -371,9 +370,9 @@ public class ConnectionService extends ControlPlaneAPI {
         String serviceId = serviceFound.getServiceId();
         String connectionIdentifier = "";
         String serviceIdentifier = MarketplaceService.getChoreoServiceIdentifier(runner, httpClient, accessToken, serviceId, requestedServiceVisibility, fileType);
-        if (fileType.equals(SourceConfigurationFileTypes.COMPONENT_CONFIG)){
+        if (fileType.equals(SourceConfigurationFileTypes.COMPONENT_CONFIG) || fileType.equals(SourceConfigurationFileTypes.COMPONENT_V10)){
             connectionIdentifier = connection.getGroupUuid();
-        } else if (fileType.equals(SourceConfigurationFileTypes.COMPONENT_V11)) {
+        } else if (fileType.equals(SourceConfigurationFileTypes.COMPONENT_V11) || fileType.equals(SourceConfigurationFileTypes.COMPONENT_V12)){
             connectionIdentifier = connection.getName();
         }
         updateSourceConfigurationFile(repoName, githubOrgName, branchName.length > 0 ? branchName[0] : "main" ,connectionIdentifier, serviceIdentifier, fileType, ".choreo", templatePath);
@@ -407,16 +406,16 @@ public class ConnectionService extends ControlPlaneAPI {
             if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
                 throw new ValidationException("Error while updating component.yaml v1.0 file" + mergeCodeResp.getRes());
             }
-        } else if (fileType == SourceConfigurationFileTypes.COMPONENT_V11){
+        } else if (fileType == SourceConfigurationFileTypes.COMPONENT_V11 || fileType.equals(SourceConfigurationFileTypes.COMPONENT_V12)){
             Map<String, String> params = new HashMap<>();
             params.put("resourceRef", serviceIdentifier);
             params.put("connectionName", connectionIdentifier);
             String updatedComponentV11FileContent = MessageUtils.generateStringFromTemplate(sourceConfigFileTemplatePath, params);
             String encodedFileContent = Base64.getEncoder().
                     encodeToString(updatedComponentV11FileContent.getBytes(StandardCharsets.UTF_8));
-            Response mergeCodeResp = GitHub.mergeNewCode(repoName,choreoFolderPath.concat("/component.yaml") , "Update component.yaml file v1.1", encodedFileContent, options);
+            Response mergeCodeResp = GitHub.mergeNewCode(repoName,choreoFolderPath.concat("/component.yaml") , "Update component.yaml file v1.1/1.2", encodedFileContent, options);
             if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
-                throw new ValidationException("Error while updating component.yaml v1.1 file" + mergeCodeResp.getRes());
+                throw new ValidationException("Error while updating component.yaml v1.1/1.2 file" + mergeCodeResp.getRes());
             }
         }
     }
