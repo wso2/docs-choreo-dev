@@ -4,7 +4,7 @@ In Choreo, if an administrator [configures a workflow to require approval](../ad
 
 Upon submitting a workflow approval request, Choreo notifies all authorized assignees via email about the [review request](../administer/review-workflow-approval-requests.md). When an authorized assignee approves or rejects the request, you will receive an email with details of the decision.
 
-The approach to request approval can vary depending on the workflow. 
+The approach to request approval can vary depending on the workflow.
 
 ## Request approval for environment promotion
 
@@ -12,6 +12,7 @@ The approach to request approval can vary depending on the workflow.
 
 - Ensure you have a component created, built, and deployed to the development environment.
 - Ensure that an approval workflow is configured for environment promotion.
+- Ensure you need to have required permissions to promote components or `WORKFLOW-MANAGEMENT >> Create approval requests` permission
 - Ensure you are promoting the component to a critical environment, such as production.
 
 To request approval to promote a component from the development environment to production, follow these steps:
@@ -29,6 +30,6 @@ When an authorized assignee approves the request, you will receive a confirmatio
 
 ## Cancel a workflow approval request
 
-If you want to cancel a workflow approval request that is already submitted, you can do so before the request is approved or rejected. 
+If you want to cancel a workflow approval request that is already submitted, you can do so before the request is approved or rejected.
 
 When you submit a workflow approval request, the **Request to Promote** button changes to **Cancel Request**. To cancel an approval request, click **Cancel Request**. Upon confirming the cancellation, all configured approvers are notified immediately, and the request will no longer be pending.
