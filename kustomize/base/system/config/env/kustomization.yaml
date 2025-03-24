@@ -489,7 +489,7 @@ configMapGenerator:
       - ARGO_DOCKER_BUILD_IMAGE={{.ARGO_DOCKER_BUILD_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/argo-docker-build:main-1e54151737c3463de2aca9f2d708c0f7f5db1d32"}}
       - ARGO_BUILDPACK_BUILD_IMAGE={{.ARGO_BUILDPACK_BUILD_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/argo-buildpack-build:main-d08de6a080d7c1fcd259de9efb5697890adaca04"}}
       - ARGO_ENVIRONMENT_CLEANUP_IMAGE={{.ARGO_ENVIRONMENT_CLEANUP_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/argo-environment-cleanup:main-3202e4fe7e81484eac19de7370c587bd31c21cf0"}}
-      - ARGO_VALIDATION_AND_GENERATION_IMAGE={{.ARGO_VALIDATION_AND_GENERATION_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/argo-validations:main-59d331bb8f94968f90f830dc78bdd51c315fbacb"}}
+      - ARGO_VALIDATION_AND_GENERATION_IMAGE={{.ARGO_VALIDATION_AND_GENERATION_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/argo-validations:main-ab14300f1db8ae0c36b2feeecec1d72857dd4c65"}}
       - ARGO_BASE_IMAGE={{.ARGO_BASE_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/argo-base-image:main-09e9cef77e5b727b4e9b1bb0a2dd32c38f504237"}}
       - BUILDPACKS_TEST_RUNNER_ENABLE={{.BUILDPACKS_TEST_RUNNER_ENABLE}}
       - BUILDPACKS_ENABLED_TEST_ORGS={{.BUILDPACKS_ENABLED_TEST_ORGS}}
