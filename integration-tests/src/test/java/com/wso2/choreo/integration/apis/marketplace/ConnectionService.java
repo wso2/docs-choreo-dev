@@ -63,7 +63,7 @@ public class ConnectionService extends ControlPlaneAPI {
     private static final String CONTEXT = "connections/v1";
     private static final Logger log = LogManager.getLogger();
 
-    public static String createChoreoConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+    public static ConnectionInfo createChoreoConnection(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
                                                 ConnectionCreateRequest connectionReq, Boolean isOauth2Secured,
                                                 List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs, 
                                                 boolean isWebApp ) throws IOException {
@@ -74,7 +74,7 @@ public class ConnectionService extends ControlPlaneAPI {
             createChoreoConnectionURI = createChoreoConnectionURI.concat("?generateCreds=true");
         }
         String requestPayload = ObjectMapperUtil.mapObjectToString(connectionReq);
-        AtomicReference<String> connectionId = new AtomicReference<>();
+        AtomicReference<ConnectionInfo> connection = new AtomicReference<>();
         runner.variable("isConnectionCreationSuccess",false);
         runner.$(repeatOnError()
                 .until("(i = 5) or ( ${isConnectionCreationSuccess} = true )")
@@ -101,12 +101,12 @@ public class ConnectionService extends ControlPlaneAPI {
                                     }
                                     String payload = message.getPayload(String.class);
                                     JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
-                                    validateConnectionCreation (context, connectionJsonObject, connectionId,
-                                            isOauth2Secured, "isConnectionCreationSuccess",
+                                    validateConnectionCreation (context, connectionJsonObject, isOauth2Secured, "isConnectionCreationSuccess",
                                             publisherDeployedEnvs, isWebApp);
+                                    connection.set(ObjectMapperUtil.mapStringToObject(ConnectionInfo.class, message.getPayload(String.class), ""));
                                 }
                                 )));
-        return connectionId.get();
+        return connection.get();
     }
     private static boolean  isStageSuccess(JsonArray envStatus, String stage) {
 
@@ -161,7 +161,7 @@ public class ConnectionService extends ControlPlaneAPI {
                                             }
                                             String payload = message.getPayload(String.class);
                                             JsonObject connectionJsonObject = new JsonParser().parse(payload).getAsJsonObject();
-                                            validateConnectionCreation (context, connectionJsonObject, null,
+                                            validateConnectionCreation (context, connectionJsonObject,
                                             isPublisherSecured, "isConnectionRefreshSuccess",
                                                     publisherDeployedEnvs, isWebApp);
                                         }
@@ -206,9 +206,9 @@ public class ConnectionService extends ControlPlaneAPI {
                 marketplaceServiceClient, accessToken, serviceName, networkVisibilityFilter,projectId);
         return services.get(0);  //we will only get one as we search by exact name
     }
-    public static ConnectionCreateRequest createComponentLevelConnectionCreationReq(
+    public static ConnectionCreateRequest createConnectionCreationReq(
             List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
-            String projectId, String clientComponentId, String requestingServiceVisibility,
+            String projectId, String clientComponentId, ServiceVisibility requestingServiceVisibility,
             ServiceInfo serviceFound ) throws IOException {
 
         String serviceId = serviceFound.getServiceId();
@@ -226,28 +226,32 @@ public class ConnectionService extends ControlPlaneAPI {
         ArrayList<Visibility> visibilities = new ArrayList<>();
         String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-        Visibility componentVisibility = Visibility.builder().
-                organizationUuid(orgUuid).projectUuid(projectId).componentUuid(clientComponentId).build();
+        Visibility.VisibilityBuilder visibilityBuilder = Visibility.builder()
+                .organizationUuid(orgUuid)
+                .projectUuid(projectId);
+
+        if (!clientComponentId.isEmpty()) {
+            visibilityBuilder.componentUuid(clientComponentId);
+        }
+        Visibility componentVisibility = visibilityBuilder.build();
         visibilities.add(componentVisibility);
         String connectionName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_CONNECTION_NAME);
 
-        ConnectionCreateRequest connectionCreationReq = ConnectionCreateRequest.builder().name(connectionName)
-                .description("Component Level connection")
+        return ConnectionCreateRequest.builder().name(connectionName)
+                .description("Connection created for integration tests")
                 .serviceId(serviceId)
                 .schemaReference(schemaReference)
-                .environments(environmentsToQuery.toArray(new com.wso2.choreo.integration.models.marketplace.Environment[0]))
+                .environments(environmentsToQuery.toArray(new Environment[0]))
                 .visibilities(visibilities.toArray(new Visibility[0]))
-                .requestingServiceVisibility(requestingServiceVisibility)
+                .requestingServiceVisibility(requestingServiceVisibility.toString())
                 .orgIdInteger(orgId).build();
-
-        return connectionCreationReq;
 
     }
 
-    public static void createProjectLevelConnection(Map<Endpoints, HttpClient> citrusClients, TestNGCitrusSpringSupport runner,
+    public static ConnectionInfo createProjectLevelConnection(Map<Endpoints, HttpClient> citrusClients, TestNGCitrusSpringSupport runner,
                                                     String accessToken, String serviceName, String networkVisibilityFilter,
                                                     String projectId , String connectionName, String connectionDescription,
-                                                    String requestingServiceVisibility, Boolean isOauth2Secured,
+                                                    ServiceVisibility requestingServiceVisibility, Boolean isOauth2Secured,
                                                     List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs) throws IOException {
         String orgUuid = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
@@ -287,13 +291,15 @@ public class ConnectionService extends ControlPlaneAPI {
                 .schemaReference(schemaReference)
                 .environments(environmentsToQuery.toArray(new com.wso2.choreo.integration.models.marketplace.Environment[0]))
                 .visibilities(visibilities.toArray(new Visibility[0]))
-                .requestingServiceVisibility(requestingServiceVisibility)
+                .requestingServiceVisibility(requestingServiceVisibility.toString())
                 .orgIdInteger(orgId).build();
-        String connectionId = ConnectionService.createChoreoConnection(runner, connectionServiceClient,
+
+        ConnectionInfo connection = ConnectionService.createChoreoConnection(runner, connectionServiceClient,
                 accessToken, connectionReq, isOauth2Secured, publisherDeployedEnvs,false);
         Pattern UUID_REGEX =
                 Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
-        Assert.assertTrue(UUID_REGEX.matcher(connectionId).matches());
+        Assert.assertTrue(UUID_REGEX.matcher(connection.getGroupUuid()).matches());
+        return connection;
     }
 
     public static  void disableEndpointSecurity(TestActionRunner runner,Map<Endpoints, HttpClient> citrusClients,String apiId, String accessToken){
@@ -341,80 +347,75 @@ public class ConnectionService extends ControlPlaneAPI {
         return endpoints.get(0).getPublicUrl();
     }
 
-    public static String createAndUseConnection(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
-                                     String requestedServiceName, String requestedServiceVisibility, String projectId,
+    public static ConnectionInfo createConnection(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
+                                      String requestedServiceName, ServiceVisibility requestedServiceVisibility, String projectId,
                                      String clientChoreoComponentId, List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
-                                     List<com.wso2.choreo.integration.models.environments.Environment> servicePublisherComponentEnvironments,
-                                              String repoName, String... branchName) throws IOException {
+                                     List<com.wso2.choreo.integration.models.environments.Environment> servicePublisherComponentEnvironments, String networkVisibilityFilter, Boolean isOauth2Secured, Boolean isWebapp) throws IOException {
 
-        ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,runner,accessToken,requestedServiceName,requestedServiceVisibility.toLowerCase(),"");
-        ConnectionCreateRequest connectionCreationReq= ConnectionService.createComponentLevelConnectionCreationReq(clientComponentEnvironments,projectId,clientChoreoComponentId,requestedServiceVisibility,serviceFound);
+        ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,runner,accessToken,requestedServiceName,networkVisibilityFilter,"");
+        ConnectionCreateRequest connectionCreationReq= ConnectionService.createConnectionCreationReq(clientComponentEnvironments,projectId,clientChoreoComponentId,requestedServiceVisibility,serviceFound);
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
-        String serviceId = serviceFound.getServiceId();
-        String connectionId = ConnectionService.createChoreoConnection(runner, httpClient,
-                accessToken, connectionCreationReq,true,servicePublisherComponentEnvironments.subList(0,1),false);
+        ConnectionInfo connection = ConnectionService.createChoreoConnection(runner, httpClient,
+                accessToken, connectionCreationReq, isOauth2Secured, servicePublisherComponentEnvironments, isWebapp);
 
-        //update component-config.yaml file
-        //Let's consume service using public visibility
-        String serviceIdentifier = MarketplaceService.getChoreoServiceIdentifier(runner,
-                httpClient, accessToken, serviceId, ServiceVisibility.PUBLIC);
-        Map<String, String> params = new HashMap<>();
-        params.put("serviceIdentifier", serviceIdentifier);
-        params.put("connectionId", connectionId);
-        String updatedComponentConfigFileContent = MessageUtils.generateStringFromTemplate(
-                "templates/marketplace/component-config.mustache", params);
-        String encodedFileContent = Base64.getEncoder().
-                encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
-        Map<String, String> options = new HashMap<>();
-        if (branchName.length > 0) {
-            options.put("branchName",branchName[0]);
-        }
-        Response mergeCodeResp = GitHub.mergeNewCode( repoName, ".choreo/component-config.yaml", "Update component-config file", encodedFileContent,options);
-        if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
-            throw new ValidationException("Error while update component-config.yaml file" + mergeCodeResp.getRes());
-        }
-        return connectionId;
+        return connection;
     }
 
-    public static void UpdateSourceConfigurationFile(String repoName, String branchName, String connectionIdentifier, String serviceIdentifier, SourceConfigurationFileTypes fileType, String choreoFolderPath) throws IOException {
+    public static void addConnectionToConfigurationFile(TestNGCitrusSpringSupport runner, Map<Endpoints, HttpClient> citrusClients, String accessToken,
+                                                        String requestedServiceName, String networkVisibilityFilter, String githubOrgName, String repoName,
+                                                        SourceConfigurationFileTypes fileType, String templatePath, ConnectionInfo connection, ServiceVisibility requestedServiceVisibility, String... branchName) throws IOException {
+
+        HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
+        ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,runner,accessToken,requestedServiceName,networkVisibilityFilter.toLowerCase(),"");
+        String serviceId = serviceFound.getServiceId();
+        String connectionIdentifier = "";
+        String serviceIdentifier = MarketplaceService.getChoreoServiceIdentifier(runner, httpClient, accessToken, serviceId, requestedServiceVisibility, fileType);
+        if (fileType.equals(SourceConfigurationFileTypes.COMPONENT_CONFIG) || fileType.equals(SourceConfigurationFileTypes.COMPONENT_V10)){
+            connectionIdentifier = connection.getGroupUuid();
+        } else if (fileType.equals(SourceConfigurationFileTypes.COMPONENT_V11) || fileType.equals(SourceConfigurationFileTypes.COMPONENT_V12)){
+            connectionIdentifier = connection.getName();
+        }
+        updateSourceConfigurationFile(repoName, githubOrgName, branchName.length > 0 ? branchName[0] : "main" ,connectionIdentifier, serviceIdentifier, fileType, ".choreo", templatePath);
+
+    }
+
+    public static void updateSourceConfigurationFile(String repoName, String githubOrgName, String branchName, String connectionIdentifier, String serviceIdentifier,
+                                                     SourceConfigurationFileTypes fileType, String choreoFolderPath, String sourceConfigFileTemplatePath) throws IOException {
         Map<String, String> options = new HashMap<>();
-        options.put("orgName", GH_TEST_USER_ORG);
+        options.put("orgName", githubOrgName);
         options.put("branchName", branchName);
         if (fileType == SourceConfigurationFileTypes.COMPONENT_CONFIG){
             Map<String, String> params = new HashMap<>();
             params.put("serviceIdentifier", serviceIdentifier);
             params.put("connectionId", connectionIdentifier);
-            String updatedComponentConfigFileContent = MessageUtils.generateStringFromTemplate(
-                    "templates/connectionManagement/sourceConfigurationFiles/databaseConnections/component-config.mustache", params);
+            String updatedComponentConfigFileContent = MessageUtils.generateStringFromTemplate(sourceConfigFileTemplatePath, params);
             String encodedFileContent = Base64.getEncoder().
                     encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
             Response mergeCodeResp = GitHub.mergeNewCode( repoName, choreoFolderPath.concat("/component-config.yaml"), "Update component-config.yaml file", encodedFileContent, options);
             if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
-                throw new ValidationException("Error while updating component-config.yaml file for db connections" + mergeCodeResp.getRes());
+                throw new ValidationException("Error while updating component-config.yaml file" + mergeCodeResp.getRes());
             }
-        } else if (fileType == SourceConfigurationFileTypes.COMPONENT_V1D0){
+        } else if (fileType == SourceConfigurationFileTypes.COMPONENT_V10){
             Map<String, String> params = new HashMap<>();
             params.put("serviceIdentifier", serviceIdentifier);
             params.put("connectionId", connectionIdentifier);
-            String updatedComponentConfigFileContent = MessageUtils.generateStringFromTemplate(
-                    "templates/connectionManagement/sourceConfigurationFiles/databaseConnections/componentv10.mustache", params);
+            String updatedComponentV10FileContent = MessageUtils.generateStringFromTemplate(sourceConfigFileTemplatePath, params);
             String encodedFileContent = Base64.getEncoder().
-                    encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
+                    encodeToString(updatedComponentV10FileContent.getBytes(StandardCharsets.UTF_8));
             Response mergeCodeResp = GitHub.mergeNewCode(repoName, choreoFolderPath.concat("/component.yaml"), "Update component.yaml file v1.0", encodedFileContent, options);
             if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
-                throw new ValidationException("Error while updating component.yaml v1.0 file for db connections" + mergeCodeResp.getRes());
+                throw new ValidationException("Error while updating component.yaml v1.0 file" + mergeCodeResp.getRes());
             }
-        } else if (fileType == SourceConfigurationFileTypes.COMPONENT_V1D1){
+        } else if (fileType == SourceConfigurationFileTypes.COMPONENT_V11 || fileType.equals(SourceConfigurationFileTypes.COMPONENT_V12)){
             Map<String, String> params = new HashMap<>();
             params.put("resourceRef", serviceIdentifier);
             params.put("connectionName", connectionIdentifier);
-            String updatedComponentConfigFileContent = MessageUtils.generateStringFromTemplate(
-                    "templates/connectionManagement/sourceConfigurationFiles/databaseConnections/componentv11.mustache", params);
+            String updatedComponentV11FileContent = MessageUtils.generateStringFromTemplate(sourceConfigFileTemplatePath, params);
             String encodedFileContent = Base64.getEncoder().
-                    encodeToString(updatedComponentConfigFileContent.getBytes(StandardCharsets.UTF_8));
-            Response mergeCodeResp = GitHub.mergeNewCode(repoName,choreoFolderPath.concat("/component.yaml") , "Update component.yaml file v1.1", encodedFileContent, options);
+                    encodeToString(updatedComponentV11FileContent.getBytes(StandardCharsets.UTF_8));
+            Response mergeCodeResp = GitHub.mergeNewCode(repoName,choreoFolderPath.concat("/component.yaml") , "Update component.yaml file v1.1/1.2", encodedFileContent, options);
             if (mergeCodeResp.getStatusCode() != HttpStatus.OK.value()) {
-                throw new ValidationException("Error while updating component.yaml v1.1 file for db connections" + mergeCodeResp.getRes());
+                throw new ValidationException("Error while updating component.yaml v1.1/1.2 file" + mergeCodeResp.getRes());
             }
         }
     }
@@ -429,8 +430,7 @@ public class ConnectionService extends ControlPlaneAPI {
     }
 
     public static void validateConnectionCreation(com.consol.citrus.context.TestContext context,
-                                                  JsonObject connectionJsonObject, AtomicReference<String> connectionId,
-                                                  boolean isOauth2Secured, String contextVariableName,
+                                                  JsonObject connectionJsonObject, boolean isOauth2Secured, String contextVariableName,
                                                   List<com.wso2.choreo.integration.models.environments.Environment> publisherDeployedEnvs,
                                                   boolean isWebApp){
 
@@ -464,9 +464,6 @@ public class ConnectionService extends ControlPlaneAPI {
             }
         }
         context.setVariable(contextVariableName, true);
-        if(connectionId != null) {
-            connectionId.set(connectionJsonObject.get("groupUuid").getAsString());
-        }
     }
 
     public static CommonResource FindDatabase(Map<Endpoints, HttpClient> citrusClients, TestNGCitrusSpringSupport runner, String accessToken, String databaseServerId,
