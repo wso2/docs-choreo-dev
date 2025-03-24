@@ -30,4 +30,5 @@ public class Repository {
     String dockerContext;
     String dockerfilePath;
     String buildContext;
+    Boolean isPublicRepo = false;
 }
