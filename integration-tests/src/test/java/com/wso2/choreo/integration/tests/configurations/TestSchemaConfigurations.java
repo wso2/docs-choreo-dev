@@ -91,15 +91,10 @@ public class TestSchemaConfigurations extends TestBase {
         @CitrusTest
         public void addConfigurations_TestSchemaDp(DataProviderWrapper dp) throws Exception {
                 AtomicReference<String> environmentTemplateIdRef = new AtomicReference<>(null);
-                int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-                EnvironmentTemplatesListDTO environmentTemplatesListDTO = DevopsPortalApi.getEnvironmentTemplates(this,
-                                accessToken, orgId);
-                List<EnvironmentTemplate> environmentTemplates = environmentTemplatesListDTO.getData();
-                environmentTemplates.forEach(environment -> {
-                        if (environment.getRegion().equals(dp.getRegion().toUpperCase())) {
-                                if (environment.getEnvName().equals(Constant.Environment.Development.name())) {
-                                        environmentTemplateIdRef.set(environment.getId().toString());
-                                }
+                List<Environment> environments = dp.getEnvironments();
+                environments.forEach(environment -> {
+                        if (environment.getName().equals(Constant.Environment.Development.name())) {
+                                environmentTemplateIdRef.set(environment.getTemplateId().toString());
                         }
                 });
                 String envId = environmentTemplateIdRef.get();
@@ -132,15 +127,10 @@ public class TestSchemaConfigurations extends TestBase {
         @CitrusTest
         public void promoteComponent_TestSchemaDp(DataProviderWrapper dp) throws Exception {
                 AtomicReference<String> environmentTemplateIdRef = new AtomicReference<>(null);
-                int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
-                EnvironmentTemplatesListDTO environmentTemplatesListDTO = DevopsPortalApi.getEnvironmentTemplates(this,
-                                accessToken, orgId);
-                List<EnvironmentTemplate> environmentTemplates = environmentTemplatesListDTO.getData();
-                environmentTemplates.forEach(environment -> {
-                        if (environment.getRegion().equals(dp.getRegion().toUpperCase())) {
-                                if (environment.getEnvName().equals(Constant.Environment.Production.name())) {
-                                        environmentTemplateIdRef.set(environment.getId().toString());
-                                }
+                List<Environment> environments = dp.getEnvironments();
+                environments.forEach(environment -> {
+                        if (environment.getName().equals(Constant.Environment.Production.name())) {
+                                environmentTemplateIdRef.set(environment.getTemplateId().toString());
                         }
                 });
                 String envId = environmentTemplateIdRef.get();
