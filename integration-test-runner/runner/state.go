@@ -29,6 +29,15 @@ type EnvKey struct {
 	ProjectId string
 }
 
+type SpecRunResult int
+
+const (
+	Pending SpecRunResult = iota
+	Complete
+	Waiting
+	Error
+)
+
 type RunState int
 
 const (
@@ -50,6 +59,10 @@ type ActionState struct {
 type SpecState struct {
 	unrecoverableError  error
 	orgHolder           OrgHolder
+	nextSequenceIndex   int
+	totalSequences      int
+	waitTill            int64
+	runResult           SpecRunResult
 	projects            map[string]response.CreateProject
 	componentReq        map[string]request.CreateComponent
 	componentRes        map[string]response.CreateComponent
@@ -62,6 +75,7 @@ func NewState(orgHolder *OrgHolder, sequences []int) *SpecState {
 	state := &SpecState{
 		orgHolder:           *orgHolder,
 		unrecoverableError:  nil,
+		totalSequences:      len(sequences),
 		projects:            make(map[string]response.CreateProject),
 		componentReq:        make(map[string]request.CreateComponent),
 		componentRes:        make(map[string]response.CreateComponent),
@@ -149,4 +163,12 @@ func (s *SpecState) GetActionState(sequence int) (*ActionState, bool) {
 
 func (s *SpecState) SetActionState(sequence int, actionState ActionState) {
 	s.actionStates[sequence] = actionState
+}
+
+func (s *SpecState) WaitTill() int64 {
+	return s.waitTill
+}
+
+func (s *SpecState) SetWaitTill(waitTill int64) {
+	s.waitTill = waitTill
 }
