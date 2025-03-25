@@ -20,7 +20,7 @@ To request approval to promote a component from one environment to another criti
 2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3. From the left navigation, Click **DevOps** and then click **CD Pipelines**
 4. Go to the **Development** card and click **Request to Promote**.
-5. In the **Request Approval** pane that opens, enter your request details and click **Submit**. This creates a request and notifies all authorized assignees via email about the request.
+5. In the **Request Approval** pane, enter your request details and click **Submit**. This creates a request and notifies all authorized assignees via email about the request.
 
     !!! note
          When an environment promotion request for a specific component is pending review, Choreo restricts other developers from making the same request until the pending request is either approved or rejected.
