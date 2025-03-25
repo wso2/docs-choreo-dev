@@ -171,32 +171,32 @@ export class Project {
           this.searchComponent(name);
 
           cy.get("body").then((body) => {
-          if (body.find(TestIds.componentTable).length > 0) {
-            cy.get(TestIds.componentTable)
-            .find("tbody")
-            .within((tbody) => {
-              if (tbody.find("tr").length > 0) {
-                cy.get("tr").each((row) => {
-                  cy.wrap(row).within(() => {
-                    cy.get("td")
-                      .eq(0)
-                      .then((td) => {
-                        cy.wrap(td.find("div").first())
-                          .invoke("attr", "title")
-                          .then((title) => {
-                            if (title === name) {
-                              isExists = true;
-                            }
+            if (body.find(TestIds.componentTable).length > 0) {
+              cy.get(TestIds.componentTable)
+                .find("tbody")
+                .within((tbody) => {
+                  if (tbody.find("tr").length > 0) {
+                    cy.get("tr").each((row) => {
+                      cy.wrap(row).within(() => {
+                        cy.get("td")
+                          .eq(0)
+                          .then((td) => {
+                            cy.wrap(td.find("div").first())
+                              .invoke("attr", "title")
+                              .then((title) => {
+                                if (title === name) {
+                                  isExists = true;
+                                }
+                              });
                           });
                       });
-                  });
+                    });
+                  }
                 });
-              }
-            });
-          }
-        });
-        
-        this.clearComponentSearch();
+            }
+          });
+
+          this.clearComponentSearch();
         }
       })
       .then(() => {
@@ -344,13 +344,18 @@ export class Project {
 
   createProxyComponent(proxyInfo: ProxyInfo) {
     this.createComponentIfEmptyProject();
-    cy.get(TestIds.proxyBuildPack).should("be.visible").click();
+    cy.get(TestIds.proxyBuildPack)
+      .should("be.visible")
+      .should("not.be.disabled")
+      .then(($btn) => {
+        cy.wrap($btn).click();
+      });
     if (proxyInfo.oasUrl !== undefined) {
       this.proxyCreationWizard.createFromOASUrl(proxyInfo.oasUrl);
     } else if (proxyInfo.oasFilePath !== undefined) {
       this.proxyCreationWizard.createFromOASFile(proxyInfo.oasFilePath);
     } else {
-     cy.get(TestIds.ProxyCreateFromScratch).should("be.visible").click();
+      cy.get(TestIds.ProxyCreateFromScratch).should("be.visible").click();
     }
 
     const proxyName = Utils.generateComponentName("oas");
