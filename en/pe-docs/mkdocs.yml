@@ -112,6 +112,7 @@ nav:
       - CD Pipelines:
           - Deploy Applications using Choreo CD Pipeline: devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline.md
           - Manage CD Pipelines: 'devops/cd-pipelines/manage-continuous-deployment-pipelines.md'
+          - Submit Environment Promotion Approval Requests: 'devops/cd-pipelines/submit-and-manage-environment-promotion-approval-requests.md'
       - Manage Configuration Groups: devops/manage-configuration-groups.md
   - Governance:
       - Workflows:
