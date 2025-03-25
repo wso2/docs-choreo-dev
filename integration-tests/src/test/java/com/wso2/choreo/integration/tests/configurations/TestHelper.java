@@ -18,7 +18,7 @@ import com.wso2.choreo.integration.common.schemaconfigservice.SchemaConfig;
 import com.wso2.choreo.integration.common.schemaconfigservice.SchemaConfigValue;
 
 public final class TestHelper {
-    public static final String EXPECTED_API_RESPONSE = "{\"user-info\": YmFzaWMtaW5mbzoKICBhZ2U6IDMwCiAgaXNfcmVnaXN0ZXJlZDogdHJ1ZQogIG5hbWU6ICJKb2huIERvZSIKICBzZXg6ICJtYWxlIgpvY2N1cGF0aW9uOgogIGNvbXBhbnk6ICJ3c28yIgogIHRpdGxlOiAiU0UiCg==, \"index\": 1}";
+    public static final String EXPECTED_API_RESPONSE = "{\"user-info\": \"YmFzaWMtaW5mbzoKICBhZ2U6IDMwCiAgaXNfcmVnaXN0ZXJlZDogdHJ1ZQogIG5hbWU6ICJKb2huIERvZSIKICBzZXg6ICJtYWxlIgpvY2N1cGF0aW9uOgogIGNvbXBhbnk6ICJ3c28yIgogIHRpdGxlOiAiU0UiCg==\", \"index\": \"1\"}";
 
     public static SchemaConfig[] generateAddConfigurationPayload(String envId) {
         return new SchemaConfig[] {

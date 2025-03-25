@@ -38,7 +38,6 @@ import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -52,7 +51,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class TestSchemaConfigurations extends TestBase {
 
         private String accessToken;
-        private String REST_API_EXPECTED_RESPONSE;
         private final List<DataProviderWrapper> dps = new ArrayList<>();
         @Autowired
         Map<Endpoints, HttpClient> citrusClients;
@@ -60,9 +58,6 @@ public class TestSchemaConfigurations extends TestBase {
         @BeforeClass
         public void setup_TestBYOCEUDp() throws Exception {
                 accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-                REST_API_EXPECTED_RESPONSE = new String(new ClassPathResource(
-                                "templates/schemaConfigService/schemaConfigServiceResponse.json").getInputStream()
-                                .readAllBytes());
         }
 
         @DataProvider(name = "dps")
@@ -130,7 +125,7 @@ public class TestSchemaConfigurations extends TestBase {
                 Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
                                 dp.getChoreoComponent(), dp.getDeploymentStatusDTO(), dp.getEnvironments());
                 ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/user",
-                                REST_API_EXPECTED_RESPONSE);
+                                TestHelper.EXPECTED_API_RESPONSE);
         }
 
         @Test(dependsOnMethods = { "invokeAPIDev_TestSchemaDp" }, dataProvider = "dps")
@@ -168,7 +163,7 @@ public class TestSchemaConfigurations extends TestBase {
                                         dp.getChoreoComponent(), statusDTO, dp.getEnvironments());
                         ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(),
                                         "/user",
-                                        REST_API_EXPECTED_RESPONSE);
+                                        TestHelper.EXPECTED_API_RESPONSE);
                 }
         }
 }
