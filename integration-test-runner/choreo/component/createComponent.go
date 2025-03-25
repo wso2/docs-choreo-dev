@@ -19,6 +19,7 @@ import (
 	"choreo-integration-test-runner/helper/name"
 	"choreo-integration-test-runner/model/request"
 	"choreo-integration-test-runner/runner"
+	"time"
 
 	"choreo-integration-test-runner/template"
 	"errors"
@@ -111,9 +112,12 @@ func (c *component) Execute(client *resty.Client, state *runner.SpecState, actio
 		}
 	}
 
+	state.SetWaitTill(time.Now().Unix() + (60 * 2))
+
 	return runner.ExecutionResult{
 		Response:           nil,
 		IsValidateResponse: false,
+		IsWaiting:          true,
 	}
 }
 
