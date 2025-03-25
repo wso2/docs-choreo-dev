@@ -45,7 +45,7 @@ Follow below steps to promote a component to a higher level environment:
 4.  Click the **Promote** button on the required environment card from which the promotion is initiated.
 
 !!! Note -
-    You may see **Request To Promote** instead of **Promote** if the workflow approvals are enabled for Environment Promotion and the environment is a critical environment. Please refer [Submit and Manage Workflow Approval Requests](./submit-and-manage-workflow-approval-requests.md) for more information. 
+    You may see **Request To Promote** instead of **Promote** if the workflow approvals are enabled and the target environment is a critical environment. See [Submit and Manage Workflow Approval Requests](./submit-and-manage-workflow-approval-requests.md) for more information. 
     
 5.  In the **Configuration Types** pane, you can either provide new values for the configurations or use the **Development configuration**.
 
