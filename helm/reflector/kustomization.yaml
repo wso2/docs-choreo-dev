@@ -1,0 +1,10 @@
+helmCharts:
+  - name: reflector
+    valuesInline:
+      fullnameOverride: reflector
+      image:
+        repository: choreoprivateacr.azurecr.io/emberstack/kubernetes-reflector
+
+resources:
+  - namespace.yaml
+
