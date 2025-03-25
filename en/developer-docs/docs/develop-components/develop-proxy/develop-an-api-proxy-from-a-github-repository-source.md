@@ -115,6 +115,7 @@ Choreo allows you to test your API proxy using either the [integrated OpenAPI Co
             - To disable security for the entire API, clear the **OAuth2** checkbox.
             - To disable security for a specific resource, expand the relevant resource and turn off the **Security** toggle.
         4. Click **Apply**.
+        5. Then click **Deploy**.
 
 1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
 2. Select **Development** from the environment drop-down list.
@@ -140,17 +141,20 @@ Now that you have a tested API proxy, you can publish it and make it available f
 
 ### Step 5.2: Publish the API proxy
 
+**Publishing** makes your API available in the **Choreo Developer Portal**, enabling application developers to access and use it.
+
 1. In the left navigation menu, click **Lifecycle** under **Manage**. This takes you to the **Lifecycle** page.
 2. Click **Publish**.
 3. In the **Publish API** dialog, click **Confirm** to proceed with publishing the API. If you want to change the display name, make the necessary changes and then click **Confirm**. This changes the API lifecycle state to **Published**.
 
-## Step 6: Invoke the API
+
+## Step 6: Invoke the API From DevPortal
 
 To generate credentials for the published API and invoke it via the Choreo Developer Portal, follow these steps:
 
 1. In the **Lifecycle** page, click **Go to Devportal**. This takes you to the `Department Service` in the Choreo Developer Portal.
 
-2. **Invoke the API**:
+2. Invoke the API:
     1. In the Developer Portal left navigation menu, click **Try Out**.
     2. In the **Endpoint** list, select **Development** as the environment to try out the API.
     3. Click **Get Test Key** to generate an access token.

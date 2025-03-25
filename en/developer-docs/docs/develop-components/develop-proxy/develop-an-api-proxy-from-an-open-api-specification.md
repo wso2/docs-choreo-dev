@@ -1,4 +1,4 @@
-# Develop an API Proxy from Open API Specification
+# Develop an API Proxy from Open API Document
 
 An API proxy acts as an intermediary between an existing API and Choreo, intercepting all requests made to the API. It also functions as a managed API, allowing you to apply essential API management features such as security policies and rate limiting.
 
@@ -22,26 +22,24 @@ In this guide, you will:
 
 ## Step 1: Create an API proxy
 
-To create an API proxy, you can either upload an OpenAPI specification or provide an OpenAPI specification URL. In this guide, you will specify a URL to an OpenAPI definition of a sample API.
+To create an API proxy, you can either upload an OpenAPI document or provide a hosted OpenAPI document's URL. In this guide, you will specify a URL to an OpenAPI definition of a sample API.
 
 1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card. This opens the **Create an API Proxy** pane.
 4. Select **Upload API Specification** option. 
-5. Click on **Try with sample URL** to go ahead with the sample Open API Specification.
-
-    !!! info
-        To streamline the process, if you already have a specification file saved on your device, simply upload it directly instead of relying on the sample.
+5. Click on **Try with sample URL** to go ahead with the sample Open API Document.
+        
 
 6. Specify the following values as Proxy Metadata:
 
     !!! note
-        Values will auto populate according to the data in the uploaded/selected specification file. Following values are for the sample provided by choreo.
+        While most values are auto-generated from the specification, the context value has been explicitly set to **petstore** to enhance clarity
 
 
     | **Field**       | **Value**                                  |
     |-----------------|--------------------------------------------|
-    | **Context**     | `api/v3`                                   |
+    | **Context**     | `petstore`                                   |
     | **Version**     | `v1.0`                                      |
     | **Target**      | `https://petstore3.swagger.io/api/v3` |
 
@@ -52,9 +50,9 @@ To create an API proxy, you can either upload an OpenAPI specification or provid
 
     | **Field**                 | **Value**          |
     |---------------------------|--------------------|
-    | **Component Display Name**| `Pet Store Service`          |
+    | **Component Display Name**| `Petstore Service`          |
     | **Component Name**        | `pet-store-service`          |
-    | **Description**           | `Sample proxy for pet store service`     |
+    | **Description**           | `Sample proxy for Petstore service`     |
 
 8. Click **Create**. This creates the API proxy component and takes you to the **Deploy** page.
 
@@ -79,8 +77,9 @@ Choreo allows you to test your API proxy using either the [integrated OpenAPI Co
         2. Go to the **Build Area** card and click **Security Settings**.
         3. In the **Security Settings** pane:
             - To disable security for the entire API, clear the **OAuth2** checkbox.
-            - To disable security for a specific resource, expand the relevant resource and turn off the **Security** toggle.
+            - To disable security for a specific resource, expand the relevant resource and turn off the **Security** toggle.    
         4. Click **Apply**.
+        5. Then click **Deploy**.
 
 1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
 2. Select **Development** from the environment drop-down list.
@@ -106,17 +105,21 @@ Now that you have a tested API proxy, you can publish it and make it available f
 
 ### Step 4.2: Publish the API proxy
 
+
+ **Publishing** makes your API available in the **Choreo Developer Portal**, enabling application developers to access and use it.
+
 1. In the left navigation menu, click **Lifecycle** under **Manage**. This takes you to the **Lifecycle** page.
 2. Click **Publish**.
 3. In the **Publish API** dialog, click **Confirm** to proceed with publishing the API. If you want to change the display name, make the necessary changes and then click **Confirm**. This changes the API lifecycle state to **Published**.
 
-## Step 5: Invoke the API
+
+## Step 5: Invoke the API From DevPortal
 
 To generate credentials for the published API and invoke it via the Choreo Developer Portal, follow these steps:
 
-1. In the **Lifecycle** page, click **Go to Devportal**. This takes you to the `Pet Store Service` in the Choreo Developer Portal.
+1. In the **Lifecycle** page, click **Go to Devportal**. This takes you to the `Petstore Service` in the Choreo Developer Portal.
 
-2. **Invoke the API**:
+2. Invoke the API:
     1. In the Developer Portal left navigation menu, click **Try Out**.
     2. In the **Endpoint** list, select **Development** as the environment to try out the API.
     3. Click **Get Test Key** to generate an access token.
