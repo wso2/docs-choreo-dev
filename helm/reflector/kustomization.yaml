@@ -4,6 +4,10 @@ helmCharts:
       fullnameOverride: reflector
       image:
         repository: choreoprivateacr.azurecr.io/emberstack/kubernetes-reflector
+    releaseName: reflector
+    namespace: reflector
+    version: 7.1.288
+    repo: oci://choreocontrolplane.azurecr.io/helm
 
 resources:
   - namespace.yaml
