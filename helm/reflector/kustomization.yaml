@@ -3,7 +3,7 @@ helmCharts:
     valuesInline:
       fullnameOverride: reflector
       image:
-        repository: choreoprivateacr.azurecr.io/emberstack/kubernetes-reflector
+        repository: choreocontrolplane.azurecr.io/emberstack/kubernetes-reflector
     releaseName: reflector
     namespace: reflector
     version: 7.1.288
