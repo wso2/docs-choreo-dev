@@ -344,12 +344,7 @@ export class Project {
 
   createProxyComponent(proxyInfo: ProxyInfo) {
     this.createComponentIfEmptyProject();
-    cy.get(TestIds.proxyBuildPack)
-      .should("be.visible")
-      .should("not.be.disabled")
-      .then(($btn) => {
-        cy.wrap($btn).click();
-      });
+    cy.getUnstable(TestIds.proxyBuildPack).should("be.enabled").click();
     if (proxyInfo.oasUrl !== undefined) {
       this.proxyCreationWizard.createFromOASUrl(proxyInfo.oasUrl);
     } else if (proxyInfo.oasFilePath !== undefined) {
