@@ -11,3 +11,5 @@ helmCharts:
 
 resources:
   - namespace.yaml
+
+namespace: reflector
