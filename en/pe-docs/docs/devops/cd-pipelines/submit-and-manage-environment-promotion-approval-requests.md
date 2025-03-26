@@ -2,7 +2,7 @@
 
 In Choreo, when an administrator or platform engineer [configures the Environment Promotion workflow to require approval](../../governance/workflows/configure-approvals-for-choreo-workflows.md), you must submit a request to obtain approval to promote the deployment to a critical environment.
 
-Upon submitting a promotion approval request, Choreo notifies all authorized assignees via email about the [review request](../../governance/approvals/review-workflow-approval-requests.md). When an authorized assignee approves or rejects the request, you will receive an email with details of the decision.
+When you submit a promotion approval request, Choreo notifies all authorized reviewers via email. Once an authorized reviewer approves or rejects the request, you will receive an email with the decision details. See [Review Workflow Approval Requests](../../governance/approvals/review-workflow-approval-requests.md) for more information on workflow approval request reviews.
 
 
 ## Request approval for environment promotion
