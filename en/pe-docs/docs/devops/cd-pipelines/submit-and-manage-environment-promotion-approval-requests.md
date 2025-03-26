@@ -1,6 +1,6 @@
 # Submit and Manage Environment Promotion Approval Requests
 
-In Choreo, when an administrator or platform engineer [configures the Environment Promotion workflow to require approval](../../governance/workflows/configure-approvals-for-choreo-workflows.md), you must submit a request to obtain approval to promote the deployment to a critical environment.
+If environment promotion workflows are configured for your organization as mentioned in the [guide](../../governance/workflows/configure-approvals-for-choreo-workflows.md), you must request and receive approval before deploying to a critical environment.
 
 When you submit a promotion approval request, Choreo notifies all authorized reviewers via email. Once an authorized reviewer approves or rejects the request, you will receive an email with the decision details. See [Review Workflow Approval Requests](../../governance/approvals/review-workflow-approval-requests.md) for more information on workflow approval request reviews.
 
@@ -9,10 +9,10 @@ When you submit a promotion approval request, Choreo notifies all authorized rev
 
 ### Prerequisites
 
-- You should have a component created, built, and deployed to the first environment configured in your CD pipeline.
+- Ensure you have a component created, built, and deployed to the first environment of your [CD pipeline](./manage-continuous-deployment-pipelines.md).
 - Ensure that an approval workflow is configured for environment promotion.
-- You should promote the component to a critical environment, such as production.
-- You must have required permissions to promote components or at least `WORKFLOW-MANAGEMENT >> Create approval requests` permission
+- Ensure you are promoting to a critical environment, such as production.
+- Ensure you have the required permissions to either promote the component or create approval requests. The specific permission needed is `WORKFLOW-MANAGEMENT >> Create approval requests`.
 
 To request approval to promote a component from one environment to another critical environment, follow these steps:
 
