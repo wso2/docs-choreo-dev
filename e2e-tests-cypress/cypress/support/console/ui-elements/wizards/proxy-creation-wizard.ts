@@ -17,16 +17,16 @@ import { SHORT_TIME } from "../../../commons/timeouts";
 
 export class _ProxyCreationWizard {
   createFromOASUrl(url: string) {
-    cy.get(TestIds.OASUploadProxy).should("be.visible").click();
-    cy.get(TestIds.oasUrlEntry).should("be.visible").type(url);
+    cy.getUnstable(TestIds.OASUploadProxy).should("be.visible").click();
+    cy.getUnstable(TestIds.oasUrlEntry).should("be.visible").type(url);
   }
 
   createFromOASFile(filepath: string) {
-    cy.get(TestIds.OASUploadProxy).should("be.visible").click();
-    cy.get(TestIds.upload).click();
+    cy.getUnstable(TestIds.OASUploadProxy).should("be.visible").click();
+    cy.getUnstable(TestIds.upload).click();
 
     cy.fixture(filepath).as("oasFile");
-    cy.get(TestIds.filepathEntry).selectFile("@oasFile", {
+    cy.getUnstable(TestIds.filepathEntry).selectFile("@oasFile", {
       force: true,
     });
   }
@@ -47,11 +47,11 @@ export class _ProxyCreationWizard {
     let endpointUrl: string | undefined;
 
     if (proxyInfo.endpointUrl !== "") {
-      cy.get(TestIds.Endpoint).within(() =>
-        cy.get("input").clear().type(proxyInfo.endpointUrl)
+      cy.getUnstable(TestIds.Endpoint).within(() =>
+        cy.getUnstable("input").clear().type(proxyInfo.endpointUrl)
       );
     } else {
-      cy.get(TestIds.Endpoint).within(() =>
+      cy.getUnstable(TestIds.Endpoint).within(() =>
         cy
           .get("input")
           .invoke("val")
