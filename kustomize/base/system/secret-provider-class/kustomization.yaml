@@ -56,6 +56,7 @@ resources:
   - dp-project-manager.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - delete-manager.yaml
+  - devops-portal-api.yaml
   - moesif-service.yaml
   - metered-usage-handler.yaml
   - metered-usage-handler-service.yaml
