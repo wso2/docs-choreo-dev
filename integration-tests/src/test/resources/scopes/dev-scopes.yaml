@@ -14,6 +14,8 @@ scopes:
   - apim:subscription_view
   - apim:tier_manage
   - apim:tier_view
+  - apim:sand_key_manage
+  - apim:prod_key_manage
   - choreo:component_manage
   - choreo:deployment_manage
   - choreo:dev_env_manage
