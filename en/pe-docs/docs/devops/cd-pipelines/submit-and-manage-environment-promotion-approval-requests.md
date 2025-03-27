@@ -12,7 +12,7 @@ When you submit a promotion approval request, Choreo notifies all authorized rev
 - Ensure you have a component created, built, and deployed to the first environment of your [CD pipeline](./manage-continuous-deployment-pipelines.md).
 - Ensure that an approval workflow is configured for environment promotion.
 - Ensure you are promoting to a critical environment, such as production.
-- Ensure you have the required permissions to either promote the component or create approval requests. The specific permission needed is `WORKFLOW-MANAGEMENT >> Create approval requests`.
+- Ensure you have the required permissions to either promote the component or create approval requests. Approval request creation requires **Create Approval Requests** permission under **WORKFLOW-MANAGEMENT**.
 
 To request approval to promote a component from one environment to another critical environment, follow these steps:
 
