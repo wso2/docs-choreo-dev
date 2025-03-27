@@ -4034,7 +4034,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>You can override UI-defined and auto-generated endpoints by providing a <code>component.yaml</code> file in the <code>.choreo</code> directory, which will take priority over other configurations.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+<ul>
+<li>
 <p>Automatic endpoint generation is not supported for dynamic endpoint parameters such as variable ports. Therefore, you must use an <code>component.yaml</code> file to define dynamic endpoint parameters.</p>
+</li>
+<li>
+<p>If you're configuring REST API and WebSocket endpoints in the same component, they must use separate ports. Sharing a port between these two endpoint types is not supported.</p>
+</li>
+</ul>
 </div>
 <p>To learn about the <code>component.yaml</code> file, see <a href="../manage-component-source-configurations/#overview-of-the-componentyaml-file">Overview of the component.yaml file</a>.</p>
 <h2 id="expose-endpoints-as-managed-apis">Expose endpoints as managed APIs<a class="headerlink" href="#expose-endpoints-as-managed-apis" title="Permanent link">&para;</a></h2>
