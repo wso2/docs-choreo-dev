@@ -27,6 +27,8 @@ To learn about the `component.yaml` file, see [Overview of the component.yaml fi
 !!! note
     Automatic endpoint generation is not supported for dynamic endpoint parameters such as variable ports. Therefore, you must use an `component.yaml` file to define dynamic endpoint parameters.
 
+    If you're defining REST API and WebSocket endpoints in the same component, they must use separate ports. Sharing a port between these two endpoint types is not supported.
+
 To learn about the `component.yaml` file, see [Overview of the component.yaml file](../develop-components/manage-component-source-configurations.md#overview-of-the-componentyaml-file).
 
 ## Expose endpoints as managed APIs
