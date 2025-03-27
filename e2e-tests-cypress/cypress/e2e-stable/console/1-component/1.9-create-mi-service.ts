@@ -53,6 +53,10 @@ describe("Verify MI service component functionality", () => {
     service.build();
   });
 
+  it("Enable and execute Unit Tests in Build", () => {   
+    service.buildWithUnitTests();
+  });
+
   it("Deploying the component with Project level visibility", () => {
     service.deployProjectLevelAccessibility();
   });

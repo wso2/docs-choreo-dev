@@ -38,6 +38,16 @@ export interface BuildFeature {
       | Byoc
   ): void;
   _isSuccessfulBuildExists(): Cypress.Chainable<boolean>;
+  _buildWithUnitTests(
+    component:
+      | Service
+      | ManualTrigger
+      | ScheduleTrigger
+      | TestRunner
+      | WebApp
+      | Webhook
+      | Byoc
+  ): void;
 }
 
 export function mixinBuild<T extends Types.Constructor>(
@@ -81,6 +91,24 @@ export function mixinBuild<T extends Types.Constructor>(
         .then(() => {
           return cy.wrap(isExists);
         });
+    }
+
+    _buildWithUnitTests(
+      component:
+      | Service
+      | ManualTrigger
+      | ScheduleTrigger
+      | TestRunner
+      | WebApp
+      | Webhook
+      | Byoc
+    ) {
+      this.sideMenu.navigateToBuild();
+      cy.get(TestIds.configureBuild).should("be.visible").click();
+      cy.get(TestIds.enableUnitTests).should("be.visible").click();
+      cy.get(TestIds.next).should("be.enabled").click();
+      cy.get(TestIds.enableUnitTests).should("not.exist");
+      this.triggerBuild(component);
     }
 
     private triggerBuild(

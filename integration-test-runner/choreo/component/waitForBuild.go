@@ -18,11 +18,15 @@ import (
 	"choreo-integration-test-runner/model/request"
 	"choreo-integration-test-runner/model/response"
 	"choreo-integration-test-runner/runner"
-	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/go-resty/resty/v2"
+)
+
+const (
+	waitIntervalSeconds = 60 * 1
 )
 
 type build struct {
@@ -30,7 +34,7 @@ type build struct {
 	params   map[string]string
 }
 
-func (w *build) WaitForBuild(ctx context.Context, sequence int, params map[string]string) *build {
+func WaitForBuild(sequence int, params map[string]string) *build {
 	return &build{
 		sequence: sequence,
 		params:   params,
@@ -78,6 +82,11 @@ func (w *build) Execute(client *resty.Client, state *runner.SpecState, actionSta
 
 	response, status := api.GetDeploymentStatusByVersion(client, request)
 
+	result := runner.ExecutionResult{
+		Response:           nil,
+		IsValidateResponse: false,
+	}
+
 	if status.IsFailed() {
 		actionState.Runs = append(actionState.Runs, runner.Run{
 			RunState: runner.Failed,
@@ -94,6 +103,8 @@ func (w *build) Execute(client *resty.Client, state *runner.SpecState, actionSta
 				actionState.Runs = append(actionState.Runs, runner.Run{
 					RunState: runner.Progressing,
 				})
+				result.IsWaiting = true
+				state.SetWaitTill(time.Now().Unix() + waitIntervalSeconds)
 			} else if status == "completed" && conclusion == "success" {
 				actionState.Runs = append(actionState.Runs, runner.Run{
 					RunState: runner.Success,
@@ -104,13 +115,16 @@ func (w *build) Execute(client *resty.Client, state *runner.SpecState, actionSta
 					Reason:   fmt.Sprintf("build failed, status: %s, conclusion: %s", status, conclusion),
 				})
 			}
+		} else {
+			actionState.Runs = append(actionState.Runs, runner.Run{
+				RunState: runner.Progressing,
+			})
+			result.IsWaiting = true
+			state.SetWaitTill(time.Now().Unix() + waitIntervalSeconds)
 		}
 	}
 
-	return runner.ExecutionResult{
-		Response:           nil,
-		IsValidateResponse: false,
-	}
+	return result
 }
 
 func (w *build) SanitizeParams(params map[string]string) error {

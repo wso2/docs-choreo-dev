@@ -125,6 +125,8 @@ export namespace TestIds {
   export const buildTime = '[data-cyid="build-time"]';
   export const build =
     '[data-cyid="build-latest-button"]';
+  export const configureBuild = '[data-cyid="build-configs-edit-icon-button"]';
+  export const enableUnitTests = '[data-cyid="toggle-unit-test"]';
   export const tableTitle = '[data-cyid="table-title"]';
   export const createComponent =
     '[data-cyid="create-multiple-components-split-toggle-button-button"]';

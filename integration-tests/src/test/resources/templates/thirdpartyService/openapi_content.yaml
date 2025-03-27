@@ -1,0 +1,42 @@
+openapi: 3.0.1
+info:
+  title: Users V1
+  version: 0.1.0
+servers:
+  - url: "localhost:8080/users/v1"
+paths:
+  /users/{email}:
+    get:
+      operationId: getUsersEmail
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      required:
+        - email
+        - id
+        - name
+        - phoneNumber
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string

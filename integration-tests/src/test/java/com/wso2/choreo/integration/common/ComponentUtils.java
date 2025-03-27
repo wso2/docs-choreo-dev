@@ -318,7 +318,7 @@ public class ComponentUtils {
 
         return GraphqlDTO.builder().name(name).srcGitRepoUrl(repo.getRepoUrl()).projectId(project.getId()).orgId(orgId)
                 .orgHandler(orgHandle).buildpackId(buildpack.getId()).languageVersion(buildpack.getVersion())
-                .buildContext(repo.getBuildContext()).build();
+                .buildContext(repo.getBuildContext()).isPublicRepo(repo.getIsPublicRepo()).build();
     }
 
     public static GraphqlDTO createBuildpackComponentRequestWithSecretRef(String name, ChoreoProject project, Repository repo, String secretRef, Buildpack... buildpackType) {
@@ -752,7 +752,7 @@ public class ComponentUtils {
                                      List<Environment> environments) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         GraphqlDTO graphqlDTO = createDeploymentRequest(component, latestCommit, environments);
-        GraphQL.getBuildStatusByConclusionVersionV2(runner, appServiceClient, accessToken, graphqlDTO,120);
+        GraphQL.getBuildStatusByConclusionVersionV2(runner, appServiceClient, accessToken, graphqlDTO,60);
     }
 
     public static ComponentDeploymentStatusDTO deployBuiltComponent(TestNGCitrusSpringSupport runner,

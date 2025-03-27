@@ -57,6 +57,9 @@ configMapGenerator:
       - MIZZEN_BASE_URL={{.MIZZEN_BASE_URL | default ""}}
       - DPCOST_SERVICE_BASE_URL={{.DPCOST_SERVICE_BASE_URL | default "http://cost-optimizer.choreo-ai:8000"}}
       - DATAPLANE_IDS={{.DATAPLANE_IDS | default ""}}
+      - WEBSUBHUB_PUBLISHER_ENABLED={{.WEBSUBHUB_PUBLISHER_ENABLED | default "false"}}
+      - WEBSUBHUB_PUBLISHER_TOPIC={{.WEBSUBHUB_PUBLISHER_TOPIC | default ""}}
+      - WEBSUBHUB_PUBLISHER_URL={{.WEBSUBHUB_PUBLISHER_URL | default ""}}
   - name: env-cost-optimizer-cp-cron-cm
     behavior: create
     literals:
