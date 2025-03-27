@@ -3916,12 +3916,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h1 id="submit-and-manage-workflow-approval-requests">Submit and Manage Workflow Approval Requests<a class="headerlink" href="#submit-and-manage-workflow-approval-requests" title="Permanent link">&para;</a></h1>
 <p>In Choreo, if an administrator <a href="../../administer/configure-approvals-for-choreo-workflows/">configures a workflow to require approval</a>, you must submit a request to obtain approval to perform the task.</p>
-<p>Upon submitting a workflow approval request, Choreo notifies all authorized assignees via email about the <a href="../../administer/review-workflow-approval-requests/">review request</a>. When an authorized assignee approves or rejects the request, you will receive an email with details of the decision.</p>
+<p>When you submit a workflow approval request, Choreo notifies all authorized reviewers via email. Once an authorized reviewer approves or rejects the request, you will receive an email with the decision details. See <a href="../../administer/review-workflow-approval-requests/">Review Workflow Approval Requests</a> for more information on workflow approval request reviews.</p>
 <p>The approach to request approval can vary depending on the workflow. </p>
 <h2 id="request-approval-for-environment-promotion">Request approval for environment promotion<a class="headerlink" href="#request-approval-for-environment-promotion" title="Permanent link">&para;</a></h2>
 <p><strong>Prerequisites</strong>:</p>
 <ul>
-<li>Ensure you have a component created, built, and deployed to the development environment.</li>
+<li>Ensure you have a component created, built, and deployed to the first environment of your <a href="../../devops-and-ci-cd/manage-continuous-deployment-pipelines/">CD pipeline</a>.</li>
 <li>Ensure that an approval workflow is configured for environment promotion.</li>
 <li>Ensure you are promoting the component to a critical environment, such as production.</li>
 </ul>
@@ -3932,7 +3932,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>In the left navigation menu, click <strong>Deploy</strong>.</li>
 <li>Go to the <strong>Development</strong> card and click <strong>Request to Promote</strong>.</li>
 <li>
-<p>In the <strong>Request Approval</strong> pane that opens, enter your request details and click <strong>Submit</strong>. This creates a request and notifies all authorized assignees via email about the request.</p>
+<p>In the <strong>Request Approval</strong> pane, enter your request details and click <strong>Submit</strong>. This creates a request and notifies all authorized assignees via email about the request.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When an environment promotion request for a specific component is pending review, Choreo restricts other developers from making the same request until the pending request is either approved or rejected.</p>
