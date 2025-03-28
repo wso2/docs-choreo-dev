@@ -223,6 +223,10 @@ export class Proxy extends mixinDevelop(
     this._disableSecurity(this, method, resource);
   }
 
+  disableSecurityAndDeploy(method: Enums.HTTPMethod, resource: string, accessMode: Enums.Accessibility) {
+    this._disableSecurityAndDeploy(this, method, resource, accessMode);
+  }
+
   enableSecurityScemes(securitySchemes: SecurityScheme[]) {
     this._enableSecurityScemes(this, securitySchemes);
   }
