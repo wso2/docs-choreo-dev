@@ -28,6 +28,9 @@ spec:
       containers:
         - name: devops-portal-api
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-devops-portal-api:latest
+          envFrom:
+            - secretRef:
+                name: secret-devops-portal-api
           ports:
             - containerPort: 8089
               name: devopsapi-port
@@ -70,6 +73,9 @@ spec:
               subPath: Config.toml
             - name: tmp
               mountPath: /tmp
+            - name: secret-devops-portal-api
+              mountPath: "/mnt/csi/secret-devops-portal-api"
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: config
@@ -77,6 +83,14 @@ spec:
             name: cm-file-devops-portal-api
         - name: tmp
           emptyDir: {}
+        - name: secret-devops-portal-api
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-devops-portal-api
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
       serviceAccountName: sa-choreo-default
       topologySpreadConstraints:
         - labelSelector:

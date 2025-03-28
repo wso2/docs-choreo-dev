@@ -27,6 +27,7 @@ spec:
       containers:
         - name: platform-services-manager
           image: choreocontrolplane.azurecr.io/choreoipaas/platform-services-manager:latest
+          args: ["-migrate"]
           envFrom:
             - configMapRef:
                 name: env-choreo-platform-services-manager

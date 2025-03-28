@@ -29,6 +29,7 @@ import com.wso2.choreo.integration.models.marketplace.CommonResource;
 import com.wso2.choreo.integration.models.marketplace.ServiceInfo;
 import com.wso2.choreo.integration.models.marketplace.ServiceStatus;
 import com.wso2.choreo.integration.models.marketplace.ServiceVisibility;
+import com.wso2.choreo.integration.models.marketplace.SourceConfigurationFileTypes;
 import com.wso2.choreo.integration.models.marketplace.ThirdPartyService;
 import com.wso2.choreo.integration.models.marketplace.ThirdPartyServiceCreateResponse;
 import com.wso2.choreo.integration.models.marketplace.ThirdPartyServiceEndpointConfig;
@@ -104,9 +105,14 @@ public class MarketplaceService {
     }
 
     public static String getChoreoServiceIdentifier(TestActionRunner runner, HttpClient client, String accessToken,
-                                                    String serviceId, ServiceVisibility visibility) {
+                                                    String serviceId, ServiceVisibility visibility, SourceConfigurationFileTypes fileType) {
+        SourceConfigurationFileTypes configFileType = fileType;
+        // connection snippet will be same for all component.yaml v1.X versions
+        if (configFileType.equals(SourceConfigurationFileTypes.COMPONENT_V12)){
+            configFileType = SourceConfigurationFileTypes.COMPONENT_V11;
+        }
         String resourceURL = CONTEXT.concat("/services/").concat(serviceId).
-                concat("/dependencyId").concat("?visibility=").concat(visibility.toString());
+                concat("/dependencyId").concat("?visibility=").concat(visibility.toString()).concat("&configFileType=".concat(configFileType.toString().toLowerCase()));
         AtomicReference<String> serviceIdentifier = new AtomicReference<>();
         runner.$(http()
                 .client(client)

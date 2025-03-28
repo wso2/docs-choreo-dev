@@ -17,8 +17,10 @@ import (
 	"choreo-integration-test-runner/choreo"
 	"choreo-integration-test-runner/choreo/component"
 	"choreo-integration-test-runner/choreo/project"
+	"choreo-integration-test-runner/helper/appstate"
 	"choreo-integration-test-runner/runner"
 	"choreo-integration-test-runner/template"
+	"fmt"
 	"os"
 	"testing"
 )
@@ -37,10 +39,56 @@ func TestCreateProject(t *testing.T) {
 		t.Errorf("Template loading failed: %v", err)
 	}
 
-	actions := make([]runner.Action, 0, 2)
+	noOfSpecs := 6
+
+	specs := make([]*runner.Spec, noOfSpecs)
+
+	for i := 0; i < noOfSpecs; i++ {
+		specs[i] = specBuilder(fmt.Sprintf("BasicTest%d", i), "testproject", "servicecomp")
+	}
+
+	sch, err := runner.NewScheduler(specs, 10)
+
+	if err != nil {
+		t.Errorf("Failed to create scheduler: %v", err)
+	}
+
+	sch.Run()
+
+	runtimeData := sch.CompletedSpecs()
+
+	if len(runtimeData) != noOfSpecs {
+		t.Errorf("Expected 1 completed spec, got %d", len(runtimeData))
+	}
+
+	for i := 0; i < noOfSpecs; i++ {
+		state := appstate.GetState(runtimeData[i].Ctx).(*runner.SpecState)
+
+		createProjectAction, ok := state.GetActionState(1)
+
+		if !ok || createProjectAction.Runs[0].RunState != runner.Success {
+			t.Errorf("Expected Success, got %v", createProjectAction.Runs[0].RunState)
+		}
+
+		createComponentAction, ok := state.GetActionState(2)
+
+		if !ok || createComponentAction.Runs[0].RunState != runner.Success {
+			t.Errorf("Expected Success, got %v", createComponentAction.Runs[0].RunState)
+		}
+
+		_, ok = state.GetComponentDetailsResponse("servicecomp")
+
+		if !ok {
+			t.Errorf("Expected component with placeholder servicecomp to exist")
+		}
+	}
+}
+
+func specBuilder(name, projectPlaceholder, componentPlaceholder string) *runner.Spec {
+	actions := make([]runner.Action, 0, 3)
 
 	actions = append(actions, project.CreateProject(1, map[string]string{
-		"placeholder": "testproject",
+		"placeholder": projectPlaceholder,
 		"description": "description",
 		"region":      "US",
 	}))
@@ -53,32 +101,13 @@ func TestCreateProject(t *testing.T) {
 		"buildPack":         "Ballerina",
 		"accessibility":     "external",
 		"isPublicRepo":      "true",
-		"project":           "testproject",
-		"placeholder":       "servicecomp",
+		"project":           projectPlaceholder,
+		"placeholder":       componentPlaceholder,
 	}))
 
-	spec := runner.Spec{}
-	spec.Init("BasicTest", actions)
+	actions = append(actions, component.WaitForBuild(3, map[string]string{
+		"component": componentPlaceholder,
+	}))
 
-	spec.Execute()
-
-	state := spec.GetState()
-
-	createProjectAction, ok := state.GetActionState(1)
-
-	if !ok || createProjectAction.Runs[0].RunState != runner.Success {
-		t.Errorf("Expected Success, got %v", createProjectAction.Runs[0].RunState)
-	}
-
-	createComponentAction, ok := state.GetActionState(2)
-
-	if !ok || createComponentAction.Runs[0].RunState != runner.Success {
-		t.Errorf("Expected Success, got %v", createComponentAction.Runs[0].RunState)
-	}
-
-	_, ok = state.GetComponentDetailsResponse("servicecomp")
-
-	if !ok {
-		t.Errorf("Expected component with placeholder servicecomp to exist")
-	}
+	return runner.NewSpec(name, actions)
 }

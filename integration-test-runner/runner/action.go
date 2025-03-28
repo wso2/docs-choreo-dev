@@ -21,6 +21,7 @@ import (
 
 type ExecutionResult struct {
 	IsValidateResponse bool
+	IsWaiting          bool
 	Response           []byte
 }
 
