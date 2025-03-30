@@ -690,3 +690,7 @@ client_secret = "$env{APIM_AI_CLIENT_SECRET}"
 token_endpoint = "{{.APIM_AI_TOKEN_ENDPOINT}}"
 devportal_theming.endpoint = "{{.APIM_AI_DEVPORTAL_THEMING_ENDPOINT}}"
 api_design.endpoint =  "{{.APIM_AI_API_DESIGN_ENDPOINT}}"
+
+[choreo.system_metrics]
+enable="{{.APIM_SYSTEM_METRICS_ENABLED | default "true"}}"
+log_interval="{{.APIM_SYSTEM_METRICS_LOG_INTERVAL | default "3s"}}"
