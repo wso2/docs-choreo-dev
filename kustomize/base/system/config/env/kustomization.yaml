@@ -483,6 +483,7 @@ configMapGenerator:
       - IS_CUSTOMIZABLE_CI_ENABLED_FOR_PAID_ORGS={{.IS_CUSTOMIZABLE_CI_ENABLED_FOR_PAID_ORGS | default "false"}}
       - CUSTOMIZABLE_CI_ENABLED_PDPS={{.CUSTOMIZABLE_CI_ENABLED_PDPS | default ""}}
       - ARGO_STRUCTURE={{.ARGO_STRUCTURE | default "stepBased"}}
+      - ARGO_CONTAINER_SET_ENABLED_ORGS={{.ARGO_CONTAINER_SET_ENABLED_ORGS | default ""}}
       - ARGO_ENVIRONMENT_SETUP_IMAGE={{.ARGO_ENVIRONMENT_SETUP_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/argo-environment-setup:main-739f2d1910b5f50c83ed3a18e4c874194895b509"}}
       - ARGO_TRIVY_SCAN_IMAGE={{.ARGO_TRIVY_SCAN_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/argo-trivy-scan:main-1b35c6aa380ef963433aaf397f9c8eb18e900145"}}
       - ARGO_PUSH_IMAGE={{.ARGO_PUSH_IMAGE | default "choreocontrolplane.azurecr.io/choreoipaas/argo-image-push:main-ffe4c461a8e46907362aab61accd8a10f0520af6"}}
