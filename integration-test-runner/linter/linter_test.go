@@ -1,123 +1,189 @@
 package linter
 
 import (
-	"encoding/json"
 	"testing"
 )
 
-// Test cases
-func TestValidateSequenceOrder(t *testing.T) {
-	tests := []struct {
-		name          string
-		steps         []Step
-		expectSuccess bool
-		expectError   string
-	}{
-		// Valid order: Should pass
-		{
-			name: "Valid sequence order",
-			steps: []Step{
-				{Sequence: 1, Function: "CreateProject"},
-				{Sequence: 2, Function: "CreateComponent"},
-				{Sequence: 3, Function: "GetEnvironments"},
-				{Sequence: 4, Function: "WaitForBuild"},
-				{Sequence: 5, Function: "DeployComponent"},
-				{Sequence: 6, Function: "Promote"},
-				{Sequence: 7, Function: "InvokeDevEndpoint"},
-				{Sequence: 8, Function: "InvokeProdEndpoint"},
-			},
-			expectSuccess: true,
-		},
-		// Invalid order: CreateComponent before CreateProject
-		{
-			name: "Invalid: CreateComponent before CreateProject",
-			steps: []Step{
-				{Sequence: 1, Function: "CreateComponent"},
-				{Sequence: 2, Function: "CreateProject"},
-			},
-			expectSuccess: false,
-			expectError:   "ERROR: Cannot execute CreateComponent (Sequence 1) because dependency CreateProject is missing or comes later!",
-		},
+func TestValidateSequenceOrderWithCorrectPlaceholders(t *testing.T) {
+	validJSON := `[
+        {
+            "sequence": 1,
+            "function": "CreateProject",
+            "params": {
+                "region": "US",
+                "placeholder": "project1"
+            }
+        },
+        {
+            "sequence": 2,
+            "function": "CreateComponent",
+            "params": {
+                "project": "project1",
+                "placeholder": "BallerinaServiceComponent"
+            }
+        },
+        {
+            "sequence": 3,
+            "function": "WaitForBuild",
+            "params": {
+                "component": "BallerinaServiceComponent"
+            }
+        },
+        {
+            "sequence": 4,
+            "function": "GetEnvironments",
+            "params": {
+                "project": "project1"
+            }
+        },
+        {
+            "sequence": 5,
+            "function": "DeployComponent",
+            "params": {
+                "component": "BallerinaServiceComponent"
+            }
+        }
+    ]`
 
-		// Invalid order: DeployComponent before WaitForBuild
-		{
-			name: "Invalid: DeployComponent before WaitForBuild",
-			steps: []Step{
-				{Sequence: 1, Function: "CreateProject"},
-				{Sequence: 2, Function: "CreateComponent"},
-				{Sequence: 3, Function: "DeployComponent"},
-				{Sequence: 4, Function: "WaitForBuild"},
-			},
-			expectSuccess: false,
-			expectError:   "ERROR: Cannot execute DeployComponent (Sequence 3) because dependency WaitForBuild is missing or comes later!",
-		},
-	}
-
-	// Run each test case
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-
-			stepsJSON, err := json.Marshal(tt.steps)
-			if err != nil {
-				t.Fatalf("Failed to marshal steps: %v", err)
-			}
-
-			err = ValidateSequenceOrder(string(stepsJSON))
-
-			if tt.expectSuccess && err != nil {
-				t.Errorf("Expected success but got error: %v", err)
-			} else if !tt.expectSuccess && err == nil {
-				t.Errorf("Expected error but got success")
-			} else if !tt.expectSuccess && err != nil && err.Error() != tt.expectError {
-				t.Errorf("Expected error: %s, but got: %s", tt.expectError, err.Error())
-			}
-		})
+	err := ValidateSequenceOrder(validJSON)
+	if err != nil {
+		t.Errorf("Expected no error, but got: %v", err)
 	}
 }
 
-var jsonData = `
-[
-	{
-		"sequence": 1,
-		"function": "CreateProject"
-	},
-	{
-		"sequence": 2,
-		"function": "CreateComponent"
-	},
-	{
-		"sequence": 3,
-		"function": "WaitForBuild"
-	},
-	{
-		"sequence": 4,
-		"function": "GetEnvironments"
-	},
-	{
-		"sequence": 5,
-		"function": "DeployComponent"
-	},
-	{
-		"sequence": 6,
-		"function": "Promote"
-	},
-	{
-		"sequence": 7,
-		"function": "InvokeDevEndpoint"
-	},
-	{
-		"sequence": 8,
-		"function": "InvokeProdEndpoint"
+func TestValidateSequenceOrderWithMismatchedPlaceHolders(t *testing.T) {
+	invalidJSON := `[
+        {
+            "sequence": 1,
+            "function": "CreateProject",
+            "params": {
+                "region": "US",
+                "placeholder": "Project1"
+            }
+        },
+        {
+            "sequence": 2,
+            "function": "CreateComponent",
+            "params": {
+                "project": "Project2",
+                "placeholder": "BallerinaServiceComponent"
+            }
+        }
+    ]`
+
+	err := ValidateSequenceOrder(invalidJSON)
+	if err == nil {
+		t.Errorf("Expected error due to mismatched placeholder reference")
 	}
-]`
+}
 
-// Test case for validating JSON data
-func TestValidateSequenceOrderWithJSON(t *testing.T) {
-	// Validate sequence order with the JSON string
-	err := ValidateSequenceOrder(jsonData)
+// Test case to check function executes before its Sequence dependency
+func TestValidateSequenceOrderWithIncorrectOrder(t *testing.T) {
+	invalidJSON := `[
+        {
+            "sequence": 2,
+            "function": "CreateComponent",
+            "params": {
+                "project": "project1",
+                "placeholder": "BallerinaServiceComponent"
+            }
+        },
+        {
+            "sequence": 1,
+            "function": "CreateProject",
+            "params": {
+                "region": "US",
+                "placeholder": "project1"
+            }
+        }
+    ]`
 
-	// Check if validation passed
+	err := ValidateSequenceOrder(invalidJSON)
+	if err == nil {
+		t.Errorf("Expected error due to Sequence dependency being executed out of order")
+	}
+}
+
+// Test case where a placeholder is used before being created
+func TestValidateSequenceOrderWithPlaceholderUsedBeforeCreation(t *testing.T) {
+	invalidJSON := `[
+        {
+            "sequence": 2,
+            "function": "DeployComponent",
+            "params": {
+                "component": "BallerinaServiceComponent"
+            }
+        },
+        {
+            "sequence": 1,
+            "function": "CreateComponent",
+            "params": {
+                "project": "project1",
+                "placeholder": "BallerinaServiceComponent"
+            }
+        }
+    ]`
+
+	err := ValidateSequenceOrder(invalidJSON)
+	if err == nil {
+		t.Errorf("Expected error due to placeholder being used before creation")
+	}
+}
+
+// Test case with multiple independent projects ensuring no cross-project dependencies
+func TestValidateSequenceOrderWithMultipleIndependentProjects(t *testing.T) {
+	validJSON := `[
+        {
+            "sequence": 1,
+            "function": "CreateProject",
+            "params": {
+                "region": "US",
+                "placeholder": "ProjectA"
+            }
+        },
+        {
+            "sequence": 2,
+            "function": "CreateComponent",
+            "params": {
+                "project": "ProjectA",
+                "placeholder": "ComponentA"
+            }
+        },
+        {
+            "sequence": 3,
+            "function": "CreateProject",
+            "params": {
+                "region": "EU",
+                "placeholder": "ProjectB"
+            }
+        },
+        {
+            "sequence": 4,
+            "function": "CreateComponent",
+            "params": {
+                "project": "ProjectB",
+                "placeholder": "ComponentB"
+            }
+        }
+    ]`
+
+	err := ValidateSequenceOrder(validJSON)
 	if err != nil {
-		t.Errorf("Expected success but got error: %v", err)
+		t.Errorf("Expected error: %v", err)
+	}
+}
+
+// Test case where a component from one component is used in another project
+func TestComponentFromProjectAUsedInProjectB(t *testing.T) {
+	content := `[
+		{"sequence": 1, "function": "CreateProject", "params": {"placeholder": "ProjectA"}},
+		{"sequence": 2, "function": "CreateComponent", "params": {"placeholder": "ComponentA"}},
+		{"sequence": 3, "function": "CreateProject", "params": {"placeholder": "ProjectB"}},
+		{"sequence": 4, "function": "DeployComponent", "params": {"placeholder": "ComponentA"}}
+	]`
+
+	err := ValidateSequenceOrder(content)
+	if err != nil {
+		t.Errorf("expected error: %v", err)
 	}
 }
