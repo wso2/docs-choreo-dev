@@ -37,6 +37,12 @@ export interface ManageFeature {
     method: Enums.HTTPMethod,
     resource: string
   );
+  _disableSecurityAndDeploy(
+    component: Component,
+    method: Enums.HTTPMethod,
+    resource: string,
+    accessMode: Enums.Accessibility
+  );
   _applyPermissionToResources(component: Component, permission: string);
   _verifyConsumer(appName: string);
   _updateApiVisibility(component: Component, visibility: ApiVisibility);
@@ -118,6 +124,32 @@ export function mixinManage<T extends Types.Constructor>(
       cy.get(TestIds.applyApiConfig, VERY_SHORT_TIME).should("be.enabled");
       cy.get(TestIds.cancelApiConfig).click();
       cy.get(TestIds.applyApiConfig).should("not.exist");
+    }
+
+    _disableSecurityAndDeploy(
+      component: Component,
+      method: Enums.HTTPMethod,
+      resource: string,
+      accessMode: Enums.Accessibility
+    ) {
+      this.sideMenu.navigateToDeploy();
+
+      this.deploymentTrack.validate(component);
+
+      cy.getUnstable(TestIds.buildCard)
+        .should("be.visible")
+        .find(TestIds.executeDeployProxySplitToggle)
+        .click();
+      
+      this.toggleResourceSecurityV2(method, resource);
+
+      cy.get(TestIds.proxyDeployButton)
+        .contains("Deploy")
+        .should("be.visible")
+        .click();
+
+      this.verifyDeploymentStatus(accessMode);
+      
     }
 
     _addPermissions(component: Component, permissions: string[]) {
