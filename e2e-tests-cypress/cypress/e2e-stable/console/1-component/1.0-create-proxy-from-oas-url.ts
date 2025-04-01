@@ -31,7 +31,7 @@ describe("Create proxy using existing url", () => {
   const QUERY_PARAM_VALUE = "1";
   const EXPECTED_VALUE = "sold";
   const NEW_RESOURCE_EXPECTED_VALUE = "id";
-  const URL = "https://raw.githubusercontent.com/swagger-api/swagger-petstore/5b7e57cd5d6232cc1b0e9980c336c51966519794/src/main/resources/openapi.yaml";
+  const URL = "https://petstore3.swagger.io/api/v3/openapi.json";
   const ENDPOINT_URL =
     "https://9f3f5ca2-c1f2-43e7-afbe-a15714138b57-dev.e1-us-east-azure.choreoapis.dev/mgch/petstore/petstore-9f2/v1.0";
   let project: Project;
