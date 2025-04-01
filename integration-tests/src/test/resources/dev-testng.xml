@@ -53,6 +53,7 @@
             <class name="com.wso2.choreo.integration.tests.thirdpartyServices.ThirdPartyServices"/>
             <class name="com.wso2.choreo.integration.tests.configurations.TestSchemaConfigurations"/>
             <class name="com.wso2.choreo.integration.tests.devPortalApiKey.DevPortalAPIKey"/>
+            <class name="com.wso2.choreo.integration.tests.configurations.TestConfigurationGroups"/>
         </classes>
     </test>
 </suite>
