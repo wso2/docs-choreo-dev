@@ -37,12 +37,6 @@ export interface ManageFeature {
     method: Enums.HTTPMethod,
     resource: string
   );
-  _disableSecurityAndDeploy(
-    component: Component,
-    method: Enums.HTTPMethod,
-    resource: string,
-    accessMode: Enums.Accessibility
-  );
   _applyPermissionToResources(component: Component, permission: string);
   _verifyConsumer(appName: string);
   _updateApiVisibility(component: Component, visibility: ApiVisibility);

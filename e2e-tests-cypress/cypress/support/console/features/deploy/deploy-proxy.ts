@@ -32,7 +32,7 @@ import { ProxyLeftMenu } from "../../ui-elements/left-menus/proxy-left-menu";
 import { Proxy } from "../../entities/component/proxy-component";
 import { Types } from "../../../commons/types";
 import { DeploymentTrack } from "../deployment-track/deployment-track";
-import { Enums } from "../../../commons/enums";
+import { Enums, SecurityScheme } from "../../../commons/enums";
 
 export interface DeployProxyFeature {
   _addNewVersion(component: Proxy, version: string);
@@ -40,6 +40,17 @@ export interface DeployProxyFeature {
   _deploy(component: Proxy, visibility?: Enums.Accessibility);
 
   _promote(component: Proxy);
+
+  _disableSecurityAndDeploy(
+    component: Proxy,
+    method: Enums.HTTPMethod,
+    resource: string,
+    accessMode: Enums.Accessibility
+  );
+
+  _enableSecuritySchemesAndDeploy(component: Proxy, securitySchemes: SecurityScheme[]);
+
+  _managePermissionsAndDeploy(component: Proxy, permissions: string[]);
 }
 
 export function mixinProxyDeploy<T extends Types.Constructor>(
@@ -150,6 +161,190 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
         .should("not.exist");
     }
 
+    _disableSecurityAndDeploy(
+      component: Proxy,
+      method: Enums.HTTPMethod,
+      resource: string,
+      accessMode: Enums.Accessibility
+    ) {
+      this.sideMenu.navigateToDeploy();
+
+      this.deploymentTrack.validate(component);
+
+      this.waitTillReadyToDeploy();
+
+      cy.getUnstable(TestIds.buildCard)
+        .should("be.visible")
+        .find(TestIds.executeDeployProxySplitToggle)
+        .click();
+      
+      this.changeAccessMode(accessMode);
+      
+      this.toggleResourceSecurityV2(method, resource);
+
+      this.deployProxy(component);
+
+      this.getNumberOfPriorBuilds().then((buildCount) => {
+        cy.log("Number of prior builds: " + buildCount);
+        this.verifyDeploymentStatus(buildCount);
+      });
+      
+    }
+
+    _managePermissionsAndDeploy(component: Proxy, permissions: string[]) {
+      this.sideMenu.navigateToDeploy();
+
+      this.deploymentTrack.validate(component);
+
+      this.waitTillReadyToDeploy();
+
+      cyGet(TestIds.deployProxySplitToggle, MEDIUM_TIME)
+        .should("not.be.disabled")
+        .click();
+
+      cyGet(TestIds.configureDeploy, VERY_SHORT_TIME).click();
+
+      cyGet(TestIds.executeDeployProxySplitToggle, MEDIUM_TIME)
+        .should("not.be.disabled")
+        .click();
+
+      Utils.checkIfUnchecked(TestIds.oauth2SecurityScheme).then(() => {
+        this.addPermissionsV2(permissions);
+        this.applyAllPermissionsToResourcesV2(permissions);
+        this.deleteAllPermissionsV2(permissions);
+        this.applyPermissionsToResourcesV2(permissions[0]);
+      });
+
+      cy.wait(VERY_SHORT_TIME.timeout);
+
+      this.deployProxy(component);
+
+      this.getNumberOfPriorBuilds().then((buildCount) => {
+        cy.log("Number of prior builds: " + buildCount);
+        this.verifyDeploymentStatus(buildCount);
+      });
+    }
+
+    private openManagePermissionsView() {
+      cyGet(TestIds.managePermissionBtn, VERY_SHORT_TIME).scrollIntoView();
+      cyGet(TestIds.managePermissionBtn, VERY_SHORT_TIME).should("be.visible").click();
+      cyGet(TestIds.managePermissionSection, VERY_SHORT_TIME).scrollIntoView().should("be.visible");
+    }
+
+    private addPermissionsV2(permissions: string[]) {
+      this.openManagePermissionsView();
+      cy.get(TestIds.addScopeBtnV2).should("be.visible").click();
+
+      permissions.forEach((permission) => {
+        this.addPermissionV2(permission);
+      });
+
+      cy.get(TestIds.selectAllScopesV2).should("be.visible");
+      permissions.forEach((permission) => {
+        cy.get(TestIds.scopeItem(permission)).should("be.visible");
+      });
+    }
+
+    private applyAllPermissionsToResourcesV2(permissions: string[]) {
+      cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
+      cy.get(TestIds.selectAllScopesV2).should("be.enabled").click();
+      cy.get(TestIds.applyScopesToAllV2).should("be.enabled").click();
+      cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
+
+      cy.get(TestIds.permissionAssignmentTable).scrollIntoView().should("be.visible");
+
+      permissions.forEach((permission) => {
+        cy.get(TestIds.permissionTag(permission)).should("be.visible");
+      });
+    }
+    
+    private deleteAllPermissionsV2(permissions: string[]) {
+      cy.get(TestIds.permissionAssignmentTable).scrollIntoView().should("be.visible");
+      cy.get(TestIds.deleteAllScopesV2).should("be.visible").click();
+
+      permissions.forEach((permission) => {
+        cy.get(TestIds.permissionTag(permission)).should("not.exist");
+      });
+    }
+
+    private applyPermissionsToResourcesV2(permission: string) {
+      cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
+      cy.get(TestIds.scopeItemCheckBoxV2(permission))
+      .should("be.visible")
+      .click();
+      cy.get(TestIds.applyScopesToAllV2).should("be.enabled").click();
+      cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
+
+      cy.get(TestIds.permissionAssignmentTable).scrollIntoView().should("be.visible");
+      cy.get(TestIds.permissionTag(permission)).should("be.visible");
+    }
+
+    private addPermissionV2(permission: string) {
+      cy.get(TestIds.addNewScopeV2).should("be.disabled");
+      cy.get(TestIds.scopeTextInputV2).type(permission);
+      cy.get(TestIds.addNewScopeV2).should("be.enabled").click().wait(1000);
+    }
+
+    private toggleResourceSecurityV2(method: Enums.HTTPMethod, resource: string) {
+      let methodString = method.toString();
+
+      cy.get(`[data-cyid="${methodString.toLowerCase()}-/${resource}-isSecured-check-box"]`)
+        .scrollIntoView()
+        .click();
+      cy.wait(VERY_SHORT_TIME.timeout);
+    }
+
+    private cloneSecuritySchemes() : Map<SecurityScheme, string> {
+      return new Map(this.securitySchemes);
+    }
+
+    private enableSecuritySchemes(securitySchemes: SecurityScheme[]) {
+      const remainingSchemes = this.cloneSecuritySchemes();
+
+      securitySchemes.forEach((scheme) => {
+        const schemeSelector = remainingSchemes.get(scheme);
+
+        if (schemeSelector) {
+          Utils.checkIfUnchecked(schemeSelector);
+          remainingSchemes.delete(scheme);
+        } else {
+          throw new Error(`Security scheme ${scheme} not found`);
+        }
+      });
+
+      for (const schemeSelector of remainingSchemes.values()) {
+        Utils.unCheckIfChecked(schemeSelector);
+      }
+      cy.wait(VERY_SHORT_TIME.timeout);
+    }
+
+
+    _enableSecuritySchemesAndDeploy(component: Proxy, securitySchemes: SecurityScheme[]) {
+      this.sideMenu.navigateToDeploy();
+
+      this.deploymentTrack.validate(component);
+
+      this.waitTillReadyToDeploy();
+
+      cyGet(TestIds.deployProxySplitToggle, MEDIUM_TIME)
+      .should("not.be.disabled")
+      .click();
+
+      cyGet(TestIds.configureDeploy, VERY_SHORT_TIME).click();
+
+      cyGet(TestIds.executeDeployProxySplitToggle, MEDIUM_TIME)
+        .should("not.be.disabled")
+        .click();
+
+      this.enableSecuritySchemes(securitySchemes);
+      this.deployProxy(component);
+      
+      this.getNumberOfPriorBuilds().then((buildCount) => {
+        cy.log("Number of prior builds: " + buildCount);  
+        this.verifyDeploymentStatus(buildCount);
+      });
+    }
+
     private RetryDevDeployment() {
       cy.log("Checking for retry deployment");
       for (let i = 0; i < 4; i++) {
@@ -179,6 +374,36 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       });
     }
 
+    private changeAccessMode(visibility?: Enums.Accessibility) {
+      if (visibility !== undefined) {
+        let accessModeRadioButton = TestIds.externalAccessMode;
+
+        if (visibility === Enums.Accessibility.INTERNAL) {
+          accessModeRadioButton = TestIds.internalAccessMode;
+        }
+
+        cy.get(accessModeRadioButton, SHORT_TIME).should("be.visible").click().wait(VERY_SHORT_TIME.timeout);
+      }
+    }
+
+    private deployProxy(component: Proxy) {
+      cy.get(TestIds.deploy, VERY_SHORT_TIME).scrollIntoView();
+      if (component.isPolicyAdded()) {
+        cy.get(TestIds.deploy, VERY_SHORT_TIME)
+          .should('be.visible')
+          .click();
+
+        cy.get(TestIds.configSubmit, MEDIUM_TIME)
+          .should('be.visible')
+          .click();
+      } else {
+        cy.get(TestIds.deploy, VERY_SHORT_TIME)
+          .should('be.visible')
+          .click();
+      }
+    }
+    
+
     private startDeployment(
       component: Proxy,
       visibility?: Enums.Accessibility
@@ -193,23 +418,9 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
         .should("not.be.disabled")
         .click();
 
-      if (visibility !== undefined) {
-        let accessModeRadioButton = TestIds.externalAccessMode;
+      this.changeAccessMode(visibility);
 
-        if (visibility === Enums.Accessibility.INTERNAL) {
-          accessModeRadioButton = TestIds.internalAccessMode;
-        }
-
-        cy.get(accessModeRadioButton, SHORT_TIME).should("be.visible").click();
-      }
-
-      if (component.isPolicyAdded()) {
-        cy.get(TestIds.deploy, VERY_SHORT_TIME).should("be.visible").click();
-
-        cy.get(TestIds.configSubmit, MEDIUM_TIME).should("be.visible").click();
-      } else {
-        cy.get(TestIds.deploy, VERY_SHORT_TIME).should("be.visible").click();
-      }
+      this.deployProxy(component);
     }
 
     private verifyDeploymentStatus(numberOfPriorBuilds: number) {

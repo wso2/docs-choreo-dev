@@ -64,11 +64,7 @@ describe("Create and deploy a component to test developer portal with custom dom
   });
 
   it("Enable OAuth2 security", () => {
-    proxy.enableSecurityScemes([SecurityScheme.OAuth2]);
-  });
-
-  it("Deploy API Proxy", () => {
-    proxy.deploy();
+    proxy.enableSecuritySchemesAndDeploy([SecurityScheme.OAuth2]);
   });
 
   it("Promote API Proxy", () => {

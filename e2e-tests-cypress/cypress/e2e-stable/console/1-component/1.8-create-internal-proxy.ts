@@ -70,13 +70,9 @@ describe(`Verify internal API Proxy functionality`, () => {
     internalProxy.removeDefaultResources();
     internalProxy.addResources([{ path: OPERATION_USERS, verbs: ["GET"] }]);
   });
-
-  it("Disable security of Internal Proxy", () => {
-    internalProxy.disableSecurity(Enums.HTTPMethod.GET, OPERATION_USERS);
-  });
-
-  it("Deploy Internal Proxy", () => {
-    internalProxy.deploy(Enums.Accessibility.INTERNAL);
+  
+  it("Disable security of Internal Proxy and Deploy", () => {
+    internalProxy.disableSecurityAndDeploy(Enums.HTTPMethod.GET, OPERATION_USERS, Enums.Accessibility.INTERNAL);
   });
 
   it("Promote Internal Proxy", () => {
@@ -198,7 +194,7 @@ describe(`Verify internal API Proxy functionality`, () => {
   });
 
   it("Ensure correct security schemes are selected after converting to external", () => {
-    internalProxy.enableSecurityScemes([SecurityScheme.OAuth2]);
+    internalProxy.enableSecuritySchemesAndDeploy([SecurityScheme.OAuth2]);
   });
 
   // Reloading the proxy is required to ensure that the access mode change is reflected in other parts of the UI,
