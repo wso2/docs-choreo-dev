@@ -127,16 +127,12 @@ export function mixinManage<T extends Types.Constructor>(
 
       cy.get(TestIds.buildCard)
         .should("be.visible")
-        .find(TestIds.executeDeploy)
+        .find(TestIds.viewArtifact)
         .click();
 
-      cy.get(TestIds.managePermissionBtn).should("be.visible").click();
-      cy.get(TestIds.managePermissionSection).scrollIntoView();
-
-      const noScopeButton = cy.get(TestIds.addScopeBtn);
-      if (noScopeButton) {
-        noScopeButton.should("be.visible").click();
-      }
+      Utils.checkIfUnchecked(TestIds.oauth2SecurityScheme).then(() => {
+        cy.get(TestIds.addScopeBtnV2).should("be.visible").click();
+      });
       
       permissions.forEach((permission) => {
         Utils.checkIfUnchecked(TestIds.oauth2SecurityScheme).then(() => {
@@ -181,11 +177,13 @@ export function mixinManage<T extends Types.Constructor>(
 
       cy.get(TestIds.buildCard)
         .should("be.visible")
-        .find(TestIds.executeDeploy)
+        .find(TestIds.viewArtifact)
         .click();
 
       cy.get(TestIds.deleteAllScopesV2).should("be.visible").click();
-      cy.get('tbody tr:first').should("be.visible");
+      cy.get(TestIds.securitySettingsFirstResource)
+        .should("be.visible")
+        .click();
 
       permissions.forEach((permission) => {
         cy.get(TestIds.permissionTag(permission)).should("not.exist");
@@ -201,15 +199,17 @@ export function mixinManage<T extends Types.Constructor>(
 
       cy.get(TestIds.buildCard)
         .should("be.visible")
-        .find(TestIds.executeDeploy)
+        .find(TestIds.viewArtifact)
         .click();
 
-      cy.get(TestIds.managePermissionBtn).should("be.visible").click();
-
+      cy.get(TestIds.scopeItemCheckBoxV2(permission))
+        .should("be.visible")
+        .click();
       cy.get(TestIds.applyScopesToAllV2).should("be.enabled").click();
       cy.get(TestIds.applyScopesToAllV2).should("be.disabled");
-
-      cy.get('tbody tr:first').should("be.visible");
+      cy.get(TestIds.securitySettingsFirstResource)
+        .should("be.visible")
+        .click();
 
       cy.get(TestIds.permissionTag(permission)).should("be.visible");
 
@@ -246,7 +246,7 @@ export function mixinManage<T extends Types.Constructor>(
 
       this.deploymentTrack.validate(component);
 
-      cy.getUnstable(TestIds.buildCard)
+      cy.get(TestIds.buildCard)
         .should("be.visible")
         .find(TestIds.viewArtifact)
         .click();
@@ -346,14 +346,6 @@ export function mixinManage<T extends Types.Constructor>(
       // Wait short time for setting changes to be applied.
       // UI seems to work in a slightly async manner giving a misleading indication that the action has completed
       cy.get(TestIds.editSettings).should("be.enabled").wait(3000);
-    }
-
-    private toggleResourceSecurityV2(method: Enums.HTTPMethod, resource: string) {
-      let methodString = method.toString();
-
-      cy.get(`[data-cyid="${methodString.toLowerCase()}-/${resource}-isSecured-check-box"]`)
-        .scrollIntoView()
-        .click();
     }
 
     private toggleResourceSecurity(method: Enums.HTTPMethod, resource: string) {

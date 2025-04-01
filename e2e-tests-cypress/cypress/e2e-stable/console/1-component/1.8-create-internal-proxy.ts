@@ -70,9 +70,13 @@ describe(`Verify internal API Proxy functionality`, () => {
     internalProxy.removeDefaultResources();
     internalProxy.addResources([{ path: OPERATION_USERS, verbs: ["GET"] }]);
   });
-  
-  it("Disable security of Internal Proxy and Deploy", () => {
-    internalProxy.disableSecurityAndDeploy(Enums.HTTPMethod.GET, OPERATION_USERS, Enums.Accessibility.INTERNAL);
+
+  it("Disable security of Internal Proxy", () => {
+    internalProxy.disableSecurity(Enums.HTTPMethod.GET, OPERATION_USERS);
+  });
+
+  it("Deploy Internal Proxy", () => {
+    internalProxy.deploy(Enums.Accessibility.INTERNAL);
   });
 
   it("Promote Internal Proxy", () => {
