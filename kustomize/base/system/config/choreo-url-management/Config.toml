@@ -5,6 +5,7 @@ choreoJwtAudience = "{{.CHOREO_JWT_AUDIENCE}}"
 patAppJwtAudience = "{{.PAT_APP_JWT_AUDIENCE}}"
 cpGatewayJWKSUrl = "{{.CHOREO_CP_GATEWAY_JWKS_URL}}"
 authHeaderName = "{{.AUTH_HEADER_NAME}}"
+secondaryAuthHeaderName = "x-jwt-assertion"
 cloudManagerUrl = "http://dp-cloud-manager:80"
 apimUrl = "{{.CHOREO_APIM_URL}}"
 mizzenUrl = "http://dp-mizzen:80/api/v1"
@@ -25,6 +26,7 @@ retryInterval = 1.0
 retryCount = 3
 retryBackOffFactor = 2.0
 enableAppGwUpdate = {{.ENABLE_APPGW_UPDATE}}
+workflowManagementServiceUrl = "http://workflow-mgt:80/workflow-mgt/v1"
 
 [choreo.choreo_url_management.db]
 port = 1433
