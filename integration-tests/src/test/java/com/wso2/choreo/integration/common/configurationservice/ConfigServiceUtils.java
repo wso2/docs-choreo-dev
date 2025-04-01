@@ -70,16 +70,47 @@ public class ConfigServiceUtils {
      *
      * @param runner              Citrus test runner
      * @param client              Citrus http client
-     * @param groupUuid           Group UUID
      * @param updatedConfigGroup  Updated configurationGroup object
      * @return Updated ConfigurationGroup object
      * @throws TokenRetrievalException If an error occurs while retrieving the token
      * @throws IOException             If an error occurs while reading the response
      * @throws URISyntaxException      If an error occurs while creating the URI
      */
-    public static ConfigurationGroup updateConfigGroup(TestActionRunner runner, HttpClient client, 
+    public static ConfigurationGroup updateConfigGroup(TestActionRunner runner, HttpClient client,
             ConfigurationGroup updatedConfigGroup) throws TokenRetrievalException, IOException, URISyntaxException {
 
         return ConfigurationService.updateConfigGroup(runner, client, updatedConfigGroup);
-    }    
+    }
+
+    /**
+     * Create a configuration group
+     * 
+     * @param runner              Citrus test runner
+     * @param client              Citrus http client
+     * @param configGroupPayload  configurationGroup object
+     * @return created ConfigurationGroup object
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while creating the URI
+     */
+    public static ConfigurationGroup createConfigGroup(TestActionRunner runner, HttpClient client, ConfigurationGroup configGroupPayload)
+            throws  TokenRetrievalException, IOException, URISyntaxException {
+        return  ConfigurationService.createConfigGroup(runner,client, configGroupPayload);
+    };
+
+
+    /**
+     * Delete a configuration group
+     *
+     * @param runner              Citrus test runner
+     * @param client              Citrus http client
+     * @param configGroupId       configurationGroup Id
+     * @throws TokenRetrievalException If an error occurs while retrieving the token
+     * @throws IOException             If an error occurs while reading the response
+     * @throws URISyntaxException      If an error occurs while creating the URI
+     */
+    public static void deleteConfigGroup(TestActionRunner runner, HttpClient client, String configGroupId)
+            throws  TokenRetrievalException, IOException, URISyntaxException {
+        ConfigurationService.deleteConfigGroup(runner,client, configGroupId);
+    };
 }
