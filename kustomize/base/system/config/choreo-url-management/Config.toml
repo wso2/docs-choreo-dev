@@ -26,7 +26,7 @@ retryInterval = 1.0
 retryCount = 3
 retryBackOffFactor = 2.0
 enableAppGwUpdate = {{.ENABLE_APPGW_UPDATE}}
-workflowManagementServiceUrl = "http://workflow-mgt:80/workflow-mgt/v1"
+workflowManagementServiceUrl = "http://workflow-mgt:9082/workflow-mgt/v1"
 
 [choreo.choreo_url_management.db]
 port = 1433
