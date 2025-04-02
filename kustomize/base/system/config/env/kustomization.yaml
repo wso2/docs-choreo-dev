@@ -1259,3 +1259,8 @@ configMapGenerator:
       - ENABLE_SQS_LISTENING={{.ENABLE_SQS_LISTENING | default "false"}}
       - SQS_URL={{.SQS_URL | default "empty"}}
       - BILLING_INTERNAL_GRPC_ADDRESS=billing-service:9094
+  - name: env-choreo-contract-service
+    behavior: create
+    literals:
+      - GITHUB_OWNER={{.GITHUB_OWNER | default "nomadxd"}}
+      - GITHUB_REPO={{.GITHUB_REPO | default "openapi-connectors"}}

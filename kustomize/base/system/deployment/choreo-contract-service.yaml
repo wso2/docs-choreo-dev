@@ -70,6 +70,16 @@ spec:
                 secretKeyRef:
                   name: secret-contract-service
                   key: GITHUB_TOKEN
+            - name: GITHUB_OWNER
+              valueFrom:
+                configMapRef:
+                  name: env-choreo-contract-service
+                  value: GITHUB_OWNER
+            - name: GITHUB_REPO
+              valueFrom:
+                configMapRef:
+                  name: env-choreo-contract-service
+                  value: GITHUB_REPO
           volumeMounts:
             - name: secret-contract-service
               mountPath: "/mnt/csi/secret-contract-service"
