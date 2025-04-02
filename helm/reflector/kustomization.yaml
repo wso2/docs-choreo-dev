@@ -25,4 +25,3 @@ resources:
   - secret-provider-class.yaml
 
 namespace: reflector
-
