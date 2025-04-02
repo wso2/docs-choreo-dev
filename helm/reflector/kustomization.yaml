@@ -8,9 +8,21 @@ helmCharts:
     namespace: reflector
     version: 7.1.288
     repo: oci://choreocontrolplane.azurecr.io/helm
+    volumeMounts:
+      - name: mi-dist-blob-ad-app-secret-provider
+        mountPath: "/mnt/secrets"
+        readOnly: true
+    volumes:
+      - name: mi-dist-blob-ad-app-secret-provider
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "secret-provider-class"
 
 resources:
   - namespace.yaml
   - secret-provider-class.yaml
 
 namespace: reflector
+
