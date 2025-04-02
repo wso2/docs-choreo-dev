@@ -97,19 +97,15 @@ export function mixinManage<T extends Types.Constructor>(
         envCardSelector = TestIds.prodEnvCard;
       }
 
-      if (component instanceof Service) {
-        componentSettings = TestIds.availableEndpoints;
-      }
-
       cy.get(envCardSelector)
         .should("be.visible")
         .find(componentSettings)
         .find(TestIds.viewArtifact)
         .click();
 
-      if (component instanceof Service) {
-        cy.get(TestIds.endpointSettings).should("be.visible").click();
-      }
+        if (component instanceof Service) {
+          cy.get(TestIds.corsAndRateLimitingSummary).should("be.visible").click();
+        }
 
       cy.get(TestIds.applyApiConfig, VERY_SHORT_TIME).should("be.enabled");
       cy.getUnstable(TestIds.manageSecurity).should("be.visible").click();

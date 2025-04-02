@@ -73,6 +73,7 @@ export namespace TestIds {
   export const cancelApiConfig = '[data-cyid="manage-cancel-btn-button"]';
   export const endpointSettings =
     '[data-cyid="endpoint-config-settings-icon-button"]';
+  export const corsAndRateLimitingSummary = '[data-cyid="cors-and-rate-limiting-summary"]';
   export const selectVersion = '[data-cyid="deployment-track-picker-chip"]';
   export const selectBranch = '[data-cyid^="deployment-track-picker"]';
   export const deploySplitToggle =
