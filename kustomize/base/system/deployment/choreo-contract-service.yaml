@@ -72,14 +72,14 @@ spec:
                   key: GITHUB_TOKEN
             - name: GITHUB_OWNER
               valueFrom:
-                configMapRef:
+                configMapKeyRef:
                   name: env-choreo-contract-service
-                  value: GITHUB_OWNER
+                  key: GITHUB_OWNER
             - name: GITHUB_REPO
               valueFrom:
-                configMapRef:
+                configMapKeyRef:
                   name: env-choreo-contract-service
-                  value: GITHUB_REPO
+                  key: GITHUB_REPO
           volumeMounts:
             - name: secret-contract-service
               mountPath: "/mnt/csi/secret-contract-service"
