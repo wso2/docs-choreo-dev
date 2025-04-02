@@ -15,7 +15,6 @@ package com.wso2.choreo.integration.tests.configurations;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.http.client.HttpClient;
-import com.wso2.choreo.integration.apis.devops.DevopsPortalApi;
 import com.wso2.choreo.integration.tests.dp.TestBase;
 import com.wso2.choreo.integration.tests.dp.DataProviderWrapper;
 import com.wso2.choreo.integration.common.ComponentFlavour;
@@ -26,14 +25,10 @@ import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
 import com.wso2.choreo.integration.common.choreoproject.ChoreoProject;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.schemaconfigservice.SchemaConfig;
-import com.wso2.choreo.integration.config.ConfigDefinition;
-import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apimanager.KeyData;
 import com.wso2.choreo.integration.models.code.Repository;
-import com.wso2.choreo.integration.models.devops.EnvironmentTemplate;
-import com.wso2.choreo.integration.models.devops.EnvironmentTemplatesListDTO;
 import com.wso2.choreo.integration.models.environments.Environment;
 import com.wso2.choreo.integration.models.graphql.ComponentDeploymentStatusDTO;
 import org.apache.commons.lang3.tuple.Pair;
@@ -120,7 +115,7 @@ public class TestSchemaConfigurations extends TestBase {
                 Pair<String, KeyData> invokeData = ComponentUtils.getInvokeInfo(this, citrusClients, accessToken,
                                 dp.getChoreoComponent(), dp.getDeploymentStatusDTO(), dp.getEnvironments());
                 ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(), "/user",
-                                TestHelper.EXPECTED_API_RESPONSE);
+                                TestHelper.EXPECTED_SCHEMA_API_RESPONSE);
         }
 
         @Test(dependsOnMethods = { "invokeAPIDev_TestSchemaDp" }, dataProvider = "dps")
@@ -153,7 +148,7 @@ public class TestSchemaConfigurations extends TestBase {
                                         dp.getChoreoComponent(), statusDTO, dp.getEnvironments());
                         ComponentUtils.invokeApiGET(this, invokeData.getRight().getApikey(), invokeData.getLeft(),
                                         "/user",
-                                        TestHelper.EXPECTED_API_RESPONSE);
+                                        TestHelper.EXPECTED_SCHEMA_API_RESPONSE);
                 }
         }
 }
