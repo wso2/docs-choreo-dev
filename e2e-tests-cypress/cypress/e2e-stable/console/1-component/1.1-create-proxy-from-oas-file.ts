@@ -62,11 +62,7 @@ describe("Create Proxy from OAS file", () => {
   });
 
   it("Enable OAuth2 security", () => {
-    proxy.enableSecurityScemes([SecurityScheme.OAuth2]);
-  });
-
-  it("Deploy proxy", () => {
-    proxy.deploy();
+    proxy.enableSecuritySchemesAndDeploy([SecurityScheme.OAuth2]);
   });
 
   it("Promote proxy", () => {
@@ -113,20 +109,8 @@ describe("Create Proxy from OAS file", () => {
     proxy.enableCors(Enums.Environment.DEVELOPMENT);
   });
 
-  it("Adding permissions", () => {
-    proxy.addPermissions(permissions);
-  });
-
-  it("Apply all permissions to resources", () => {
-    proxy.applyAllPermissionsToResources(permissions);
-  });
-
-  it("Delete all permissions from resources", () => {
-    proxy.deleteAllPermissionsFromResources(permissions);
-  });
-
-  it("Apply a permission to all resources", () => {
-    proxy.applyPermissionToResources(permissions[0]);
+  it("Manage permissions", () => {
+    proxy.managePermissions(permissions);
   });
 
   it("Publish proxy to Dev portal", () => {

@@ -203,6 +203,11 @@ export class Proxy extends mixinDevelop(
     this._addPermissions(this, permissions);
   }
 
+  managePermissions(permissions: string[]) {
+    this._managePermissionsAndDeploy(this, permissions);
+  }
+
+
   applyAllPermissionsToResources(permissions: string[]) {
     this._applyAllPermissionsToResources(this, permissions);
   }
@@ -223,8 +228,12 @@ export class Proxy extends mixinDevelop(
     this._disableSecurity(this, method, resource);
   }
 
-  enableSecurityScemes(securitySchemes: SecurityScheme[]) {
-    this._enableSecurityScemes(this, securitySchemes);
+  disableSecurityAndDeploy(method: Enums.HTTPMethod, resource: string, accessMode: Enums.Accessibility) {
+    this._disableSecurityAndDeploy(this, method, resource, accessMode);
+  }
+
+  enableSecuritySchemesAndDeploy(securitySchemes: SecurityScheme[]) {
+    this._enableSecuritySchemesAndDeploy(this, securitySchemes);
   }
 
   updateAccessModeAndDeploy(accessMode: Enums.Accessibility) {

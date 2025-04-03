@@ -51,10 +51,6 @@ describe("Create Proxy from REST endpoint", () => {
       });
   });
 
-  it("Enable OAuth2 security", () => {
-    proxy.enableSecurityScemes([SecurityScheme.OAuth2]);
-  });
-
   it("Remove default resources", () => {
     proxy.removeDefaultResources();
   });
@@ -74,8 +70,8 @@ describe("Create Proxy from REST endpoint", () => {
     );
   });
 
-  it("Deploy proxy with initial mediation policy", () => {
-    proxy.deploy();
+  it("Enable OAuth2 security and deploy with initial mediation policy", () => {
+    proxy.enableSecuritySchemesAndDeploy([SecurityScheme.OAuth2]);
   });
 
   it("Promote proxy", () => {

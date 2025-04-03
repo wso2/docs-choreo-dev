@@ -73,6 +73,7 @@ export namespace TestIds {
   export const cancelApiConfig = '[data-cyid="manage-cancel-btn-button"]';
   export const endpointSettings =
     '[data-cyid="endpoint-config-settings-icon-button"]';
+  export const corsAndRateLimitingSummary = '[data-cyid="cors-and-rate-limiting-summary"]';
   export const selectVersion = '[data-cyid="deployment-track-picker-chip"]';
   export const selectBranch = '[data-cyid^="deployment-track-picker"]';
   export const deploySplitToggle =
@@ -80,6 +81,7 @@ export namespace TestIds {
   export const configureDeploy = '[data-cyid="configure-&-deploy-option"]';
   export const executeDeploy =
     '[data-cyid="direct-deploy-option-split-group-button-button"]';
+  export const proxyDeployButton = '[data-cyid="access-mode-wizard-deploy-button"]';
   export const endpointVisibility = (visibility: EndpointAccessibility) =>
     `[data-cyid="${visibility}-visibility-option-check-box"]`;
   export const endpointSubmit = '[data-cyid="endpoint-submit-btn-button"]';
@@ -176,6 +178,8 @@ export namespace TestIds {
   export const accessToken = '[data-testid="accessTokenInput"]';
   export const apiNameDevPortal = '[data-testid="txt-api-name"]';
   export const oauth2SecurityScheme = '[data-cyid="sec-scheme-oauth2-check-box"]';
+  export const managePermissionBtn = '[data-cyid="manage-permissions-button"]';
+  export const managePermissionSection = '[data-cyid="endpoint-name-chip"]'
   export const addScopeBtnV2 = '[data-cyid="scope-add-icon-button"]';
   export const addScopeBtn = '[data-testid="scope-add-icon-button"]';
   export const addNewScope = '[data-testid="scope-add-new-btn"]';
@@ -246,6 +250,8 @@ export namespace TestIds {
   export const applicationSelect = '[data-testid="application-selector"]';
   export const applicationSelectItem = (application: string) =>
     `[data-value="${application}"]`;
+
+  export const permissionAssignmentTable = '[data-cyid="permission-assignments"]';
 
   export const testKeyRadio = '[id="test-key-radio-btn"]';
   export const appllicationKeyRadio = '[id="application-key-radio-btn"]';
@@ -473,6 +479,3 @@ export namespace TestIds {
   export const ProxyCreateFromScratch = '[data-cyid="from-scratch-card-button"]';
   export const addConfigButton = '[data-cyid="env-config-section-add-config-button"]';
 }
-
-
-

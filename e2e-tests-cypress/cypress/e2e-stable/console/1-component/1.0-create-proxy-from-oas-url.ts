@@ -64,10 +64,6 @@ describe("Create proxy using existing url", () => {
       });
   });
 
-  it("Enable OAuth2 security", () => {
-    proxy.enableSecurityScemes([SecurityScheme.OAuth2]);
-  });
-
   it("Remove additional resources and save", () => {
     proxy.removeResources([
       "panel-/pet/{petId}/uploadImage/post-header",
@@ -95,8 +91,8 @@ describe("Create proxy using existing url", () => {
     ]);
   });
 
-  it("Deploy proxy", () => {
-    proxy.deploy();
+  it("Enable OAuth2 security and deploy", () => {
+    proxy.enableSecuritySchemesAndDeploy([SecurityScheme.OAuth2]);
   });
 
   it("Promote proxy", () => {
