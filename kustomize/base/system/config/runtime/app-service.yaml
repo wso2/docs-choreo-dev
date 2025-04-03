@@ -244,6 +244,7 @@ defaultRoles:
         - choreo:url_mapping_manage
         - choreo:url_mapping_view
         - choreo:project_view
+        - config.groups.read
         - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
         - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
         - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
@@ -352,6 +353,7 @@ defaultRoles:
         - {{.PERMISSION_CONFIG_VIEW}}
         - {{.PERMISSION_CONFIG_CREATE}}
         - {{.PERMISSION_CONFIG_DELETE}}
+        - config.groups
         # Environment Management
         - choreo:non_prod_env_manage
         - choreo:prod_env_manage
