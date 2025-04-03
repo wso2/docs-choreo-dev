@@ -46,7 +46,7 @@ configMapGenerator:
       - BQ_DATASET_ID={{.BQ_DATASET_ID | default ""}}
       - ORG_MANAGER_SCOPE={{.ORG_MANAGER_SCOPE | default ""}}
       - WEBSUBHUB_PUBLISHER_ENABLED={{.WEBSUBHUB_PUBLISHER_ENABLED | default "false"}}
-      - WEBSUBHUB_PUBLISHER_TOPIC={{.WEBSUBHUB_PUBLISHER_TOPIC | default ""}}
+      - WEBSUBHUB_PUBLISHER_TOPIC={{.WEBSUBHUB_PUBLISHER_TOPIC | default "choreosystem-choreo_cp_events_topic"}}
       - WEBSUBHUB_PUBLISHER_URL={{.WEBSUBHUB_PUBLISHER_URL | default ""}}
   - name: env-cost-optimizer-cp-cm
     behavior: create
