@@ -2190,8 +2190,6 @@ INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Ma
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Configs','urn:choreosystem:configmanagement:config_view','CONFIGURATIONS-MANAGEMENT','View Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Create Configs','urn:choreosystem:configmanagement:config_create','CONFIGURATIONS-MANAGEMENT','Create Configs');
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Delete Configs','urn:choreosystem:configmanagement:config_delete','CONFIGURATIONS-MANAGEMENT','Delete Configs');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Configuration Groups','config.groups','CONFIGURATIONS-MANAGEMENT','Create, Edit and Delete Configuration Groups');
-INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('View Configuration Groups','config.groups.read','CONFIGURATIONS-MANAGEMENT','View Configuration Groups');
 
 -- CUSTOM-DOMAINS
 INSERT INTO permission (display_name,handle,domain_area,description) VALUES ('Manage Custom Domains','urn:choreosystem:customdomainapi:custom_domain_manage','CUSTOM-DOMAINS','Create, Edit and Delete Custom Domains');
