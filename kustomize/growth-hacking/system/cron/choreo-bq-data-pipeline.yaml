@@ -8,7 +8,7 @@ metadata:
   labels:
     choreo.component: choreo-bq-data-pipeline #Label for the cron job
 spec:
-  schedule: 30 23 * * *
+  schedule: 30 0 * * *
   successfulJobsHistoryLimit: 3 #Number of successful job histories to keep
   concurrencyPolicy: Forbid #Concurrency policy to forbid concurrent execution of the job
   jobTemplate:

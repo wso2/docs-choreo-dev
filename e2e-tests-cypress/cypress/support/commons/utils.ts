@@ -560,6 +560,8 @@ export class Utils {
         cy.get(locator).click();
       }
     });
+
+    return cy.wrap({});
   }
 
   static checkIfUnchecked(locator: string) {   
@@ -568,5 +570,7 @@ export class Utils {
         cy.get(locator).click();
       }
     });
+
+    return cy.wrap({});
   }
 }

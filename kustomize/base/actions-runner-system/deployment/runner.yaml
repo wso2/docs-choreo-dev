@@ -20,11 +20,11 @@ spec:
       image: choreocontrolplane.azurecr.io/choreoipaas/gh-runner:latest
       resources:
         limits:
-          cpu: "2"
-          memory: 4Gi
+          cpu: 750m
+          memory: 2Gi
         requests:
-          cpu: 1500m
-          memory: 1Gi
+          cpu: 250m
+          memory: 512Mi
       tolerations:
         - effect: NoSchedule
           key: ghrunner
@@ -42,7 +42,7 @@ spec:
       dockerdContainerResources:
         limits:
           cpu: "1"
-          memory: 3Gi
-        requests:
-          cpu: "1"
           memory: 2Gi
+        requests:
+          cpu: 500m
+          memory: 512Mi

@@ -10,11 +10,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wso2.choreo.integration.apis.ControlPlaneAPI;
 import com.wso2.choreo.integration.common.utils.HttpClientUtil;
+import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.ConfigDefinition;
 import com.wso2.choreo.integration.config.Configuration;
 import com.wso2.choreo.integration.config.Constant;
 import com.wso2.choreo.integration.models.ApiDTO;
+import com.wso2.choreo.integration.models.apiKey.ApiKeyResponse;
+import com.wso2.choreo.integration.models.apimanager.Application;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPI;
 import com.wso2.choreo.integration.models.proxyapi.ProxyAPIWrapper;
 import com.wso2.choreo.integration.models.response.Response;
@@ -26,6 +29,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
@@ -79,7 +83,7 @@ public class ApiManager extends ControlPlaneAPI {
 
 
     public static Response changeLifeCycle(String apiId, String action, String accessToken) throws IOException {
-        String url = STS_ENDPOINT + "api/am/publisher/v2/apis/change-lifecycle?organizationId=" + ORG_UUID + "&apiId=" + apiId + "&action=" + action;
+        String url = STS_ENDPOINT + "/api/am/publisher/v2/apis/change-lifecycle?organizationId=" + ORG_UUID + "&apiId=" + apiId + "&action=" + action;
         return HttpClientUtil.httpPOST(url, "", accessToken, "");
     }
 
@@ -93,6 +97,59 @@ public class ApiManager extends ControlPlaneAPI {
         Response res = HttpClientUtil.httpGET(requestURI, accessToken, "");
         return ObjectMapperUtil.mapStringToObject(RevisionWrapper.class, res.getRes(), "");
 
+    }
+
+    public static Application CreateDevPortalApplication(String accessToken) throws IOException {
+        String requestUrlForCreateApp = STS_ENDPOINT + Constant.DEVPORTAL_ENDPOINT_SUFFIX + Constant.DEVPORTAL_APPLICATIONS +
+                "?organizationId=" + ORG_UUID;
+        HashMap<String, Object> requestBodyMap = new HashMap<>() {
+            {
+                put("name", NameGenerator.generateThreadUniqueNameWithPrefix("testApp"));
+                put("throttlingPolicy", "Unlimited");
+                put("tokenType", "JWT");
+                put("description", "");
+            }
+        };
+
+        Response response = HttpClientUtil.httpPOST(
+                requestUrlForCreateApp, ObjectMapperUtil.mapToString(requestBodyMap), accessToken, "");
+        if (response.getStatusCode() != HttpStatus.CREATED.value()) {
+            throw new ValidationException("Error creating devportal application Status Code: " + response.getStatusCode());
+        }
+        Application app = ObjectMapperUtil.mapStringToObject(Application.class, response.getRes(), "");
+        return app;
+    }
+
+    public static void deleteDevPortalApplication(String accessToken, String appId) throws IOException {
+        String requestUrlForDeleteApp = STS_ENDPOINT + Constant.DEVPORTAL_ENDPOINT_SUFFIX + Constant.DEVPORTAL_APPLICATIONS + "/" + appId +
+                "?organizationId=" + ORG_UUID;
+        HttpClientUtil.httpDELETE(requestUrlForDeleteApp, accessToken, "");
+    }
+
+    public static ApiKeyResponse createApiKeyV2(String accessToken, String payLoad) throws IOException {
+        String url = STS_ENDPOINT + Constant.DEVPORTAL_ENDPOINT_SUFFIX + "/api-keys/generate?organizationId=" + ORG_UUID;
+        Response resp = HttpClientUtil.httpPOST(url, payLoad, accessToken, "");
+        if (resp.getStatusCode() != HttpStatus.OK.value()) {
+            throw new ValidationException("Error creating api key Status Code: " + resp.getStatusCode());
+        }
+        return ObjectMapperUtil.mapStringToObject(ApiKeyResponse.class, resp.getRes());
+    }
+
+    public static ApiKeyResponse regenerateApiKeyV2(String accessToken, String apiKeyId) throws IOException {
+        String url = STS_ENDPOINT + Constant.DEVPORTAL_ENDPOINT_SUFFIX + "/api-keys/" + apiKeyId + "/regenerate?organizationId=" + ORG_UUID;
+        Response resp = HttpClientUtil.httpPOST(url, "", accessToken, "");
+        if (resp.getStatusCode() != HttpStatus.OK.value()) {
+            throw new ValidationException("Error regenerating api key Status Code: " + resp.getStatusCode());
+        }
+        return ObjectMapperUtil.mapStringToObject(ApiKeyResponse.class, resp.getRes());
+    }
+
+    public static void deleteApiKeyV2(String accessToken, String apiKeyId) throws IOException {
+        String url = STS_ENDPOINT + Constant.DEVPORTAL_ENDPOINT_SUFFIX + "/api-keys/" + apiKeyId + "/revoke?organizationId=" + ORG_UUID;
+        Response response = HttpClientUtil.httpPOST(url, "", accessToken, "");
+        if (response.getStatusCode() != HttpStatus.OK.value()) {
+            throw new ValidationException("Error deleting api key Status Code: " + response.getStatusCode());
+        }
     }
 
     public static KeyData getApiKey(TestActionRunner runner, HttpClient client, String accessToken, String apiId, String keyType) {

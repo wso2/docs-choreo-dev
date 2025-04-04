@@ -34,7 +34,7 @@ export class Curl {
     let curl: CurlData = {
       method: "",
       url: "",
-      headers: { "api-key": "" },
+      headers: { "test-key": "" },
     };
 
     if (typeof env !== "undefined") {
@@ -56,7 +56,7 @@ export class Curl {
         const apiKey = arrayURL[4];
         const method = arrayURL[6];
 
-        curl.headers["api-key"] = apiKey;
+        curl.headers["test-key"] = apiKey;
         curl.url = url;
         curl.method = method;
         Cypress.env(`${env}`, curl);
@@ -74,7 +74,7 @@ export class Curl {
         const url = arrayURL[1];
         const apiKey = arrayURL[4];
         const method = arrayURL[6];
-        const curl = { method, url, headers: { "api-key": apiKey } };
+        const curl = { method, url, headers: { "test-key": apiKey } };
         return cy.wrap(curl);
       });
   }
@@ -88,7 +88,7 @@ export class Curl {
     let curl: CurlData = {
       method: "",
       url: "",
-      headers: { "api-key": "" },
+      headers: { "test-key": "" },
     };
     if (curlData) {
       curl.headers = curlData["headers"];
@@ -108,7 +108,7 @@ export class Curl {
         const apiKey = arrayURL[13];
         const method = arrayURL[3];
 
-        curl.headers["api-key"] = apiKey;
+        curl.headers["test-key"] = apiKey;
         curl.url = url;
         curl.method = method;
         Cypress.env(`${env}`, curl);

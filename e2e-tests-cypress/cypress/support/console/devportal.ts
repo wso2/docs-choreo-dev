@@ -21,7 +21,7 @@ export class DevPortal {
   loginToDevPortal(devPortalUrl?: string): void {
     const resourcePath = `/${Cypress.env(
       "choreoOrgHandle"
-    )}?fidp=choreoe2etest`;
+    )}?fidp=EnterpriseIDP`;
 
     let loginURL = Cypress.env("devportalLoginURL") + resourcePath;
 
@@ -56,6 +56,8 @@ export class DevPortal {
         cy.get(TestIds.devPortalRegisterPageFirstNameInput).type(userDetails.firstName)
         cy.get(TestIds.devPortalRegisterPageLastNameInput).type(userDetails.lastName)
         cy.get(TestIds.devPortalRegistrationSubmitButton).click();
+        cy.get(TestIds.selfSignupComplete, VERY_SHORT_TIME).should("be.visible");
+        cy.get(TestIds.selfSignupComplete, VERY_SHORT_TIME).should("not.exist");
     }
 
     this.handleDevPortalSelfSignup(loginLogic, devPortalUrl);

@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: choreo-gateway-extension-server
+  name: choreo-gateway-extension-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-gateway-extension-server
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-gateway-extension-server
+        antiaffinity: choreo-gateway-extension-server
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-gateway-extension-server
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-gateway-extension-server:latest
+          env:
+            - name: CONFIG_FILE_PATH
+              value: "/app/Config.toml"
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: config
+              mountPath: /app/Config.toml
+              subPath: Config.toml
+          ports:
+            - containerPort: 5005
+              name: server
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 60
+            periodSeconds: 60
+            failureThreshold: 3
+            successThreshold: 1
+            tcpSocket:
+              port: 5005
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            tcpSocket:
+              port: 5005
+          resources:
+            limits:
+              cpu: 400m
+              memory: 400Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+      volumes:
+        - name: config
+          configMap:
+            name: cm-gateway-extension-server
+      restartPolicy: Always

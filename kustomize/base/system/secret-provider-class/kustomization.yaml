@@ -56,6 +56,7 @@ resources:
   - dp-project-manager.yaml
   - multivariate-anomaly-detector-notification-manager.yaml
   - delete-manager.yaml
+  - devops-portal-api.yaml
   - moesif-service.yaml
   - metered-usage-handler.yaml
   - metered-usage-handler-service.yaml
@@ -77,6 +78,7 @@ resources:
   - opentelemetry-collector.yaml
   - resource-registry-db.yaml
   - pdp-manager.yaml
+  - pdp-manager-temp.yaml
   - crypto-key-service-ingress-tls.yaml
   - usage-handler-service-ingress-tls.yaml
   - choreo-platform-services-manager.yaml
@@ -85,6 +87,7 @@ resources:
   - choreo-aws-marketplace-client.yaml
   - sts-mgt-service.yaml
   - choreo-org-activity-cron-secret.yaml
+  - choreo-contract-service.yaml
 
 patches:
   - path: patch.json

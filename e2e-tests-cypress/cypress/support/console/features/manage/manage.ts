@@ -97,19 +97,15 @@ export function mixinManage<T extends Types.Constructor>(
         envCardSelector = TestIds.prodEnvCard;
       }
 
-      if (component instanceof Service) {
-        componentSettings = TestIds.availableEndpoints;
-      }
-
       cy.get(envCardSelector)
         .should("be.visible")
         .find(componentSettings)
         .find(TestIds.viewArtifact)
         .click();
 
-      if (component instanceof Service) {
-        cy.get(TestIds.endpointSettings).should("be.visible").click();
-      }
+        if (component instanceof Service) {
+          cy.get(TestIds.corsAndRateLimitingSummary).should("be.visible").click();
+        }
 
       cy.get(TestIds.applyApiConfig, VERY_SHORT_TIME).should("be.enabled");
       cy.getUnstable(TestIds.manageSecurity).should("be.visible").click();
@@ -118,6 +114,32 @@ export function mixinManage<T extends Types.Constructor>(
       cy.get(TestIds.applyApiConfig, VERY_SHORT_TIME).should("be.enabled");
       cy.get(TestIds.cancelApiConfig).click();
       cy.get(TestIds.applyApiConfig).should("not.exist");
+    }
+
+    _disableSecurityAndDeploy(
+      component: Component,
+      method: Enums.HTTPMethod,
+      resource: string,
+      accessMode: Enums.Accessibility
+    ) {
+      this.sideMenu.navigateToDeploy();
+
+      this.deploymentTrack.validate(component);
+
+      cy.getUnstable(TestIds.buildCard)
+        .should("be.visible")
+        .find(TestIds.executeDeployProxySplitToggle)
+        .click();
+      
+      this.toggleResourceSecurityV2(method, resource);
+
+      cy.get(TestIds.proxyDeployButton)
+        .contains("Deploy")
+        .should("be.visible")
+        .click();
+
+      this.verifyDeploymentStatus(accessMode);
+      
     }
 
     _addPermissions(component: Component, permissions: string[]) {
@@ -130,10 +152,21 @@ export function mixinManage<T extends Types.Constructor>(
         .find(TestIds.viewArtifact)
         .click();
 
-      cy.get(TestIds.addScopeBtnV2).should("be.visible").click();
-
+      Utils.checkIfUnchecked(TestIds.oauth2SecurityScheme).then(() => {
+        cy.get(TestIds.addScopeBtnV2).should("be.visible").click();
+      });
+      
       permissions.forEach((permission) => {
-        this.addPermissionV2(permission);
+        Utils.checkIfUnchecked(TestIds.oauth2SecurityScheme).then(() => {
+          this.addPermissionV2(permission);
+        });
+      });
+
+      Utils.checkIfUnchecked(TestIds.oauth2SecurityScheme).then(() => {
+        cy.get(TestIds.selectAllScopesV2).should("be.visible");
+        permissions.forEach((permission) => {
+          cy.get(TestIds.scopeItem(permission)).should("be.visible");
+        });
       });
     }
 
@@ -256,7 +289,8 @@ export function mixinManage<T extends Types.Constructor>(
           if (val !== visibility) {
             cy.get(TestIds.apiVisibility).should("be.visible").click();
             cy.get(TestIds.apiVisibility).find('input').clear().type(visibility).type('{downArrow}').type('{enter}');
-            cy.get(TestIds.apiInfoSave).should("be.enabled").click({ force: true });
+            cy.get(TestIds.dialogPrimaryAction).should("be.visible").click();
+            cy.get(TestIds.dialogPrimaryAction).should("not.exist");
             cy.get(TestIds.backdropLoader).should("not.exist");
             cy.get(TestIds.apiInfoSave).should("be.disabled");
             cy.get(TestIds.apiVisibility)
@@ -276,8 +310,6 @@ export function mixinManage<T extends Types.Constructor>(
       cy.get(TestIds.addNewScopeV2).should("be.disabled");
       cy.get(TestIds.scopeTextInputV2).type(permission);
       cy.get(TestIds.addNewScopeV2).should("be.enabled").click().wait(1000);
-      cy.get(TestIds.selectAllScopesV2).should("be.visible");
-      cy.get(TestIds.scopeItem(permission)).should("be.visible");
     }
 
     private saveUsagePlans(component: Component, plans: UsagePlan[]) {

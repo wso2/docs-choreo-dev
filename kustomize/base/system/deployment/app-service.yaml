@@ -153,6 +153,16 @@ spec:
                 secretKeyRef:
                   name: secret-app-service
                   key: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD
+            - name: PARDOT_STALE_USER_HANDLING_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: PARDOT_STALE_USER_HANDLING_APP_KEY
+            - name: PARDOT_STALE_USER_HANDLING_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: PARDOT_STALE_USER_HANDLING_APP_SECRET
           envFrom:
             - configMapRef:
                 name: env-app-service

@@ -607,6 +607,7 @@ CREATE TABLE [dbo].[organization](
     [name] [nvarchar](255) NOT NULL,
     [handle] [nvarchar](255) NOT NULL,
     [status] [nvarchar](63) NOT NULL DEFAULT (N'ACTIVE'),
+    [origin_cloud] [nvarchar](50) NOT NULL DEFAULT (N'choreo'),
     [created_at] [datetime] NOT NULL,
     [updated_at] [datetime] NOT NULL,
     CONSTRAINT [PK_organization_id] PRIMARY KEY CLUSTERED,

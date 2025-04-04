@@ -318,7 +318,7 @@ public class ComponentUtils {
 
         return GraphqlDTO.builder().name(name).srcGitRepoUrl(repo.getRepoUrl()).projectId(project.getId()).orgId(orgId)
                 .orgHandler(orgHandle).buildpackId(buildpack.getId()).languageVersion(buildpack.getVersion())
-                .buildContext(repo.getBuildContext()).build();
+                .buildContext(repo.getBuildContext()).isPublicRepo(repo.getIsPublicRepo()).build();
     }
 
     public static GraphqlDTO createBuildpackComponentRequestWithSecretRef(String name, ChoreoProject project, Repository repo, String secretRef, Buildpack... buildpackType) {
@@ -752,7 +752,7 @@ public class ComponentUtils {
                                      List<Environment> environments) throws Exception {
         HttpClient appServiceClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         GraphqlDTO graphqlDTO = createDeploymentRequest(component, latestCommit, environments);
-        GraphQL.getBuildStatusByConclusionVersionV2(runner, appServiceClient, accessToken, graphqlDTO,120);
+        GraphQL.getBuildStatusByConclusionVersionV2(runner, appServiceClient, accessToken, graphqlDTO,60);
     }
 
     public static ComponentDeploymentStatusDTO deployBuiltComponent(TestNGCitrusSpringSupport runner,
@@ -1117,7 +1117,7 @@ public class ComponentUtils {
         HttpGet request = new HttpGet(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
-        request.setHeader("API-Key", apiKey);
+        request.setHeader("Test-Key", apiKey);
 
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
                 CloseableHttpResponse response = httpClient.execute(request)) {
@@ -1147,7 +1147,7 @@ public class ComponentUtils {
         HttpGet request = new HttpGet(requestURI);
         request.setHeader(HttpHeaders.AUTHORIZATION, accessToken);
         request.setHeader(HttpHeaders.CONTENT_TYPE, Constant.APPLICATION_JSON);
-        request.setHeader("API-Key", apiKey);
+        request.setHeader("Test-Key", apiKey);
 
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
             for (int i = 0; i < attempts; i++) {
@@ -1203,7 +1203,7 @@ public class ComponentUtils {
                         .get(resource)
                         .message()
                         .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .header("API-Key", apiKey)),
+                        .header("Test-Key", apiKey)),
                         http()
                                 .client(invokeUrl)
                                 .receive()
@@ -1240,7 +1240,7 @@ public class ComponentUtils {
                                         .get(resource)
                                         .message()
                                         .accept(MediaType.APPLICATION_JSON_VALUE)
-                                        .header("API-Key", apiKey)),
+                                        .header("Test-Key", apiKey)),
                                 http()
                                         .client(invokeUrl)
                                         .receive()
@@ -1286,7 +1286,7 @@ public class ComponentUtils {
                                 .get(resource)
                                 .message()
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                                .header("API-Key", apiKey))
+                                .header("Test-Key", apiKey))
                                 .header("x-choreo-test-session-id", testSessionId),
                         http()
                                 .client(invokeUrl)
@@ -1312,7 +1312,7 @@ public class ComponentUtils {
                                 .get(resource)
                                 .message()
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                                .header("API-Key", apiKey)),
+                                .header("Test-Key", apiKey)),
                         http()
                                 .client(invokeUrl)
                                 .receive()
@@ -1359,7 +1359,7 @@ public class ComponentUtils {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .body(requestBody)
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .header("API-Key", apiKey)),
+                        .header("Test-Key", apiKey)),
                         http()
                                 .client(invokeUrl)
                                 .receive()
@@ -1396,7 +1396,7 @@ public class ComponentUtils {
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .body(requestBody)
                                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .header("API-Key", apiKey)),
+                                .header("Test-Key", apiKey)),
                         http()
                                 .client(invokeUrl)
                                 .receive()
@@ -1429,7 +1429,7 @@ public class ComponentUtils {
     public static void invokeWSApi(TestActionRunner runner, String apiKey, String invokeUrl, String resource) {
 
             WebSocketHttpHeaders headers = new WebSocketHttpHeaders();
-            headers.add("API-Key", apiKey);
+            headers.add("Test-Key", apiKey);
 
             WebSocketClientEndpointConfiguration webSocketEndpointConfiguration = new WebSocketClientEndpointConfiguration();
             webSocketEndpointConfiguration.setEndpointUri(invokeUrl + "/" + resource);

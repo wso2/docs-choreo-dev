@@ -30,10 +30,12 @@ import java.util.Optional;
 public class ConfigurationGroup {
     private String groupUuid;
     private String groupName;
-    private List<Scope> scopes;
-    private String type;
-    private List<Configuration> configurations;
+    private String groupDisplayName;
     private String description;
+    private String type;
+    private List<Scope> scopes;
+    private List<Configuration> configurations;
+    private List<EnvironmentSet> environmentSets;
 
     public Optional<String> getConfigurationValue(String key, String environmentUuid) {
         return configurations.stream()

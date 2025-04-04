@@ -54,7 +54,6 @@ describe(`Verify internal API Proxy functionality`, () => {
       .createProxyComponent({
         version: "1.0",
         endpointUrl: API_ENDPOINT,
-        isInternal: true,
       })
       .then((comp) => {
         internalProxy = comp;
@@ -71,13 +70,9 @@ describe(`Verify internal API Proxy functionality`, () => {
     internalProxy.removeDefaultResources();
     internalProxy.addResources([{ path: OPERATION_USERS, verbs: ["GET"] }]);
   });
-
-  it("Disable security of Internal Proxy", () => {
-    internalProxy.disableSecurity(Enums.HTTPMethod.GET, OPERATION_USERS);
-  });
-
-  it("Deploy Internal Proxy", () => {
-    internalProxy.deploy();
+  
+  it("Disable security of Internal Proxy and Deploy", () => {
+    internalProxy.disableSecurityAndDeploy(Enums.HTTPMethod.GET, OPERATION_USERS, Enums.Accessibility.INTERNAL);
   });
 
   it("Promote Internal Proxy", () => {
@@ -199,7 +194,7 @@ describe(`Verify internal API Proxy functionality`, () => {
   });
 
   it("Ensure correct security schemes are selected after converting to external", () => {
-    internalProxy.enableSecurityScemes([SecurityScheme.OAuth2]);
+    internalProxy.enableSecuritySchemesAndDeploy([SecurityScheme.OAuth2]);
   });
 
   // Reloading the proxy is required to ensure that the access mode change is reflected in other parts of the UI,
@@ -244,10 +239,6 @@ describe(`Verify internal API Proxy functionality`, () => {
 
   it("Find API in devportal custom domain", () => {
     devPortal.searchApi(internalProxy.getName());
-  });
-
-  it("Generate Production credentials for converted External Proxy in Dev portal", () => {
-    internalProxy.generateCredentials_DevPortal(Enums.Environment.PRODUCTION);
   });
 
   it("Tryout converted External Proxy in Dev portal", () => {

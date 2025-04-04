@@ -18,12 +18,14 @@ import { devPortal } from "../../support/console/devportal";
 
 describe("Self signup when auto approval disabled and user rejected scenario", () => {
 
+  const selfSignupOrg = Cypress.env("selfSignupOrgHandle");
+
   it("Login to Console", () => {
-    console.selfSignupOrgAdminLogin();
+    console.login();
   });
 
   it("Switch to self signup enabled org", () => {
-    console.switchtOrg("choreoselfsignup").then(() => {
+    console.switchtOrg(selfSignupOrg).then(() => {
       console.removePendingDevportalSelfSignupRequests();
     });
   });
@@ -48,7 +50,7 @@ describe("Self signup when auto approval disabled and user rejected scenario", (
   });
 
   it("Login to Console", () => {
-    console.selfSignupOrgAdminLogin();
+    console.login();
 
     cy.task('getData', 'userDetails').then((userDetails) => {
       cy.task('setData', { key: 'userDetails', value: userDetails as UserDetails });
@@ -56,7 +58,7 @@ describe("Self signup when auto approval disabled and user rejected scenario", (
   });
 
   it("Switch to self signup enabled org", () => {
-    console.switchtOrg("choreoselfsignup");
+    console.switchtOrg(selfSignupOrg);
   });
 
   it("Reject self signup request", () => {

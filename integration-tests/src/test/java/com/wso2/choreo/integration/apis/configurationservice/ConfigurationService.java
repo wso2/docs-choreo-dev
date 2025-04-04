@@ -210,6 +210,77 @@ public class ConfigurationService {
         return new ObjectMapper().readValue(responseDTO.get(), ConfigurationGroup.class);
     }
 
+    public static ConfigurationGroup createConfigGroup(TestActionRunner runner, HttpClient client, ConfigurationGroup configurationGroup)
+        throws TokenRetrievalException, IOException, URISyntaxException {
+
+        AtomicReference<String> responseDTO = new AtomicReference<>();
+        String requestBody = ObjectMapperUtil.mapObjectToString(configurationGroup);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(getConfigGroupsEndpoint())
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate(((message, testContext) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.CREATED.value()){
+                                        throw new ValidationException("Unexpected HTTP Response Status Code:" + code);
+                                    }
+                                    try {
+                                        ConfigurationGroup response =  new ObjectMapper()
+                                                .readValue(message.getPayload().toString(), ConfigurationGroup.class);
+                                        if (response.getGroupUuid() == null) {
+                                            throw new RuntimeException("Response fields are empty");
+                                        }
+                                        responseDTO.set(message.getPayload(String.class));
+                                    } catch (JsonProcessingException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }))
+                )
+        );
+
+        return new ObjectMapper().readValue(responseDTO.get(), ConfigurationGroup.class);
+    }
+
+    public static void deleteConfigGroup(TestActionRunner runner, HttpClient client, String configurationGroupId)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .delete(getConfigGroupsEndpoint() + "/" + configurationGroupId)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                )
+        );
+    }
+
     private static String getAccessToken() throws TokenRetrievalException, IOException, URISyntaxException {
 
         return TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();

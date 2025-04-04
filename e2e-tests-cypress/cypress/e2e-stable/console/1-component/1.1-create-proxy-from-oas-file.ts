@@ -17,7 +17,7 @@ import {
   Proxy,
   ProxyMetaData,
 } from "../../../support/console/entities/component/proxy-component";
-import { Enums, UsagePlan } from "../../../support/commons/enums";
+import { Enums, SecurityScheme, UsagePlan } from "../../../support/commons/enums";
 import { OK } from "../../../support/commons/http";
 import { Application } from "../../../support/console/entities/application/application";
 import { devPortal } from "../../../support/console/devportal";
@@ -61,8 +61,8 @@ describe("Create Proxy from OAS file", () => {
       });
   });
 
-  it("Deploy proxy", () => {
-    proxy.deploy();
+  it("Enable OAuth2 security", () => {
+    proxy.enableSecuritySchemesAndDeploy([SecurityScheme.OAuth2]);
   });
 
   it("Promote proxy", () => {
@@ -109,20 +109,8 @@ describe("Create Proxy from OAS file", () => {
     proxy.enableCors(Enums.Environment.DEVELOPMENT);
   });
 
-  it("Adding permissions", () => {
-    proxy.addPermissions(permissions);
-  });
-
-  it("Apply all permissions to resources", () => {
-    proxy.applyAllPermissionsToResources(permissions);
-  });
-
-  it("Delete all permissions from resources", () => {
-    proxy.deleteAllPermissionsFromResources(permissions);
-  });
-
-  it("Apply a permission to all resources", () => {
-    proxy.applyPermissionToResources(permissions[0]);
+  it("Manage permissions", () => {
+    proxy.managePermissions(permissions);
   });
 
   it("Publish proxy to Dev portal", () => {
@@ -199,7 +187,7 @@ describe("Create Proxy from OAS file", () => {
       if (!testConsoleOnly) {
         proxy.testSwaggerConsole_DevPortal({
           resource: RESOURCE,
-          application: application.getName(),
+          keyType: Enums.ApiTryoutKeyType.APPLICATION_KEY,
         });
       } else {
         cy.log(`Skipping Devportal step due to testConsoleOnly: ${testConsoleOnly}`);
@@ -234,5 +222,9 @@ describe("Create Proxy from OAS file", () => {
 
   it("Verifying project insights in Prod", () => {
     project.verifyUsageInsights(Enums.Environment.PRODUCTION);
+  });
+
+  it('Clean up created data', () => {
+    console.cleanUpData();
   });
 });

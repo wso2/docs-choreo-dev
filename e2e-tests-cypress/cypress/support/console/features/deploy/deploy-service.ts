@@ -561,7 +561,7 @@ export function mixinServiceDeploy<T extends Types.Constructor>(
     }
 
     private verifyEndpointIsDeployed(envCardLocator: string) {
-      for (var i = 0; i < 6; i++) {
+      for (var i = 0; i < 10; i++) {
         let isEndpointLoaded = false;
         cy.get(envCardLocator, { log: false }).then((envCard) => {
           if (envCard.find(TestIds.endpointStatus).length > 0) {

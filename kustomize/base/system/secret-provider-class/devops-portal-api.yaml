@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-devops-portal-api
+spec:
+  secretObjects:
+    - secretName: secret-devops-portal-api
+      type: Opaque
+      data:
+        - objectName: APIM_REST_API_CONSUMER_SECRET
+          key: APIM_REST_API_CONSUMER_SECRET
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: apim-REST-API-CONSUMER-SECRET
+          objectType: secret
+          objectAlias: APIM_REST_API_CONSUMER_SECRET
+          objectVersion: "{{.APIM_REST_API_CONSUMER_SECRET}}"

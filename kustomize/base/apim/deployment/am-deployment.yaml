@@ -65,7 +65,7 @@ spec:
               path: /internal/data/v1/healthz
               port: 9443
               scheme: HTTPS
-            initialDelaySeconds: 300
+            initialDelaySeconds: 100
             periodSeconds: 20
             timeoutSeconds: 15
           readinessProbe:
@@ -73,7 +73,7 @@ spec:
               path: /internal/data/v1/healthz
               port: 9443
               scheme: HTTPS
-            initialDelaySeconds: 300
+            initialDelaySeconds: 50
             periodSeconds: 10
             timeoutSeconds: 15
           lifecycle:

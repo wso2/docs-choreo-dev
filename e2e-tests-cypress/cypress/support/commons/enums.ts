@@ -49,6 +49,13 @@ export namespace Enums {
     SANDBOX = "Sandbox",
   }
 
+  export enum ApiTryoutKeyType {
+    TEST_KEY = "testKey",
+    APPLICATION_KEY = "applicationKey",
+    API_KEY = "apiKey",
+
+  }
+
   export enum HTTPMethod {
     GET = "GET",
     POST = "POST",

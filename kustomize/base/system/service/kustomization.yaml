@@ -56,3 +56,4 @@ resources:
   - choreo-aws-marketplace-client.yaml
   - configuration-schema-service.yaml
   - sts-mgt-service.yaml
+  - choreo-contract-service.yaml

@@ -315,42 +315,6 @@ defaultRoles:
         - choreo:log_view_non_prod
         - choreo:project_view
         - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
-    - name: Choreo DevOps
-      handle: choreo-devops
-      description: Users who are involved in deployment management
-      tags:
-        - deployments
-      permissions:
-        - apim:tier_manage
-        - apim:api_manage
-        - apim:subscription_manage
-        - choreo:deployment_manage
-        - choreo:prod_env_manage
-        - choreo:non_prod_env_manage
-        - apim:api_settings
-        - environments:view_dev
-        - environments:view_prod
-        - apim:environment_manage
-        - choreo:log_view_non_prod
-        - choreo:log_view_prod
-        - choreo:project_view
-        - {{.PERMISSION_GLOBAL_CONFIG_VIEW}}
-        - {{.PERMISSION_GLOBAL_CONFIG_CREATE}}
-        - {{.PERMISSION_GLOBAL_CONFIG_DELETE}}
-        - {{.PERMISSION_GLOBAL_CONFIG_UPDATE}}
-        - {{.PERMISSION_GLOBAL_CONFIG_MANAGE}}
-        - {{.PERMISSION_CONFIG_VIEW}}
-        - {{.PERMISSION_CONFIG_CREATE}}
-        - {{.PERMISSION_CONFIG_DELETE}}
-        - {{.PERMISSION_CONFIG_MANAGE}}
-        - {{.PERMISSION_CUSTOM_DOMAIN_VIEW}}
-        - {{.PERMISSION_CUSTOM_DOMAIN_CREATE}}
-        - {{.PERMISSION_CUSTOM_DOMAIN_DELETE}}
-        - {{.PERMISSION_CUSTOM_DOMAIN_UPDATE}}
-        - {{.PERMISSION_CUSTOM_DOMAIN_MANAGE}}
-        - {{.PERMISSION_COMPONENT_TRIGGER}}
-        - {{.PERMISSION_COMPONENT_COMPONENT_MANAGE}}
-        - {{.PERMISSION_DEVOPS_DEPLOYMENT_VIEW}}
     - name: Choreo Platform Engineer
       handle: choreo-platform-engineer
       description: Users who perform tasks focusing on infrastructure, governance, service mesh, and monitoring.
@@ -521,6 +485,7 @@ organizationCleanUp:
     topic: ${ORG_REMOVER_REQUEST_TOPIC}
   publisher:
     topic: ${ORG_REMOVER_RESULT_TOPIC}
+  userDeletionEnabled: {{.USER_DELETION_ENABLED}}
 anonymousCleanup:
   taskInterval: 0
   expiryDays: 7
@@ -561,6 +526,14 @@ balCentral:
 subscriptions:
   enable: ${IS_SUBSCRIPTIONS_ENABLED}
   freeStepQuota: ${FREE_STEP_QUOTA}
+  subscriptionTierIds:
+    choreoFreeTierId: {{.CHOREO_FREE_TIER_ID}}
+    devantFreeTierId: {{.DEVANT_FREE_TIER_ID}}
+    bijiraFreeTierId: {{.BIJIRA_FREE_TIER_ID}}
+  subscriptionTypes:
+    choreoSubscriptionType: "choreo-subscription"
+    devantSubscriptionType: "devant-subscription"
+    bijiraSubscriptionType: "bijira-subscription"
 permissions:
   roleManage: {{.PERMISSION_CHOREO_ROLE_MANAGE}}
   devEnvManage: choreo:non_prod_env_manage
@@ -581,6 +554,14 @@ choreoDemoOrg:
   role: ${DEMO_ORG_ROLE}
   demoOrgHandle: ${DEMO_ORG_HANDLE}
   demoOrgUUID: ${DEMO_ORG_UUID}
+pardotStaleUserHandling:
+  enable: {{.PARDOT_STALE_USER_HANDLING_ENABLED}}
+  pardot:
+    clientKey: ${PARDOT_STALE_USER_HANDLING_APP_KEY}
+    clientSecret: ${PARDOT_STALE_USER_HANDLING_APP_SECRET}
+    tokenURL: {{.PARDOT_STALE_USER_HANDLING_TOKEN_URL}}
+    pardotEndpoint: {{.PARDOT_STALE_USER_HANDLING_ENDPOINT}}
+    pardotSvcURL: {{.PARDOT_STALE_USER_HANDLING_SVC_URL}}
 salesforceLeadPardotConfig:
   enable: {{.SALESFORCE_LEAD_VIA_PARDOT_ENABLED}}
   pardot:

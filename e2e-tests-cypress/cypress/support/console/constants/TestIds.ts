@@ -14,6 +14,10 @@
 import { EndpointAccessibility, Enums } from "../../commons/enums";
 
 export namespace TestIds {
+  export const username = '[data-testid="login-page-username-input"]';
+  export const password = '[data-testid="login-page-password-input"]';
+  export const loginButton = '[data-testid="login-page-continue-login-button"]';
+  export const selfSignupComplete = '[data-testid="self-register-complete-page-header"]';
   export const logout = '[data-cyid="logout-button-button"]';
   export const userProfile = '[data-testid="header-user-profile-menu"]';
   export const orgPicker = '[data-cyid="org-picker-button"]'
@@ -32,7 +36,7 @@ export namespace TestIds {
   export const projectCard = '[data-cyid="create-project-card"]';
   export const searchIcon = '[data-cyid="search-icon-icon-button"]';
   export const projectSearch =
-    '[data-cyid="page-action-auto-forcused-search-search-field"]';
+    '[data-cyid="project-search-bar-input"]';
   export const viewAllSamples = '[data-cyid="view-all-samples-btn-button"]';
   export const trySample = '[data-cyid="component-select-tab-try-a-sample"]';
   export const sampleSearch = '[data-cyid="samples-search-bar-input"]';
@@ -48,6 +52,7 @@ export namespace TestIds {
   export const componentDeleteConfirm =
     '[data-cyid="delete-confirmation-dialog-content"]';
   export const componentSelector = '[data-cyid="component-selector-button"]';
+  export const branchSelect = '[data-cyid="org-repo-select"]';
   export const confirmName = '[data-cyid="confirm-name"]';
   export const next = '[data-cyid="btn-next-button"]';
   export const deploy = '[data-cyid="access-mode-wizard-deploy-button"]';
@@ -58,7 +63,7 @@ export namespace TestIds {
   export const deploymentStatusChip = '[data-cyid="deployment-status-chip"]';
   export const availableEndpoints = '[data-testid="Endpoints-env-artifact"]';
   export const apiConfiguration =
-    '[data-testid="API Configuration-env-artifact"]';
+    '[data-testid="CORS, Rate Limiting and Resiliency-env-artifact"]';
   export const rightDrawerButton = '[data-cyid="deploy-right-drawer-icon-button"]';  
   export const attachPolicy = '[data-cyid="attach-policy-button-button"]';
   export const viewArtifact = '[data-cyid="btn-view-artifact-icon-button"]';
@@ -68,6 +73,7 @@ export namespace TestIds {
   export const cancelApiConfig = '[data-cyid="manage-cancel-btn-button"]';
   export const endpointSettings =
     '[data-cyid="endpoint-config-settings-icon-button"]';
+  export const corsAndRateLimitingSummary = '[data-cyid="cors-and-rate-limiting-summary"]';
   export const selectVersion = '[data-cyid="deployment-track-picker-chip"]';
   export const selectBranch = '[data-cyid^="deployment-track-picker"]';
   export const deploySplitToggle =
@@ -75,6 +81,7 @@ export namespace TestIds {
   export const configureDeploy = '[data-cyid="configure-&-deploy-option"]';
   export const executeDeploy =
     '[data-cyid="direct-deploy-option-split-group-button-button"]';
+  export const proxyDeployButton = '[data-cyid="access-mode-wizard-deploy-button"]';
   export const endpointVisibility = (visibility: EndpointAccessibility) =>
     `[data-cyid="${visibility}-visibility-option-check-box"]`;
   export const endpointSubmit = '[data-cyid="endpoint-submit-btn-button"]';
@@ -120,6 +127,8 @@ export namespace TestIds {
   export const buildTime = '[data-cyid="build-time"]';
   export const build =
     '[data-cyid="build-latest-button"]';
+  export const configureBuild = '[data-cyid="build-configs-edit-icon-button"]';
+  export const enableUnitTests = '[data-cyid="toggle-unit-test"]';
   export const tableTitle = '[data-cyid="table-title"]';
   export const createComponent =
     '[data-cyid="create-multiple-components-split-toggle-button-button"]';
@@ -168,6 +177,9 @@ export namespace TestIds {
   export const getTestKey = '[data-testid="get-test-key-btn"]';
   export const accessToken = '[data-testid="accessTokenInput"]';
   export const apiNameDevPortal = '[data-testid="txt-api-name"]';
+  export const oauth2SecurityScheme = '[data-cyid="sec-scheme-oauth2-check-box"]';
+  export const managePermissionBtn = '[data-cyid="manage-permissions-button"]';
+  export const managePermissionSection = '[data-cyid="endpoint-name-chip"]'
   export const addScopeBtnV2 = '[data-cyid="scope-add-icon-button"]';
   export const addScopeBtn = '[data-testid="scope-add-icon-button"]';
   export const addNewScope = '[data-testid="scope-add-new-btn"]';
@@ -238,6 +250,26 @@ export namespace TestIds {
   export const applicationSelect = '[data-testid="application-selector"]';
   export const applicationSelectItem = (application: string) =>
     `[data-value="${application}"]`;
+
+  export const permissionAssignmentTable = '[data-cyid="permission-assignments"]';
+
+  export const testKeyRadio = '[id="test-key-radio-btn"]';
+  export const appllicationKeyRadio = '[id="application-key-radio-btn"]';
+  export const apiKey = '[id="api-key-radio-btn"]';
+
+  export const getTryoutKeyTypeSelector = (keyType: Enums.ApiTryoutKeyType) => {
+    switch (keyType) {
+      case Enums.ApiTryoutKeyType.TEST_KEY:
+        return testKeyRadio;
+      case Enums.ApiTryoutKeyType.APPLICATION_KEY:
+        return appllicationKeyRadio;
+      case Enums.ApiTryoutKeyType.API_KEY:
+        return apiKey;
+      default:
+        return testKeyRadio;
+    }
+  }
+  
   export const value = (value: string) => `[value=${value}]`;
   export const search = '[data-testid="search-btn"]';
   export const searchAppText =
@@ -254,7 +286,7 @@ export namespace TestIds {
   export const refreshTasks = '[data-cyid="refresh-tasks-button"]';
   export const executionCount = '[data-cyid="total-executions-count"]';
   export const link = '[data-cyid="btn-link-button"]';
-  export const mountPath = '[data-cyid="mount-path"]';
+  export const mountPath = '[data-cyid="adhoc-config-file-editor-mount-path"]';
   export const formConfigField =
     '[class="view-lines monaco-mouse-cursor-text"]';
   export const appUrl = '[data-cyid="app-url-link"]';
@@ -295,20 +327,21 @@ export namespace TestIds {
   export const warningBanner = '[data-testid="warning-banner"]';
   export const addConfig = '[data-cyid="add-new-button"]';
   export const addConfigKey =
-    '[data-cyid="key-value-card-add-new-new-input-name"]';
+    '[data-cyid="env-config-add-new-new-input-name"]';
   export const addConfigValue =
-    '[data-cyid="key-value-card-add-new-new-input-value"]';
+    '[data-cyid="env-config-add-new-new-input-value"]';
   export const configSave = '[data-cyid="key-value-save-button"]';
   export const keyValueCheckBox =
     '[data-cyid="key-value-card-add-new-secret-check-box"]';
   export const nextButton = '[data-testid="btn-next"]';
-  export const fileMount = '[data-cyid="file-mount-upload-button"]';
+  export const fileMount = '[data-cyid="file-config-section-add-config-button"]';
   export const addNewConfigs = '[data-cyid="promote-selector-default-configs"]';
   export const copyConfigs = '[data-cyid="promote-selector-copy-configs"]';
   export const componentSearchBox =
     '[data-cyid="component-listing-auto-forcused-search-search-field"]';
   export const searchDomain =
     '[data-cyid="search-expandable-right-auto-forcused-search-search-field"]';
+  export const envFilter = '[data-testid="env-filter"]';
   export const domainTable = '[data-cyid="domains-list"]';
   export const deleteDomain = '[data-cyid="domain-delete-icon-button"]';
   export const addDomain = '[data-cyid="domains-add-button"]';
@@ -437,6 +470,12 @@ export namespace TestIds {
   export const dockerSearchBox = '[data-cyid="project-directory-search-search-bar"]';
   export const dockerFileSelect = '[data-cyid="subPath-greeting-service-go/Dockerfile"]';
   export const connectionServiceCard = '[data-cyid="choreo-service-card-button"]';
+  export const ThirdPartyGITCard = '[data-cyid="public-repository-card-button"]';
+  export const ViewAllComponentsButton = '[data-cyid="view-all-component-types-button"]';
+  export const OASUploadProxy = '[data-cyid="upload-oas-card-button"]';
+  export const proxyName = '[data-cyid="new-component-display-name"]';
+  export const Endpoint = '[data-cyid="new-component-target"]';
+  export const ProxyCreateButton = '[data-cyid="Create-button"]';
+  export const ProxyCreateFromScratch = '[data-cyid="from-scratch-card-button"]';
+  export const addConfigButton = '[data-cyid="env-config-section-add-config-button"]';
 }
-
-
