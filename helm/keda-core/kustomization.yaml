@@ -17,7 +17,7 @@ helmCharts:
     includeCRDs: true
     releaseName: keda
     namespace: keda
-    version: 2.14.3
+    version: 2.14.1
     repo: oci://choreocontrolplane.azurecr.io/helm
 
 commonAnnotations:
