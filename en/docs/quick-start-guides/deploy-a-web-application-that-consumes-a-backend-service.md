@@ -215,7 +215,7 @@ A connection allows you to integrate the service with other services or external
 1. In the left navigation menu, click **Build**.
 2. In the **Builds** pane, click **Build Latest**.
 
-   !!! note
+    !!! note
         The build process may take some time. You can track progress in the **Build Details** pane. Once complete, the build status changes to **Success**.
 
 ### Step 6.4: Configure and deploy the web application
