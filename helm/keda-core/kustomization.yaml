@@ -6,18 +6,18 @@ helmCharts:
           # -- Image name of KEDA operator
           repository: choreocontrolplane.azurecr.io/kedacore/keda
           # -- Image tag of KEDA operator. Optional, given app version of Helm chart is used by default
-          tag: "2.14.1"
+          tag: "2.9.3"
         metricsApiServer:
           # -- Image name of KEDA Metrics API Server
           repository: choreocontrolplane.azurecr.io/kedacore/keda-metrics-apiserver
           # -- Image tag of KEDA Metrics API Server. Optional, given app version of Helm chart is used by default
-          tag: "2.14.1"
+          tag: "2.9.3"
       operator:
         replicaCount: 2
     includeCRDs: true
     releaseName: keda
     namespace: keda
-    version: 2.14.1
+    version: 2.9.4
     repo: oci://choreocontrolplane.azurecr.io/helm
 
 commonAnnotations:
