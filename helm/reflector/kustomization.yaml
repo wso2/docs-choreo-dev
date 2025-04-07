@@ -5,7 +5,7 @@ helmCharts:
       image:
         repository: choreocontrolplane.azurecr.io/emberstack/kubernetes-reflector
       volumes:
-        - name: mi-dist-blob-ad-app-secret-provider
+        - name: reflector-secrets
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
@@ -14,7 +14,7 @@ helmCharts:
             volumeAttributes:
               secretProviderClass: "reflector-secrets"
       volumeMounts:
-        - name: mi-dist-blob-ad-app-secret-provider
+        - name: reflector-secrets
           mountPath: "/mnt/secrets"
           readOnly: true
     releaseName: reflector
