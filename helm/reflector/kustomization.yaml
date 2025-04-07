@@ -22,6 +22,5 @@ helmCharts:
 
 resources:
   - namespace.yaml
-  - secret-provider-class.yaml
 
 namespace: reflector
