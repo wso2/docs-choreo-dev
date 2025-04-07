@@ -9,6 +9,8 @@ helmCharts:
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
             volumeAttributes:
               secretProviderClass: "reflector-secrets"
       volumeMounts:
