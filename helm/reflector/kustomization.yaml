@@ -10,7 +10,7 @@ helmCharts:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "secret-provider-class"
+              secretProviderClass: "reflector-secrets"
       volumeMounts:
         - name: mi-dist-blob-ad-app-secret-provider
           mountPath: "/mnt/secrets"
@@ -22,5 +22,6 @@ helmCharts:
 
 resources:
   - namespace.yaml
+  - secret-provider-class.yaml
 
 namespace: reflector
