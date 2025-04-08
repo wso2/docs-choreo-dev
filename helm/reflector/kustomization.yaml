@@ -4,19 +4,6 @@ helmCharts:
       fullnameOverride: reflector
       image:
         repository: choreocontrolplane.azurecr.io/emberstack/kubernetes-reflector
-      volumes:
-        - name: reflector-secrets
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-            volumeAttributes:
-              secretProviderClass: "reflector-secrets"
-      volumeMounts:
-        - name: reflector-secrets
-          mountPath: "/mnt/secrets"
-          readOnly: true
     releaseName: reflector
     namespace: reflector
     version: 7.1.288
@@ -25,5 +12,8 @@ helmCharts:
 resources:
   - namespace.yaml
   - secret-provider-class.yaml
+
+patches:
+  - path: reflector-patch.yaml
 
 namespace: reflector
