@@ -21,4 +21,3 @@ spec:
               name: csi-secret-store-azure
             volumeAttributes:
               secretProviderClass: "reflector-secrets"
-
