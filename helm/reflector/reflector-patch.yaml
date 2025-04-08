@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reflector
+  namespace: reflector
+spec:
+  template:
+    spec:
+      containers:
+        - name: reflector
+          volumeMounts:
+            - name: reflector-secrets
+              mountPath: "/mnt/secrets"
+              readOnly: true
+      volumes:
+        - name: reflector-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+            volumeAttributes:
+              secretProviderClass: "reflector-secrets"
