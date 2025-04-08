@@ -7,14 +7,13 @@ import (
 
 // Step struct to match JSON structure
 type Step struct {
-	Sequence int               `json:"sequence"`
 	Function string            `json:"function"`
 	Params   map[string]string `json:"params,omitempty"`
 }
 
 type actionData struct {
 	Placeholder string
-	Sequence    int
+	Index       int
 }
 
 // Track order of action execution within the spec
@@ -31,17 +30,16 @@ var dependencies = map[string][]string{
 }
 
 func buildSpecExecutionTree(steps []Step) {
-	for _, step := range steps {
+	for index, step := range steps {
 		placeholder := ""
 		if val, exists := step.Params["placeholder"]; exists {
 			placeholder = val
 		}
 
 		specExecutionTree[step.Function] = append(specExecutionTree[step.Function], actionData{
-			Sequence:    step.Sequence,
+			Index:       index,
 			Placeholder: placeholder,
 		})
-
 	}
 }
 
@@ -55,22 +53,20 @@ func ValidateSequenceOrder(content string) error {
 
 	buildSpecExecutionTree(steps)
 
-	for _, step := range steps {
-		// Collect dependencies from map
+	for currentIndex, step := range steps {
 		if requiredDeps, exists := dependencies[step.Function]; exists {
 			for _, dep := range requiredDeps {
-				depAction, found := specExecutionTree[dep]
+				depActions, found := specExecutionTree[dep]
 				if !found {
-					return fmt.Errorf("ERROR: Cannot execute %s (Sequence %d) because dependency %s is missing or comes later", step.Function, step.Sequence, dep)
+					return fmt.Errorf("ERROR: Cannot execute %s at position %d because dependency %s is missing", step.Function, currentIndex+1, dep)
 				}
-				for _, action := range depAction {
-					if action.Sequence >= step.Sequence {
-						return fmt.Errorf("ERROR: Cannot execute %s (Sequence %d) before %s (Sequence %d)", step.Function, step.Sequence, dep, action.Sequence)
+				for _, action := range depActions {
+					if action.Index >= currentIndex {
+						return fmt.Errorf("ERROR: Cannot execute %s at position %d before %s at position %d", step.Function, currentIndex+1, dep, action.Index+1)
 					}
 				}
 			}
 		}
-
 	}
 
 	return nil

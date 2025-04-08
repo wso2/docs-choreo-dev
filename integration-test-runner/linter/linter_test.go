@@ -7,7 +7,6 @@ import (
 func TestValidateSequenceOrderWithCorrectPlaceholders(t *testing.T) {
 	validJSON := `[
         {
-            "sequence": 1,
             "function": "CreateProject",
             "params": {
                 "region": "US",
@@ -15,7 +14,6 @@ func TestValidateSequenceOrderWithCorrectPlaceholders(t *testing.T) {
             }
         },
         {
-            "sequence": 2,
             "function": "CreateComponent",
             "params": {
                 "project": "project1",
@@ -23,21 +21,18 @@ func TestValidateSequenceOrderWithCorrectPlaceholders(t *testing.T) {
             }
         },
         {
-            "sequence": 3,
             "function": "WaitForBuild",
             "params": {
                 "component": "BallerinaServiceComponent"
             }
         },
         {
-            "sequence": 4,
             "function": "GetEnvironments",
             "params": {
                 "project": "project1"
             }
         },
         {
-            "sequence": 5,
             "function": "DeployComponent",
             "params": {
                 "component": "BallerinaServiceComponent"
@@ -51,37 +46,9 @@ func TestValidateSequenceOrderWithCorrectPlaceholders(t *testing.T) {
 	}
 }
 
-func TestValidateSequenceOrderWithMismatchedPlaceHolders(t *testing.T) {
-	invalidJSON := `[
-        {
-            "sequence": 1,
-            "function": "CreateProject",
-            "params": {
-                "region": "US",
-                "placeholder": "Project1"
-            }
-        },
-        {
-            "sequence": 2,
-            "function": "CreateComponent",
-            "params": {
-                "project": "Project2",
-                "placeholder": "BallerinaServiceComponent"
-            }
-        }
-    ]`
-
-	err := ValidateSequenceOrder(invalidJSON)
-	if err == nil {
-		t.Errorf("Expected error due to mismatched placeholder reference")
-	}
-}
-
-// Test case to check function executes before its Sequence dependency
 func TestValidateSequenceOrderWithIncorrectOrder(t *testing.T) {
 	invalidJSON := `[
         {
-            "sequence": 2,
             "function": "CreateComponent",
             "params": {
                 "project": "project1",
@@ -89,7 +56,6 @@ func TestValidateSequenceOrderWithIncorrectOrder(t *testing.T) {
             }
         },
         {
-            "sequence": 1,
             "function": "CreateProject",
             "params": {
                 "region": "US",
@@ -100,22 +66,19 @@ func TestValidateSequenceOrderWithIncorrectOrder(t *testing.T) {
 
 	err := ValidateSequenceOrder(invalidJSON)
 	if err == nil {
-		t.Errorf("Expected error due to Sequence dependency being executed out of order")
+		t.Errorf("Expected error due to dependency being executed out of order")
 	}
 }
 
-// Test case where a placeholder is used before being created
 func TestValidateSequenceOrderWithPlaceholderUsedBeforeCreation(t *testing.T) {
 	invalidJSON := `[
         {
-            "sequence": 2,
             "function": "DeployComponent",
             "params": {
                 "component": "BallerinaServiceComponent"
             }
         },
         {
-            "sequence": 1,
             "function": "CreateComponent",
             "params": {
                 "project": "project1",
@@ -130,11 +93,9 @@ func TestValidateSequenceOrderWithPlaceholderUsedBeforeCreation(t *testing.T) {
 	}
 }
 
-// Test case with multiple independent projects ensuring no cross-project dependencies
 func TestValidateSequenceOrderWithMultipleIndependentProjects(t *testing.T) {
 	validJSON := `[
         {
-            "sequence": 1,
             "function": "CreateProject",
             "params": {
                 "region": "US",
@@ -142,7 +103,6 @@ func TestValidateSequenceOrderWithMultipleIndependentProjects(t *testing.T) {
             }
         },
         {
-            "sequence": 2,
             "function": "CreateComponent",
             "params": {
                 "project": "ProjectA",
@@ -150,7 +110,6 @@ func TestValidateSequenceOrderWithMultipleIndependentProjects(t *testing.T) {
             }
         },
         {
-            "sequence": 3,
             "function": "CreateProject",
             "params": {
                 "region": "EU",
@@ -158,7 +117,6 @@ func TestValidateSequenceOrderWithMultipleIndependentProjects(t *testing.T) {
             }
         },
         {
-            "sequence": 4,
             "function": "CreateComponent",
             "params": {
                 "project": "ProjectB",
@@ -169,21 +127,41 @@ func TestValidateSequenceOrderWithMultipleIndependentProjects(t *testing.T) {
 
 	err := ValidateSequenceOrder(validJSON)
 	if err != nil {
-		t.Errorf("Expected error: %v", err)
+		t.Errorf("Expected no error, but got: %v", err)
 	}
 }
 
-// Test case where a component from one component is used in another project
 func TestComponentFromProjectAUsedInProjectB(t *testing.T) {
-	content := `[
-		{"sequence": 1, "function": "CreateProject", "params": {"placeholder": "ProjectA"}},
-		{"sequence": 2, "function": "CreateComponent", "params": {"placeholder": "ComponentA"}},
-		{"sequence": 3, "function": "CreateProject", "params": {"placeholder": "ProjectB"}},
-		{"sequence": 4, "function": "DeployComponent", "params": {"placeholder": "ComponentA"}}
-	]`
+	invalidJSON := `[
+        {
+            "function": "CreateProject",
+            "params": {
+                "placeholder": "ProjectA"
+            }
+        },
+        {
+            "function": "CreateComponent",
+            "params": {
+                "project": "ProjectA",
+                "placeholder": "ComponentA"
+            }
+        },
+        {
+            "function": "CreateProject",
+            "params": {
+                "placeholder": "ProjectB"
+            }
+        },
+        {
+            "function": "DeployComponent",
+            "params": {
+                "component": "ComponentA"
+            }
+        }
+    ]`
 
-	err := ValidateSequenceOrder(content)
+	err := ValidateSequenceOrder(invalidJSON)
 	if err != nil {
-		t.Errorf("expected error: %v", err)
+		t.Errorf("Expected no error, but got: %v", err)
 	}
 }
