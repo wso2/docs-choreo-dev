@@ -1,65 +1,56 @@
 [
-    {
-      "sequence": 1,
-      "function": "CreateProject",
-      "params": {
-        "region": "US",
-        "placeholder": "testproject"
-      }
-    },
-    {
-      "sequence": 2,
-      "function": "CreateComponent",
-      "params": {
-        "srcGitRepoUrl": "https://github.com/choreo-test-apps/byor-service-app1",
-        "repositoryBranch": "main",
-        "repositorySubPath": "",
-        "displayType": "ballerinaService",
-        "project": "testproject",
-        "placeholder": "BallerinaServiceComponent"
-      }
-    },
-    {
-      "sequence": 3,
-      "function": "WaitForBuild",
-      "params": {
-        "component": "BallerinaServiceComponent"
-      }
-    },
-    {
-      "sequence": 4,
-      "function": "GetEnvironments",
-      "params": {
-        "project": "testproject"
-      }
-    },
-    {
-      "sequence": 5,
-      "function": "DeployComponent",
-      "params": {
-        "component": "BallerinaServiceComponent"
-      }
-    },
-    {
-      "sequence": 6,
-      "function": "Promote",
-      "params": {
-        "component": "BallerinaServiceComponent"
-      }
-    },
-    {
-      "sequence": 7,
-      "function": "InvokeDevEndpoint",
-      "params": {
-        "component": "BallerinaServiceComponent"
-      }
-    },
-    {
-      "sequence": 8,
-      "function": "InvokeProdEndpoint",
-      "params": {
-        "component": "BallerinaServiceComponent"
-      }
+  {
+    "function": "CreateProject",
+    "params": {
+      "region": "US",
+      "placeholder": "testproject"
     }
-  ]
-  
+  },
+  {
+    "function": "CreateComponent",
+    "params": {
+      "srcGitRepoUrl": "https://github.com/choreo-test-apps/byor-service-app1",
+      "repositoryBranch": "main",
+      "repositorySubPath": "",
+      "displayType": "ballerinaService",
+      "project": "testproject",
+      "placeholder": "BallerinaServiceComponent"
+    }
+  },
+  {
+    "function": "WaitForBuild",
+    "params": {
+      "component": "BallerinaServiceComponent"
+    }
+  },
+  {
+    "function": "GetEnvironments",
+    "params": {
+      "project": "testproject"
+    }
+  },
+  {
+    "function": "DeployComponent",
+    "params": {
+      "component": "BallerinaServiceComponent"
+    }
+  },
+  {
+    "function": "Promote",
+    "params": {
+      "component": "BallerinaServiceComponent"
+    }
+  },
+  {
+    "function": "InvokeDevEndpoint",
+    "params": {
+      "component": "BallerinaServiceComponent"
+    }
+  },
+  {
+    "function": "InvokeProdEndpoint",
+    "params": {
+      "component": "BallerinaServiceComponent"
+    }
+  }
+]
