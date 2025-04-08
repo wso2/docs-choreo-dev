@@ -133,3 +133,4 @@ configMapGenerator:
       - DEBUG={{.DEBUG | default false}}
       - SKIP_AUTH={{.SKIP_AUTH | default false}}
       - SUPPORTED_COMPONENTS={{.SUPPORTED_COMPONENTS | default "byocService,byoiService,buildpackService,byocRestApi"}}
+      - MIGRATED_CUT_OFF_DATE={{.MIGRATED_CUT_OFF_DATE | default "2025-04-05T00:00:00Z"}}
