@@ -134,3 +134,14 @@ configMapGenerator:
       - SKIP_AUTH={{.SKIP_AUTH | default false}}
       - SUPPORTED_COMPONENTS={{.SUPPORTED_COMPONENTS | default "byocService,byoiService,buildpackService,byocRestApi"}}
       - MIGRATED_CUT_OFF_DATE={{.MIGRATED_CUT_OFF_DATE | default "2025-04-05T00:00:00Z"}}
+
+  - name: log-enricher-config
+    behavior: create
+    literals:
+      - PORT="9095"
+      - DEBUG="false"
+      - OPENSEARCH_HOST={{.OPENSEARCH_HOST | default "opensearch-cluster-master"}}
+      - OPENSEARCH_PORT={{.OPENSEARCH_PORT | default "9200"}}
+      - INDEX_NAME="kube-events"
+      - OPENSEARCH_USERNAME={{.OPENSEARCH_USERNAME | default "admin"}}
+      - OPENSEARCH_PASSWORD="{{.OPENSEARCH_PASSWORD}}" #how to get the password from secret
