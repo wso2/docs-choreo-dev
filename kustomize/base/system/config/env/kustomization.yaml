@@ -386,6 +386,12 @@ configMapGenerator:
       - SERVER_PORT={{.SERVER_PORT | default "8080"}}
       - ARTIFACT_HUB_URL={{.ARTIFACT_HUB_URL | default "https://artifacthub.io/api/v1"}}
       - MSSQL_HOST={{.MSSQL_HOST | default "choreo-prod-ctrl-plane-mssql.database.windows.net"}}
+  - name: env-buildpack-image-cache
+    behavior: create
+    literals:
+      - LIFECYCLE_IMAGE_TAG={{.LIFECYCLE_IMAGE_TAG | default "0.20.2"}}
+      - BUILDER_IMAGE_TAG={{.BUILDER_IMAGE_TAG | default "google-22@sha256:a1fd64eb789cb8b11c9169ea3f0cfe3741c565eb8e2a337fcd2b179cfde09231"}}
+      - RUN_IMAGE_TAG={{.RUN_IMAGE_TAG | default "2941124e39ef19f49aabac4257daf5f652805e81"}}
   - name: env-dp-cicd
     behavior: create
     literals:
