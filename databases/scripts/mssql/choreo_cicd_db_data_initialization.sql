@@ -106,10 +106,13 @@ INSERT INTO component_type
 (id, [type], displayName)
 VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e6', 'eventHandler', 'Event Handler');
 
-
 INSERT INTO component_type
 (id, [type], displayName)
 VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e7', 'testRunner', 'Test Runner');
+
+INSERT INTO component_type
+(id, [type], displayName)
+VALUES('33315C0E-B6EF-4DF4-B159-854B5EB650E9', 'mcpService', 'MCP Server');
 
 -- Component Buildpack Mapping
 
@@ -437,3 +440,11 @@ VALUES('F3E3C113-560D-4422-8464-19393A20968E', 'DISABLE_BAL_OBSERVABILITY', 'Dis
 INSERT INTO buildpack_enviornment_variable 
 (id, envVariableKey, displayName, defaultValue, isOptional, shouldTakeUserInput, placeholder, buildpackId) 
 VALUES('F3E3C113-560D-4422-8464-19393A20969E', 'PRIVATE_APP_TOKEN', 'Private App Token', '$PRIVATE_APP_TOKEN', 1, 0, '', 'f9e4820e-6284-11ee-8c99-0242ac120018');
+
+INSERT INTO buildpack_component_type_mapping
+(typeId, buildpackId)
+VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e9', 'f9e4820e-6284-11ee-8c99-0242ac120004');
+
+INSERT INTO buildpack_component_type_mapping
+(typeId, buildpackId)
+VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e9', 'f9e4820e-6284-11ee-8c99-0242ac120003');
