@@ -1,0 +1,13 @@
+[
+  {"op": "replace",
+   "path": "/spec/provider",
+   "value": "azure"},
+
+  {"op": "replace",
+   "path": "/spec/parameters/usePodIdentity",
+   "value": "false"},
+
+  {"op": "replace",
+   "path": "/spec/parameters/tenantId",
+   "value": "da76d684-740f-4d94-8717-9d5fb21dd1f9"}
+]
