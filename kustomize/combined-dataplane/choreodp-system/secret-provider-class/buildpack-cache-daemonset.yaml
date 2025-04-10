@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-buildpack-cache-daemonset
+spec:
+  secretObjects:
+    - secretName: secret-buildpack-cache-daemonset
+      type: Opaque
+      data:
+        - objectName: AZURE_CONTAINER_REGISTRY_PASSWORD
+          key: AZURE_CONTAINER_REGISTRY_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-dp-cicd-azure-cr-password
+          objectType: secret
+          objectAlias: AZURE_CONTAINER_REGISTRY_PASSWORD
+          objectVersion: "{{.AZURE_CONTAINER_REGISTRY_PASSWORD_VERSION}}"
