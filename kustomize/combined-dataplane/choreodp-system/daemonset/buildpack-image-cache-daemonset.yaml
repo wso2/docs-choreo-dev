@@ -102,6 +102,9 @@ spec:
           volumeMounts:
             - name: cache-volume
               mountPath: /mnt/podman-cache
+            - name: secret-buildpack-cache-daemonset
+              mountPath: /mnt/csi/secret-buildpack-cache-daemonset
+              readOnly: true
       containers:
         - name: podman-dummy
           image: choreocontrolplane.azurecr.io/choreoipaas/argo-buildpack-build:main-d08de6a080d7c1fcd259de9efb5697890adaca04
@@ -113,3 +116,11 @@ spec:
           hostPath:
             path: /mnt/podman-cache
             type: DirectoryOrCreate
+        - name: secret-buildpack-cache-daemonset
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-buildpack-cache-daemonset
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
