@@ -11,9 +11,17 @@
  * associated services.
  */
 
-package api
+package stop
 
-const graphql = "/projects/1.0.0/graphql"
-const orgs = "/orgs/1.0.0/orgs"
-const configs = "/config-mgt/1.0.0"
-const apipublisher = "/api/am/publisher/v2/apis"
+func HandleValueWithError[T any](value T, err error) T {
+	if err != nil {
+		panic(err)
+	}
+	return value
+}
+
+func HandleError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}

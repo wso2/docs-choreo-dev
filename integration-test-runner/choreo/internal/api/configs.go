@@ -15,33 +15,56 @@ package api
 
 import (
 	"choreo-integration-test-runner/config"
-	res "choreo-integration-test-runner/model/response"
+	"choreo-integration-test-runner/model/request"
+	"choreo-integration-test-runner/template"
 	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/go-resty/resty/v2"
 )
 
-func GetOrgs(client *resty.Client) (*res.GetOrgs, error) {
-	response := res.GetOrgs{}
+func AddConfiguration(client *resty.Client, request request.AddConfiguration) error {
+	buf, err := template.PopulateRequestTemplate("addConfiguration", request)
+
+	if err != nil {
+		return err
+	}
 
 	newAppServiceHost, err := config.GetConfig(config.CHOREO_NEW_APP_SERVICE_ENDPOINT)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
+	var url strings.Builder
+	url.Grow(100)
+
+	url.WriteString(newAppServiceHost)
+	url.WriteString(configs)
+	url.WriteString("/orgs/")
+	url.WriteString(request.OrgHandle)
+	url.WriteString("/projects/")
+	url.WriteString(request.ProjectId)
+	url.WriteString("/components/")
+	url.WriteString(request.ComponentId)
+	url.WriteString("/envs/")
+	url.WriteString(request.EnvId)
+	url.WriteString("/")
+	url.WriteString(request.LatestVersionId)
+	url.WriteString("/configurations")
+
 	res, err := client.R().
-		SetResult(&response).
-		Get(newAppServiceHost + orgs)
+		SetBody(buf.String()).
+		Post(url.String())
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return nil, errors.New("orgs call failed, response code: " + res.Status())
+		return errors.New("configs call failed, response code: " + res.Status())
 	}
 
-	return &response, nil
+	return nil
 }

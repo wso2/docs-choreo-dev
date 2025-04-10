@@ -15,7 +15,7 @@ package response
 
 type Environment struct {
 	Name               string   `json:"name"`
-	ID                 string   `json:"id"`
+	Id                 string   `json:"id"`
 	ChoreoEnv          string   `json:"choreoEnv"`
 	Vhost              string   `json:"vhost"`
 	ApiEnvName         string   `json:"apiEnvName"`
@@ -33,4 +33,12 @@ type Environment struct {
 
 type GetDeploymentEnvironments struct {
 	Environments []Environment `json:"environments"`
+}
+
+func (e *Environment) GetKeyType() string {
+	if e.Critical {
+		return "Production"
+	}
+
+	return "Development"
 }

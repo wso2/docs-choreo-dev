@@ -16,6 +16,7 @@ package matcher
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 )
 
 type Result struct {
@@ -55,6 +56,37 @@ func JsonMatch(expected []byte, actual []byte) (*Result, error) {
 	}
 
 	compareValues(expectedMap, actualMap, result)
+
+	return result, nil
+}
+
+func JsonEqual(expected []byte, actual []byte) (*Result, error) {
+	expectedMap := make(map[string]interface{})
+	actualMap := make(map[string]interface{})
+
+	err := json.Unmarshal(expected, &expectedMap)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(actual, &actualMap)
+
+	if err != nil {
+		return nil, err
+	}
+
+	result := &Result{
+		Match:     true,
+		ErrorMsgs: make([]string, 0, len(expectedMap)),
+	}
+
+	result.Match = reflect.DeepEqual(expectedMap, actualMap)
+
+	if !result.Match {
+		result.ErrorMsgs = append(result.ErrorMsgs,
+			fmt.Sprintf("Expected values '%v' does not match actual value '%v'", expected, actual))
+	}
 
 	return result, nil
 }

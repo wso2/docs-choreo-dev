@@ -11,9 +11,25 @@
  * associated services.
  */
 
-package api
+package request
 
-const graphql = "/projects/1.0.0/graphql"
-const orgs = "/orgs/1.0.0/orgs"
-const configs = "/config-mgt/1.0.0"
-const apipublisher = "/api/am/publisher/v2/apis"
+type BalConfig struct {
+	ConfigKeyName string
+	IsRequired    bool
+	ValueOrSource string
+	ValueType     string
+}
+
+type AddConfiguration struct {
+	ComponentId     string
+	EnvId           string
+	LatestVersionId string
+	OrgHandle       string
+	ProjectId       string
+	ModuleName      string
+	CommitHash      string
+	ApplyNow        bool
+	Operation       int
+	SourceUuid      string
+	Configs         []BalConfig
+}

@@ -13,6 +13,8 @@
 
 package response
 
+import "errors"
+
 type Author struct {
 	Name      string `json:"name"`
 	Date      string `json:"date"`
@@ -29,4 +31,14 @@ type Commit struct {
 
 type GetCommitHistory struct {
 	CommitHistory []Commit `json:"commitHistory"`
+}
+
+func (c *GetCommitHistory) GetLatestCommit() (*Commit, error) {
+	for _, commit := range c.CommitHistory {
+		if commit.IsLatest {
+			return &commit, nil
+		}
+	}
+
+	return nil, errors.New("latest commit not found")
 }
