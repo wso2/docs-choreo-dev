@@ -551,6 +551,7 @@ configMapGenerator:
       - DISABLE_CONFIGURABLE_CHECK_ALERT={{.DISABLE_CONFIGURABLE_CHECK_ALERT | default "false"}}
       - CONFIGURABLE_ALERT_ENABLED_ORGS={{.CONFIGURABLE_ALERT_ENABLED_ORGS | default ""}}
       - AZURE_TENANT_ID={{.AZURE_TENANT_ID | default "da76d684-740f-4d94-8717-9d5fb21dd1f9"}}
+      - MI_BUILDPACKS_BLOB_CONTAINER_HOST={{.MI_BUILDPACKS_BLOB_CONTAINER_HOST | default "https://choreosharedbuildpack6.blob.core.windows.net"}}
   - name: env-dp-cloud-manager
     behavior: create
     literals:
