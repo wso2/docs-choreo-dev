@@ -53,3 +53,10 @@ configMapGenerator:
       - choreo-appdev-sts/application.properties
       - choreo-appdev-sts/log4j2.yaml
       - choreo-appdev-sts/json-log-layout.json
+  - name: env-buildpack-cache-daemonset
+    behavior: create
+    literals:
+      - LIFECYCLE_IMAGE_TAG={{.LIFECYCLE_IMAGE_TAG | default "0.20.2"}}
+      - BUILDER_IMAGE_TAG={{.BUILDER_IMAGE_TAG | default "google-22@sha256:a1fd64eb789cb8b11c9169ea3f0cfe3741c565eb8e2a337fcd2b179cfde09231"}}
+      - RUN_IMAGE_TAG={{.RUN_IMAGE_TAG | default "2941124e39ef19f49aabac4257daf5f652805e81"}}
+      - AZURE_CONTAINER_REGISTRY_USERNAME={{.AZURE_CONTAINER_REGISTRY_USERNAME | default "choreo-buildpacks-pull-tf-dev"}}

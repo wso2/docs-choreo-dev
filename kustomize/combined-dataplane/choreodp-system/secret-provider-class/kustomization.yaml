@@ -15,6 +15,7 @@ resources:
   - dp-mizzen-agent.yaml
   - metered-usage-handler.yaml
   - choreo-appdev-sts.yaml
+  - buildpack-cache-daemonset.yaml
 
 patches:
   - path: patch.json

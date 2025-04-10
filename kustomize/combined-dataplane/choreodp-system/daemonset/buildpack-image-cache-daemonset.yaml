@@ -42,19 +42,14 @@ spec:
         - name: podman-cache-init
           image: choreocontrolplane.azurecr.io/choreoipaas/argo-buildpack-build:main-d08de6a080d7c1fcd259de9efb5697890adaca04
           env:
-            - name: ACR_PASSWORD
+            - name: AZURE_CONTAINER_REGISTRY_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: AZURE-CONTAINER-REGISTRY-PASSWORD
-                  name: secret-dp-cicd
-            - name: ACR_USERNAME
-              valueFrom:
-                configMapKeyRef:
-                  name: env-dp-cicd
-                  key: AZURE_CONTAINER_REGISTRY_USERNAME
+                  key: AZURE_CONTAINER_REGISTRY_PASSWORD
+                  name: secret-buildpack-cache-daemonset
           envFrom:
             - configMapRef:
-                name: env-buildpack-image-cache
+                name: env-buildpack-cache-daemonset
           command:
             - sh
             - -c
@@ -64,7 +59,7 @@ spec:
               mkdir -p /mnt/podman-cache
 
               echo "Logging in to ACR"
-              podman login -u "$ACR_USERNAME" -p "$ACR_PASSWORD" choreocontrolplane.azurecr.io
+              podman login -u "$AZURE_CONTAINER_REGISTRY_USERNAME" -p "$ACR_PASSWORD" choreocontrolplane.azurecr.io
 
               LIFECYCLE_IMAGE="choreocontrolplane.azurecr.io/buildpacksio/lifecycle:${LIFECYCLE_TAG}"
               BUILDER_IMAGE="choreocontrolplane.azurecr.io/buildpacks/builder:${BUILDER_TAG}"
