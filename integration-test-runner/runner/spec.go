@@ -15,13 +15,20 @@ package runner
 
 import (
 	"choreo-integration-test-runner/helper/appstate"
-	"choreo-integration-test-runner/helper/matcher"
+	"choreo-integration-test-runner/logger"
 	"context"
-	"fmt"
-	"strings"
 
 	"github.com/go-resty/resty/v2"
 )
+
+type Action interface {
+	RunMode() RunMode
+	Execute(client *resty.Client, actionState *ActionState)
+	NextUnitIndex() int
+	SetParams(params map[string]string, mandatoryFields []string) error
+	Init(state *SpecState) error
+	ResetUnits()
+}
 
 type Spec struct {
 	name    string
@@ -39,26 +46,23 @@ func (s *Spec) Name() string {
 	return s.name
 }
 
-func (s *Spec) Execute(ctx context.Context, client *resty.Client, done chan string) {
+func (s *Spec) Execute(ctx context.Context, client *resty.Client, log *logger.TestLogger, done chan string) {
 	state := appstate.GetState(ctx).(*SpecState)
 
-	isWaiting := false
-
-	for state.nextSequenceIndex < state.totalSequences {
+	for state.nextSequenceIndex < state.NumberOfActions() {
 		action := s.actions[state.nextSequenceIndex]
 
-		sequence := action.GetSequence()
-		params := action.GetParams()
+		actionState := state.GetActionState(state.nextSequenceIndex)
 
-		actionState, ok := state.GetActionState(sequence)
+		action.ResetUnits()
 
-		if !ok {
-			state.runResult = Error
-			state.unrecoverableError = fmt.Errorf("function state not found for sequence: %d", sequence)
-			break
-		}
+		action.Init(state)
 
-		err := action.SanitizeParams(params)
+		action.Execute(client, &actionState)
+
+		state.SetActionState(state.nextSequenceIndex, actionState)
+
+		run, err := actionState.GetLatestRun()
 
 		if err != nil {
 			state.runResult = Error
@@ -66,92 +70,36 @@ func (s *Spec) Execute(ctx context.Context, client *resty.Client, done chan stri
 			break
 		}
 
-		result := action.Execute(client, state, actionState, params)
+		var exitLoop bool
 
-		if actionState.Runs[len(actionState.Runs)-1].RunState == Failed {
-			state.runResult = Error
-			break
-		}
-
-		if result.IsValidateResponse {
-			validateResponse(actionState, result.Response, action.GetResponseGenerator())
-		}
-
-		s.handleSubActions(client, state, action, actionState, params)
-
-		if actionState.Runs[len(actionState.Runs)-1].RunState == Success {
+		switch run.RunState {
+		case Success:
+			log.Debugf("Action %d executed successfully", state.nextSequenceIndex)
+			state.ResetWaitTill()
+			state.runResult = Successful
 			state.nextSequenceIndex++
+		case Failed:
+			log.Errorf("Action %d failed, reason: %s", state.nextSequenceIndex, run.Reason)
+			state.runResult = Error
+			exitLoop = true
+		case Progressing:
+			log.Debugf("Action %d is still in progress", state.nextSequenceIndex)
+			state.runResult = Waiting
+			state.SetWaitTill(run.WaitTill)
+			exitLoop = true
+		default:
+			log.Errorf("Unhandled state %d, for action %d", run.RunState, state.nextSequenceIndex)
 		}
 
-		isWaiting = result.IsWaiting
-		if result.IsWaiting {
-			state.runResult = Waiting
+		if exitLoop {
 			break
 		}
 	}
 
-	if state.nextSequenceIndex == state.totalSequences {
-		if isWaiting {
-			state.runResult = SpecRunResult(Error)
-			state.unrecoverableError = fmt.Errorf("final sequence: %d has been executed but spec is waiting", state.nextSequenceIndex-1)
-			return
-		}
-
-		state.runResult = SpecRunResult(Complete)
+	if state.nextSequenceIndex == state.NumberOfActions() {
+		state.runResult = SpecRunResult(Successful)
 	}
 
 	appstate.SetState(ctx, state)
 	done <- s.name
-}
-
-func (s *Spec) handleSubActions(client *resty.Client, state *SpecState, action Action, actionState *ActionState, params map[string]string) {
-	subAction := action.GetSubAction()
-
-	for subAction != nil {
-		result := subAction.Execute(client, state, actionState, params)
-
-		if actionState.Runs[len(actionState.Runs)-1].RunState == Failed {
-			break
-		}
-
-		if result.IsValidateResponse {
-			validateResponse(actionState, result.Response, subAction.GetResponseGenerator())
-		}
-
-		subAction = subAction.GetSubAction()
-	}
-
-}
-
-func validateResponse(actionState *ActionState, response []byte, gen ResponseGenerator) {
-	expectedResponse, err := gen.GenExpectedResponse()
-
-	if err != nil {
-		actionState.Runs = append(actionState.Runs, Run{
-			RunState: Skipped,
-			Reason:   err.Error(),
-		})
-		return
-	}
-
-	result, err := matcher.JsonMatch(expectedResponse.Bytes(), response)
-	if err != nil {
-		actionState.Runs = append(actionState.Runs, Run{
-			RunState: Skipped,
-			Reason:   err.Error(),
-		})
-		return
-	}
-
-	if !result.Match {
-		actionState.Runs = append(actionState.Runs, Run{
-			RunState: Failed,
-			Reason:   strings.Join(result.ErrorMsgs, ", "),
-		})
-		return
-	}
-
-	actionState.Runs = append(actionState.Runs, Run{
-		RunState: Success,
-	})
 }

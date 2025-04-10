@@ -15,32 +15,47 @@ package api
 
 import (
 	"choreo-integration-test-runner/config"
-	res "choreo-integration-test-runner/model/response"
+	"choreo-integration-test-runner/model/request"
+	"choreo-integration-test-runner/model/response"
 	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/go-resty/resty/v2"
 )
 
-func GetOrgs(client *resty.Client) (*res.GetOrgs, error) {
-	response := res.GetOrgs{}
+func GetApiKey(client *resty.Client, request *request.GetApiKey) (*response.GetApiKey, error) {
 
-	newAppServiceHost, err := config.GetConfig(config.CHOREO_NEW_APP_SERVICE_ENDPOINT)
+	stsHost, err := config.GetConfig(config.STS_ENDPOINT)
 
 	if err != nil {
 		return nil, err
 	}
 
+	var url strings.Builder
+	url.Grow(100)
+
+	url.WriteString(stsHost)
+	url.WriteString(apipublisher)
+	url.WriteString("/")
+	url.WriteString(request.ApiId)
+	url.WriteString("/generate-key?organizationId=")
+	url.WriteString(request.OrgUuid)
+	url.WriteString("&keyType=")
+	url.WriteString(request.KeyType)
+
+	var response response.GetApiKey
+
 	res, err := client.R().
 		SetResult(&response).
-		Get(newAppServiceHost + orgs)
+		Post(url.String())
 
 	if err != nil {
 		return nil, err
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return nil, errors.New("orgs call failed, response code: " + res.Status())
+		return nil, errors.New("api key generation call failed, response code: " + res.Status())
 	}
 
 	return &response, nil

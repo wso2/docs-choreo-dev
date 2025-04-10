@@ -1,5 +1,5 @@
 query {
-      commitHistory(componentId: "{{.ComponentId}}") {
+      commitHistory(componentId: "{{.ComponentId}}", branch: "{{.Branch}}") {
           author {
             name
             date
@@ -11,3 +11,4 @@ query {
         isLatest
     }
   }
+

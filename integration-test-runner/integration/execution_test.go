@@ -15,9 +15,10 @@ package integration
 
 import (
 	"choreo-integration-test-runner/choreo"
-	"choreo-integration-test-runner/choreo/component"
-	"choreo-integration-test-runner/choreo/project"
+	"choreo-integration-test-runner/choreo/action/component"
+	"choreo-integration-test-runner/choreo/action/project"
 	"choreo-integration-test-runner/helper/appstate"
+	"choreo-integration-test-runner/helper/stop"
 	"choreo-integration-test-runner/runner"
 	"choreo-integration-test-runner/template"
 	"fmt"
@@ -25,21 +26,21 @@ import (
 	"testing"
 )
 
-func TestCreateProject(t *testing.T) {
+func TestRunMultipleSpecs(t *testing.T) {
 	runIntegration := os.Getenv("RUNNER_INTEGRATION")
 	if runIntegration == "" {
 		t.Skip("set RUNNER_INTEGRATION to run this test")
 	}
 
 	if err := choreo.LoadConfigs("dev-env-config.yaml"); err != nil {
-		t.Errorf("Config loading failed: %v", err)
+		t.Fatalf("Config loading failed: %v", err)
 	}
 
 	if err := template.LoadTemplates(); err != nil {
-		t.Errorf("Template loading failed: %v", err)
+		t.Fatalf("Template loading failed: %v", err)
 	}
 
-	noOfSpecs := 6
+	noOfSpecs := 1
 
 	specs := make([]*runner.Spec, noOfSpecs)
 
@@ -50,64 +51,145 @@ func TestCreateProject(t *testing.T) {
 	sch, err := runner.NewScheduler(specs, 10)
 
 	if err != nil {
-		t.Errorf("Failed to create scheduler: %v", err)
+		t.Fatalf("Failed to create scheduler: %v", err)
 	}
 
 	sch.Run()
 
+	failedRunTimeData := sch.FailedSpecs()
+
+	if len(failedRunTimeData) != 0 {
+		for _, data := range failedRunTimeData {
+			state := appstate.GetState(data.Ctx).(*runner.SpecState)
+
+			failedSeq := state.NextSequenceIndex()
+
+			failedAction := state.GetActionState(failedSeq)
+
+			run, err := failedAction.GetLatestRun()
+
+			if err != nil {
+				t.Fatalf("Failed to get latest run: %v", err)
+			}
+
+			if run.RunState != runner.Failed {
+				t.Fatalf("Expected Failed, got %v", run.RunState)
+			}
+
+			t.Fatalf("Failed reason for action %d: %s", failedSeq, run.Reason)
+		}
+	}
+
 	runtimeData := sch.CompletedSpecs()
 
 	if len(runtimeData) != noOfSpecs {
-		t.Errorf("Expected 1 completed spec, got %d", len(runtimeData))
+		t.Fatalf("Expected %d completed spec, got %d", noOfSpecs, len(runtimeData))
 	}
 
 	for i := 0; i < noOfSpecs; i++ {
 		state := appstate.GetState(runtimeData[i].Ctx).(*runner.SpecState)
 
-		createProjectAction, ok := state.GetActionState(1)
+		createProjectAction := state.GetActionState(1)
 
-		if !ok || createProjectAction.Runs[0].RunState != runner.Success {
-			t.Errorf("Expected Success, got %v", createProjectAction.Runs[0].RunState)
+		run, err := createProjectAction.GetLatestRun()
+
+		if err != nil || run.RunState != runner.Success {
+			t.Fatalf("Expected Success, got %v", run.RunState)
 		}
 
-		createComponentAction, ok := state.GetActionState(2)
+		createComponentAction := state.GetActionState(2)
 
-		if !ok || createComponentAction.Runs[0].RunState != runner.Success {
-			t.Errorf("Expected Success, got %v", createComponentAction.Runs[0].RunState)
+		run, err = createComponentAction.GetLatestRun()
+		if err != nil || run.RunState != runner.Success {
+			t.Fatalf("Expected Success, got %v", run.RunState)
 		}
 
-		_, ok = state.GetComponentDetailsResponse("servicecomp")
+		_, err = state.GetComponentDetailsResponse("servicecomp")
 
-		if !ok {
-			t.Errorf("Expected component with placeholder servicecomp to exist")
+		if err != nil {
+			t.Fatalf("Expected component with placeholder servicecomp to exist")
 		}
 	}
 }
 
 func specBuilder(name, projectPlaceholder, componentPlaceholder string) *runner.Spec {
-	actions := make([]runner.Action, 0, 3)
+	actions := make([]runner.Action, 0)
 
-	actions = append(actions, project.CreateProject(1, map[string]string{
+	proj := project.CreateProject()
+	proj.SetParams(map[string]string{
 		"placeholder": projectPlaceholder,
 		"description": "description",
 		"region":      "US",
-	}))
+	}, proj.MandatoryFields())
 
-	actions = append(actions, component.CreateComponent(2, map[string]string{
-		"srcGitRepoURL":     "https://github.com/choreo-test-apps/byor-service-app1",
+	actions = append(actions, proj)
+
+	createComp := component.CreateComponent()
+	createComp.SetParams(map[string]string{
+		"srcGitRepoURL":     "https://github.com/wso2/choreo-samples",
 		"repositoryBranch":  "main",
-		"repositorySubPath": "",
+		"repositorySubPath": "greeting-service",
 		"displayType":       "ballerinaService",
 		"buildPack":         "Ballerina",
 		"accessibility":     "external",
 		"isPublicRepo":      "true",
 		"project":           projectPlaceholder,
 		"placeholder":       componentPlaceholder,
-	}))
+	}, createComp.MandatoryFields())
 
-	actions = append(actions, component.WaitForBuild(3, map[string]string{
+	actions = append(actions, createComp)
+
+	waitBuild := component.WaitForBuild()
+	stop.HandleError(waitBuild.SetParams(map[string]string{
 		"component": componentPlaceholder,
-	}))
+	}, waitBuild.MandatoryFields()))
+
+	actions = append(actions, waitBuild)
+
+	getEnvs := component.GetEnvironments()
+	stop.HandleError(getEnvs.SetParams(map[string]string{
+		"project": projectPlaceholder,
+	}, getEnvs.MandatoryFields()))
+
+	actions = append(actions, getEnvs)
+
+	deployComp := component.DeployComponent()
+	stop.HandleError(deployComp.SetParams(map[string]string{
+		"component": componentPlaceholder,
+	}, deployComp.MandatoryFields()))
+
+	actions = append(actions, deployComp)
+
+	promoteComp := component.PromoteComponent()
+	stop.HandleError(promoteComp.SetParams(map[string]string{
+		"component": componentPlaceholder,
+	}, promoteComp.MandatoryFields()))
+
+	actions = append(actions, promoteComp)
+
+	invokeDeployment := component.InvokeDeployment()
+	stop.HandleError(invokeDeployment.SetParams(map[string]string{
+		"component":   componentPlaceholder,
+		"method":      "GET",
+		"resource":    "/",
+		"queryParams": "name=Hello",
+		"statusCode":  "200",
+		"response":    "{\n  \"from\": \"Choreo\",\n  \"to\": \"Hello\",\n  \"message\": \"Welcome to Choreo!\"\n}",
+	}, invokeDeployment.MandatoryFields()))
+
+	actions = append(actions, invokeDeployment)
+
+	invokePromotion := component.InvokePromotion()
+	stop.HandleError(invokePromotion.SetParams(map[string]string{
+		"component":   componentPlaceholder,
+		"method":      "GET",
+		"resource":    "/",
+		"queryParams": "name=Hello",
+		"statusCode":  "200",
+		"response":    "{\n  \"from\": \"Choreo\",\n  \"to\": \"Hello\",\n  \"message\": \"Welcome to Choreo!\"\n}",
+	}, invokePromotion.MandatoryFields()))
+
+	actions = append(actions, invokePromotion)
 
 	return runner.NewSpec(name, actions)
 }

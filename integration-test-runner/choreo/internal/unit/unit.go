@@ -11,9 +11,16 @@
  * associated services.
  */
 
-package api
+package unit
 
-const graphql = "/projects/1.0.0/graphql"
-const orgs = "/orgs/1.0.0/orgs"
-const configs = "/config-mgt/1.0.0"
-const apipublisher = "/api/am/publisher/v2/apis"
+import (
+	"github.com/go-resty/resty/v2"
+)
+
+type UnitComplete bool
+
+type Unit interface {
+	Execute(client *resty.Client) (UnitComplete, error)
+	WaitTill() int64
+	Name() string
+}

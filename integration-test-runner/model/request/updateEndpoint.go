@@ -11,9 +11,15 @@
  * associated services.
  */
 
-package api
+package request
 
-const graphql = "/projects/1.0.0/graphql"
-const orgs = "/orgs/1.0.0/orgs"
-const configs = "/config-mgt/1.0.0"
-const apipublisher = "/api/am/publisher/v2/apis"
+type UpdateEndpoint struct {
+	ComponentId       string
+	VersionId         string
+	ReleaseId         string
+	EndpointId        string
+	DisplayName       string
+	ApiContext        string
+	ApiDefinitionPath string
+	Visibility        string
+}

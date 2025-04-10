@@ -34,24 +34,28 @@ type specRuntimeData struct {
 }
 
 type scheduler struct {
-	tokenApi       *auth.TokenApi
-	pendingIndex   int
-	concurrency    int
-	pendingSpecs   []specRuntimeData
-	completedSpecs []specRuntimeData
-	activeSpecs    map[string]specRuntimeData
-	execDone       chan string
-	mu             sync.Mutex
-	ticker         *time.Ticker
+	tokenApi     *auth.TokenApi
+	pendingIndex int
+	concurrency  int
+	pendingSpecs []specRuntimeData
+	successSpecs []specRuntimeData
+	errorSpecs   []specRuntimeData
+	activeSpecs  map[string]specRuntimeData
+	waitingSpecs map[string]specRuntimeData
+	execDone     chan string
+	mu           sync.Mutex
+	ticker       *time.Ticker
 }
 
 func NewScheduler(specs []*Spec, concurrency int) (*scheduler, error) {
 	sch := &scheduler{
-		execDone:       make(chan string),
-		pendingSpecs:   make([]specRuntimeData, 0, len(specs)),
-		completedSpecs: make([]specRuntimeData, 0, len(specs)),
-		activeSpecs:    make(map[string]specRuntimeData),
-		concurrency:    concurrency,
+		execDone:     make(chan string),
+		pendingSpecs: make([]specRuntimeData, 0, len(specs)),
+		successSpecs: make([]specRuntimeData, 0, int(float64(len(specs))*0.75)),
+		errorSpecs:   make([]specRuntimeData, 0, int(float64(len(specs))*0.25)),
+		activeSpecs:  make(map[string]specRuntimeData),
+		waitingSpecs: make(map[string]specRuntimeData),
+		concurrency:  concurrency,
 	}
 
 	asgardeoConfig, err := getAsgardeoConfig()
@@ -86,13 +90,7 @@ func NewScheduler(specs []*Spec, concurrency int) (*scheduler, error) {
 }
 
 func buildContext(spec *Spec, orgHolder *OrgHolder) context.Context {
-	sequences := make([]int, 0, len(spec.actions))
-
-	for _, action := range spec.actions {
-		sequences = append(sequences, action.GetSequence())
-	}
-
-	state := NewState(orgHolder, sequences)
+	state := NewState(orgHolder, len(spec.actions))
 
 	ctx := context.Background()
 	ctx = appstate.SetState(ctx, state)
@@ -109,7 +107,7 @@ func (s *scheduler) Run() {
 			s.processExecuted(name)
 		case <-s.ticker.C:
 			s.runPendingSpecs()
-			s.evaluateIncompleteSpecs()
+			s.evaluateWaitingSpecs()
 			if s.endRunOnCompletion() {
 				return
 			}
@@ -118,7 +116,11 @@ func (s *scheduler) Run() {
 }
 
 func (s *scheduler) CompletedSpecs() []specRuntimeData {
-	return s.completedSpecs
+	return s.successSpecs
+}
+
+func (s *scheduler) FailedSpecs() []specRuntimeData {
+	return s.errorSpecs
 }
 
 func (s *scheduler) runPendingSpecs() {
@@ -149,7 +151,7 @@ func (s *scheduler) runPendingSpecs() {
 
 		s.activeSpecs[data.Spec.name] = data
 		client := newClient(token, data.logger)
-		go data.Spec.Execute(data.Ctx, client, s.execDone)
+		go data.Spec.Execute(data.Ctx, client, data.logger, s.execDone)
 	}
 }
 
@@ -159,7 +161,10 @@ func (s *scheduler) endRunOnCompletion() bool {
 
 	var end bool
 
-	if s.pendingIndex >= len(s.pendingSpecs) && len(s.activeSpecs) == 0 {
+	if s.pendingIndex >= len(s.pendingSpecs) && len(s.activeSpecs) == 0 && len(s.waitingSpecs) == 0 {
+		fmt.Println("All specs completed")
+		fmt.Println("Success specs:", len(s.successSpecs))
+		fmt.Println("Error specs:", len(s.errorSpecs))
 		fmt.Println("Ending run")
 		s.ticker.Stop()
 		end = true
@@ -168,11 +173,11 @@ func (s *scheduler) endRunOnCompletion() bool {
 	return end
 }
 
-func (s *scheduler) evaluateIncompleteSpecs() {
+func (s *scheduler) evaluateWaitingSpecs() {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	if len(s.activeSpecs) == 0 {
+	if len(s.waitingSpecs) == 0 {
 		return
 	}
 
@@ -183,18 +188,41 @@ func (s *scheduler) evaluateIncompleteSpecs() {
 		return
 	}
 
-	for _, data := range s.activeSpecs {
+	errorSpecNames := make([]string, 0)
+	restartedSpecNames := make([]string, 0)
+
+	for name, data := range s.waitingSpecs {
 		state := appstate.GetState(data.Ctx).(*SpecState)
 
-		switch state.runResult {
-		case Waiting:
+		if state.waitCount < 6 {
 			if state.waitTill < time.Now().Unix() {
+				data.logger.Debugf("Resuming from action index: %d, resume attempt: %d", state.nextSequenceIndex, state.waitCount)
 				client := newClient(token, data.logger)
-				go data.Spec.Execute(data.Ctx, client, s.execDone)
+				go data.Spec.Execute(data.Ctx, client, data.logger, s.execDone)
+				restartedSpecNames = append(restartedSpecNames, name)
 			}
-		case Error:
+		} else {
+			data.logger.Errorf("Waiting for too long, action index: %d, resume attempt: %d", state.nextSequenceIndex, state.waitCount)
+			state.runResult = Error
+			state.unrecoverableError = fmt.Errorf("waiting for too long")
+			appstate.SetState(data.Ctx, state)
+			errorSpecNames = append(errorSpecNames, name)
 		}
 
+	}
+
+	for _, name := range errorSpecNames {
+		if data, ok := s.waitingSpecs[name]; ok {
+			s.errorSpecs = append(s.errorSpecs, data)
+			delete(s.waitingSpecs, name)
+		}
+	}
+
+	for _, name := range restartedSpecNames {
+		if data, ok := s.waitingSpecs[name]; ok {
+			s.activeSpecs[name] = data
+			delete(s.waitingSpecs, name)
+		}
 	}
 }
 
@@ -205,9 +233,34 @@ func (s *scheduler) processExecuted(name string) {
 
 	state := appstate.GetState(data.Ctx).(*SpecState)
 
-	if state.runResult == Complete {
-		s.completedSpecs = append(s.completedSpecs, data)
+	switch state.runResult {
+	case Successful:
+		s.successSpecs = append(s.successSpecs, data)
 		delete(s.activeSpecs, name)
+	case Error:
+		s.errorSpecs = append(s.errorSpecs, data)
+		actionState := state.GetActionState(state.nextSequenceIndex)
+		run, err := actionState.GetLatestRun()
+
+		if err != nil {
+			data.logger.Errorf("Failed to get latest run: %v", err)
+		} else {
+			data.logger.Errorf("Failed reason for action index %d: %s", state.nextSequenceIndex, run.Reason)
+		}
+		delete(s.activeSpecs, name)
+	case Waiting:
+		actionState := state.GetActionState(state.nextSequenceIndex)
+		run, err := actionState.GetLatestRun()
+
+		if err != nil {
+			data.logger.Errorf("Failed to get latest run: %v", err)
+		} else {
+			data.logger.Debugf("Waiting reason for action index %d: %s", state.nextSequenceIndex, run.Reason)
+		}
+		s.waitingSpecs[name] = data
+		delete(s.activeSpecs, name)
+	default:
+		data.logger.Errorf("Unhandled result %d for action index %d\n", state.runResult, state.nextSequenceIndex)
 	}
 }
 
@@ -310,10 +363,10 @@ func newClient(accessToken string, l resty.Logger) *resty.Client {
 	client.SetLogger(l)
 	client.SetRetryCount(4)
 	client.SetRetryWaitTime(2 * time.Second)
-	client.SetRetryMaxWaitTime(10 * time.Second)
+	client.SetRetryMaxWaitTime(30 * time.Second)
 	client.AddRetryCondition(
 		func(r *resty.Response, err error) bool {
-			return err != nil || r.StatusCode() >= 500
+			return err != nil || r.StatusCode() >= 401
 		},
 	)
 
