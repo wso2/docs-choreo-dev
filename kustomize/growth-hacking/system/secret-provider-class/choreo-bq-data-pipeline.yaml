@@ -23,6 +23,8 @@ spec:
           key: MONGODB_PASSWORD
         - objectName: RUDDER_DB_PASSWORD
           key: RUDDER_DB_PASSWORD
+        - objectName: BILLING_DB_PASSWORD
+          key: BILLING_DB_PASSWORD
   parameters:
     objects: |
       array:
@@ -66,3 +68,8 @@ spec:
           objectType: secret
           objectAlias: RUDDER_DB_PASSWORD
           objectVersion: "{{.RUDDER_DB_PASSWORD}}"
+        - |
+          objectName: billing-DB-MSSQL-PASSWORD
+          objectType: secret
+          objectAlias: BILLING_DB_PASSWORD
+          objectVersion: "{{.BILLING_DB_PASSWORD}}"
