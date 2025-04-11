@@ -1,0 +1,38 @@
+query List {
+  componentEndpoints(
+    input: {
+      componentId: "{{.ComponentId}}"
+      versionId: "{{.VersionId}}"
+      options: { filter: { releaseIds: ["{{.ReleaseId}}"] } }
+    }
+  ) {
+    id
+    createdAt
+    updatedAt
+    releaseId
+    environmentId
+    displayName
+    port
+    type
+    apiContext
+    apiDefinitionPath
+    invokeUrl
+    visibility
+    hostName
+    apimId
+    apimRevisionId
+    apimName
+    projectUrl
+    organizationUrl
+    publicUrl
+    state
+    stateReason {
+      code
+      message
+      details
+      workerId
+    }
+    isDeleted
+    deletedAt
+  }
+}

@@ -14,173 +14,93 @@
 package api
 
 import (
-	"choreo-integration-test-runner/choreo/status"
+	"bytes"
+	"choreo-integration-test-runner/config"
+	"choreo-integration-test-runner/helper/matcher"
 	req "choreo-integration-test-runner/model/request"
 	res "choreo-integration-test-runner/model/response"
 	"choreo-integration-test-runner/template"
+	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/go-resty/resty/v2"
 )
 
-func CreateProject(client *resty.Client, model req.CreateProject) (*res.CreateProject, status.Status) {
-	buf, err := template.PopulateRequestTemplate("createProject", model)
-	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
-	}
-
-	var response map[string]res.CreateProject
-
-	request := make(map[string]string)
-	request["query"] = buf.String()
-
-	res, err := client.R().
-		SetBody(request).
-		SetResult(&response).
-		Post(graphql)
-
-	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		return nil, status.NewTempFailedStatus(res.Status())
-	}
-
-	data := response["data"]
-
-	return &data, status.NewSuccessStatus(res.Body())
+type ResponseGenerator interface {
+	GenExpectedResponse() (*bytes.Buffer, error)
 }
 
-func CreateComponent(client *resty.Client, model req.CreateComponent) (*res.CreateComponent, status.Status) {
-	buf, err := template.PopulateRequestTemplate("createComponent", model)
-
-	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
-	}
-
-	var response map[string]res.CreateComponent
-
-	request := make(map[string]string)
-	request["query"] = buf.String()
-
-	res, err := client.R().
-		SetBody(request).
-		SetResult(&response).
-		Post(graphql)
-
-	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		return nil, status.NewTempFailedStatus(res.Status())
-	}
-
-	data := response["data"]
-
-	return &data, status.NewSuccessStatus(res.Body())
+func CreateProject(client *resty.Client, model req.CreateProject) (*res.CreateProject, error) {
+	return callGraphQL[req.CreateProject, res.CreateProject](client, "createProject", model, nil)
 }
 
-func GetComponentDetails(client *resty.Client, model req.GetComponentDetails) (*res.GetComponentDetails, status.Status) {
-	buf, err := template.PopulateRequestTemplate("getComponentDetails", model)
-
-	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
-	}
-
-	var response map[string]res.GetComponentDetails
-
-	request := make(map[string]string)
-	request["query"] = buf.String()
-
-	res, err := client.R().
-		SetBody(request).
-		SetResult(&response).
-		Post(graphql)
-
-	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		return nil, status.NewTempFailedStatus(res.Status())
-	}
-
-	data := response["data"]
-
-	return &data, status.NewSuccessStatus(res.Body())
+func CreateComponent(client *resty.Client, model req.CreateComponent, gen ResponseGenerator) (*res.CreateComponent, error) {
+	return callGraphQL[req.CreateComponent, res.CreateComponent](client, "createComponent", model, gen)
 }
 
-func GetCommitHistory(client *resty.Client, model req.GetCommitHistory) (*res.GetCommitHistory, status.Status) {
-	buf, err := template.PopulateRequestTemplate("getCommitHistory", model)
-
-	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
-	}
-
-	var response map[string]res.GetCommitHistory
-
-	request := make(map[string]string)
-	request["query"] = buf.String()
-
-	res, err := client.R().
-		SetBody(request).
-		SetResult(&response).
-		Post(graphql)
-
-	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		return nil, status.NewTempFailedStatus(res.Status())
-	}
-
-	data := response["data"]
-
-	return &data, status.NewSuccessStatus(res.Body())
-
+func GetComponentDetails(client *resty.Client, model req.GetComponentDetails, gen ResponseGenerator) (*res.GetComponentDetails, error) {
+	return callGraphQL[req.GetComponentDetails, res.GetComponentDetails](client, "getComponentDetails", model, gen)
 }
 
-func GetDeploymentEnvironments(client *resty.Client, model req.GetDeploymentEnvironments) (*res.GetDeploymentEnvironments, status.Status) {
-	buf, err := template.PopulateRequestTemplate("getDeploymentEnvironments", model)
-
-	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
-	}
-
-	var response map[string]res.GetDeploymentEnvironments
-
-	request := make(map[string]string)
-	request["query"] = buf.String()
-
-	res, err := client.R().
-		SetBody(request).
-		SetResult(&response).
-		Post(graphql)
-
-	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		return nil, status.NewTempFailedStatus(res.Status())
-	}
-
-	data := response["data"]
-
-	return &data, status.NewSuccessStatus(res.Body())
+func GetCommitHistoryByBranch(client *resty.Client, model req.GetCommitHistoryByBranch) (*res.GetCommitHistory, error) {
+	return callGraphQL[req.GetCommitHistoryByBranch, res.GetCommitHistory](client, "getCommitHistoryByBranch", model, nil)
 }
 
-func GetDeploymentStatusByVersion(client *resty.Client, model req.GetDeploymentStatusByVersion) (*res.GetDeploymentStatusByVersion, status.Status) {
-	buf, err := template.PopulateRequestTemplate("getDeploymentStatusByVersion", model)
+func GetDeploymentEnvironments(client *resty.Client, model req.GetDeploymentEnvironments) (*res.GetDeploymentEnvironments, error) {
+	return callGraphQL[req.GetDeploymentEnvironments, res.GetDeploymentEnvironments](client, "getDeploymentEnvironments", model, nil)
+}
+
+func GetDeploymentStatusByVersion(client *resty.Client, model req.GetDeploymentStatusByVersion) (*res.GetDeploymentStatusByVersion, error) {
+	return callGraphQL[req.GetDeploymentStatusByVersion, res.GetDeploymentStatusByVersion](client, "getDeploymentStatusByVersion", model, nil)
+}
+
+func DeployComponent(client *resty.Client, model req.DeployComponent) (*res.DeployComponent, error) {
+	return callGraphQL[req.DeployComponent, res.DeployComponent](client, "deployComponent", model, nil)
+}
+
+func GetBuildImages(client *resty.Client, model req.GetBuildImages) (*res.GetBuildImages, error) {
+	return callGraphQL[req.GetBuildImages, res.GetBuildImages](client, "getBuildImages", model, nil)
+}
+
+func DeployBuild(client *resty.Client, model req.DeployBuild) (*res.DeployBuild, error) {
+	return callGraphQL[req.DeployBuild, res.DeployBuild](client, "deployBuild", model, nil)
+}
+
+func GetEndpoints(client *resty.Client, model req.GetEndpoints) (*res.GetEndpoints, error) {
+	return callGraphQL[req.GetEndpoints, res.GetEndpoints](client, "getEndpoints", model, nil)
+}
+
+func GenerateEndpoints(client *resty.Client, model req.GenerateEndpoints) (*res.GenerateEndpoints, error) {
+	return callGraphQL[req.GenerateEndpoints, res.GenerateEndpoints](client, "generateEndpoints", model, nil)
+}
+
+func UpdateEndpoint(client *resty.Client, model req.UpdateEndpoint) (*res.UpdateEndpoint, error) {
+	return callGraphQL[req.UpdateEndpoint, res.UpdateEndpoint](client, "updateEndpoint", model, nil)
+}
+
+func GetComponentDeployment(client *resty.Client, model req.GetComponentDeployment) (*res.GetComponentDeployment, error) {
+	return callGraphQL[req.GetComponentDeployment, res.GetComponentDeployment](client, "getComponentDeployment", model, nil)
+}
+
+func PromoteComponent(client *resty.Client, model req.PromoteComponent) (*res.PromoteComponent, error) {
+	return callGraphQL[req.PromoteComponent, res.PromoteComponent](client, "promoteComponent", model, nil)
+}
+
+func callGraphQL[Req_t, Res_t any](client *resty.Client, templateName string, model Req_t, gen ResponseGenerator) (*Res_t, error) {
+	buf, err := template.PopulateRequestTemplate(templateName, model)
 
 	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
+		return nil, err
 	}
 
-	var response map[string]res.GetDeploymentStatusByVersion
+	newAppServiceHost, err := config.GetConfig(config.CHOREO_NEW_APP_SERVICE_ENDPOINT)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var response map[string]Res_t
 
 	request := make(map[string]string)
 	request["query"] = buf.String()
@@ -188,17 +108,43 @@ func GetDeploymentStatusByVersion(client *resty.Client, model req.GetDeploymentS
 	res, err := client.R().
 		SetBody(request).
 		SetResult(&response).
-		Post(graphql)
+		Post(newAppServiceHost + graphql)
 
 	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
+		return nil, err
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return nil, status.NewTempFailedStatus(res.Status())
+		return nil, errors.New("graphql call failed, response code: " + res.Status())
+	}
+
+	if gen != nil {
+		err = validateResponse(res.Body(), gen)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	data := response["data"]
 
-	return &data, status.NewSuccessStatus(res.Body())
+	return &data, nil
+}
+
+func validateResponse(response []byte, gen ResponseGenerator) error {
+	expectedResponse, err := gen.GenExpectedResponse()
+
+	if err != nil {
+		return err
+	}
+
+	result, err := matcher.JsonMatch(expectedResponse.Bytes(), response)
+	if err != nil {
+		return err
+	}
+
+	if !result.Match {
+		return errors.New(strings.Join(result.ErrorMsgs, ", "))
+	}
+
+	return nil
 }

@@ -13,6 +13,7 @@
 
 package request
 
-type GetCommitHistory struct {
+type GetCommitHistoryByBranch struct {
 	ComponentId string
+	Branch      string
 }

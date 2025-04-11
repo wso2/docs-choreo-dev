@@ -1,0 +1,12 @@
+mutation {
+    deployDeploymentTrack(
+        input: {
+            componentId:  "{{.ComponentId}}"
+            id: "{{.VersionId}}",
+            imageId: "{{.ImageId}}",
+            environmentId:"{{.EnvId}}",
+            cron: "",
+            cronTimezone: "",
+        }
+    )
+}

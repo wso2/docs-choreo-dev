@@ -1,0 +1,18 @@
+{
+    "moduleName": "{{.ModuleName}}",
+    "commitHash": "{{.CommitHash}}",
+    "applyNow": {{.ApplyNow}},
+    "operation": {{.Operation}},
+    "sourceUuid": "{{.SourceUuid}}",
+    "configs": [
+        {{range $index, $config := .Configs}}
+        {{if $index}},{{end}}
+        {
+            "configKeyName": "{{$config.ConfigKeyName}}",
+            "isRequired": {{$config.IsRequired}},
+            "valueOrSource": "{{$config.ValueOrSource}}",
+            "valueType": "{{$config.ValueType}}"
+        }
+        {{end}}
+    ]
+}

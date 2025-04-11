@@ -14,27 +14,34 @@
 package api
 
 import (
-	"choreo-integration-test-runner/choreo/status"
+	"choreo-integration-test-runner/config"
 	res "choreo-integration-test-runner/model/response"
+	"errors"
 	"net/http"
 
 	"github.com/go-resty/resty/v2"
 )
 
-func GetOrgs(client *resty.Client) (*res.GetOrgs, status.Status) {
+func GetOrgs(client *resty.Client) (*res.GetOrgs, error) {
 	response := res.GetOrgs{}
+
+	newAppServiceHost, err := config.GetConfig(config.CHOREO_NEW_APP_SERVICE_ENDPOINT)
+
+	if err != nil {
+		return nil, err
+	}
 
 	res, err := client.R().
 		SetResult(&response).
-		Get(orgs)
+		Get(newAppServiceHost + orgs)
 
 	if err != nil {
-		return nil, status.NewPermFailedStatus(err.Error())
+		return nil, err
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return nil, status.NewTempFailedStatus(res.Status())
+		return nil, errors.New("orgs call failed, response code: " + res.Status())
 	}
 
-	return &response, status.NewSuccessStatus(res.Body())
+	return &response, nil
 }

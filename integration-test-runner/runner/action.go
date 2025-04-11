@@ -15,31 +15,8 @@ package runner
 
 import (
 	"bytes"
-
-	"github.com/go-resty/resty/v2"
 )
-
-type ExecutionResult struct {
-	IsValidateResponse bool
-	IsWaiting          bool
-	Response           []byte
-}
 
 type ResponseGenerator interface {
 	GenExpectedResponse() (*bytes.Buffer, error)
-}
-
-type Action interface {
-	GetParams() map[string]string
-	GetSequence() int
-	Execute(client *resty.Client, state *SpecState, actionState *ActionState, params map[string]string) ExecutionResult
-	SanitizeParams(params map[string]string) error
-	GetSubAction() SubAction
-	GetResponseGenerator() ResponseGenerator
-}
-
-type SubAction interface {
-	Execute(client *resty.Client, state *SpecState, actionState *ActionState, params map[string]string) ExecutionResult
-	GetSubAction() SubAction
-	GetResponseGenerator() ResponseGenerator
 }

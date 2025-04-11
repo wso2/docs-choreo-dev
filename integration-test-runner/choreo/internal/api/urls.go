@@ -13,7 +13,7 @@
 
 package api
 
-const newAppServiceHost = "https://apis.preview-dv.choreo.dev"
-
-const graphql = newAppServiceHost + "/projects/1.0.0/graphql"
-const orgs = newAppServiceHost + "/orgs/1.0.0/orgs"
+const graphql = "/projects/1.0.0/graphql"
+const orgs = "/orgs/1.0.0/orgs"
+const configs = "/config-mgt/1.0.0"
+const apipublisher = "/api/am/publisher/v2/apis"
