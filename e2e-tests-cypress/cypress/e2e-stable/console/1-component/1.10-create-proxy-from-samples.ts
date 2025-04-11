@@ -11,7 +11,7 @@
  * associated services.
  */
 
-import { BuildPacks, Enums, SecurityScheme } from "../../../support/commons/enums";
+import { Enums, SecurityScheme } from "../../../support/commons/enums";
 import { console } from "../../../support/console/console";
 import { Project } from "../../../support/console/entities/project/project";
 import { Proxy } from "../../../support/console/entities/component/proxy-component";
@@ -27,9 +27,9 @@ describe("Verify Proxy Creation from Sample Repo", () => {
   let proxy: Proxy;
   const REPO_URL = "https://github.com/wso2/choreo-samples";
   const REPO_NAME = "department-api-proxy-from-github";
-  const sampleName = "department-service";
-  const ENDPOINT_URL = "https://samples.choreoapps.dev/company/hr"
   const RESOURCE = "department/{departmentId}";
+  const ENDPOINT_URL = "https://samples.choreoapps.dev/company/hr";
+  const EXPECTED_VALUE = "Finance";
 
   it("Login to Console", () => {
     console.login();
@@ -66,22 +66,39 @@ describe("Verify Proxy Creation from Sample Repo", () => {
     proxy.build();
   });
 
-
   it("Enable OAuth2 security and deploy", () => {
-      proxy.enableSecuritySchemesAndDeploy([SecurityScheme.OAuth2]);
-    });
+    proxy.enableSecuritySchemesAndDeploy([SecurityScheme.OAuth2]);
+  });
 
-  // it("Promote proxy", () => {
-  //   proxy.promote();
-  // });
+  it("Promote proxy", () => {
+    proxy.promote();
+  });
 
   it("Verify test functionality using Swagger UI in Dev", () => {
-      proxy
-        .testSwaggerConsole(Enums.Environment.DEVELOPMENT, RESOURCE)
-        .then((res) => {
-          expect(res.statusCode).to.be.equal(OK.toString());
-        });
-    });
+    proxy
+      .testSwaggerConsole(
+        Enums.Environment.DEVELOPMENT,
+        RESOURCE,
+        "departmentId",
+        "1"
+      )
+      .then((res) => {
+        expect(res.statusCode).to.be.equal(OK.toString());
+        expect(res.response).to.contain(EXPECTED_VALUE);
+      });
+  });
 
-
+  it("Verify test functionality using Swagger UI in Prod", () => {
+    proxy
+      .testSwaggerConsole(
+        Enums.Environment.PRODUCTION,
+        RESOURCE,
+        "departmentId",
+        "1"
+      )
+      .then((res) => {
+        expect(res.statusCode).to.be.equal(OK.toString());
+        expect(res.response).to.contain(EXPECTED_VALUE);
+      });
+  });
 });
