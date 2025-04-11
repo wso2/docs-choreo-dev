@@ -440,6 +440,8 @@ termsOfService:
   serviceNames:
     - choreo
     - ballerina-central
+    - devant
+    - bijira
 memberInvitation:
   invitationLinkDurationDays: 7
 controlPlaneOrganization:
