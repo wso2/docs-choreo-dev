@@ -59,7 +59,7 @@ spec:
               mkdir -p /mnt/podman-cache
 
               echo "Logging in to ACR"
-              podman login -u "$AZURE_CONTAINER_REGISTRY_USERNAME" -p "$ACR_PASSWORD" choreocontrolplane.azurecr.io
+              podman login -u "$AZURE_CONTAINER_REGISTRY_USERNAME" -p "$AZURE_CONTAINER_REGISTRY_PASSWORD" choreocontrolplane.azurecr.io
 
               LIFECYCLE_IMAGE="choreocontrolplane.azurecr.io/buildpacksio/lifecycle:${LIFECYCLE_TAG}"
               BUILDER_IMAGE="choreocontrolplane.azurecr.io/buildpacks/builder:${BUILDER_TAG}"
