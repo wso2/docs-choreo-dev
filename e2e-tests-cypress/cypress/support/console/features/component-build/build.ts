@@ -25,6 +25,7 @@ import { Webhook } from "../../entities/component/webhook-component";
 import { TestRunner } from "../../entities/component/test-runner-component";
 import { Byoc } from "../../entities/component/byoc-component";
 import { Helper } from "../../../commons/helper";
+import { Proxy } from "../../entities/component/proxy-component";
 
 export interface BuildFeature {
   _build(
@@ -36,6 +37,7 @@ export interface BuildFeature {
       | WebApp
       | Webhook
       | Byoc
+      | Proxy
   ): void;
   _isSuccessfulBuildExists(): Cypress.Chainable<boolean>;
   _buildWithUnitTests(
@@ -66,6 +68,7 @@ export function mixinBuild<T extends Types.Constructor>(
         | Webhook
         | TestRunner
         | Byoc
+        | Proxy
     ) {
       this.sideMenu.navigateToBuild();
       this.triggerBuild(component);
@@ -120,6 +123,7 @@ export function mixinBuild<T extends Types.Constructor>(
         | WebApp
         | Webhook
         | Byoc
+        | Proxy
     ) {
       this.deploymentTrack.validate(component);
 

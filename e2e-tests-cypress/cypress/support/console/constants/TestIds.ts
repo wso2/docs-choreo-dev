@@ -161,7 +161,7 @@ export namespace TestIds {
   export const uriPatternEntry =
     '[data-cyid="get-operation-target-placeholder"]';
   export const add = '[data-testid="add-btn"]';
-  export const versionPicker = '[data-cyid="version-picker"]';
+  export const versionPicker = '[data-cyid="version-picker|deployment-track-picker"],[data-cyid^="deployment-track-picker"]';
   export const buildStatus = '[data-cyid="map-build-status"]';
   export const devPortalLink = '[data-cyid="dev-portal-button-button"]';
   export const dialogPrimaryAction =
@@ -478,4 +478,8 @@ export namespace TestIds {
   export const ProxyCreateButton = '[data-cyid="Create-button"]';
   export const ProxyCreateFromScratch = '[data-cyid="from-scratch-card-button"]';
   export const addConfigButton = '[data-cyid="env-config-section-add-config-button"]';
+  export const publicGHRepoButton = '[data-cyid="public-repository-card-button"]';
 }
+
+
+

@@ -19,6 +19,7 @@ import { mixinDevelop } from "../../features/develop/develop";
 import { mixinTestProxy } from "../../features/test/test-proxy";
 import { mixinManage } from "../../features/manage/manage";
 import { console } from "../../../../support/console/console";
+import { mixinBuild } from "../../features/component-build/build";
 
 export interface ProxyMetaData {
   name: string;
@@ -31,8 +32,8 @@ export interface ProxyMetaData {
   prodEndpointUrl: string;
 }
 
-export class Proxy extends mixinDevelop(
-  mixinManage(mixinProxyDeploy(mixinTestProxy(Component)))
+export class Proxy extends mixinDevelop (
+  mixinManage(mixinBuild(mixinProxyDeploy(mixinTestProxy(Component))))
 ) {
   private endpointUrl: string;
   private basePath: string;
@@ -124,6 +125,11 @@ export class Proxy extends mixinDevelop(
   deploy(visibility?: Enums.Accessibility) {
     this._deploy(this, visibility);
   }
+
+  build() {
+    this._build(this);
+  }
+
 
   promote() {
     this._promote(this);
