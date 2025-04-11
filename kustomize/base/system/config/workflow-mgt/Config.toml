@@ -10,7 +10,7 @@ apimUrl = "{{.APIM_URL}}"
 apimClientId = "{{.APIM_CLIENT_ID}}"
 
 [workflow_mgt_service.url_mgt_service]
-urlMgtServiceUrl = "http://choreo-url-management:3000"
+urlMgtServiceUrl = "http://choreo-url-management:9090"
 
 [workflow_mgt_service.db]
 host = "{{.DB_HOST}}"
