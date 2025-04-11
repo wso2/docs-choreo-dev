@@ -61,6 +61,12 @@ export class ProxyLeftMenu extends LeftMenu {
     );
   }
 
+  navigateToBuild() {
+    this.scrollToTopOfMenu();
+    this.navigateToMenuItem("[data-cyid=link-deploy]");
+    this.navigateToMenuItem("[data-cyid=link-build]");
+  }
+
   navigateToLifecycle() {
     this.scrollToTopOfMenu();
     this.navigateToSubMenu(

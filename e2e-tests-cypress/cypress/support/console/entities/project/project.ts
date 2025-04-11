@@ -47,10 +47,14 @@ export interface RepoInfo {
 }
 
 export interface ProxyInfo {
+  readonly displayName?: string;
+  readonly directoryInfo?: DirectoryInfo;
+  readonly repoUrl?: string;
   readonly version: string;
   readonly endpointUrl: string;
   readonly oasUrl?: string;
   readonly oasFilePath?: string;
+  readonly branch?: string;
 }
 
 export interface DirectoryInfo {
@@ -375,6 +379,31 @@ export class Project {
     });
   }
 
+  createProxyComponentFromGH(proxyInfo: ProxyInfo): Cypress.Chainable<Proxy> {
+    this.createComponentIfEmptyProject();
+    cy.getUnstable(TestIds.proxyBuildPack).should("be.enabled").click();
+    cy.get(TestIds.publicGHRepoButton).should("be.visible").click();
+    
+    const proxyName = Utils.generateComponentName("sample");
+    const basePath = Utils.generateBasePath();
+  
+    this.serviceCreationWizard.enterProxyGHInfo(proxyName, proxyInfo);
+  
+    return cy.url().then((url) => {
+      return new Proxy(
+        proxyName,
+        proxyInfo.version,
+        basePath,
+        proxyInfo.endpointUrl,
+        url,
+        "",
+        "",
+        ""
+      );
+    });
+  }
+  
+  
   createServiceComponentUI(
     serviceInfo: ComponentInfo,
     endpointName: string,
@@ -391,6 +420,10 @@ export class Project {
 
     return cy.wrap(new Service(serviceName, endpointName));
   }
+
+  
+
+  
 
   createManualTriggerUI(
     manualTriggerInfo: ComponentInfo,

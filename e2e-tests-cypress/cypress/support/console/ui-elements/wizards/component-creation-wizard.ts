@@ -11,10 +11,11 @@
  * associated services.
  */
 
-import { ComponentInfo, DirectoryInfo } from "../../entities/project/project";
+import { ComponentInfo, DirectoryInfo, ProxyInfo } from "../../entities/project/project";
 import { TestIds } from "../../constants/TestIds";
 import { SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 import { BuildPacks } from "../../../commons/enums";
+import { MEDIUM_TIME_OUT } from "../../../devportal/constants";
 
 export class _ComponentCreationWizard {
   enterServiceInfo(name: string, serviceInfo: ComponentInfo) {
@@ -27,6 +28,21 @@ export class _ComponentCreationWizard {
       .within(() => cy.get("input").clear().type(name));
     this.createComponent(name);
      
+  }
+
+  enterProxyGHInfo(name: string, proxyInfo: ProxyInfo) {
+    this.createFromGHUrl(proxyInfo);
+    this.selectProjectDirectory(proxyInfo.directoryInfo);
+    cy.get(TestIds.serviceDisplayName)
+      .eq(0)
+      .within(() => cy.get("input").clear().type(name));
+      if (proxyInfo.endpointUrl !== "") {
+        cy.get(TestIds.Endpoint).within(() =>
+          cy.get("input").clear().type(proxyInfo.endpointUrl)
+        );
+      }
+    this.createComponent(name);
+    
   }
 
   enterTriggerInfo(name: string, manualTriggerInfo: ComponentInfo, enterCustomInfo: () => void) {
@@ -42,15 +58,15 @@ export class _ComponentCreationWizard {
     this.createComponent(name);
   }
 
-  private createFromGHUrl(serviceInfo: ComponentInfo) {
+  private createFromGHUrl(serviceInfo: ComponentInfo | ProxyInfo) {
     cy.get(TestIds.serviceGHUrlEntry).should("be.visible").type(`${serviceInfo.repoUrl}{enter}`);
     cy.get(TestIds.progressBar).should("be.visible");
     cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist");
     cy.get(TestIds.projectDirectoryEdit).should("be.enabled");
 
-    if (serviceInfo.branch !== undefined) {
+    if (serviceInfo.branch  !== undefined) {
       cy.get(TestIds.branchSelect).click();
-      cy.get("li").contains(serviceInfo.branch).click();
+      cy.get("li").contains(serviceInfo.branch ).click();
     }
   }
 
