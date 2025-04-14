@@ -155,7 +155,7 @@ export class TryOut {
   }
 
   static selectEndpoint(endpoint: string) {
-    Utils.getRenderedElement('[data-testid="endpoint-selector"]').click();
+    cy.getUnstable('[data-testid="endpoint-selector"]').scrollIntoView().click();
     cyGet(`[data-cyid="endpoint-list-item-${endpoint}"]`).click();
   }
 }

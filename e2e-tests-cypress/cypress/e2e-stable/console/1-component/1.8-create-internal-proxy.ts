@@ -29,8 +29,8 @@ describe(`Verify internal API Proxy functionality`, () => {
 
   const OPERATION_USERS = "users";
 
-  const DEV_INVOKE_URL_TEXT = "dev-internal";
-  const PROD_INVOKE_URL_TEXT = "prod-internal";
+  const DEV_INVOKE_URL_TEXT = "-dev";
+  const PROD_INVOKE_URL_TEXT = "-prod";
   const endpointMatcher = new Map<string, Enums.Environment>([
     [DEV_INVOKE_URL_TEXT, Enums.Environment.DEVELOPMENT],
     [PROD_INVOKE_URL_TEXT, Enums.Environment.PRODUCTION],

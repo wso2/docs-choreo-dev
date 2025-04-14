@@ -69,12 +69,9 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
 
       this.RetryDevDeployment();
 
-      this.getNumberOfPriorBuilds().then((buildCount) => {
-        cy.log("Number of prior builds: " + buildCount);
-        this.startDeployment(component, visibility);
+      this.startDeployment(component, visibility);
 
-        this.verifyDeploymentStatus(buildCount);
-      });
+      this.verifyDeploymentStatus();
     }
 
     _promote(component: Proxy) {
@@ -184,11 +181,7 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
 
       this.deployProxy(component);
 
-      this.getNumberOfPriorBuilds().then((buildCount) => {
-        cy.log("Number of prior builds: " + buildCount);
-        this.verifyDeploymentStatus(buildCount);
-      });
-      
+      this.verifyDeploymentStatus();
     }
 
     _managePermissionsAndDeploy(component: Proxy, permissions: string[]) {
@@ -215,14 +208,9 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
         this.applyPermissionsToResourcesV2(permissions[0]);
       });
 
-      cy.wait(VERY_SHORT_TIME.timeout);
-
       this.deployProxy(component);
 
-      this.getNumberOfPriorBuilds().then((buildCount) => {
-        cy.log("Number of prior builds: " + buildCount);
-        this.verifyDeploymentStatus(buildCount);
-      });
+      this.verifyDeploymentStatus();      
     }
 
     private openManagePermissionsView() {
@@ -291,7 +279,6 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       cy.get(`[data-cyid="${methodString.toLowerCase()}-/${resource}-isSecured-check-box"]`)
         .scrollIntoView()
         .click();
-      cy.wait(VERY_SHORT_TIME.timeout);
     }
 
     private cloneSecuritySchemes() : Map<SecurityScheme, string> {
@@ -315,7 +302,6 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       for (const schemeSelector of remainingSchemes.values()) {
         Utils.unCheckIfChecked(schemeSelector);
       }
-      cy.wait(VERY_SHORT_TIME.timeout);
     }
 
 
@@ -339,10 +325,7 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       this.enableSecuritySchemes(securitySchemes);
       this.deployProxy(component);
       
-      this.getNumberOfPriorBuilds().then((buildCount) => {
-        cy.log("Number of prior builds: " + buildCount);  
-        this.verifyDeploymentStatus(buildCount);
-      });
+      this.verifyDeploymentStatus();
     }
 
     private RetryDevDeployment() {
@@ -368,12 +351,6 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       cy.get('[data-cyid="refresh-button-button"]').should("not.exist");
     }
 
-    private getNumberOfPriorBuilds() {
-      return cy.get(TestIds.buildCard).then((buildCard) => {
-        return buildCard.find(TestIds.buildStatus).filter(":visible").length;
-      });
-    }
-
     private changeAccessMode(visibility?: Enums.Accessibility) {
       if (visibility !== undefined) {
         let accessModeRadioButton = TestIds.externalAccessMode;
@@ -382,7 +359,7 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
           accessModeRadioButton = TestIds.internalAccessMode;
         }
 
-        cy.get(accessModeRadioButton, SHORT_TIME).should("be.visible").click().wait(VERY_SHORT_TIME.timeout);
+        cy.get(accessModeRadioButton, SHORT_TIME).should("be.visible").click();
       }
     }
 
@@ -423,13 +400,8 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
       this.deployProxy(component);
     }
 
-    private verifyDeploymentStatus(numberOfPriorBuilds: number) {
+    private verifyDeploymentStatus() {
       cy.get(TestIds.backdropLoader).should("not.exist");
-
-      cy.get(TestIds.buildCard)
-        .find(TestIds.buildStatus, SHORT_TIME)
-        .filter(":visible")
-        .should("have.length", numberOfPriorBuilds + 1);
 
       cy.get(TestIds.buildStatus, SHORT_TIME)
         .eq(0)

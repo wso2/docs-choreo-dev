@@ -157,8 +157,4 @@ describe("Create and deploy a component to test developer portal with custom dom
       console.removeCustomDomain(CUSTOM_DOMAIN, CustomDomainType.DevPortal);
     });
   });
-
-  it('Clean up created data', () => {
-    console.cleanUpData();
-  });
 });

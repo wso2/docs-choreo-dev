@@ -242,8 +242,4 @@ describe("Create Proxy from REST endpoint", () => {
     proxy.stopDeployment();
     proxy.stopPromotion();
   });
-
-  it('Clean up created data', () => {
-    console.cleanUpData();
-  });
 });
