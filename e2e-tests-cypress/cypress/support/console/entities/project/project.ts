@@ -210,6 +210,7 @@ export class Project {
 
   visitComponent(name: string): string {
     this.goToComponentListing();
+    cy.contains("Refetching components...", SHORT_TIME).should("not.exist");
     cy.get("body").then((body) => {
       if (body.find(TestIds.refreshComponentListIconButton).length > 0) {
         cy.get(TestIds.refreshComponentListIconButton)
@@ -220,7 +221,7 @@ export class Project {
         this.goToComponentListing();
       }
 
-      cy.contains("Refetching Components...", SHORT_TIME).should("not.exist");
+      cy.contains("Refetching components...", SHORT_TIME).should("not.exist");
       this.searchComponent(name);
       cy.get(TestIds.componentTable)
         .contains(name)

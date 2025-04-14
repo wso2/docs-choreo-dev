@@ -60,10 +60,6 @@ describe("API overview comment and rating scenario", () => {
       });
   });
 
-  it("Enable OAuth2 security", () => {
-    proxy.enableSecurityScemes([SecurityScheme.OAuth2]);
-  });
-
   it("Deploy API Proxy", () => {
     proxy.deploy();
   });
@@ -155,9 +151,5 @@ describe("API overview comment and rating scenario", () => {
     proxy.navigateToComponentInConsole();
     proxy.stopDeployment();
     proxy.stopPromotion();
-  });
-
-  it('Clean up created data', () => {
-    console.cleanUpData();
   });
 });

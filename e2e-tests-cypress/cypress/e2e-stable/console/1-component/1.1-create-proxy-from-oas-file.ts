@@ -223,8 +223,4 @@ describe("Create Proxy from OAS file", () => {
   it("Verifying project insights in Prod", () => {
     project.verifyUsageInsights(Enums.Environment.PRODUCTION);
   });
-
-  it('Clean up created data', () => {
-    console.cleanUpData();
-  });
 });
