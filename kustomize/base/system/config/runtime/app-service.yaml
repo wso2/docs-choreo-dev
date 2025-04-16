@@ -519,6 +519,9 @@ marketingConsent:
   clientKey: ${MARKETING_CONSENT_APP_CLIENT_KEY}
   clientSecret: ${MARKETING_CONSENT_APP_CLIENT_SECRET}
   tokenURL: ${APIM_TOKEN_EP}
+  choreoPardotEndpoint: {{.CHOREO_PARDOT_EP}}
+  devantPardotEndpoint: {{.DEVANT_PARDOT_EP}}
+  bijiraPardotEndpoint: {{.BIJIRA_PARDOT_EP}}
   pardotEndpoint: ${PARDOT_EP}
   pardotSvcURL: ${PARDOT_SVC_URL}
   emailConsentSvcURL: ${EMAIL_CONSENT_SVC_URL}
