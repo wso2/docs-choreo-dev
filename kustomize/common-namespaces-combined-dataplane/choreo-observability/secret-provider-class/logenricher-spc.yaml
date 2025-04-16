@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# Copyright (c) 2025, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+# Copyright (c) 2025, WSO2 LLC. (http://wso2.com) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,17 +14,22 @@
 # limitations under the License.
 # -----------------------------------------------------------------------
 
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
 metadata:
-  name: log-enricher-role
-rules:
-- apiGroups: [""]
-  resources: ["pods", "services", "configmaps","secrets", "persistentvolumeclaims", "persistentvolumes"]
-  verbs: ["get", "list", "watch"]
-- apiGroups: ["apps"]
-  resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
-  verbs: ["get", "list", "watch"]
-- apiGroups: ["batch"]
-  resources: ["jobs", "cronjobs"]
-  verbs: ["get", "list", "watch"]
+  name: log-enricher-opensearch-password
+spec:
+  secretObjects:
+    - secretName: log-enricher-opensearch-password
+      type: Opaque
+      data:
+        - key: opensearch-password
+          objectName: OPENSEARCH_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: {{.OPENSEARCH_PASSWD_OBJ_NAME | default "obs-opensearch-password"}}
+          objectType: secret
+          objectAlias: OPENSEARCH_PASSWORD
+          objectVersion: "{{.OPENSEARCH_PASSWD}}"

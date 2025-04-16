@@ -139,9 +139,8 @@ configMapGenerator:
     behavior: create
     literals:
       - PORT="9095"
-      - DEBUG="false"
-      - OPENSEARCH_HOST={{.OPENSEARCH_HOST | default "opensearch-cluster-master"}}
+      - DEBUG={{.DEBUG | default false}}
+      - OPENSEARCH_HOST={{.OPENSEARCH_HOST | default "opensearch"}}
       - OPENSEARCH_PORT={{.OPENSEARCH_PORT | default "9200"}}
-      - INDEX_NAME="kube-events"
+      - INDEX_NAME= {{.EVENT_INDEX | default "kube-events"}}
       - OPENSEARCH_USERNAME={{.OPENSEARCH_USERNAME | default "admin"}}
-      - OPENSEARCH_PASSWORD="{{.OPENSEARCH_PASSWORD}}" #how to get the password from secret
