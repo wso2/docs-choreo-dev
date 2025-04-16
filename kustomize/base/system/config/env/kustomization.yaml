@@ -961,6 +961,7 @@ configMapGenerator:
       - STS_MGT_URL=http://sts-mgt-service:3000
       - ENABLE_STS_MGT_SERVICE={{.ENABLE_STS_MGT_SERVICE | default "false"}}
       - CONNECTION_SERVICE_URL={{.CONNECTION_SERVICE_URL | default "http://connection-service:9000"}}
+      - PROJECT_NAME_DENY_LIST={{.PROJECT_NAME_DENY_LIST | default "oauth2,oidc"}}
   - name: env-alert-notification-service
     behavior: create
     literals:
