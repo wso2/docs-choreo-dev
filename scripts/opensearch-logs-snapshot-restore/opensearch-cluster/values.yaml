@@ -1,0 +1,36 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+nodePools:
+  master:
+    diskSize: "3Gi"
+    resources:
+      requests:
+        memory: "1000Mi"
+        cpu: "100m"
+      limits:
+        memory: "1200Mi"
+        cpu: "300m"
+  data:
+    diskSize: "10Gi" # Set this according to the data size to be restored
+    resources:
+      requests:
+        memory: "1000Mi" # Adjust this requests and limits according to the dataplane values
+        cpu: "500m"
+      limits:
+        memory: "1200Mi" # Adjust this requests and limits according to the dataplane values
+        cpu: "800m"
+snapshotRepository:
+  basePath: "container-logs-automatic-snapshots"
+  bucket: "" # Find these values from the dataplane repository
+  region: ""
+  accessKey: ""
+  secretKey: ""

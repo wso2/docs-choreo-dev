@@ -1,0 +1,77 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: opensearch.opster.io/v1
+kind: OpenSearchCluster
+metadata:
+  name: opensearch
+  namespace: observability
+spec:
+  bootstrap:
+    additionalConfig:
+      network.bind_host: "0.0.0.0" # To prevent installing plugins on bootstrap node
+  general:
+    version: "2.18.0"
+    additionalConfig:
+      s3.client.default.endpoint: s3.amazonaws.com
+      plugins.security.audit.config.enable_rest: "false" # disable audit logs
+    serviceName: opensearch
+    setVMMaxMapCount: true
+    pluginsList: ["repository-s3", "mapper-size"]
+    keystore:
+    - secret:
+        name: snapshot-repository
+    snapshotRepositories:
+    - name: container-logs-automatic-snapshots
+      settings:
+        base_path: {{ .Values.snapshotRepository.basePath }}
+        bucket: {{ .Values.snapshotRepository.bucket }}
+        region: {{ .Values.snapshotRepository.region }}
+      type: s3
+  confMgmt:
+    smartScaler: true
+  nodePools:
+  - component: data
+    replicas: 1
+    diskSize: {{ .Values.nodePools.data.diskSize }}
+    resources:
+      requests:
+        memory: {{ .Values.nodePools.data.resources.requests.memory }}
+        cpu: {{ .Values.nodePools.data.resources.requests.cpu }}
+      limits:
+        memory: {{ .Values.nodePools.data.resources.limits.memory }}
+        cpu: {{ .Values.nodePools.data.resources.limits.cpu }}
+    roles:
+    - "data"
+  - component: master
+    replicas: 3
+    diskSize: {{ .Values.nodePools.master.diskSize }}
+    resources:
+      requests:
+        memory: {{ .Values.nodePools.master.resources.requests.memory }}
+        cpu: {{ .Values.nodePools.master.resources.requests.cpu }}
+      limits:
+        memory: {{ .Values.nodePools.master.resources.limits.memory }}
+        cpu: {{ .Values.nodePools.master.resources.limits.cpu }}
+    roles:
+    - "master"
+
+  security:
+    config:
+      adminCredentialsSecret:
+        name: opensearch-admin-credentials-secret
+      securityConfigSecret:
+        name: opensearch-security-config
+    tls:
+      transport:
+        generate: true
+      http:
+        generate: true
