@@ -186,7 +186,8 @@ public class DevPortalAPIKey extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void invokeAPIWithAPIKey_TestDevPortalAPIKey() throws Exception {
         String testSessionId = NameGenerator.generateThreadUniqueName();
-        DevPortalApiKeyUtils.invokeApiGET(this, apiKey, endpointUrl, testSessionId, RESOURCE_PATH, HttpStatus.OK);
+        DevPortalApiKeyUtils.invokeApiGET(this, DevPortalApiKeyUtils.DEFAULT_API_KEY_HEADER,
+                apiKey, endpointUrl, testSessionId, RESOURCE_PATH, HttpStatus.OK);
     }
 
     @Test(dependsOnMethods = {"invokeAPIWithAPIKey_TestDevPortalAPIKey"})
@@ -196,7 +197,28 @@ public class DevPortalAPIKey extends TestNGCitrusSpringSupport {
         ApiKeyResponse apiKeyResponse = ApiManager.regenerateApiKeyV2(accessToken, apiKeyId);
         regeneratedApiKey = apiKeyResponse.getValue();
         String testSessionId = NameGenerator.generateThreadUniqueName();
-        DevPortalApiKeyUtils.invokeApiGET(this, regeneratedApiKey, endpointUrl, testSessionId, RESOURCE_PATH, HttpStatus.OK);
+        DevPortalApiKeyUtils.invokeApiGET(this, DevPortalApiKeyUtils.DEFAULT_API_KEY_HEADER,
+                regeneratedApiKey, endpointUrl, testSessionId, RESOURCE_PATH, HttpStatus.OK);
+    }
+
+    @Test(dependsOnMethods = {"regenerateAPIKeyAndInvoke_TestDevPortalAPIKey"})
+    @CitrusTest
+    public void changeApiKeyHeaderNameAndInvoke_TestDevPortalAPIKey() throws Exception {
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        String headerName = "x-custom-api-key";
+        DevPortalApiKeyUtils.changeApiKeyHeader(this, citrusClients, apiId, headerName, accessToken);
+
+        environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
+                component);
+        ComponentUtils.deployAndValidateBuiltComponent(this, citrusClients, accessToken,
+                component, environments);
+        List<ComponentDeploymentStatusDTO> promotionStatus = ComponentUtils.promoteComponent(this, citrusClients,
+                accessToken, component,
+                environments, ComponentFlavour.BYOC);
+
+        String testSessionId = NameGenerator.generateThreadUniqueName();
+        DevPortalApiKeyUtils.invokeApiGET(
+                this, headerName, regeneratedApiKey, endpointUrl, testSessionId, RESOURCE_PATH, HttpStatus.OK);
     }
 
     @Test(dependsOnMethods = {"regenerateAPIKeyAndInvoke_TestDevPortalAPIKey"})
@@ -205,6 +227,9 @@ public class DevPortalAPIKey extends TestNGCitrusSpringSupport {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ApiManager.deleteApiKeyV2(accessToken, apiKeyId);
         String testSessionId = NameGenerator.generateThreadUniqueName();
-        DevPortalApiKeyUtils.invokeApiGET(this, regeneratedApiKey, endpointUrl, testSessionId, RESOURCE_PATH, HttpStatus.UNAUTHORIZED);
+        DevPortalApiKeyUtils.invokeApiGET(this, DevPortalApiKeyUtils.DEFAULT_API_KEY_HEADER,
+                regeneratedApiKey, endpointUrl, testSessionId, RESOURCE_PATH, HttpStatus.UNAUTHORIZED);
     }
+
+
 }
