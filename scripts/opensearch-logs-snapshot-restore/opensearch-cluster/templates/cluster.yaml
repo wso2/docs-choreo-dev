@@ -27,42 +27,42 @@ spec:
     setVMMaxMapCount: true
     pluginsList: ["repository-s3", "mapper-size"]
     keystore:
-    - secret:
+      - secret:
         name: snapshot-repository
     snapshotRepositories:
-    - name: container-logs-automatic-snapshots
-      settings:
-        base_path: {{ .Values.snapshotRepository.basePath }}
-        bucket: {{ .Values.snapshotRepository.bucket }}
-        region: {{ .Values.snapshotRepository.region }}
-      type: s3
+      - name: container-logs-automatic-snapshots
+        settings:
+          base_path: {{.Values.snapshotRepository.basePath}}
+          bucket: {{.Values.snapshotRepository.bucket}}
+          region: {{.Values.snapshotRepository.region}}
+        type: s3
   confMgmt:
     smartScaler: true
   nodePools:
-  - component: data
-    replicas: 1
-    diskSize: {{ .Values.nodePools.data.diskSize }}
-    resources:
-      requests:
-        memory: {{ .Values.nodePools.data.resources.requests.memory }}
-        cpu: {{ .Values.nodePools.data.resources.requests.cpu }}
-      limits:
-        memory: {{ .Values.nodePools.data.resources.limits.memory }}
-        cpu: {{ .Values.nodePools.data.resources.limits.cpu }}
-    roles:
-    - "data"
-  - component: master
-    replicas: 3
-    diskSize: {{ .Values.nodePools.master.diskSize }}
-    resources:
-      requests:
-        memory: {{ .Values.nodePools.master.resources.requests.memory }}
-        cpu: {{ .Values.nodePools.master.resources.requests.cpu }}
-      limits:
-        memory: {{ .Values.nodePools.master.resources.limits.memory }}
-        cpu: {{ .Values.nodePools.master.resources.limits.cpu }}
-    roles:
-    - "master"
+    - component: data
+      replicas: 1
+      diskSize: {{.Values.nodePools.data.diskSize}}
+      resources:
+        requests:
+          memory: {{.Values.nodePools.data.resources.requests.memory}}
+          cpu: {{.Values.nodePools.data.resources.requests.cpu}}
+        limits:
+          memory: {{.Values.nodePools.data.resources.limits.memory}}
+          cpu: {{.Values.nodePools.data.resources.limits.cpu}}
+      roles:
+        - "data"
+    - component: master
+      replicas: 3
+      diskSize: {{.Values.nodePools.master.diskSize}}
+      resources:
+        requests:
+          memory: {{.Values.nodePools.master.resources.requests.memory}}
+          cpu: {{.Values.nodePools.master.resources.requests.cpu}}
+        limits:
+          memory: {{.Values.nodePools.master.resources.limits.memory}}
+          cpu: {{.Values.nodePools.master.resources.limits.cpu}}
+      roles:
+        - "master"
 
   security:
     config:
