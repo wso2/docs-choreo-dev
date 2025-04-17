@@ -19,7 +19,7 @@ while [[ $(kubectl get opensearchcluster opensearch -n observability -o jsonpath
 done
 
 # loop until all opensearch pods are running
-while [[ $(kubectl get pods -n observability | grep opensearch-master | grep 1/1 | wc -l) -ne 3 ]]; do
+while [[ $(kubectl get pods -n observability | grep opensearch-master | grep -c 1/1) -ne 3 ]]; do
   echo "Waiting for opensearch master pods to be ready..."
   sleep 5
 done

@@ -11,7 +11,7 @@
 # --------------------------------------------------------------------------------------
 
 kubectl port-forward svc/opensearch -n observability 9200 &
-pid=$(echo $!)
+pid=$!
 sleep 10
 password=$(kubectl get secret opensearch-admin-credentials-secret -o yaml -n observability | yq eval '.data["password"]' | base64 -d)
 token=$(echo -n "admin:$password" | base64)
@@ -22,4 +22,4 @@ curl --location 'https://localhost:9200/_cluster/health?pretty' --header "Author
 echo "allocation"
 curl --location 'https://localhost:9200/_cat/allocation?v' --header "Authorization: Basic $token" -k
 
-kill $pid
+kill "$pid"

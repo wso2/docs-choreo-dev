@@ -11,7 +11,7 @@
 # --------------------------------------------------------------------------------------
 
 kubectl port-forward svc/opensearch -n observability 9200 &
-pid=$(echo $!)
+pid=$!
 sleep 5
 password=$(kubectl get secret opensearch-admin-credentials-secret -o yaml -n observability | yq eval '.data["password"]' | base64 -d)
 
@@ -23,4 +23,4 @@ curl --location --request GET "https://localhost:9200/_cat/snapshots/container-l
      --header 'Content-Type: application/json' \
      -k
 
-kill $pid
+kill "$pid"

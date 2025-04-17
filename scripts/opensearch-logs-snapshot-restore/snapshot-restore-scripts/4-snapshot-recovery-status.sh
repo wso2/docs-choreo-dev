@@ -11,7 +11,7 @@
 # --------------------------------------------------------------------------------------
 
 kubectl port-forward svc/opensearch -n observability 9200 &
-pid=$(echo $!)
+pid=$!
 sleep 5
 password=$(kubectl get secret opensearch-admin-credentials-secret -o yaml -n observability | yq eval '.data["password"]' | base64 -d)
 
@@ -30,4 +30,4 @@ while true; do
     sleep 60
 done
 
-kill $pid
+kill "$pid"

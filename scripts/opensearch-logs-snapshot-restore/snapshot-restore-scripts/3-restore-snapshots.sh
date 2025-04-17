@@ -18,7 +18,7 @@ fi
 SNAPSHOT_NAME="$1"
 
 kubectl port-forward svc/opensearch -n observability 9200 &
-pid=$(echo $!)
+pid=$!
 sleep 5
 password=$(kubectl get secret opensearch-admin-credentials-secret -o yaml -n observability | yq eval '.data["password"]' | base64 -d)
 
@@ -38,7 +38,7 @@ curl --location 'https://localhost:9200/_cat/indices?v=true&expand_wildcards=all
      -k
 
 echo "Recovery status"
-for i in {0..20}; do
+for _ in {0..20}; do
     echo -e "health"
     curl --location 'https://localhost:9200/_cluster/health?pretty=true' \
          --header "Authorization: Basic $token" \
@@ -50,4 +50,4 @@ for i in {0..20}; do
     sleep 60
 done
 
-kill $pid
+kill "$pid"

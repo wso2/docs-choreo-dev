@@ -19,14 +19,14 @@ helm repo update
 helm install opensearch-operator opensearch-operator/opensearch-operator -n observability --version 2.7.0
 
 # loop until opensearch crds are created
-while [[ $(kubectl get crd | grep opensearch | wc -l) -eq 0 ]]; do
+while [[ $(kubectl get crd | grep -c opensearch) -eq 0 ]]; do
   echo "Waiting for opensearch crds to be created..."
   sleep 5
 done
 echo "opensearch crds created"
 
 # loop until opensearch operator is running and both containers are ready
-while [[ $(kubectl get pods -n observability | grep opensearch-operator | grep 2/2 | wc -l) -eq 0 ]]; do
+while [[ $(kubectl get pods -n observability | grep opensearch-operator | grep -c 2/2) -eq 0 ]]; do
   echo "Waiting for opensearch operator to be ready..."
   sleep 5
 done
