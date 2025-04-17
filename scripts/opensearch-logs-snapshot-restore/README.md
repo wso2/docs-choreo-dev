@@ -97,6 +97,8 @@ The script from step 3 will monitor the status of the ongoing snapshot restorati
 
 After the restoration is complete, logs are available in the opensearch cluster and usual OpenSearch APIs can be used to query and fetch the logs. The following script is designed to fetch the logs of a specific choreo-component and a namespace, and save them to a file.
 
+>Note: There may be issues in parsing the logs using jq tool due to some special characters (e.g. escape characters in stack traces). Look for such issues if any errors are thrown from the script and adjust the script accordingly.
+
 ```bash
 chmod +x 5-fetch-and-process-logs.sh
 ./5-fetch-and-process-logs.sh <choreo-component-id> <namespace>

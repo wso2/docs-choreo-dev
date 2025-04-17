@@ -28,7 +28,7 @@ spec:
     pluginsList: ["repository-s3", "mapper-size"]
     keystore:
       - secret:
-        name: snapshot-repository
+          name: snapshot-repository
     snapshotRepositories:
       - name: container-logs-automatic-snapshots
         settings:
