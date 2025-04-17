@@ -115,7 +115,7 @@ while [ "$last_hit_sort_value" -ne "$previous_last_hit_sort_value" ]; do
         echo "$hit" >> component_"${COMPONENT_ID}"_logs.json
     done
 
-    last_hit_sort_value=$(echo $logs_next_page | jq -r '.hits.hits[-1].sort[0]')
+    last_hit_sort_value=$(echo "$logs_next_page" | jq -r '.hits.hits[-1].sort[0]')
     echo "last_hit_sort_value: $last_hit_sort_value"
 done
 
