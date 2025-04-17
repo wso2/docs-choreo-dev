@@ -5,3 +5,4 @@ resources:
   - sys-obsapi.yaml
   - alerting-api.yaml
   - insights-query-api.yaml
+  - log-enricher.yaml

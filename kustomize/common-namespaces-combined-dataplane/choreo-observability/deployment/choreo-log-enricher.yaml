@@ -42,64 +42,64 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - name: log-enricher
-        envFrom:
-          - configMapRef:
-              name: log-enricher-config
-        env:
-          - name: OPENSEARCH_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: log-enricher-opensearch-password
-                key: opensearch-password
-        image: choreocontrolplane.azurecr.io/choreoipaas/choreo-log-enricher:latest
-        securityContext:
-          runAsUser: 10500
-          runAsGroup: 10500
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
-          capabilities:
-            drop:
-              - all
-        volumeMounts:
-          - name: opensearch-password
-            mountPath: "/mnt/csi/opensearch-password"
-            readOnly: true
-        ports:
-          - containerPort: 9090
-            name: log-enricher-port
-        readinessProbe:
-          initialDelaySeconds: 5
-          timeoutSeconds: 15
-          periodSeconds: 10
-          failureThreshold: 3
-          successThreshold: 1
-          httpGet:
-            port: log-enricher-port
-            path: /readiness
-        livenessProbe:
-          initialDelaySeconds: 10
-          timeoutSeconds: 15
-          periodSeconds: 30
-          failureThreshold: 3
-          successThreshold: 1
-          httpGet:
-            port: log-enricher-port
-            path: /liveness
-        resources:
-          limits:
-            cpu: "500m"
-            memory: "1200Mi"
-          requests:
-            cpu: "300m"
-            memory: "800Mi"
+        - name: log-enricher
+          envFrom:
+            - configMapRef:
+                name: log-enricher-config
+          env:
+            - name: OPENSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: log-enricher
+                  key: opensearch-password
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-log-enricher:latest
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: opensearch-password
+              mountPath: "/mnt/csi/opensearch-password"
+              readOnly: true
+          ports:
+            - containerPort: 9090
+              name: log-enricher-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: log-enricher-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: log-enricher-port
+              path: /liveness
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "1200Mi"
+            requests:
+              cpu: "300m"
+              memory: "800Mi"
       volumes:
         - name: opensearch-password
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: log-enricher-opensearch-password
+              secretProviderClass: log-enricher
             nodePublishSecretRef:
               name: csi-secret-store-azure
       restartPolicy: Always

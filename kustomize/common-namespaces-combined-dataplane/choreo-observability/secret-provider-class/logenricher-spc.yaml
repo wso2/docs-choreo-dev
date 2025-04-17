@@ -17,10 +17,9 @@
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
-  name: log-enricher-opensearch-password
-spec:
+  name: log-enricher
   secretObjects:
-    - secretName: log-enricher-opensearch-password
+    - secretName: log-enricher
       type: Opaque
       data:
         - key: opensearch-password
