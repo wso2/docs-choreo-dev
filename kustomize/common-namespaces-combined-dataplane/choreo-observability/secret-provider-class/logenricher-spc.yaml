@@ -18,6 +18,7 @@ apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
   name: log-enricher
+spec:
   secretObjects:
     - secretName: log-enricher
       type: Opaque
