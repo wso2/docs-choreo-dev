@@ -375,7 +375,7 @@ export class GraphQLQueryBuilder {
                                   name: "${componentData.componentName}",
                                   orgId: ${componentData.orgId},
                                   orgHandler: "${componentData.handle}",
-                                  displayName: "${componentData.componentName}",
+                                  displayName: "${componentData.displayName}",
                                   displayType: "${componentData.displayType}",
                                   projectId: "${projectId}",
                                   labels: "",
@@ -392,6 +392,8 @@ export class GraphQLQueryBuilder {
                                   repositorySubPath: "${componentData.repositorySubPath}",
                                   repositoryType: "${componentData.repositoryType}",
                                   repositoryBranch: "main",
+                                  initializeAsBallerinaProject: ${componentData.initializeAsBallerinaProject},
+                                  secretRef: "${componentData.secretRef}",
                                 } )
                                 {id, orgId, projectId, handler    }
                       }`,

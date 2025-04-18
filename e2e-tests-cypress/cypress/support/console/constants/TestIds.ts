@@ -92,6 +92,7 @@ export namespace TestIds {
   export const noEndpointNotification =
     '[data-testid="no-endpoints-notification"]';
   export const endpointStatus = '[data-cyid="Endpoints-status-chip"]';
+  export const enduserAttributes = '[data-cyid="sec-backend-jwt-check-box"]'
   export const commitHistory = '[data-cyid="commit-history-detail-box"]';
   export const retry = '[data-testid="retry-btn"]';
   export const refresh = '[data-cyid="refresh-button-button"]';
