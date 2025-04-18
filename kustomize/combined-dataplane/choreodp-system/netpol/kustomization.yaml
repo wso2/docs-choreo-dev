@@ -1,2 +1,3 @@
 resources:
   - deny-metadata-egress.yaml
+  - build-pipeline-daemonset.yaml
