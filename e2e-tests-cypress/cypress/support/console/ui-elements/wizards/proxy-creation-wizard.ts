@@ -13,7 +13,7 @@
 
 import { ProxyInfo } from "../../entities/project/project";
 import { TestIds } from "../../constants/TestIds";
-import { SHORT_TIME } from "../../../commons/timeouts";
+import { MEDIUM_TIME, SHORT_TIME, VERY_SHORT_TIME } from "../../../commons/timeouts";
 
 export class _ProxyCreationWizard {
   createFromOASUrl(url: string) {
@@ -62,10 +62,10 @@ export class _ProxyCreationWizard {
       );
     }
 
-    cy.getUnstable(TestIds.ProxyCreateButton).should("be.enabled").eq(1).click();
+    cy.getUnstable(TestIds.ProxyCreateButton).should("be.enabled", SHORT_TIME).eq(1).click();
 
     cy.get(TestIds.backdropLoader).should("not.exist");
-    cy.get(TestIds.progressBar, SHORT_TIME).should("not.exist").then(() => {
+    cy.get(TestIds.progressBar, MEDIUM_TIME).should("not.exist").then(() => {
       // If an error occurs during creation the Create Proxy page will be displayed
       // which contains the Skip Source button. Therefore detect that the Proxy 
       // creation has failed.

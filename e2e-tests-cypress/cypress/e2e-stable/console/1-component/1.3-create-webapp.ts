@@ -18,6 +18,9 @@ import {
   Project,
 } from "../../../support/console/entities/project/project";
 import { console } from "../../../support/console/console";
+import { Utils } from "../../../support/commons/utils";
+import { TestIds } from "../../../support/console/constants/TestIds";
+import { ConfigEntryStep, createDefaultSteps } from "../../../support/commons/types";
 
 
 describe("Create Web App", () => {
@@ -42,6 +45,12 @@ describe("Create Web App", () => {
    * The following functions are specific to the particular web app used in this spec.
    * Hence they are not implemented in a reusable way & are maintained at spec level.
    */
+  function enableEnduserAttributes(){
+    Utils.checkIfUnchecked(TestIds.enduserAttributes).then(() => {
+      cy.get(TestIds.nextButton).scrollIntoView();
+    });
+  }
+
   function visitSampleWebsite(url: string) {
     cy.origin(url, () => {
       cy.visit("/");
@@ -150,12 +159,10 @@ describe("Create Web App", () => {
     });
   })
 
-  it("Enable Pass User Context To Backend", () => {
-      service.enablePassUserContextToBackend();
-  });
-
-  it("Deploy backend service to Dev", () => {
-    service.deployPublicLevelAccessibility();
+  it("Enable Pass User Context and Deploy backend service to Dev", () => {
+    let configSteps = createDefaultSteps(2);
+    configSteps[configSteps.length - 1] = new ConfigEntryStep(enableEnduserAttributes);
+    service.deployPublicLevelAccessibilityWithConfigs(configSteps, false);
   });
 
   it("Promote backend service to Prod", () => {

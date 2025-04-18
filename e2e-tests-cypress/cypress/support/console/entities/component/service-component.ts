@@ -25,7 +25,6 @@ import { mixinServiceDeploy } from "../../features/deploy/deploy-service";
 import { mixinManage } from "../../features/manage/manage";
 import { ConfigEntryStep, createDefaultSteps } from "../../../commons/types";
 import { mixinConnections } from "../../features/component-connections/connections";
-import { ConnectionsFeature } from "../../features/component-connections/connections";
 import { TestIds } from "../../constants/TestIds";
 
 export class Service extends mixinBuild(
@@ -139,7 +138,9 @@ export class Service extends mixinBuild(
 
   enablePassUserContextToBackend() {
     this.sideMenu.navigateToDeploy();
-    cy.get(TestIds.endpointConfigurationsButton).should("be.visible").click();
+    cy.get(TestIds.availableEndpoints).within(() => {
+      cy.get(TestIds.viewArtifact).should("be.visible").click();
+    });
     cy.get(TestIds.rightDrawer)
       .contains("div", "Pass end-user attributes to upstream")
       .should("be.visible")

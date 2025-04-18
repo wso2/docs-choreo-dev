@@ -281,8 +281,9 @@ export class Project {
     }
 
     let componentData: ComponentData = {
-      componentName: componentName,
+      componentName: componentName.toLowerCase().replace(/\./g, ""),
       displayType: Enums.DisplayType.ballerinaService,
+      displayName: componentName,
       accessibility: accessibility,
       projectName: this.name,
       triggerChannels: "",
@@ -291,6 +292,8 @@ export class Project {
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",
+      initializeAsBallerinaProject: false,
+      secretRef: "",
     };
 
     return GraphQL.createComponentV2(
@@ -575,6 +578,8 @@ export class Project {
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",
+      initializeAsBallerinaProject: false,
+      secretRef: "",
     };
 
     return GraphQL.createComponentV2(
@@ -607,6 +612,8 @@ export class Project {
       repositoryType: Enums.RepoType.UserManagedNonEmpty,
       repositorySubPath: repoInfo.subPath == undefined ? "" : repoInfo.subPath,
       sampleTemplate: "",
+      initializeAsBallerinaProject: false,
+      secretRef: "",
     };
 
     return GraphQL.createComponentV2(
@@ -681,6 +688,8 @@ export class Project {
       sampleTemplate: "",
       triggerChannels: webhookInfo.triggerChannels,
       triggerId: webhookInfo.triggerId,
+      initializeAsBallerinaProject: false,
+      secretRef: "",
     };
 
     return GraphQL.createComponentV2(

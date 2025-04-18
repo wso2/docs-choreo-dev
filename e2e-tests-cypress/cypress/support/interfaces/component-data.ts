@@ -15,4 +15,6 @@ export interface ComponentData extends AbsComponent {
   repositorySubPath?: string;
   accessibility?: string;
   displayName?: string;
+  initializeAsBallerinaProject: boolean;
+  secretRef: string;
 }

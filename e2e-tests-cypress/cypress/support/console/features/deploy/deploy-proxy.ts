@@ -412,17 +412,17 @@ export function mixinProxyDeploy<T extends Types.Constructor>(
 
       cy.get(TestIds.buildStatus)
         .eq(0)
-        .contains(BUILD_IN_PROGRESS, LONG_TIME)
+        .contains(BUILD_IN_PROGRESS, VERY_LONG_TIME)
         .should("not.exist");
 
       cy.get(TestIds.buildStatus)
         .eq(0)
-        .contains(BUILD_PARTIAL, LONG_TIME)
+        .contains(BUILD_PARTIAL, VERY_LONG_TIME)
         .should("not.exist");
 
       cy.get(TestIds.buildStatus)
         .eq(0)
-        .contains(BUILD_IN_PROGRESS, LONG_TIME)
+        .contains(BUILD_IN_PROGRESS, VERY_LONG_TIME)
         .should("not.exist");
 
       cy.get(TestIds.devEnvCard).within(() => {

@@ -11,6 +11,16 @@ const path = require('path');
 // Choreo Stage env file
 const jsonFilePath = path.join(__dirname, 'cypress.stage.env.json');
 
+const username = process.env.CYPRESS_STAGE_USERNAME
+const password = process.env.CYPRESS_STAGE_PASSWORD
+const orgHandle = process.env.CYPRESS_STAGE_ORG_HANDLE
+
+if (username && password && orgHandle) {
+  process.env.cypress_enterpriseIDPUsername = username
+  process.env.cypress_enterpriseIDPPassword = password
+  process.env.choreoOrgHandle = orgHandle
+}
+
 try {
   const jsonData = fs.readFileSync(jsonFilePath, 'utf8');
   
