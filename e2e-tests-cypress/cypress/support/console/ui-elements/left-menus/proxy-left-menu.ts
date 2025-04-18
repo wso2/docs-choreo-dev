@@ -37,6 +37,13 @@ export class ProxyLeftMenu extends LeftMenu {
 
   navigateToDeploy() {
     this.scrollToTopOfMenu();
+    // An error maybe encountered during the deploy(example: If an error is encouneterd while the right
+    // drawer is still open, the elements of the deploy page are not acctionable without closing the
+    // right drawer explicitly). If the page is in a non actionalble state, retrying the failed step is futile. 
+    // Handling all possible error conditions explictly is not practical. By navigating to the home page first, 
+    // we can ensure that the deploy page gets reloaded when the step is retried by Cypress, 
+    // thereby ensuring the deploy page is reset before retrying the step when an error is encountered.
+    this.navigateToMenuItem("[data-cyid=home]");
     this.navigateToMenuItem("[data-cyid=link-deploy]");
   }
 
@@ -63,6 +70,12 @@ export class ProxyLeftMenu extends LeftMenu {
 
   navigateToBuild() {
     this.scrollToTopOfMenu();
+    // An error maybe encountered during the build(example: If an error is encouneterd while the right
+    // drawer is still open, the elements of the build page are not acctionable without closing the
+    // right drawer explicitly). If the page is in a non actionalble state, retrying the failed step is futile. 
+    // Handling all possible error conditions explictly is not practical. By navigating to the deploy page first, 
+    // we can ensure that the build page gets reloaded when the step is retried by Cypress, 
+    // thereby ensuring the build page is reset before retrying the step when an error is encountered.
     this.navigateToMenuItem("[data-cyid=link-deploy]");
     this.navigateToMenuItem("[data-cyid=link-build]");
   }
