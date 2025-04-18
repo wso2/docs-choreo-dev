@@ -63,6 +63,7 @@ public class DevPortalAPIKey extends TestNGCitrusSpringSupport {
     private String apiKeyId;
     private DevPortalApiKeyUtils.KeySetType keySetType;
     private static final String RESOURCE_PATH = "/rewards";
+    private static final String customApiKeyHeader = "x-custom-api-key";
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
 
@@ -205,8 +206,7 @@ public class DevPortalAPIKey extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void changeApiKeyHeaderNameAndInvoke_TestDevPortalAPIKey() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
-        String headerName = "x-custom-api-key";
-        DevPortalApiKeyUtils.changeApiKeyHeader(this, citrusClients, apiId, headerName, accessToken);
+        DevPortalApiKeyUtils.changeApiKeyHeader(this, citrusClients, apiId, customApiKeyHeader, accessToken);
 
         environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 component);
@@ -218,16 +218,16 @@ public class DevPortalAPIKey extends TestNGCitrusSpringSupport {
 
         String testSessionId = NameGenerator.generateThreadUniqueName();
         DevPortalApiKeyUtils.invokeApiGET(
-                this, headerName, regeneratedApiKey, endpointUrl, testSessionId, RESOURCE_PATH, HttpStatus.OK);
+                this, customApiKeyHeader, regeneratedApiKey, endpointUrl, testSessionId, RESOURCE_PATH, HttpStatus.OK);
     }
 
-    @Test(dependsOnMethods = {"regenerateAPIKeyAndInvoke_TestDevPortalAPIKey"})
+    @Test(dependsOnMethods = {"changeApiKeyHeaderNameAndInvoke_TestDevPortalAPIKey"})
     @CitrusTest
     public void deleteAPIKeyAndInvoke() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ApiManager.deleteApiKeyV2(accessToken, apiKeyId);
         String testSessionId = NameGenerator.generateThreadUniqueName();
-        DevPortalApiKeyUtils.invokeApiGET(this, DevPortalApiKeyUtils.DEFAULT_API_KEY_HEADER,
+        DevPortalApiKeyUtils.invokeApiGET(this, customApiKeyHeader,
                 regeneratedApiKey, endpointUrl, testSessionId, RESOURCE_PATH, HttpStatus.UNAUTHORIZED);
     }
 
