@@ -22,5 +22,5 @@ roleRef:
   name: log-enricher-role
   apiGroup: rbac.authorization.k8s.io
 subjects:
-- kind: ServiceAccount
-  name: log-enricher-sa
+  - kind: ServiceAccount
+    name: log-enricher-sa

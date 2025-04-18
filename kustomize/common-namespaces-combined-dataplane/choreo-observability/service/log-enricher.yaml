@@ -7,9 +7,9 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 9090
-    targetPort: 9090
-    protocol: TCP
-    name: http
+    - port: 9090
+      targetPort: log-enricher-port
+      protocol: TCP
+      name: log-enricher-port
   selector:
     app: log-enricher
