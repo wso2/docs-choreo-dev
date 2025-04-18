@@ -68,6 +68,7 @@ window.Settings = {
     apiTryoutTestKeyEnabled: {{.API_TRYOUT_TEST_KEY_ENABLED | default false}},
     apiKeyFeatureEnabled: {{.API_KEY_FEATURE_ENABLED | default false}},
     devPortalIdPConfigurationFeatureEnabled: {{.DEV_PORTAL_IDP_CONFIGURATION_FEATURE_ENABLED | default false}},
+    apiKeyScopeSupportEnabled: {{.API_KEY_SCOPE_SUPPORT_ENABLED | default false}},
 }
 
 const currentHost = window.location.hostname;
