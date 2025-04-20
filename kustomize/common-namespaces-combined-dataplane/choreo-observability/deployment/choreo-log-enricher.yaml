@@ -88,11 +88,11 @@ spec:
               path: /liveness
           resources:
             limits:
-              cpu: "500m"
-              memory: "1200Mi"
+              cpu: "200m"
+              memory: "300Mi"
             requests:
-              cpu: "300m"
-              memory: "800Mi"
+              cpu: "100m"
+              memory: "250Mi"
       volumes:
         - name: opensearch-password
           csi:
