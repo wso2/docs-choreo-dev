@@ -18,25 +18,16 @@ kind: Deployment
 metadata:
   name: log-enricher
   labels:
-    app.kubernetes.io/name: choreo-log-enricher
-    app.kubernetes.io/part-of: choreo-observability
     choreo.component: log-enricher
-    app: log-enricher
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: choreo-log-enricher
-      app.kubernetes.io/part-of: choreo-observability
       choreo.component: log-enricher
-      app: log-enricher
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: choreo-log-enricher
-        app.kubernetes.io/part-of: choreo-observability
         choreo.component: log-enricher
-        app: log-enricher
     spec:
       securityContext:
         seccompProfile:
@@ -46,12 +37,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: log-enricher-config
-          env:
-            - name: OPENSEARCH_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: log-enricher
-                  key: opensearch-password
           image: choreocontrolplane.azurecr.io/choreoipaas/choreo-log-enricher:latest
           securityContext:
             runAsUser: 10500
@@ -67,7 +52,7 @@ spec:
               readOnly: true
           ports:
             - containerPort: 9090
-              name: log-enricher-port
+              name: log-port
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 15
