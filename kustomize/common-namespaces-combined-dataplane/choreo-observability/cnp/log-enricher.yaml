@@ -25,9 +25,9 @@ spec:
             - port: "443"
               protocol: TCP
     - toEndpoints:
-      - matchLabels:
-          k8s:io.kubernetes.pod.namespace: choreo-observability
-          opster.io/opensearch-cluster: opensearch
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: choreo-observability
+            opster.io/opensearch-cluster: opensearch
       toPorts:
         - ports:
             - port: "9200"
