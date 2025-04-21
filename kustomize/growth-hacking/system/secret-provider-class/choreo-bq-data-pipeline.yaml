@@ -69,7 +69,7 @@ spec:
           objectAlias: RUDDER_DB_PASSWORD
           objectVersion: "{{.RUDDER_DB_PASSWORD}}"
         - |
-          objectName: billing-DB-MSSQL-PASSWORD
+          objectName: billing-DB-SQL-PASSWORD
           objectType: secret
           objectAlias: BILLING_DB_PASSWORD
           objectVersion: "{{.BILLING_DB_PASSWORD}}"
