@@ -14,7 +14,6 @@
 import { TestIds } from "../../constants/TestIds";
 import { Proxy } from "../../entities/component/proxy-component";
 import { Component } from "../../entities/component/component";
-import { Service } from "../../entities/component/service-component";
 
 export class DeploymentTrack {
   validate(component: Component) {
@@ -22,12 +21,8 @@ export class DeploymentTrack {
 
     const version = component.getLatestVersion();
 
-    const regex = new RegExp(`(API v${version}|^v${version})`, "gm");
-
     if (component instanceof Proxy) {
       cy.get(TestIds.versionPicker).contains(`v${version}`);
-    } else if (component instanceof Service) {
-      cy.get(TestIds.selectBranch).contains(regex);
     } else {
       cy.get(TestIds.selectBranch).contains(version);
     }
