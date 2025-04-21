@@ -32,3 +32,14 @@ spec:
         - ports:
             - port: "9200"
               protocol: TCP
+  ingress:
+    # Allow ingress from fluent-bit-events deployment to get K8s events
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: fluent-bit
+            app.kubernetes.io/name: fluent-bit-events
+            k8s:io.kubernetes.pod.namespace: choreo-observability
+      toPorts:
+        - ports:
+            - port: "9090"
+              protocol: TCP
