@@ -678,7 +678,8 @@ export class Project {
     }
 
     let componentData: ComponentData = {
-      componentName: componentName,
+      componentName: componentName.toLowerCase().replace(/\./g, ""),
+      displayName: componentName,
       displayType: Enums.DisplayType.webhook,
       accessibility: accessibility,
       projectName: this.name,
