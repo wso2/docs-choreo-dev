@@ -19,12 +19,6 @@ kind: SecretProviderClass
 metadata:
   name: log-enricher
 spec:
-  secretObjects:
-    - secretName: log-enricher
-      type: Opaque
-      data:
-        - key: opensearch-password
-          objectName: OPENSEARCH_PASSWORD
   parameters:
     objects: |
       array:

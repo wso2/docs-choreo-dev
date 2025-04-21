@@ -60,7 +60,7 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: log-enricher-port
+              port: log-port
               path: /readiness
           livenessProbe:
             initialDelaySeconds: 10
@@ -69,7 +69,7 @@ spec:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
-              port: log-enricher-port
+              port: log-port
               path: /liveness
           resources:
             limits:
