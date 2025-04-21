@@ -6,3 +6,4 @@ resources:
   - sys-obsapi.yaml
   - alerting-api.yaml
   - insights-query-api.yaml
+  - choreo-log-enricher.yaml

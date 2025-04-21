@@ -21,6 +21,7 @@ resources:
   - rbac
   - service
   - secret-provider-class
+  - cnp
 
 patches:
   - path: priority-class-deployment-patch.yaml

@@ -1,3 +1,4 @@
 resources:
   - loggingapi-sa
   - alerting-api
+  - log-enricher-sa
