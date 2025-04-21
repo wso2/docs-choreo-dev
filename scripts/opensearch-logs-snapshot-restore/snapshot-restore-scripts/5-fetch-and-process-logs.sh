@@ -37,12 +37,12 @@ logs_first_page=$(curl --location 'https://localhost:9200/_search' --header "Aut
                 },
                 {
                     "match": {
-                        "kubernetes.namespace_name": "'$NAMESPACE'"
+                        "kubernetes.namespace_name": "'"$NAMESPACE"'"
                     }
                 },
                 {
                     "match": {
-                        "kubernetes.labels.component_id": "'$COMPONENT_ID'"
+                        "kubernetes.labels.component_id": "'"$COMPONENT_ID"'"
                     }
                 }
             ]
@@ -82,12 +82,12 @@ while [ "$last_hit_sort_value" -ne "$previous_last_hit_sort_value" ]; do
                     },
                     {
                         "match": {
-                            "kubernetes.namespace_name": "'$NAMESPACE'"
+                            "kubernetes.namespace_name": "'"$NAMESPACE"'"
                         }
                     },
                     {
                         "match": {
-                            "kubernetes.labels.component_id": "'$COMPONENT_ID'"
+                            "kubernetes.labels.component_id": "'"$COMPONENT_ID"'"
                         }
                     }
                 ]
@@ -97,7 +97,7 @@ while [ "$last_hit_sort_value" -ne "$previous_last_hit_sort_value" ]; do
             "log"
         ],
         "search_after": [
-            '$last_hit_sort_value'
+            '"$last_hit_sort_value"'
         ],
         "sort": [
             { "@timestamp": "asc" }
