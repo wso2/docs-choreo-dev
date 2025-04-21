@@ -60,12 +60,9 @@ logs_first_page=$(curl --location 'https://localhost:9200/_search' --header "Aut
 
 hits_count=$(echo "$logs_first_page" | jq -r '.hits.total.value')
 echo "hits_count: $hits_count"
-hits=$(echo "$logs_first_page" | jq -r '.hits.hits[]')
+hits=$(echo "$logs_first_page" | jq '.hits.hits')
 
-for hit in $hits; do
-    # Append the hit to output file
-    echo "$hit" >> component_"${COMPONENT_ID}"_logs.json
-done
+(echo "$hits") | jq -r '.[] | ._source.log' >> component_"${COMPONENT_ID}"_logs.json
 
 last_hit_sort_value=$(echo "$logs_first_page" | jq -r '.hits.hits[-1].sort[0]')
 previous_last_hit_sort_value=555 # Initialize with a dummy value
@@ -108,12 +105,9 @@ while [ "$last_hit_sort_value" -ne "$previous_last_hit_sort_value" ]; do
         "size": 5000
     }')
 
-    hits=$(echo "$logs_next_page" | jq -r '.hits.hits[]')
+    hits=$(echo "$logs_next_page" | jq '.hits.hits')
 
-    for hit in $hits; do
-        # Append the hit to output file
-        echo "$hit" >> component_"${COMPONENT_ID}"_logs.json
-    done
+    (echo "$hits") | jq -r '.[] | ._source.log' >> component_"${COMPONENT_ID}"_logs.json
 
     last_hit_sort_value=$(echo "$logs_next_page" | jq -r '.hits.hits[-1].sort[0]')
     echo "last_hit_sort_value: $last_hit_sort_value"
