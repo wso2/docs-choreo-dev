@@ -137,7 +137,7 @@ configMapGenerator:
   - name: log-enricher-config
     behavior: create
     literals:
-      - PORT="9090"
+      - PORT=9090
       - DEBUG={{.DEBUG | default false}}
       - OPENSEARCH_HOST={{.OPENSEARCH_HOST | default "opensearch"}}
       - OPENSEARCH_PORT={{.OPENSEARCH_PORT | default "9200"}}
