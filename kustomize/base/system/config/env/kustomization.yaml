@@ -928,6 +928,7 @@ configMapGenerator:
       - REACT_APP_ENABLE_API_SETTINGS_UX={{.REACT_APP_ENABLE_API_SETTINGS_UX | default "false"}}
       - REACT_APP_ENABLE_MCP_SERVER_SUPPORT={{.REACT_APP_ENABLE_MCP_SERVER_SUPPORT | default "false"}}
       - REACT_APP_SET_API_KEY_AS_DEFAULT_SECURITY_SCHEME={{.REACT_APP_SET_API_KEY_AS_DEFAULT_SECURITY_SCHEME | default "false"}}
+      - REACT_APP_ENABLE_API_KEY_SCOPE_SUPPORT={{.REACT_APP_ENABLE_API_KEY_SCOPE_SUPPORT | default "false"}}
   - name: env-dp-mizzen
     behavior: create
     literals:
