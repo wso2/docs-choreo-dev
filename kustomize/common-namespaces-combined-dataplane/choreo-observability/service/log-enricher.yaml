@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: log-port
   selector:
-    app: log-enricher
+    choreo.component: log-enricher
