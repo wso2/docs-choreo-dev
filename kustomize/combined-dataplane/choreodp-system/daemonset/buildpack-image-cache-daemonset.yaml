@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: podman-image-cache
+  namespace: dev-choreodp-system
 spec:
   selector:
     matchLabels:
@@ -61,9 +62,9 @@ spec:
               echo "Logging in to ACR"
               podman login -u "$AZURE_CONTAINER_REGISTRY_USERNAME" -p "$AZURE_CONTAINER_REGISTRY_PASSWORD" choreocontrolplane.azurecr.io
 
-              LIFECYCLE_IMAGE="choreocontrolplane.azurecr.io/buildpacksio/lifecycle:${LIFECYCLE_TAG}"
-              BUILDER_IMAGE="choreocontrolplane.azurecr.io/buildpacks/builder:${BUILDER_TAG}"
-              RUN_IMAGE="choreocontrolplane.azurecr.io/buildpacks/google-22/run:${RUN_TAG}"
+              LIFECYCLE_IMAGE="choreocontrolplane.azurecr.io/buildpacksio/lifecycle:${LIFECYCLE_IMAGE_TAG}"
+              BUILDER_IMAGE="choreocontrolplane.azurecr.io/buildpacks/builder:${BUILDER_IMAGE_TAG}"
+              RUN_IMAGE="choreocontrolplane.azurecr.io/buildpacks/google-22/run:${RUN_IMAGE_TAG}"
 
               to_filename() {
                 echo "$1" | sed 's|[/:]|_|g'
