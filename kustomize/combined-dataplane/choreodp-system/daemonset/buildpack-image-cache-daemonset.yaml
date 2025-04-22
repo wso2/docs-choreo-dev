@@ -4,17 +4,14 @@ metadata:
   name: podman-image-cache
   namespace: dev-choreodp-system
   labels:
-    source: image-cache
     choreo.component: image-cache
 spec:
   selector:
     matchLabels:
-      source: image-cache
       choreo.component: image-cache
   template:
     metadata:
       labels:
-        source: image-cache
         choreo.component: image-cache
     spec:
       affinity:
