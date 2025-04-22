@@ -959,6 +959,7 @@ configMapGenerator:
       - REACT_APP_ENABLE_MCP_SERVER_SUPPORT={{.REACT_APP_ENABLE_MCP_SERVER_SUPPORT | default "false"}}
       - REACT_APP_SET_API_KEY_AS_DEFAULT_SECURITY_SCHEME={{.REACT_APP_SET_API_KEY_AS_DEFAULT_SECURITY_SCHEME | default "false"}}
       - REACT_APP_ENABLE_API_KEY_SCOPE_SUPPORT={{.REACT_APP_ENABLE_API_KEY_SCOPE_SUPPORT | default "false"}}
+      - REACT_APP_PROJECT_NAME_DENY_LIST={{.REACT_APP_PROJECT_NAME_DENY_LIST | default "oauth2,oidc"}}
   - name: env-dp-mizzen
     behavior: create
     literals:
