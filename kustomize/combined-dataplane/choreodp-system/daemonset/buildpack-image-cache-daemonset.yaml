@@ -5,14 +5,17 @@ metadata:
   namespace: dev-choreodp-system
   labels:
     app-name: podman-image-cache
+    source: image-cache
 spec:
   selector:
     matchLabels:
       app-name: podman-image-cache
+      source: image-cache
   template:
     metadata:
       labels:
         app-name: podman-image-cache
+        source: image-cache
     spec:
       affinity:
         nodeAffinity:
