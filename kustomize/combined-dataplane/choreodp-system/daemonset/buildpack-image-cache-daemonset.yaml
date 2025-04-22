@@ -3,14 +3,16 @@ kind: DaemonSet
 metadata:
   name: podman-image-cache
   namespace: dev-choreodp-system
+  labels:
+    app-name: podman-image-cache
 spec:
   selector:
     matchLabels:
-      app: podman-image-cache
+      app-name: podman-image-cache
   template:
     metadata:
       labels:
-        app: podman-image-cache
+        app-name: podman-image-cache
     spec:
       affinity:
         nodeAffinity:
