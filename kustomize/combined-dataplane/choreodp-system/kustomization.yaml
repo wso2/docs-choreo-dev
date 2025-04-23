@@ -28,7 +28,6 @@ resources:
   - rbac
   - secret-provider-class
   - service
-  - daemonset
 
 patches:
   - path: priority-class-deployment-patch.yaml
