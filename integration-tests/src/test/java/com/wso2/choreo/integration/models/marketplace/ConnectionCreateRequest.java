@@ -19,4 +19,5 @@ public class ConnectionCreateRequest {
     private Visibility[] visibilities;
     private String requestingServiceVisibility;
     private int orgIdInteger;
+    private String[] allowedScopes;
 }

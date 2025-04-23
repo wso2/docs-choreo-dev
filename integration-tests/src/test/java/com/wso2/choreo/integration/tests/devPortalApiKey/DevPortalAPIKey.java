@@ -27,6 +27,7 @@ import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
 import com.wso2.choreo.integration.common.utils.NameGenerator;
 import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
 import com.wso2.choreo.integration.config.Constant;
+import com.wso2.choreo.integration.models.GraphqlDTO;
 import com.wso2.choreo.integration.models.apiKey.ApiKeyGenerateRequest;
 import com.wso2.choreo.integration.models.apiKey.ApiKeyResponse;
 import com.wso2.choreo.integration.models.apimanager.Application;
@@ -47,10 +48,11 @@ import java.util.Map;
 
 public class DevPortalAPIKey extends TestNGCitrusSpringSupport {
 
-    private static final String SVC_COMPONENTS_REPO_URL = "https://github.com/choreo-test-apps/connection-test-loyalty-service";
-    private static final String PUBLIC_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT = "loyalty-service-public-visibility/";
+    private static final String SVC_COMPONENTS_REPO_URL = "https://github.com/wso2/choreo-samples";
+    private static final String PUBLIC_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT = "go-reading-list-rest-api/";
     private static final String SVC_COMPONENT_DOCKER_FILE_PATH = "Dockerfile";
-    private static final String OAS_FILE_PATH = "openapi.yaml";
+    private static final String OAS_FILE_PATH = "docs/openapi.yaml";
+    private static final String branchName = "main";
     private ChoreoProject project;
     private ChoreoComponent component;
     private List<Environment> environments;
@@ -60,9 +62,11 @@ public class DevPortalAPIKey extends TestNGCitrusSpringSupport {
     private String environmentId;
     private String apiKey;
     private String regeneratedApiKey;
+    private String apiKeyWithScopes;
     private String apiKeyId;
     private DevPortalApiKeyUtils.KeySetType keySetType;
-    private static final String RESOURCE_PATH = "/rewards";
+    private static final String RESOURCE_PATH = "/books";
+    private static final String SCOPE_PROTECTED_RESOURCE_PATH = "/books/1";
     private static final String customApiKeyHeader = "x-custom-api-key";
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
@@ -89,12 +93,15 @@ public class DevPortalAPIKey extends TestNGCitrusSpringSupport {
         String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
         Repository repo = Repository.builder().
                 repoUrl(SVC_COMPONENTS_REPO_URL).
+                subPath(PUBLIC_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT).
                 oasFilePath(PUBLIC_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT+OAS_FILE_PATH).
                 dockerfilePath(PUBLIC_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT+SVC_COMPONENT_DOCKER_FILE_PATH).
-                dockerContext(PUBLIC_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT).build();
+                dockerContext(PUBLIC_ENDPOINTS_SVC_COMPONENT_DOCKER_CONTEXT).
+                isPublicRepo(true).build();
 
-        component =
-                ConnectionUtils.createByocComponent(this, citrusClients, accessToken, componentName, project, repo);
+        GraphqlDTO dto = ComponentUtils.createBuildpackComponentRequest(componentName, project, repo);
+        component = ComponentUtils.createComponent(this, citrusClients, accessToken, dto, ComponentFlavour.BUILDPACK,
+                branchName);
     }
 
     @Test(dependsOnMethods = {"createServiceComponent_TestDevPortalAPIKey"})
@@ -203,6 +210,36 @@ public class DevPortalAPIKey extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"regenerateAPIKeyAndInvoke_TestDevPortalAPIKey"})
+    @CitrusTest
+    public void invokeProtectedPath_TestDevPortalAPIKey() throws Exception {
+        String testSessionId = NameGenerator.generateThreadUniqueName();
+        DevPortalApiKeyUtils.invokeApiGET(this, DevPortalApiKeyUtils.DEFAULT_API_KEY_HEADER,
+                regeneratedApiKey, endpointUrl, testSessionId, SCOPE_PROTECTED_RESOURCE_PATH, HttpStatus.FORBIDDEN);
+    }
+
+    @Test(dependsOnMethods = {"invokeProtectedPath_TestDevPortalAPIKey"})
+    @CitrusTest
+    public void createApiKeyWithScopesAndInvoke_TestDevPortalAPIKey() throws Exception {
+        String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+        ApiKeyGenerateRequest apiKeyGenerateRequest = ApiKeyGenerateRequest.builder()
+                .name(NameGenerator.generateThreadUniqueName())
+                .applicationId(applicationId)
+                .apiId(apiId)
+                .subscriptionPlan("Unlimited")
+                .environmentTemplateId(environmentId)
+                .keyType(keySetType.toString())
+                .scopes(List.of("read:books"))
+                .build();
+
+        String payLoad = ObjectMapperUtil.mapObjectToString(apiKeyGenerateRequest);
+        ApiKeyResponse apiKeyResponse = ApiManager.createApiKeyV2(accessToken, payLoad);
+        apiKeyWithScopes = apiKeyResponse.getValue();
+        String testSessionId = NameGenerator.generateThreadUniqueName();
+        DevPortalApiKeyUtils.invokeApiGET(this, DevPortalApiKeyUtils.DEFAULT_API_KEY_HEADER,
+                apiKeyWithScopes, endpointUrl, testSessionId, SCOPE_PROTECTED_RESOURCE_PATH, HttpStatus.OK);
+    }
+
+    @Test(dependsOnMethods = {"createApiKeyWithScopesAndInvoke_TestDevPortalAPIKey"})
     @CitrusTest
     public void changeApiKeyHeaderNameAndInvoke_TestDevPortalAPIKey() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();

@@ -269,7 +269,7 @@ public class ComponentUtils {
         return GraphqlDTO.builder().name(name).srcGitRepoUrl(repo.getRepoUrl()).projectId(project.getId()).orgId(orgId)
                 .displayType(Constant.displayType.restAPI.name()).orgHandler(orgHandle)
                 .oasFilePath(repo.getOasFilePath()).dockerContext(repo.getDockerContext())
-                .dockerfilePath(repo.getDockerfilePath()).build();
+                .isPublicRepo(repo.getIsPublicRepo()).dockerfilePath(repo.getDockerfilePath()).build();
     }
 
     public static GraphqlDTO createPrismMockComponentRequest(String name, ChoreoProject project, Repository repo) {
