@@ -62,42 +62,6 @@ spec:
               mkdir -p /mnt/podman-cache
 
               echo "Logging in to ACR"
-              podman login -u "$AZURE_CONTAINER_REGISTRY_USERNAME" -p "$AZURE_CONTAINER_REGISTRY_PASSWORD" choreocontrolplane.azurecr.io
-
-              LIFECYCLE_IMAGE="choreocontrolplane.azurecr.io/buildpacksio/lifecycle:${LIFECYCLE_IMAGE_TAG}"
-              BUILDER_IMAGE="choreocontrolplane.azurecr.io/buildpacks/builder:${BUILDER_IMAGE_TAG}"
-              RUN_IMAGE="choreocontrolplane.azurecr.io/buildpacks/google-22/run:${RUN_IMAGE_TAG}"
-
-              to_filename() {
-                echo "$1" | sed 's|[/:]|_|g'
-              }
-
-              LIFECYCLE_TAR="/mnt/podman-cache/$(to_filename "$LIFECYCLE_IMAGE").tar"
-              if [[ -f "$LIFECYCLE_TAR" ]]; then
-                echo "lifecycleImage already exists"
-              else
-                echo "Pulling lifecycleImage"
-                podman pull "$LIFECYCLE_IMAGE"
-                podman save -o "$LIFECYCLE_TAR" "$LIFECYCLE_IMAGE"
-              fi
-
-              BUILDER_TAR="/mnt/podman-cache/$(to_filename "$BUILDER_IMAGE").tar"
-              if [[ -f "$BUILDER_TAR" ]]; then
-                echo "builderImage already exists"
-              else
-                echo "Pulling builderImage"
-                podman pull "$BUILDER_IMAGE"
-                podman save -o "$BUILDER_TAR" "$BUILDER_IMAGE"
-              fi
-
-              RUN_TAR="/mnt/podman-cache/$(to_filename "$RUN_IMAGE").tar"
-              if [[ -f "$RUN_TAR" ]]; then
-                echo "runImage already exists"
-              else
-                echo "Pulling runImage"
-                podman pull "$RUN_IMAGE"
-                podman save -o "$RUN_TAR" "$RUN_IMAGE"
-              fi
 
               echo "All images cached successfully."
           securityContext:
