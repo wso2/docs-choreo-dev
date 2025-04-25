@@ -46,3 +46,5 @@ commonAnnotations:
 resources:
   - namespace.yaml
   - keda-netpol.yaml
+
+namespace: keda
