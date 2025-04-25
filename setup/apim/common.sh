@@ -73,6 +73,13 @@ export PDP_MANAGER_API_KEY="pdpmanagerclientid"
 export PDP_MANAGER_API_SECRET="$(generate_client_secret)"
 export PDP_MANAGER_CALL_BACK_URL="https://localhost"
 
+#system api pipeline configs
+export SYSTEM_API_PIPELINE_SP_NAME="choreo_pdp_sync_pipeline1"
+export SYSTEM_API_PIPELINE_API_KEY="systemapipelineclientid"
+# shellcheck disable=SC2155
+export SYSTEM_API_PIPELINE_API_SECRET="$(generate_client_secret)"
+export SYSTEM_API_PIPELINE_CALL_BACK_URL="https://localhost"
+
 #endpoint resolver configs
 export ENDPOINT_RESOLVER_SP_NAME="endpointResolver"
 export ENDPOINT_RESOLVER_API_KEY="endpointresolverclientid"
