@@ -2,31 +2,31 @@
 
 In the Choreo Console, you have the ability to manage access to projects and the actions that can be performed within them. Administrators have the capability to restrict project access to specific user groups. This feature is useful when you need certain user groups to have access to particular projects or for a set of projects.
 
-Choreo uses **Roles**, **Groups**, and a **Mapping level** to control access to the Choreo Console as follows: 
+Choreo uses **Roles**, **Groups**, **Service Accounts**, and a **Mapping level** to control access to the Choreo Console as follows: 
 
 - **Role** : Role is a collection of permissions. Choreo has a predefined set of roles with permissions assigned to them. [Learn more](../choreo-concepts/organization.md#roles)
 - **Group** : Group is a collection of users. A user group requires a role or multiple roles to be assigned to it so that the users in those groups get the relevant permissions via the assigned roles. [Learn more](../choreo-concepts/organization.md#groups)
+- **Service Account** : A Service Account is a non-human entity that can be created by a user in the organization to access resources without exposing user credentials. Service Accounts can be added to groups, and groups can be assigned to Service Accounts to manage their access. [Learn more](../choreo-concepts/organization.md#service-accounts)
 
 - **Mapping level** : A mapping level defines the extent at which a role-group mapping can be done. Choreo has two defined resource levels.
     - **Organization** : You can assign a role to a group or associate a group with a role within the organization. This ensures that    
-                         all users in a group inherit the permissions granted by that role across all organizational resources.
-                         For example, if a user has edit_project permission at the organization mapping level, that user can edit all the projects in the organization.
+                         all users or Service Accounts in a group inherit the permissions granted by that role across all organizational resources.
+                         For example, if a user or Service Account has edit_project permission at the organization mapping level, they can edit all the projects in the organization.
     - **Project** : You can assign a role to a group or associate a group with a role within a specific project resource. This ensures 
-                    that users in the group inherit the permissions granted by that role only within the context of the specified project.
-                    For example, If a user has edit_project permission at the project mapping level, that user can only edit the specified project.
+                    that users or Service Accounts in the group inherit the permissions granted by that role only within the context of the specified project.
+                    For example, if a user or Service Account has edit_project permission at the project mapping level, they can only edit the specified project.
 
-
-In Choreo, authorization operates by assigning a role to a group at a specified level. The level at which the role is assigned determines the extent of permissions granted to users.
+In Choreo, authorization operates by assigning a role to a group at a specified level. The level at which the role is assigned determines the extent of permissions granted to users or Service Accounts.
 
 !!! warning "Important"
-    Avoid assigning multiple roles to a single user across different projects or levels (organization and project). Such assignments can grant users unintended permission to some projects, allowing them to perform tasks they shouldn't have access to. Therefore, it is recommended to assign only one role to a user across projects or levels to ensure proper access control.
+    Avoid assigning multiple roles to a single user or Service Account across different projects or levels (organization and project). Such assignments can grant unintended permissions to some projects, allowing them to perform tasks they shouldn't have access to. Therefore, it is recommended to assign only one role to a user or Service Account across projects or levels to ensure proper access control.
 
 !!! info
     In Choreo, organization-level permissions take precedence over project-level permissions.
 
 To elaborate further, refer to the following diagram. 
 
-The following diagram depicts a role-group assignment at a specific resource level. In the diagram, an admin user has assigned the Developer role to all members of the Engineering group within the Engineering Project. This grants users in the Engineering group the ability to perform all actions allowed by the Developer role within the Engineering Project.
+The following diagram depicts a role-group assignment at a specific resource level. In the diagram, an admin user has assigned the Developer role to all members of the Engineering group within the Engineering Project. This grants users and Service Accounts in the Engineering group the ability to perform all actions allowed by the Developer role within the Engineering Project.
 
 ![Console access control](../assets/img/administer/access-control-to-console.png)
 
@@ -130,3 +130,71 @@ Follow the steps given below to add an existing user as a project developer:
      - You can invite new users or add existing users to new groups within the Engineering Project, and based on their requirements, assign roles like Developer, API Publisher, etc.
 
 Now you have successfully set up access control within your project.
+
+## Managing Service Accounts
+
+### Step 1: Create a Service Account
+
+Follow the steps below to create a Service Account:
+
+1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you want to create the Service Account.
+2. In the left navigation menu, click **Settings**.
+3. Click the **Access Control** tab and then click the **Service Accounts** tab.
+4. Click **+ Create Service Account**.
+5. Enter a name and description for the Service Account. You can enter the values given below:
+
+    | **Field**                | **Value**                          |
+    |--------------------------|------------------------------------|
+    | **Name** | `Example Bot`          |
+    | **Description**          | `Service Account for Engineering Project automation`|
+
+6. Click **Create**. This creates the Service Account and generates credentials that you can use to obtain an access token.
+
+!!! warning
+    The **Client Secret** will only be shown once. Make sure to securely store it. If you lose the secret, you will need to regenerate it.
+
+### Step 2: Add Groups to the Service Account
+
+Follow the steps below to add groups to the Service Account:
+
+1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created the Service Account.
+2. In the left navigation menu, click **Settings**.
+3. Click the **Access Control** tab and then click the **Service Accounts** tab.
+4. Search for the Service Account you want to manage (e.g., `Example Bot`) and click the corresponding edit icon.
+5. Click **+Add Groups**.
+6. In the **Add Groups to Service Account** dialog, select the groups you want to associate with the Service Account (e.g., `Developer`).
+7. Click **Add**. You can also remove groups from the Service Account using the delete icon in the groups list of the Service Account.
+
+### Managing Service Accounts in Groups
+
+When you select a group in the **Groups** tab, you can view the Service Accounts associated with that group. 
+
+- To add a Service Account to the group, click **+Add Service Accounts**, select the desired Service Account, and click **Add**.
+- To remove a Service Account from the group, use the delete icon corresponding to the Service Account in the list.
+
+This allows you to manage the association between Service Accounts and groups effectively.
+
+You can view the list of Service Accounts under the **Service Accounts** section of the group. You can also delete Service Accounts from the group using the delete icon.
+
+### Step 3: Manage Service Account Details
+
+You can update the name and description of a Service Account by following these steps:
+
+1. In the Choreo Console, go to the **Service Accounts** tab under **Access Control**.
+2. Click the edit icon corresponding to the Service Account you want to update.
+3. Modify the name and description as needed.
+4. Click **Save**.
+
+### Step 4: Obtain an Access Token for a Service Account
+
+To authenticate programmatic access using a Service Account, you need to obtain an access token. Use the following `curl` command to get the token:
+
+```shell
+curl --location 'https://auth.choreo.dev/oauth2/token' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--header 'Authorization: Basic Base64(client_id:client_secret)' \
+--data-urlencode 'grant_type=service_account' \
+--data-urlencode 'scope=apim:api_view apim:api_create apim:api_publish apim:subscribe apim:api_delete service_catalog:service_view service_catalog:service_write apim:api_generate_key'
+```
+
+Now you have successfully created and managed a Service Account for programmatic access.

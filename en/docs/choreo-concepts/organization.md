@@ -41,6 +41,49 @@ Choreo roles are defined as follows:
 - **External API subscriber**: External API subscribers are API consumers who have access only to the API Developer Portal. They can join an organization with the sole purpose of consuming APIs.
 - **Environment Manager (Deprecated)**: Manages deployment environments.
 
+### Service Accounts
+
+Service accounts in Choreo are non-human accounts that allow automated systems or applications to interact with Choreo resources. These accounts are typically used for CI/CD pipelines, automated deployments, or other system integrations.
+
+#### Create a Service Account
+
+To create a service account, follow these steps:
+
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in.
+2. Navigate to the **Settings** section in the left navigation panel.
+3. Under **Service Accounts**, click **Create Service Account**.
+4. Provide a name and description for the service account.
+5. Assign the necessary roles to the service account based on the required permissions.
+6. Click **Create** to generate the service account credentials.
+
+#### Manage Service Account Permissions
+
+You can manage the permissions of a service account by assigning or modifying roles:
+
+1. Go to the **Settings** section and select **Service Accounts**.
+2. Click on the service account you want to manage.
+3. Update the roles assigned to the service account as needed.
+4. Save the changes.
+
+#### Rotate Service Account Credentials
+
+To ensure security, you can rotate the credentials of a service account periodically:
+
+1. Navigate to the **Service Accounts** section in **Settings**.
+2. Select the service account for which you want to rotate credentials.
+3. Click **Rotate Credentials** and confirm the action.
+4. Download the new credentials securely and update any systems using the old credentials.
+
+#### Delete a Service Account
+
+If a service account is no longer needed, you can delete it:
+
+1. Go to the **Service Accounts** section in **Settings**.
+2. Select the service account you want to delete.
+3. Click **Delete** and confirm the action.
+
+> **Note**: Deleting a service account will revoke its access to all resources immediately. Ensure that no critical systems depend on the account before deletion.
+
 ## Organization ID
 
 The Organization ID serves as a unique identifier for each organization. To get the organization ID, follow the steps below:
