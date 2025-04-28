@@ -23,7 +23,7 @@ type promoteComponent struct {
 	action.BaseAction
 }
 
-func PromoteComponent() *promoteComponent {
+func PromoteComponent() runner.Action {
 	return &promoteComponent{}
 }
 

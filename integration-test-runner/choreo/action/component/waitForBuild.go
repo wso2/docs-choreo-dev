@@ -23,7 +23,7 @@ type waitBuild struct {
 	action.BaseAction
 }
 
-func WaitForBuild() *waitBuild {
+func WaitForBuild() runner.Action {
 	return &waitBuild{}
 }
 

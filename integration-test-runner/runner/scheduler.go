@@ -194,7 +194,7 @@ func (s *scheduler) evaluateWaitingSpecs() {
 	for name, data := range s.waitingSpecs {
 		state := appstate.GetState(data.Ctx).(*SpecState)
 
-		if state.waitCount < 6 {
+		if state.waitCount < 10 {
 			if state.waitTill < time.Now().Unix() {
 				data.logger.Debugf("Resuming from action index: %d, resume attempt: %d", state.nextSequenceIndex, state.waitCount)
 				client := newClient(token, data.logger)

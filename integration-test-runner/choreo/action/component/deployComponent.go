@@ -23,7 +23,7 @@ type deployComponent struct {
 	action.BaseAction
 }
 
-func DeployComponent() *deployComponent {
+func DeployComponent() runner.Action {
 	return &deployComponent{}
 }
 

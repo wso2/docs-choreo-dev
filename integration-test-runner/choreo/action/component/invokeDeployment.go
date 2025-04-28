@@ -24,7 +24,7 @@ type invokeDeployment struct {
 	action.BaseAction
 }
 
-func InvokeDeployment() *invokeDeployment {
+func InvokeDeployment() runner.Action {
 	return &invokeDeployment{}
 }
 
