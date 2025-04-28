@@ -24,7 +24,7 @@ type invokePromotion struct {
 	action.BaseAction
 }
 
-func InvokePromotion() *invokePromotion {
+func InvokePromotion() runner.Action {
 	return &invokePromotion{}
 }
 

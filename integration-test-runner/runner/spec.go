@@ -26,6 +26,7 @@ type Action interface {
 	Execute(client *resty.Client, actionState *ActionState)
 	NextUnitIndex() int
 	SetParams(params map[string]string, mandatoryFields []string) error
+	MandatoryFields() []string
 	Init(state *SpecState) error
 	ResetUnits()
 }

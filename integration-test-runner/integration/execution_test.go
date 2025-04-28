@@ -15,13 +15,10 @@ package integration
 
 import (
 	"choreo-integration-test-runner/choreo"
-	"choreo-integration-test-runner/choreo/action/component"
-	"choreo-integration-test-runner/choreo/action/project"
 	"choreo-integration-test-runner/helper/appstate"
-	"choreo-integration-test-runner/helper/stop"
+	"choreo-integration-test-runner/interpreter"
 	"choreo-integration-test-runner/runner"
 	"choreo-integration-test-runner/template"
-	"fmt"
 	"os"
 	"testing"
 )
@@ -42,10 +39,10 @@ func TestRunMultipleSpecs(t *testing.T) {
 
 	noOfSpecs := 1
 
-	specs := make([]*runner.Spec, noOfSpecs)
+	specs, err := specReader("../specs")
 
-	for i := 0; i < noOfSpecs; i++ {
-		specs[i] = specBuilder(fmt.Sprintf("BasicTest%d", i), "testproject", "servicecomp")
+	if err != nil {
+		t.Fatalf("Failed to read specs: %v", err)
 	}
 
 	sch, err := runner.NewScheduler(specs, 10)
@@ -112,84 +109,12 @@ func TestRunMultipleSpecs(t *testing.T) {
 	}
 }
 
-func specBuilder(name, projectPlaceholder, componentPlaceholder string) *runner.Spec {
-	actions := make([]runner.Action, 0)
+func specReader(path string) ([]*runner.Spec, error) {
+	specs, err := interpreter.Process(path)
 
-	proj := project.CreateProject()
-	proj.SetParams(map[string]string{
-		"placeholder": projectPlaceholder,
-		"description": "description",
-		"region":      "US",
-	}, proj.MandatoryFields())
+	if err != nil {
+		return nil, err
+	}
 
-	actions = append(actions, proj)
-
-	createComp := component.CreateComponent()
-	createComp.SetParams(map[string]string{
-		"srcGitRepoURL":     "https://github.com/wso2/choreo-samples",
-		"repositoryBranch":  "main",
-		"repositorySubPath": "greeting-service",
-		"displayType":       "ballerinaService",
-		"buildPack":         "Ballerina",
-		"accessibility":     "external",
-		"isPublicRepo":      "true",
-		"project":           projectPlaceholder,
-		"placeholder":       componentPlaceholder,
-	}, createComp.MandatoryFields())
-
-	actions = append(actions, createComp)
-
-	waitBuild := component.WaitForBuild()
-	stop.HandleError(waitBuild.SetParams(map[string]string{
-		"component": componentPlaceholder,
-	}, waitBuild.MandatoryFields()))
-
-	actions = append(actions, waitBuild)
-
-	getEnvs := component.GetEnvironments()
-	stop.HandleError(getEnvs.SetParams(map[string]string{
-		"project": projectPlaceholder,
-	}, getEnvs.MandatoryFields()))
-
-	actions = append(actions, getEnvs)
-
-	deployComp := component.DeployComponent()
-	stop.HandleError(deployComp.SetParams(map[string]string{
-		"component": componentPlaceholder,
-	}, deployComp.MandatoryFields()))
-
-	actions = append(actions, deployComp)
-
-	promoteComp := component.PromoteComponent()
-	stop.HandleError(promoteComp.SetParams(map[string]string{
-		"component": componentPlaceholder,
-	}, promoteComp.MandatoryFields()))
-
-	actions = append(actions, promoteComp)
-
-	invokeDeployment := component.InvokeDeployment()
-	stop.HandleError(invokeDeployment.SetParams(map[string]string{
-		"component":   componentPlaceholder,
-		"method":      "GET",
-		"resource":    "/",
-		"queryParams": "name=Hello",
-		"statusCode":  "200",
-		"response":    "{\n  \"from\": \"Choreo\",\n  \"to\": \"Hello\",\n  \"message\": \"Welcome to Choreo!\"\n}",
-	}, invokeDeployment.MandatoryFields()))
-
-	actions = append(actions, invokeDeployment)
-
-	invokePromotion := component.InvokePromotion()
-	stop.HandleError(invokePromotion.SetParams(map[string]string{
-		"component":   componentPlaceholder,
-		"method":      "GET",
-		"resource":    "/",
-		"queryParams": "name=Hello",
-		"statusCode":  "200",
-		"response":    "{\n  \"from\": \"Choreo\",\n  \"to\": \"Hello\",\n  \"message\": \"Welcome to Choreo!\"\n}",
-	}, invokePromotion.MandatoryFields()))
-
-	actions = append(actions, invokePromotion)
-
-	return runner.NewSpec(name, actions)
+	return specs, nil
 }

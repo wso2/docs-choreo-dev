@@ -23,7 +23,7 @@ type createProject struct {
 	action.BaseAction
 }
 
-func CreateProject() *createProject {
+func CreateProject() runner.Action {
 	return &createProject{}
 }
 

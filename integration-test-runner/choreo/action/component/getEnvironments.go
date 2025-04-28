@@ -23,7 +23,7 @@ type getEnvironments struct {
 	action.BaseAction
 }
 
-func GetEnvironments() *getEnvironments {
+func GetEnvironments() runner.Action {
 	return &getEnvironments{}
 }
 

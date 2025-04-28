@@ -27,7 +27,7 @@ type createComponent struct {
 	action.BaseAction
 }
 
-func CreateComponent() *createComponent {
+func CreateComponent() runner.Action {
 	return &createComponent{}
 
 }
