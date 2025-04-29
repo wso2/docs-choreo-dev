@@ -2,6 +2,7 @@ apiVersion: 'cilium.io/v2'
 kind: CiliumNetworkPolicy
 metadata:
   name: allow-rules-keda-operator
+  namespace: keda
 spec:
   endpointSelector:
     matchLabels:
@@ -35,6 +36,7 @@ apiVersion: 'cilium.io/v2'
 kind: CiliumNetworkPolicy
 metadata:
   name: default-allow-keda-components
+  namespace: keda
 spec:
   endpointSelector: {}
   egress:
