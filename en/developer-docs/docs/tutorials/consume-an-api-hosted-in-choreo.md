@@ -122,23 +122,11 @@ Update the web app configurations to invoke the **Reading List Service** REST AP
 
 To configure the front-end application:
 
-1. On the web application component page, click **DevOps** in the left menu, then click **Configs and Secrets**.
-2. Click **+ Create**.
-3. Select the following options and click **Next**:
+1. On the Choreo Console header, select the project and the created web application component.
+2. In the left navigation menu, click **Deploy**.
+3. On the **Deploy** page, go to the **Set Up** card and click **Configure & Deploy**.
+4. In the **File Mount** pane, copy the following JSON configuration into the text area and replace the placeholders with the values from earlier steps:
 
-    | **Field**             | **Value**                               |
-    |-----------------------|-----------------------------------------|
-    | **Config Type**       | **Config Map**                          |
-    | **Mount Type**        | **File Mount**                          |
-
-4. Specify the following values:
-
-    | **Field**             | **Value**                               |
-    |-----------------------|-----------------------------------------|
-    | **Config Name**       | **Web App Config**                      |
-    | **Mount Path**        | **/usr/share/nginx/html/config.js**     |
-
-5. Copy the following JSON configuration into the text area. Replace the placeholders with the values from earlier steps:
 
     ```javascript
     window.config = {
@@ -149,22 +137,21 @@ To configure the front-end application:
     };
     ```
 
+
     | **Field**             | **Description**                               |
     |-----------------------|-----------------------------------------------|
     | **redirectUrl**       | The web app URL you copied earlier.           |
     | **asgardeoClientId**  | The **Client ID** from the Asgardeo application. |
     | **asgardeoBaseUrl**   | The IdP API URL with your organization name (e.g., `https://api.asgardeo.io/t/<ORG_NAME>`). |
     | **choreoApiUrl**      | The **Reading List Service** URL from the endpoint table in the overview page. |
+        
+    !!! tip
+        You can refer to the configuration file mounted at `/app/public` as `./public/config.js` within your web application.
+    
+5. Click **Deploy**.
+6. Once deployed, copy the **Web App URL** from the development environment card.
+7. Navigate to the web app URL to verify it’s successfully hosted.
 
-6. Click **Create**.
 
-### Step 4: Deploy the web application
-
-To deploy the web application:
-
-1. In the left menu, click **Deploy**.
-2. In the **Build Area** card, click **Deploy Manually**. Deployment may take a few minutes.
-3. Once deployed, copy the **Web App URL** from the development environment card.
-4. Navigate to the web app URL to verify it’s successfully hosted.
 
 That’s it! You can now use a user from your IdP to sign in and invoke the service through your web application.
