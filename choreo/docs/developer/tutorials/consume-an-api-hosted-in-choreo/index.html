@@ -973,13 +973,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#step-4-deploy-the-web-application" class="md-nav__link">
-    Step 4: Deploy the web application
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -4108,13 +4101,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#step-4-deploy-the-web-application" class="md-nav__link">
-    Step 4: Deploy the web application
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -4380,52 +4366,11 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <p>To configure the front-end application:</p>
 <ol>
-<li>On the web application component page, click <strong>DevOps</strong> in the left menu, then click <strong>Configs and Secrets</strong>.</li>
-<li>Click <strong>+ Create</strong>.</li>
+<li>On the Choreo Console header, select the project and the created web application component.</li>
+<li>In the left navigation menu, click <strong>Deploy</strong>.</li>
+<li>On the <strong>Deploy</strong> page, under the <strong>Set Up</strong> card and click <strong>Configure &amp; Deploy</strong>.</li>
 <li>
-<p>Select the following options and click <strong>Next</strong>:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Config Type</strong></td>
-<td><strong>Config Map</strong></td>
-</tr>
-<tr>
-<td><strong>Mount Type</strong></td>
-<td><strong>File Mount</strong></td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Specify the following values:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Config Name</strong></td>
-<td><strong>Web App Config</strong></td>
-</tr>
-<tr>
-<td><strong>Mount Path</strong></td>
-<td><strong>/usr/share/nginx/html/config.js</strong></td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Copy the following JSON configuration into the text area. Replace the placeholders with the values from earlier steps:</p>
+<p>Copy the following JSON configuration, paste it into the text area in the <strong>File Mount pane</strong>, and replace the placeholders with the values from the previous steps:</p>
 <div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">window</span><span class="p">.</span><span class="nx">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="nx">redirectUrl</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&lt;web-app-url&gt;&quot;</span><span class="p">,</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nx">asgardeoClientId</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&lt;asgardeo-client-id&gt;&quot;</span><span class="p">,</span>
@@ -4460,16 +4405,14 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 </tbody>
 </table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can refer to the mounted configuration file as <code>./public/config.js</code> within your web application.</p>
+</div>
 </li>
 <li>
-<p>Click <strong>Create</strong>.</p>
+<p>Click <strong>Deploy</strong>.</p>
 </li>
-</ol>
-<h3 id="step-4-deploy-the-web-application">Step 4: Deploy the web application<a class="headerlink" href="#step-4-deploy-the-web-application" title="Permanent link">&para;</a></h3>
-<p>To deploy the web application:</p>
-<ol>
-<li>In the left menu, click <strong>Deploy</strong>.</li>
-<li>In the <strong>Build Area</strong> card, click <strong>Deploy Manually</strong>. Deployment may take a few minutes.</li>
 <li>Once deployed, copy the <strong>Web App URL</strong> from the development environment card.</li>
 <li>Navigate to the web app URL to verify it’s successfully hosted.</li>
 </ol>
