@@ -124,8 +124,8 @@ To configure the front-end application:
 
 1. On the Choreo Console header, select the project and the created web application component.
 2. In the left navigation menu, click **Deploy**.
-3. On the **Deploy** page, go to the **Set Up** card and click **Configure & Deploy**.
-4. In the **File Mount** pane, copy the following JSON configuration into the text area and replace the placeholders with the values from earlier steps:
+3. On the **Deploy** page, under the **Set Up** card and click **Configure & Deploy**.
+4. Copy the following JSON configuration, paste it into the text area in the **File Mount pane**, and replace the placeholders with the values from the previous steps:
 
 
     ```javascript
@@ -146,7 +146,7 @@ To configure the front-end application:
     | **choreoApiUrl**      | The **Reading List Service** URL from the endpoint table in the overview page. |
         
     !!! tip
-        You can refer to the configuration file mounted at `/app/public` as `./public/config.js` within your web application.
+        You can refer to the mounted configuration file as `./public/config.js` within your web application.
     
 5. Click **Deploy**.
 6. Once deployed, copy the **Web App URL** from the development environment card.
