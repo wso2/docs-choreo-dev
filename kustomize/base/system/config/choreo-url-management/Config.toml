@@ -3,6 +3,7 @@ portOffset = 0
 cpGatewayJwtIssuer = "{{.CHOREO_CP_GATEWAY_ISSUER}}"
 choreoJwtAudience = "{{.CHOREO_JWT_AUDIENCE}}"
 patAppJwtAudience = "{{.PAT_APP_JWT_AUDIENCE}}"
+choreoAuthHandlerAudiences = "{{.CHOREO_AUTH_HANDLER_AUDIENCES}}"
 cpGatewayJWKSUrl = "{{.CHOREO_CP_GATEWAY_JWKS_URL}}"
 authHeaderName = "{{.AUTH_HEADER_NAME}}"
 secondaryAuthHeaderName = "x-jwt-assertion"
