@@ -123,6 +123,7 @@ export class Project {
     Utils.getRenderedElement(TestIds.createProject).click();
     cy.get(TestIds.createProject).should("not.exist");
     cy.get(TestIds.backdropLoader).should("not.exist");
+    cy.get(TestIds.ViewAllComponentsButton).should("be.visible").click();
   }
 
   private checkProjectCardCreation() {
@@ -434,7 +435,6 @@ export class Project {
     enterCustomInfo: () => void
   ): Cypress.Chainable<ManualTrigger> {
     this.createComponentIfEmptyProject();
-    cy.get(TestIds.ViewAllComponentsButton).should("be.visible").click();
     cy.get(TestIds.manualTriggerBuildPack).should("be.visible").click();
 
     const manualTriggerName = Utils.generateComponentName();
@@ -452,7 +452,6 @@ export class Project {
     enterCustomInfo: () => void
   ) {
     this.createComponentIfEmptyProject();
-    cy.get(TestIds.ViewAllComponentsButton).should("be.visible").click();
     cy.get(TestIds.testRunnerBuildPack).should("be.visible").click();
 
     const testRunnerName = Utils.generateComponentName();
