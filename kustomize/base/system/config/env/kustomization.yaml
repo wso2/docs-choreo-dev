@@ -1241,10 +1241,8 @@ configMapGenerator:
       - EMAIL_ALERT_RECEIVERS={{.EMAIL_ALERT_RECEIVERS}}
       - AZURE_LA_WORKSPACE_US={{.AZURE_LA_WORKSPACE_US}}
       - AZURE_LA_WORKSPACE_EU={{.AZURE_LA_WORKSPACE_EU}}
-      - AZURE_LA_WORKSPACE_WUS2={{.AZURE_LA_WORKSPACE_WUS2}}
       - DATAPLANE_ID_US={{.DATAPLANE_ID_US}}
       - DATAPLANE_ID_EU={{.DATAPLANE_ID_EU}}
-      - DATAPLANE_ID_WUS2={{.DATAPLANE_ID_WUS2}}
   - name: env-configuration-schema-service
     behavior: create
     literals:
