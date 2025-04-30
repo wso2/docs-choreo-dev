@@ -25,6 +25,10 @@ spec:
           key: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
         - objectName: AZURE-CONTAINER-REGISTRY-PASSWORD
           key: AZURE-CONTAINER-REGISTRY-PASSWORD
+        - objectName: CHOREO-GITOPS-APP-CLIENT-SECRET
+          key: CHOREO-GITOPS-APP-CLIENT-SECRET
+        - objectName: CHOREO-GITOPS-APP-PRIVATE-KEY
+          key: CHOREO-GITOPS-APP-PRIVATE-KEY
   parameters:
     objects: |
       array:
@@ -73,3 +77,13 @@ spec:
           objectType: secret
           objectAlias: AZURE-CONTAINER-REGISTRY-PASSWORD
           objectVersion: "{{.AZURE_CONTAINER_REGISTRY_PASSWORD}}"
+        - |
+          objectName: dp-cicd-gitops-app-client-secret
+          objectType: secret
+          objectAlias: CHOREO-GITOPS-APP-CLIENT-SECRET
+          objectVersion: "{{.CHOREO_GITOPS_APP_CLIENT_SECRET}}"
+        - |
+          objectName: dp-cicd-gitops-app-private-key
+          objectType: secret
+          objectAlias: CHOREO-GITOPS-APP-PRIVATE-KEY
+          objectVersion: "{{.CHOREO_GITOPS_APP_PRIVATE_KEY}}"

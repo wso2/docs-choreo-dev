@@ -91,6 +91,16 @@ spec:
                 secretKeyRef:
                   key: AZURE-CONTAINER-REGISTRY-PASSWORD
                   name: secret-dp-cicd
+            - name: GITOPS_APP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITOPS-APP-CLIENT-SECRET
+                  name: secret-dp-cicd
+            - name: GITOPS_APP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITOPS-APP-PRIVATE-KEY
+                  name: secret-dp-cicd
             - name: BUILDPACKS_BUILDER_IMAGE
               valueFrom:
                 configMapKeyRef:
