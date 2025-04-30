@@ -1,0 +1,33 @@
+[cp.resilient_invoker]
+healthCheckPort = 9095
+queueName = "resilient-invoker"
+timeToLive = {{.MESSAGE_TTL}}
+asbConnectionStringPath = "/mnt/csi/secret-cp-rrs/CP_RRS_ASB_CONNECTION_STRING"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
+
+[cp.proxyDeployer.config]
+maxRevisions = 20
+resourceRegistryBasePath="http://resource-registry:9090/resource-registry"
+workflowBasePath = "http://workflow-mgt:9082/workflow-mgt/v1"
+enableWorkflowValidation = {{.ENABLE_WORKFLOW_VALIDATION | default false}}
+
+dbUser = "choreo_proxy_deployer_db_user"
+
+proxyDeployerPort = 9095
+healthCheckPort = 9091
+listenerTimeout = {{.LISTENER_TIMEOUT | default 120.5}}
+
+jwksEnabled = {{.JWKS_VALIDATION_ENABLED | default false }}
+jwtTokenScopes = ["apim:api_manage", "apim:publisher_settings"]
+
+mizzenServerBasePath = "http://dp-mizzen:80"
+
+enableMarketplaceIntelligentRouting={{.ENABLE_MARKETPLACE_INTELLIGENT_ROUTING | default false}}
+
+[ballerina.http.accessLogConfig]
+console = true
+
+[ballerina.log]
+level = "{{.LOG_LEVEL | default "INFO"}}"
