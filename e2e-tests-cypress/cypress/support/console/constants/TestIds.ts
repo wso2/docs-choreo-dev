@@ -455,6 +455,7 @@ export namespace TestIds {
   export const miComponentCard = '[data-cyid="WSO2 MI-card-button"]';
   export const repoSearchBox = '[data-cyid="project-directory-search-search-bar-input"]';
   export const continueButton = '[data-cyid="Continue-button"]';
+  export const pathPreview = '[data-cyid="path-preview"]';
   export const repoSubPath = (subPath: string) => `[data-cyid="subPath-${subPath}"]`;
   export const serviceCreateButton = '[data-cyid="Create-button"]';
   export const HelloWorldGoManualTaskRepo = '[data-cyid="subPath-docker-hello-world-manual-task"]';
