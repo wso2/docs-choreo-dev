@@ -31,7 +31,8 @@ describe("Create Web App", () => {
   const BACKEND_CONNECTION_NAME = "Managed Auth BE Connection";
   const REPO_URL = "https://github.com/wso2/choreo-samples";
   const DIRECTORY_NAME = "reading-list-app";
-  const SUB_DIRECTORY = [DIRECTORY_NAME];
+  const BACKEND_SUB_DIRECTORY = ["reading-list-service"];
+  const WEB_APP_SUB_DIRECTORY = ["reading-list-front-end-with-managed-auth"];
   const BACKEND_SUB_DIRECTORY_ID = `${DIRECTORY_NAME}/reading-list-service`
   const WEB_APP_SUB_DIRECTORY_ID = `${DIRECTORY_NAME}/reading-list-front-end-with-managed-auth`
 
@@ -128,7 +129,7 @@ describe("Create Web App", () => {
             displayName: "",
             repoUrl: REPO_URL,
             buildPack: BuildPacks.Ballerina,
-            directoryInfo: { directoryName: DIRECTORY_NAME, subDirectories: SUB_DIRECTORY, directoryTestid: BACKEND_SUB_DIRECTORY_ID },
+            directoryInfo: { directoryName: DIRECTORY_NAME, subDirectories: BACKEND_SUB_DIRECTORY, directoryTestid: BACKEND_SUB_DIRECTORY_ID },
           }, 
           ENDPOINT_NAME, 
           BACKEND_SERVICE_COMPONENT_NAME)
@@ -184,7 +185,7 @@ describe("Create Web App", () => {
         displayName: "",
         repoUrl: REPO_URL,
         buildPack: BuildPacks.WEBAPP,
-        directoryInfo: { directoryName: DIRECTORY_NAME, subDirectories: SUB_DIRECTORY, directoryTestid: WEB_APP_SUB_DIRECTORY_ID },
+        directoryInfo: { directoryName: DIRECTORY_NAME, subDirectories: WEB_APP_SUB_DIRECTORY, directoryTestid: WEB_APP_SUB_DIRECTORY_ID },
       },
       enterBuildPackInfo
     ).then((comp) => {

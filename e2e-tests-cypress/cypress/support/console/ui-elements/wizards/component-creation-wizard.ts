@@ -190,13 +190,23 @@ export class _ComponentCreationWizard {
       cy.get(TestIds.projectDirectoryEdit).should("be.enabled").eq(0).click();
       cy.get(TestIds.repoSearchBox).should("be.visible").type(directoryInfo.directoryName);
 
+      cy.getUnstable(TestIds.repoSubPath(directoryInfo.directoryName)).should("be.visible").click();
+      cy.getUnstable(TestIds.pathPreview).within(() => {
+        cy.get("input").should("have.attr", "value").and("contain", directoryInfo.directoryName);
+      });
+
+      let subDirectoryId = directoryInfo.directoryName;
+
       if (directoryInfo.subDirectories !== undefined) {
         for (const subDirectory of directoryInfo.subDirectories) {
-          cy.getUnstable(TestIds.repoSubPath(subDirectory)).should("be.visible").click();
+          cy.get(TestIds.repoSearchBox).should("be.visible").clear().type(subDirectory);
+          cy.getUnstable(TestIds.repoSubPath(subDirectoryId.concat("/").concat(subDirectory))).should("be.visible").click();
+          cy.getUnstable(TestIds.pathPreview).within(() => {
+            cy.get("input").should("have.attr", "value").and("contain", subDirectory);
+          });
         }
       }
 
-      cy.getUnstable(TestIds.repoSubPath(directoryInfo.directoryTestid)).should("be.visible").click();
       cy.get(TestIds.continueButton).should("be.enabled").click();
     }
   }
