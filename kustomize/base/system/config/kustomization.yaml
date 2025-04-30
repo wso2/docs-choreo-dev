@@ -504,7 +504,7 @@ configMapGenerator:
   - name: cm-file-cp-consolidated-service
     behavior: create
     files:
-      - cp-consolidated-service/Config.toml
+      - cp-consolidated-app/Config.toml
   - name: cm-file-cp-rrs
     behavior: create
     files:
