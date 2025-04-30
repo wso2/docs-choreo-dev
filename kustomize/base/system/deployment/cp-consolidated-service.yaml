@@ -27,7 +27,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: cp-consolidated-service
-          image: thushi1214/consolidateapps:latest
+          image: choreocontrolplane.azurecr.io/choreoipaas/consolidated-cp-services:latest
           envFrom:
             - secretRef:
                 name: secret-choreo-apim-proxy-deployer
