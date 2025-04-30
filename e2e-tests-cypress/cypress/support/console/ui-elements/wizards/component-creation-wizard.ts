@@ -192,11 +192,11 @@ export class _ComponentCreationWizard {
 
       if (directoryInfo.subDirectories !== undefined) {
         for (const subDirectory of directoryInfo.subDirectories) {
-          cy.get(TestIds.repoSubPath(subDirectory)).should("be.visible").click();
+          cy.getUnstable(TestIds.repoSubPath(subDirectory)).should("be.visible").click();
         }
       }
 
-      cy.get(TestIds.repoSubPath(directoryInfo.directoryTestid)).should("be.visible").click();
+      cy.getUnstable(TestIds.repoSubPath(directoryInfo.directoryTestid)).should("be.visible").click();
       cy.get(TestIds.continueButton).should("be.enabled").click();
     }
   }
