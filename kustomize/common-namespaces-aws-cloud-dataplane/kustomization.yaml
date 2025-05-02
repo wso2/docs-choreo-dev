@@ -18,3 +18,4 @@ resources:
   - ../../helm/cert-manager
   - ../../helm/reflector
   - ../../helm/reloader
+  - ../../helm/keda-core
