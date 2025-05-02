@@ -1126,11 +1126,11 @@ configMapGenerator:
       - CHARGING_COMPONENTS_WITH_PRIVATE_REPOS_ENABLED={{.CHARGING_COMPONENTS_WITH_PRIVATE_REPOS_ENABLED | default "false"}}
       - PRORATA_MODEL_ENABLED={{.PRORATA_MODEL_ENABLED}}
       - PLATFORM_SVC_COST_PUBLISHING_ENABLE={{.PLATFORM_SVC_COST_PUBLISHING_ENABLE | default "false"}}
-      - INFRA_USAGE_PUBLISHING_EXCLUDED_SUBSCRIPTION_TYPES={{.INFRA_USAGE_PUBLISHING_EXCLUDED_SUBSCRIPTION_TYPES | default "bijira-subscription,bijira-trans-subscription,bijira-support-base-subscription,bijira-support-api-subscription,bijira-support-trans-subscription,devant-subscription,devant-support-base-subscription,devant-support-integration-subscription,choreo-platform-svc-subscription"}}
+      - INFRA_USAGE_PUBLISHING_EXCLUDED_SUBSCRIPTION_TYPES={{.INFRA_USAGE_PUBLISHING_EXCLUDED_SUBSCRIPTION_TYPES | default "bijira-subscription,bijira-trans-subscription,devant-subscription,choreo-platform-svc-subscription"}}
       - PLATFORM_SVC_USAGE_PUBLISHING_EXCLUDED_SUBSCRIPTION_TYPES={{.PLATFORM_SVC_USAGE_PUBLISHING_EXCLUDED_SUBSCRIPTION_TYPES | default "choreo-platform-svc-subscription"}}
       - COMPONENT_USAGE_PUBLISHING_INCLUDED_SUBSCRIPTION_TYPES={{.COMPONENT_USAGE_PUBLISHING_INCLUDED_SUBSCRIPTION_TYPES | default "bijira-subscription,bijira-trans-subscription,devant-subscription,choreo-subscription"}}
-      - SUPPORT_USAGE_PUBLISHING_INCLUDED_SUBSCRIPTION_TYPES={{.SUPPORT_USAGE_PUBLISHING_INCLUDED_SUBSCRIPTION_TYPES | default "bijira-support-base-subscription,bijira-support-api-subscription,bijira-support-trans-subscription,devant-support-base-subscription,devant-support-integration-subscription,choreo-support"}}
-      - COMPONENT_USAGE_TRACKING_SUBSCRIPTION_TYPES={{.COMPONENT_USAGE_TRACKING_SUBSCRIPTION_TYPES | default "choreo-subscription,choreo-support,bijira-subscription,bijira-trans-subscription,bijira-support-base-subscription,bijira-support-api-subscription,bijira-support-trans-subscription,devant-subscription,devant-support-base-subscription,devant-support-integration-subscription"}}
+      - SUPPORT_USAGE_PUBLISHING_INCLUDED_SUBSCRIPTION_TYPES={{.SUPPORT_USAGE_PUBLISHING_INCLUDED_SUBSCRIPTION_TYPES | default "choreo-support,wso2-support"}}
+      - COMPONENT_USAGE_TRACKING_SUBSCRIPTION_TYPES={{.COMPONENT_USAGE_TRACKING_SUBSCRIPTION_TYPES | default "choreo-subscription,wso2-support,bijira-subscription,bijira-trans-subscription,devant-subscription"}}
       - AWS_MARKETPLACE_CLIENT_URL="http://choreo-aws-marketplace-client:8080"
       - AWS_CHOREO_PRODUCT_CODE={{.AWS_CHOREO_PRODUCT_CODE | default "choreo"}}
       - GCP_USAGE_REPORTING_ENABLED={{.GCP_USAGE_REPORTING_ENABLED | default false}}
