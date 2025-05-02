@@ -58,6 +58,7 @@ configMapGenerator:
       - DB_PASSWORD_FILE=/mnt/csi/secret-cost-optimizer-cp/DB_PASSWORD
       - SCOPE={{.SCOPE | default "choreo:deployment_manage"}}
       - MIZZEN_BASE_URL={{.MIZZEN_BASE_URL | default ""}}
+      - PROJECT_MANAGER_SERVICE_BASE_URL={{.PROJECT_MANAGER_SERVICE_BASE_URL | default ""}}
       - DPCOST_SERVICE_BASE_URL={{.DPCOST_SERVICE_BASE_URL | default "http://cost-optimizer.choreo-ai:8000"}}
       - DATAPLANE_IDS={{.DATAPLANE_IDS | default ""}}
       - WEBSUBHUB_PUBLISHER_ENABLED={{.WEBSUBHUB_PUBLISHER_ENABLED | default "false"}}
