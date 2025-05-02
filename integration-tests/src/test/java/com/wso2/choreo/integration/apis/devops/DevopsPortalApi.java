@@ -392,6 +392,55 @@ public class DevopsPortalApi extends ControlPlaneAPI {
     }
 
     /**
+     * Generate BYOI ECI token
+     * @param runner Test action runner
+     * @param accessToken Access token
+     * @param orgUuid Organization UUID
+     * @param projectId Project ID
+     * @param componentId Component ID
+     * @param tokenName Token name
+     * @return Token
+     */
+    public static String generateBYOECIToken(TestActionRunner runner, String accessToken, String orgUuid, String projectId, String componentId, String tokenName) throws IOException {
+        final String url = "/ci/components/" + componentId + "/tokens?organization_id=" + orgUuid + "&project_id=" + projectId;
+        Map<String, String> payloadMap = new HashMap<>();
+        payloadMap.put("tokenName", tokenName);
+        String body = ObjectMapperUtil.mapObjectToString("templates/devOps/createBYOECIToken.mustache", payloadMap);
+        runner.$(http()
+                .client(DEVOPS_ENDPOINT)
+                .send()
+                .post(url)
+                .message()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(body)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+        Response res = HttpClientUtil.httpPOST(url, body, accessToken, "");
+        return res.getRes();
+    }
+
+    /**
+     * Trigger external CI will trigger a deployment of the component to the lowest environment with given image
+     * @param runner Test action runner
+     * @param token Token
+     * @param orgUuid Organization UUID
+     * @param projectId Project ID
+     * @param componentId Component ID
+     * @param versionId Version ID
+     * @param image Image
+     */
+    public static void triggerExternalCI(TestActionRunner runner, String token, String orgUuid, String projectId, String componentId, String versionId, String image) throws IOException {
+        final String url = "/external-ci/deploy";
+        Map<String, String> payloadMap = new HashMap<>();
+        payloadMap.put("token", token);
+        payloadMap.put("componentId", componentId);
+        payloadMap.put("versionId", versionId);
+        payloadMap.put("image", image);
+        String body = ObjectMapperUtil.mapObjectToString("templates/devOps/triggerExternalCI.mustache", payloadMap);
+        HttpClientUtil.httpPOST(url, body, "", "");
+    }
+
+    /**
      * Get BYOI endpoints
      * @param runner Test action runner
      * @param accessToken Access token

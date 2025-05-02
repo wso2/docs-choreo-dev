@@ -13,5 +13,6 @@ public class ComponentDeploymentStatusDTO {
     private String versionId;
     private String releaseId;
     private BuildDTO build;
+    private String imageUrl;
     private ApiRevisionDTO apiRevision;
 }

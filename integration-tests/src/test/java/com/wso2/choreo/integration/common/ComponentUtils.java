@@ -218,7 +218,7 @@ public class ComponentUtils {
                 .repositorySubPath(repo.getSubPath()).displayType(Constant.displayType.restAPI.name()).build();
     }
 
-    public static GraphqlDTO createBYOIComponentRequest(String name, String projectId, String imageUrl, String registryId) {
+    public static GraphqlDTO createBYOIComponentRequest(String name, String projectId, String imageUrl, String registryId, String componentType) {
         String orgHandle = Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE);
         int orgId = Integer.parseInt(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_ID));
 
@@ -227,7 +227,7 @@ public class ComponentUtils {
                             .orgId(orgId)
                             .orgHandler(orgHandle)
                             .displayName(name)
-                            .componentType(Constant.displayType.byoiService.name())
+                            .componentType(componentType)
                             .projectId(projectId)
                             .imageUrl(imageUrl)
                             .registryId(registryId)

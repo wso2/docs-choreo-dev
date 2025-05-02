@@ -106,7 +106,7 @@ public final class Constant {
         manualTrigger,
         buildpackService,
         byoiService,
-        byocWebAppsDockerfileLess,
+        byoiWebApp,
         prismMockService,
         externalConsumer
     }

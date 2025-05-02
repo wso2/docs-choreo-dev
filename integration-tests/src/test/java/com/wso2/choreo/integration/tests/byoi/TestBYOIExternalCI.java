@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+ * Copyright (c) 2025, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
  *
  * This software is the property of WSO2 Inc. and its suppliers, if any.
  * Dissemination of any information or reproduction of any material contained
@@ -43,8 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class TestBYOIComponent extends TestNGCitrusSpringSupport {
-
+public class TestBYOIExternalCI extends TestNGCitrusSpringSupport {
+   
     private String orgHandle;
     private String orgId;
     private String orgUUID;
@@ -54,12 +54,13 @@ public class TestBYOIComponent extends TestNGCitrusSpringSupport {
     private String componentId;
     private static String accessToken;
     private ChoreoComponent testComponent;
-    private List<ByoiEndpoint> byoiEndpoints;
     private ApiVersion apiVersion;
     private boolean isPDP;
     private Image image;
     private String releaseId;
     private ComponentDeploymentStatusDTO componentDeployment;
+    private String token;
+    private String imageUrl;
 
     @Autowired
     Map<Endpoints, HttpClient> citrusClients;
@@ -85,15 +86,18 @@ public class TestBYOIComponent extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void getRegistries_TestCreateBYOIComponent() throws Exception {
         List<ThirdPartyContainerRegistryDTO> containerRegistries = DevopsPortalApi.getThirdPartyRegistryCredentials(this, accessToken, orgUUID);
-        // TODO - currently this has been written considering CDP and need to modify this logic to accomodated PDP
         if (containerRegistries.size() > 0) {
             if (isPDP) {
-                containerRegistryId = containerRegistries.get(1).getId();
+                containerRegistryId = containerRegistries.stream()
+                    .filter(registry -> "Choreo Samples Registry".equals(registry.getName()))
+                    .findFirst()
+                    .orElseThrow(() -> new Exception("Container registry with name 'Choreo Samples Registry' not found"))
+                    .getId();
             } else {
-                containerRegistryId = containerRegistries.get(0).getId();
+                throw new Exception("This test if only supported for PDP");
             }
         } else {
-            containerRegistryId = DevopsPortalApi.createThirdPartyRegistryCredential(this, accessToken, orgUUID, "Choreo Samples Registry", "Azure", "vendor-specific", "choreoanonymouspullable.azurecr.io").getId();
+            throw new Exception("No container registries found");
         }
     }
 
@@ -109,8 +113,8 @@ public class TestBYOIComponent extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void createComponent_TestCreateBYOIComponent() throws Exception {
         String componentName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_COMPONENT_NAME);
-        final String imageUrl = "choreoanonymouspullable.azurecr.io/pet-store:v0.9";
-        GraphqlDTO graphqlDTO = ComponentUtils.createBYOIComponentRequest(componentName, projectId, imageUrl, containerRegistryId, Constant.displayType.byoiService.name());
+        final String imageUrl = "choreoanonymouspullable.azurecr.io/react-spa:v0.9";
+        GraphqlDTO graphqlDTO = ComponentUtils.createBYOIComponentRequest(componentName, projectId, imageUrl, containerRegistryId, Constant.displayType.byoiWebApp.name());
 
         Optional<CreateByoiComponentResponseDTO> byoiComponent = GraphQL.createBYOIComponent(this,
                 choreoProjectsTestClient, graphqlDTO, accessToken);
@@ -127,14 +131,6 @@ public class TestBYOIComponent extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"componentRetrieval_TestCreateBYOIComponent"})
-    @CitrusTest
-    public void createBYOIEndpoint_TestCreateBYOIComponent() throws Exception {
-        apiVersion = testComponent.getLatestApiVersion();
-        releaseId = apiVersion.getAppEnvVersions().stream().filter(appEnvVersion -> appEnvVersion.getEnvironment().equals("dev")).findFirst().get().getReleaseId();
-        byoiEndpoints = DevopsPortalApi.createByoiEndpoint(this, accessToken, orgUUID, projectId, componentId, releaseId);
-    }
-
-    @Test(dependsOnMethods = {"createBYOIEndpoint_TestCreateBYOIComponent"})
     @CitrusTest
     public void getImages_TestCreateBYOIComponent() throws Exception {
         List<Image> images = DevopsPortalApi.getImages(this, accessToken, orgUUID, projectId, componentId, apiVersion.getId());
@@ -162,6 +158,27 @@ public class TestBYOIComponent extends TestNGCitrusSpringSupport {
     }
 
     @Test(dependsOnMethods = {"checkEndpointStatus_TestCreateBYOIComponent"})
+    @CitrusTest
+    public void generateBYOECIToken_TestCreateBYOIComponent() throws Exception {
+        token = DevopsPortalApi.generateBYOECIToken(this, accessToken, orgUUID, projectId, componentId, "test-token");
+        Assert.assertNotNull(token);
+    }
+
+    @Test(dependsOnMethods = {"generateBYOECIToken_TestCreateBYOIComponent"})
+    @CitrusTest
+    public void triggerExternalCI_TestCreateBYOIComponent() throws Exception {
+        imageUrl = "choreoanonymouspullable.azurecr.io/react-spa:latest";
+        DevopsPortalApi.triggerExternalCI(this, token, orgUUID, projectId, componentId, apiVersion.getId(), imageUrl);
+    }
+
+    @Test(dependsOnMethods = {"triggerExternalCI_TestCreateBYOIComponent"})
+    @CitrusTest
+    public void checkDeployedImage_TestCreateBYOIComponent() throws Exception {
+        componentDeployment = GraphQL.componentDeployment(testComponent, "dev", accessToken);
+        Assert.assertEquals(componentDeployment.getImageUrl(), imageUrl);
+    }
+
+    @Test(dependsOnMethods = {"checkDeployedImage_TestCreateBYOIComponent"})
     @CitrusTest
     public void deleteComponent_TestCreateBYOIComponent() throws Exception {
         GraphQL.deleteComponent(componentId, projectId, accessToken);

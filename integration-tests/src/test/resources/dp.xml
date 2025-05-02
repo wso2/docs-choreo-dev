@@ -13,6 +13,7 @@
             <class name="com.wso2.choreo.integration.tests.dp.TestWebSocketServiceDp"/>
             <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>
             <class name="com.wso2.choreo.integration.tests.configurations.TestSchemaConfigurations"/>
+            <class name="com.wso2.choreo.integration.tests.byoi.TestBYOIExternalCI"/>
         </classes>
     </test>
 </suite>
