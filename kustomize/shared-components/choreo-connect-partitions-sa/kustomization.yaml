@@ -11,7 +11,6 @@
 
 resources:
   - ../choreo-connect-partitions
-  - serviceaccounts.yaml
 
 patchesStrategicMerge:
   - add-serviceaccounts.yaml
