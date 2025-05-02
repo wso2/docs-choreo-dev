@@ -16,3 +16,5 @@ resources:
   - ../common-namespaces-combined-dataplane/choreo-sts
   - ../common-namespaces-combined-dataplane/keda
   - ../../helm/cert-manager
+  - ../../helm/reflector
+  - ../../helm/reloader
