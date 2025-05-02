@@ -22,3 +22,6 @@ configMapGenerator:
       - HC_VAULT_ROLE=vault
       - MAX_CONCURRENT_RECONCILES={{.MAX_CONCURRENT_RECONCILES}}
       - MAX_RETRY_COUNT={{.MAX_RETRY_COUNT}}
+
+patches:
+  - path: secretproviderclass-patch.yaml
