@@ -9,22 +9,8 @@
 #
 # --------------------------------------------------------------------------------------
 
-resources:
-  - ../combined-dataplane
-  - service-accounts
-
-configMapGenerator:
-  - name: env-dp-kv-resolver
-    behavior: replace
-    literals:
-      - ENV={{.ENV}}
-      - SECRET_STORE_TYPE=HCVault
-      - HC_VAULT_ADDRESS="http://vault.vault:8200"
-      - HC_VAULT_ROLE=vault
-      - MAX_CONCURRENT_RECONCILES={{.MAX_CONCURRENT_RECONCILES}}
-      - MAX_RETRY_COUNT={{.MAX_RETRY_COUNT}}
-
-patchesStrategicMerge:
-  - secretproviderclass-patch.yaml
-  - serviceaccount-patch.yaml
-  - services-patch.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: choreo-nginx-service
+$patch: delete
