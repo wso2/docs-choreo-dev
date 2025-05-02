@@ -501,6 +501,10 @@ configMapGenerator:
     behavior: create
     files:
       - cp-resilient-invoker/Config.toml
+  - name: cm-file-cp-consolidated-service
+    behavior: create
+    files:
+      - cp-consolidated-app/Config.toml
   - name: cm-file-cp-rrs
     behavior: create
     files:
