@@ -209,7 +209,7 @@ public class ConnectionService extends ControlPlaneAPI {
     public static ConnectionCreateRequest createConnectionCreationReq(
             List<com.wso2.choreo.integration.models.environments.Environment> clientComponentEnvironments,
             String projectId, String clientComponentId, ServiceVisibility requestingServiceVisibility,
-            ServiceInfo serviceFound ) throws IOException {
+            ServiceInfo serviceFound, String[] allowedScopes ) throws IOException {
 
         String serviceId = serviceFound.getServiceId();
         String schemaReference = serviceFound.getConnectionSchemas()[0].getId();  //this will only have one schema
@@ -244,7 +244,8 @@ public class ConnectionService extends ControlPlaneAPI {
                 .environments(environmentsToQuery.toArray(new Environment[0]))
                 .visibilities(visibilities.toArray(new Visibility[0]))
                 .requestingServiceVisibility(requestingServiceVisibility.toString())
-                .orgIdInteger(orgId).build();
+                .orgIdInteger(orgId)
+                .allowedScopes(allowedScopes).build();
 
     }
 
@@ -353,7 +354,7 @@ public class ConnectionService extends ControlPlaneAPI {
                                      List<com.wso2.choreo.integration.models.environments.Environment> servicePublisherComponentEnvironments, String networkVisibilityFilter, Boolean isOauth2Secured, Boolean isWebapp) throws IOException {
 
         ServiceInfo serviceFound = ConnectionService.FindService(citrusClients,runner,accessToken,requestedServiceName,networkVisibilityFilter,"");
-        ConnectionCreateRequest connectionCreationReq= ConnectionService.createConnectionCreationReq(clientComponentEnvironments,projectId,clientChoreoComponentId,requestedServiceVisibility,serviceFound);
+        ConnectionCreateRequest connectionCreationReq= ConnectionService.createConnectionCreationReq(clientComponentEnvironments,projectId,clientChoreoComponentId,requestedServiceVisibility,serviceFound, new String[]{});
         HttpClient httpClient = citrusClients.get(Endpoints.CHOREO_NEW_APP_SERVICE_ENDPOINT);
         ConnectionInfo connection = ConnectionService.createChoreoConnection(runner, httpClient,
                 accessToken, connectionCreationReq, isOauth2Secured, servicePublisherComponentEnvironments, isWebapp);

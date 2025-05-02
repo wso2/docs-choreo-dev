@@ -36,6 +36,8 @@ public class DevPortalApiKeyUtils {
         SANDBOX
     }
 
+    public static final String DEFAULT_API_KEY_HEADER = "Api-Key";
+
     public static void enableAPIKeySecurityForAPI(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
                                                   String apiId, String accessToken) {
 
@@ -50,7 +52,17 @@ public class DevPortalApiKeyUtils {
         ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
     }
 
-    public static void invokeApiGET(TestActionRunner runner, String apiKey, String invokeUrl, String testSessionId ,String resource,
+    public static void changeApiKeyHeader(TestActionRunner runner, Map<Endpoints, HttpClient> citrusClients,
+                                          String apiId, String headerName, String accessToken) {
+
+        HttpClient httpClient = citrusClients.get(Endpoints.STS_ENDPOINT);
+        JsonObject apiInfo = ApiManager.getApi(runner,httpClient,accessToken,apiId);
+        apiInfo.remove("apiKeyHeader");
+        apiInfo.addProperty("apiKeyHeader",headerName);
+        ApiManager.updateApi(runner,httpClient,accessToken,apiId,apiInfo);
+    }
+
+    public static void invokeApiGET(TestActionRunner runner, String apiKeyHeaderName, String apiKey, String invokeUrl, String testSessionId ,String resource,
                                     HttpStatus expectedResponseCode) throws Exception {
         // Test API Invocation
         runner.$(repeatOnError()
@@ -63,7 +75,7 @@ public class DevPortalApiKeyUtils {
                                 .get(resource)
                                 .message()
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                                .header("Api-Key", apiKey))
+                                .header(apiKeyHeaderName, apiKey))
                                 .header("x-choreo-test-session-id", testSessionId),
                         http()
                                 .client(invokeUrl)
