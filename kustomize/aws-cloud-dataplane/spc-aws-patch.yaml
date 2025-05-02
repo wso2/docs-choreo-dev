@@ -9,20 +9,10 @@
 #
 # --------------------------------------------------------------------------------------
 
-resources:
-  - ../common-namespaces-combined-dataplane/choreo-ai
-  - ../common-namespaces-combined-dataplane/choreo-egress-gateway
-  - ../common-namespaces-combined-dataplane/choreo-observability
-  - ../common-namespaces-combined-dataplane/choreo-sts
-  - ../common-namespaces-combined-dataplane/keda
-  - ../../helm/cert-manager
-  - ../../helm/reflector
-  - ../../helm/reloader
-  - ../../helm/keda-core
-
-patches:
-  - path: spc-aws-patch.yaml
-    target:
-      group: secrets-store.csi.x-k8s.io
-      version: v1
-      kind: SecretProviderClass
+- op: remove
+  path: /spec/parameters/tenantId
+- op: remove
+  path: /spec/parameters/usePodIdentity
+- op: replace
+  path: /spec/provider
+  value: aws
