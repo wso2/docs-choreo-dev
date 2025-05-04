@@ -108,7 +108,8 @@ public final class Constant {
         byoiService,
         byoiWebApp,
         prismMockService,
-        externalConsumer
+        externalConsumer,
+        byocWebAppsDockerfileLess
     }
     public enum apiLIifCycleState {
         Publish
