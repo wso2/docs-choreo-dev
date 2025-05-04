@@ -10,22 +10,6 @@
 # --------------------------------------------------------------------------------------
 
 resources:
-  - ../common-namespaces-combined-dataplane/choreo-ai
-  - ../common-namespaces-combined-dataplane/choreo-egress-gateway
-  - ../common-namespaces-combined-dataplane/choreo-observability
-  - ../common-namespaces-combined-dataplane/choreo-sts
-  - ../common-namespaces-combined-dataplane/keda
-  - ../../helm/cert-manager
-  - ../../helm/reflector
-  - ../../helm/reloader
-  - ../../helm/keda-core
+  - service-accounts.yaml
 
-patches:
-  - path: spc-aws-patch.yaml
-    target:
-      group: secrets-store.csi.x-k8s.io
-      version: v1
-      kind: SecretProviderClass
-
-patchesStrategicMerge:
-  - service-account-patch.yaml
+namespace: choreo-sts
