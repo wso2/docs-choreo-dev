@@ -4,9 +4,6 @@ queueName = "resilient-invoker"
 timeToLive = {{.MESSAGE_TTL | default 2100}}
 asbConnectionStringPath = "/mnt/csi/secret-cp-rrs/CP_RRS_ASB_CONNECTION_STRING"
 
-[ballerina.log]
-level = "{{.LOG_LEVEL}}"
-
 [cp.pdeploy.config]
 maxRevisions = 20
 resourceRegistryBasePath="http://resource-registry:9090/resource-registry"
