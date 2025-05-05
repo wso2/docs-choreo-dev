@@ -25,7 +25,7 @@ configMapGenerator:
       - MAX_RETRY_COUNT={{.MAX_RETRY_COUNT}}
 
 patchesStrategicMerge:
-  - secretproviderclass-patch.yaml
+  - secretproviderclass-patches/choreodp-system.yaml
   - serviceaccount-patch.yaml
   - services-patch.yaml
 
