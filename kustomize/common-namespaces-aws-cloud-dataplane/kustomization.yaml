@@ -19,6 +19,7 @@ resources:
   - ../../helm/reflector
   - ../../helm/reloader
   - ../../helm/keda-core
+  - service-accounts
 
 patches:
   - path: spc-aws-patch.yaml

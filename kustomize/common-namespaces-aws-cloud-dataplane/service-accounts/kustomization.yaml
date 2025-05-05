@@ -10,5 +10,7 @@
 # --------------------------------------------------------------------------------------
 
 resources:
-  - choreo-apim
-  - choreodp-system
+  - choreo-ai
+  - choreo-egress-gateway
+  - choreo-sts
+  - choreo-observability
