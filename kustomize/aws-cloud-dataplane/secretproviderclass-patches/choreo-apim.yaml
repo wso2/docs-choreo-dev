@@ -104,7 +104,7 @@ spec:
         objectAlias: ANALYTICS_AUTH_TOKEN
         objectVersion: "{{.ANALYTICS_AUTH_TOKEN}}"
       - |
-        objectName: {{.MOESIF_MS_AUTH_PWD_OBJ_NAME | default "apim-moesif-auth-password" }} 
+        objectName: {{.MOESIF_MS_AUTH_PWD_OBJ_NAME | default "apim-moesif-auth-password" }}
         objectType: secret
         objectAlias: MOESIF_MS_AUTH_PWD
         objectVersion: "{{.MOESIF_MS_AUTH_PWD}}"
