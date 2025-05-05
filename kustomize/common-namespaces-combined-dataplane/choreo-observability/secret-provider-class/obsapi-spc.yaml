@@ -24,7 +24,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: obs-adx-view-client-secret
+          objectName: {{.AZURE_ADX_CLIENT_SECRET_OBJ_NAME | default "obs-adx-view-client-secret"}}
           objectType: secret
           objectAlias: AZURE_ADX_CLIENT_SECRET
           objectVersion: "{{.AZURE_ADX_CLIENT_SECRET}}"
