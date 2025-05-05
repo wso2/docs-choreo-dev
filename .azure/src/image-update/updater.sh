@@ -48,7 +48,7 @@ update_configs () {
 
   trimmedUpdatedConfigs=${updatedConfigs//$'\n'/}
   echo "[DEBUG] configs : $trimmedUpdatedConfigs"
-  echo "$trimmedUpdatedConfigs" | tr ',' '\n' | while read updatingConfig; do
+  echo "$trimmedUpdatedConfigs" | tr ',' '\n' | while read -r updatingConfig; do
     IFS='=' read -ra config <<< "$updatingConfig"
     echo "Updating ${config[0]} config to ${config[1]}"
     count=$(grep -c "^${config[0]}=" "$envFileName" || true)
@@ -68,7 +68,7 @@ update_multi_cluster_images () {
   echo "$clusters"
   for cluster in $clusters; do
     mapfile -t paths < <(echo "$CLUSTER_MAPPING_CONFIG" | cluster="$cluster" yq '.[env(cluster)][]')
-    UpdatedImages=$(echo "$1" | jq -r .$cluster[])
+    UpdatedImages=$(echo "$1" | jq -r ."$cluster"[])
     echo "$UpdatedImages"
 
     for p in "${paths[@]}"; do
