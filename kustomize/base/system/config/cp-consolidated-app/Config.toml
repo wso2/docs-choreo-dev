@@ -1,5 +1,5 @@
 [cp.resinvoke]
-healthCheckPort = 9095
+healthCheckPort = 9093
 queueName = "resilient-invoker"
 timeToLive = {{.MESSAGE_TTL | default 2100}}
 asbConnectionStringPath = "/mnt/csi/secret-cp-rrs/CP_RRS_ASB_CONNECTION_STRING"
