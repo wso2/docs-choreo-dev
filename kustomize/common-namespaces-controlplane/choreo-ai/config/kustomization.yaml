@@ -64,6 +64,7 @@ configMapGenerator:
       - WEBSUBHUB_PUBLISHER_ENABLED={{.WEBSUBHUB_PUBLISHER_ENABLED | default "false"}}
       - WEBSUBHUB_PUBLISHER_TOPIC={{.WEBSUBHUB_PUBLISHER_TOPIC | default ""}}
       - WEBSUBHUB_PUBLISHER_URL={{.WEBSUBHUB_PUBLISHER_URL | default ""}}
+      - COST_SAVINGS_THRESHOLD={{.COST_SAVINGS_THRESHOLD | default "0.2"}}
   - name: env-cost-optimizer-cp-cron-cm
     behavior: create
     literals:
