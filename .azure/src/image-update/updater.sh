@@ -142,5 +142,8 @@ function push_changes() {
   done
 }
 
+echo "[DEBUG] updated configs: $UPDATED_CONFIGS"
+echo "[DEBUG] image map: $UPDATED_IMAGE_MAP"
+echo "[DEBUG] images: $UPDATED_IMAGES"
 setup_git
 push_changes
