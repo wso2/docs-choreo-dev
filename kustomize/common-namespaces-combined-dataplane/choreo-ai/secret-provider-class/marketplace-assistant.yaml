@@ -20,7 +20,7 @@ spec:
           objectAlias: AZURE_OPENAI_API_KEY
           objectVersion: "{{.AZURE_OPENAI_API_KEY}}"
         - |
-          objectName: {{.ZILLIZ_CLOUD_API_KEY_OBJ_NAME | default "ai-zilliz-CLUSTER-API-KEY"}}
+          objectName: ai-zilliz-CLUSTER-API-KEY
           objectType: secret
           objectAlias: ZILLIZ_CLOUD_API_KEY
           objectVersion: "{{.ZILLIZ_CLOUD_API_KEY}}"

@@ -13,7 +13,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: {{.AZURE_OPENAI_API_KEY | default "ai-cogsvc-dp-westus-primary-access-key"}}
+          objectName: ai-cogsvc-dp-westus-primary-access-key
           objectType: secret
           objectAlias: AZURE_OPENAI_API_KEY
           objectVersion: "{{.AZURE_OPENAI_API_KEY}}"

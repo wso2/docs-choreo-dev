@@ -24,7 +24,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: {{.AZURE_LA_CLIENT_SECRET_OBJ_NAME | default "obs-log-analytics-read-sysobs-api-client-secret"}}
+          objectName: obs-log-analytics-read-sysobs-api-client-secret
           objectType: secret
           objectAlias: AZURE_LA_CLIENT_SECRET
           objectVersion: "{{.AZURE_LA_CLIENT_SECRET}}"

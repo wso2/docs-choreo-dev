@@ -24,7 +24,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: {{.EVENT_HUB_CONNECTION_STRING_OBJ_NAME | default "obs-eh-primary-conn-string"}}
+          objectName: obs-eh-primary-conn-string
           objectType: secret
           objectAlias: EVENT_HUB_CONNECTION_STRING
           objectVersion: "{{.EVENT_HUB_CONNECTION_STRING}}"
