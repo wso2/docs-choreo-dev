@@ -42,27 +42,26 @@ metadata:
 spec:
   parameters:
     objects: |
-      array:
-        - |
-          objectName: {{.ROUTER_KEYSTORE_KEY_OBJ_NAME | default "mgw-ROUTER-KEYSTORE"}}
-          objectType: secret
-          objectAlias: ROUTER_KEYSTORE_KEY
-          objectVersion: "{{.ROUTER_KEYSTORE_KEY}}"
-        - |
-          objectName: {{.ENFORCER_JWT_KEYSTORE_KEY_OBJ_NAME | default "mgw-ENFORCER-JWT-KEYSTORE-KEY"}}
-          objectType: secret
-          objectAlias: ENFORCER_JWT_KEYSTORE_KEY
-          objectVersion: "{{.ENFORCER_JWT_KEYSTORE_KEY}}"
-        - |
-          objectName: {{.ENFORCER_JWT_KEYSTORE_CERTIFICATE_OBJ_NAME | default "mgw-ENFORCER-JWT-KEYSTORE-CERTIFICATE"}}
-          objectType: secret
-          objectAlias: ENFORCER_JWT_KEYSTORE_CERTIFICATE
-          objectVersion: "{{.ENFORCER_JWT_KEYSTORE_CERTIFICATE}}"
-        - |
-          objectName: {{.ENFORCER_KEYSTORE_KEY_OBJ_NAME | default "mgw-ENFORCER-KEYSTORE-KEY"}}
-          objectType: secret
-          objectAlias: ENFORCER_KEYSTORE_KEY
-          objectVersion: "{{.ENFORCER_KEYSTORE_KEY}}"
+      - |
+        objectName: {{.ROUTER_KEYSTORE_KEY_OBJ_NAME | default "mgw-ROUTER-KEYSTORE"}}
+        objectType: secret
+        objectAlias: ROUTER_KEYSTORE_KEY
+        objectVersion: "{{.ROUTER_KEYSTORE_KEY}}"
+      - |
+        objectName: {{.ENFORCER_JWT_KEYSTORE_KEY_OBJ_NAME | default "mgw-ENFORCER-JWT-KEYSTORE-KEY"}}
+        objectType: secret
+        objectAlias: ENFORCER_JWT_KEYSTORE_KEY
+        objectVersion: "{{.ENFORCER_JWT_KEYSTORE_KEY}}"
+      - |
+        objectName: {{.ENFORCER_JWT_KEYSTORE_CERTIFICATE_OBJ_NAME | default "mgw-ENFORCER-JWT-KEYSTORE-CERTIFICATE"}}
+        objectType: secret
+        objectAlias: ENFORCER_JWT_KEYSTORE_CERTIFICATE
+        objectVersion: "{{.ENFORCER_JWT_KEYSTORE_CERTIFICATE}}"
+      - |
+        objectName: {{.ENFORCER_KEYSTORE_KEY_OBJ_NAME | default "mgw-ENFORCER-KEYSTORE-KEY"}}
+        objectType: secret
+        objectAlias: ENFORCER_KEYSTORE_KEY
+        objectVersion: "{{.ENFORCER_KEYSTORE_KEY}}"
 
 ---
 apiVersion: secrets-store.csi.x-k8s.io/v1
@@ -74,72 +73,15 @@ spec:
     - secretName: secret-apim
       type: Opaque
       data:
-        - objectName: CHOREO_IS_ADMIN_PSWD
-          key: CHOREO_IS_ADMIN_PSWD
-        - objectName: H2_SHARED_DB_PSWD
-          key: H2_SHARED_DB_PSWD
         - objectName: SUPER_ADMIN_PSWD
           key: SUPER_ADMIN_PSWD
-        - objectName: ASGARDEO_SYSTEM_APP_CLIENT_SECRET
-          key: ASGARDEO_SYSTEM_APP_CLIENT_SECRET
-        - objectName: APIM_DASHBOARD_USER_PWD
-          key: APIM_DASHBOARD_USER_PWD
-        - objectName: APIM_DASHBOARD_USER_PWD_SHA256
-          key: APIM_DASHBOARD_USER_PWD_SHA256
-        - objectName: INSTANCE_BASED_AUTHZ_DISABLED_ORG_HANDLES
-          key: INSTANCE_BASED_AUTHZ_DISABLED_ORG_HANDLES
-        - objectName: DEVPORTAL_V2_ACCESS_KEY
-          key: DEVPORTAL_V2_ACCESS_KEY
-        - objectName: APIM_AI_CLIENT_SECRET
-          key: APIM_AI_CLIENT_SECRET
   parameters:
     objects: |
-      array:
-        - |
-          objectName: apim-CHOREO-IS-ADMIN-PSWD
-          objectType: secret
-          objectAlias: CHOREO_IS_ADMIN_PSWD
-          objectVersion: "{{.CHOREO_IS_ADMIN_PSWD}}"
-        - |
-          objectName: apim-h2-shared-database-password
-          objectType: secret
-          objectAlias: H2_SHARED_DB_PSWD
-          objectVersion: "{{.H2_SHARED_DB_PSWD}}"
-        - |
-          objectName: apim-super-admin-password
-          objectType: secret
-          objectAlias: SUPER_ADMIN_PSWD
-          objectVersion: "{{.SUPER_ADMIN_PSWD}}"
-        - |
-          objectName: apim-asgardeo-system-app-client-secret
-          objectType: secret
-          objectAlias: ASGARDEO_SYSTEM_APP_CLIENT_SECRET
-          objectVersion: "{{.ASGARDEO_SYSTEM_APP_CLIENT_SECRET}}"
-        - |
-          objectName: apim-dashboard-user-password
-          objectType: secret
-          objectAlias: APIM_DASHBOARD_USER_PWD
-          objectVersion: "{{.APIM_DASHBOARD_USER_PWD}}"
-        - |
-          objectName: apim-dashboard-user-password-sha256
-          objectType: secret
-          objectAlias: APIM_DASHBOARD_USER_PWD_SHA256
-          objectVersion: "{{.APIM_DASHBOARD_USER_PWD_SHA256}}"
-        - |
-          objectName: choreo-prod-auth-paid-org-handles
-          objectType: secret
-          objectAlias: INSTANCE_BASED_AUTHZ_DISABLED_ORG_HANDLES
-          objectVersion: "{{.INSTANCE_BASED_AUTHZ_DISABLED_ORG_HANDLES}}"
-        - |
-          objectName: devportal-v2-access-key
-          objectType: secret
-          objectAlias: DEVPORTAL_V2_ACCESS_KEY
-          objectVersion: "{{.DEVPORTAL_V2_ACCESS_KEY}}"
-        - |
-          objectName: choreo-apim-ai-client-secret
-          objectType: secret
-          objectAlias: APIM_AI_CLIENT_SECRET
-          objectVersion: "{{.APIM_AI_CLIENT_SECRET}}"
+      - |
+        objectName: apim-super-admin-password
+        objectType: secret
+        objectAlias: SUPER_ADMIN_PSWD
+        objectVersion: "{{.SUPER_ADMIN_PSWD}}"
 ---
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
@@ -208,14 +150,13 @@ metadata:
 spec:
   parameters:
     objects: |
-      array:
-        - |
-          objectName: {{.ADAPTER_KEYSTORE_KEY_OBJ_NAME | default "apim-mg-keystore-key"}}
-          objectType: secret
-          objectAlias: ADAPTER_KEYSTORE_KEY
-          objectVersion: "{{.ADAPTER_KEYSTORE_KEY}}"
-        - |
-          objectName: {{.ADAPTER_KEYSTORE_CERTIFICATE_OBJ_NAME | default "apim-mg-keystore-cert"}}
-          objectType: secret
-          objectAlias: ADAPTER_KEYSTORE_CERTIFICATE
-          objectVersion: "{{.ADAPTER_KEYSTORE_CERTIFICATE}}"
+      - |
+        objectName: {{.ADAPTER_KEYSTORE_KEY_OBJ_NAME | default "apim-mg-keystore-key"}}
+        objectType: secret
+        objectAlias: ADAPTER_KEYSTORE_KEY
+        objectVersion: "{{.ADAPTER_KEYSTORE_KEY}}"
+      - |
+        objectName: {{.ADAPTER_KEYSTORE_CERTIFICATE_OBJ_NAME | default "apim-mg-keystore-cert"}}
+        objectType: secret
+        objectAlias: ADAPTER_KEYSTORE_CERTIFICATE
+        objectVersion: "{{.ADAPTER_KEYSTORE_CERTIFICATE}}"
