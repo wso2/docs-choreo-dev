@@ -128,18 +128,22 @@ function main() {
   else
     echo "No changes to update"
   fi
-  git commit -am "Update image tags in $BUILD_NUMBER"
 }
 
 function push_changes() {
   main
-  git diff
-  while ! git push origin HEAD:"$BRANCH"; do
-    echo "[WARNING] Push failed. Fetching latest changes and retrying..."
-    git fetch origin "$BRANCH"
-    git reset --hard "origin/$BRANCH"
-    main
-  done
+  if [[ $(git status --porcelain --untracked-files=no) ]]; then
+    git diff
+    git commit -am "Update image tags in $BUILD_NUMBER"
+    while ! git push origin HEAD:"$BRANCH"; do
+      echo "[WARNING] Push failed. Fetching latest changes and retrying..."
+      git fetch origin "$BRANCH"
+      git reset --hard "origin/$BRANCH"
+      main
+    done
+  else
+    echo "[INFO] No changes detected"
+  fi
 }
 
 echo "[DEBUG] updated configs: $UPDATED_CONFIGS"
