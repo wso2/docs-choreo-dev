@@ -29,3 +29,5 @@ patches:
 
 patchesStrategicMerge:
   - service-account-patch.yaml
+  - choreo-ai-secretproviderclass-patch.yaml
+  - choreo-obs-secretproviderclass-patch.yaml

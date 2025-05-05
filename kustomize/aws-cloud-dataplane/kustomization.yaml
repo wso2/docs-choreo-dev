@@ -26,6 +26,7 @@ configMapGenerator:
 
 patchesStrategicMerge:
   - secretproviderclass-patches/choreodp-system.yaml
+  - secretproviderclass-patches/choreo-apim.yaml
   - serviceaccount-patch.yaml
   - services-patch.yaml
 
