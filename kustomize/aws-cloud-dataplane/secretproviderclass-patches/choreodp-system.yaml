@@ -77,7 +77,7 @@ spec:
           objectName: "{{.AWS_CONTAINER_REGISTRY_PASSWORD_OBJ_NAME}}"
           objectType: secretsmanager
           objectAlias: AZURE_CONTAINER_REGISTRY_PASSWORD
-          objectVersion: "{{.AZURE_CONTAINER_REGISTRY_PASSWORD_VERSION}}"
+          objectVersion: "{{.AWS_CONTAINER_REGISTRY_PASSWORD_VERSION}}"
 ---
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
@@ -98,7 +98,7 @@ spec:
           objectAlias: CHOREO_STS_REDIS_PASSWORD
           objectVersion: "{{.CHOREO_STS_REDIS_PASSWORD_VERSION}}"
         - |
-          objectName: "{{.APP_DEV_STS_APP_CLIENT_SECRET_VERSION_OBJ_NAME}}"
+          objectName: "{{.APP_DEV_STS_APP_CLIENT_SECRET_OBJ_NAME}}"
           objectType: secretsmanager
           objectAlias: APP_DEV_STS_APP_CLIENT_SECRET
           objectVersion: "{{.APP_DEV_STS_APP_CLIENT_SECRET_VERSION}}"
