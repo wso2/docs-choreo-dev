@@ -49,3 +49,6 @@ spec:
           objectVersion: {{.MILVUS_PROXY_CONSUMER_KEY}}
         - |
           objectName: ai-milvus-proxy-docs-assistant-consumer-secret
+          objectType: secret
+          objectAlias: PROXY_CONSUMER_SECRET
+          objectVersion: {{.MILVUS_PROXY_CONSUMER_SECRET}}
