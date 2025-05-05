@@ -1691,15 +1691,15 @@ document.addEventListener('DOMContentLoaded', function() {
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#procfile" class="md-nav__link">
-    Procfile
+  <a href="#configure-build-time-environment-variables" class="md-nav__link">
+    Configure build-time environment variables
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#configure-build-time-environment-variables" class="md-nav__link">
-    Configure build-time environment variables
+  <a href="#customize-the-default-run-command" class="md-nav__link">
+    Customize the Default Run Command
   </a>
   
 </li>
@@ -3978,15 +3978,15 @@ document.addEventListener('DOMContentLoaded', function() {
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#procfile" class="md-nav__link">
-    Procfile
+  <a href="#configure-build-time-environment-variables" class="md-nav__link">
+    Configure build-time environment variables
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#configure-build-time-environment-variables" class="md-nav__link">
-    Configure build-time environment variables
+  <a href="#customize-the-default-run-command" class="md-nav__link">
+    Customize the Default Run Command
   </a>
   
 </li>
@@ -4052,21 +4052,18 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 </tbody>
 </table>
-<h3 id="procfile">Procfile<a class="headerlink" href="#procfile" title="Permanent link">&para;</a></h3>
-<p>A <code>Procfile</code> is a configuration file used to declare the commands that are run by your application's containers. </p>
+<p>For more examples, see <a href="https://github.com/wso2/choreo-samples">Choreo samples</a>.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>In <strong>Python</strong> projects, it is mandatory to have a <code>Procfile</code> with the <code>web</code> process type in the project root directory.</p>
+<p>In <strong>Python</strong> projects, it is mandatory to provide a <code>Run Command</code> when creating a component.</p>
 </div>
-<p>Here's an example <code>Procfile</code> for an application:</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>web: &lt;command to start your application&gt;
-</code></pre></div>
-
-<p>e.g.,</p>
-<p><code>web: python main.py</code> <br>
-<code>web: gunicorn --bind :8080 --workers 1 --threads 8 --timeout 0 main:app</code> <br>
-<code>web: flask run --host=0.0.0.0</code></p>
-<p>For more examples, see <a href="https://github.com/wso2/choreo-samples">Choreo samples</a>.</p>
+<p>Here are some example run commands for an application:<br>
+e.g.,</p>
+<ul>
+<li>python main.py</li>
+<li>gunicorn --bind :8080 --workers 1 --threads 8 --timeout 0 main:app</li>
+<li>flask run --host=0.0.0.0</li>
+</ul>
 </div>
 <div class="tabbed-block">
 <p>Supported Versions - 2201.3.5, 2201.4.1, 2201.5.0, 2201.5.1, 201.6.0,  2201.7.0</p>
@@ -4175,16 +4172,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>If Maven files such as <code>mvn.cmd</code> exist in the project without the <code>.mvn</code> directory, the build will fail. To ensure a successful build, you must either commit the <code>.mvn</code> directory along with any Maven files or not include any Maven files in the project if you choose not to commit the <code>.mvn</code> directory.</li>
 </ul>
 </div>
-<h4>Procfile</h4>
-<p>A <code>Procfile</code> is a configuration file used to declare the commands that are run by your application's containers. 
-If you want to customize the default entry point of the container, you can include a <code>Procfile</code> with the <code>web</code> process type in the project root directory. 
-In <strong>Java</strong> projects, it is optional to include a <code>Procfile</code>.</p>
-<p>Here's an example <code>Procfile</code> for an application:</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>web: &lt;command to start your application&gt;
-</code></pre></div>
-
-<p>e.g.,</p>
-<p><code>web: java -jar target/sample.jar</code> <br></p>
 <p>For more examples, see <a href="https://github.com/wso2/choreo-samples">Choreo samples</a>.</p>
 </div>
 <div class="tabbed-block">
@@ -4208,16 +4195,6 @@ In <strong>Java</strong> projects, it is optional to include a <code>Procfile</c
 </tr>
 </tbody>
 </table>
-<h4>Procfile</h4>
-<p>A <code>Procfile</code> is a configuration file used to declare the commands that are run by your application's containers. 
-If you want to customize the default entry point of the container, you can include a <code>Procfile</code> with the <code>web</code> process type in the project root directory. 
-In <strong>NodeJS</strong> projects, it is optional to include a <code>Procfile</code>.</p>
-<p>Here's an example <code>Procfile</code> for an application:</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>web: &lt;command to start your application&gt;
-</code></pre></div>
-
-<p>e.g.,</p>
-<p><code>web: node app.js</code> <br></p>
 <p>For more examples, see <a href="https://github.com/wso2/choreo-samples">Choreo samples</a>.</p>
 </div>
 <div class="tabbed-block">
@@ -4245,16 +4222,6 @@ In <strong>NodeJS</strong> projects, it is optional to include a <code>Procfile<
 </tr>
 </tbody>
 </table>
-<h4>Procfile</h4>
-<p>A <code>Procfile</code> is a configuration file used to declare the commands that are run by your application's containers. 
-If you want to customize the default entry point of the container, you can include a <code>Procfile</code> with the <code>web</code> process type in the project root directory. 
-In <strong>PHP</strong> projects, it is optional to include a <code>Procfile</code>.</p>
-<p>Here's an example <code>Procfile</code> for an application:</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>web: &lt;command to start your application&gt;
-</code></pre></div>
-
-<p>e.g.,</p>
-<p><code>web:php -S 0.0.0.0:8000 index.php</code> <br></p>
 <p>For more examples, see <a href="https://github.com/wso2/choreo-samples">Choreo samples</a>.</p>
 </div>
 <div class="tabbed-block">
@@ -4282,17 +4249,6 @@ In <strong>PHP</strong> projects, it is optional to include a <code>Procfile</co
 </tr>
 </tbody>
 </table>
-<h4>Procfile</h4>
-<p>A <code>Procfile</code> is a configuration file used to declare the commands that are run by your application's containers. 
-If you want to customize the default entry point of the container, you can include a <code>Procfile</code> with the <code>web</code> process type in the project root directory. 
-In <strong>Ruby</strong> projects, it is optional to include a <code>Procfile</code>.</p>
-<p>Here's an example <code>Procfile</code> for an application:</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>web: &lt;command to start your application&gt;
-</code></pre></div>
-
-<p>e.g.,</p>
-<p><code>web: ruby app.rb</code> <br>
-<code>web:bundle exec ruby app.rb -p 8080</code> <br></p>
 <p>For more examples, see <a href="https://github.com/wso2/choreo-samples">Choreo samples</a>.</p>
 </div>
 <div class="tabbed-block">
@@ -4319,18 +4275,9 @@ In <strong>Ruby</strong> projects, it is optional to include a <code>Procfile</c
     - 8, 11, 17, 18 (OpenJDK Runtime Environment Temurin)</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>You can use this buildpack only with web applications. For other component types, use the <strong>Java</strong> buildpack. Additionally, if the generated artifact is a <code>WAR</code> file, it is necessary to include a <strong>Procfile</strong>.</p>
+<p>You can use this buildpack only with web applications. For other component types, use the <strong>Java</strong> buildpack. Additionally, if the generated artifact is a <code>WAR</code> file, you must include the run command in the <strong>Build Configurations</strong> editor on the component's <strong>Build</strong> page. <br> e.g.,
+    <code>java -jar target/sample.war</code> <br></p>
 </div>
-<h4>Procfile</h4>
-<p>A <code>Procfile</code> is a configuration file used to declare the commands that are run by your application's containers. 
-If you want to customize the default entry point of the container, you can include a <code>Procfile</code> with the <code>web</code> process type in the project root directory. 
-In <strong>Java</strong> projects, it is optional to include a <code>Procfile</code>.</p>
-<p>Here's an example <code>Procfile</code> for an application:</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>web: &lt;command to start your application&gt;
-</code></pre></div>
-
-<p>e.g.,</p>
-<p><code>web: java -jar target/sample.war</code> <br></p>
 </div>
 </div>
 </div>
@@ -4343,6 +4290,14 @@ In <strong>Java</strong> projects, it is optional to include a <code>Procfile</c
 <p>During the build process, the build-time environment variables and their values are passed to the buildpack. Therefore, you can configure both buildpack-specific environment variables and those required for the component build.</p>
 <p>For example, if you want to override the Maven command of the <strong>Java</strong> buildpack, you can use <code>GOOGLE_MAVEN_BUILD_ARGS</code> as the environment key and <code>clean install</code> as the value. </p>
 <p>For more examples, see <a href="https://cloud.google.com/docs/buildpacks/service-specific-configs">Google Cloud's buildpacks documentation</a>.</p>
+<h3 id="customize-the-default-run-command">Customize the Default Run Command<a class="headerlink" href="#customize-the-default-run-command" title="Permanent link">&para;</a></h3>
+<p>You can configure the run command required to start the component via the <strong>Build Configurations</strong> editor on the component's <strong>Build</strong> page. This overrides the default run command provided by the buildpack. After configuring the run command, you must rebuild the component for the changes to take effect.<br></p>
+<p>e.g., <br></p>
+<ul>
+<li>java -jar target/sample.jar</li>
+<li>node app.js</li>
+<li>php -S 0.0.0.0:8000 index.php</li>
+</ul>
 
 
 
