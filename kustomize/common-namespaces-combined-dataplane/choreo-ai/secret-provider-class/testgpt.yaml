@@ -15,7 +15,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: {{.REDIS_AUTH_KEY_OBJ_NAME | default "ai-api-test-redis-primary-access-key"}}
+          objectName: {{.REDIS_AUTH_KEY_OBJ_NAME | default "redis-testgpt-password"}}
           objectType: secret
           objectAlias: REDIS-AUTH-KEY
           objectVersion: "{{.REDIS_AUTH_KEY}}"
