@@ -29,7 +29,7 @@ spec:
           objectAlias: REDIS_PASSWORD
           objectVersion: "{{.REDIS_PASSWORD}}"
         - |
-          objectName: {{.DATA_COLLECTOR_CONSUMER_KEY_OBJ_NAME | default "ai-data-collector-consumer-key"}} 
+          objectName: {{.DATA_COLLECTOR_CONSUMER_KEY_OBJ_NAME | default "ai-data-collector-consumer-key"}}
           objectType: secret
           objectAlias: DATA_COLLECTOR_CONSUMER_KEY
           objectVersion: {{.DATA_COLLECTOR_CONSUMER_KEY}}
