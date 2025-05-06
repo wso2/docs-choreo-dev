@@ -13,9 +13,11 @@ azureOpenAIChatDeploymentId = "{{.OPENAI_CHAT_DEPLOYMENT_ID_TESTGPT}}"
 azureOpenAIApiVersion = "2023-05-15"
 azureOpenAIToken = "/mnt/csi/secret-testgpt/OPENAI-ACCESS-KEY"
 
-redisHost = "redis-cluster.redis.svc.cluster.local"
+redisClusterHost = "redis-cluster.redis.svc.cluster.local"
+redisClusterUser = "testgpt_user"
+redisClusterPassword = "/mnt/csi/secret-testgpt/REDIS-CLUSTER-AUTH-KEY"
+redisHost = "{{.REDIS_HOST_TESTGPT}}"
 redisPassword = "/mnt/csi/secret-testgpt/REDIS-AUTH-KEY"
-redisUser = "testgpt_user"
 
 appServiceUrl = "{{.APP_SERVICE_URL}}"
 graphqlUrl = "{{.GRAPHQL_URL}}"
