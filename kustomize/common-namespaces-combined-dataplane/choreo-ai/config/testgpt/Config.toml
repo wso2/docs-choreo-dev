@@ -13,10 +13,9 @@ azureOpenAIChatDeploymentId = "{{.OPENAI_CHAT_DEPLOYMENT_ID_TESTGPT}}"
 azureOpenAIApiVersion = "2023-05-15"
 azureOpenAIToken = "/mnt/csi/secret-testgpt/OPENAI-ACCESS-KEY"
 
-# Commented out the redis cluster configuration till it's ready
-# redisClusterHost = "redis-cluster.redis.svc.cluster.local"
-# redisClusterUser = "testgpt_user"
-# redisClusterPassword = "/mnt/csi/secret-testgpt/REDIS-CLUSTER-AUTH-KEY"
+redisClusterHost = "redis-cluster.redis.svc.cluster.local"
+redisClusterUser = "testgpt_user"
+redisClusterPassword = "/mnt/csi/secret-testgpt/REDIS-CLUSTER-AUTH-KEY"
 redisHost = "{{.REDIS_HOST_TESTGPT}}"
 redisPassword = "/mnt/csi/secret-testgpt/REDIS-AUTH-KEY"
 
