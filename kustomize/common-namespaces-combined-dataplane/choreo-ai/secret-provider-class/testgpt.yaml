@@ -9,13 +9,15 @@ spec:
       data:
         - objectName: REDIS-AUTH-KEY
           key: REDIS-AUTH-KEY
+        - objectName: REDIS-CLUSTER-AUTH-KEY
+          key: REDIS-CLUSTER-AUTH-KEY
         - objectName: OPENAI-ACCESS-KEY
           key: OPENAI-ACCESS-KEY
   parameters:
     objects: |
       array:
         - |
-          objectName: {{.REDIS_AUTH_KEY_OBJ_NAME | default "redis-testgpt-password"}}
+          objectName: {{.REDIS_AUTH_KEY_OBJ_NAME | default "ai-api-test-redis-primary-access-key"}}
           objectType: secret
           objectAlias: REDIS-AUTH-KEY
           objectVersion: "{{.REDIS_AUTH_KEY}}"
@@ -24,3 +26,8 @@ spec:
           objectType: secret
           objectAlias: OPENAI-ACCESS-KEY
           objectVersion: "{{.OPENAI_ACCESS_KEY}}"
+        - |
+          objectName: {{.REDIS_CLUSTER_AUTH_KEY_OBJ_NAME | default "redis-testgpt-password"}}
+          objectType: secretsmanager
+          objectAlias: REDIS-CLUSTER-AUTH-KEY
+          objectVersion: "{{.REDIS_CLUSTER_AUTH_KEY}}"
