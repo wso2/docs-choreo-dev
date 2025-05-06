@@ -18,6 +18,6 @@ spec:
           objectVersion: "{{.OPENAI_ACCESS_KEY}}"
         - |
           objectName: {{.REDIS_CLUSTER_AUTH_KEY_OBJ_NAME | default "redis-testgpt-password"}}
-          objectType: secretsmanager
+          objectType: secret
           objectAlias: REDIS-CLUSTER-AUTH-KEY
           objectVersion: "{{.REDIS_CLUSTER_AUTH_KEY}}"
