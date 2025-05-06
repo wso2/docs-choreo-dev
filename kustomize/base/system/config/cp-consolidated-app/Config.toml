@@ -1,9 +1,3 @@
-[cp.resinvoke]
-healthCheckPort = 9093
-queueName = "resilient-invoker"
-timeToLive = {{.MESSAGE_TTL | default 2100}}
-asbConnectionStringPath = "/mnt/csi/secret-cp-rrs/CP_RRS_ASB_CONNECTION_STRING"
-
 [cp.pdeploy.config]
 maxRevisions = 20
 resourceRegistryBasePath="http://resource-registry:9090/resource-registry"
@@ -27,4 +21,5 @@ enableMarketplaceIntelligentRouting={{.ENABLE_MARKETPLACE_INTELLIGENT_ROUTING | 
 console = true
 
 [ballerina.log]
+format = "json"
 level = "{{.LOG_LEVEL | default "INFO"}}"
