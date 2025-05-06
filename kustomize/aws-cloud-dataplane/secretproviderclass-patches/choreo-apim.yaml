@@ -11,13 +11,11 @@ spec:
           key: RATE_LIMITER_REDIS_AUTH_KEY
   parameters:
     objects: |
-      - |
-        objectName: {{.RATE_LIMITER_KEYSTORE_KEY_OBJ_NAME | default "mgw-RATE-LIMITER-KEYSTORE-CERT" }}
+      - objectName: {{.RATE_LIMITER_KEYSTORE_KEY_OBJ_NAME | default "mgw-RATE-LIMITER-KEYSTORE-CERT" }}
         objectType: secretsmanager
         objectAlias: RATE_LIMITER_KEYSTORE_KEY
         objectVersion: "{{.RATE_LIMITER_KEYSTORE_KEY}}"
-      - |
-        objectName: {{.RATE_LIMITER_REDIS_AUTH_KEY_OBJ_NAME | default "apim-rate-limiter-redis-primary-access-key"}}
+      - objectName: {{.RATE_LIMITER_REDIS_AUTH_KEY_OBJ_NAME | default "apim-rate-limiter-redis-primary-access-key"}}
         objectType: secretsmanager
         objectAlias: RATE_LIMITER_REDIS_AUTH_KEY
         objectVersion: "{{.RATE_LIMITER_REDIS_AUTH_KEY}}"
@@ -29,8 +27,7 @@ metadata:
 spec:
   parameters:
     objects: |
-      - |
-        objectName: {{.RATE_LIMITER_KEYSTORE_CERT_OBJ_NAME | default "mgw-RATE-LIMITER-KEYSTORE-CERT" }}
+      - objectName: {{.RATE_LIMITER_KEYSTORE_CERT_OBJ_NAME | default "mgw-RATE-LIMITER-KEYSTORE-CERT" }}
         objectType: secretsmanager
         objectAlias: RATE_LIMITER_KEYSTORE_CERT
         objectVersion: "{{.RATE_LIMITER_KEYSTORE_CERT}}"
@@ -42,23 +39,19 @@ metadata:
 spec:
   parameters:
     objects: |
-      - |
-        objectName: {{.ROUTER_KEYSTORE_KEY_OBJ_NAME | default "mgw-ROUTER-KEYSTORE"}}
+      - objectName: {{.ROUTER_KEYSTORE_KEY_OBJ_NAME | default "mgw-ROUTER-KEYSTORE"}}
         objectType: secretsmanager
         objectAlias: ROUTER_KEYSTORE_KEY
         objectVersion: "{{.ROUTER_KEYSTORE_KEY}}"
-      - |
-        objectName: {{.ENFORCER_JWT_KEYSTORE_KEY_OBJ_NAME | default "mgw-ENFORCER-JWT-KEYSTORE-KEY"}}
+      - objectName: {{.ENFORCER_JWT_KEYSTORE_KEY_OBJ_NAME | default "mgw-ENFORCER-JWT-KEYSTORE-KEY"}}
         objectType: secretsmanager
         objectAlias: ENFORCER_JWT_KEYSTORE_KEY
         objectVersion: "{{.ENFORCER_JWT_KEYSTORE_KEY}}"
-      - |
-        objectName: {{.ENFORCER_JWT_KEYSTORE_CERTIFICATE_OBJ_NAME | default "mgw-ENFORCER-JWT-KEYSTORE-CERTIFICATE"}}
+      - objectName: {{.ENFORCER_JWT_KEYSTORE_CERTIFICATE_OBJ_NAME | default "mgw-ENFORCER-JWT-KEYSTORE-CERTIFICATE"}}
         objectType: secretsmanager
         objectAlias: ENFORCER_JWT_KEYSTORE_CERTIFICATE
         objectVersion: "{{.ENFORCER_JWT_KEYSTORE_CERTIFICATE}}"
-      - |
-        objectName: {{.ENFORCER_KEYSTORE_KEY_OBJ_NAME | default "mgw-ENFORCER-KEYSTORE-KEY"}}
+      - objectName: {{.ENFORCER_KEYSTORE_KEY_OBJ_NAME | default "mgw-ENFORCER-KEYSTORE-KEY"}}
         objectType: secretsmanager
         objectAlias: ENFORCER_KEYSTORE_KEY
         objectVersion: "{{.ENFORCER_KEYSTORE_KEY}}"
@@ -77,8 +70,7 @@ spec:
           key: SUPER_ADMIN_PSWD
   parameters:
     objects: |
-      - |
-        objectName: apim-super-admin-password
+      - objectName: apim-super-admin-password
         objectType: secretsmanager
         objectAlias: SUPER_ADMIN_PSWD
         objectVersion: "{{.SUPER_ADMIN_PSWD}}"
@@ -98,13 +90,11 @@ spec:
           key: MOESIF_MS_AUTH_PWD
   parameters:
     objects: |
-      - |
-        objectName: {{.ANALYTICS_AUTH_TOKEN_OBJ_NAME | default "apim-analytics-auth-token" }}
+      - objectName: {{.ANALYTICS_AUTH_TOKEN_OBJ_NAME | default "apim-analytics-auth-token" }}
         objectType: secretsmanager
         objectAlias: ANALYTICS_AUTH_TOKEN
         objectVersion: "{{.ANALYTICS_AUTH_TOKEN}}"
-      - |
-        objectName: {{.MOESIF_MS_AUTH_PWD_OBJ_NAME | default "apim-moesif-auth-password" }}
+      - objectName: {{.MOESIF_MS_AUTH_PWD_OBJ_NAME | default "apim-moesif-auth-password" }}
         objectType: secretsmanager
         objectAlias: MOESIF_MS_AUTH_PWD
         objectVersion: "{{.MOESIF_MS_AUTH_PWD}}"
@@ -127,18 +117,15 @@ spec:
           key: ENFORCER_MANAGEMENT_PASSWORD
   parameters:
     objects: |
-      - |
-        objectName: {{.ADAPTER_ADMIN_PASSWORD_OBJ_NAME | default "apim-adapter-admin-password"}}
+      - objectName: {{.ADAPTER_ADMIN_PASSWORD_OBJ_NAME | default "apim-adapter-admin-password"}}
         objectType: secretsmanager
         objectAlias: ADAPTER_ADMIN_PASSWORD
         objectVersion: "{{.ADAPTER_ADMIN_PASSWORD}}"
-      - |
-        objectName: {{.ENFORCER_ADMIN_PASSWORD_OBJ_NAME | default "apim-ENFORCER-ADMIN-PASSWORD"}}
+      - objectName: {{.ENFORCER_ADMIN_PASSWORD_OBJ_NAME | default "apim-ENFORCER-ADMIN-PASSWORD"}}
         objectType: secretsmanager
         objectAlias: ENFORCER_ADMIN_PASSWORD
         objectVersion: "{{.ENFORCER_ADMIN_PASSWORD}}"
-      - |
-        objectName: {{.ENFORCER_MANAGEMENT_PASSWORD_OBJ_NAME | default "apim-enforcer-management-password"}}
+      - objectName: {{.ENFORCER_MANAGEMENT_PASSWORD_OBJ_NAME | default "apim-enforcer-management-password"}}
         objectType: secretsmanager
         objectAlias: ENFORCER_MANAGEMENT_PASSWORD
         objectVersion: "{{.ENFORCER_MANAGEMENT_PASSWORD}}"
@@ -150,13 +137,11 @@ metadata:
 spec:
   parameters:
     objects: |
-      - |
-        objectName: {{.ADAPTER_KEYSTORE_KEY_OBJ_NAME | default "apim-mg-keystore-key"}}
+      - objectName: {{.ADAPTER_KEYSTORE_KEY_OBJ_NAME | default "apim-mg-keystore-key"}}
         objectType: secretsmanager
         objectAlias: ADAPTER_KEYSTORE_KEY
         objectVersion: "{{.ADAPTER_KEYSTORE_KEY}}"
-      - |
-        objectName: {{.ADAPTER_KEYSTORE_CERTIFICATE_OBJ_NAME | default "apim-mg-keystore-cert"}}
+      - objectName: {{.ADAPTER_KEYSTORE_CERTIFICATE_OBJ_NAME | default "apim-mg-keystore-cert"}}
         objectType: secretsmanager
         objectAlias: ADAPTER_KEYSTORE_CERTIFICATE
         objectVersion: "{{.ADAPTER_KEYSTORE_CERTIFICATE}}"

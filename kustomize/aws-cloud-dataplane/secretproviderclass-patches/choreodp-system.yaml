@@ -49,21 +49,18 @@ metadata:
 spec:
   parameters:
     objects: |
-        - |
-          objectName: "{{.OAUTH_AGENT_ENC_KEY_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: OAUTH_AGENT_ENC_KEY
-          objectVersion: "{{.OAUTH_AGENT_ENC_KEY}}"
-        - |
-          objectName: "{{.OAUTH_AGENT_CACHE_ENC_KEY_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: OAUTH_AGENT_CACHE_ENC_KEY
-          objectVersion: "{{.OAUTH_AGENT_CACHE_ENC_KEY}}"
-        - |
-          objectName: {{.OAUTH_AGENT_REDIS_PWD_OBJ_NAME}}
-          objectType: secretsmanager
-          objectAlias: OAUTH_AGENT_REDIS_PWD
-          objectVersion: "{{.OAUTH_AGENT_REDIS_PWD}}"
+      - objectName: "{{.OAUTH_AGENT_ENC_KEY_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: OAUTH_AGENT_ENC_KEY
+        objectVersion: "{{.OAUTH_AGENT_ENC_KEY}}"
+      - objectName: "{{.OAUTH_AGENT_CACHE_ENC_KEY_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: OAUTH_AGENT_CACHE_ENC_KEY
+        objectVersion: "{{.OAUTH_AGENT_CACHE_ENC_KEY}}"
+      - objectName: {{.OAUTH_AGENT_REDIS_PWD_OBJ_NAME}}
+        objectType: secretsmanager
+        objectAlias: OAUTH_AGENT_REDIS_PWD
+        objectVersion: "{{.OAUTH_AGENT_REDIS_PWD}}"
 ---
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
@@ -73,11 +70,10 @@ metadata:
 spec:
   parameters:
     objects: |
-        - |
-          objectName: "{{.AWS_CONTAINER_REGISTRY_PASSWORD_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: AZURE_CONTAINER_REGISTRY_PASSWORD
-          objectVersion: "{{.AWS_CONTAINER_REGISTRY_PASSWORD_VERSION}}"
+      - objectName: "{{.AWS_CONTAINER_REGISTRY_PASSWORD_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: AZURE_CONTAINER_REGISTRY_PASSWORD
+        objectVersion: "{{.AWS_CONTAINER_REGISTRY_PASSWORD_VERSION}}"
 ---
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
@@ -87,21 +83,18 @@ metadata:
 spec:
   parameters:
     objects: |
-        - |
-          objectName: "{{.DP_STS_CLIENT_SECRET_ENCRYPTION_KEY_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: DP_STS_CLIENT_SECRET_ENCRYPTION_KEY
-          objectVersion: "{{.DP_STS_CLIENT_SECRET_ENCRYPTION_KEY_VERSION}}"
-        - |
-          objectName: {{.CHOREO_STS_REDIS_PASSWORD_OBJ_NAME}}
-          objectType: secretsmanager
-          objectAlias: CHOREO_STS_REDIS_PASSWORD
-          objectVersion: "{{.CHOREO_STS_REDIS_PASSWORD_VERSION}}"
-        - |
-          objectName: "{{.APP_DEV_STS_APP_CLIENT_SECRET_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: APP_DEV_STS_APP_CLIENT_SECRET
-          objectVersion: "{{.APP_DEV_STS_APP_CLIENT_SECRET_VERSION}}"
+        - objectName: "{{.DP_STS_CLIENT_SECRET_ENCRYPTION_KEY_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: DP_STS_CLIENT_SECRET_ENCRYPTION_KEY
+        objectVersion: "{{.DP_STS_CLIENT_SECRET_ENCRYPTION_KEY_VERSION}}"
+      - objectName: {{.CHOREO_STS_REDIS_PASSWORD_OBJ_NAME}}
+        objectType: secretsmanager
+        objectAlias: CHOREO_STS_REDIS_PASSWORD
+        objectVersion: "{{.CHOREO_STS_REDIS_PASSWORD_VERSION}}"
+      - objectName: "{{.APP_DEV_STS_APP_CLIENT_SECRET_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: APP_DEV_STS_APP_CLIENT_SECRET
+        objectVersion: "{{.APP_DEV_STS_APP_CLIENT_SECRET_VERSION}}"
 ---
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
@@ -111,33 +104,27 @@ metadata:
 spec:
   parameters:
     objects: |
-        - |
-          objectName: "{{.STRIPE_TOKEN_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: STRIPE_TOKEN
-          objectVersion: "{{.STRIPE_TOKEN}}"
-        - |
-          objectName: "{{.CHOREO_USAGE_DB_PASSWORD_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: CHOREO_USAGE_DB_PASSWORD
-          objectVersion: "{{.CHOREO_USAGE_DB_PASSWORD}}"
-        - |
-          objectName: "{{.AZURE_AUTH_APP_CLIENT_SECRET_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: AZURE_AUTH_APP_CLIENT_SECRET
-          objectVersion: "{{.AZURE_AUTH_APP_CLIENT_SECRET}}"
-        - |
-          objectName: "{{.CLIENT_ID_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: CLIENT_ID
-          objectVersion: "{{.CLIENT_ID}}"
-        - |
-          objectName: "{{.CLIENT_SECRET_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: CLIENT_SECRET
-          objectVersion: "{{.CLIENT_SECRET}}"
-        - |
-          objectName: "{{.USAGE_COLLECTOR_TRUSTSTORE_PASSWORD_OBJ_NAME}}"
-          objectType: secretsmanager
-          objectAlias: USAGE_COLLECTOR_TRUSTSTORE_PASSWORD
-          objectVersion: "{{.USAGE_COLLECTOR_TRUSTSTORE_PASSWORD}}"
+      - objectName: "{{.STRIPE_TOKEN_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: STRIPE_TOKEN
+        objectVersion: "{{.STRIPE_TOKEN}}"
+      - objectName: "{{.CHOREO_USAGE_DB_PASSWORD_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: CHOREO_USAGE_DB_PASSWORD
+        objectVersion: "{{.CHOREO_USAGE_DB_PASSWORD}}"
+      - objectName: "{{.AZURE_AUTH_APP_CLIENT_SECRET_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: AZURE_AUTH_APP_CLIENT_SECRET
+        objectVersion: "{{.AZURE_AUTH_APP_CLIENT_SECRET}}"
+      - objectName: "{{.CLIENT_ID_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: CLIENT_ID
+        objectVersion: "{{.CLIENT_ID}}"
+      - objectName: "{{.CLIENT_SECRET_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: CLIENT_SECRET
+        objectVersion: "{{.CLIENT_SECRET}}"
+      - objectName: "{{.USAGE_COLLECTOR_TRUSTSTORE_PASSWORD_OBJ_NAME}}"
+        objectType: secretsmanager
+        objectAlias: USAGE_COLLECTOR_TRUSTSTORE_PASSWORD
+        objectVersion: "{{.USAGE_COLLECTOR_TRUSTSTORE_PASSWORD}}"
