@@ -140,7 +140,9 @@ Follow the steps below to create a Service Account:
 1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you want to create the Service Account.
 2. In the left navigation menu, click **Settings**.
 3. Click the **Access Control** tab and then click the **Service Accounts** tab.
+![Service Account List](../assets/img/administer/service-account/service-accounts-list.png)
 4. Click **+ Create Service Account**.
+![Create Service Account](../assets/img/administer/service-account/create-service-account.png)
 5. Enter a name and description for the Service Account. You can enter the values given below:
 
     | **Field**                | **Value**                          |
@@ -157,19 +159,19 @@ Follow the steps below to create a Service Account:
 
 Follow the steps below to add groups to the Service Account:
 
-1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created the Service Account.
-2. In the left navigation menu, click **Settings**.
-3. Click the **Access Control** tab and then click the **Service Accounts** tab.
-4. Search for the Service Account you want to manage (e.g., `Example Bot`) and click the corresponding edit icon.
-5. Click **+Add Groups**.
-6. In the **Add Groups to Service Account** dialog, select the groups you want to associate with the Service Account (e.g., `Developer`).
-7. Click **Add**. You can also remove groups from the Service Account using the delete icon in the groups list of the Service Account.
+1. After creating a service account or clicking on an existing service account you can go to service account details.
+![Service Account](../assets/img/administer/service-account/service-account-details.png)
+2. Click **+Assign Groups**.
+3. In the **Add Groups to Service Account** dialog, select the groups you want to associate with the Service Account (e.g., `Developer`).
+![Add Groups to Service Account](../assets/img/administer/service-account/add-groups-to-service-account.png)
+4. Click **Add**. You can also remove groups from the Service Account using the delete icon in the groups list of the Service Account.
 
 ### Managing Service Accounts in Groups
 
 When you select a group in the **Groups** tab, you can view the Service Accounts associated with that group. 
-
+![Add Service account to Group](../assets/img/administer/service-account/service-account-in-group.png)
 - To add a Service Account to the group, click **+Add Service Accounts**, select the desired Service Account, and click **Add**.
+![Add Service account to Group](../assets/img/administer/service-account/add-service-account-to-group.png)
 - To remove a Service Account from the group, use the delete icon corresponding to the Service Account in the list.
 
 This allows you to manage the association between Service Accounts and groups effectively.
@@ -180,10 +182,9 @@ You can view the list of Service Accounts under the **Service Accounts** section
 
 You can update the name and description of a Service Account by following these steps:
 
-1. In the Choreo Console, go to the **Service Accounts** tab under **Access Control**.
-2. Click the edit icon corresponding to the Service Account you want to update.
-3. Modify the name and description as needed.
-4. Click **Save**.
+1. In the Service Account details click name or description and modify the name and description as needed.
+![Update Service Account](../assets/img/administer/service-account/update-sa-details.png)
+2. Click **Save** to save or **Close** to undo the changes.
 
 ### Step 4: Obtain an Access Token for a Service Account
 
