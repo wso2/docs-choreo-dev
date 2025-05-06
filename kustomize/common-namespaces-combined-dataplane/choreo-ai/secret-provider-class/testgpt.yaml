@@ -3,16 +3,6 @@ kind: SecretProviderClass
 metadata:
   name: testgpt-secret
 spec:
-  secretObjects:
-    - secretName: testgpt-secret
-      type: Opaque
-      data:
-        - objectName: REDIS-AUTH-KEY
-          key: REDIS-AUTH-KEY
-        - objectName: REDIS-CLUSTER-AUTH-KEY
-          key: REDIS-CLUSTER-AUTH-KEY
-        - objectName: OPENAI-ACCESS-KEY
-          key: OPENAI-ACCESS-KEY
   parameters:
     objects: |
       array:
