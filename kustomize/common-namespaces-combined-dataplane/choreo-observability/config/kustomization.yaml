@@ -78,6 +78,7 @@ configMapGenerator:
       - AZURE_ADX_CLIENT_ID={{.AZURE_ADX_CLIENT_ID}}
       - SAMPLE_APP_RELEASE_ID={{.SAMPLE_APP_RELEASE_ID}}
       - LOG_LEVEL={{.LOG_LEVEL}}
+      - FEATURE_FLAG_S2Z_BYPASS={{.FEATURE_FLAG_S2Z_BYPASS | default "false"}}
   - name: obsapi-v2-env
   - name: opensearch
     behavior: create
