@@ -32,3 +32,4 @@ patchesStrategicMerge:
   - service-account-patch.yaml
   - choreo-ai-secretproviderclass-patch.yaml
   - choreo-obs-secretproviderclass-patch.yaml
+  - deployments/choreo-observability/loggingapi.yaml
