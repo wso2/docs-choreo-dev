@@ -83,7 +83,7 @@ metadata:
 spec:
   parameters:
     objects: |
-        - objectName: "{{.DP_STS_CLIENT_SECRET_ENCRYPTION_KEY_OBJ_NAME}}"
+      - objectName: "{{.DP_STS_CLIENT_SECRET_ENCRYPTION_KEY_OBJ_NAME}}"
         objectType: secretsmanager
         objectAlias: DP_STS_CLIENT_SECRET_ENCRYPTION_KEY
         objectVersion: "{{.DP_STS_CLIENT_SECRET_ENCRYPTION_KEY_VERSION}}"
