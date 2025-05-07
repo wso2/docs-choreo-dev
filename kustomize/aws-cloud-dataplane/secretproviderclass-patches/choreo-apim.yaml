@@ -70,7 +70,7 @@ spec:
           key: SUPER_ADMIN_PSWD
   parameters:
     objects: |
-      - objectName: apim-super-admin-password
+      - objectName: {{.SUPER_ADMIN_PSWD_OBJ_NAME | default "apim-super-admin-password"}}
         objectType: secretsmanager
         objectAlias: SUPER_ADMIN_PSWD
         objectVersion: "{{.SUPER_ADMIN_PSWD}}"
