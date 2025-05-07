@@ -34,6 +34,6 @@ export TERM=xterm-256color
 
 PF_PID=$(start_port_forward "spicedb-cluster" "spicedb-operator" 50051 50051)
 
-grpcurl -d '{"schema": "definition choreo_permissions {\nrelation allowed : choreo_roles#has\n}\ndefinition choreo_roles {\n    relation has : choreo_groups | choreo_project_groups | choreo_component_groups\n}\ndefinition choreo_groups {}\ndefinition choreo_project_groups {\n    relation related_group : choreo_groups\n}\ndefinition choreo_component_groups {}"}' -H "Authorization: Bearer $TOKEN" -plaintext localhost:50051 authzed.api.v1.SchemaService/WriteSchema
+grpcurl -d '{"schema": "definition choreo_permissions {\n\trelation allowed: choreo_roles#has\n\tpermission related = allowed->related\n}\n\ndefinition choreo_roles {\n\trelation has: choreo_groups | choreo_project_groups | choreo_env_groups | choreo_project_env_groups\n\tpermission related = has + has->related\n}\n\ndefinition choreo_groups {}\n\ndefinition choreo_project_groups {\n\trelation related_group: choreo_groups\n\tpermission related = related_group\n}\n\ndefinition choreo_env_groups {\n\trelation related_group: choreo_groups\n\tpermission related = related_group\n}\n\ndefinition choreo_project_env_groups {\n\trelation related_group: choreo_groups\n\tpermission related = related_group\n}"}' -H "Authorization: Bearer $TOKEN" -plaintext localhost:50051 authzed.api.v1.SchemaService/WriteSchema
 
 kill_port_forward "$PF_PID"
