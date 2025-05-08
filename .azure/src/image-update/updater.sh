@@ -15,8 +15,10 @@ set -eo pipefail
 CLUSTER_MAPPING_CONFIG=$(cat "$CLUSTER_CONFIG_PATH")
 
 update_images () {
+  local image_arr
   echo "[INFO] updating image tags"
-  for imageName in "$@"; do
+  mapfile -t image_arr <<< "$1"
+  for imageName in "${image_arr[@]}"; do
     echo "[INFO] updating image tag for $imageName"
     $KUSTOMIZE edit set image "$imageName"
   done
