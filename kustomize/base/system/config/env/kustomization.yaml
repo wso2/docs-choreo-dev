@@ -1097,7 +1097,7 @@ configMapGenerator:
       - RUDDER_URL={{.RUDDER_URL}}
       - PROJECT_MANAGER_URL={{.PROJECT_MANAGER_URL}}
       - CICD_URL={{.CICD_URL}}
-      - DEV_OPS_PORTAL_URL={{.DEV_OPS_PORTAL_URL}}
+      - DEV_OPS_PORTAL_URL={{.DEV_OPS_PORTAL_URL | default "http://devops-portal-api:8089/api/v1"}}
       - APIM_SERVICE_URL={{.APIM_SERVICE_URL}}
       - APIM_CLIENT_ID={{.APIM_CLIENT_ID}}
       - INTROSPECTION_URL={{.INTROSPECTION_URL}}
