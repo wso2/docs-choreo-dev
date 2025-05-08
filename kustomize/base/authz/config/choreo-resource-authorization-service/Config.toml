@@ -31,6 +31,7 @@ roleDeletePermissionConf = "{{.ROLE_DELETE_PERMISSION}}"
 asgardeoTokenIssuerConf = "{{.ASGARDEO_TOKEN_ISSUER}}"
 
 orgLevelPermissionsList = {{.ORG_LEVEL_PERMISSIONS | default "[]"}}
+allEnvPermissionsList = {{.ALL_ENV_PERMISSIONS | default "[]"}}
 
 [choreo.resource_authz_service.spicedbGrpcClient]
 # SpiceDB configs
