@@ -2635,6 +2635,26 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#use-multiple-continuous-deployment-pipelines-within-a-component" class="md-nav__link">
+    Use multiple continuous deployment pipelines within a component
+  </a>
+  
+    <nav class="md-nav" aria-label="Use multiple continuous deployment pipelines within a component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites_5" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4142,6 +4162,26 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#use-multiple-continuous-deployment-pipelines-within-a-component" class="md-nav__link">
+    Use multiple continuous deployment pipelines within a component
+  </a>
+  
+    <nav class="md-nav" aria-label="Use multiple continuous deployment pipelines within a component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites_5" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4266,6 +4306,24 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="admonition info">
 <p class="admonition-title">Note</p>
 <p>The <strong>default</strong> continuous deployment pipeline is configured separately at both the organization and project levels. When a project is created, it inherits the organization's <strong>default</strong> pipeline. The project's <strong>default</strong> pipeline then defines the default promotion order for its components on the Deploy page.</p>
+</div>
+</li>
+</ol>
+<h2 id="use-multiple-continuous-deployment-pipelines-within-a-component">Use multiple continuous deployment pipelines within a component<a class="headerlink" href="#use-multiple-continuous-deployment-pipelines-within-a-component" title="Permanent link">&para;</a></h2>
+<h3 id="prerequisites_5">Prerequisites<a class="headerlink" href="#prerequisites_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>To use multiple continuous deployment pipelines on a component's deploy page, the component's project must have more than one continuous deployment pipeline assigned.</li>
+</ul>
+<p>To use multiple continuous deployment pipelines in a component, follow the steps given below:</p>
+<ol>
+<li>Sign in to <a href="https://console.choreo.dev/">Choreo</a>.</li>
+<li>In the Choreo Console top navigation menu, select the Organization, then the Project and finally the Component where you want to use multiple continuous deployment pipelines.</li>
+<li>In the left navigation menu, click <strong>Deploy</strong>.</li>
+<li>
+<p>At the top of the page, click on the dropdown next to the Deployment Track/Version dropdown and choose the continuous deployment pipeline you want to use to deploy the component.</p>
+<div class="admonition info">
+<p class="admonition-title">Note</p>
+<p>The user will be able to view all continuous deployment pipelines assigned to the project and select one to deploy the component. Existing permissions will continue to control deployment and promotion access for specific environments.</p>
 </div>
 </li>
 </ol>
