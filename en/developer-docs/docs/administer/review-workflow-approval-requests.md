@@ -29,3 +29,6 @@ To approve or reject a request, follow these steps:
    Alternatively, click the Choreo Console link in the approval request email notification you received. This takes you to the request details in the Choreo Console.
 2. Review the request and click **Approve** or **Reject** based on your decision.
 
+!!! note
+      - An email will be sent to requestor mentioning details about the details
+      - Currently, approver or other approvers will not receive an email, however action is recorded at Choreo databases. 

@@ -4,9 +4,15 @@ Choreo allows you to configure approval processes for specific workflows within 
 
 Choreo currently allows you to configure approvals for environment promotion and API subscription workflows.
 
-Configuring approvals for environment promotion allows authorized users to control components being promoted to a critical/production environment. 
+Configuring approvals for environment promotion allows authorized users to control components being promoted to a critical/production environment.
 
 Configuring approvals for the API subscription workflow allows you to create subscription plans that require approval before being activated. This feature allows you to control access to APIs by requiring administrative review and authorization of subscriptions before they become active.
+
+## Permissions to create approval requests
+
+=== "Environment promotion"
+
+     To submit an environment promotion approval request, a user must have required permissions to promote components or at least `WORKFLOW-MANAGEMENT >> Create approval requests` permission
 
 ## Permissions to review and respond to approval requests
 
@@ -16,7 +22,7 @@ Click the respective tab for details on permissions depending on the workflow fo
 
      To review and respond to environment promotion approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:
 
-      - **WORKFLOW-MANAGEMENT**: 
+      - **WORKFLOW-MANAGEMENT**:
           - Approve component promotion requests: Grants access to review and approve the promotion of components to critical environments.
       - **PROJECT-MANAGEMENT**: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
 
@@ -26,7 +32,7 @@ Click the respective tab for details on permissions depending on the workflow fo
 
       - **WORKFLOW-MANAGEMENT**:
           - Approve API subscriptions: Grants access to review and approve API subscription workflow requests.
-      - **PROJECT-MANAGEMENT**: 
+      - **PROJECT-MANAGEMENT**:
           Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.
 
 ## Set up an approval process for a workflow
@@ -49,10 +55,10 @@ To set up an approval process for a workflow, follow these steps:
 
     !!! info "Important"
          Currently, there is no validation to ensure that the specified roles and assignees have the necessary permissions to review and respond to requests. If the [required permissions](#permissions-to-review-and-respond-to-approval-requests) are not correctly configured, some users may receive email notifications but will be unable to review the requests.
-         
+
 7. Click **Save**. This configures and enables the approval process for the workflow.
 
-Once you enable the approval process for a workflow, see the following details on how to submit a request for approval and the approval process. Click the respective tab depending on the workflow for which you enabled the approval process:  
+Once you enable the approval process for a workflow, see the following details on how to submit a request for approval and the approval process. Click the respective tab depending on the workflow for which you enabled the approval process:
 
 === "Environment promotion"
 
