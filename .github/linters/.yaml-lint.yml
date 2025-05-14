@@ -9,3 +9,9 @@ rules:
   line-length:
     max: 80
     level: warning
+  syntax:
+    ignore:
+      - /tmp/lint/cdp-helm-charts
+  braces:
+    ignore:
+      - /tmp/lint/cdp-helm-charts
