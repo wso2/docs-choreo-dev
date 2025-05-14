@@ -75,6 +75,7 @@ func (w *invokePromotion) Init(state *runner.SpecState) error {
 			CompDetails:        &detailsRes,
 			Environment:        &env,
 			HttpMethod:         w.ParamValue("method"),
+			ContentType:        w.ParamValue("contentType"),
 			ResourcePath:       w.ParamValue("resource"),
 			QueryParams:        w.ParamValue("queryParams"),
 			Request:            w.ParamValue("request"),
@@ -87,4 +88,8 @@ func (w *invokePromotion) Init(state *runner.SpecState) error {
 	}
 
 	return nil
+}
+
+func (w *invokePromotion) Name() string {
+	return "InvokePromotion"
 }

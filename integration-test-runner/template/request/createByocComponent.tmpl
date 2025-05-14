@@ -1,0 +1,46 @@
+mutation {
+    createByocComponent(
+        component: {
+            name: "{{.Name}}",
+            displayName: "{{.Name}}",
+            description: "",
+            orgId: {{.OrgId}},
+            orgHandler: "{{.OrgHandler}}",
+            projectId: "{{.ProjectId}}",
+            labels: "",
+            componentType: "{{.ComponentType}}",
+            port: null,
+            oasFilePath: "{{.OasFilePath}}",
+            accessibility: "external",
+            byocConfig: {
+                dockerfilePath: "{{.ByocConfig.DockerFilePath}}",
+                dockerContext: "{{.ByocConfig.DockerContext}}",
+                srcGitRepoUrl: "{{.ByocConfig.SrcGitRepoUrl}}",
+                srcGitRepoBranch: "{{.ByocConfig.SrcGitRepoBranch}}"
+            }
+            secretRef: "",
+            isPublicRepo: {{.IsPublicRepo}},
+        }
+    ) {
+        id
+        createdAt
+        updatedAt
+        name
+        handle
+        organizationId
+        projectId
+        orgHandle
+        type
+        description
+        imageRegistryId
+        imageRegistry {
+        id
+        createdAt
+        updatedAt
+        cloudConnectorId
+        imageRepositoryName
+        }
+        componentType
+        httpBased
+    }
+}

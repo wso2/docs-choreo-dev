@@ -30,17 +30,22 @@ type ActionMapper struct {
 	Params   map[string]string `yaml:"params,omitempty"`
 }
 
-type SpecMapper []ActionMapper
+type SpecMapper struct {
+	Kind    string         `yaml:"kind"`
+	Extends string         `yaml:"extends,omitempty"`
+	Actions []ActionMapper `yaml:"actions"`
+}
 
 var actionMapper = map[string]func() runner.Action{
-	"CreateProject":    project.CreateProject,
-	"CreateComponent":  component.CreateComponent,
-	"WaitForBuild":     component.WaitForBuild,
-	"GetEnvironments":  component.GetEnvironments,
-	"DeployComponent":  component.DeployComponent,
-	"PromoteComponent": component.PromoteComponent,
-	"InvokeDeployment": component.InvokeDeployment,
-	"InvokePromotion":  component.InvokePromotion,
+	"CreateProject":       project.CreateProject,
+	"CreateComponent":     component.CreateComponent,
+	"CreateByocComponent": component.CreateByocComponent,
+	"WaitForBuild":        component.WaitForBuild,
+	"GetEnvironments":     component.GetEnvironments,
+	"DeployComponent":     component.DeployComponent,
+	"PromoteComponent":    component.PromoteComponent,
+	"InvokeDeployment":    component.InvokeDeployment,
+	"InvokePromotion":     component.InvokePromotion,
 }
 
 func Process(specPath string) ([]*runner.Spec, error) {
@@ -70,7 +75,7 @@ func Process(specPath string) ([]*runner.Spec, error) {
 
 			l := linter.NewLinter()
 
-			err = l.ValidateSequenceOrder(string(content))
+			err = l.ValidateSequenceOrder(content)
 
 			if err != nil {
 				return nil, err
@@ -93,13 +98,13 @@ func loadSpec(name string, spec []byte) (*runner.Spec, error) {
 	mapping := SpecMapper{}
 	err := yaml.Unmarshal(spec, &mapping)
 
-	actions := make([]runner.Action, 0, len(mapping))
+	actions := make([]runner.Action, 0, len(mapping.Actions))
 
 	if err != nil {
 		return nil, err
 	}
 
-	for _, a := range mapping {
+	for _, a := range mapping.Actions {
 		actionCtr, exists := actionMapper[a.Function]
 
 		if !exists {
@@ -122,5 +127,9 @@ func loadSpec(name string, spec []byte) (*runner.Spec, error) {
 		return nil, fmt.Errorf("failed to cut .yaml suffix for %s", name)
 	}
 
-	return runner.NewSpec(withoutExtension, actions), nil
+	if mapping.Extends != "" {
+		return runner.NewSpec(withoutExtension, mapping.Kind, actions), nil
+	} else {
+		return runner.NewExtendedSpec(withoutExtension, mapping.Kind, mapping.Extends, actions), nil
+	}
 }

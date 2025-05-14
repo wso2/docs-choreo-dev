@@ -11,8 +11,13 @@
  * associated services.
  */
 
-package response
+package request
 
-type CreateComponent struct {
-	BaseComponent `json:"createComponent"`
+type BaseComponent struct {
+	Name        string
+	Description string
+	OrgId       int
+	OrgHandler  string
+	DisplayName string
+	ProjectId   string
 }

@@ -18,7 +18,7 @@ import (
 )
 
 func TestValidateSequenceOrderWithCorrectPlaceholders(t *testing.T) {
-	validJSON := `---
+	content := `---
 - action: CreateProject
   params:
     region: US
@@ -76,14 +76,14 @@ func TestValidateSequenceOrderWithCorrectPlaceholders(t *testing.T) {
 `
 	l := NewLinter()
 
-	err := l.ValidateSequenceOrder(validJSON)
+	err := l.ValidateSequenceOrder([]byte(content))
 	if err != nil {
 		t.Errorf("Expected no error, but got: %v", err)
 	}
 }
 
 func TestValidateSequenceOrderWithIncorrectOrder(t *testing.T) {
-	invalidJSON := `---
+	content := `---
 - action: CreateComponent
   params:
     project: project1
@@ -95,14 +95,14 @@ func TestValidateSequenceOrderWithIncorrectOrder(t *testing.T) {
 
 	l := NewLinter()
 
-	err := l.ValidateSequenceOrder(invalidJSON)
+	err := l.ValidateSequenceOrder([]byte(content))
 	if err == nil {
 		t.Errorf("Expected error due to dependency being executed out of order")
 	}
 }
 
 func TestValidateSequenceOrderWithPlaceholderUsedBeforeCreation(t *testing.T) {
-	invalidJSON := `---
+	content := `---
 - action: DeployComponent
   params:
     component: BallerinaServiceComponent
@@ -113,14 +113,14 @@ func TestValidateSequenceOrderWithPlaceholderUsedBeforeCreation(t *testing.T) {
 `
 	l := NewLinter()
 
-	err := l.ValidateSequenceOrder(invalidJSON)
+	err := l.ValidateSequenceOrder([]byte(content))
 	if err == nil {
 		t.Errorf("Expected error due to placeholder being used before creation")
 	}
 }
 
 func TestValidateSequenceOrderWithMultipleIndependentProjects(t *testing.T) {
-	validJSON := `---
+	content := `---
 - action: CreateProject
   params:
     region: US
@@ -140,14 +140,14 @@ func TestValidateSequenceOrderWithMultipleIndependentProjects(t *testing.T) {
 `
 	l := NewLinter()
 
-	err := l.ValidateSequenceOrder(validJSON)
+	err := l.ValidateSequenceOrder([]byte(content))
 	if err != nil {
 		t.Errorf("Expected no error, but got: %v", err)
 	}
 }
 
 func TestComponentFromProjectAUsedInProjectB(t *testing.T) {
-	invalidJSON := `---
+	content := `---
 - action: CreateProject
   params:
     placeholder: ProjectA
@@ -166,8 +166,136 @@ func TestComponentFromProjectAUsedInProjectB(t *testing.T) {
 
 	l := NewLinter()
 
-	err := l.ValidateSequenceOrder(invalidJSON)
+	err := l.ValidateSequenceOrder([]byte(content))
 	if err == nil {
 		t.Errorf("Expected error due to same component placeholder being used in multiple projects")
+	}
+}
+
+func TestProjectDuplicatePlaceholder(t *testing.T) {
+	content := `---
+- action: CreateProject
+  params:
+    placeholder: ProjectA
+- action: CreateProject
+  params:
+    placeholder: ProjectB
+- action: CreateProject
+  params:
+    placeholder: ProjectA
+`
+
+	l := NewLinter()
+
+	err := l.ValidateSequenceOrder([]byte(content))
+	if err == nil {
+		t.Errorf("Expected error due to same project placeholder being used in multiple projects")
+	}
+}
+
+func TestDeploymentWithOutOfOrderGetEnv(t *testing.T) {
+	content := `---
+- action: CreateProject
+  params:
+    region: US
+    description: Ballerina service project
+    placeholder: testproject
+- action: CreateComponent
+  params:
+    srcGitRepoURL: https://github.com/wso2/choreo-samples
+    repositoryBranch: main
+    repositorySubPath: greeting-service
+    displayType: ballerinaService
+    buildPack: Ballerina
+    accessibility: external
+    isPublicRepo: 'true'
+    project: testproject
+    placeholder: servicecomp
+- action: WaitForBuild
+  params:
+    component: servicecomp
+- action: DeployComponent
+  params:
+    component: servicecomp
+- action: GetEnvironments
+  params:
+    project: testproject
+`
+
+	l := NewLinter()
+
+	err := l.ValidateSequenceOrder([]byte(content))
+	if err == nil {
+		t.Errorf("Expected error due to GetEnv being after Deploy")
+	}
+}
+
+func TestDeploymentWithInvalidGetEnv(t *testing.T) {
+	content := `---
+- action: CreateProject
+  params:
+    region: US
+    description: Ballerina service project
+    placeholder: testproject
+- action: CreateProject
+  params:
+    region: US
+    description: Ballerina service project
+    placeholder: testproject2
+- action: CreateComponent
+  params:
+    srcGitRepoURL: https://github.com/wso2/choreo-samples
+    repositoryBranch: main
+    repositorySubPath: greeting-service
+    displayType: ballerinaService
+    buildPack: Ballerina
+    accessibility: external
+    isPublicRepo: 'true'
+    project: testproject
+    placeholder: servicecomp
+- action: WaitForBuild
+  params:
+    component: servicecomp
+- action: GetEnvironments
+  params:
+    project: testproject2
+- action: DeployComponent
+  params:
+    component: servicecomp
+- action: PromoteComponent
+  params:
+    component: servicecomp
+- action: InvokeDeployment
+  params:
+    component: servicecomp
+    method: GET
+    resource: "/"
+    queryParams: name=Hello
+    statusCode: '200'
+    response: |-
+      {
+        "from": "Choreo",
+        "to": "Hello",
+        "message": "Welcome to Choreo!"
+      }
+- action: InvokePromotion
+  params:
+    component: servicecomp
+    method: GET
+    resource: "/"
+    queryParams: name=Hello
+    statusCode: '200'
+    response: |-
+      {
+        "from": "Choreo",
+        "to": "Hello",
+        "message": "Welcome to Choreo!"
+      }
+`
+	l := NewLinter()
+
+	err := l.ValidateSequenceOrder([]byte(content))
+	if err == nil {
+		t.Errorf("Expected error due to GetEnv not being called for project component being Deploy")
 	}
 }

@@ -108,3 +108,7 @@ func (w *deployComponent) Init(state *runner.SpecState) error {
 
 	return nil
 }
+
+func (w *deployComponent) Name() string {
+	return "DeployComponent"
+}

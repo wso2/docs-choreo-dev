@@ -25,6 +25,11 @@ type action struct {
 	Params map[string]string `yaml:"params"`
 }
 
+type spec struct {
+	Shared  bool     `yaml:"shared"`
+	Actions []action `yaml:"actions"`
+}
+
 type relationData struct {
 	name         string
 	isParent     bool
@@ -40,14 +45,15 @@ type actionOrder struct {
 
 // Unique constants for action names
 const (
-	createProjectName    = "CreateProject"
-	createComponentName  = "CreateComponent"
-	getEnvironmentsName  = "GetEnvironments"
-	waitForBuildName     = "WaitForBuild"
-	deployComponentName  = "DeployComponent"
-	promoteComponentName = "PromoteComponent"
-	invokeDeploymentName = "InvokeDeployment"
-	invokePromotionName  = "InvokePromotion"
+	createProjectName       = "CreateProject"
+	createComponentName     = "CreateComponent"
+	createByocComponentName = "CreateByocComponent"
+	getEnvironmentsName     = "GetEnvironments"
+	waitForBuildName        = "WaitForBuild"
+	deployComponentName     = "DeployComponent"
+	promoteComponentName    = "PromoteComponent"
+	invokeDeploymentName    = "InvokeDeployment"
+	invokePromotionName     = "InvokePromotion"
 )
 
 /*
@@ -63,6 +69,7 @@ are declared in the spec. The relationship rules are as follows:
 */
 var createProject = relationData{name: createProjectName, isParent: true}
 var createComponent = relationData{name: createComponentName, isParent: true, parentKey: "project", parent: &createProject}
+var createByocComponent = relationData{name: createByocComponentName, isParent: true, parentKey: "project", parent: &createProject}
 var getEnvironments = relationData{name: getEnvironmentsName, parentKey: "project", parent: &createProject}
 var waitForBuild = relationData{name: waitForBuildName, parentKey: "component", parent: &createComponent}
 var deployComponent = relationData{name: deployComponentName, parentKey: "component", parent: &createComponent, dependencies: []*relationData{&waitForBuild, &getEnvironments}}
@@ -71,14 +78,15 @@ var invokeDeployment = relationData{name: invokeDeploymentName, parentKey: "comp
 var invokePromotion = relationData{name: invokePromotionName, parentKey: "component", parent: &createComponent, dependencies: []*relationData{&promoteComponent}}
 
 var relationships = map[string]relationData{
-	createProjectName:    createProject,
-	createComponentName:  createComponent,
-	getEnvironmentsName:  getEnvironments,
-	waitForBuildName:     waitForBuild,
-	deployComponentName:  deployComponent,
-	promoteComponentName: promoteComponent,
-	invokeDeploymentName: invokeDeployment,
-	invokePromotionName:  invokePromotion,
+	createProjectName:       createProject,
+	createComponentName:     createComponent,
+	createByocComponentName: createByocComponent,
+	getEnvironmentsName:     getEnvironments,
+	waitForBuildName:        waitForBuild,
+	deployComponentName:     deployComponent,
+	promoteComponentName:    promoteComponent,
+	invokeDeploymentName:    invokeDeployment,
+	invokePromotionName:     invokePromotion,
 }
 
 type linter struct {
@@ -94,14 +102,14 @@ func NewLinter() *linter {
 }
 
 // ValidateSequenceOrder ensures steps execute in the correct order while tracking placeholders
-func (l *linter) ValidateSequenceOrder(content string) error {
-	var steps []action
-	err := yaml.Unmarshal([]byte(content), &steps)
+func (l *linter) ValidateSequenceOrder(content []byte) error {
+	var spec spec
+	err := yaml.Unmarshal(content, &spec)
 	if err != nil {
 		return err
 	}
 
-	return l.validate(steps)
+	return l.validate(spec.Actions)
 }
 
 func (l *linter) validate(acts []action) error {
@@ -189,7 +197,7 @@ func (l *linter) verifyOrder(acts []action) error {
 							}
 						}
 					} else { // Dependency is not directly related to action
-						l.verifyUnrelatedDependecy(act, index, &rel, dep)
+						return l.verifyUnrelatedDependecy(act, index, &rel, dep)
 					}
 				}
 			}
@@ -210,7 +218,7 @@ func (l *linter) verifyUnrelatedDependecy(act action, index int, rel *relationDa
 			compActsOrder := l.specOrder[componentKeyValue]
 
 			for _, i := range compActsOrder {
-				if i.act.Name == createComponentName {
+				if i.act.Name == createComponentName || i.act.Name == createByocComponentName {
 					projKeyVal := i.act.Params["project"]
 
 					projActsOrder := l.specOrder[projKeyVal]
@@ -227,7 +235,7 @@ func (l *linter) verifyUnrelatedDependecy(act action, index int, rel *relationDa
 				}
 			}
 
-			return fmt.Errorf("action %s is missing dependency %s", getEnvironmentsName, dep.name)
+			return fmt.Errorf("action %s is missing dependency %s", act.Name, dep.name)
 		} else {
 			return fmt.Errorf("unhandled relationship %s depends on %s", rel.name, getEnvironmentsName)
 		}

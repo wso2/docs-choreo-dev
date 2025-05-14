@@ -24,35 +24,37 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-type createComponent struct {
-	params CreateComponentParams
+type createByocComponent struct {
+	params CreateByocComponentParams
 	state  *runner.SpecState
 }
 
-type CreateComponentParams struct {
+type CreateByocComponentParams struct {
 	ProjectRes        *response.CreateProject
 	Placeholder       string
 	Description       string
-	DisplayType       string
+	ComponentType     string
 	OrgId             int
 	Accessibility     string
 	SrcGitRepoURL     string
 	RepositorySubPath string
 	RepositoryBranch  string
 	IsPublicRepo      bool
+	DockerContext     string
+	DockerFilePath    string
 }
 
-func CreateComponent(state *runner.SpecState, params *CreateComponentParams) *createComponent {
-	return &createComponent{
+func CreateByocComponent(state *runner.SpecState, params *CreateByocComponentParams) *createByocComponent {
+	return &createByocComponent{
 		params: *params,
 		state:  state,
 	}
 }
 
-func (c *createComponent) Execute(client *resty.Client) (unit.UnitComplete, error) {
+func (c *createByocComponent) Execute(client *resty.Client) (unit.UnitComplete, error) {
 	name := name.NewName("autotest")
 
-	req := request.CreateComponent{
+	req := request.CreateByocComponent{
 		BaseComponent: request.BaseComponent{
 			Name:        name.NameWithSeparators(),
 			Description: c.params.Description,
@@ -61,22 +63,28 @@ func (c *createComponent) Execute(client *resty.Client) (unit.UnitComplete, erro
 			DisplayName: name.NameWithSeparators(),
 			ProjectId:   c.params.ProjectRes.Project.Id,
 		},
-		DisplayType:       c.params.DisplayType,
+		ComponentType:     c.params.ComponentType,
 		Accessibility:     c.params.Accessibility,
 		SrcGitRepoUrl:     c.params.SrcGitRepoURL,
 		RepositorySubPath: c.params.RepositorySubPath,
 		RepositoryBranch:  c.params.RepositoryBranch,
 		IsPublicRepo:      c.params.IsPublicRepo,
+		ByocConfig: request.ByocConfig{
+			SrcGitRepoUrl:    c.params.SrcGitRepoURL,
+			SrcGitRepoBranch: c.params.RepositoryBranch,
+			DockerFilePath:   c.params.DockerFilePath,
+			DockerContext:    c.params.DockerContext,
+		},
 	}
 
-	expected := response.CreateComponent{
+	expected := response.CreateByocComponent{
 		BaseComponent: response.BaseComponent{
 			OrgId:     c.state.GetOrgId(),
 			ProjectId: c.params.ProjectRes.Project.Id,
 		},
 	}
 
-	res, err := api.CreateComponent(client, req, &expected)
+	res, err := api.CreateByocComponent(client, req, &expected)
 
 	if err != nil {
 		return false, err
@@ -88,10 +96,10 @@ func (c *createComponent) Execute(client *resty.Client) (unit.UnitComplete, erro
 	return true, nil
 }
 
-func (c *createComponent) Name() string {
-	return "CreateComponent"
+func (c *createByocComponent) Name() string {
+	return "CreateByocComponent"
 }
 
-func (c *createComponent) WaitTill() int64 {
+func (c *createByocComponent) WaitTill() int64 {
 	return 0
 }

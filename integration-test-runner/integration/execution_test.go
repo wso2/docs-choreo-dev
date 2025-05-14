@@ -37,7 +37,7 @@ func TestRunMultipleSpecs(t *testing.T) {
 		t.Fatalf("Template loading failed: %v", err)
 	}
 
-	noOfSpecs := 1
+	noOfSpecs := 2
 
 	specs, err := specReader("../specs")
 
@@ -77,7 +77,7 @@ func TestRunMultipleSpecs(t *testing.T) {
 		}
 	}
 
-	runtimeData := sch.CompletedSpecs()
+	runtimeData := sch.SuccessSpecs()
 
 	if len(runtimeData) != noOfSpecs {
 		t.Fatalf("Expected %d completed spec, got %d", noOfSpecs, len(runtimeData))

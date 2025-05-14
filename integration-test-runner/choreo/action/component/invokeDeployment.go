@@ -75,6 +75,7 @@ func (w *invokeDeployment) Init(state *runner.SpecState) error {
 		CompDetails:        &detailsRes,
 		Environment:        &devEnv,
 		HttpMethod:         w.ParamValue("method"),
+		ContentType:        w.ParamValue("contentType"),
 		ResourcePath:       w.ParamValue("resource"),
 		QueryParams:        w.ParamValue("queryParams"),
 		Request:            w.ParamValue("request"),
@@ -86,4 +87,8 @@ func (w *invokeDeployment) Init(state *runner.SpecState) error {
 	w.Append(invokeUrl)
 
 	return nil
+}
+
+func (w *invokeDeployment) Name() string {
+	return "InvokeDeployment"
 }

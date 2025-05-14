@@ -29,16 +29,29 @@ type Action interface {
 	MandatoryFields() []string
 	Init(state *SpecState) error
 	ResetUnits()
+	Name() string
 }
 
 type Spec struct {
 	name    string
+	kind    string
+	extends string
 	actions []Action
 }
 
-func NewSpec(name string, actions []Action) *Spec {
+func NewSpec(name string, kind string, actions []Action) *Spec {
 	return &Spec{
 		name:    name,
+		kind:    kind,
+		actions: actions,
+	}
+}
+
+func NewExtendedSpec(name string, kind string, extends string, actions []Action) *Spec {
+	return &Spec{
+		name:    name,
+		kind:    kind,
+		extends: extends,
 		actions: actions,
 	}
 }
@@ -75,21 +88,21 @@ func (s *Spec) Execute(ctx context.Context, client *resty.Client, log *logger.Te
 
 		switch run.RunState {
 		case Success:
-			log.Debugf("Action %d executed successfully", state.nextSequenceIndex)
+			log.Debugf("Action: %s(%d) executed successfully", action.Name(), state.nextSequenceIndex)
 			state.ResetWaitTill()
 			state.runResult = Successful
 			state.nextSequenceIndex++
 		case Failed:
-			log.Errorf("Action %d failed, reason: %s", state.nextSequenceIndex, run.Reason)
+			log.Errorf("Action: %s(%d) failed, reason: %s", action.Name(), state.nextSequenceIndex, run.Reason)
 			state.runResult = Error
 			exitLoop = true
 		case Progressing:
-			log.Debugf("Action %d is still in progress", state.nextSequenceIndex)
+			log.Debugf("Action: %s(%d) is still in progress", action.Name(), state.nextSequenceIndex)
 			state.runResult = Waiting
 			state.SetWaitTill(run.WaitTill)
 			exitLoop = true
 		default:
-			log.Errorf("Unhandled state %d, for action %d", run.RunState, state.nextSequenceIndex)
+			log.Errorf("Unhandled state %d, for Action: %s(%d)", run.RunState, action.Name(), state.nextSequenceIndex)
 		}
 
 		if exitLoop {

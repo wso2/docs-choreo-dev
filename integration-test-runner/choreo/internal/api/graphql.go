@@ -31,64 +31,76 @@ type ResponseGenerator interface {
 	GenExpectedResponse() (*bytes.Buffer, error)
 }
 
-func CreateProject(client *resty.Client, model req.CreateProject) (*res.CreateProject, error) {
-	return callGraphQL[req.CreateProject, res.CreateProject](client, "createProject", model, nil)
+func CreateProject(client *resty.Client, request req.CreateProject) (*res.CreateProject, error) {
+	return callGraphQL[req.CreateProject, res.CreateProject](client, "createProject", request, nil)
 }
 
-func CreateComponent(client *resty.Client, model req.CreateComponent, gen ResponseGenerator) (*res.CreateComponent, error) {
-	return callGraphQL[req.CreateComponent, res.CreateComponent](client, "createComponent", model, gen)
+func DeleteProject(client *resty.Client, request req.DeleteProject, expected *res.DeleteProject) (*res.DeleteProject, error) {
+	return callGraphQL[req.DeleteProject, res.DeleteProject](client, "deleteProject", request, nil)
 }
 
-func GetComponentDetails(client *resty.Client, model req.GetComponentDetails, gen ResponseGenerator) (*res.GetComponentDetails, error) {
-	return callGraphQL[req.GetComponentDetails, res.GetComponentDetails](client, "getComponentDetails", model, gen)
+func CreateComponent(client *resty.Client, request req.CreateComponent, expected *res.CreateComponent) (*res.CreateComponent, error) {
+	return callGraphQL(client, "createComponent", request, expected)
 }
 
-func GetCommitHistoryByBranch(client *resty.Client, model req.GetCommitHistoryByBranch) (*res.GetCommitHistory, error) {
-	return callGraphQL[req.GetCommitHistoryByBranch, res.GetCommitHistory](client, "getCommitHistoryByBranch", model, nil)
+func CreateByocComponent(client *resty.Client, request req.CreateByocComponent, expected *res.CreateByocComponent) (*res.CreateByocComponent, error) {
+	return callGraphQL(client, "createByocComponent", request, expected)
 }
 
-func GetDeploymentEnvironments(client *resty.Client, model req.GetDeploymentEnvironments) (*res.GetDeploymentEnvironments, error) {
-	return callGraphQL[req.GetDeploymentEnvironments, res.GetDeploymentEnvironments](client, "getDeploymentEnvironments", model, nil)
+func GetComponentDetails(client *resty.Client, request req.GetComponentDetails, expected *res.GetComponentDetails) (*res.GetComponentDetails, error) {
+	return callGraphQL(client, "getComponentDetails", request, expected)
 }
 
-func GetDeploymentStatusByVersion(client *resty.Client, model req.GetDeploymentStatusByVersion) (*res.GetDeploymentStatusByVersion, error) {
-	return callGraphQL[req.GetDeploymentStatusByVersion, res.GetDeploymentStatusByVersion](client, "getDeploymentStatusByVersion", model, nil)
+func GetCommitHistoryByBranch(client *resty.Client, request req.GetCommitHistoryByBranch) (*res.GetCommitHistory, error) {
+	return callGraphQL[req.GetCommitHistoryByBranch, res.GetCommitHistory](client, "getCommitHistoryByBranch", request, nil)
 }
 
-func DeployComponent(client *resty.Client, model req.DeployComponent) (*res.DeployComponent, error) {
-	return callGraphQL[req.DeployComponent, res.DeployComponent](client, "deployComponent", model, nil)
+func GetDeploymentEnvironments(client *resty.Client, request req.GetDeploymentEnvironments) (*res.GetDeploymentEnvironments, error) {
+	return callGraphQL[req.GetDeploymentEnvironments, res.GetDeploymentEnvironments](client, "getDeploymentEnvironments", request, nil)
 }
 
-func GetBuildImages(client *resty.Client, model req.GetBuildImages) (*res.GetBuildImages, error) {
-	return callGraphQL[req.GetBuildImages, res.GetBuildImages](client, "getBuildImages", model, nil)
+func GetDeploymentStatusByVersion(client *resty.Client, request req.GetDeploymentStatusByVersion) (*res.GetDeploymentStatusByVersion, error) {
+	return callGraphQL[req.GetDeploymentStatusByVersion, res.GetDeploymentStatusByVersion](client, "getDeploymentStatusByVersion", request, nil)
 }
 
-func DeployBuild(client *resty.Client, model req.DeployBuild) (*res.DeployBuild, error) {
-	return callGraphQL[req.DeployBuild, res.DeployBuild](client, "deployBuild", model, nil)
+func DeployComponent(client *resty.Client, request req.DeployComponent) (*res.DeployComponent, error) {
+	return callGraphQL[req.DeployComponent, res.DeployComponent](client, "deployComponent", request, nil)
 }
 
-func GetEndpoints(client *resty.Client, model req.GetEndpoints) (*res.GetEndpoints, error) {
-	return callGraphQL[req.GetEndpoints, res.GetEndpoints](client, "getEndpoints", model, nil)
+func GetBuildImages(client *resty.Client, request req.GetBuildImages) (*res.GetBuildImages, error) {
+	return callGraphQL[req.GetBuildImages, res.GetBuildImages](client, "getBuildImages", request, nil)
 }
 
-func GenerateEndpoints(client *resty.Client, model req.GenerateEndpoints) (*res.GenerateEndpoints, error) {
-	return callGraphQL[req.GenerateEndpoints, res.GenerateEndpoints](client, "generateEndpoints", model, nil)
+func DeployBuild(client *resty.Client, request req.DeployBuild) (*res.DeployBuild, error) {
+	return callGraphQL[req.DeployBuild, res.DeployBuild](client, "deployBuild", request, nil)
 }
 
-func UpdateEndpoint(client *resty.Client, model req.UpdateEndpoint) (*res.UpdateEndpoint, error) {
-	return callGraphQL[req.UpdateEndpoint, res.UpdateEndpoint](client, "updateEndpoint", model, nil)
+func GetEndpoints(client *resty.Client, request req.GetEndpoints) (*res.GetEndpoints, error) {
+	return callGraphQL[req.GetEndpoints, res.GetEndpoints](client, "getEndpoints", request, nil)
 }
 
-func GetComponentDeployment(client *resty.Client, model req.GetComponentDeployment) (*res.GetComponentDeployment, error) {
-	return callGraphQL[req.GetComponentDeployment, res.GetComponentDeployment](client, "getComponentDeployment", model, nil)
+func GenerateEndpoints(client *resty.Client, request req.GenerateEndpoints) (*res.GenerateEndpoints, error) {
+	return callGraphQL[req.GenerateEndpoints, res.GenerateEndpoints](client, "generateEndpoints", request, nil)
 }
 
-func PromoteComponent(client *resty.Client, model req.PromoteComponent) (*res.PromoteComponent, error) {
-	return callGraphQL[req.PromoteComponent, res.PromoteComponent](client, "promoteComponent", model, nil)
+func PromoteEndpoints(client *resty.Client, request req.PromoteEndpoints) (*res.PromoteEndpoints, error) {
+	return callGraphQL[req.PromoteEndpoints, res.PromoteEndpoints](client, "promoteEndpoints", request, nil)
 }
 
-func callGraphQL[Req_t, Res_t any](client *resty.Client, templateName string, model Req_t, gen ResponseGenerator) (*Res_t, error) {
-	buf, err := template.PopulateRequestTemplate(templateName, model)
+func UpdateEndpoint(client *resty.Client, request req.UpdateEndpoint) (*res.UpdateEndpoint, error) {
+	return callGraphQL[req.UpdateEndpoint, res.UpdateEndpoint](client, "updateEndpoint", request, nil)
+}
+
+func GetComponentDeployment(client *resty.Client, request req.GetComponentDeployment) (*res.GetComponentDeployment, error) {
+	return callGraphQL[req.GetComponentDeployment, res.GetComponentDeployment](client, "getComponentDeployment", request, nil)
+}
+
+func PromoteComponent(client *resty.Client, request req.PromoteComponent) (*res.PromoteComponent, error) {
+	return callGraphQL[req.PromoteComponent, res.PromoteComponent](client, "promoteComponent", request, nil)
+}
+
+func callGraphQL[Req_t, Res_t any](client *resty.Client, templateName string, request Req_t, expected *Res_t) (*Res_t, error) {
+	buf, err := template.PopulateRequestTemplate(templateName, request)
 
 	if err != nil {
 		return nil, err
@@ -102,11 +114,11 @@ func callGraphQL[Req_t, Res_t any](client *resty.Client, templateName string, mo
 
 	var response map[string]Res_t
 
-	request := make(map[string]string)
-	request["query"] = buf.String()
+	body := make(map[string]string)
+	body["query"] = buf.String()
 
 	res, err := client.R().
-		SetBody(request).
+		SetBody(body).
 		SetResult(&response).
 		Post(newAppServiceHost + graphql)
 
@@ -118,8 +130,9 @@ func callGraphQL[Req_t, Res_t any](client *resty.Client, templateName string, mo
 		return nil, errors.New("graphql call failed, response code: " + res.Status())
 	}
 
-	if gen != nil {
-		err = validateResponse(res.Body(), gen)
+	if expected != nil {
+		err = validateResponse(templateName, res.Body(), expected)
+
 		if err != nil {
 			return nil, err
 		}
@@ -130,8 +143,8 @@ func callGraphQL[Req_t, Res_t any](client *resty.Client, templateName string, mo
 	return &data, nil
 }
 
-func validateResponse(response []byte, gen ResponseGenerator) error {
-	expectedResponse, err := gen.GenExpectedResponse()
+func validateResponse[Res_t any](templateName string, response []byte, expected *Res_t) error {
+	expectedResponse, err := template.PopulateResponseTemplate(templateName, expected)
 
 	if err != nil {
 		return err

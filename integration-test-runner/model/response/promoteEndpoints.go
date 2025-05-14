@@ -13,6 +13,6 @@
 
 package response
 
-type CreateComponent struct {
-	BaseComponent `json:"createComponent"`
+type PromoteEndpoints struct {
+	PromoteComponentEndpoints []Endpoint `json:"promoteComponentEndpoints"`
 }

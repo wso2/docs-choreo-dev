@@ -50,3 +50,7 @@ func (w *getEnvironments) Init(state *runner.SpecState) error {
 
 	return nil
 }
+
+func (w *getEnvironments) Name() string {
+	return "GetEnvironments"
+}

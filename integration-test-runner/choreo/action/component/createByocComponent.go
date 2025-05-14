@@ -19,46 +19,45 @@ import (
 	"choreo-integration-test-runner/runner"
 )
 
-type FieldValidator interface {
-	MandatoryFields() []string
-}
-
-type createComponent struct {
+type createByocComponent struct {
 	action.BaseAction
 }
 
-func CreateComponent() runner.Action {
-	return &createComponent{}
+func CreateByocComponent() runner.Action {
+	return &createByocComponent{}
 
 }
 
-func (c *createComponent) RunMode() runner.RunMode {
+func (c *createByocComponent) RunMode() runner.RunMode {
 	return runner.ALL
 }
 
-func (c *createComponent) MandatoryFields() []string {
-	return []string{"placeholder", "displayType", "project",
-		"accessibility", "srcGitRepoURL", "repositorySubPath", "repositoryBranch", "isPublicRepo"}
+func (c *createByocComponent) MandatoryFields() []string {
+	return []string{"placeholder", "componentType", "project",
+		"accessibility", "srcGitRepoURL", "repositorySubPath", "repositoryBranch", "isPublicRepo",
+		"dockerContext", "dockerFilePath"}
 }
 
-func (c *createComponent) Init(state *runner.SpecState) error {
+func (c *createByocComponent) Init(state *runner.SpecState) error {
 	project, err := state.GetProject(c.ParamValue("project"))
 
 	if err != nil {
 		return err
 	}
 
-	createComp := component.CreateComponent(state, &component.CreateComponentParams{
+	createComp := component.CreateByocComponent(state, &component.CreateByocComponentParams{
 		ProjectRes:        &project,
 		Placeholder:       c.ParamValue("placeholder"),
 		Description:       c.ParamValue("description"),
-		DisplayType:       c.ParamValue("displayType"),
+		ComponentType:     c.ParamValue("componentType"),
 		OrgId:             state.GetOrgId(),
 		Accessibility:     c.ParamValue("accessibility"),
 		SrcGitRepoURL:     c.ParamValue("srcGitRepoURL"),
 		RepositorySubPath: c.ParamValue("repositorySubPath"),
 		RepositoryBranch:  c.ParamValue("repositoryBranch"),
 		IsPublicRepo:      c.ParamValue("isPublicRepo") == "true",
+		DockerContext:     c.ParamValue("dockerContext"),
+		DockerFilePath:    c.ParamValue("dockerFilePath"),
 	})
 
 	getCompDetails := component.GetComponentDetails(state, &component.GetComponentDetailsParams{
@@ -77,6 +76,6 @@ func (c *createComponent) Init(state *runner.SpecState) error {
 	return nil
 }
 
-func (c *createComponent) Name() string {
-	return "CreateComponent"
+func (c *createByocComponent) Name() string {
+	return "CreateByocComponent"
 }

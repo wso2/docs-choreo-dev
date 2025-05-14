@@ -45,3 +45,7 @@ func (w *waitBuild) Init(state *runner.SpecState) error {
 
 	return nil
 }
+
+func (w *waitBuild) Name() string {
+	return "WaitForBuild"
+}
