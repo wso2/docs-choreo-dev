@@ -31,7 +31,7 @@ global:
 choreo-apim:
   enabled: true
   serviceAccount:
-    annotations: {}
+    annotations: { }
   apim-devportal:
     replicas: 1
     autoscaling:
@@ -131,7 +131,7 @@ choreo-apim:
     config:
       apimAdminUsername: choreo_apim_admin
       gaAdminUsername: choreo_ga_admin
-      dataplanes: []
+      dataplanes: [ ]
       mizzenHost: http://dp-mizzen.choreo-system.svc.cluster.local
       dbHost: sqlfg-choreo-choreo-global-adapter-db-prod.database.windows.net
       logLevel: INFO
@@ -165,3 +165,33 @@ choreo-apim:
         key: redisPassword
     vault:
       roleName: choreo-connect-global-adapter
+  choreo-governance-service:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/choreo-governance-service
+      tag: latest
+    config:
+      dbURL: "jdbc:sqlserver://choreo-prod-mssql-server.database.windows.net:1433;database=choreo_governance_db;SendStringParametersAsUnicode=false;socketTimeout=60000"
+      disableDatabaseConnection: true
+      validateRulesetContent: false
+      excludedOrgsFromAuthorization: ""
+      enableAIGovernance: false
+      aiServiceAppClientId: ""
+      githubRunnerAppClientId: ""
+      endpoints:
+        governanceAIServiceBasePath: ""
+        aiAppTokenEndpoint: ""
+    secrets:
+      governanceDBPassword:
+        path: choreo-cp/data/choreo-apim/choreo-governance-service
+        key: governanceDBPassword
+      apimAdminPassword:
+        path: choreo-cp/data/choreo-apim/choreo-governance-service
+        key: apimAdminPassword
+      apimAIClientSecret:
+        path: choreo-cp/data/choreo-apim/choreo-governance-service
+        key: apimAIClientSecret
