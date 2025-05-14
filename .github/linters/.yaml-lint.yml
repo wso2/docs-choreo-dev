@@ -3,15 +3,10 @@ extends: default
 ignore:
   # ignoring since the directory contains helm manifests
   - /tmp/lint/databases/templates/
+  - /tmp/lint/cdp-helm-charts
 
 rules:
   # 80 chars should be enough, but don't fail if a line is longer
   line-length:
     max: 80
     level: warning
-  syntax:
-    ignore:
-      - /tmp/lint/cdp-helm-charts
-  braces:
-    ignore:
-      - /tmp/lint/cdp-helm-charts
