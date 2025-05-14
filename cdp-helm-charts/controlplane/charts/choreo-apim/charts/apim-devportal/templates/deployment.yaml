@@ -63,7 +63,7 @@ spec:
           name: apim-devportal
           envFrom:
             - configMapRef:
-                name: cm-feature-flags
+                name: feature-flags
           readinessProbe:
             initialDelaySeconds: 15
             timeoutSeconds: 15
