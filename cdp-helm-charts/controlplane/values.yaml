@@ -204,3 +204,19 @@ choreo-apim:
     image:
       repository: choreoipaas/choreo-linter-service
       tag: latest
+  config-deployer-service:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: config-deployer-service
+      tag: 1.0.0-amd64
+    secrets:
+      privateKey:
+        path: choreo-cp/data/choreo-apim/config-deployer-service
+        key: privateKey
+      publicKey:
+        path: choreo-cp/data/choreo-apim/config-deployer-service
+        key: publicKey
