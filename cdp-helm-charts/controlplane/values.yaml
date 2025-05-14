@@ -1,0 +1,91 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+global:
+  choreosystem:
+    orgHandle: choreosystem
+  asgardeo:
+    consoleUrl: https://console.asgardeo.io
+  image:
+    registry: choreocontrolplane.azurecr.io
+    pullSecrets:
+      - name: choreo-image-pull-secret
+  namespaces:
+    apim: choreo-apim
+    system: choreo-system
+    observability: choreo-observability
+    ai: choreo-ai
+choreo-apim:
+  enabled: true
+  serviceAccount:
+    annotations: {}
+  apim-devportal:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/choreo-apim-devportal
+      tag: latest
+    config:
+      clientId: ''
+      signInRedirectUrl: ''
+      signOutRedirectUrl: ''
+      clientHost: ''
+      apimHost: ''
+      tokenExchangeUrl: ''
+      apimApi: ''
+      apimGatewayHostSuffix: ''
+      idpHost: ''
+      apiServiceHost: ''
+      graphqlServiceHost: ''
+      graphqlResource: ''
+      azureCDNOrigin: ''
+      devToolEnable: true
+      tokenEndpoint: ''
+      revokeEndpoint: ''
+      enableInV2: true
+      enableEmailLogin: true
+      enableMicrosoftLogin: true
+      overrideEndpoints:
+        authorizationEndpoint: ''
+        tokenEndpoint: ''
+        endSessionEndpoint: ''
+      tokenExchangeConfig:
+        clientId: ''
+        scope: 'apim:admin apim:subscribe environments:view_prod environments:view_dev apim:prod_key_manage apim:sand_key_manage urn:choreosystem:customdomainapi:custom_domain_view urn:choreosystem:usermanagement:user_view'
+      azureInsightsKey: ''
+      choreoSystemHostSuffix: ''
+      devportalHost: ''
+      customDomain:
+        enabled: false
+        apiServiceHost: ""
+        graphqlServiceHost: ""
+        tokenEndpoint: ""
+        wellKnownEndpoint: ""
+        devportalHost: ""
+        permissionAdminPortalUrl: ""
+        customSubscriptionPolicyHandlingOrg: ""
+        apiTryoutTestKeyEnabled: false
+        apiKeyFeatureEnabled: false
+        devPortalIdPConfigurationFeatureEnabled: false
+      selfSignupEnabledOrgs: ''
+      pdpDomainCustomizedOrgs: '[]'
+      permissionAdminPortalEnabled: true
+      sandboxKeyGenerationEnabled: true
+      intelligentRoutingFeatureEnabled: true
+      choreoInbuiltKeyManagerFeatureEnabled: true
+      customSubscriptionPolicyHandlingOrg: ""
+      apiTryoutTestKeyEnabled: false
+      apiKeyFeatureEnabled: false
+      devPortalIdPConfigurationFeatureEnabled: false
+      apiKeyScopeSupportEnabled: false
