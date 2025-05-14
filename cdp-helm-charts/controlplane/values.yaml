@@ -119,3 +119,49 @@ choreo-apim:
         key: redisPassword
     vault:
       roleName: app-gateway-oauth-agent
+  choreo-connect-global-adapter:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/choreo-connect-global-adapter-v2
+      tag: latest
+    config:
+      apimAdminUsername: choreo_apim_admin
+      gaAdminUsername: choreo_ga_admin
+      dataplanes: []
+      mizzenHost: http://dp-mizzen.choreo-system.svc.cluster.local
+      dbHost: sqlfg-choreo-choreo-global-adapter-db-prod.database.windows.net
+      logLevel: INFO
+    secrets:
+      mgwPrivateKey:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: mgwPrivateKey
+      mgwPublicKey:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: mgwPublicKey
+      gaPrivateKey:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: gaPrivateKey
+      gaPublicKey:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: gaPublicKey
+      gaAdminPassword:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: gaAdminPassword
+      gaDBPassword:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: gaDBPassword
+      apimAdminPassword:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: apimAdminPassword
+      asbConnectionString:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: asbConnectionString
+      redisPassword:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: redisPassword
+    vault:
+      roleName: choreo-connect-global-adapter
