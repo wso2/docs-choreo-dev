@@ -19,11 +19,12 @@ metadata:
   name: choreo-linter-service
   namespace: {{ .Values.global.namespaces.apim }}
 spec:
-  replicas: 1
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
   selector:
     matchLabels:
       {{ include "choreo-linter-service.labels" . | indent 6 }}
-  strategy: {}
   template:
     metadata:
       labels:
