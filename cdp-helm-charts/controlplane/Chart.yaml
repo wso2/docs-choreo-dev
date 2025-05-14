@@ -35,15 +35,6 @@ version: 1.0.0
 appVersion: "1.0.0"
 
 dependencies:
-  - name: choreo-ai
-    version: 1.0.0
-    condition: choreo-ai.enabled
   - name: choreo-apim
     version: 1.0.0
     condition: choreo-apim.enabled
-  - name: choreo-observability
-    version: 1.0.0
-    condition: choreo-observability.enabled
-  - name: choreodp-system
-    version: 1.0.0
-    condition: choreodp-system.enabled
