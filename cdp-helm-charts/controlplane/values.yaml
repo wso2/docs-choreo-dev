@@ -195,3 +195,12 @@ choreo-apim:
       apimAIClientSecret:
         path: choreo-cp/data/choreo-apim/choreo-governance-service
         key: apimAIClientSecret
+  choreo-linter-service:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/choreo-linter-service
+      tag: latest
