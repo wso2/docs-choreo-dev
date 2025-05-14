@@ -13,6 +13,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: choreo-connect-global-adapter
+  namespace: {{ .Values.global.namespaces.apim }}
   labels:
     {{ include "choreo-connect-global-adapter.labels" . | indent 4 }}
   annotations:

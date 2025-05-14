@@ -15,6 +15,7 @@ metadata:
   labels:
     {{- include "choreo-connect-global-adapter.labels" . | nindent 4 }}
   name: choreo-connect-global-adapter
+  namespace: {{ .Values.global.namespaces.apim }}
 spec:
   selector:
     {{- include "choreo-connect-global-adapter.labels" . | nindent 4 }}
