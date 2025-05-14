@@ -15,6 +15,7 @@ metadata:
   labels:
     {{- include "apim-devportal.labels" . | nindent 4 }}
   name: apim-devportal-svc
+  namespace: {{ .Values.global.namespaces.apim }}
 spec:
   type: ClusterIP
   ports:

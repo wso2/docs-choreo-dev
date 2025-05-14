@@ -15,6 +15,7 @@ metadata:
   labels:
     {{- include "app-gateway-oauth-agent.labels" . | nindent 4 }}
   name: app-gateway-oauth-agent
+  namespace: {{ .Values.global.namespaces.apim }}
 spec:
   ports:
     - name: agoa-port

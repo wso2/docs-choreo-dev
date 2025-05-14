@@ -13,6 +13,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: apim-devportal
+  namespace: {{ .Values.global.namespaces.apim }}
   labels:
     {{- include "apim-devportal.labels" . | nindent 4 }}
 spec:
