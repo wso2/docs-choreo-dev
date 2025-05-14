@@ -39,22 +39,13 @@ spec:
       {{- if .Values.autoscaling.enabled }}
       {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
       {{- if ge $minReplicas 2 }}
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: choreo.component
-                    operator: In
-                    values:
-                      - apim-devportal
-              topologyKey: kubernetes.io/hostname
+      {{- include "apim-devportal.affinity" . | nindent 6 }}
       {{- end }}
       {{- end }}
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-      automountServiceAccountToken: true
+      serviceAccountName: apim-devportal
       containers:
         - image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: Always
