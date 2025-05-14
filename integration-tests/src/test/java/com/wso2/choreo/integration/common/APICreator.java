@@ -125,8 +125,8 @@ public class APICreator extends ControlPlaneAPI {
         return ObjectMapperUtil.mapToGraphQLQuery(expectedResponse);
     }
 
-    public static ProxyResponse<Status> initiateDeployment(String componentId, String versionId, String envId, String accessToken) throws IOException {
-        String url = PROXY_URI + componentId + "/versions/" + versionId + "/initiate-deployment?environmentId=" + envId + "&accessMode=external";
+    public static ProxyResponse<Status> initiateDeployment(String componentId, String versionId, String envId, String deploymentPipelineId, String accessToken) throws IOException {
+        String url = PROXY_URI + componentId + "/versions/" + versionId + "/initiate-deployment?environmentId=" + envId + "&accessMode=external&deploymentPipelineId=" + deploymentPipelineId;
         Response response = HttpClientUtil.httpPOST(url, "", accessToken, "");
         Status status = ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "");
         return ProxyResponse.<Status>builder().response(response).entity(status).build();
@@ -138,16 +138,16 @@ public class APICreator extends ControlPlaneAPI {
         return ObjectMapperUtil.mapStringToObject(ProxyAPIBuild.class, res.getRes(), "");
     }
 
-    public static ProxyResponse<Status> deployProxyAPI(String componentId, String versionId, String buildId, String envId, String accessToken) throws IOException {
-        String url = PROXY_URI + componentId + "/versions/" + versionId + "/deploy-service?buildId=" + buildId + "&environmentId=" + envId;
+    public static ProxyResponse<Status> deployProxyAPI(String componentId, String versionId, String buildId, String envId, String deploymentPipelineId, String accessToken) throws IOException {
+        String url = PROXY_URI + componentId + "/versions/" + versionId + "/deploy-service?buildId=" + buildId + "&environmentId=" + envId + "&deploymentPipelineId=" + deploymentPipelineId;
         Response response = HttpClientUtil.httpPOST(url, "", accessToken, "");
         Status status = ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "");
         return ProxyResponse.<Status>builder().response(response).entity(status).build();
 
     }
 
-    public static Status promoteProxyAPI(String componentId, String versionId, String fromEnv,String targetEnv,  String buildId,  String accessToken) throws IOException {
-        String url = PROXY_URI + componentId + "/versions/" + versionId + "/promote?fromEnv=" + fromEnv+"&targetEnv="+targetEnv +  "&buildId=" + buildId ;
+    public static Status promoteProxyAPI(String componentId, String versionId, String fromEnv,String targetEnv,  String buildId, String accessToken, String deploymentPipelineId) throws IOException {
+        String url = PROXY_URI + componentId + "/versions/" + versionId + "/promote?fromEnv=" + fromEnv+"&targetEnv="+targetEnv +  "&buildId=" + buildId + "&deploymentPipelineId=" + deploymentPipelineId;
         Response response = HttpClientUtil.httpPOST(url, "", accessToken, "");
         return ObjectMapperUtil.mapStringToObject(Status.class, response.getRes(), "");
     }

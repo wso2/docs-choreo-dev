@@ -820,12 +820,12 @@ public class ComponentUtils {
 
     public static ProxyAPIBuild deployProxyComponent(TestActionRunner runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
-            List<Environment> environments) throws Exception {
+            List<Environment> environments, String deploymentPipelineId) throws Exception {
         HttpClient choreoEPClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
 
         for (Environment env : environments) {
             ProxyDeployer.initiateDeployment(runner, choreoEPClient, accessToken, component.getId(),
-                    component.getLatestApiVersion().getId(), env.getId());
+                    component.getLatestApiVersion().getId(), env.getId(), deploymentPipelineId);
         }
 
         ProxyAPIBuild apiBuilds = ProxyDeployer.getApiBuilds(runner, choreoEPClient, accessToken, component.getId(),
@@ -835,7 +835,7 @@ public class ComponentUtils {
 
         for (Environment env : environments) {
             ProxyDeployer.deployProxyAPI(runner, choreoEPClient, accessToken, component.getId(),
-                    component.getLatestApiVersion().getId(), build.getBuildId(), env.getId());
+                    component.getLatestApiVersion().getId(), build.getBuildId(), env.getId(), deploymentPipelineId);
         }
 
         return apiBuilds;
@@ -843,7 +843,7 @@ public class ComponentUtils {
 
     public static void promoteProxyComponent(TestActionRunner runner,
             Map<Endpoints, HttpClient> citrusClients, String accessToken, ChoreoComponent component,
-            List<Environment> environments, ProxyAPIBuild apiBuilds) throws Exception {
+            List<Environment> environments, ProxyAPIBuild apiBuilds, String deploymentPipelineId) throws Exception {
         HttpClient choreoEPClient = citrusClients.get(Endpoints.CHOREO_ENDPOINT);
 
         int srcEnvIndex = 0;
@@ -856,7 +856,7 @@ public class ComponentUtils {
             Environment destEnv = environments.get(destEnvIndex);
 
             ProxyDeployer.promoteProxyAPI(runner, choreoEPClient, accessToken, component.getId(),
-                    component.getLatestApiVersion().getId(), srcEnv.getId(), destEnv.getId(), build.getBuildId());
+                    component.getLatestApiVersion().getId(), srcEnv.getId(), destEnv.getId(), build.getBuildId(), deploymentPipelineId);
 
             ++srcEnvIndex;
             ++destEnvIndex;

@@ -70,7 +70,6 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         ChoreoProject testProject = ComponentUtils.createProject(this, citrusClients, accessToken, 
                 Constant.region.US.toString());
         String projectId = testProject.getId();
-
         String firstAPIName = Constant.DEFAULT_API_NAME.concat(String.valueOf(new Date().getTime()));
         String firstContext = APICreator.generateContext(firstAPIName);
         proxyAPI = APICreator.createAPI(firstAPIName, firstContext, accessToken).getEntity();        
@@ -89,8 +88,9 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
         environments = GraphQL.getComponentDeploymentEnvironment(projectId, accessToken);
 
         devEnv = choreoComponent.getEnvironment(environments, Constant.Environment.Development);
+        String deploymentPipelineId = testProject.getDefaultDeploymentPipelineId();
         ProxyResponse<Status> statusProxyResponse = APICreator.initiateDeployment(choreoComponent.getId(),
-                choreoComponent.getLatestApiVersion().getId(), devEnv.getId(), accessToken);
+                choreoComponent.getLatestApiVersion().getId(), devEnv.getId(), deploymentPipelineId, accessToken);
         Assert.assertEquals(statusProxyResponse.getResponse().getStatusCode(), HttpStatus.OK.value());
         Assert.assertTrue(statusProxyResponse.getEntity().isSuccess());
 
@@ -98,7 +98,7 @@ public class TestBasicAPIRevisionCreation extends TestNGCitrusSpringSupport {
                 accessToken);
         String buildId = proxyAPIBuild.getBuilds()[0].getBuildId();
         ProxyResponse<Status> res = APICreator.deployProxyAPI(choreoComponent.getId(), this.apiId, buildId,
-                devEnv.getId(), accessToken);
+                devEnv.getId(), deploymentPipelineId, accessToken);
         Assert.assertEquals(res.getResponse().getStatusCode(), HttpStatus.OK.value());
         apiRevisionDTO = ApiRevisionDTO.builder().proxyId(proxyAPI.getId()).apiId(proxyAPI.getId()).buildId(buildId).orgUuid(orgUuid).build();
     }

@@ -38,8 +38,8 @@ public class ProxyDeployer extends ControlPlaneAPI {
 
     private static final String PROXY_RESOURCE = "/proxy/deployer/v1/components/";
 
-    public static void initiateDeployment(TestActionRunner runner, HttpClient client, String accessToken, String componentId, String versionId, String envId) {
-        String resource = PROXY_RESOURCE + componentId + "/versions/" + versionId + "/initiate-deployment?environmentId=" + envId + "&accessMode=external";
+    public static void initiateDeployment(TestActionRunner runner, HttpClient client, String accessToken, String componentId, String versionId, String envId, String deploymentPipelineId) {
+        String resource = PROXY_RESOURCE + componentId + "/versions/" + versionId + "/initiate-deployment?environmentId=" + envId + "&accessMode=external&deploymentPipelineId=" + deploymentPipelineId;
 
         runner.$(repeatOnError()
                 .until("i = 5")
@@ -98,9 +98,9 @@ public class ProxyDeployer extends ControlPlaneAPI {
     }
 
     public static void deployProxyAPI(TestActionRunner runner, HttpClient client, String accessToken,
-                                                       String componentId, String versionId, String buildId, String envId) {
+                                                       String componentId, String versionId, String buildId, String envId, String deploymentPipelineId) {
         String resource = PROXY_RESOURCE + componentId + "/versions/" + versionId + "/deploy-service?buildId=" +
-                buildId + "&environmentId=" + envId;
+                buildId + "&environmentId=" + envId + "&deploymentPipelineId=" + deploymentPipelineId;
 
         runner.$(repeatOnError()
                 .until("i = 5")
@@ -124,9 +124,9 @@ public class ProxyDeployer extends ControlPlaneAPI {
     }
 
     public static void promoteProxyAPI(TestActionRunner runner, HttpClient client, String accessToken,
-                                         String componentId, String versionId, String fromEnv, String targetEnv, String buildId) {
+                                         String componentId, String versionId, String fromEnv, String targetEnv, String buildId, String deploymentPipelineId) {
         String resource = PROXY_RESOURCE + componentId + "/versions/" + versionId + "/promote?fromEnv=" +
-                fromEnv+"&targetEnv="+targetEnv +  "&buildId=" + buildId;
+                fromEnv+"&targetEnv="+targetEnv +  "&buildId=" + buildId + "&deploymentPipelineId=" + deploymentPipelineId;
 
         runner.$(repeatOnError()
                 .until("i = 5")

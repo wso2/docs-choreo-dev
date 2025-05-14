@@ -1265,7 +1265,7 @@ vars.put(&quot;projectId&quot;, backendProjectId);</stringProp>
                   <collectionProp name="Arguments.arguments">
                     <elementProp name="" elementType="HTTPArgument">
                       <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                      <stringProp name="Argument.value">{&quot;query&quot;:&quot;mutation {\n      deployDeploymentTrack(\n        input: {\n          componentId: \&quot;${componentId}\&quot;,\n          id: \&quot;${trackId}\&quot;,\n          imageId: \&quot;${imageId}\&quot;,\n          environmentId: \&quot;${devEnvId}\&quot;,\n          cron: \&quot;\&quot;,\n          cronTimezone: \&quot;\&quot;,\n        }\n      )\n    }&quot;}</stringProp>
+                      <stringProp name="Argument.value">{&quot;query&quot;:&quot;mutation {\n      deployDeploymentTrack(\n        input: {\n          componentId: \&quot;${componentId}\&quot;,\n          id: \&quot;${trackId}\&quot;,\n          imageId: \&quot;${imageId}\&quot;,\n          environmentId: \&quot;${devEnvId}\&quot;,\n          deploymentPipelineId: \&quot;${deploymentPipelineId}\&quot;,\n          cron: \&quot;\&quot;,\n          cronTimezone: \&quot;\&quot;,\n        }\n      )\n    }&quot;}</stringProp>
                       <stringProp name="Argument.metadata">=</stringProp>
                     </elementProp>
                   </collectionProp>
