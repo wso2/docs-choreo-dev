@@ -12,6 +12,7 @@
 global:
   choreosystem:
     orgHandle: choreosystem
+    orgUUID: ""
   asgardeo:
     consoleUrl: https://console.asgardeo.io
   vault:
@@ -195,6 +196,8 @@ choreo-apim:
       apimAIClientSecret:
         path: choreo-cp/data/choreo-apim/choreo-governance-service
         key: apimAIClientSecret
+    vault:
+      roleName: choreo-governance-service
   choreo-linter-service:
     replicas: 1
     autoscaling:
@@ -220,3 +223,72 @@ choreo-apim:
       publicKey:
         path: choreo-cp/data/choreo-apim/config-deployer-service
         key: publicKey
+    vault:
+      roleName: config-deployer-service
+  product-apim:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/choreo-product-apim
+      tag: latest
+    config:
+      hostName: ""
+      apimDBURL: "jdbc:sqlserver://sqlfg-choreo-choreo-apim-db-prod.database.windows.net:1433;database=choreo_apim_db;SendStringParametersAsUnicode=false;socketTimeout=60000"
+      sharedDBURL: "jdbc:sqlserver://sqlfg-choreo-choreo-apim-shared-db-prod.database.windows.net:1433;database=choreo_apim_shared_db;SendStringParametersAsUnicode=false;socketTimeout=60000"
+      sharedDBJDBCInterceptors: "SlowQueryReport(threshold=200)"
+      dbURL: "jdbc:sqlserver://sqlfg-choreo-choreo-apim-user-db-prod.database.windows.net:1433;database=choreo_apim_user_db;SendStringParametersAsUnicode=false;socketTimeout=60000"
+      mongoDBConnectionString: "mongodb+srv://prod_choreo_db_user:$env{MONGO_DB_PSWD}@choreo-apim-pl-0.lbxa7.mongodb.net/PROD_APIM_DB?retryWrites=true&amp;w=majority"
+      persistenceGroupId: ""
+      gatewayEnvironments: []
+      serviceProviders: []
+      jwtAudiences: []
+      perOrgSettings: []
+      websubhubURL: "https://publish.websubhub.choreo.dev/hub"
+      websubhubTopic: "choreosystem-choreo_cp_events_topic"
+      publisherKeyIssuer: "https://sts.choreo.dev:443/api/am/publisher/v2/apis/internal-key"
+      devportalURL: "https://sts.choreo.dev/devportal"
+      devportalKeyIssuer: "https://sts.choreo.dev:443/api/am/devportal/v2/apis/test-key"
+      devportalV2URL: "https://devportal.choreoapps.dev"
+      authzServiceURL: "rpc-api-authz.cloud-internal.wso2.com:9091"
+      authzServiceEnabled: false
+      instanceBasedAuthzServiceEnabled: true
+      instanceBasedAuthzServiceDisabledOrgs: ""
+      azureServiceBusPool: []
+      jwtIssuerName: "https://sts.choreo.dev:443/oauth2/token"
+      jwtJWKSUrl: "https://sts.choreo.dev:443/oauth2/jwks"
+      operationPolicyURL: "https://api.central.ballerina.io/2.0/"
+      asgardeoSystemAppTokenEndpoint: "https://api.asgardeo.io/oauth2/token"
+      asgardeoSystemAppAuthzEndpoint: "https://api.asgardeo.io"
+      patHandlerClientId: ""
+      apimAIEnable: false
+      apimAIClientId: ""
+      apimAITokenEndpoint: ""
+      apimAIDevportalThemingEndpoint: ""
+      apimAIAPIDesignEndpoint: ""
+    secrets:
+      primaryKeystorePassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: primaryKeystorePassword
+      primaryKeystoreKeyPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: primaryKeystoreKeyPassword
+      tlsKeystorePassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: tlsKeystorePassword
+      tlsKeystoreKeyPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: tlsKeystoreKeyPassword
+      internalKeystorePassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: internalKeystorePassword
+      internalKeystoreKeyPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: internalKeystoreKeyPassword
+      truststorePassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: truststorePassword
+    vault:
+      roleName: product-apim
