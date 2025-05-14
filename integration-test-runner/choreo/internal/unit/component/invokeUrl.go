@@ -14,6 +14,7 @@
 package component
 
 import (
+	"bytes"
 	"choreo-integration-test-runner/choreo/internal/unit"
 	"choreo-integration-test-runner/helper/matcher"
 	"choreo-integration-test-runner/model/response"
@@ -33,6 +34,7 @@ type InvokeUrlParams struct {
 	CompDetails        *response.GetComponentDetails
 	Environment        *response.Environment
 	HttpMethod         string
+	ContentType        string
 	ResourcePath       string
 	QueryParams        string
 	Request            string
@@ -90,6 +92,10 @@ func (g *invokeUrl) Execute(client *resty.Client) (unit.UnitComplete, error) {
 	request := client.R()
 	request.SetHeader("Test-Key", apiKey.Apikey)
 
+	if g.params.ContentType != "" {
+		request.SetHeader("Content-Type", g.params.ContentType)
+	}
+
 	var response *resty.Response
 
 	switch g.params.HttpMethod {
@@ -127,13 +133,25 @@ func (g *invokeUrl) Execute(client *resty.Client) (unit.UnitComplete, error) {
 	}
 
 	if g.params.ExpectedResponse != "" {
-		result, err := matcher.JsonEqual([]byte(g.params.ExpectedResponse), response.Body())
+		if response.Header().Get("Content-Type") == "application/json" {
+			result, err := matcher.JsonEqual([]byte(g.params.ExpectedResponse), response.Body())
 
-		if err != nil {
-			return false, err
-		}
-		if !result.Match {
-			return false, fmt.Errorf("%s", strings.Join(result.ErrorMsgs, ","))
+			if err != nil {
+				return false, err
+			}
+			if !result.Match {
+				return false, fmt.Errorf("%s", strings.Join(result.ErrorMsgs, ","))
+			}
+		} else {
+			actual := response.Body()
+
+			actual = bytes.TrimSpace(actual)
+			actual = bytes.TrimLeft(actual, "\r\n")
+			actual = bytes.TrimRight(actual, "\r\n")
+
+			if !bytes.Equal([]byte(g.params.ExpectedResponse), actual) {
+				return false, fmt.Errorf("expected response %s(%d), got %s(%d)", g.params.ExpectedResponse, len(g.params.ExpectedResponse), string(response.Body()), len(string(response.Body())))
+			}
 		}
 	}
 

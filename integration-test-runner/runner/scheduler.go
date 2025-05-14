@@ -18,6 +18,7 @@ import (
 	"choreo-integration-test-runner/config"
 	"choreo-integration-test-runner/helper/appstate"
 	"choreo-integration-test-runner/logger"
+	"container/list"
 	"context"
 	"fmt"
 	"strconv"
@@ -35,10 +36,9 @@ type specRuntimeData struct {
 
 type scheduler struct {
 	tokenApi     *auth.TokenApi
-	pendingIndex int
 	concurrency  int
-	pendingSpecs []specRuntimeData
-	successSpecs []specRuntimeData
+	pendingSpecs *list.List
+	successSpecs map[string][]specRuntimeData
 	errorSpecs   []specRuntimeData
 	activeSpecs  map[string]specRuntimeData
 	waitingSpecs map[string]specRuntimeData
@@ -50,9 +50,9 @@ type scheduler struct {
 func NewScheduler(specs []*Spec, concurrency int) (*scheduler, error) {
 	sch := &scheduler{
 		execDone:     make(chan string),
-		pendingSpecs: make([]specRuntimeData, 0, len(specs)),
-		successSpecs: make([]specRuntimeData, 0, int(float64(len(specs))*0.75)),
+		pendingSpecs: list.New(),
 		errorSpecs:   make([]specRuntimeData, 0, int(float64(len(specs))*0.25)),
+		successSpecs: make(map[string][]specRuntimeData),
 		activeSpecs:  make(map[string]specRuntimeData),
 		waitingSpecs: make(map[string]specRuntimeData),
 		concurrency:  concurrency,
@@ -79,7 +79,7 @@ func NewScheduler(specs []*Spec, concurrency int) (*scheduler, error) {
 	}
 
 	for _, spec := range specs {
-		sch.pendingSpecs = append(sch.pendingSpecs, specRuntimeData{
+		sch.pendingSpecs.PushBack(specRuntimeData{
 			Spec:   spec,
 			logger: logger.NewTestLogger(spec.name, fmt.Sprintf("./%s.log", spec.name)),
 			Ctx:    buildContext(spec, orgHolder),
@@ -115,8 +115,26 @@ func (s *scheduler) Run() {
 	}
 }
 
-func (s *scheduler) CompletedSpecs() []specRuntimeData {
-	return s.successSpecs
+func (s *scheduler) SuccessSpecs() []specRuntimeData {
+	data := make([]specRuntimeData, 0)
+
+	for _, specs := range s.successSpecs {
+		data = append(data, specs...)
+	}
+
+	return data
+}
+
+func (s *scheduler) addToSuccessSpecs(data specRuntimeData) {
+	coll, ok := s.successSpecs[data.Spec.kind]
+
+	if !ok {
+		coll = make([]specRuntimeData, 0)
+	}
+
+	coll = append(coll, data)
+
+	s.successSpecs[data.Spec.kind] = coll
 }
 
 func (s *scheduler) FailedSpecs() []specRuntimeData {
@@ -124,7 +142,7 @@ func (s *scheduler) FailedSpecs() []specRuntimeData {
 }
 
 func (s *scheduler) runPendingSpecs() {
-	if s.pendingIndex >= len(s.pendingSpecs) {
+	if s.pendingSpecs.Len() == 0 {
 		return
 	}
 
@@ -142,16 +160,32 @@ func (s *scheduler) runPendingSpecs() {
 		return
 	}
 
-	for ; s.pendingIndex < len(s.pendingSpecs); s.pendingIndex++ {
+	for e := s.pendingSpecs.Front(); e != nil; {
 		if len(s.activeSpecs) > s.concurrency {
 			break
 		}
 
-		data := s.pendingSpecs[s.pendingIndex]
+		data := e.Value.(specRuntimeData)
+
+		if data.Spec.extends != "" {
+			finished, ok := s.successSpecs[data.Spec.extends]
+
+			if !ok { // No successful specs that this spec extends
+				e = e.Next()
+				continue
+			}
+
+			// Copy over ctx of a successful spec, in this case we pick the first one but any of them would do
+			data.Ctx = finished[0].Ctx
+		}
 
 		s.activeSpecs[data.Spec.name] = data
 		client := newClient(token, data.logger)
 		go data.Spec.Execute(data.Ctx, client, data.logger, s.execDone)
+
+		next := e.Next()
+		s.pendingSpecs.Remove(e)
+		e = next
 	}
 }
 
@@ -161,7 +195,7 @@ func (s *scheduler) endRunOnCompletion() bool {
 
 	var end bool
 
-	if s.pendingIndex >= len(s.pendingSpecs) && len(s.activeSpecs) == 0 && len(s.waitingSpecs) == 0 {
+	if s.pendingSpecs.Len() == 0 && len(s.activeSpecs) == 0 && len(s.waitingSpecs) == 0 {
 		fmt.Println("All specs completed")
 		fmt.Println("Success specs:", len(s.successSpecs))
 		fmt.Println("Error specs:", len(s.errorSpecs))
@@ -235,7 +269,7 @@ func (s *scheduler) processExecuted(name string) {
 
 	switch state.runResult {
 	case Successful:
-		s.successSpecs = append(s.successSpecs, data)
+		s.addToSuccessSpecs(data)
 		delete(s.activeSpecs, name)
 	case Error:
 		s.errorSpecs = append(s.errorSpecs, data)

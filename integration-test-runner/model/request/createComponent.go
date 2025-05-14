@@ -14,13 +14,8 @@
 package request
 
 type CreateComponent struct {
-	Name              string
-	Description       string
-	OrgId             int
-	OrgHandler        string
-	DisplayName       string
+	BaseComponent
 	DisplayType       string
-	ProjectId         string
 	Accessibility     string
 	SrcGitRepoUrl     string
 	RepositorySubPath string

@@ -102,8 +102,8 @@ type SpecState struct {
 	waitCount           int
 	runResult           SpecRunResult
 	projects            map[string]response.CreateProject
-	componentReq        map[string]request.CreateComponent
-	componentRes        map[string]response.CreateComponent
+	componentReq        map[string]request.BaseComponent
+	componentRes        map[string]response.BaseComponent
 	commitHistory       map[string]response.GetCommitHistory
 	componentDetailsRes map[string]response.GetComponentDetails
 	environments        map[EnvKey]response.GetDeploymentEnvironments
@@ -119,8 +119,8 @@ func NewState(orgHolder *OrgHolder, numberOfActions int) *SpecState {
 		orgHolder:           *orgHolder,
 		unrecoverableError:  nil,
 		projects:            make(map[string]response.CreateProject),
-		componentReq:        make(map[string]request.CreateComponent),
-		componentRes:        make(map[string]response.CreateComponent),
+		componentReq:        make(map[string]request.BaseComponent),
+		componentRes:        make(map[string]response.BaseComponent),
 		commitHistory:       make(map[string]response.GetCommitHistory),
 		componentDetailsRes: make(map[string]response.GetComponentDetails),
 		environments:        make(map[EnvKey]response.GetDeploymentEnvironments),
@@ -185,7 +185,7 @@ func (s *SpecState) FindProjectById(projectId string) (response.CreateProject, e
 	return response.CreateProject{}, errors.New("project not found")
 }
 
-func (s *SpecState) GetComponentRequest(placeholder string) (request.CreateComponent, error) {
+func (s *SpecState) GetComponentRequest(placeholder string) (request.BaseComponent, error) {
 	component, ok := s.componentReq[placeholder]
 
 	if !ok {
@@ -195,7 +195,7 @@ func (s *SpecState) GetComponentRequest(placeholder string) (request.CreateCompo
 	return component, nil
 }
 
-func (s *SpecState) GetComponentResponse(placeholder string) (response.CreateComponent, error) {
+func (s *SpecState) GetComponentResponse(placeholder string) (response.BaseComponent, error) {
 	component, ok := s.componentRes[placeholder]
 
 	if !ok {
@@ -273,11 +273,11 @@ func (s *SpecState) SetProject(placeholder string, project response.CreateProjec
 	s.projects[placeholder] = project
 }
 
-func (s *SpecState) SetComponentRequest(placeholder string, component request.CreateComponent) {
+func (s *SpecState) SetComponentRequest(placeholder string, component request.BaseComponent) {
 	s.componentReq[placeholder] = component
 }
 
-func (s *SpecState) SetComponentResponse(placeholder string, component response.CreateComponent) {
+func (s *SpecState) SetComponentResponse(placeholder string, component response.BaseComponent) {
 	s.componentRes[placeholder] = component
 }
 

@@ -16,66 +16,64 @@ package component
 import (
 	"choreo-integration-test-runner/choreo/internal/api"
 	"choreo-integration-test-runner/choreo/internal/unit"
-	"choreo-integration-test-runner/helper/stop"
 	"choreo-integration-test-runner/model/request"
 	"choreo-integration-test-runner/model/response"
 	"choreo-integration-test-runner/runner"
-	"fmt"
 
 	"github.com/go-resty/resty/v2"
 )
 
-type promoteComponent struct {
-	params *PromoteComponentParams
+type promoteEndpoints struct {
+	params *PromoteEndpointsParams
 	state  *runner.SpecState
 }
 
-type PromoteComponentParams struct {
+type PromoteEndpointsParams struct {
 	CompDetails     *response.GetComponentDetails
 	SrcEnvironment  *response.Environment
 	DestEnvironment *response.Environment
 }
 
-func PromoteComponent(state *runner.SpecState, params *PromoteComponentParams) *promoteComponent {
-	return &promoteComponent{
+func PromoteEndpoints(state *runner.SpecState, params *PromoteEndpointsParams) *promoteEndpoints {
+	return &promoteEndpoints{
 		params: params,
 		state:  state,
 	}
 }
 
-func (g *promoteComponent) Execute(client *resty.Client) (unit.UnitComplete, error) {
-	latestApiVersion, err := g.params.CompDetails.GetLatestApiVersion()
+func (p *promoteEndpoints) Execute(client *resty.Client) (unit.UnitComplete, error) {
+	latestApiVersion, err := p.params.CompDetails.GetLatestApiVersion()
 
 	if err != nil {
 		return false, err
 	}
 
-	srcEnvReleaseId, err := getEnvironmentReleaseId(latestApiVersion, g.params.SrcEnvironment)
+	srcEnvReleaseId, err := getEnvironmentReleaseId(latestApiVersion, p.params.SrcEnvironment)
 
 	if err != nil {
 		return false, err
 	}
 
-	promoteReq := request.PromoteComponent{
-		ComponentId:         g.params.CompDetails.Component.Id,
-		ApiVersionId:        latestApiVersion.Id,
+	req := request.PromoteEndpoints{
+		ComponentId:         p.params.CompDetails.Component.Id,
+		VersionId:           latestApiVersion.Id,
 		SourceReleaseId:     srcEnvReleaseId,
-		TargetEnvironmentId: g.params.DestEnvironment.Id,
+		TargetEnvironmentId: p.params.DestEnvironment.Id,
 	}
 
-	promoteRes := stop.HandleValueWithError(api.PromoteComponent(client, promoteReq))
+	_, err = api.PromoteEndpoints(client, req)
 
-	if promoteRes.Promote == "success" {
-		return true, nil
+	if err != nil {
+		return false, err
 	}
 
-	return false, fmt.Errorf("failed to promote component: %s, received: %s", g.params.CompDetails.Component.Name, promoteRes.Promote)
+	return true, nil
 }
 
-func (g *promoteComponent) Name() string {
-	return "promoteComponent"
+func (p *promoteEndpoints) Name() string {
+	return "promoteEndpoints"
 }
 
-func (g *promoteComponent) WaitTill() int64 {
+func (p *promoteEndpoints) WaitTill() int64 {
 	return 0
 }

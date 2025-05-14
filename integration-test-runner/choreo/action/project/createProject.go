@@ -46,3 +46,7 @@ func (w *createProject) Init(state *runner.SpecState) error {
 
 	return nil
 }
+
+func (w *createProject) Name() string {
+	return "CreateProject"
+}

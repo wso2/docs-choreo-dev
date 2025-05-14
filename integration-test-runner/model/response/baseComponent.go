@@ -13,6 +13,10 @@
 
 package response
 
-type CreateComponent struct {
-	BaseComponent `json:"createComponent"`
+type BaseComponent struct {
+	Id        string `json:"id"`
+	OrgId     int    `json:"orgId"`
+	ProjectId string `json:"projectId"`
+	Handler   string `json:"handler"`
+	Handle    string `json:"handle"`
 }

@@ -41,6 +41,10 @@ func UpdateEndpoint(state *runner.SpecState, params *UpdateEndpointParams) *upda
 }
 
 func (g *updateEndpoint) Execute(client *resty.Client) (unit.UnitComplete, error) {
+	if g.params.CompDetails.Component.DisplayType != "ballerinaService" {
+		return true, nil
+	}
+
 	latestApiVersion, err := g.params.CompDetails.GetLatestApiVersion()
 
 	if err != nil {

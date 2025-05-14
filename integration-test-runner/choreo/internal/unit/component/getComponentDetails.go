@@ -14,13 +14,11 @@
 package component
 
 import (
-	"bytes"
 	"choreo-integration-test-runner/choreo/internal/api"
 	"choreo-integration-test-runner/choreo/internal/unit"
 	"choreo-integration-test-runner/model/request"
 	"choreo-integration-test-runner/model/response"
 	"choreo-integration-test-runner/runner"
-	"choreo-integration-test-runner/template"
 
 	"github.com/go-resty/resty/v2"
 )
@@ -49,12 +47,31 @@ func (c *getComponentDetails) Execute(client *resty.Client) (unit.UnitComplete, 
 		return false, err
 	}
 
-	req := request.GetComponentDetails{
-		ProjectId:        c.params.ProjectRes.Project.Id,
-		ComponentHandler: createCompRes.Component.Handler,
+	componentHandler := createCompRes.Handle
+	if createCompRes.Handler != "" {
+		componentHandler = createCompRes.Handler
 	}
 
-	res, err := api.GetComponentDetails(client, req, c)
+	req := request.GetComponentDetails{
+		ProjectId:        c.params.ProjectRes.Project.Id,
+		ComponentHandler: componentHandler,
+	}
+
+	createCompReq, err := c.state.GetComponentRequest(c.params.Placeholder)
+
+	if err != nil {
+		return false, err
+	}
+
+	expected := response.GetComponentDetails{
+		Component: response.Component{
+			Name:       createCompReq.Name,
+			OrgId:      c.state.GetOrgId(),
+			OrgHandler: c.state.GetOrgHandler(),
+			ProjectId:  c.params.ProjectRes.Project.Id,
+		}}
+
+	res, err := api.GetComponentDetails(client, req, &expected)
 
 	if err != nil {
 		return false, err
@@ -71,22 +88,4 @@ func (c *getComponentDetails) Name() string {
 
 func (c *getComponentDetails) WaitTill() int64 {
 	return 0
-}
-
-func (c *getComponentDetails) GenExpectedResponse() (*bytes.Buffer, error) {
-	createCompReq, err := c.state.GetComponentRequest(c.params.Placeholder)
-
-	if err != nil {
-		return nil, err
-	}
-
-	expected := response.Component{
-		Name:        createCompReq.Name,
-		OrgId:       c.state.GetOrgId(),
-		OrgHandler:  c.state.GetOrgHandler(),
-		ProjectId:   c.params.ProjectRes.Project.Id,
-		DisplayType: createCompReq.DisplayType,
-	}
-
-	return template.PopulateResponseTemplate("getComponentDetails", expected)
 }

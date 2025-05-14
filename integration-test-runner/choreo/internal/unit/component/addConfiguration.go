@@ -43,6 +43,10 @@ func AddConfiguration(state *runner.SpecState, params *AddConfigurationParams) *
 }
 
 func (g *addConfiguration) Execute(client *resty.Client) (unit.UnitComplete, error) {
+	if g.params.CompDetails.Component.DisplayType != "ballerinaService" {
+		return true, nil
+	}
+
 	latestApiVersion, err := g.params.CompDetails.GetLatestApiVersion()
 
 	if err != nil {

@@ -11,8 +11,23 @@
  * associated services.
  */
 
-package response
+package request
 
-type CreateComponent struct {
-	BaseComponent `json:"createComponent"`
+type ByocConfig struct {
+	DockerFilePath   string
+	DockerContext    string
+	SrcGitRepoUrl    string
+	SrcGitRepoBranch string
+}
+
+type CreateByocComponent struct {
+	BaseComponent
+	ComponentType     string
+	Accessibility     string
+	SrcGitRepoUrl     string
+	RepositorySubPath string
+	RepositoryBranch  string
+	IsPublicRepo      bool
+	OasFilePath       string
+	ByocConfig        ByocConfig
 }

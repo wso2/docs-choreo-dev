@@ -69,10 +69,10 @@ func (w *promoteComponent) Init(state *runner.SpecState) error {
 
 	for destEnvIndex < len(envsRes.Environments) {
 
-		w.Append(component.GenerateEndpoints(state, &component.GenerateEndpointsParams{
-			CompDetails:   &detailsRes,
-			Environment:   &envsRes.Environments[destEnvIndex],
-			CommitHistory: &commitHistory,
+		w.Append(component.PromoteEndpoints(state, &component.PromoteEndpointsParams{
+			CompDetails:     &detailsRes,
+			SrcEnvironment:  &envsRes.Environments[srcEnvIndex],
+			DestEnvironment: &envsRes.Environments[destEnvIndex],
 		}))
 
 		w.Append(component.GetEndpoints(state, &component.GetEndpointsParams{
@@ -96,7 +96,6 @@ func (w *promoteComponent) Init(state *runner.SpecState) error {
 			CompDetails:     &detailsRes,
 			SrcEnvironment:  &envsRes.Environments[srcEnvIndex],
 			DestEnvironment: &envsRes.Environments[destEnvIndex],
-			CommitHistory:   &commitHistory,
 		}))
 
 		w.Append(component.WaitForDeployment(state, &component.WaitForDeploymentParams{
@@ -114,4 +113,8 @@ func (w *promoteComponent) Init(state *runner.SpecState) error {
 	}
 
 	return nil
+}
+
+func (w *promoteComponent) Name() string {
+	return "PromoteComponent"
 }

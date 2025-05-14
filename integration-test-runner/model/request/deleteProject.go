@@ -11,8 +11,9 @@
  * associated services.
  */
 
-package response
+package request
 
-type CreateComponent struct {
-	BaseComponent `json:"createComponent"`
+type DeleteProject struct {
+	ProjectId string
+	OrgId     string
 }

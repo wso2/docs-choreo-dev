@@ -42,6 +42,10 @@ func GetEndpoints(state *runner.SpecState, params *GetEndpointsParams) *getEndpo
 }
 
 func (g *getEndpoints) Execute(client *resty.Client) (unit.UnitComplete, error) {
+	if g.params.CompDetails.Component.DisplayType != "ballerinaService" {
+		return true, nil
+	}
+
 	latestApiVersion, err := g.params.CompDetails.GetLatestApiVersion()
 
 	if err != nil {

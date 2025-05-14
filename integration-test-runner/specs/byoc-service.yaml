@@ -1,22 +1,24 @@
 ---
-kind: Ballerina-Service-US
+kind: BYOC-Service-US
 actions:
 - action: CreateProject
   params:
     region: US
-    description: Ballerina service project
+    description: BYOC service project
     placeholder: testproject
-- action: CreateComponent
+- action: CreateByocComponent
   params:
     srcGitRepoURL: https://github.com/wso2/choreo-samples
     repositoryBranch: main
-    repositorySubPath: greeting-service
-    displayType: ballerinaService
+    repositorySubPath: greeting-service-go
+    componentType: byocService
     buildPack: Ballerina
     accessibility: external
     isPublicRepo: 'true'
     project: testproject
     placeholder: servicecomp
+    dockerFilePath: greeting-service-go/Dockerfile
+    dockerContext: greeting-service-go
 - action: WaitForBuild
   params:
     component: servicecomp
@@ -33,25 +35,17 @@ actions:
   params:
     component: servicecomp
     method: GET
-    resource: "/"
-    queryParams: name=Hello
+    contentType: text/plain
+    resource: "/greeter/greet"
+    queryParams: name=Choreo
     statusCode: '200'
-    response: |-
-      {
-        "from": "Choreo",
-        "to": "Hello",
-        "message": "Welcome to Choreo!"
-      }
+    response: Hello, Choreo!
 - action: InvokePromotion
   params:
     component: servicecomp
     method: GET
-    resource: "/"
-    queryParams: name=Hello
+    contentType: text/plain
+    resource: "/greeter/greet"
+    queryParams: name=Choreo
     statusCode: '200'
-    response: |-
-      {
-        "from": "Choreo",
-        "to": "Hello",
-        "message": "Welcome to Choreo!"
-      }
+    response: Hello, Choreo!

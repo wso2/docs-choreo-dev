@@ -43,6 +43,10 @@ func GenerateEndpoints(state *runner.SpecState, params *GenerateEndpointsParams)
 }
 
 func (g *generateEndpoints) Execute(client *resty.Client) (unit.UnitComplete, error) {
+	if g.params.CompDetails.Component.DisplayType != "ballerinaService" {
+		return true, nil
+	}
+
 	latestApiVersion, err := g.params.CompDetails.GetLatestApiVersion()
 
 	if err != nil {
