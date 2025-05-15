@@ -76,6 +76,10 @@ check_keyvault_expiries() {
     cert_names=$(az keyvault certificate list --vault-name "$KEY_VAULT_NAME" --query "[].name" -o tsv)
     for cert in $cert_names; do
         expiry=$(az keyvault certificate show --vault-name "$KEY_VAULT_NAME" --name "$cert" --query "attributes.expires" -o tsv)
+        if [ $? -ne 0 ]; then
+            echo "Warning: Failed to fetch certificate '$cert' from '$KEY_VAULT_NAME'. Skipping." >&2
+            continue
+        fi
         if [ -n "$expiry" ]; then
             expiry_ts=$(date -u -d "$expiry" +%s)
             readable_expiry_date=$(date -u -d "@$expiry_ts")
@@ -93,6 +97,10 @@ check_keyvault_expiries() {
     secret_names=$(az keyvault secret list --vault-name "$KEY_VAULT_NAME" --query "[].name" -o tsv)
     for secret in $secret_names; do
         expiry=$(az keyvault secret show --vault-name "$KEY_VAULT_NAME" --name "$secret" --query "attributes.expires" -o tsv)
+        if [ $? -ne 0 ]; then
+            echo "Warning: Failed to fetch secret '$secret' from '$KEY_VAULT_NAME'. Possibly disabled or forbidden. Skipping." >&2
+            continue
+        fi
         if [ -n "$expiry" ]; then
             expiry_ts=$(date -u -d "$expiry" +%s)
             readable_expiry_date=$(date -u -d "@$expiry_ts")
