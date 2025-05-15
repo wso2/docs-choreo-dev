@@ -13,13 +13,39 @@
 
 set -eo pipefail
 CLUSTER_MAPPING_CONFIG=$(cat "$CLUSTER_CONFIG_PATH")
+HELM_IMAGE_MAPPING_CONFIG=$(cat "$HELM_IMAGE_MAP_PATH")
+readarray -t CP_HELM_IMAGES < <(yq e -o=j -I=0 '.cp.images[]' "$HELM_IMAGE_MAPPING_CONFIG")
+readarray -t DP_HELM_IMAGES < <(yq e -o=j -I=0 '.dp.images[]' "$HELM_IMAGE_MAPPING_CONFIG")
+CP_CHART_LOCATION="$BASE_PATH/cdp-helm-charts/controlplane"
+DP_CHART_LOCATION="$BASE_PATH/cdp-helm-charts/dataplane"
 
 update_images () {
   local image_arr
   echo "[INFO] updating image tags"
   mapfile -t image_arr <<< "$1"
   for imageName in "${image_arr[@]}"; do
+    # Extract the image name and tag from the input
+    IFS=':' read -ra arr <<<"$imageName" && unset IFS
+    image_name=${arr[0]}
+    image_tag=${arr[1]}
     echo "[INFO] updating image tag for $imageName"
+    # Check if the image is a control plane image
+    for cp_image_entry in "${CP_HELM_IMAGES[@]}"; do
+      name=$(echo "$cp_image_entry" | yq -e '.name')
+      ref=$(echo "$cp_image_entry" | yq -e '.helmReference')
+      if [[ "$image_name" == "$name" ]]; then
+        ref="$ref" tag="$image_tag" yq -i 'eval(strenv(ref)) = strenv(tag)' "$CP_CHART_LOCATION/values.yaml"
+        echo "[DEBUG] updated image tag for $ref to $image_tag in $CP_CHART_LOCATION/values.yaml"
+      fi
+    done
+    for dp_image_entry in "${DP_HELM_IMAGES[@]}"; do
+      name=$(echo "$dp_image_entry" | yq -e '.name')
+      ref=$(echo "$dp_image_entry" | yq -e '.helmReference')
+      if [[ "$image_name" == "$name" ]]; then
+        ref="$ref" tag="$image_tag" yq -i 'eval(strenv(ref)) = strenv(tag)' "$DP_CHART_LOCATION/values.yaml"
+        echo "[DEBUG] updated image tag for $ref to $image_tag in $DP_CHART_LOCATION/values.yaml"
+      fi
+    done
     $KUSTOMIZE edit set image "$imageName"
   done
 
