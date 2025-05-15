@@ -39,7 +39,7 @@ configMapGenerator:
       - REDIS_TLS_CLIENT_CERT=""
       - REDIS_TLS_CLIENT_KEY=""
       - REDIS_TLS_CACERT=""
-      - CACHE_KEY_PREFIX="rate_limit:"
+      - CACHE_KEY_PREFIX="CC_RATELIMIT:"
       # gRPC server
       - GRPC_HOST="0.0.0.0"
       - GRPC_PORT="8091"
