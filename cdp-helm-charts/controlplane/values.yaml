@@ -31,8 +31,6 @@ global:
     ai: choreo-ai
 choreo-apim:
   enabled: true
-  serviceAccount:
-    annotations: { }
   apim-devportal:
     replicas: 1
     autoscaling:
@@ -95,6 +93,8 @@ choreo-apim:
       apiKeyFeatureEnabled: false
       devPortalIdPConfigurationFeatureEnabled: false
       apiKeyScopeSupportEnabled: false
+    serviceAccount:
+      annotations: {}
   app-gateway-oauth-agent:
     replicas: 1
     autoscaling:
@@ -120,6 +120,8 @@ choreo-apim:
         key: redisPassword
     vault:
       roleName: app-gateway-oauth-agent
+    serviceAccount:
+      annotations: {}
   choreo-connect-global-adapter:
     replicas: 1
     autoscaling:
@@ -166,6 +168,8 @@ choreo-apim:
         key: redisPassword
     vault:
       roleName: choreo-connect-global-adapter
+    serviceAccount:
+      annotations: {}
   choreo-governance-service:
     replicas: 1
     autoscaling:
@@ -198,6 +202,8 @@ choreo-apim:
         key: apimAIClientSecret
     vault:
       roleName: choreo-governance-service
+    serviceAccount:
+      annotations: {}
   choreo-linter-service:
     replicas: 1
     autoscaling:
@@ -207,6 +213,8 @@ choreo-apim:
     image:
       repository: choreoipaas/choreo-linter-service
       tag: latest
+    serviceAccount:
+      annotations: {}
   config-deployer-service:
     replicas: 1
     autoscaling:
@@ -225,6 +233,8 @@ choreo-apim:
         key: publicKey
     vault:
       roleName: config-deployer-service
+    serviceAccount:
+      annotations: {}
   product-apim:
     replicas: 1
     autoscaling:
@@ -290,5 +300,55 @@ choreo-apim:
       truststorePassword:
         path: choreo-cp/data/choreo-apim/product-apim
         key: truststorePassword
+      choreoAPIMDBPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: choreoAPIMDBPassword
+      choreoAPIMSharedDBPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: choreoAPIMSharedDBPassword
+      choreoAPIMUserDBPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: choreoAPIMUserDBPassword
+      mongoDBAtlasPrivateKey:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: mongoDBAtlasPrivateKey
+      mongoDBAtlasPublicKey:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: mongoDBAtlasPublicKey
+      superAdminPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: superAdminPassword
+      asgardeoSystemAppClientSecret:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: asgardeoSystemAppClientSecret
+      apimDashboardUserPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: apimDashboardUserPassword
+      apimDashboardUserPasswordSHA256:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: apimDashboardUserPasswordSHA256
+      devportalV2AccessKey:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: devportalV2AccessKey
+      apimAIClientSecret:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: apimAIClientSecret
+      asbConnectionString:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: asbConnectionString
+      primaryKeystore:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: primaryKeystore
+      tlsKeystore:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: tlsKeystore
+      internalKeystore:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: internalKeystore
+      clientTruststore:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: clientTruststore
     vault:
       roleName: product-apim
+    serviceAccount:
+      annotations: {}
