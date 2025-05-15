@@ -842,6 +842,7 @@ export class Project {
         cy.get(TestIds.createComponent).click();
         cy.contains("Create").should("be.visible").click();
         cy.get(TestIds.backdropLoader).should("not.exist");
+        cy.get(TestIds.ViewAllComponentsButton).should("be.visible").click();
       }
     });
   }

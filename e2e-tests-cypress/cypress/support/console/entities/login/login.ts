@@ -24,8 +24,6 @@ class Login {
   static username = "#username";
   static password = "#password";
 
-  static enterpriseLogoutUrl = Cypress.env("auth0LogoutUrl");
-  static enterpriseClientId = Cypress.env("auth0ClientID");
   static enterpriseLoginUrl = Cypress.env("enterpriseLoginUrl");
 
   private displayName: string = "";
