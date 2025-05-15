@@ -75,6 +75,7 @@ public class GraphqlDTO {
     private String registryId;
     private boolean isPublicRepo;
     private String secretRef;
+    private String deploymentPipelineId;
 
     @NoArgsConstructor
     @AllArgsConstructor

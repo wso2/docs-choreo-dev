@@ -38,6 +38,7 @@ public class ChoreoProject {
     private String createdDate;
     private String region;
     private String GitRepoURL = "https://github.com/choreo-test-apps/rest-api";
+    private String defaultDeploymentPipelineId;
 
     private String getComponentsQuery() {
 

@@ -1612,7 +1612,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/promote?fromEnv={{environmentId}}&targetEnv=1322c90f-e9c8-4211-9880-e221088485f8&buildId=9cc570fae-196c-460e-9922-ff3a20ea7826&accessMode=external",
+							"raw": "https://{{app_choreo_host}}/proxy/deployer/v1/components/{{componentId}}/versions/{{versionId}}/promote?fromEnv={{environmentId}}&targetEnv=1322c90f-e9c8-4211-9880-e221088485f8&buildId=9cc570fae-196c-460e-9922-ff3a20ea7826&accessMode=external&deploymentPipelineId={{deploymentPipelineId}}",
 							"protocol": "https",
 							"host": [
 								"{{app_choreo_host}}"
@@ -1643,6 +1643,10 @@
 								{
 									"key": "accessMode",
 									"value": "external"
+								},
+								{
+									"key": "deploymentPipelineId",
+									"value": "{{deploymentPipelineId}}"
 								}
 							]
 						}

@@ -698,10 +698,10 @@ public class GraphQL extends ControlPlaneAPI {
                 ));
     }
 
-    public static Response promoteComponent(ChoreoComponent component, String accessToken)
+    public static Response promoteComponent(ChoreoComponent component, ChoreoProject project, String accessToken)
             throws Exception {
         GraphqlDTO dto = GraphqlDTO.builder().componentId(component.getId()).apiVersionId(component.getLatestApiVersion().getId()).
-                sourceReleaseId(component.getReleaseIdForEnvironment("dev")).targetEnvironmentId(component.getLatestAppEnvId("prod")).build();
+                sourceReleaseId(component.getReleaseIdForEnvironment("dev")).targetEnvironmentId(component.getLatestAppEnvId("prod")).deploymentPipelineId(project.getDefaultDeploymentPipelineId()).build();
         String generatedQuery = ObjectMapperUtil.mapObjectToString("templates/graphql/requests/promote.mustache", dto);
         return HttpClientUtil.httpPOST(CHOREO_PROJECT_URL, ObjectMapperUtil.mapToGraphQLQuery(generatedQuery), accessToken, "");
     }

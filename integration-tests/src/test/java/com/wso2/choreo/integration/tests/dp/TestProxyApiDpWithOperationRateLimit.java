@@ -129,14 +129,14 @@ public class TestProxyApiDpWithOperationRateLimit extends TestBase {
     @CitrusTest
     public void deployProxyAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
         dp.setProxyAPIBuild(ComponentUtils.deployProxyComponent(this, citrusClients, accessToken,
-                dp.getChoreoComponent(), dp.getEnvironments()));
+                dp.getChoreoComponent(), dp.getEnvironments(), dp.getChoreoProject().getDefaultDeploymentPipelineId()));
     }
 
     @Test(dependsOnMethods = {"deployProxyAPI_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
     @CitrusTest
     public void promoteProxyAPI_ProxyApiDpWithOperationRateLimit(DataProviderWrapper dp) throws Exception {
         ComponentUtils.promoteProxyComponent(this, citrusClients, accessToken, dp.getChoreoComponent(),
-                dp.getEnvironments(), dp.getProxyAPIBuild());
+                dp.getEnvironments(), dp.getProxyAPIBuild(), dp.getChoreoProject().getDefaultDeploymentPipelineId());
     }
 
     @Test(dependsOnMethods = {"promoteProxyAPI_ProxyApiDpWithOperationRateLimit"}, dataProvider = "dps")
