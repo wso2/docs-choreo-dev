@@ -87,6 +87,7 @@ configMapGenerator:
       - SCOPE_CONFIG={{.SCOPE_CONFIG | default "choreo:deployment_manage"}}
       - REDIS_USERNAME={{.REDIS_USERNAME | default "cost_optimizer_user"}}
       - REDIS_NODE={{.REDIS_NODE | default "redis-cluster-headless.redis.svc.cluster.local:6379"}}
+      - RECOMMENDATION_MIN_DOLLARS={{.RECOMMENDATION_MIN_DOLLARS | default "0.1"}}
   - name: env-cost-optimizer-dp-daily-cron-cm
     behavior: create
     literals:
