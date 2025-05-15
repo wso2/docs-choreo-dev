@@ -70,10 +70,11 @@ for cert in $cert_names; do
     expiry=$(az keyvault certificate show --vault-name "$KEY_VAULT_NAME" --name "$cert" --query "attributes.expires" -o tsv)
     if [ -n "$expiry" ]; then
         expiry_ts=$(date -u -d "$expiry" +%s)
+        readable_expiry_date=$(date -r $expiry_ts)
         if [ "$expiry_ts" -lt "$CURRENT_DATE" ]; then
-            echo "$KEY_VAULT_NAME, $cert, $expiry_ts" >> "$OUTPUT_PATH"/dev_expired_certs.csv
+            echo "$KEY_VAULT_NAME, $cert, $readable_expiry_date" >> "$OUTPUT_PATH"/dev_expired_certs.csv
         elif [ "$expiry_ts" -lt "$CUTOFF_DATE" ]; then
-            echo "$KEY_VAULT_NAME, $cert, $expiry_ts" >> "$OUTPUT_PATH"/dev_expiring_certs.csv
+            echo "$KEY_VAULT_NAME, $cert, $readable_expiry_date" >> "$OUTPUT_PATH"/dev_expiring_certs.csv
         fi
     fi
 done
@@ -106,5 +107,4 @@ if [ "$dev_expiring_certs_count" -gt 0 ]; then
   curl -sX POST "$WEBHOOK_URL" \
         -H 'Content-Type: application/json' \
         -d "$message_body"
-  exit 1
 fi
