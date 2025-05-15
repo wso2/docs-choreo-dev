@@ -23,6 +23,6 @@ data:
   REDIS_PORT: {{ .Values.global.redis.port}}
   REDIS_HOST: {{ .Values.global.redis.host}}
   REDIS_DB: "1"
-  PAT_CLIENT_ID: {{ required "A valid .choreo-apim.app-gateway-oauth-agent.config.patClientId entry required!" .Values.config.patClientId | quote }}
+  PAT_CLIENT_ID: {{ .Values.config.patClientId | quote }}
   PAT_CLIENT_TOKEN_EP: {{ .Values.config.patClientTokenEp | quote }}
   PAT_TOKEN_TTL_BUFFER: {{ .Values.config.patTokenTtlBuffer | quote }}
