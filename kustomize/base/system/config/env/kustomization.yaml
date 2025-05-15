@@ -1046,6 +1046,7 @@ configMapGenerator:
       - AZURE_SUBSCRIPTION_MANAGEMENT_SP_TENANT_ID={{.AZURE_SUBSCRIPTION_MANAGEMENT_SP_TENANT_ID | default ""}}
       - APIM_ADMIN_USERNAME={{.APIM_ADMIN_USERNAME | default ""}}
       - REDIS_HOST={{.REDIS_HOST | default ""}}
+      - UPTIME_REVISION_UNDEPLOY_ENABLED={{.UPTIME_REVISION_UNDEPLOY_ENABLED | default "false"}}
   - name: env-dp-delete-manager
     behavior: create
     literals:
