@@ -50,7 +50,7 @@ window.Settings = {
     azureInsightsKey: {{ required "A valid .choreo-apim.apim-devportal.config.azureInsightsKey entry required!" .Values.config.azureInsightsKey | quote }},
     choreoSystemOrg: {{ required "A valid .global.choreosystem.orgHandle entry required!" .Values.global.choreosystem.orgHandle | quote }},
     choreoSystemHostSuffix: {{ required "A valid .choreo-apim.apim-devportal.config.choreoSystemHostSuffix entry required!" .Values.config.choreoSystemHostSuffix | quote }},
-    asgardeoConsoleUrl: {{ required "A valid .global.asgardeo.consoleUrl entry required!" .global.asgardeo.consoleUrl | quote }},
+    asgardeoConsoleUrl: {{ required "A valid .global.asgardeo.consoleUrl entry required!" .Values.global.asgardeo.consoleUrl | quote }},
     devportalHost: {{ required "A valid .choreo-apim.apim-devportal.config.devportalHost entry required!" .Values.config.devportalHost | quote }},
     isCustomDomain: {{ required "A valid .choreo-apim.apim-devportal.config.customDomain.enabled entry required!" .Values.config.customDomain.enabled }},
     customDomain: "",
