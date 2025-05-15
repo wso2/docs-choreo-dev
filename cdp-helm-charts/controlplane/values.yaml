@@ -256,6 +256,7 @@ choreo-apim:
       serviceProviders: []
       jwtAudiences: []
       perOrgSettings: []
+      loggers: []
       websubhubURL: "https://publish.websubhub.choreo.dev/hub"
       websubhubTopic: "choreosystem-choreo_cp_events_topic"
       publisherKeyIssuer: "https://sts.choreo.dev:443/api/am/publisher/v2/apis/internal-key"
