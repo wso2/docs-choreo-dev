@@ -422,7 +422,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
                 proxyComponent);
         ConnectionService.enableOAuth2SecurityForAPI(this, citrusClients, proxyApiId, accessToken);
         proxyAPIBuild = ComponentUtils.deployProxyComponent(this, citrusClients, accessToken,
-                proxyComponent, proxyPublisherComponentEnvironments.subList(0, 1));
+                proxyComponent, proxyPublisherComponentEnvironments.subList(0, 1), projectOne.getDefaultDeploymentPipelineId());
     }
 
     // Create a project level connection to the deployed proxy publisher component
@@ -486,7 +486,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
     public void PromoteProxyPublisherComponent_TestChoreoConnections() throws Exception {
         String accessToken = TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
         ComponentUtils.promoteProxyComponent(this, citrusClients, accessToken, proxyComponent,
-                proxyPublisherComponentEnvironments, proxyAPIBuild);
+                proxyPublisherComponentEnvironments, proxyAPIBuild, projectOne.getDefaultDeploymentPipelineId());
     }
 
     // Verify the proxy publisher status in marketplace after the promotion
@@ -555,7 +555,7 @@ public class ChoreoConnections extends TestNGCitrusSpringSupport {
         List<Environment> environments = ComponentUtils.getDeploymentEnvironments(this, citrusClients, accessToken,
                 proxyComponent);
         ComponentUtils.deployProxyComponent(this, citrusClients, accessToken,
-                proxyComponent , environments);
+                proxyComponent , environments, projectOne.getDefaultDeploymentPipelineId());
         String connectionName = NameGenerator.generateThreadUniqueNameWithPrefix(Constant.TEST_CONNECTION_NAME);
         ConnectionService.createProjectLevelConnection(citrusClients, this, accessToken,
                 proxyComponent.getName(), NETWORK_VISIBILITY_FILTER, projectOne.getId(),
