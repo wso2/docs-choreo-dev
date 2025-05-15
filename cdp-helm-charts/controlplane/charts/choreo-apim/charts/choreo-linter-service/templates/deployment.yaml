@@ -1,0 +1,82 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+  labels:
+    {{ include "choreo-linter-service.labels" . | indent 4 }}
+  name: choreo-linter-service
+  namespace: {{ .Values.global.namespaces.apim }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{ include "choreo-linter-service.labels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ include "choreo-linter-service.labels" . | indent 8 }}
+    spec:
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "choreo-linter-service.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}
+      serviceAccountName: choreo-linter-service
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-linter-service
+          image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: 8080
+              name: service-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /healthz/readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /healthz/liveness
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1000Mi
+            requests:
+              cpu: 1000m
+              memory: 1000Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+      restartPolicy: Always

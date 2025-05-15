@@ -1,0 +1,158 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_38=Service account token is required when using Linkerd
+  labels:
+    {{ include "product-apim.labels" . | indent 4 }}
+  name: product-apim
+  namespace: {{ .Values.global.namespaces.apim }}
+spec:
+  progressDeadlineSeconds: 900
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      {{ include "product-apim.labels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ include "product-apim.labels" . | indent 8 }}
+    spec:
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "product-apim.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}
+      serviceAccountName: product-apim
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: wso2am
+          image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /internal/data/v1/healthz
+              port: 9443
+              scheme: HTTPS
+            initialDelaySeconds: 100
+            periodSeconds: 20
+            timeoutSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /internal/data/v1/healthz
+              port: 9443
+              scheme: HTTPS
+            initialDelaySeconds: 50
+            periodSeconds: 10
+            timeoutSeconds: 15
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - ${WSO2_SERVER_HOME}/bin/api-manager.sh stop
+          resources:
+            requests:
+              memory: 6Gi
+              cpu: "2"
+            limits:
+              memory: 6Gi
+              cpu: "2.5"
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - all
+              add:
+                - NET_RAW
+          ports:
+            - containerPort: 9763
+              protocol: "TCP"
+            - containerPort: 9443
+              protocol: "TCP"
+          envFrom:
+            - configMapRef:
+                name: feature-flags
+            - secretRef:
+                name: product-apim
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: JVM_MEM_OPTS
+              value: "-XX:InitialRAMPercentage=59.0 -XX:MaxRAMPercentage=59.0"
+            - name: PROFILE_NAME
+              value: control-plane
+            - name: DEPLOYMENT_TYPE_PROD_PREFIXES
+              value: "prod, systemapis"
+          volumeMounts:
+            - name: apim-vol
+              mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
+            - name: mysql-connector-jar
+              mountPath: /home/wso2carbon/wso2-artifact-volume/repository/components/lib
+            - name: wso2am-conf
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
+              subPath: deployment.toml
+            - name: wso2am-conf
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/log4j2.properties
+              subPath: log4j2.properties
+            - name: wso2am-conf
+              mountPath: /home/wso2carbon/docker-entrypoint.sh
+              subPath: docker-entrypoint.sh
+            - name: secret-provider-class-vol
+              mountPath: /home/wso2carbon/wso2-keystores/primary-keystore.pfx
+              readOnly: true
+              subPath: primary-keystore.pfx
+            - name: secret-provider-class-vol
+              mountPath: /home/wso2carbon/wso2-keystores/tls-keystore.pfx
+              readOnly: true
+              subPath: tls-keystore.pfx
+            - name: secret-provider-class-vol
+              mountPath: /home/wso2carbon/wso2-keystores/internal-keystore.pfx
+              readOnly: true
+              subPath: internal-keystore.pfx
+            - name: secret-provider-class-vol
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/resources/security/client-truststore.jks
+              subPath: client-truststore.jks
+      volumes:
+        - name: apim-vol
+          emptyDir: {}
+        - name: mysql-connector-jar
+          emptyDir: {}
+        - name: wso2am-conf
+          configMap:
+            name: product-apim
+        - name: secret-provider-class-vol
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: product-apim

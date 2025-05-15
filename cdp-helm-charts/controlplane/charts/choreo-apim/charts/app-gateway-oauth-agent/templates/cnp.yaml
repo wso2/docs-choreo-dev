@@ -1,0 +1,52 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: app-gateway-oauth-agent
+  namespace: {{ .Values.global.namespaces.apim }}
+  labels:
+    {{- include "app-gateway-oauth-agent.labels" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+      {{- include "app-gateway-oauth-agent.labels" . | nindent 6 }}
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s:k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEndpoints:
+        - matchLabels:
+            choreo.component: apim-am
+      toPorts:
+        - ports:
+            - port: "9763"
+              protocol: TCP
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            choreo.component: api-key-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            cc.component: choreo-connect-deployment
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP

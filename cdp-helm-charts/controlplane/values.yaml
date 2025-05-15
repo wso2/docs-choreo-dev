@@ -1,0 +1,355 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+global:
+  choreosystem:
+    orgHandle: choreosystem
+    orgUUID: ""
+  asgardeo:
+    consoleUrl: https://console.asgardeo.io
+  vault:
+    url: http://vault.vault:8200
+  redis:
+    host: redis-cluster.redis.svc.cluster.local
+    port: "6379"
+  image:
+    registry: choreocontrolplane.azurecr.io
+    pullSecrets:
+      - name: choreo-image-pull-secret
+  namespaces:
+    apim: choreo-apim
+    system: choreo-system
+    observability: choreo-observability
+    ai: choreo-ai
+choreo-apim:
+  enabled: true
+  apim-devportal:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/choreo-apim-devportal
+      tag: latest
+    config:
+      clientId: ''
+      signInRedirectUrl: ''
+      signOutRedirectUrl: ''
+      clientHost: ''
+      apimHost: ''
+      tokenExchangeUrl: ''
+      apimApi: ''
+      apimGatewayHostSuffix: ''
+      idpHost: ''
+      apiServiceHost: ''
+      graphqlServiceHost: ''
+      graphqlResource: ''
+      azureCDNOrigin: ''
+      devToolEnable: true
+      tokenEndpoint: ''
+      revokeEndpoint: ''
+      enableInV2: true
+      enableEmailLogin: true
+      enableMicrosoftLogin: true
+      overrideEndpoints:
+        authorizationEndpoint: ''
+        tokenEndpoint: ''
+        endSessionEndpoint: ''
+      tokenExchangeConfig:
+        clientId: ''
+        scope: 'apim:admin apim:subscribe environments:view_prod environments:view_dev apim:prod_key_manage apim:sand_key_manage urn:choreosystem:customdomainapi:custom_domain_view urn:choreosystem:usermanagement:user_view'
+      azureInsightsKey: ''
+      choreoSystemHostSuffix: ''
+      devportalHost: ''
+      customDomain:
+        enabled: false
+        apiServiceHost: ""
+        graphqlServiceHost: ""
+        tokenEndpoint: ""
+        wellKnownEndpoint: ""
+        devportalHost: ""
+        permissionAdminPortalUrl: ""
+        customSubscriptionPolicyHandlingOrg: ""
+        apiTryoutTestKeyEnabled: false
+        apiKeyFeatureEnabled: false
+        devPortalIdPConfigurationFeatureEnabled: false
+      selfSignupEnabledOrgs: ''
+      pdpDomainCustomizedOrgs: '[]'
+      permissionAdminPortalEnabled: true
+      sandboxKeyGenerationEnabled: true
+      intelligentRoutingFeatureEnabled: true
+      choreoInbuiltKeyManagerFeatureEnabled: true
+      customSubscriptionPolicyHandlingOrg: ""
+      apiTryoutTestKeyEnabled: false
+      apiKeyFeatureEnabled: false
+      devPortalIdPConfigurationFeatureEnabled: false
+      apiKeyScopeSupportEnabled: false
+    serviceAccount:
+      annotations: {}
+  app-gateway-oauth-agent:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/app-gateway-oauth-agent
+      tag: latest
+    config:
+      patClientId: ""
+      patClientTokenEp: http://choreo-am-service:9763/oauth2/token
+      patTokenTtlBuffer: "10"
+    secrets:
+      encKey:
+        path: choreo-cp/data/choreo-apim/app-gateway-oauth-agent
+        key: encryptionKey
+      patClientSecret:
+        path: choreo-cp/data/choreo-apim/app-gateway-oauth-agent
+        key: patClientSecret
+      redisPassword:
+        path: choreo-cp/data/choreo-apim/app-gateway-oauth-agent
+        key: redisPassword
+    vault:
+      roleName: app-gateway-oauth-agent
+    serviceAccount:
+      annotations: {}
+  choreo-connect-global-adapter:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/choreo-connect-global-adapter-v2
+      tag: latest
+    config:
+      apimAdminUsername: choreo_apim_admin
+      gaAdminUsername: choreo_ga_admin
+      dataplanes: [ ]
+      mizzenHost: http://dp-mizzen.choreo-system.svc.cluster.local
+      dbHost: sqlfg-choreo-choreo-global-adapter-db-prod.database.windows.net
+      logLevel: INFO
+    secrets:
+      mgwPrivateKey:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: mgwPrivateKey
+      mgwPublicKey:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: mgwPublicKey
+      gaPrivateKey:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: gaPrivateKey
+      gaPublicKey:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: gaPublicKey
+      gaAdminPassword:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: gaAdminPassword
+      gaDBPassword:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: gaDBPassword
+      apimAdminPassword:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: apimAdminPassword
+      asbConnectionString:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: asbConnectionString
+      redisPassword:
+        path: choreo-cp/data/choreo-apim/choreo-connect-global-adapter
+        key: redisPassword
+    vault:
+      roleName: choreo-connect-global-adapter
+    serviceAccount:
+      annotations: {}
+  choreo-governance-service:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/choreo-governance-service
+      tag: latest
+    config:
+      dbURL: "jdbc:sqlserver://choreo-prod-mssql-server.database.windows.net:1433;database=choreo_governance_db;SendStringParametersAsUnicode=false;socketTimeout=60000"
+      disableDatabaseConnection: true
+      validateRulesetContent: false
+      excludedOrgsFromAuthorization: ""
+      enableAIGovernance: false
+      aiServiceAppClientId: ""
+      githubRunnerAppClientId: ""
+      endpoints:
+        governanceAIServiceBasePath: ""
+        aiAppTokenEndpoint: ""
+    secrets:
+      governanceDBPassword:
+        path: choreo-cp/data/choreo-apim/choreo-governance-service
+        key: governanceDBPassword
+      apimAdminPassword:
+        path: choreo-cp/data/choreo-apim/choreo-governance-service
+        key: apimAdminPassword
+      apimAIClientSecret:
+        path: choreo-cp/data/choreo-apim/choreo-governance-service
+        key: apimAIClientSecret
+    vault:
+      roleName: choreo-governance-service
+    serviceAccount:
+      annotations: {}
+  choreo-linter-service:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/choreo-linter-service
+      tag: latest
+    serviceAccount:
+      annotations: {}
+  config-deployer-service:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: config-deployer-service
+      tag: 1.0.0-amd64
+    secrets:
+      privateKey:
+        path: choreo-cp/data/choreo-apim/config-deployer-service
+        key: privateKey
+      publicKey:
+        path: choreo-cp/data/choreo-apim/config-deployer-service
+        key: publicKey
+    vault:
+      roleName: config-deployer-service
+    serviceAccount:
+      annotations: {}
+  product-apim:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/choreo-product-apim
+      tag: latest
+    config:
+      hostName: ""
+      apimDBURL: "jdbc:sqlserver://sqlfg-choreo-choreo-apim-db-prod.database.windows.net:1433;database=choreo_apim_db;SendStringParametersAsUnicode=false;socketTimeout=60000"
+      sharedDBURL: "jdbc:sqlserver://sqlfg-choreo-choreo-apim-shared-db-prod.database.windows.net:1433;database=choreo_apim_shared_db;SendStringParametersAsUnicode=false;socketTimeout=60000"
+      sharedDBJDBCInterceptors: "SlowQueryReport(threshold=200)"
+      dbURL: "jdbc:sqlserver://sqlfg-choreo-choreo-apim-user-db-prod.database.windows.net:1433;database=choreo_apim_user_db;SendStringParametersAsUnicode=false;socketTimeout=60000"
+      mongoDBConnectionString: "mongodb+srv://prod_choreo_db_user:$env{MONGO_DB_PSWD}@choreo-apim-pl-0.lbxa7.mongodb.net/PROD_APIM_DB?retryWrites=true&amp;w=majority"
+      persistenceGroupId: ""
+      gatewayEnvironments: []
+      serviceProviders: []
+      jwtAudiences: []
+      perOrgSettings: []
+      loggers: []
+      websubhubURL: "https://publish.websubhub.choreo.dev/hub"
+      websubhubTopic: "choreosystem-choreo_cp_events_topic"
+      publisherKeyIssuer: "https://sts.choreo.dev:443/api/am/publisher/v2/apis/internal-key"
+      devportalURL: "https://sts.choreo.dev/devportal"
+      devportalKeyIssuer: "https://sts.choreo.dev:443/api/am/devportal/v2/apis/test-key"
+      devportalV2URL: "https://devportal.choreoapps.dev"
+      authzServiceURL: "rpc-api-authz.cloud-internal.wso2.com:9091"
+      authzServiceEnabled: false
+      instanceBasedAuthzServiceEnabled: true
+      instanceBasedAuthzServiceDisabledOrgs: ""
+      azureServiceBusPool: []
+      jwtIssuerName: "https://sts.choreo.dev:443/oauth2/token"
+      jwtJWKSUrl: "https://sts.choreo.dev:443/oauth2/jwks"
+      operationPolicyURL: "https://api.central.ballerina.io/2.0/"
+      asgardeoSystemAppTokenEndpoint: "https://api.asgardeo.io/oauth2/token"
+      asgardeoSystemAppAuthzEndpoint: "https://api.asgardeo.io"
+      patHandlerClientId: ""
+      apimAIEnable: false
+      apimAIClientId: ""
+      apimAITokenEndpoint: ""
+      apimAIDevportalThemingEndpoint: ""
+      apimAIAPIDesignEndpoint: ""
+    secrets:
+      primaryKeystorePassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: primaryKeystorePassword
+      primaryKeystoreKeyPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: primaryKeystoreKeyPassword
+      tlsKeystorePassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: tlsKeystorePassword
+      tlsKeystoreKeyPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: tlsKeystoreKeyPassword
+      internalKeystorePassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: internalKeystorePassword
+      internalKeystoreKeyPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: internalKeystoreKeyPassword
+      truststorePassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: truststorePassword
+      choreoAPIMDBPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: choreoAPIMDBPassword
+      choreoAPIMSharedDBPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: choreoAPIMSharedDBPassword
+      choreoAPIMUserDBPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: choreoAPIMUserDBPassword
+      mongoDBAtlasPrivateKey:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: mongoDBAtlasPrivateKey
+      mongoDBAtlasPublicKey:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: mongoDBAtlasPublicKey
+      superAdminPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: superAdminPassword
+      asgardeoSystemAppClientSecret:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: asgardeoSystemAppClientSecret
+      apimDashboardUserPassword:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: apimDashboardUserPassword
+      apimDashboardUserPasswordSHA256:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: apimDashboardUserPasswordSHA256
+      devportalV2AccessKey:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: devportalV2AccessKey
+      apimAIClientSecret:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: apimAIClientSecret
+      asbConnectionString:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: asbConnectionString
+      primaryKeystore:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: primaryKeystore
+      tlsKeystore:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: tlsKeystore
+      internalKeystore:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: internalKeystore
+      clientTruststore:
+        path: choreo-cp/data/choreo-apim/product-apim
+        key: clientTruststore
+    vault:
+      roleName: product-apim
+    serviceAccount:
+      annotations: {}

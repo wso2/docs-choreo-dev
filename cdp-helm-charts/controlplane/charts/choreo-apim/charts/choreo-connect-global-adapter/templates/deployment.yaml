@@ -1,0 +1,145 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: choreo-connect-global-adapter
+  namespace: {{ .Values.global.namespaces.apim }}
+  labels:
+    {{ include "choreo-connect-global-adapter.labels" . | indent 4 }}
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
+spec:
+  progressDeadlineSeconds: 900
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{ include "choreo-connect-global-adapter.labels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ include "choreo-connect-global-adapter.labels" . | indent 8 }}
+    spec:
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "choreo-connect-global-adapter.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}
+      serviceAccountName: choreo-connect-global-adapter
+      securityContext:
+        runAsUser: 10500
+        runAsGroup: 10500
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-connect-global-adapter
+          volumeMounts:
+            - mountPath: /home/wso2/security/keystore/mg.key
+              name: secret-provider-class
+              readOnly: true
+              subPath: mg.key
+            - mountPath: /home/wso2/security/keystore/mg.pem
+              name: secret-provider-class
+              readOnly: true
+              subPath: mg.pem
+            - mountPath: /home/wso2/security/keystore/global-adapter.key
+              name: secret-provider-class
+              readOnly: true
+              subPath: global-adapter.key
+            - mountPath: /home/wso2/security/keystore/global-adapter.pem
+              name: secret-provider-class
+              readOnly: true
+              subPath: global-adapter.pem
+            - mountPath: /home/wso2/security/truststore/mg.pem
+              name: secret-provider-class
+              readOnly: true
+              subPath: mg.pem
+            - mountPath: /home/wso2/security/truststore/global-adapter.pem
+              name: secret-provider-class
+              readOnly: true
+              subPath: global-adapter.pem
+            - mountPath: /home/wso2/conf
+              name: global-adapter-config
+            - name: log-volume
+              mountPath: logs
+          image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add:
+                - "NET_RAW"
+          envFrom:
+            - configMapRef:
+                name: feature-flags
+            - secretRef:
+                name: choreo-connect-global-adapter
+          env:
+            - name: GLOBAL_ADAPTER_PRIVATE_KEY_PATH
+              value: /home/wso2/security/keystore/global-adapter.key
+            - name: GLOBAL_ADAPTER_PUBLIC_CERT_PATH
+              value: /home/wso2/security/keystore/global-adapter.pem
+            - name: ADAPTER_PRIVATE_KEY_PATH
+              value: "/home/wso2/security/keystore/mg.key"
+            - name: ADAPTER_PUBLIC_CERT_PATH
+              value: "/home/wso2/security/keystore/mg.pem"
+            - name: GLOBAL_ADAPTER_SERVER_NAME
+              value: global-adapter
+            - name: PARTITION_CHECK_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "200m"
+            limits:
+              memory: "150Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 18000
+            - containerPort: 9843
+          livenessProbe:
+            exec:
+              command: ["sh", "check_health.sh", "liveness"]
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          readinessProbe:
+            exec:
+              command: ["sh", "check_health.sh", "readiness"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          startupProbe:
+            exec:
+              command: ["sh", "check_health.sh", "readiness"]
+            failureThreshold: 30
+            periodSeconds: 30
+      volumes:
+        - name: log-volume
+          emptyDir: {}
+        - name: global-adapter-config
+          configMap:
+            name: choreo-connect-global-adapter
+        - name: secret-provider-class
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: choreo-connect-global-adapter
+      restartPolicy: Always
