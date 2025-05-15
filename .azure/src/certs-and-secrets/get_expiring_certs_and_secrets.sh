@@ -55,11 +55,20 @@ az_login "$CLIENT_ID" "$CLIENT_SECRET" "$TENANT_ID"
 init_csv "Key Vault Name, Certificate Name, Expired Date" "$OUTPUT_PATH"/dev_expired_certs.csv
 init_csv "Key Vault Name, Certificate Name, Expires On" "$OUTPUT_PATH"/dev_expiring_certs.csv
 
+init_csv "Key Vault Name, Certificate Name, Expired Date" "$OUTPUT_PATH"/dev_expired_secrets.csv
+init_csv "Key Vault Name, Certificate Name, Expires On" "$OUTPUT_PATH"/dev_expiring_secrets.csv
+
 init_csv "Key Vault Name, Certificate Name, Expired Date" "$OUTPUT_PATH"/stg_expired_certs.csv
 init_csv "Key Vault Name, Certificate Name, Expires On" "$OUTPUT_PATH"/stg_expiring_certs.csv
 
-init_csv "Key Vault Name, Certificate Name, Expired Date" "$OUTPUT_PATH"/prod_expired_certs.csv
-init_csv "Key Vault Name, Certificate Name, Expires On" "$OUTPUT_PATH"/prod_expiring_certs.csv
+init_csv "Key Vault Name, Certificate Name, Expired Date" "$OUTPUT_PATH"/stg_expired_secrets.csv
+init_csv "Key Vault Name, Certificate Name, Expires On" "$OUTPUT_PATH"/stg_expiring_secrets.csv
+
+#init_csv "Key Vault Name, Certificate Name, Expired Date" "$OUTPUT_PATH"/prod_expired_certs.csv
+#init_csv "Key Vault Name, Certificate Name, Expires On" "$OUTPUT_PATH"/prod_expiring_certs.csv
+
+#init_csv "Key Vault Name, Certificate Name, Expired Date" "$OUTPUT_PATH"/prod_expired_secrets.csv
+#init_csv "Key Vault Name, Certificate Name, Expires On" "$OUTPUT_PATH"/prod_expiring_secrets.csv
 
 EXPIRY_THRESHOLD_DAYS=7
 CURRENT_DATE=$(date -u +%s)
@@ -128,8 +137,8 @@ dev_expired_certs_count=$(tail -n +2 "$OUTPUT_PATH"/dev_expired_certs.csv | wc -
 dev_expiring_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/dev_expiring_secrets.csv | wc -l)
 dev_expired_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/dev_expired_secrets.csv | wc -l)
 
-stg_expiring_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/stg_expiring_certs.csv | wc -l)
-stg_expired_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/stg_expired_certs.csv | wc -l)
+stg_expiring_certs_count=$(tail -n +2 "$OUTPUT_PATH"/stg_expiring_certs.csv | wc -l)
+stg_expired_certs_count=$(tail -n +2 "$OUTPUT_PATH"/stg_expired_certs.csv | wc -l)
 
 stg_expiring_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/stg_expiring_secrets.csv | wc -l)
 stg_expired_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/stg_expired_secrets.csv | wc -l)
@@ -140,15 +149,24 @@ stg_expired_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/stg_expired_secrets.csv | 
 #prod_expiring_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/prod_expiring_secrets.csv | wc -l)
 #prod_expired_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/prod_expired_secrets.csv | wc -l)
 
-if [ "$dev_expiring_certs_count" -gt 0 ] | [ "$dev_expiring_secrets_count" -gt 0 ] | [ "$stg_expiring_certs_count" -gt 0 ] | [ "$stg_expiring_secrets_count" -gt 0 ]; then # | [ "$prod_expiring_certs_count" -gt 0 ] | [ "$prod_expiring_secrets_count" -gt 0 ]
+if [ "$dev_expiring_certs_count" -gt 0 ] || [ "$dev_expiring_secrets_count" -gt 0 ] || [ "$stg_expiring_certs_count" -gt 0 ] || [ "$stg_expiring_secrets_count" -gt 0 ]; then # | [ "$prod_expiring_certs_count" -gt 0 ] | [ "$prod_expiring_secrets_count" -gt 0 ]
   export DEV_EXPIRING_CERTS_COUNT="$dev_expiring_certs_count"
-  export DEV_EXPIRED_CERTS_COUNT="$dev_expiring_certs_count"
+  export DEV_EXPIRED_CERTS_COUNT="$dev_expired_certs_count"
+
+  export DEV_EXPIRING_SECRETS_COUNT="$dev_expiring_secrets_count"
+  export DEV_EXPIRED_SECRETS_COUNT="$dev_expired_secrets_count"
 
   export STG_EXPIRING_CERTS_COUNT="$stg_expiring_certs_count"
-  export STG_EXPIRED_CERTS_COUNT="$stg_expiring_certs_count"
+  export STG_EXPIRED_CERTS_COUNT="$stg_expired_certs_count"
+
+  export STG_EXPIRING_SECRETS_COUNT="$stg_expiring_secrets_count"
+  export STG_EXPIRED_SECRETS_COUNT="$stg_expired_secrets_count"
 
   #export PROD_EXPIRING_CERTS_COUNT="$prod_expiring_certs_count"
-  #export PROD_EXPIRED_CERTS_COUNT="$prod_expiring_certs_count"
+  #export PROD_EXPIRED_CERTS_COUNT="$prod_expired_certs_count"
+
+  #export PROD_EXPIRING_SECRETS_COUNT="$prod_expiring_secrets_count"
+  #export PROD_EXPIRED_SECRETS_COUNT="$prod_expired_secrets_count"
 
   message_body=$(envsubst < message.json)
   curl -sX POST "$WEBHOOK_URL" \
