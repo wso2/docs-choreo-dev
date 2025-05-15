@@ -55,53 +55,83 @@ az_login "$CLIENT_ID" "$CLIENT_SECRET" "$TENANT_ID"
 init_csv "Key Vault Name, Certificate Name, Expired Date" "$OUTPUT_PATH"/dev_expired_certs.csv
 init_csv "Key Vault Name, Certificate Name, Expires On" "$OUTPUT_PATH"/dev_expiring_certs.csv
 
-#!/bin/bash
+init_csv "Key Vault Name, Certificate Name, Expired Date" "$OUTPUT_PATH"/stg_expired_certs.csv
+init_csv "Key Vault Name, Certificate Name, Expires On" "$OUTPUT_PATH"/stg_expiring_certs.csv
 
-KEY_VAULT_NAME="dev-csi-64"
+init_csv "Key Vault Name, Certificate Name, Expired Date" "$OUTPUT_PATH"/prod_expired_certs.csv
+init_csv "Key Vault Name, Certificate Name, Expires On" "$OUTPUT_PATH"/prod_expiring_certs.csv
+
 EXPIRY_THRESHOLD_DAYS=7
 CURRENT_DATE=$(date -u +%s)
 CUTOFF_DATE=$(date -u -d "+${EXPIRY_THRESHOLD_DAYS} days" +%s)
 
-echo "🔍 Checking certificates in Key Vault: $KEY_VAULT_NAME"
+check_keyvault_expiries() {
 
-# Check certificates
-cert_names=$(az keyvault certificate list --vault-name "$KEY_VAULT_NAME" --query "[].name" -o tsv)
-for cert in $cert_names; do
-    expiry=$(az keyvault certificate show --vault-name "$KEY_VAULT_NAME" --name "$cert" --query "attributes.expires" -o tsv)
-    if [ -n "$expiry" ]; then
-        expiry_ts=$(date -u -d "$expiry" +%s)
-        readable_expiry_date=$(date -u -d "@$expiry_ts")
-        if [ "$expiry_ts" -lt "$CURRENT_DATE" ]; then
-            echo "$KEY_VAULT_NAME, $cert, $readable_expiry_date" >> "$OUTPUT_PATH"/dev_expired_certs.csv
-        elif [ "$expiry_ts" -lt "$CUTOFF_DATE" ]; then
-            echo "$KEY_VAULT_NAME, $cert, $readable_expiry_date" >> "$OUTPUT_PATH"/dev_expiring_certs.csv
+    local KEY_VAULT_NAME="$1"
+    local ENV_PREFIX="$2"
+
+    echo "Checking certificates in Key Vault: $KEY_VAULT_NAME"
+
+    # Check certificates
+    cert_names=$(az keyvault certificate list --vault-name "$KEY_VAULT_NAME" --query "[].name" -o tsv)
+    for cert in $cert_names; do
+        expiry=$(az keyvault certificate show --vault-name "$KEY_VAULT_NAME" --name "$cert" --query "attributes.expires" -o tsv)
+        if [ -n "$expiry" ]; then
+            expiry_ts=$(date -u -d "$expiry" +%s)
+            readable_expiry_date=$(date -u -d "@$expiry_ts")
+            if [ "$expiry_ts" -lt "$CURRENT_DATE" ]; then
+                echo "$KEY_VAULT_NAME, $cert, $readable_expiry_date" >> "$OUTPUT_PATH"/"${ENV_PREFIX}_expired_certs.csv"
+            elif [ "$expiry_ts" -lt "$CUTOFF_DATE" ]; then
+                echo "$KEY_VAULT_NAME, $cert, $readable_expiry_date" >> "$OUTPUT_PATH"/"${ENV_PREFIX}_dev_expiring_certs.csv"
+            fi
         fi
-    fi
-done
+    done
 
-#echo "🔍 Checking secrets in Key Vault: $KEY_VAULT_NAME"
+    echo "Checking secrets in Key Vault: $KEY_VAULT_NAME"
 
-## Check secrets
-#secret_names=$(az keyvault secret list --vault-name "$KEY_VAULT_NAME" --query "[].name" -o tsv)
-#for secret in $secret_names; do
-#    expiry=$(az keyvault secret show --vault-name "$KEY_VAULT_NAME" --name "$secret" --query "attributes.expires" -o tsv)
-#    if [ -n "$expiry" ]; then
-#        expiry_ts=$(date -u -d "$expiry" +%s)
-#        if [ "$expiry_ts" -lt "$CURRENT_DATE" ]; then
-#            echo "❌ Secret '$secret' is already expired on $expiry"
-#        elif [ "$expiry_ts" -lt "$CUTOFF_DATE" ]; then
-#            echo "⚠️ Secret '$secret' will expire soon on $expiry"
-#        fi
-#    fi
-#done
+    ## Check secrets
+    secret_names=$(az keyvault secret list --vault-name "$KEY_VAULT_NAME" --query "[].name" -o tsv)
+    for secret in $secret_names; do
+        expiry=$(az keyvault secret show --vault-name "$KEY_VAULT_NAME" --name "$secret" --query "attributes.expires" -o tsv)
+        if [ -n "$expiry" ]; then
+            expiry_ts=$(date -u -d "$expiry" +%s)
+            readable_expiry_date=$(date -u -d "@$expiry_ts")
+            if [ "$expiry_ts" -lt "$CURRENT_DATE" ]; then
+                echo "$KEY_VAULT_NAME, $cert, $readable_expiry_date" >> "$OUTPUT_PATH"/"${ENV_PREFIX}_expired_secrets.csv"
+            elif [ "$expiry_ts" -lt "$CUTOFF_DATE" ]; then
+                echo "$KEY_VAULT_NAME, $cert, $readable_expiry_date" >> "$OUTPUT_PATH"/"${ENV_PREFIX}_dev_expiring_secrets.csv"
+            fi
+        fi
+    done
+}
+
+check_keyvault_expiries "dev-csi-64" "dev"
+check_keyvault_expiries "dev-csi-apim-7" "dev"
+
+check_keyvault_expiries "stg-csi-74" "stg"
+check_keyvault_expiries "stg-csi-apim-55" "stg"
+
+check_keyvault_expiries "prod-csi-60" "prod"
+check_keyvault_expiries "prod-csi-apim-54" "prod"
 
 dev_expiring_certs_count=$(tail -n +2 "$OUTPUT_PATH"/dev_expiring_certs.csv | wc -l)
 dev_expired_certs_count=$(tail -n +2 "$OUTPUT_PATH"/dev_expired_certs.csv | wc -l)
 
-if [ "$dev_expiring_certs_count" -gt 0 ]; then
-  echo "[WARNING] There are $dev_expiring_certs_count certs expiring within a week In Dev"
+stg_expiring_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/stg_expiring_certs.csv | wc -l)
+stg_expired_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/stg_expired_certs.csv | wc -l)
+
+prod_expiring_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/prod_expiring_certs.csv | wc -l)
+prod_expired_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/prod_expired_certs.csv | wc -l)
+
+if [ "$dev_expiring_certs_count" -gt 0 ] | [ "$dev_expired_certs_count" -gt 0 ] | [ "$stg_expiring_certs_count" -gt 0 ] | [ "$stg_expired_certs_count" -gt 0 ] | [ "$prod_expiring_certs_count" -gt 0 ] | [ "$prod_expired_certs_count" -gt 0 ]; then
   export DEV_EXPIRING_CERTS_COUNT="$dev_expiring_certs_count"
   export DEV_EXPIRED_CERTS_COUNT="$dev_expiring_certs_count"
+
+  export STG_EXPIRING_CERTS_COUNT="$stg_expiring_certs_count"
+  export STG_EXPIRED_CERTS_COUNT="$stg_expiring_certs_count"
+
+  export PROD_EXPIRING_CERTS_COUNT="$prod_expiring_certs_count"
+  export PROD_EXPIRED_CERTS_COUNT="$prod_expiring_certs_count"
 
   message_body=$(envsubst < message.json)
   curl -sX POST "$WEBHOOK_URL" \
