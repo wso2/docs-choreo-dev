@@ -3973,12 +3973,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h1 id="configure-approvals-for-choreo-workflows">Configure Approvals for Choreo Workflows<a class="headerlink" href="#configure-approvals-for-choreo-workflows" title="Permanent link">&para;</a></h1>
 <p>Choreo allows you to configure approval processes for specific workflows within the platform. An approval process for a workflow ensures that critical or sensitive changes are properly managed and controlled.</p>
-<p>Choreo currently allows you to configure approvals for environment promotion and API subscription workflows.</p>
+<p>Choreo currently allows you to configure approvals for environment promotion, API subscription and URL customization workflows.</p>
 <p>Configuring approvals for environment promotion allows authorized users to control components being promoted to a critical/production environment. </p>
 <p>Configuring approvals for the API subscription workflow allows you to create subscription plans that require approval before being activated. This feature allows you to control access to APIs by requiring administrative review and authorization of subscriptions before they become active.</p>
+<p>Configuring approvals for URL customization workflows allows you to control custom URL mappings by requiring review and approval before the customization is applied.</p>
 <h2 id="permissions-to-review-and-respond-to-approval-requests">Permissions to review and respond to approval requests<a class="headerlink" href="#permissions-to-review-and-respond-to-approval-requests" title="Permanent link">&para;</a></h2>
 <p>Click the respective tab for details on permissions depending on the workflow for which you want to configure approvals:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Environment promotion</label><label for="__tabbed_1_2">API subscription</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Environment promotion</label><label for="__tabbed_1_2">API subscription</label><label for="__tabbed_1_3">URL customization</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>To review and respond to environment promotion approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:</p>
@@ -3999,6 +4000,17 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 <li><strong>PROJECT-MANAGEMENT</strong>: 
       Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<p>To review and respond to URL customization approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:</p>
+<ul>
+<li><strong>WORKFLOW-MANAGEMENT</strong>:<ul>
+<li>Approve custom URL mapping requests: Grants access to review and approve custom URL mapping requests.</li>
+</ul>
+</li>
+<li><strong>URL-MANAGEMENT</strong>: 
+      Manage Custom Domains: Grants access to manage custom domains for the organization.</li>
 </ul>
 </div>
 </div>
@@ -4034,13 +4046,16 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 </ol>
 <p>Once you enable the approval process for a workflow, see the following details on how to submit a request for approval and the approval process. Click the respective tab depending on the workflow for which you enabled the approval process:  </p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Environment promotion</label><label for="__tabbed_2_2">API subscription</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Environment promotion</label><label for="__tabbed_2_2">API subscription</label><label for="__tabbed_2_3">URL customization</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Once you configure an approval process for environment promotion, developers must <a href="../../develop-components/submit-and-manage-workflow-approval-requests/">submit a request for approval to use the workflow</a>. An authorized assignee must then <a href="../review-workflow-approval-requests/">review and approve the request</a> for a developer to proceed with the task related to the workflow.</p>
 </div>
 <div class="tabbed-block">
 <p>Once you configure an approval process for API subscription, administrators can select the <strong>Approval required</strong> checkbox to create or update subscription plans to require approval. For details, see <a href="../create-api-subscription-plans/">Create API Subscription Plans</a>. API consumers using these plans must request approval to proceed. For details, see step 7 in <a href="../../api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan/">Subscribe to an API with a Subscription Plan</a>. An authorized approver must then <a href="../review-workflow-approval-requests/">review and approve the request</a> before the subscription is granted.</p>
+</div>
+<div class="tabbed-block">
+<p>Once you configure an approval process for URL customization, developers must submit a request for approval to configure a custom URL for a component. Instead of being automatically deployed, the URL mapping will go into a pending state. An authorized approver must then <a href="../review-workflow-approval-requests/">review and approve the request</a> before the custom URL is activated for the respective component. </p>
 </div>
 </div>
 </div>
