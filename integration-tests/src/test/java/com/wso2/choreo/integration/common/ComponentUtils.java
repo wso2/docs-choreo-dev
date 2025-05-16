@@ -779,9 +779,10 @@ public class ComponentUtils {
             throw new RuntimeException("Images not found for version ID : " + latestVersionId +
                     " in component ID : " + componentId);
         }
-
+        ChoreoProject project = component.getProject();
+        String deploymentPipelineId = project.getDefaultDeploymentPipelineId();
         GraphqlDTO graphqlDeployDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId)
-                .imageId(images.get(0).getAsJsonObject().get("imageId").getAsString()).environmentId(devEnvIdToDeploy)
+                .imageId(images.get(0).getAsJsonObject().get("imageId").getAsString()).environmentId(devEnvIdToDeploy).deploymentPipelineId(deploymentPipelineId)
                 .build();
         GraphQL.deployBuiltComponent(runner, appServiceClient, accessToken, graphqlDeployDTO);
 

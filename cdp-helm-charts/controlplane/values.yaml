@@ -29,6 +29,7 @@ global:
     system: choreo-system
     observability: choreo-observability
     ai: choreo-ai
+    spicedbOperator: spicedb-operator
 choreo-apim:
   enabled: true
   apim-devportal:
@@ -353,6 +354,8 @@ choreo-apim:
       roleName: product-apim
     serviceAccount:
       annotations: {}
+spicedb-operator:
+  enabled: true
 choreo-system:
   enabled: true
   app-service:

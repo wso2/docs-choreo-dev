@@ -147,7 +147,7 @@ stg_expired_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/stg_expired_secrets.csv | 
 #prod_expiring_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/prod_expiring_secrets.csv | wc -l)
 #prod_expired_secrets_count=$(tail -n +2 "$OUTPUT_PATH"/prod_expired_secrets.csv | wc -l)
 
-if [ "$dev_expiring_certs_count" -gt 0 ] || [ "$dev_expiring_secrets_count" -gt 0 ] || [ "$stg_expiring_certs_count" -gt 0 ] || [ "$stg_expiring_secrets_count" -gt 0 ]; then # | [ "$prod_expiring_certs_count" -gt 0 ] | [ "$prod_expiring_secrets_count" -gt 0 ]
+if [ "$dev_expiring_certs_count" -gt 0 ] || [ "$dev_expiring_secrets_count" -gt 0 ] || [ "$dev_expired_certs_count" -gt 0 ] || [ "$dev_expired_secrets_count" -gt 0 ] || [ "$stg_expiring_certs_count" -gt 0 ] || [ "$stg_expiring_secrets_count" -gt 0 ] || [ "$stg_expired_certs_count" -gt 0 ] || [ "$stg_expired_secrets_count" -gt 0 ]; then # | [ "$prod_expiring_certs_count" -gt 0 ] | [ "$prod_expiring_secrets_count" -gt 0 ]
   export DEV_EXPIRING_CERTS_COUNT="$dev_expiring_certs_count"
   export DEV_EXPIRED_CERTS_COUNT="$dev_expired_certs_count"
 
