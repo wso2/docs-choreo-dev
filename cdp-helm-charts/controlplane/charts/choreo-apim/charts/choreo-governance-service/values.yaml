@@ -1,0 +1,44 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicas: 1
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/choreo-governance-service
+  tag: latest
+config:
+  dbURL: "jdbc:sqlserver://choreo-prod-mssql-server.database.windows.net:1433;database=choreo_governance_db;SendStringParametersAsUnicode=false;socketTimeout=60000"
+  disableDatabaseConnection: true
+  validateRulesetContent: false
+  excludedOrgsFromAuthorization: ""
+  enableAIGovernance: false
+  aiServiceAppClientId: ""
+  githubRunnerAppClientId: ""
+  endpoints:
+    governanceAIServiceBasePath: ""
+    aiAppTokenEndpoint: ""
+secrets:
+  governanceDBPassword:
+    path: choreo-cp/data/choreo-apim/choreo-governance-service
+    key: governanceDBPassword
+  apimAdminPassword:
+    path: choreo-cp/data/choreo-apim/choreo-governance-service
+    key: apimAdminPassword
+  apimAIClientSecret:
+    path: choreo-cp/data/choreo-apim/choreo-governance-service
+    key: apimAIClientSecret
+vault:
+  roleName: choreo-governance-service
+serviceAccount:
+  annotations: {}
