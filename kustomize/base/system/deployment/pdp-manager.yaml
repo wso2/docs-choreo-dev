@@ -29,6 +29,7 @@ spec:
         - name: pdp-manager
           imagePullPolicy: Always
           image: choreocontrolplane.azurecr.io/choreoipaas/pdp-manager:latest
+          args: ["-migrate"]
           resources:
             limits:
               cpu: 200m
