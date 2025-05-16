@@ -780,7 +780,7 @@ public class ComponentUtils {
                     " in component ID : " + componentId);
         }
         ChoreoProject project = component.getProject();
-        String deploymentPipelineId = project.getDeploymentPipelineId();
+        String deploymentPipelineId = project.getDefaultDeploymentPipelineId();
         GraphqlDTO graphqlDeployDTO = GraphqlDTO.builder().componentId(componentId).versionId(latestVersionId)
                 .imageId(images.get(0).getAsJsonObject().get("imageId").getAsString()).environmentId(devEnvIdToDeploy).deploymentPipelineId(deploymentPipelineId)
                 .build();
