@@ -15,7 +15,7 @@ For Server-Side Rendered (SSR) applications, Choreo's managed authentication pro
 
 To secure your web application, you must implement authentication and authorization for it. 
 
-To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below. Before you move on to the next section, see [Develop Web Applications Locally with Choreo’s Managed Authentication](../develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md) to ensure a seamless authentication experience when developing your web application on your local machine. You can also refer to [sample React app with managed authentication](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end-with-managed-auth) or [sample Java app with managed authentication](https://github.com/sajitha-tj/choreo-sample-reading-list-ssr-with-managed-auth).
+To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below. Before you move on to the next section, see [Develop Web Applications Locally with Choreo’s Managed Authentication](../develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md) to ensure a seamless authentication experience when developing your web application on your local machine. You can also refer to [sample React app with managed authentication](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end-with-managed-auth) or [sample Java app with managed authentication](https://github.com/wso2/choreo-samples/tree/main/go-reading-list-web-app).
 
 ### Step 1.1: Implement the sign-in functionality
 
