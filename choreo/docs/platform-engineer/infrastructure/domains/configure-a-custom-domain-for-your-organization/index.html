@@ -972,13 +972,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#approve-a-custom-url-request" class="md-nav__link">
-    Approve a custom URL request
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2964,13 +2957,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#approve-a-custom-url-request" class="md-nav__link">
-    Approve a custom URL request
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2990,7 +2976,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>A custom domain is essential for effective branding, discoverability, and credibility of a website. Choreo allows you to easily configure custom domains for your organization, enabling developers to utilize it to configure custom URLs for their components such as API proxies, services, web applications, and webhooks.</p>
 <p>This section provides an overview of Choreo’s custom domain configuration model and guides you through configuring a custom domain for your organization.</p>
 <h2 id="choreo-custom-domain-configuration-model">Choreo custom domain configuration model<a class="headerlink" href="#choreo-custom-domain-configuration-model" title="Permanent link">&para;</a></h2>
-<p>Choreo allows platform engineers to add custom domains for their organizations. When an platform engineer adds custom domains to an organization, component developers can submit requests to utilize the custom domains for their respective components. These requests require approval from platform engineers. Upon approval, the custom domain and the relevant URL customization become available to the component.</p>
+<p>Choreo allows platform engineers to add custom domains for their organizations. When an platform engineer adds custom domains to an organization, component developers can utilize the custom domains for their respective components.</p>
 <h2 id="configure-a-custom-domain-for-an-organization">Configure a custom domain for an organization<a class="headerlink" href="#configure-a-custom-domain-for-an-organization" title="Permanent link">&para;</a></h2>
 <p>To add a custom domain for your organization, follow the steps given below:</p>
 <div class="admonition info">
@@ -3131,33 +3117,15 @@ Replace <code>&lt;root_or_bundle_cert&gt;.pem</code> with the path to your root 
 <p>Now, you have successfully added a custom domain for your organization.</p>
 <p>You can see the added custom domain listed in the <strong>Active Domains</strong> tab under the URL <strong>Settings</strong> tab.</p>
 <p><a class="glightbox" href="../../../assets/img/administer/configure-domain/active-domains.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Active domains" src="../../../assets/img/administer/configure-domain/active-domains.png" /></a></p>
-<p>The custom domain you added will be available to the entity types in the specified environment. You can request the custom domain when configuring a custom URL for a component.</p>
+<p>The custom domain you added will be available to the entity types in the specified environment. You can use the custom domain when configuring a custom URL for a component.</p>
 <div class="admonition info">
 <p class="admonition-title">Note<p>If you add a custom domain for the <strong>Developer Portal</strong> type, the customization is applied immediately, and you can access the organization’s Developer Portal via the added domain.</p>
 </p>
 </div>
 <p>If you want to view the entity types that use a particular custom domain, click the specific custom domain listed in the <strong>Active Domains</strong> tab.</p>
 <h2 id="configure-a-custom-url-for-a-component">Configure a custom URL for a component<a class="headerlink" href="#configure-a-custom-url-for-a-component" title="Permanent link">&para;</a></h2>
-<p>When an platform engineer adds custom domains for specific environments, developers can request any available custom domain to configure a custom URL for a component in a specific environment.</p>
-<h2 id="approve-a-custom-url-request">Approve a custom URL request<a class="headerlink" href="#approve-a-custom-url-request" title="Permanent link">&para;</a></h2>
-<p>When a developer requests a custom URL, the request will be listed in the organization-level <strong>Domains</strong> page under the <strong>Pending URL Requests</strong> tab.</p>
-<p>To approve a custom URL mapping, follow the steps given below:</p>
-<div class="admonition info">
-<p class="admonition-title">Note</p>
-<p>To approve custom URL requests, you must have <strong>Approve URL Mappings</strong> permission under <strong>URL Management</strong> permission group.</p>
-</div>
-<ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the top navigation menu, click the <strong>Organization</strong> list and select your organization.</li>
-<li>In the left navigation menu, click <strong>Infrastructure</strong> and then click <strong>Domains</strong>.</li>
-<li>Click the <strong>Pending URL Requests</strong> tab. You will see all the pending URL mapping requests sent by developers.
-   <a class="glightbox" href="../../../assets/img/administer/configure-domain/pending-url-requests.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Pending URL requests" src="../../../assets/img/administer/configure-domain/pending-url-requests.png" /></a></li>
-<li>Go to the custom URL you want to approve and click the corresponding <strong>Approve URL Mapping</strong> icon under the <strong>Action</strong> column.</li>
-<li>Review the details and click <strong>Approve</strong>.</li>
-</ol>
-<p>Once approved, the invoke URL of the component gets replaced with the configured custom URL.</p>
-<p><a class="glightbox" href="../../../assets/img/administer/configure-domain/custom-url.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Custom URL" src="../../../assets/img/administer/configure-domain/custom-url.png" /></a></p>
-<p>Now you have successfully utilized the configured custom domain to set up a custom URL for a component.</p>
+<p>When a platform engineer adds custom domains for specific environments, developers can use any available custom domain to configure a custom URL for a component in a specific environment.</p>
+<p>For better governance, you can configure an approval process for URL mappings using <a href="../governance/workflows.configure-approvals-for-choreo-workflows.md">Choreo Workflows</a>.</p>
 
 
 
