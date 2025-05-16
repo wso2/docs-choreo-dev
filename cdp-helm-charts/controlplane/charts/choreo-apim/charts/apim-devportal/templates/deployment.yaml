@@ -17,7 +17,7 @@ metadata:
     checkov.io/skip6: CKV_K8S_38=Service account token is required when using Linkerd
   labels:
     {{- include "apim-devportal.labels" . | nindent 4 }}
-  name: apim-devportal-deployment
+  name: apim-devportal
   namespace: {{ .Values.global.namespaces.apim }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
