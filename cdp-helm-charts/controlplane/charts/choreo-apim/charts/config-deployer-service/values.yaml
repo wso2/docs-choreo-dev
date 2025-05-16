@@ -9,30 +9,22 @@
 #
 # --------------------------------------------------------------------------------------
 
-global:
-  choreosystem:
-    orgHandle: choreosystem
-    orgUUID: ""
-  asgardeo:
-    consoleUrl: https://console.asgardeo.io
-  vault:
-    url: http://vault.vault:8200
-  redis:
-    host: redis-cluster.redis.svc.cluster.local
-    port: "6379"
-  image:
-    registry: choreocontrolplane.azurecr.io
-    pullSecrets:
-      - name: choreo-image-pull-secret
-  namespaces:
-    apim: choreo-apim
-    system: choreo-system
-    observability: choreo-observability
-    ai: choreo-ai
-    spicedbOperator: spicedb-operator
-choreo-apim:
+replicas: 1
+autoscaling:
   enabled: true
-spicedb-operator:
-  enabled: true
-choreo-system:
-  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: config-deployer-service
+  tag: 1.0.0-amd64
+secrets:
+  privateKey:
+    path: choreo-cp/data/choreo-apim/config-deployer-service
+    key: privateKey
+  publicKey:
+    path: choreo-cp/data/choreo-apim/config-deployer-service
+    key: publicKey
+vault:
+  roleName: config-deployer-service
+serviceAccount:
+  annotations: {}

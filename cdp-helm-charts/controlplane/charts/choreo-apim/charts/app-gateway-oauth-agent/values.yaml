@@ -1,0 +1,37 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicas: 1
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/app-gateway-oauth-agent
+  tag: latest
+config:
+  patClientId: ""
+  patClientTokenEp: http://choreo-am-service:9763/oauth2/token
+  patTokenTtlBuffer: "10"
+secrets:
+  encKey:
+    path: choreo-cp/data/choreo-apim/app-gateway-oauth-agent
+    key: encryptionKey
+  patClientSecret:
+    path: choreo-cp/data/choreo-apim/app-gateway-oauth-agent
+    key: patClientSecret
+  redisPassword:
+    path: choreo-cp/data/choreo-apim/app-gateway-oauth-agent
+    key: redisPassword
+vault:
+  roleName: app-gateway-oauth-agent
+serviceAccount:
+  annotations: {}
