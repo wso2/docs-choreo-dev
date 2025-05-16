@@ -353,3 +353,161 @@ choreo-apim:
       roleName: product-apim
     serviceAccount:
       annotations: {}
+choreo-system:
+  enabled: true
+  app-service:
+    replicas: 1
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3
+    image:
+      repository: choreoipaas/app-service
+      tag: latest
+    config:
+      db:
+        host: ""
+        port: ""
+        driver: sqlserver
+      apiManager:
+        clientKey: ""
+        serviceUrl: https://sts.choreo.dev
+        exchangeTokenClientKey: ""
+      devopsApiURL: ""
+      centralOrgRegistry:
+        url: ""
+        tlsCert: ""
+      prometheusMetricsReporterConfig:
+        enabledClusterIds: '[]'
+      invitation:
+        redirectUrl: ""
+      scim2:
+        idpHost: ""
+        idpUsername: ""
+        idpTokenUrl: ""
+      userSupport:
+        host: ""
+      emailService:
+        invitationHost: ""
+        invitationHostDevPortal: ""
+      choreoSystemUserIdpId: ""
+      demoOrg:
+        uuid: ""
+      apim:
+        clientKey: ""
+        idpUrl: ""
+        serviceUrl: ""
+        gatewaySuffix: ""
+      asgardeo:
+        orgManagementApiUrl: ""
+        userManagementApiUrl: ""
+        asgardeoClientTimeout: 120s
+        tokenUrl: ""
+        clientKey: ""
+        asgardeoKeyManagerBaseUrl: ""
+      marketingConsent:
+        clientKey: ""
+        tokenURL: ""
+        choreoPardotEndpoint: ""
+        devantPardotEndpoint: ""
+        bijiraPardotEndpoint: ""
+        pardotEndpoint: ""
+        pardotSvcURL: ""
+        emailConsentSvcURL: ""
+      ballerinaCentralUserIdpId: ""
+      subscriptions:
+        freeStepQuota: ""
+        choreoFreeTierId: ""
+        devantFreeTierId: ""
+        bijiraFreeTierId: ""
+      pardotUserRegistrationTokenURL: ""
+      pardotallUserList:
+        choreoPardotEndpoint: ""
+        devantPardotEndpoint: ""
+        bijiraPardotEndpoint: ""
+        pardotEndpoint: ""
+        pardotSvcURL: ""
+      pardotStaleUserHandlingTokenURL: ""
+      pardotStaleUserHandlingEndpoint: ""
+      pardotStaleUserHandlingSvcURL: ""
+      salesforceLeadPardotConfig:
+        tokenURL: ""
+        choreoPardotEndpoint: ""
+        devantPardotEndpoint: ""
+        bijiraPardotEndpoint: ""
+        pardotEndpoint: ""
+        pardotSvcURL: ""
+    secrets:
+      appDBPassword:
+        path: choreo-cp/data/choreo-system/app-service
+        key: appDBPassword
+      keyManagerRegistrationAPIMClientSecret:
+        path: choreo-cp/data/choreo-system/app-service
+        key: keyManagerRegistrationAPIMClientSecret
+      invitationDecoderKey:
+        path: choreo-cp/data/choreo-system/app-service
+        key: invitationDecoderKey
+      azureAppInsightsInstrumentationKey:
+        path: choreo-cp/data/choreo-system/app-service
+        key: azureAppInsightsInstrumentationKey
+      centralOrgRegistryCertificateKey:
+        path: choreo-cp/data/choreo-system/app-service
+        key: centralOrgRegistryCertificateKey
+      markertingConsentAppClientSecret:
+        path: choreo-cp/data/choreo-system/app-service
+        key: markertingConsentAppClientSecret
+      asgardeoClientSecret:
+        path: choreo-cp/data/choreo-system/app-service
+        key: asgardeoClientSecret
+      idpAppClientSecret:
+        path: choreo-cp/data/choreo-system/app-service
+        key: idpAppClientSecret
+      pardotUserListRegAppKey:
+        path: choreo-cp/data/choreo-system/app-service
+        key: pardotUserListRegAppKey
+      pardotUserListRegAppSecret:
+        path: choreo-cp/data/choreo-system/app-service
+        key: pardotUserListRegAppSecret
+      salesforceLeadPardotAppKey:
+        path: choreo-cp/data/choreo-system/app-service
+        key: salesforceLeadPardotAppKey
+      salesforceLeadPardotAppSecret:
+        path: choreo-cp/data/choreo-system/app-service
+        key: salesforceLeadPardotAppSecret
+      maxMindGeoLocationCountryUsername:
+        path: choreo-cp/data/choreo-system/app-service
+        key: maxMindGeoLocationCountryUsername
+      maxMindGeoLocationCountryPassword:
+        path: choreo-cp/data/choreo-system/app-service
+        key: maxMindGeoLocationCountryPassword
+      pardotStaleUserHandlingAppKey:
+        path: choreo-cp/data/choreo-system/app-service
+        key: pardotStaleUserHandlingAppKey
+      pardotStaleUserHandlingAppSecret:
+        path: choreo-cp/data/choreo-system/app-service
+        key: pardotStaleUserHandlingAppSecret
+      scimBackendAPIUserPassword:
+        path: choreo-cp/data/choreo-system/app-service
+        key: scimBackendAPIUserPassword
+      serviceNowClientId:
+        path: choreo-cp/data/choreo-system/app-service
+        key: serviceNowClientId
+      serviceNowClientSecret:
+        path: choreo-cp/data/choreo-system/app-service
+        key: serviceNowClientSecret
+      serviceNowUsername:
+        path: choreo-cp/data/choreo-system/app-service
+        key: serviceNowUsername
+      serviceNowPassword:
+        path: choreo-cp/data/choreo-system/app-service
+        key: serviceNowPassword
+      asbConnectionString:
+        path: choreo-cp/data/choreo-system/app-service
+        key: asbConnectionString
+      apimClientSecret:
+        path: choreo-cp/data/choreo-system/app-service
+        key: apimClientSecret
+    vault:
+      roleName: app-service
+    serviceAccount:
+      annotations: {}

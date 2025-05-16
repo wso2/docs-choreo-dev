@@ -1,0 +1,96 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    {{- include "app-service.labels" . | nindent 4 }}
+  name: app-service
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "app-service.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "app-service.labels" . | nindent 8 }}
+    spec:
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "app-service.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}
+      serviceAccountName: app-service
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          name: app-service
+          envFrom:
+            - secretRef:
+                name: app-service
+          ports:
+            - containerPort: 8080
+              name: grpc-port
+          readinessProbe:
+            exec:
+              command:
+                - /bin/grpc_health_probe
+                - -addr=:8080
+            initialDelaySeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - "/bin/sh"
+                - "-c"
+                - "bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING"
+            initialDelaySeconds: 20
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 12000
+            runAsGroup: 12000
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - mountPath: /app-service.yaml
+              name: config
+              subPath: app-service.yaml
+            - name: secret-provider-class
+              mountPath: /mnt/csi/secret-provider-class
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: app-service
+        - name: secret-provider-class
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: app-service
