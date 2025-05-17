@@ -15,8 +15,8 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-     {{- include "dp-secret-manager.labels" . | nindent 4 }}
-  name: dp-secret-manager
+     {{- include "dp-project-manager.labels" . | nindent 4 }}
+  name: dp-project-manager
   namespace: {{ .Values.global.namespaces.system }}
 spec:
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
@@ -24,7 +24,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: dp-secret-manager
+    name: dp-project-manager
   metrics:
     - type: Resource
       resource:
