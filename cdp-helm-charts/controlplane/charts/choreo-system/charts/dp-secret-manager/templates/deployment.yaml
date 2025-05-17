@@ -101,7 +101,5 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: dp-secret-manager
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
       restartPolicy: Always
       serviceAccountName: dp-secret-manager
