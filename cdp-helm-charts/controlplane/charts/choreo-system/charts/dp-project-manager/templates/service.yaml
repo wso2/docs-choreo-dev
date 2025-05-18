@@ -1,5 +1,3 @@
-{{- if .Values.autoscaling.enabled }}
----
 # -------------------------------------------------------------------------------------
 #
 # Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
@@ -11,31 +9,18 @@
 #
 # --------------------------------------------------------------------------------------
 
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
+apiVersion: v1
+kind: Service
 metadata:
   labels:
-     {{- include "dp-mizzen.labels" . | nindent 4 }}
-  name: dp-mizzen
+    {{- include "dp-project-manager.labels" . | nindent 4 }}
+  name: dp-project-manager
   namespace: {{ .Values.global.namespaces.system }}
 spec:
-  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
-  minReplicas: {{ .Values.autoscaling.minReplicas }}
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: dp-mizzen
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 75
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: 75
-{{- end }}
+  selector:
+    {{- include "dp-project-manager.labels" . | nindent 4 }}
+  ports:
+    - name: dp-project-manager-port-http
+      port: 80
+      protocol: TCP
+      targetPort: http-port

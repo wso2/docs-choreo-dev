@@ -1,0 +1,45 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dp-project-manager
+  namespace: {{ .Values.global.namespaces.system }}
+  labels:
+    {{ include "dp-project-manager.labels" . | indent 4 }}
+data:
+  RUDDER_URL: http://dp-rudder:80
+  CICD_URL: http://dp-cicd:80
+  SUBSCRIPTION_SERVICE_URL: subscriptions:9090
+  DELETION_PERIOD_IN_MONTHS: 3
+  AUTHZ_SERVICE_AUTHORIZATION_HEADER_NAME: x-jwt-assertion
+  NODE_OPTIONS: "--max-http-header-size=65000"
+  API_KEY_SVC_URL: http://api-key-service:8080
+  STS_MGT_URL: http://sts-mgt-service:3000
+  CONNECTION_SERVICE_URL: http://connection-service:9000
+  PROJECT_NAME_DENY_LIST: "oauth2,oidc"
+  MONGODB_USER: {{ .Values.config.mongodbUser }}
+  MONGODB_HOST: {{ .Values.config.mongodbHost }}
+  MONGODB_DATABASE: {{ .Values.config.mongodbDatabase }}
+  DEFAULT_REGION: {{ .Values.config.defaultRegion }}
+  AVAILABLE_REGIONS: {{ .Values.config.availableRegions | quote }}
+  PROJECT_ENV_INIT_ENABLED: {{ .Values.config.projectEnvInitEnabled }}
+  REPO_VISIBILITY_ENABLED: {{ .Values.config.repoVisibilityEnabled }}
+  COMPONENT_RESTRICTION_FEATURE_ENABLED: {{ .Values.config.componentRestrictionFeatureEnabled }}
+  APIM_URL: {{ .Values.config.apimUrl }}
+  APIM_CLIENT_ID: {{ .Values.config.apimClientId }}
+  MARKETPLACE_APIM_APP_CREATION_ENABLED: {{ .Values.config.marketplaceApimAppCreationEnabled }}
+  NEW_PROJECT_HANDLER_FLOW_ENABLED: {{ .Values.config.newProjectHandlerFlowEnabled }}
+  NEW_COMPONENT_HANDLER_FLOW_ENABLED: {{ .Values.config.newComponentHandlerFlowEnabled }}
+  AUTHZ_SERVICE_GRPC_ENDPOINT: {{ .Values.config.authzServiceGrpcEndpoint | quote}}
+  AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED: {{ .Values.config.authzServiceProjectAuthorizationEnabled }}
+  ENABLE_STS_MGT_SERVICE: {{ .Values.config.enableStsManagementService }}
