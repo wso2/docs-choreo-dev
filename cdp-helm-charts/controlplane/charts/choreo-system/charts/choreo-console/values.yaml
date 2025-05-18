@@ -421,7 +421,7 @@ config:
   queuedStatusPollingInterval: 30
   inProgressStatusPollingInterval: 10
   choreoManagedAuthLocalDevDocUrl: https://wso2.com/choreo/docs/develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication/
-  choreoManagedAuthLocalDevProxyPackage: @choreo/proxy
+  choreoManagedAuthLocalDevProxyPackage: '@choreo/proxy'
   enableManagedAuthLocalDev: True
   enableChoreoAuthorization: True
   enableChoreoAuthorizationDate: 2024-05-13
@@ -465,15 +465,15 @@ config:
   enableEnvironmentDeletionFeature: True
   buildTimeEnvironmentVariablesDocLink: "https://wso2.com/choreo/docs/develop-components/deploy-an-application-with-buildpacks/#configure-build-time-environment-variables"
   customizableCiDocLink: "https://wso2.com/choreo/docs/develop-components/deploy-an-application-with-buildpacks/#configure-customizable-ci"
-  customSubscriptionPolicyHandlingOrg: *
+  customSubscriptionPolicyHandlingOrg: '*'
   enableAsyncManualScheduleTaskCreation: True
   enableAsyncEventHandlerTestRunnerCreation: "false"
   choreoResourceAuthzDocUrl: "https://wso2.com/choreo/docs/administer/control-access-in-the-choreo-console/"
   downloadLogsPageSize: 1000
-  approvalOrgs: *
-  subscriptionApprovalOrgs: *
+  approvalOrgs: '*'
+  subscriptionApprovalOrgs: '*'
   enableDtDeleteConsole: True
-  executePageObsApiEnabledOrgs: *
+  executePageObsApiEnabledOrgs: '*'
   apiGovernanceBaseUrl: https://apis.choreo.dev/governance/v1.0
   enableGenAiServices: true
   openAiTemplateId: 1a1d9a9b-334f-4f2a-aafe-bbf1ff753aed
