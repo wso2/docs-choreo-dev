@@ -34,7 +34,7 @@ spec:
       {{- if .Values.autoscaling.enabled }}
       {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
       {{- if ge $minReplicas 2 }}
-      {{- include "app-service.affinity" . | nindent 6 }}
+      {{- include "choreo-console.affinity" . | nindent 6 }}
       {{- end }}
       {{- end }}
       securityContext:
