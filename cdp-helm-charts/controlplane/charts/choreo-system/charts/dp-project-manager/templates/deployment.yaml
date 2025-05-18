@@ -108,4 +108,4 @@ spec:
             volumeAttributes:
               secretProviderClass: dp-project-manager
       restartPolicy: Always
-      serviceAccountName: sa-choreo-default
+      serviceAccountName: dp-project-manager
