@@ -191,7 +191,7 @@ data:
   REACT_APP_PROXY_DEPLOYER_BASE_URL: {{ .Values.config.proxyDeployerBaseUrl }}
   REACT_APP_USER_ENABLED_FEATURE_PREVIEW_LIST: {{ .Values.config.userEnabledFeaturePreviewList }}
   REACT_APP_CHOREO_SAAS_OFFER_URL: {{ .Values.config.choreoSaasOfferUrl }}
-  REACT_APP_PROJECT_DP_REGIONS: {{ .Values.config.projectDpRegions | join '|' }}
+  REACT_APP_PROJECT_DP_REGIONS: {{ .Values.config.projectDpRegions | join "|" }}
   REACT_APP_GIT_HUB_URL: {{ .Values.config.gitHubUrl }}
   REACT_APP_ENABLE_AUTO_DEPLOY_BY_DEFAULT: {{ .Values.config.enableAutoDeployByDefault }}
   REACT_APP_CONFIGURABLE_WEBHOOK_ENABLED: {{ .Values.config.configurableWebhookEnabled }}
@@ -331,7 +331,7 @@ data:
   REACT_APP_ENABLE_CHOREO_PROJECT_AUTHORIZATION: {{ .Values.config.enableChoreoProjectAuthorization }}
   REACT_APP_ENABLE_API_KEY_FEATURE: {{ .Values.config.enableApiKeyFeature }}
   REACT_APP_ENABLE_EXTERNAL_CONSUMER_COMPONENT: {{ .Values.config.enableExternalConsumerComponent }}
-  REACT_APP_CONNECTIONS_ENABLED_COMPONENT_TYPES: {{ .Values.config.connectionsEnabledComponentTypes | join '|' }}
+  REACT_APP_CONNECTIONS_ENABLED_COMPONENT_TYPES: {{ .Values.config.connectionsEnabledComponentTypes | join "|" }}
   REACT_APP_ENABLE_MARKETPLACE_INT_ROUTING_FEATURE: {{ .Values.config.enableMarketplaceIntRoutingFeature }}
   REACT_APP_FEATURE_FLAG_MAINTENANCE_CUSTOM_MESSAGE: {{ .Values.config.featureFlagMaintenanceCustomMessage }}
   REACT_APP_ENABLE_DEFAULT_ENDPOINT_URL_FEATURE: {{ .Values.config.enableDefaultEndpointUrlFeature }}
@@ -385,5 +385,5 @@ data:
   REACT_APP_ENABLE_MCP_SERVER_SUPPORT: {{ .Values.config.enableMcpServerSupport }}
   REACT_APP_SET_API_KEY_AS_DEFAULT_SECURITY_SCHEME: {{ .Values.config.setApiKeyAsDefaultSecurityScheme }}
   REACT_APP_ENABLE_API_KEY_SCOPE_SUPPORT: {{ .Values.config.enableApiKeyScopeSupport }}
-  REACT_APP_PROJECT_NAME_DENY_LIST: {{ .Values.config.projectNameDenyList | join ',' }}
+  REACT_APP_PROJECT_NAME_DENY_LIST: {{ .Values.config.projectNameDenyList | join "," }}
   REACT_APP_ENABLE_DATA_PLANE_INSIGHTS: {{ .Values.config.enableDataPlaneInsights }}
