@@ -1,0 +1,87 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: choreo-console
+  labels:
+    {{- include "choreo-console.labels" . | nindent 4 }}
+data:
+  REACT_APP_FIDP_GOOGLE: google
+  REACT_APP_FIDP_GITHUB: github
+  REACT_APP_FIDP_MICROSOFT: microsoft
+  REACT_APP_FIDP_ENTERPRISE: EnterpriseIDP
+  REACT_APP_FIDP_E2E: choreoe2etest
+  REACT_APP_FIDP_ANONYMOUS: choreoanonymous
+  REACT_APP_FEATURE_TOS_SERVICE_NAME: choreo
+  REACT_APP_GA_TRACKING_CODE: UA-206124793-2
+  REACT_APP_APIM_PUBLISHER_ENDPOINT_PREFIX: '/api/am/publisher/v2/'
+  REACT_APP_APIM_ADMIN_ENDPOINT_PREFIX: '/api/am/admin/v2/'
+  REACT_APP_ASGARDEO_SDK_STORAGE_TYPE: sessionStorage
+  REACT_APP_AUTHENTICATOR_GOOGLE: GoogleOIDCAuthenticator
+  REACT_APP_AUTHENTICATOR_GITHUB: GithubAuthenticator
+  REACT_APP_AUTHENTICATOR_ANONYMOUS: OpenIDConnectAuthenticator
+  REACT_APP_AUTHENTICATOR_ENTERPRISE: EnterpriseIDPAuthenticator
+  REACT_CHOREO_HOME_PAGE: https://wso2.com/choreo/
+  REACT_APP_CHOREO_STEP_BASED_ENTERPRISE_TIER_UUID: 01ec1f84-ce3d-122e-ac9b-f10c95fd72da
+  REACT_APP_CHOREO_ENTERPRISE_TIER_UUID: 4abe3757-86f6-47de-994f-f02fb0522e99
+  REACT_APP_CHOREO_DEVELOPER_TIER_UUID: 41e29802-f4bb-456c-a92e-b14cca67c4bb
+  REACT_APP_BALLERINA_LOW_CODE_RESOURCES_VERSION: {{ .Values.config.ballerinaLowCodeResourcesVersion }}
+  REACT_APP_SAMPLE_BALLERINA_VERSION: {{ .Values.config.sampleBallerinaVersion }}
+  REACT_APP_CHOREO_SAMPLES_VERSION: {{ .Values.config.choreoSamplesVersion }}
+  REACT_APP_HOTJAR_ID: ''
+  REACT_APP_HOTJAR_VERSION: {{ .Values.config.hotjarVersion }}
+  REACT_APP_API_BASE_URL: {{ .Values.config.apiBaseUrl }}
+  REACT_APP_PROJECT_API_BASE_URL: {{ .Values.config.projectAPIBaseUrl }}
+  REACT_APP_DECLARATIVE_API_BASE_URL: {{ .Values.config.declarativeApiBaseUrl }}
+  REACT_APP_WORKFLOW_MGT_API_URL: {{ .Values.config.workflowMgtApiUrl }}
+  REACT_APP_DEVOPS_API_BASE_URL: {{ .Values.config.devopsApiBaseUrl }}
+  REACT_APP_CHOREO_APP_SERVICE_BASE_URL: {{ .Values.config.appServiceBaseUrl }}
+  REACT_APP_CIO_DASHBOARD_QUERY_API_URL: {{ .Values.config.cioDashboardQueryApiUrl }}
+  REACT_APP_CIO_CONFIGURATOR_API_URL: {{ .Values.config.cioConfiguratorApiUrl }}
+  REACT_APP_API_BALLERINA_CENTRAL_URL: {{ .Values.config.apiBallerinaCentralUrl }}
+  REACT_APP_MOESIF_API_BASE_URL: {{ .Values.config.moesifApiBaseUrl }}
+  REACT_APP_IS_MOESIF_SETTINGS_PAGE_ENABLED: true
+  REACT_APP_ENABLE_DEPLOYMENT_TRACK_LISTING: true
+  REACT_APP_ENABLE_CONFIG_GROUP_MANAGEMENT: false
+  REACT_APP_GTM_ID: {{ .Values.config.gtmId }}
+  REACT_APP_API_MANAGER_BASE_URL: {{ .Values.config.apiManagerBaseUrl }}
+  REACT_APP_CRYPTO_KEY_SERVICE_BASE_URL: {{ .Values.config.cryptoKeyServiceBaseUrl }}
+  REACT_APP_WEB_SUB_HUB_URL: {{ .Values.config.webSubHubUrl }}
+  REACT_APP_APIM_DCR_VERSION: {{ .Values.config.apimDCRVersion }}
+  REACT_APP_DCR_GRANT_TYPE: client_credentials
+  REACT_APP_API_DEVPORTAL_URL: {{ .Values.config.apiDevPortalUrl }}
+  REACT_APP_API_DEVOPSPORTAL_URL: ''
+  REACT_APP_API_GATEWAY_ENDPOINT_SUFFIX: {{ .Values.config.apiGatewayEndpointSuffix }}
+  REACT_APP_ASGARDEO_SDK_RESOURCE_SERVER_URLS: {{ .Values.config.asgardeoSDKResourceServerUrls | join "|" }}
+  REACT_APP_ASGARDEO_SDK_SIGNIN_REDIRECT_URL: {{ .Values.config.asgardeoSDKSignInRedirectUrl }}
+  REACT_APP_ASGARDEO_SDK_SIGN_OUT_REDIRECT_URL: {{ .Values.config.asgardeoSDKSignOutRedirectUrl }}
+  REACT_APP_ASGARDEO_SDK_CLIENT_ID: {{ .Values.config.asgardeoSDKClientId }}
+  REACT_APP_ASGARDEO_SDK_SERVER_ORIGIN: {{ .Values.config.asgardeoSDKServerOrigin }}
+  REACT_APP_ASGARDEO_SDK_CLIENT_HOST: {{ .Values.config.asgardeoSDKClientHost }}
+  REACT_APP_ASGARDEO_SDK_ENABLE_PKCE: true
+  REACT_APP_ASGARDEO_SDK_CHECK_SESSION_INTERVAL: -1
+  REACT_APP_ASGARDEO_SDK_DISABLE_SIGNIN_SILENTLY: true
+  REACT_APP_ASGARDEO_SDK_AUTO_LOGOUT_ON_TOKEN_REFRESH_ERROR: false
+  REACT_APP_ASGARDEO_SDK_AUTHORIZATION_ENDPOINT_URL: {{ .Values.config.asgardeoSDKAuthorizationEndpointUrl }}
+  REACT_APP_ASGARDEO_SDK_TOKEN_ENDPOINT_URL: {{ .Values.config.asgardeoSDKTokenEndpointUrl }}
+  REACT_APP_ASGARDEO_SDK_LOGOUT_ENDPOINT_URL: {{ .Values.config.asgardeoSDKLogoutEndpointUrl }}
+  REACT_APP_ASGARDEO_SDK_OVERRIDE_WELLKNOWN_ENDPOINT: true
+  REACT_APP_ASGARDEO_SDK_SCOPES: {{ .Values.config.asgardeoSDKScopes | join "|" }}
+  REACT_APP_DEVPORTAL_SCOPES: {{ .Values.config.devportalScopes | join " " }}
+  REACT_APP_ASGARDEO_EX_TOKEN_ENDPOINT: {{ .Values.config.asgardeoExTokenEndpoint }}
+  REACT_APP_ASGARDEO_EX_ATTACH_TOKEN: {{ .Values.config.asgardeoExAttachToken }}
+  REACT_APP_ASGARDEO_EX_CLIENT_ID: {{ .Values.config.asgardeoExClientId }}
+  REACT_APP_ASGARDEO_EX_GRANT_TYPE: urn:ietf:params:oauth:grant-type:token-exchange
+  REACT_APP_ASGARDEO_EX_SUB_TOKEN_TYPE: urn:ietf:params:oauth:token-type:jwt
+  REACT_APP_ASGARDEO_EX_REQ_TOKEN_TYPE: urn:ietf:params:oauth:token-type:jwt
+  REACT_APP_ASGARDEO_EX_SCOPES: {{ .Values.config.asgardeoExScopes | join " " }}

@@ -1,0 +1,230 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicas: 1
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/choreo-console-next
+  tag: latest
+vault:
+  roleName: choreo-console
+serviceAccount:
+  annotations: {}
+config:
+  ballerinaLowCodeResourcesVersion: 20230110-1125
+  sampleBallerinaVersion: 2201.3.1
+  choreoSamplesVersion: v84
+  hotjarVersion: 6
+  apiBaseUrl: https://app.choreo.dev
+  projectAPIBaseUrl: https://apis.choreo.dev/projects/1.0.0/graphql
+  declarativeApiBaseUrl: https://apis.choreo.dev/declarative-api/v1.0
+  workflowMgtApiUrl: https://apis.choreo.dev/workflow-mgt/v1.0
+  devopsApiBaseUrl: https://apis.choreo.dev/devops/1.0.0
+  appServiceBaseUrl: https://app.choreo.dev
+  cioDashboardQueryApiUrl: https://apis.choreo.dev/cio-query-api/1.0.0/query
+  cioConfiguratorApiUrl: https://apis.choreo.dev/cio-incident-configurator/1.0.0
+  apiBallerinaCentralUrl: https://api.central.ballerina.io/2.0
+  moesifApiBaseUrl: https://apis.choreo.dev/moesif-key/0.1.0
+  gtmId: GTM-KJJQ2NQ
+  apiManagerBaseUrl: https://sts.choreo.dev
+  cryptoKeyServiceBaseUrl: https://apis.choreo.dev/crypto-key-service/0.1.0
+  webSubHubUrl: https://hub.websubhub.choreo.dev/hub
+  apimDCRVersion: v0.17
+  apiDevPortalUrl: https://devportal.choreo.dev
+  apiGatewayEndpointSuffix: choreoapis.dev
+  asgardeoSDKResourceServerUrls:
+    - https://sts.choreo.dev
+    - https://api.asgardeo.io
+    - https://sts.preview.choreo.dev
+    - https://apim.preview.choreo.dev
+    - https://id.choreo.dev
+    - https://console.preview.choreo.dev
+    - https://console.choreo.dev
+    - https://app.preview.choreo.dev
+    - https://app.choreo.dev
+    - https://choreocontrolplane.choreo.dev
+    - https://choreocontrolplane.preview.choreo.dev
+    - https://api.central.ballerina.io
+    - https://subscriptions.wso2.com
+    - https://apis.choreo.dev/projects/1.0.0/graphql
+    - https://apis.choreo.dev/org-mgt/1.0.0/orgs
+    - https://apis.choreo.dev/org-mgt/1.0.0
+    - https://apis.choreo.dev/moesif-key/0.1.0
+    - https://apis.choreo.dev/component-mgt/1.0.0
+    - https://apis.choreo.dev/user-mgt/1.0.0
+    - https://apis.choreo.dev/orgs/1.0.0
+    - https://apis.choreo.dev/config-mgt/1.0.0/orgs
+    - https://apis.choreo.dev/alert-configuration-service
+    - https://apis.choreo.dev/devops/1.0.0
+    - https://apis.choreo.dev/cio-query-api/1.0.0/query
+    - https://apis.choreo.dev/cio-incident-configurator/1.0.0
+    - https://apis.choreo.dev/crypto-key-service/0.1.0
+    - https://apis.choreo.dev/custom-domain/1.0.0/orgs
+    - https://apis.choreo.dev/onprem-key-mgt/1.0.0/orgs
+    - https://apis.choreo.dev/audit-logging/v1.0
+    - https://apis.choreo.dev/audit-logging/1.0.0/orgs
+    - https://apis.choreo.dev/component-utils/1.0.0
+    - https://apis.choreo.dev/marketplace/0.1.0
+    - https://choreo-shared-choreo-samples-cdne.azureedge.net
+    - https://apis.choreo.dev/config-svc/v1.0/configs/groups
+    - https://apis.choreo.dev/config-mapping-svc/v1
+    - https://apis.choreo.dev/platform-services/v1.0
+    - https://apis.choreo.dev/connections/v1.0
+    - https://apis.choreo.dev/authz-mgt/v1.0
+    - https://apis.choreo.dev/apim-appdev/v1.0
+    - https://apis.choreo.dev/user-store-mgt/v1.0
+    - https://apis.choreo.dev/code-challenge-eval/v1
+    - https://apis.choreo.dev/component-creation
+    - https://apis.choreo.dev/url-mgt/v1.0
+    - https://apis.choreo.dev/workflow-mgt/v1.0
+    - https://apis.choreo.dev/declarative-api/v1.0
+    - https://apis.choreo.dev/governance/v1.0
+    - https://apis.choreo.dev/api-key-service/v1.0
+    - https://apis.choreo.dev/choreo-appdev-sts-management-service/v1.0
+    - https://apis.choreo.dev/copilotfeedbackcollector/v1.0
+    - https://apis.choreo.dev/configuration-schema/v1.0
+    - https://apis.choreo.dev/cost-optimizer-cp/v1.0
+    - https://apis.choreo.dev/build-pipelines/v1
+  asgardeoSDKSignInRedirectUrl: https://console.choreo.dev/signin
+  asgardeoSDKSignOutRedirectUrl: https://console.choreo.dev/login
+  asgardeoSDKClientId: aVKhTSUMu_QfEwmCtrcuWoLy92oa
+  asgardeoSDKServerOrigin: https://api.asgardeo.io
+  asgardeoSDKClientHost: https://console.choreo.dev
+  asgardeoSDKAuthorizationEndpointUrl: https://api.asgardeo.io/t/a/oauth2/authorize
+  asgardeoSDKTokenEndpointUrl: https://api.asgardeo.io/t/a/oauth2/token
+  asgardeoSDKLogoutEndpointUrl: https://api.asgardeo.io/t/a/oidc/logout
+  asgardeoSDKScopes:
+    - email
+    - profile
+    - groups
+  devportalScopes:
+    - apim:subscribe
+    - apim:sub_manage
+    - apim:app_manage
+    - apim:app_import_export
+    - apim:api_key
+    - environments:view_prod
+    - environments:view_dev
+    - urn:choreosystem:customdomainapi:custom_domain_view
+    - default
+  asgardeoExTokenEndpoint: https://sts.choreo.dev:443/oauth2/token
+  asgardeoExAttachToken: false
+  asgardeoExClientId: ciwnWuwZfbcdzBUcnkhKvi_mcBUa
+  asgardeoExScopes:
+    - apim:api_manage
+    - apim:subscription_manage
+    - apim:tier_manage apim:admin
+    - apim:publisher_settings
+    - environments:view_prod
+    - environments:view_dev
+    - choreo:user_manage
+    - apim:dcr:app_manage
+    - choreo:deployment_manage
+    - choreo:dev_env_manage
+    - choreo:prod_env_manage
+    - choreo:non_prod_env_manage
+    - choreo:component_manage
+    - choreo:project_manage
+    - choreo:project_view
+    - apim:api_publish
+    - apim:document_manage
+    - apim:api_settings
+    - apim:subscription_view
+    - apim:environment_manage
+    - apim:subscribe
+    - choreo:log_view_non_prod
+    - choreo:log_view_prod
+    - urn:choreosystem:usermanagement:role_mapping_manage
+    - urn:choreosystem:usermanagement:role_mapping_view
+    - urn:choreosystem:usermanagement:role_mapping_create
+    - urn:choreosystem:usermanagement:role_mapping_update
+    - urn:choreosystem:usermanagement:role_mapping_delete
+    - urn:choreosystem:configmanagement:global_config_view
+    - urn:choreosystem:configmanagement:global_config_create
+    - urn:choreosystem:configmanagement:global_config_update
+    - urn:choreosystem:configmanagement:global_config_delete
+    - urn:choreosystem:configmanagement:global_config_manage
+    - urn:choreosystem:configmanagement:config_view
+    - urn:choreosystem:configmanagement:config_create
+    - urn:choreosystem:configmanagement:config_delete
+    - urn:choreosystem:configmanagement:config_manage
+    - urn:choreosystem:customdomainapi:custom_domain_view
+    - urn:choreosystem:customdomainapi:custom_domain_create
+    - urn:choreosystem:customdomainapi:custom_domain_update
+    - urn:choreosystem:customdomainapi:custom_domain_delete
+    - urn:choreosystem:customdomainapi:custom_domain_manage
+    - urn:choreosystem:usermanagement:role_view
+    - urn:choreosystem:usermanagement:role_create
+    - urn:choreosystem:usermanagement:role_update
+    - urn:choreosystem:usermanagement:role_delete
+    - urn:choreosystem:usermanagement:role_manage
+    - urn:choreosystem:usermanagement:role_manage
+    - urn:choreosystem:onpremkeymanagement:on_prem_key_view
+    - urn:choreosystem:onpremkeymanagement:on_prem_key_create
+    - urn:choreosystem:onpremkeymanagement:on_prem_key_delete
+    - urn:choreosystem:onpremkeymanagement:on_prem_key_update
+    - urn:choreosystem:onpremkeymanagement:on_prem_key_manage
+    - urn:choreosystem:organizationmanagement:theme_view
+    - urn:choreosystem:organizationmanagement:theme_create
+    - urn:choreosystem:organizationmanagement:theme_delete
+    - urn:choreosystem:organizationmanagement:theme_deploy
+    - urn:choreosystem:organizationmanagement:theme_manage
+    - urn:choreosystem:organizationmanagement:enterprise_login_config_view
+    - urn:choreosystem:organizationmanagement:enterprise_login_config_manage
+    - urn:choreosystem:organizationmanagement:self_signup_config_view
+    - urn:choreosystem:organizationmanagement:self_signup_config_update
+    - urn:choreosystem:organizationmanagement:self_signup_manage
+    - urn:choreosystem:organizationmanagement:self_signup_approval_view
+    - urn:choreosystem:organizationmanagement:self_signup_approval_update
+    - urn:choreosystem:usermanagement:user_manage
+    - urn:choreosystem:usermanagement:user_view
+    - urn:choreosystem:usermanagement:user_delete
+    - urn:choreosystem:usermanagement:user_update
+    - urn:choreosystem:usermanagement:permission_view
+    - urn:choreosystem:usermanagement:invitation_manage
+    - urn:choreosystem:usermanagement:invitation_view
+    - urn:choreosystem:usermanagement:invitation_send
+    - urn:choreosystem:usermanagement:invitation_delete
+    - urn:choreosystem:usermanagement:invitation_delete
+    - urn:choreosystem:componentsmanagement:component_trigger
+    - urn:choreosystem:componentsmanagement:component_create
+    - urn:choreosystem:componentsmanagement:component_config_view
+    - urn:choreosystem:componentsmanagement:component_logs_view
+    - urn:choreosystem:componentsmanagement:component_init_view
+    - urn:choreosystem:componentsmanagement:component_file_view
+    - urn:choreosystem:componentsmanagement:component_manage
+    - urn:choreosystem:choreodevopsportalapi:deployment_manage
+    - urn:choreosystem:choreodevopsportalapi:component_manage
+    - apim:api_view
+    - apim:tier_view
+    - apim:api_generate_key
+    - urn:choreosystem:choreodevopsportalapi:deployment_view
+    - urn:choreosystem:choreoauditloggingapi:audit_logs_view
+    - urn:choreosystem:choreoauditloggingapi:audit_logs_manage
+    - urn:choreosystem:componentutils:component_manage
+    - urn:choreosystem:componentutils:component_file_view
+    - urn:choreosystem:componentutils:component_trigger
+    - urn:choreosystem:componentutils:component_logs_view
+    - urn:choreosystem:organizationapi:org_manage
+    - choreo:domain_manage
+    - choreo:domain_view
+    - choreo:url_mapping_manage
+    - choreo:url_mapping_approve
+    - choreo:url_mapping_view
+    - choreo:insights_org_view
+    - choreo:workflow_request
+    - choreo:workflow_component_promotion_approve
+    - choreo:workflow_url_mapping_approve
+    - choreo:workflow_subscription_approve
+    - choreo:platform_engineer
