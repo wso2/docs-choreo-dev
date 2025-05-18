@@ -101,7 +101,6 @@ spec:
         runAsUser: 65532
         seccompProfile:
           type: RuntimeDefault
-      serviceAccountName: spicedb-operator
       volumes:
         - name: secret-spicedb-operator
           csi:
@@ -109,5 +108,4 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: secret-spicedb
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
+      serviceAccountName: spicedb-operator

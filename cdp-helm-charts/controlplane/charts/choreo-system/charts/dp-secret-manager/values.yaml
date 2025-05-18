@@ -1,0 +1,57 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicaCount: 1
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/dp-secret-manager
+  tag: latest
+serviceAccount:
+  annotations: {}
+secrets:
+  azureKeyVaultClientId:
+    path: choreo-cp/data/choreo-system/dp-secret-manager
+    key: azureKeyVaultClientId
+  azureKeyVaultClientSecret:
+    path: choreo-cp/data/choreo-system/dp-secret-manager
+    key: azureKeyVaultClientSecret
+  azureKeyVaultTenantId:
+    path: choreo-cp/data/choreo-system/dp-secret-manager
+    key: azureKeyVaultTenantId
+  usCdp2KeyVaultClientSecret:
+    path: choreo-cp/data/choreo-system/dp-secret-manager
+    key: usCdp2KeyVaultClientSecret
+vault:
+  roleName: dp-secret-manager
+config:
+  env: "prod"
+  azureKeyVaultName: prod-secret-manager-91
+  systemKeyVaultName: prod-dp-system-70
+  choreoManagedDpClusterIds: 0741478F-AC58-EC11-94F6-C89665949033,72FF49CF-AB6C-EE11-9937-6045BDB25610,BC0799B9-E27C-ED11-AC20-0003FF99F0C7,13791D4D-6E6D-EE11-9937-6045BDB25610,D4BD7924-67B7-ED11-BA77-0050F2F54D1E
+  systemKeyVaultClientId: 814c678a-634b-43d4-832b-588c9aa92827
+  systemKeyVaultTenantId: da76d684-740f-4d94-8717-9d5fb21dd1f9
+  useClusterIdIfNotProvided: 72ff49cf-ab6c-ee11-9937-6045bdb25610
+  cdpNames: US_CDP_1,EU_CDP_1,US_CDP_2
+  usCdp1ClusterId: 72ff49cf-ab6c-ee11-9937-6045bdb25610
+  usCdp1KeyVaultName: prod-secret-manager-91
+  usCdp1KeyVaultClientId: 814c678a-634b-43d4-832b-588c9aa92827
+  usCdp1KeyVaultTenantId: da76d684-740f-4d94-8717-9d5fb21dd1f9
+  euCdp1ClusterId: 13791d4d-6e6d-ee11-9937-6045bdb25610
+  euCdp1KeyVaultName: prod-secret-manager-91
+  euCdp1KeyVaultClientId: 814c678a-634b-43d4-832b-588c9aa92827
+  euCdp1KeyVaultTenantId: da76d684-740f-4d94-8717-9d5fb21dd1f9
+  usCdp2ClusterId: FC5EA931-D2CF-EE11-85FC-6045BD8626EB
+  usCdp2KeyVaultName: prod-cdp2-wu2-userapp-13
+  usCdp2KeyVaultClientId: 46709c12-7040-4e33-9e3b-30e89118531a
+  usCdp2KeyVaultTenantId: da76d684-740f-4d94-8717-9d5fb21dd1f9

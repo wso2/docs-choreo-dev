@@ -16,8 +16,8 @@ metadata:
     checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
     checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
-    {{- include "dp-mizzen.labels" . | nindent 4 }}
-  name: dp-mizzen
+    {{- include "dp-secret-manager.labels" . | nindent 4 }}
+  name: dp-secret-manager
   namespace: {{ .Values.global.namespaces.system }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
@@ -25,11 +25,11 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "dp-mizzen.labels" . | nindent 6 }}
+      {{- include "dp-secret-manager.labels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "dp-mizzen.labels" . | nindent 8 }}
+        {{- include "dp-secret-manager.labels" . | nindent 8 }}
     spec:
       {{- if .Values.autoscaling.enabled }}
       {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
@@ -38,71 +38,68 @@ spec:
       {{- end }}
       {{- end }}
       automountServiceAccountToken: true
-      terminationGracePeriodSeconds: 10
       securityContext:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: dp-mizzen
+        - name: dp-secret-manager
           imagePullPolicy: Always
           image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
           resources:
             limits:
-              cpu: 1
-              memory: 1Gi
+              cpu: 150m
+              memory: 150Mi
             requests:
-              cpu: 1
-              memory: 512Mi
+              cpu: 100m
+              memory: 100Mi
           envFrom:
             - configMapRef:
-                name: dp-mizzen
+                name: dp-secret-manager
             - secretRef:
-                name: dp-mizzen
+                name: dp-secret-manager
           securityContext:
             allowPrivilegeEscalation: false
-            seccompProfile:
-              type: RuntimeDefault
             runAsUser: 10001
             runAsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
             readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - all
+              add: ["NET_RAW"]
           ports:
-            - containerPort: 8080
+            - containerPort: 8000
               name: http-port
               protocol: TCP
-            - containerPort: 8081
-              name: ws-port
-              protocol: TCP
           readinessProbe:
-            initialDelaySeconds: 10
-            timeoutSeconds: 5
-            periodSeconds: 30
-            failureThreshold: 1
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
             successThreshold: 1
             httpGet:
-              path: /healthz
+              path: /api/v1/healthz
               port: http-port
           livenessProbe:
             initialDelaySeconds: 10
-            timeoutSeconds: 5
-            periodSeconds: 10
-            failureThreshold: 1
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
             successThreshold: 1
             httpGet:
-              path: /healthz
+              path: /api/v1/healthz
               port: http-port
           volumeMounts:
-            - name: secret-dp-mizzen
-              mountPath: /mnt/csi/secret-dp-mizzen
+            - name: secret-dp-secret-manager
+              mountPath: /mnt/csi/secret-dp-secret-manager
               readOnly: true
       volumes:
-        - name: secret-dp-mizzen
+        - name: secret-dp-secret-manager
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: dp-mizzen
+              secretProviderClass: dp-secret-manager
       restartPolicy: Always
-      serviceAccountName: dp-mizzen
+      serviceAccountName: dp-secret-manager

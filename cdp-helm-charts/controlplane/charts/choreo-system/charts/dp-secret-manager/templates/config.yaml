@@ -1,0 +1,43 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dp-secret-manager
+  namespace: {{ .Values.global.namespaces.system }}
+  labels:
+    {{ include "dp-secret-manager.labels" . | indent 4 }}
+data:
+  MIZZEN_URL: "http://dp-mizzen"
+  KV_RESOLVER_INTERNAL_SVC_URL: "http://dp-kv-resolver"
+  CLOUD_MANAGER_URL: "http://dp-cloud-manager"
+  ENV: {{ .Values.config.env | quote }}
+  AZURE_KEYVAULT_NAME: {{ .Values.config.azureKeyVaultName | quote }}
+  SYSTEM_KEYVAULT_NAME: {{ .Values.config.systemKeyVaultName | quote }}
+  CHOREO_MANAGED_DP_CLUSTER_IDS: {{ .Values.config.choreoManagedDpClusterIds | quote }}
+  SYSTEM_KV_NAME: {{ .Values.config.systemKeyVaultName | quote }}
+  SYSTEM_KV_CLIENT_ID: {{ .Values.config.systemKeyVaultClientId | quote }}
+  SYSTEM_KV_TENANT_ID: {{ .Values.config.systemKeyVaultTenantId | quote }}
+  USE_CLUSTER_ID_IF_NOT_PROVIDED: {{ .Values.config.useClusterIdIfNotProvided | quote }}
+  CDP_NAMES: {{ .Values.config.cdpNames | quote }}
+  US_CDP_1_CLUSTER_ID: {{ .Values.config.usCdp1ClusterId | quote }}
+  US_CDP_1_KV_NAME: {{ .Values.config.usCdp1KeyVaultName | quote }}
+  US_CDP_1_KV_CLIENT_ID: {{ .Values.config.usCdp1KeyVaultClientId | quote }}
+  US_CDP_1_KV_TENANT_ID: {{ .Values.config.usCdp1KeyVaultTenantId | quote }}
+  EU_CDP_1_CLUSTER_ID: {{ .Values.config.euCdp1ClusterId | quote }}
+  EU_CDP_1_KV_NAME: {{ .Values.config.euCdp1KeyVaultName | quote }}
+  EU_CDP_1_KV_CLIENT_ID: {{ .Values.config.euCdp1KeyVaultClientId | quote }}
+  EU_CDP_1_KV_TENANT_ID: {{ .Values.config.euCdp1KeyVaultTenantId | quote }}
+  US_CDP_2_CLUSTER_ID: {{ .Values.config.usCdp2ClusterId | quote }}
+  US_CDP_2_KV_NAME: {{ .Values.config.usCdp2KeyVaultName | quote }}
+  US_CDP_2_KV_CLIENT_ID: {{ .Values.config.usCdp2KeyVaultClientId | quote }}
+  US_CDP_2_KV_TENANT_ID: {{ .Values.config.usCdp2KeyVaultTenantId | quote }}
