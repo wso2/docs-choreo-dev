@@ -1,0 +1,32 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dp-cloud-manager
+  namespace: {{ .Values.global.namespaces.system }}
+  labels:
+    {{ include "dp-cloud-manager.labels" . | indent 4 }}
+data:
+  SECRET_MANAGER_URL: http://dp-secret-manager/api/v1
+  RUDDER_URL: http://dp-rudder/api/v1/
+  PROJECT_MANAGER_URL: http://dp-project-manager:80
+  CICD_URL: http://dp-cicd:80
+  SERVER_PORT: 3200
+  DB_USERNAME: choreo_cloud_manager_admin_db_user
+  DB_NAME: choreo_cloud_manager_db
+  DB_PORT: 1443
+  DB_TYPE: mssql
+  ACR_URL_TEMPLATE: "https://%s/acr/v1/%s"
+  DB_HOST: {{ .Values.config.dbHost }}
+  DATA_PLANE_SUPPORTED_REGIONS: {{ .Values.config.dataPlaneSupportedRegions | quote}}
+  COMMON_CREDENTIAL_LIMIT: {{ .Values.config.commonCredentialLimit }}
