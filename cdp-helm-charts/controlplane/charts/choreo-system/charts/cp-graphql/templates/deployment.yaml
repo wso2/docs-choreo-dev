@@ -1,0 +1,132 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+  labels:
+    {{- include "cp-graphql.labels" . | nindent 4 }}
+  name: cp-graphql
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "cp-graphql.labels" . | nindent 6 }}
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        {{- include "cp-graphql.labels" . | nindent 8 }}
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: cp-graphql
+          image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          env:
+            - name: KEYSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-cp-graphql
+                  key: KEYSTORE_PASSWORD
+          ports:
+            - containerPort: 9090
+              name: gql-port
+            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+              name: health
+            - containerPort: 9092      # To be used for public health check (external)
+              name: healthz
+            - containerPort: 9095      # This is a temporary http gateway until the CORS issues fixed. https://github.com/ballerina-platform/ballerina-standard-library/issues/1475
+              name: http-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /liveness
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-cp-graphql
+              mountPath: "/mnt/csi/secret-cp-graphql"
+              readOnly: true
+            - name: secret-idp
+              mountPath: "/mnt/csi/secret-idp"
+              readOnly: true
+            - name: secret-cp-graphql
+              mountPath: /home/ballerina/security/choreo-cp-graphql-keystore.pfx
+              subPath: BAL_KEYSTORE
+              readOnly: true
+            - name: keystore
+              mountPath: /home/ballerina/keystore
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-cp-graphql
+        - name: secret-cp-graphql
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cp-graphql
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-idp
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-idp
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: keystore
+          emptyDir: {}
+      serviceAccountName: cp-graphql
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "cp-graphql.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}
