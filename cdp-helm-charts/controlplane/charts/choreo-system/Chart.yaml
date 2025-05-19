@@ -51,18 +51,21 @@ dependencies:
   - name: devops-portal-api
     version: 1.0.0
     condition: devops-portal-api.enabled
-  - name: dp-mizzen
+  - name: dp-cicd
     version: 1.0.0
-    condition: dp-mizzen.enabled
-  - name: dp-secret-manager
-    version: 1.0.0
-    condition: dp-secret-manager.enabled
-  - name: dp-project-manager
-    version: 1.0.0
-    condition: dp-project-manager.enabled
+    condition: dp-cicd.enabled
   - name: dp-cloud-manager
     version: 1.0.0
     condition: dp-cloud-manager.enabled
+  - name: dp-mizzen
+    version: 1.0.0
+    condition: dp-mizzen.enabled
+  - name: dp-project-manager
+    version: 1.0.0
+    condition: dp-project-manager.enabled
   - name: dp-rudder
     version: 1.0.0
     condition: dp-rudder.enabled
+  - name: dp-secret-manager
+    version: 1.0.0
+    condition: dp-secret-manager.enabled
