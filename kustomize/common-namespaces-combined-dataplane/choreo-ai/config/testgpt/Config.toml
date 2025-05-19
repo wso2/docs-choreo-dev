@@ -14,7 +14,7 @@ azureOpenAIApiVersion = "2023-05-15"
 azureOpenAIToken = "/mnt/csi/secret-testgpt/OPENAI-ACCESS-KEY"
 
 isClusterConnection="{{.IS_REDIS_CLUSTER_CONNECTION | default "false"}}"
-redisClusterHost = "redis-cluster.redis.svc.cluster.local"
+redisClusterHost = "redis-cluster-headless.redis.svc.cluster.local"
 redisClusterUser = "testgpt_user"
 redisClusterPassword = "/mnt/csi/secret-testgpt/REDIS-CLUSTER-AUTH-KEY"
 redisHost = "{{.REDIS_HOST_TESTGPT}}"
