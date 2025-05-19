@@ -15,6 +15,7 @@ metadata:
   name: cp-graphql
   labels:
     {{- include "cp-graphql.labels" . | nindent 4 }}
+  namespace: {{ .Values.global.namespaces.system }}
 data:
   Config.toml: |
     {{ tpl (.Files.Get "Config.toml") . | nindent 4 }}
