@@ -324,7 +324,7 @@ data:
   REACT_APP_QUEUED_STATUS_POLLING_INTERVAL: {{ .Values.config.queuedStatusPollingInterval }}
   REACT_APP_IN_PROGRESS_STATUS_POLLING_INTERVAL: {{ .Values.config.inProgressStatusPollingInterval }}
   REACT_APP_CHOREO_MANAGED_AUTH_LOCAL_DEV_DOC_URL: {{ .Values.config.choreoManagedAuthLocalDevDocUrl }}
-  REACT_APP_CHOREO_MANAGED_AUTH_LOCAL_DEV_PROXY_PACKAGE: {{ .Values.config.choreoManagedAuthLocalDevProxyPackage }}
+  REACT_APP_CHOREO_MANAGED_AUTH_LOCAL_DEV_PROXY_PACKAGE: {{ .Values.config.choreoManagedAuthLocalDevProxyPackage | quote }}
   REACT_APP_ENABLE_MANAGED_AUTH_LOCAL_DEV: {{ .Values.config.enableManagedAuthLocalDev }}
   REACT_APP_ENABLE_CHOREO_AUTHORIZATION: {{ .Values.config.enableChoreoAuthorization }}
   REACT_APP_ENABLE_CHOREO_AUTHORIZATION_DATE: {{ .Values.config.enableChoreoAuthorizationDate }}
@@ -349,15 +349,15 @@ data:
   REACT_APP_ENABLE_ENVIRONMENT_DELETION_FEATURE: {{ .Values.config.enableEnvironmentDeletionFeature }}
   REACT_APP_BUILD_TIME_ENVIRONMENT_VARIABLES_DOC_LINK: {{ .Values.config.buildTimeEnvironmentVariablesDocLink }}
   REACT_APP_CUSTOMIZABLE_CI_DOC_LINK: {{ .Values.config.customizableCiDocLink }}
-  REACT_APP_CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG: {{ .Values.config.customSubscriptionPolicyHandlingOrg }}
+  REACT_APP_CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG: {{ .Values.config.customSubscriptionPolicyHandlingOrg | quote }}
   REACT_APP_ENABLE_ASYNC_MANUAL_SCHEDULE_TASK_CREATION: {{ .Values.config.enableAsyncManualScheduleTaskCreation }}
   REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION: {{ .Values.config.enableAsyncEventHandlerTestRunnerCreation }}
   REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL: {{ .Values.config.choreoResourceAuthzDocUrl }}
   REACT_APP_DOWNLOAD_LOGS_PAGE_SIZE: {{ .Values.config.downloadLogsPageSize }}
-  REACT_APP_APPROVAL_ORGS: {{ .Values.config.approvalOrgs }}
-  REACT_APP_SUBSCRIPTION_APPROVAL_ORGS: {{ .Values.config.subscriptionApprovalOrgs }}
+  REACT_APP_APPROVAL_ORGS: {{ .Values.config.approvalOrgs | quote }}
+  REACT_APP_SUBSCRIPTION_APPROVAL_ORGS: {{ .Values.config.subscriptionApprovalOrgs | quote }}
   REACT_APP_ENABLE_DT_DELETE_CONSOLE: {{ .Values.config.enableDtDeleteConsole }}
-  REACT_APP_EXECUTE_PAGE_OBS_API_ENABLED_ORGS: {{ .Values.config.executePageObsApiEnabledOrgs }}
+  REACT_APP_EXECUTE_PAGE_OBS_API_ENABLED_ORGS: {{ .Values.config.executePageObsApiEnabledOrgs | quote }}
   REACT_APP_API_GOVERNANCE_BASE_URL: {{ .Values.config.apiGovernanceBaseUrl }}
   REACT_APP_ENABLE_GEN_AI_SERVICES: {{ .Values.config.enableGenAiServices }}
   REACT_APP_OPEN_AI_TEMPLATE_ID: {{ .Values.config.openAiTemplateId }}
