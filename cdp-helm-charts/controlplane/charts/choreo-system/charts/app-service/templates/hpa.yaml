@@ -17,7 +17,7 @@ metadata:
   labels:
     {{- include "app-service.labels" . | nindent 4 }}
   name: app-service
-  namespace: {{ .Values.global.namespaces.apim }}
+  namespace: {{ .Values.global.namespaces.system }}
 spec:
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}

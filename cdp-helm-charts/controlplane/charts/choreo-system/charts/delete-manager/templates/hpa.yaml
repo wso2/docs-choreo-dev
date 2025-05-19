@@ -17,7 +17,7 @@ metadata:
   labels:
     {{- include "delete-manager.labels" . | nindent 4 }}
   name: delete-manager
-  namespace: {{ .Values.global.namespaces.apim }}
+  namespace: {{ .Values.global.namespaces.system }}
 spec:
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}

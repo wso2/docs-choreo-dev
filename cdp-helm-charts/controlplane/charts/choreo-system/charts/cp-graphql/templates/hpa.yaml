@@ -17,7 +17,7 @@ metadata:
   labels:
     {{- include "cp-graphql.labels" . | nindent 4 }}
   name: cp-graphql
-  namespace: {{ .Values.global.namespaces.apim }}
+  namespace: {{ .Values.global.namespaces.system }}
 spec:
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
