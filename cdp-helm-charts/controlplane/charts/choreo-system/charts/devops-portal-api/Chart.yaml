@@ -1,5 +1,16 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
 apiVersion: v2
-name: choreo-system
+name: devops-portal-api
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -22,25 +33,3 @@ version: 1.0.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.0.0"
-
-dependencies:
-  - name: api-server
-    version: 1.0.0
-  - name: app-service
-    version: 1.0.0
-  - name: choreo-console
-    version: 1.0.0
-  - name: cp-graphql
-    version: 1.0.0
-  - name: devops-portal-api
-    version: 1.0.0
-  - name: dp-mizzen
-    version: 1.0.0
-  - name: dp-secret-manager
-    version: 1.0.0
-  - name: dp-project-manager
-    version: 1.0.0
-  - name: dp-cloud-manager
-    version: 1.0.0
-  - name: dp-rudder
-    version: 1.0.0

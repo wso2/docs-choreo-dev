@@ -1,0 +1,34 @@
+[ballerina.log]
+level = {{ .Values.config.logLevel | quote }}
+format = "json"
+
+[ballerina.http.accessLogConfig]
+console = true
+
+[devops.api.config]
+app_service_url = "http://app-service:8080"
+cicd_url = "http://dp-cicd"
+cloud_manager_url = "http://dp-cloud-manager"
+delete_manager_url = "http://delete-manager"
+mizzen_url = "http://dp-mizzen"
+port = 8089
+project_manager_url = "http://dp-project-manager"
+rudder_url = "http://dp-rudder"
+subscription_svc_url = "http://subscriptions:9090"
+pdp_manager_url = "http://pdp-manager"
+apim_url = "https://choreo-am-service.choreo-apim:9443"
+no_of_max_env_per_org = {{ .Values.config.maxEnvPerOrg }}
+ciliumClusterIds = ""
+cdp_capacity_list = "{{- range $index, $item := .Values.config.cdpCapacityList }}{{- if $index }},{{ end }}{{ $item.region }}:{{ $item.value }}{{- end }}"
+default_cdp_capacity = {{ .Values.config.defaultCdpCapacity }}
+us_cdp_list = {{ .Values.config.usCDPList | join "," }}
+eu_cdp_list = {{ .Values.config.euCDPList | join "," }}
+includeJWTHeader = true
+enableEventPublish= {{ .Values.config.enableEventPublish }}
+websubhubUrl = {{ .Values.config.websubhubUrl | quote }}
+topic = {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle }}
+feature_flag_appdev_sts = {{ .Values.config.featureFlagApdevSTS }}
+feature_flag_default_env_idp_config = {{ .Values.config.featureFlagDefaultEnvIdpConfig }}
+default_idp_id = {{ .Values.config.defaultIDPId | quote }}
+apim_scopes = "apim:admin apim:api_create apim:api_delete apim:api_import_export apim:api_product_import_export apim:api_publish apim:api_view apim:app_import_export apim:client_certificates_add apim:client_certificates_update apim:client_certificates_view apim:document_create apim:document_manage apim:ep_certificates_add apim:ep_certificates_update apim:ep_certificates_view apim:external_services_discover apim:mediation_policy_create apim:mediation_policy_manage apim:mediation_policy_view apim:pub_alert_manage apim:publisher_settings apim:shared_scope_manage apim:subscription_block apim:subscription_view apim:threat_protection_policy_create apim:threat_protection_policy_manage apim:publisher_settings"
+apim_client_id = {{ .Values.config.restAPIConsumerKey | quote }}
