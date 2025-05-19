@@ -1,5 +1,16 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
 apiVersion: v2
-name: choreo-apim
+name: apim-proxy-deployer
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -22,26 +33,3 @@ version: 1.0.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.0.0"
-
-dependencies:
-  - name: apim-devportal
-    version: 1.0.0
-    condition: apim-devportal.enabled
-  - name: app-gateway-oauth-agent
-    version: 1.0.0
-    condition: app-gateway-oauth-agent.enabled
-  - name: choreo-connect-global-adapter
-    version: 1.0.0
-    condition: choreo-connect-global-adapter.enabled
-  - name: choreo-governance-service
-    version: 1.0.0
-    condition: choreo-governance-service.enabled
-  - name: choreo-linter-service
-    version: 1.0.0
-    condition: choreo-linter-service.enabled
-  - name: config-deployer-service
-    version: 1.0.0
-    condition: config-deployer-service.enabled
-  - name: product-apim
-    version: 1.0.0
-    condition: product-apim.enabled

@@ -168,7 +168,7 @@ enable = false
 [apim.choreo_audit_events]
 enable = true
 websub_hub_url = {{ .Values.config.websubhubURL | quote }}
-websub_hub_topic = {{ .Values.config.websubhubTopic | quote }}
+websub_hub_topic = {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle | quote }}
 queue_size = 20000
 worker_thread_count = 2
 

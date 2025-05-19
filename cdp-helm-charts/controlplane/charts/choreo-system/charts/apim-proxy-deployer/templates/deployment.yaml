@@ -1,0 +1,105 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip2: CKV_K8S_38=Required by linkerD
+  labels:
+    {{- include "apim-proxy-deployer.labels" . | nindent 4 }}
+  name: apim-proxy-deployer
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "apim-proxy-deployer.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "apim-proxy-deployer.labels" . | nindent 8 }}
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-apim-proxy-deployer
+          image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          envFrom:
+            - secretRef:
+                name: apim-proxy-deployer
+            - configMapRef:
+                name: apim-proxy-deployer
+          ports:
+            - containerPort: 9095  # This is a temporary http gateway until the CORS issues fixed. https://github.com/ballerina-platform/ballerina-standard-library/issues/1475
+              name: http-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: http-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: http-port
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 300m
+              memory: 650Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10001 # to fix CKV_K8S_40 use uid > 10000
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL  # Fixes CKV_K8S_37
+                - NET_RAW # Fixes CKV_K8S_28
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-choreo-apim-proxy-deployer
+              mountPath: "/mnt/csi/secret-choreo-apim-proxy-deployer"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: apim-proxy-deployer
+        - name: secret-choreo-apim-proxy-deployer
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: apim-proxy-deployer
+      serviceAccountName: apim-proxy-deployer
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "apim-proxy-deployer.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}

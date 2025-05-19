@@ -31,7 +31,6 @@ config:
   perOrgSettings: []
   loggers: []
   websubhubURL: "https://publish.websubhub.choreo.dev/hub"
-  websubhubTopic: "choreosystem-choreo_cp_events_topic"
   publisherKeyIssuer: "https://sts.choreo.dev:443/api/am/publisher/v2/apis/internal-key"
   devportalURL: "https://sts.choreo.dev/devportal"
   devportalKeyIssuer: "https://sts.choreo.dev:443/api/am/devportal/v2/apis/test-key"

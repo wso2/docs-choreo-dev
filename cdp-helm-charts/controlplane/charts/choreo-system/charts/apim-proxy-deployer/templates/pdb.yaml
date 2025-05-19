@@ -16,14 +16,14 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: resource-authorization-service
-  namespace: {{ .Values.global.namespaces.authz }}
+  name: apim-proxy-deployer
+  namespace: {{ .Values.global.namespaces.system }}
   labels:
-    {{- include "resource-authorization-service.labels" . | nindent 4 }}
+    {{- include "apim-proxy-deployer.labels" . | nindent 4 }}
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      {{- include "resource-authorization-service.labels" . | nindent 6 }}
+      {{- include "apim-proxy-deployer.labels" . | nindent 6 }}
 {{- end }}
 {{- end }}
