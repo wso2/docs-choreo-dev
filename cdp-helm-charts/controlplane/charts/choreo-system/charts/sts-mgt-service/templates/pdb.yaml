@@ -1,3 +1,7 @@
+{{- if .Values.autoscaling.enabled }}
+{{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+{{- if ge $minReplicas 2 }}
+---
 # -------------------------------------------------------------------------------------
 #
 # Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
@@ -9,14 +13,15 @@
 #
 # --------------------------------------------------------------------------------------
 
-apiVersion: v1
-kind: ConfigMap
+apiVersion: policy/v1
+kind: PodDisruptionBudget
 metadata:
-  name: dp-garbage-collector
+  name: sts-mgt-service
   namespace: {{ .Values.global.namespaces.system }}
-  labels:
-    {{ include "dp-garbage-collector.labels" . | indent 4 }}
-data:
-  MONGODB_USER: {{ .Values.config.mongodbUser }}
-  MONGODB_HOST: {{ .Values.config.mongodbHost }}
-  MONGODB_DATABASE: {{ .Values.config.mongodbDatabase }}
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      {{- include "sts-mgt-service.labels" . | nindent 6 }}
+{{- end }}
+{{- end }}
