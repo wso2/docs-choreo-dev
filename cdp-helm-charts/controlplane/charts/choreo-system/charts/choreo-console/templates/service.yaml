@@ -15,6 +15,7 @@ metadata:
   labels:
     {{- include "choreo-console.labels" . | nindent 4 }}
   name: console-next
+  namespace: {{ .Values.global.namespaces.system }}
 spec:
   ports:
     - name: con-v2-port

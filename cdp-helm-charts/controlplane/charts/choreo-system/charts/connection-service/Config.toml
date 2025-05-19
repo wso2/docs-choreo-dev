@@ -1,0 +1,34 @@
+[connection_service.config]
+servicePort=9000
+healthPort=9001
+
+configurationServiceEndpoint = "http://configuration-service:8080"
+resourceRegistryEndpoint = "http://resource-registry:9090/resource-registry"
+consoleApiClientEndpoint = "https://choreo-am-service.choreo-apim:9443/api/am/appdev/v1"
+keyManagerClientEndpoint = "https://choreo-am-service.choreo-apim:9443/keymanager-operations"
+apimHost = "http://choreo-am-service.choreo-apim:9763"
+projectManagerEndpoint = "http://dp-project-manager:80"
+endpointResolverEndpoint = "http://endpoint-resolver:9090"
+authzClientEndpoint = "http://choreo-resource-authorization-service.choreo-authorization.svc.cluster.local:9090"
+choreoIdpId = {{ .Values.config.choreoIdpId | quote }}
+rudderClientEndpoint = "http://dp-rudder:80"
+apimClientId = {{ .Values.config.apimClientId | quote }}
+choreoStsUrl = {{ .Values.config.choreoStsUrl | quote }}
+connectionDatabaseEnabled = true
+connectionListingFromDBEnabled = true
+connectionListingV2Enabled = true
+dbUrl = {{ .Values.config.dbUrl | quote }}
+dbUser = "choreo_connection_service_db_user"
+instanceBasedAuthzEnabled = true
+secretManagerEndpoint = "http://dp-secret-manager:80/api/v1"
+platformServicesManagerEndpoint = "http://platform-services-manager:80"
+enableEventPublish = true
+websubHubUrl = {{ .Values.config.websubHubUrl | quote }}
+websubHubTopic = {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle }}
+enableSTSManagementService = true
+choreoStsMgtServiceUrl = "http://sts-mgt-service:3000/api/v1/sts-proxy"
+apiKeyServiceEndpoint = "http://api-key-service:8080/api/v1"
+
+[ballerina.log]
+level = {{ .Values.config.logLevel | quote }}
+format="json"

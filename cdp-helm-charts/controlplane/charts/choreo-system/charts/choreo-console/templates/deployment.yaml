@@ -19,6 +19,7 @@ metadata:
   labels:
     {{- include "choreo-console.labels" . | nindent 4 }}
   name: choreo-console
+  namespace: {{ .Values.global.namespaces.system }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicas }}

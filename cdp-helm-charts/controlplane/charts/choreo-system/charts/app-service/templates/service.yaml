@@ -15,6 +15,7 @@ metadata:
   labels:
     {{- include "app-service.labels" . | nindent 4 }}
   name: app-service
+  namespace: {{ .Values.global.namespaces.system }}
 spec:
   ports:
     - name: app-service-port

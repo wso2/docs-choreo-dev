@@ -15,6 +15,7 @@ metadata:
   name: app-service
   labels:
     {{- include "app-service.labels" . | nindent 4 }}
+  namespace: {{ .Values.global.namespaces.system }}
 data:
   app-service.yaml: |
     {{ tpl (.Files.Get "app-service.yaml") . | nindent 4 }}

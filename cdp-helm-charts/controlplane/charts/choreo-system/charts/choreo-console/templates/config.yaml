@@ -15,6 +15,7 @@ metadata:
   name: choreo-console
   labels:
     {{- include "choreo-console.labels" . | nindent 4 }}
+  namespace: {{ .Values.global.namespaces.system }}
 data:
   REACT_APP_FIDP_GOOGLE: google
   REACT_APP_FIDP_GITHUB: github

@@ -15,8 +15,8 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    {{- include "cp-graphql.labels" . | nindent 4 }}
-  name: cp-graphql
+    {{- include "connection-service.labels" . | nindent 4 }}
+  name: connection-service
   namespace: {{ .Values.global.namespaces.system }}
 spec:
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
@@ -24,7 +24,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: cp-graphql
+    name: connection-service
   metrics:
     - type: Resource
       resource:

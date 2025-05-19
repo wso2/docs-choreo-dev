@@ -17,7 +17,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: cp-graphql
-  namespace: {{ .Values.global.namespaces.apim }}
+  namespace: {{ .Values.global.namespaces.system }}
   labels:
     {{- include "cp-graphql.labels" . | nindent 4 }}
 spec:

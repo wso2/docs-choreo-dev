@@ -16,14 +16,14 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: delete-manager
+  name: connection-service
   namespace: {{ .Values.global.namespaces.system }}
   labels:
-    {{- include "delete-manager.labels" . | nindent 4 }}
+    {{- include "connection-service.labels" . | nindent 4 }}
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      {{- include "delete-manager.labels" . | nindent 6 }}
+      {{- include "connection-service.labels" . | nindent 6 }}
 {{- end }}
 {{- end }}

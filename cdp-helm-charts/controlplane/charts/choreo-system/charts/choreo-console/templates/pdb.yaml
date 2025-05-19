@@ -17,7 +17,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: choreo-console
-  namespace: {{ .Values.global.namespaces.apim }}
+  namespace: {{ .Values.global.namespaces.system }}
   labels:
     {{- include "choreo-console.labels" . | nindent 4 }}
 spec:
