@@ -53,6 +53,20 @@ spicedb-operator:
     enabled: true
 choreo-system:
   enabled: true
+  commonConfigs:
+    ballerinaLowCodeResourcesVersion: 20230110-1125
+    sampleBallerinaVersion: 2201.3.1
+    scraperImage: choreocontrolplane.azurecr.io/choreoipaas/cio-incident-data-scraper:main-9d6fde7b4f1345ff5a58b9354191f1cc417b1bc5
+    githubScraperImage: choreocontrolplane.azurecr.io/choreoipaas/cio-incident-data-scraper:main-9d6fde7b4f1345ff5a58b9354191f1cc417b1bc5
+    servicenowScraperImage: choreocontrolplane.azurecr.io/choreoipaas/cio-servicenow-incident-scraper:main-048e1a979b282d0533bfd02ddb61dd9e9f057542
+    buildpacksBuilderImage: choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:0.2.88
+    choreoSamplesVersion: v84
+    unitTestRunnerImage: choreocontrolplane.azurecr.io/choreoipaas/choreo-unit-test-runner:0.0.3
+    workspaceImage: choreocontrolplane.azurecr.io/choreoipaas/workspace:master-1efd4ae3582ad15306462a9625abad295ad21384
+    codeServerImage: choreocontrolplane.azurecr.io/choreoipaas/choreo-ballerina-code-server:master-6db799ff6bfbdf656ab4affdfbb26838f8350e99
+    codeServerInitImage: choreocontrolplane.azurecr.io/choreoipaas/choreo-ballerina-code-server-init:master-6db799ff6bfbdf656ab4affdfbb26838f8350e99
+    synapseResourceGeneratorVersion: 1.0.31
+    apimMediationCodeGenerator: 1.5.11
   api-server:
     enabled: true
   apim-proxy-deployer:
