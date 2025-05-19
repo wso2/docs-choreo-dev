@@ -18,7 +18,7 @@ image:
   repository: choreoipaas/api-server
   tag: latest
 vault:
-  roleName: app-service
+  roleName: api-server
 serviceAccount:
   annotations: {}
 config:
