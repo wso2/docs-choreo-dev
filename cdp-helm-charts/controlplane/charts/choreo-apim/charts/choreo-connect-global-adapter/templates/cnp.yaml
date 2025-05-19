@@ -57,7 +57,7 @@ spec:
               protocol: TCP
     - fromEndpoints:
         - matchLabels:
-            choreo.component: choreo-apim-proxy-deployer
+            choreo.component: apim-proxy-deployer
             k8s:io.kubernetes.pod.namespace: choreo-system
         - matchLabels:
             choreo.component: cp-consolidated-service

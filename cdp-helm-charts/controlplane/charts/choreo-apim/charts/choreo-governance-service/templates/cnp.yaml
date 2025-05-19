@@ -54,7 +54,7 @@ spec:
               protocol: TCP
     - toEndpoints:
         - matchLabels:
-            choreo.component: choreo-resource-authorization-service
+            choreo.component: resource-authorization-service
             k8s:io.kubernetes.pod.namespace: choreo-authorization
       toPorts:
         - ports:

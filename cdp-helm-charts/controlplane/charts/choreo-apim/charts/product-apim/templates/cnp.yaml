@@ -32,7 +32,7 @@ spec:
         - matchLabels:
             choreo.component: choreo-governance-service
         - matchLabels:
-            {{- include "product-apim.labels" . | nindent 8 }}
+            {{- include "product-apim.labels" . | nindent 12 }}
         - matchLabels:
             app.kubernetes.io/instance: controlplane-internal-nginx-ingress
             k8s:io.kubernetes.pod.namespace: controlplane-internal-nginx-ingress
@@ -81,7 +81,7 @@ spec:
             choreo.component: choreo-url-management
             k8s:io.kubernetes.pod.namespace: choreo-system
         - matchLabels:
-            choreo.component: choreo-apim-proxy-deployer
+            choreo.component: apim-proxy-deployer
             k8s:io.kubernetes.pod.namespace: choreo-system
         - matchLabels:
             choreo.component: cp-consolidated-service
@@ -165,7 +165,7 @@ spec:
               protocol: TCP
     - toEndpoints:
         - matchLabels:
-            {{- include "product-apim.labels" . | nindent 8 }}
+            {{- include "product-apim.labels" . | nindent 12 }}
       toPorts:
         - ports:
             - port: "9443"
@@ -175,7 +175,7 @@ spec:
             choreo.component: choreo-url-management
             k8s:io.kubernetes.pod.namespace: choreo-system
         - matchLabels:
-            choreo.component: app-dev-authorization-service
+            choreo.component: app-dev-authz-service
             k8s:io.kubernetes.pod.namespace: choreo-system
         - matchLabels:
             choreo.component: subscriptions
