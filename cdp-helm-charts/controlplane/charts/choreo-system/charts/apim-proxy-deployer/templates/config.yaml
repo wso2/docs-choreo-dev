@@ -1,0 +1,40 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apim-proxy-deployer
+  namespace: {{ .Values.global.namespaces.system }}
+  labels:
+    {{ include "apim-proxy-deployer.labels" . | indent 4 }}
+data:
+  Config.toml: |
+    {{ tpl (.Files.Get "Config.toml") . | nindent 4 }}
+  PROXY_DEPLOYER_DB_URL: {{ .Values.config.dbURL | quote }}
+  APIM_URL: "https://choreo-am-service.choreo-apim:9443"
+  TOKEN_ISSUER: {{ .Values.config.tokenIssuer | quote }}
+  JWKS_ENDPOINT: {{ .Values.config.jwksEndpoint | quote }}
+  RUDDER_URL: "http://dp-rudder:80/api/v1"
+  PROJECT_MANAGER_URL: "http://dp-project-manager:80/api/v1"
+  CICD_URL: "http://dp-cicd:80/api/v1"
+  DEV_OPS_PORTAL_URL: "http://devops-portal-api:8089/api/v1"
+  APIM_SERVICE_URL: {{ .Values.config.apimServiceURL | quote }}
+  APIM_CLIENT_ID: {{ .Values.config.apimClientID | quote }}
+  INTROSPECTION_URL: {{ .Values.config.introspectionURL | quote }}
+  INTROSPECTION_ADMIN_USERNAME: choreo_apim_admin
+  GW_ADAPTER_URL: "http://cp-gw-adapter:8080"
+  GLOBAL_ADAPTER_URL: "http://global-adapter-v2.choreo-apim:9090"
+  ENABLE_EVENT_PUBLISH: "true"
+  WEBSUB_HUB_URL: {{ .Values.config.websubhubUrl | quote }}
+  WEBSUB_HUB_TOPIC: {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle }}
+  APP_SERVICE_URL: http://app-service:8080
+  PM_RUDDER_ID_SYNC: {{ .Values.config.pmRudderIdSync }}
