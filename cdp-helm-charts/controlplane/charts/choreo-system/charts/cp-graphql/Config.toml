@@ -1,0 +1,90 @@
+[choreo.cp.graphql.config]
+graphQLServerPort = 9090
+internalHealthCheckPort = 9091
+externalHealthCheckPort = 9092
+platformerUrl = "http://dp-project-manager:80/api/v1"
+appServiceUrl = "http://app-service:8080"
+rudderServiceUrl = "http://dp-rudder:80/api/v1"
+cicdUrl = "http://dp-cicd:80"
+negotiatorUrl = "http://negotiator:9092"
+workspaceManagerUrl = "http://workspace-manager:8080"
+cloudManagerServiceUrl = "http://dp-cloud-manager:80/api/v1"
+deleteManagerUrl =  "http://delete-manager:80/api/v1"
+subscriptionServiceUrl = "http://subscriptions:9090"
+devOpsPortalApiUrl = "http://devops-portal-api:8089"
+proxyDeployerServiceUrl = "http://choreo-apim-proxy-deployer:9095"
+urlManagerServiceUrl = "http://choreo-url-management:9090/url-mgt"
+orgManagerServiceUrl = "http://organization-management:9090/org-mgt"
+apimUrl = "https://choreo-am-service.prod-choreo-apim:9443"
+apimClientId = {{ .Values.config.apimClientId | quote }}
+apimClientSecret = "$env{APIM_REST_API_CONSUMER_SECRET}"
+apimScopes = {{ .Values.config.apimScopes | join " " }}
+jwt_issuer = {{ .Values.config.jwtIssuer | quote }}
+jwks_endpoint = {{ .Values.config.jwksEndpoint | quote }}
+jwks_enable = true
+audience_console = {{ .Values.config.audienceConsole | quote }}
+audience_dev_portal = "choreodevportal"
+audience_site24x7_application = {{ .Values.config.audienceSite24x7Application | quote }}
+audience_vs_code_client = {{ .Values.config.audienceVSCodeClient | quote }}
+audienceList = {{ .Values.config.audienceList | join "," }}
+enableAudienceList = true
+hpaEnabledOrgs = {{ .Values.config.hpaEnabledOrgs | join "," }}
+rateLimiterServiceUrl = "http://quota-limiter:9090"
+maxQueryDepth = {{ .Values.config.maxQueryDepth }}
+websubhubUrl = {{ .Values.config.websubhubUrl | quote }}
+topic = {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle }}
+pollingInterval = 0.1
+maxQueueLength = 4000
+retryCount = 3
+retryInterval = 1.0
+keyStorePath = "/home/ballerina/keystore/clientKeyStore.p12"
+keyStorePasswordPath = "/mnt/csi/secret-cp-graphql/KEYSTORE_PASSWORD"
+enableQuotaLimiter = {{ .Values.config.enableQuotaLimiter }}
+enableChoreoManagedRepoCreationBlocking = {{ .Values.config.enableChoreoManagedRepoCreationBlocking }}
+enableChoreoManagedRepoComponentFetchBlocking = {{ .Values.config.enableChoreoManagedRepoComponentFetchBlocking }}
+choreoManagedRepoComponentEnabledOrgs = {{ .Values.config.choreoManagedRepoComponentEnabledOrgs | join "," }}
+enableGithubOrgUserValidation = {{ .Values.config.enableGithubOrgUserValidation }}
+enableRBAC = {{ .Values.config.enableRBAC }}
+enableEventPublish = {{ .Values.config.enableEventPublish }}
+enableEventPublisherMTLS = {{ .Values.config.enableEventPublisherMTLS }}
+enableBannerStatus = {{ .Values.config.enableBannerStatus }}
+apimSecretPath = "/mnt/csi/secret-cp-graphql/APIM_REST_API_CONSUMER_SECRET"
+enableDBBasedNotifications = {{ .Values.config.enableDBBasedNotifications }}
+invokeUrlOrgIdPrefixExcludedOrgs = {{ .Values.config.invokeUrlOrgIdPrefixExcludedOrgs | join "," }}
+enableCustomURLMappings = {{ .Values.config.enableCustomURLMappings }}
+passUserTokenForProjectManager = {{ .Values.config.passUserTokenForProjectManager }}
+enableResolverExecutionTimeLogger = {{ .Values.config.enableResolverExecutionTimeLogger }}
+choreoOrgManagePermission = {{ printf "urn:%s:organizationapi:org_manage" .Values.global.choreosystem.orgHandle }}
+maxHeaderSize = {{ .Values.config.maxHeaderSize }}
+workflowManagementServiceUrl = "http://workflow-mgt:9082"
+enableWorkflowApprovalValidation = {{ .Values.config.enableWorkflowApprovalValidation }}
+enableCloudManagerHTTP11Client = {{ .Values.config.enableCloudManagerHTTP11Client }}
+appdevStsUrl = "http://sts-mgt-service:3000"
+mizzenUrl = "http://dp-mizzen:80"
+enableChoreoAppdevSTSCreation = {{ .Values.config.enableChoreoAppdevSTSCreation }}
+
+[ballerina.log]
+level = {{ .Values.logLevel | quote }}
+
+# Change "INFO" to "DEBUG" if need to enable log level for corresponding module.
+[[ballerina.log.modules]]
+name = "choreo/cp.graphql.http"
+level = {{ .Values.config.logLevelHTTP | quote }}
+
+[[ballerina.log.modules]]
+name = "choreo/cp.graphql.grpc"
+level = {{ .Values.config.logLevelGRPC | quote }}
+
+[[ballerina.log.modules]]
+name = "choreo/cp.graphql.utils"
+level = {{ .Values.config.logLevelUtils | quote }}
+
+[[ballerina.log.modules]]
+name = "choreo/cp.graphql.apis"
+level = {{ .Values.config.logLevelAPIs | quote }}
+
+[[choreo.cp.graphql.config.serviceStatus]]
+visible = {{ .Values.config.serviceStatusVisible }}
+name = {{ .Values.config.incidentMessageName | quote }}
+status = {{ .Values.config.incidentMessageStatus | quote }}
+message = {{ .Values.config.incidentMessage | quote }}
