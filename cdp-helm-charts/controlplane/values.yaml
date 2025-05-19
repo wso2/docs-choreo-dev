@@ -33,7 +33,55 @@ global:
     authz: choreo-authorization
 choreo-apim:
   enabled: true
+  apim-devportal:
+    enabled: true
+  app-gateway-oauth-agent:
+    enabled: true
+  choreo-connect-global-adapter:
+    enabled: true
+  choreo-governance-service:
+    enabled: true
+  choreo-linter-service:
+    enabled: true
+  config-deployer-service:
+    enabled: true
+  product-apim:
+    enabled: true
 spicedb-operator:
   enabled: true
+  spicedb-operator:
+    enabled: true
 choreo-system:
   enabled: true
+  api-server:
+    enabled: true
+  apim-proxy-deployer:
+    enabled: true
+  app-dev-authz-service:
+    enabled: true
+  app-service:
+    enabled: true
+  choreo-console:
+    enabled: true
+  connection-service:
+    enabled: true
+  cp-graphql:
+    enabled: true
+  delete-manager:
+    enabled: true
+  devops-portal-api:
+    enabled: true
+  dp-cloud-manager:
+    enabled: true
+  dp-mizzen:
+    enabled: true
+  dp-project-manager:
+    enabled: true
+  dp-rudder:
+    enabled: true
+  dp-secret-manager:
+    enabled: true
+choreo-authorization:
+  enabled: true
+  resource-authorization-service:
+    enabled: true

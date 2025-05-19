@@ -26,15 +26,22 @@ appVersion: "1.0.0"
 dependencies:
   - name: apim-devportal
     version: 1.0.0
+    condition: apim-devportal.enabled
   - name: app-gateway-oauth-agent
     version: 1.0.0
+    condition: app-gateway-oauth-agent.enabled
   - name: choreo-connect-global-adapter
     version: 1.0.0
+    condition: choreo-connect-global-adapter.enabled
   - name: choreo-governance-service
     version: 1.0.0
+    condition: choreo-governance-service.enabled
   - name: choreo-linter-service
     version: 1.0.0
+    condition: choreo-linter-service.enabled
   - name: config-deployer-service
     version: 1.0.0
+    condition: config-deployer-service.enabled
   - name: product-apim
     version: 1.0.0
+    condition: product-apim.enabled
