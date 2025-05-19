@@ -16,7 +16,7 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: app-service
+  name: api-server
   namespace: {{ .Values.global.namespaces.system }}
   labels:
     {{- include "api-server.labels" . | nindent 4 }}
