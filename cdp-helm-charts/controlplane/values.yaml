@@ -71,6 +71,8 @@ choreo-system:
     enabled: true
   devops-portal-api:
     enabled: true
+  dp-cicd:
+    enabled: true
   dp-cloud-manager:
     enabled: true
   dp-mizzen:
