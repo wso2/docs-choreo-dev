@@ -1,0 +1,104 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+  labels:
+    {{ include "app-dev-authz-service.labels" . | indent 4 }}
+  name: app-dev-authz-service
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{ include "app-dev-authz-service.labels" . | indent 6 }}
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        {{ include "app-dev-authz-service.labels" . | indent 8 }}
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: app-dev-authorization-service
+          image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          envFrom:
+            - configMapRef:
+                name: app-dev-authz-service
+          ports:
+            - containerPort: 9090
+              name: service-port
+            - containerPort: 9091
+              name: health-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /liveness
+          resources:
+            limits:
+              cpu: 750m
+              memory: 2Gi
+            requests:
+              cpu: 250m
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+              readOnly: true
+            - name: secret-appdev-authorization
+              mountPath: "/mnt/csi/secret-appdev-authorization"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: app-dev-authz-service
+        - name: secret-appdev-authorization
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: app-dev-authz-service
+      serviceAccountName: app-dev-authz-service
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "app-dev-authz-service.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}
