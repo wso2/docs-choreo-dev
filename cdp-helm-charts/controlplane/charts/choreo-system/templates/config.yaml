@@ -1,0 +1,32 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-env-variables
+  namespace: {{ .Values.global.namespaces.system }}
+  labels:
+    {{- include "choreo-system.labels" . | nindent 4 }}
+data:
+  BALLERINA_LOW_CODE_RESOURCES_VERSION: {{ .Values.commonConfigs.ballerinaLowCodeResourcesVersion }}
+  SAMPLE_BALLERINA_VERSION: {{ .Values.commonConfigs.sampleBallerinaVersion }}
+  SCRAPER_IMAGE: {{ .Values.commonConfigs.scraperImage }}
+  GITHUB_SCRAPER_IMAGE: {{ .Values.commonConfigs.githubScraperImage }}
+  SERVICENOW_SCRAPER_IMAGE: {{ .Values.commonConfigs.servicenowScraperImage }}
+  BUILDPACKS_BUILDER_IMAGE: {{ .Values.commonConfigs.buildpacksBuilderImage }}
+  CHOREO_SAMPLES_VERSION: {{ .Values.commonConfigs.choreoSamplesVersion }}
+  UNIT_TEST_RUNNER_IMAGE: {{ .Values.commonConfigs.unitTestRunnerImage }}
+  WORKSPACE_IMAGE: {{ .Values.commonConfigs.workspaceImage }}
+  CODE_SERVER_IMAGE: {{ .Values.commonConfigs.codeServerImage }}
+  CODE_SERVER_INIT_IMAGE: {{ .Values.commonConfigs.codeServerInitImage }}
+  SYNAPSE_RESOURCE_GENERATOR_VERSION: {{ .Values.commonConfigs.synapseResourceGeneratorVersion }}
+  APIM_MEDIATION_CODE_GENERATOR: {{ .Values.commonConfigs.apimMediationCodeGenerator }}
