@@ -1,0 +1,31 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicaCount: 1
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/dp-garbage-collector
+  tag: latest
+serviceAccount:
+  annotations: {}
+secrets:
+  mongodbPassword:
+    path: choreo-cp/data/choreo-system/dp-garbage-collector
+    key: mongodbPassword
+vault:
+  roleName: dp-garbage-collector
+config:
+  mongodbUser: prod_choreo_dp_project_manager
+  mongodbHost: choreo-apim-pl-0.lbxa7.mongodb.net
+  mongodbDatabase: PROD_DP_PROJECT_MANAGER
