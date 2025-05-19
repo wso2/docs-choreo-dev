@@ -1,0 +1,273 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicaCount: 1
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/dp-cicd
+  tag: latest
+serviceAccount:
+  annotations: {}
+secrets:
+  dbPassword:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: dbPassword
+  githubAppClientSecret:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: servicegithubAppClientSecretBusConnectionString
+  githubAppPrivateKey:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: githubAppPrivateKey
+  logAnalyticsKey:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: logAnalyticsKey
+  choreoPrivateAcrSecret:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: choreoPrivateAcrSecret
+  dokerRegistryPat:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: dokerRegistryPat
+  choreoGithubRunnerAppClientSecret:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: choreoGithubRunnerAppClientSecret
+  choreoGithubRunnerAppOpaqueClientSecret:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: choreoGithubRunnerAppOpaqueClientSecret
+  azureContainerRegistryPassword:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: dbazureContainerRegistryPasswordPassword
+  gitOpsAppClientSecret:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: gitOpsAppClientSecret
+  gitOpsAppPrivateKey:
+    path: choreo-cp/data/choreo-system/dp-cicd
+    key: gitOpsAppPrivateKey
+  dockerHubUsers:
+    - key: docker_user_1
+      path: choreo-cp/data/choreo-system/dp-cicd
+vault:
+  roleName: dp-cicd
+config:
+  dbHost: sqlfg-choreo-choreo-cicd-db-prod.database.windows.net
+  gitopsOrgCredentialId: 95FC47EA-206E-4F5C-AA93-135B01D49B23
+  appOrgCredentialId: F7DDF0BA-67E0-44FE-BC1B-3C56C9FE6A76
+  registryCredentialId: 11DAE80F-0784-4EE2-961A-E3C387818592
+  rudderWebhookUrl: https://app.choreo.dev
+  newRudderWebhookUrl: https://apis.choreo.dev
+  enableNewRudderWebhookUrl: true
+  choreoGitopsBotUsername: choreo-userapps-gitops-bot-prod
+  choreoGitopsBotEmail: choreo-userapps-gitops-bot-prod@wso2.com
+  choreoAppsBotUsername: choreo-userapps-source-bot-prod
+  choreoAppsBotEmail: choreo-userapps-source-bot-prod@wso2.com
+  onCommitWebhookAppRepo: https://app.choreo.dev/component/build
+  onCommitAutoBuildWebhookAppRepo: https://app.choreo.dev/component/auto-deploy
+  onPushConfigWebhookAppRepo: https://app.choreo.dev/component/code-push
+  configurableWebhookEnabled: true
+  ballerinaCentralEnv: PROD
+  ballerinaCentralApi: https://api.central.ballerina.io
+  choreoIdTokenHost: sts.choreo.dev
+  choreoIdClientId: K9hHU8gVjylyO4HuE6gy3JjLpKYa
+  appInsightsKey: 8f98bf03-9ba8-47ba-a18d-62449b92ca42
+  githubAppName: Choreo Dev
+  githubAppId: 176001
+  githubAppClientId: Iv1.804167a242012c66
+  githubRunnersWebhook: https://gh-runner.choreo.dev
+  azureCustomerId: 428606da-1dea-4101-9dc7-26a377a2640e
+  autoDeployAlertApiUrl: https://app.choreo.dev/image/deploy-alert
+  enableAutoDeployByDefault: true
+  enablePrSentByDefault: false
+  choreoPrivateAcrServer: choreoprivateacr.azurecr.io
+  choreoPrivateAcrUser: c646d734-5151-4418-97fc-6c8b98d2e136
+  subscriptionServiceUrl: subscriptions:9090
+  stepBasedFreeTierUuid: 01ebea3a-7735-10be-b3c0-ba95f991e877
+  componentBasedFreeTierUuid: 8de71e7a-adc2-4de4-a1b4-5b79d450f3ff
+  freeTierUuid: 8de71e7a-adc2-4de4-a1b4-5b79d450f3ff
+  ghRepoFilterOnChoreoSubscription: true
+  orgLevelWebhookEnabledOrgs: yashodperera
+  onPushConfigWebhookCallbackUrl: https://apis.choreo.dev/component-utils/1.0.0/choreo
+  buildpacksEnable: true
+  buildpacksTestRunnerEnable: false
+  buildpacksEnabledTestOrgs: "0,843,4864"
+  miBuildpacksEnable: true
+  enableAsyncOperations: true
+  miBuildpacksEnabledTestOrgs: 23941
+  buildpacksBuilderVersion: 0.2.78
+  miBuildpacksBlobContainerHost: "https://choreosharedbuildpack6.blob.core.windows.net"
+  customizableCiEnabledOrgs: 
+    - yomalargowforg
+    - gayashanperera
+  customizableCiEnabledForFreeTier: true
+  customizableCiEnabledForPaidCdp: true
+  customizableCiEnabledWorkflows: 
+    - BYOC
+    - Webapp
+    - Buildpack
+    - Test Runner
+    - Prism Mock
+    - MI
+  customizableCiEnabledWorkflowsForPaidCdp: 
+    - Buildpack
+    - Test Runner
+    - Prism Mock
+  customizableCiEnabledWorkflowsForPaidPdp: ""
+  customizableCiDisableOrgs: apimsaas
+  customWorkflowEnabledOrgs: gayashanperera
+  isCustomizableCiEnabledForPaidOrgs: false
+  customizableCiEnabledPdps: ""
+  argoStorageClass: default
+  argoPodAffinityEnabled: false
+  argoPodAffinityLabel: "workflow_name"
+  argoPodAffinityTopologyKey: "kubernetes.io/hostname"
+  argoPodAffinityWeight: 1
+  argoFreeTierStorageSize: 10Gi
+  argoPaidCdpStorageSize: 10Gi
+  argoBuildPackCachingEnabled: true
+  argoResourceLimitsEnabled: true
+  argoSuccessWorkflowTtl: 600
+  argoFailedWorkflowTtl: 600
+  argoActiveDeadlineSecondsForFreeTier: '1800'
+  argoActiveDeadlineSecondsForPaidCdp: '3600'
+  argoLightWeightFreeTierCpuLimit: '180m'
+  argoLightWeightFreeTierMemoryLimit: '360Mi'
+  argoLightWeightFreeTierCpuRequest: '90m'
+  argoLightWeightFreeTierMemoryRequest: '180Mi'
+  argoLightWeightPaidCdpCpuLimit: '400m'
+  argoLightWeightPaidCdpMemoryLimit: '800Mi'
+  argoLightWeightPaidCdpCpuRequest: '100m'
+  argoLightWeightPaidCdpMemoryRequest: '200Mi'
+  argoMidWeightFreeTierCpuLimit: '360m'
+  argoMidWeightFreeTierMemoryLimit: '720Mi'
+  argoMidWeightFreeTierCpuRequest: '180m'
+  argoMidWeightFreeTierMemoryRequest: '360Mi'
+  argoMidWeightPaidCdpCpuLimit: '1'
+  argoMidWeightPaidCdpMemoryLimit: '2Gi'
+  argoMidWeightPaidCdpCpuRequest: '250m'
+  argoMidWeightPaidCdpMemoryRequest: '500Mi'
+  argoHeavyWeightFreeTierCpuLimit: '540m'
+  argoHeavyWeightFreeTierMemoryLimit: '1080Mi'
+  argoHeavyWeightFreeTierCpuRequest: '270m'
+  argoHeavyWeightFreeTierMemoryRequest: '540Mi'
+  argoHeavyWeightPaidCdpCpuLimit: '2'
+  argoHeavyWeightPaidCdpMemoryLimit: '4Gi'
+  argoHeavyWeightPaidCdpCpuRequest: '500m'
+  argoHeavyWeightPaidCdpMemoryRequest: '1Gi'
+  argoFreeTierNodePool: "spot"
+  argoPaidCdpNodePool: "dedicated"
+  argoRetryStrategyEnabled: false
+  argoRetryStrategyLimit: 3
+  argoRetryStrategyRetryPolicy: "Always"
+  argoRetryStrategyBackoffDuration: "10s"
+  argoRetryStrategyMaxDuration: "2m"
+  argoRetryStrategyFactor: 2
+  argoBuildPackMemoryRequest: '2048'
+  argoBuildPackMemoryLimit: '4096'
+  argoBuildPackCpuRequest: '1000'
+  argoBuildPackCpuLimit: '2000'
+  argoBallerinaMemoryRequest: '4096'
+  argoBallerinaMemoryLimit: '8192'
+  argoBallerinaCpuRequest: '2000'
+  argoBallerinaCpuLimit: '4000'
+  argoByocMemoryRequest: '2048'
+  argoByocMemoryLimit: '4096'
+  argoByocCpuRequest: '1000'
+  argoByocCpuLimit: '2000'
+  argoMiMemoryRequest: '4096'
+  argoMiMemoryLimit: '8192'
+  argoMiCpuRequest: '2000'
+  argoMiCpuLimit: '4000'
+  argoWebappMemoryRequest: '4096'
+  argoWebappMemoryLimit: '8192'
+  argoWebappCpuRequest: '2000'
+  argoWebappCpuLimit: '4000'
+  argoGitProxyMemoryRequest: '2048'
+  argoGitProxyMemoryLimit: '4096'
+  argoGitProxyCpuRequest: '1000'
+  argoGitProxyCpuLimit: '2000'
+  argoTestRunnerMemoryRequest: '2048'
+  argoTestRunnerMemoryLimit: '4096'
+  argoTestRunnerCpuRequest: '1000'
+  argoTestRunnerCpuLimit: '2000'
+  argoPrismMockServiceMemoryRequest: '2048'
+  argoPrismMockServiceMemoryLimit: '4096'
+  argoPrismMockServiceCpuRequest: '1000'
+  argoPrismMockServiceCpuLimit: '2000'
+  argoStructure: containerSet
+  argoContainerSetEnabledOrgs: ""
+  argoEnvironmentSetupImage: choreocontrolplane.azurecr.io/choreoipaas/argo-environment-setup:main-e664c3a01461d0b1d196d5976c524fe15277abab
+  argoTrivyScanImage: choreocontrolplane.azurecr.io/choreoipaas/argo-trivy-scan:main-e664c3a01461d0b1d196d5976c524fe15277abab
+  argoPushImage: choreocontrolplane.azurecr.io/choreoipaas/argo-image-push:main-e664c3a01461d0b1d196d5976c524fe15277abab
+  argoDockerfileScanImage: choreocontrolplane.azurecr.io/choreoipaas/argo-checkov-scan:main-e664c3a01461d0b1d196d5976c524fe15277abab
+  argoDockerBuildImage: choreocontrolplane.azurecr.io/choreoipaas/argo-docker-build:main-e664c3a01461d0b1d196d5976c524fe15277abab
+  argoBuildpackBuildImage: choreocontrolplane.azurecr.io/choreoipaas/argo-buildpack-build:main-c426f2863b791813aaaed376bc2978f5e19dd254
+  argoEnvironmentCleanupImage: choreocontrolplane.azurecr.io/choreoipaas/argo-environment-cleanup:main-e664c3a01461d0b1d196d5976c524fe15277abab
+  argoValidationAndGenerationImage: choreocontrolplane.azurecr.io/choreoipaas/argo-validations:main-7812a9d90131967fec9ec52af6a5f0c8f7334121
+  argoBaseImage: choreocontrolplane.azurecr.io/choreoipaas/argo-base-image:main-e664c3a01461d0b1d196d5976c524fe15277abab
+  bdCmv: "v1.1.35"
+  bdCmFp: ".github/workflows/choreo-build-deploy_cm_1.1.35.yml"
+  bdByorv: "v1.1.49"
+  bdByorFp: ".github/workflows/choreo-build-deploy_byor_1.1.49.yml"
+  bdByocv: "v1.0.38"
+  bdByocFp: ".github/workflows/choreo-build-deploy_byoc_1.0.38.yml"
+  bdMiv: "v1.0.37"
+  bdMiFp: ".github/workflows/choreo-build-deploy_mi_1.0.37.yml"
+  bdBpv: "v0.12.25"
+  bdBpFp: ".github/workflows/choreo-build-deploy_buildpack_0.12.25.yml"
+  bdPmsv: "v1.1.1"
+  bdPmsFp: ".github/workflows/choreo-build-deploy_prism-mock-service_1.1.1.yml"
+  bdMcpv: "v0.2.0"
+  bdMcpFp: ".github/workflows/choreo-build-deploy_mcp-service_0.2.0.yml"
+  bdImagePushTemplateVersion: "choreo-templates/choreo-image-push@v1.0.7"
+  bdBuildDeployTemplateVersion: "choreo-templates/build-deploy-action@v2.2.4"
+  bdAwsSingleImageRepoEnabledOrgs: 997d45a7-39a3-4ee2-a158-5ffd8eab4697
+  mediationWfCodeGenv: "v1.2.12"
+  mediationWfCodegenFp: ".github/workflows/mediation-code-generator_1.2.12.yml"
+  disableBallerinaConfigGenerationWorflow: true
+  disableBallerinaObservability: true
+  choreoManagedBuildpackLifecycleImage: choreocontrolplane.azurecr.io/buildpacksio/lifecycle:0.19.6"
+  googleBuildpackLifecycleImage: "choreocontrolplane.azurecr.io/buildpacksio/lifecycle:0.20.2"
+  googleBuildpackRunImage: "choreocontrolplane.azurecr.io/buildpacks/google-22/run:2941124e39ef19f49aabac4257daf5f652805e81"
+  choreoManagedBuildpackRunImage: "choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/stacks/alpine/run:0.2.44"
+  disableMiCreateAppWorkflow: true
+  disableMiConfigGenerationWorkflow: true
+  enableTransactionWfCreation: true
+  dockerRegistryUsername: choreo-dockerhub-user@wso2.com
+  logLevel: info
+  githubSubmodulesSupportEnabled: true
+  choreoGithubRunnerAppClientId: UcCbfS52iYMaStN2oMTQHYmTHDMa
+  choreoGithubRunnerAppOpaqueClientId: Dk7FQ_Ci6026R2ldp35DGTNx7rAa
+  mizzenApiUrl: "http://dp-mizzen:80"
+  secretManagerApiUrl: "http://dp-secret-manager:80"
+  userServiceUrl: "app-service:8080"
+  enableSourceConfigValidation: true
+  enablePrivateRepoBuildRestrictionsOnFreeTier: false
+  enableSavingRepoVisibilityState: true
+  apimServiceUrl: https://sts.choreo.dev
+  proxyBuildWfVersion: "v1.0"
+  proxyBuildWfFilePath: ".github/workflows/proxy-build-v1.0.yml"
+  enableDockerhubUserRotation: true
+  cpGwUrl: https://apis.choreo.dev
+  azureContainerRegistryUsername: choreo-buildpacks-pull-tf-prod
+  proxyDeployerUrl: https://app.choreo.dev
+  trafficRoutingProxyDisabled: false
+  enableAsyncInitialBuild: true
+  enableSaveSrcConfigDetails: true
+  latestComponentYamlSchemaVersion: 1.2
+  sourceConfigMigrationDocLink: "https://wso2.com/choreo/docs/develop-components/manage-component-source-configurations/#update-to-the-latest-source-configuration-file"
+  enableGetBuildConfigFromBuildpackDetails: true
+  disableConfigurableCheckAlert: true
+  configurableAlertEnabledOrgs: 
+    - c43045fc-c3a8-4e37-be73-3275087ee724
+    - 7da78740-a71e-4636-8dae-e583b9758f1c
+    - e255af5a-b68b-4821-aa87-3058d39c35b7
+  azureTenantId: "da76d684-740f-4d94-8717-9d5fb21dd1f9"
