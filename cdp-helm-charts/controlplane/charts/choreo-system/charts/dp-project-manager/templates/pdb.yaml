@@ -1,3 +1,6 @@
+{{- if .Values.autoscaling.enabled }}
+{{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+{{- if ge $minReplicas 2 }}
 # -------------------------------------------------------------------------------------
 #
 # Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
@@ -19,3 +22,5 @@ spec:
   selector:
     matchLabels:
       {{- include "dp-project-manager.labels" . | nindent 6 }}
+{{- end }}
+{{- end }}
