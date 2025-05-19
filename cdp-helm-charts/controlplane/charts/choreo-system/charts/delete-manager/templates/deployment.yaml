@@ -1,0 +1,104 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    {{- include "delete-manager.labels" . | nindent 4 }}
+  name: delete-manager
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "delete-manager.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "delete-manager.labels" . | nindent 8 }}
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: delete-manager
+          imagePullPolicy: Always
+          image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          resources:
+            limits:
+              cpu: 150m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          envFrom:
+            - configMapRef:
+                name: delete-manager
+            - secretRef:
+                name: delete-manager
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10001
+            runAsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
+          ports:
+            - containerPort: 8000
+              name: http-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /api/v1/healthz
+              port: http-port
+          livenessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /api/v1/healthz
+              port: http-port
+          volumeMounts:
+            - name: secret-delete-manager
+              mountPath: /mnt/csi/secret-delete-manager
+              readOnly: true
+      volumes:
+        - name: secret-delete-manager
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: delete-manager
+      restartPolicy: Always
+      serviceAccountName: delete-manager
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "delete-manager.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}

@@ -1,0 +1,60 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: delete-manager
+  namespace: {{ .Values.global.namespaces.system }}
+  labels:
+    {{- include "delete-manager.labels" . | nindent 4 }}
+data:
+  PORT: 8000
+  MSSQL_PORT: 1433
+  MSSQL_USER: choreo_delete_manager_admin_db_user
+  MSSQL_DBNAME: choreo_delete_manager_db
+  RUDDER_URL: http://dp-rudder
+  CICD_URL: http://dp-cicd
+  PROJECT_MANAGER_URL: http://dp-project-manager
+  RESOURCE_REGISTRY_URL: http://resource-registry:9090
+  CLOUD_MANAGER_URL: http://dp-cloud-manager
+  PLATFORM_SERVICES_MANAGER_URL: http://platform-services-manager
+  PROXY_DEPLOYER_URL: http://choreo-apim-proxy-deployer:9095
+  ASB_DELETE_QUEUE_NAME: delete-manager
+  ASB_COMPONENT_DELETE_QUEUE_NAME: delete-manager
+  ASB_ENVIRONMENT_DELETE_QUEUE_NAME: delete-environments
+  ASB_DEPLOYMENT_TRACK_DELETE_QUEUE_NAME: delete-deployment-tracks
+  API_SERVER_URL: http://api-server
+  GCHAT_URL: https://chat.googleapis.com
+  APP_SERVICE_URL: app-service:8080
+  CRYPTO_KEY_SERVICE_URL: http://crypto-key-service:9091
+  CONFIG_SERVICE_URL: http://configuration-service:8080
+  CONFIG_MAPPING_SERVICE_URL: http://configuration-service:8084
+  URL_MANAGER_URL: http://choreo-url-management:9090
+  MIZZEN_URL: http://dp-mizzen
+  SPEC_POPULATOR_URL: http://spec-populator.choreo-ai:8000
+  APP_DEV_AUTHZ_URL: http://app-dev-authorization-service:9090
+  APP_DEV_USER_MGT_URL: http://app-dev-user-mgt-service:8080
+  MOESIF_SERVICE_URL: http://moesif-service:8080
+  APPDEV_STS_MGT_URL: http://sts-mgt-service:3000
+  API_KEY_SERVICE_URL: http://api-key-service:8080
+  ENV: {{ .Values.config.env }}
+  MSSQL_HOST: {{ .Values.config.mssqlHost }}
+  CONNECTOR_BUILDER_URL: {{ .Values.config.connectorBuilderUrl }}
+  APIM_URL: https://choreo-am-service.choreo-apim:9443
+  APIM_CLIENT_ID: {{ .Values.config.apimClientId }}
+  APIM_ADMIN_USERNAME: choreo_apim_admin
+  NEGOTIATOR_URL: negotiator:9092
+  GCHAT_SPACE_ID: {{ .Values.config.gchatSpaceId }}
+  BALLERINA_CENTRAL_URL: {{ .Values.config.ballerinaCentralURL }}
+  ENABLE_INSTANCE_BASED_AUTHORIZATION: true
+  ENABLE_CRYPTO_KEY_DELETION: true
+  ENABLE_APP_DEV_STS_DELETION: true
