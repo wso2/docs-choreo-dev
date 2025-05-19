@@ -1,5 +1,5 @@
 apiVersion: v2
-name: choreo-system
+name: delete-manager
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -22,29 +22,3 @@ version: 1.0.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.0.0"
-
-dependencies:
-  - name: api-server
-    version: 1.0.0
-  - name: app-dev-authz-service
-    version: 1.0.0
-  - name: app-service
-    version: 1.0.0
-  - name: choreo-console
-    version: 1.0.0
-  - name: cp-graphql
-    version: 1.0.0
-  - name: delete-manager
-    version: 1.0.0
-  - name: devops-portal-api
-    version: 1.0.0
-  - name: dp-mizzen
-    version: 1.0.0
-  - name: dp-secret-manager
-    version: 1.0.0
-  - name: dp-project-manager
-    version: 1.0.0
-  - name: dp-cloud-manager
-    version: 1.0.0
-  - name: dp-rudder
-    version: 1.0.0
