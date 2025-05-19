@@ -15,7 +15,7 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
   labels:
-    {{- include "app-service.labels" . | nindent 4 }}
+    {{- include "api-server.labels" . | nindent 4 }}
   name: api-server
   namespace: {{ .Values.global.namespaces.system }}
 spec:
@@ -24,11 +24,11 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "app-service.labels" . | nindent 6 }}
+      {{- include "api-server.labels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "app-service.labels" . | nindent 8 }}
+        {{- include "api-server.labels" . | nindent 8 }}
     spec:
       securityContext:
         seccompProfile:
@@ -36,15 +36,9 @@ spec:
       containers:
         - image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
           name: api-server
-          env:
-            - name: IDP_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: secret-idp
-                  key: IDP_CLIENT_SECRET
           envFrom:
-            - configMapRef:
-                name: env-api-server
+            - secretRef:
+                name: api-server
           ports:
             - containerPort: 8080
               name: http-port
@@ -79,29 +73,23 @@ spec:
             - mountPath: /api-server.yaml
               name: config
               subPath: api-server.yaml
-            - name: secret-idp
-              mountPath: /mnt/csi/secret-idp
+            - name: secret-volume
+              mountPath: /mnt/csi/secret-volume
               readOnly: true
       volumes:
         - name: config
           configMap:
-            name: cm-file-api-server
-        - name: secret-idp
+            name: api-server
+        - name: secret-volume
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: secret-idp
-            nodePublishSecretRef:
-              name: csi-secret-store-azure
-      serviceAccountName: sa-choreo-default
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: antiaffinity
-                    operator: In
-                    values:
-                      - api-server
-              topologyKey: kubernetes.io/hostname
+              secretProviderClass: api-server
+      serviceAccountName: api-server
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "api-server.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}

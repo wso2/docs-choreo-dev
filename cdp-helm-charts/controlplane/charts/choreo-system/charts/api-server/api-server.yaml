@@ -10,40 +10,40 @@
 # --------------------------------------------------------------------------------------
 
 idp:
-  clientId: ${IDP_CLIENT_ID}
+  clientId: {{ .Values.config.idp.clientId }}
   clientSecret: ${IDP_CLIENT_SECRET}
-  tokenUrl: ${IDP_TOKEN_URL}
-  redirectUrls: {{.REDIRECT_URLS}}
+  tokenUrl: {{ .Values.config.idp.tokenUrl }}
+  redirectUrls: {{ .Values.config.idp.redirectUrls }}
   jwks: # DEPRECATED. See 'jwksEndpoints'.
-    url: ${IDP_JWKS_URL}
-    cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
-    cacheTtl: ${JWKS_CACHE_TTL}
+    url: {{ .Values.config.idp.jwksUrl }}
+    cacheRefreshInterval: {{ .Values.config.idp.jwksCacheRefreshInterval }}
+    cacheTtl: {{ .Values.config.idp.jwksCacheTTL }}
   jwtProviders:
-    - issuer: ${KM_ISSUER}
-      audiences: {{.JWT_PROVIDERS_AUDIENCES}}
+    - issuer: {{ .Values.config.idp.kmIssuer }}
+      audiences: '[ {{ join ", " .Values.config.idp.jwtProviderAudiences }} ]'
       jwks:
-        url: ${KM_JWKS_URL}
-        cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
-        cacheTtl: ${JWKS_CACHE_TTL}
-    - issuer: ${ASGARDEO_ISSUER}
+        url: {{ .Values.config.idp.kmJwksUrl }}
+        cacheRefreshInterval: {{ .Values.config.idp.jwksCacheRefreshInterval }}
+        cacheTtl: {{ .Values.config.idp.jwksCacheTTL }}
+    - issuer: {{ .Values.config.idp.asgardeoIssuer }}
       audiences:
-        - ${ASGARDEO_AUDIENCE}
+        - {{ .Values.config.idp.asgardeoAudience }}
       jwks:
-        url: ${ASGARDEO_JWKS_URL}
-        cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
-        cacheTtl: ${JWKS_CACHE_TTL}
-    - issuer: ${CP_ENFORCER_ISSUER}
+        url: {{ .Values.config.idp.asgardeoJwksUrl }}
+        cacheRefreshInterval: {{ .Values.config.idp.jwksCacheRefreshInterval }}
+        cacheTtl: {{ .Values.config.idp.jwksCacheTTL }}
+    - issuer: {{ .Values.config.idp.cpEnforcerIssuer }}
       skipClaimsValidation: true  # Skip claim validation until https://github.com/wso2-enterprise/choreo/issues/10549 is fixed
-      publicKey: ${CP_ENFORCER_JWT_CERT}
-  issuer: ${IDP_ISSUER}   # DEPRECATED. See 'issuers'.
-  audience: {{.IDP_AUDIENCE}}
-  jwtValidationLeeway: ${IDP_JWT_VALIDATION_LEEWAY}
+      publicKey: {{ .Values.config.idp.cpEnforcerJWTIssuer | b64enc | quote }}
+  issuer: {{ .Values.config.idp.issuer }} # DEPRECATED. See 'issuers'.
+  audience: '[ {{ join ", " .Values.config.idp.audience }} ]'
+  jwtValidationLeeway: {{ .Values.config.idp.jwtValidationLeeway }}
   skipJwtValidation: false
   cookies:
     maxAge: 86400
-    secure: ${IDP_COOKIES_SECURE}
+    secure: true
     httpOnly: true
-  systemUserIdpIds: {{.SYSTEM_USER_IDP_ID}}
+  systemUserIdpIds: '[ {{ join ", " .Values.config.idp.systemUserIdpIds }} ]'
 auth:
   enable: true
 middleware:
@@ -52,14 +52,14 @@ middleware:
     dumpRequestHeaders: true
     dumpResponseBody: true
     dumpResponseHeaders: true
-    publicKey: ${MIDDLEWARE_LOGGING_PUBLIC_KEY}
+    publicKey: {{ .Values.config.middleware.logging.publicKey }}
   eventPublish:
     websubHubPublisherConfig:
-      websubHubBaseUrl: ${MIDDLEWARE_EVENT_PUBLISH_WEBSUBHUB_URL}
-      hubTopic: ${MIDDLEWARE_EVENT_PUBLISH_WEBSUBHUB_TOPIC}
-    enable: ${MIDDLEWARE_EVENT_PUBLISH_ENABLE}
+      websubHubBaseUrl: {{ .Values.config.middleware.eventPublish.websubHubBaseUrl }}
+      hubTopic: {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle }}
+    enable: true
   instanceBasedAuthz:
-    enabled: ${ENABLE_INSTANCE_BASED_AUTHZ}
+    enabled: true
 upstream:
   app-service: app-service:8080
   workspace-manager: workspace-manager:8080
@@ -69,12 +69,12 @@ upstream:
   dp-cicd: dp-cicd:80
   dp-rudder: dp-rudder:80
   organization-management: organization-management:8080
-  authz-service: ${AUTHZ_SERVICE_ENDPOINT}
+  authz-service: choreo-resource-authorization-service.choreo-authorization.svc.cluster.local:9090
 logger:
-  level: ${LOGGER_LEVEL}    # todo: change this to info after the new components get stable in prod.
+  level: info
   encoding: console
-  development: ${LOGGER_DEVELOPMENT}
-  disableStacktrace: ${LOGGER_DISABLE_STACKTRACE}
+  development: false
+  disableStacktrace: true
   encoderConfig:
     timeKey: time
     levelKey: level
@@ -90,7 +90,7 @@ logger:
   outputPaths: stdout
   errorOutputPaths: stdout # we send errors to stdout in dev so that we can easily grep without redirect
 apimTokenExchangeConfig:
-  tokenExchangeUrl: ${APIM_TOKEN_URL}
+  tokenExchangeUrl: {{ .Values.config.apimTokenExchangeConfig.url }}
   subjectTokenType: urn:ietf:params:oauth:token-type:jwt
   requestedTokenType: urn:ietf:params:oauth:token-type:jwt
   grantType: urn:ietf:params:oauth:grant-type:token-exchange
