@@ -10,7 +10,7 @@
 # --------------------------------------------------------------------------------------
 
 apiVersion: v2
-name: controlplane
+name: choreo-authorization
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -33,17 +33,6 @@ version: 1.0.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.0.0"
-
 dependencies:
-  - name: choreo-apim
+  - name: resource-authorization-service
     version: 1.0.0
-    condition: choreo-apim.enabled
-  - name: choreo-authorization
-    version: 1.0.0
-    condition: choreo-authorization.enabled
-  - name: choreo-system
-    version: 1.0.0
-    condition: choreo-system.enabled
-  - name: spicedb-operator
-    version: 1.0.0
-    condition: spicedb-operator.enabled

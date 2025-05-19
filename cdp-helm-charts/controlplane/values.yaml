@@ -30,6 +30,7 @@ global:
     observability: choreo-observability
     ai: choreo-ai
     spicedbOperator: spicedb-operator
+    authz: choreo-authorization
 choreo-apim:
   enabled: true
 spicedb-operator:
