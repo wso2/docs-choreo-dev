@@ -1,0 +1,197 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dp-rudder
+  namespace: {{ .Values.global.namespaces.system }}
+  labels:
+    {{ include "dp-rudder.labels" . | indent 4 }}
+data:
+  MSSQL_USER: choreo_rudder_admin_db_user
+  MSSQL_DBNAME: choreo_rudder_db
+  MSSQL_PORT: 1433
+  SECRET_MANAGER_URL: http://dp-secret-manager
+  MIZZEN_URL: "http://dp-mizzen"
+  CLOUD_CONNECTOR_URL: http://dp-cloud-manager
+  AUTH_URL: http://dp-project-manager
+  CICD_URL: http://dp-cicd
+  APIM_PROXY_DEPLOYER_URL: http://choreo-apim-proxy-deployer:9095
+  QUOTA_LIMITER_SVC_ADDRESS: quota-limiter:9090
+  APP_SERVICE_ADDRESS: app-service:8080
+  NEGOTIATOR_ADDRESS: negotiator:9092
+  SUBSCRIPTION_SVC_ADDRESS: subscriptions:9090
+  OBS_ADDRESS: obsapi:9096
+  DATAPLANE_BLOCKED_CIDR_LIST: 169.254.169.254/32
+  DATAPLANE_INGRESS_ALLOWED_NS_LABEL: userapp-ingress-allowed
+  CUSTOM_URL_CLUSTER_ISSUER: letsencrypt-prod
+  CUSTOM_URL_SERVICE_NAME: choreo-nginx-service
+  CUSTOM_URL_SERVICE_PORT: 9443
+  CUSTOM_URL_SERVICE_PATH: "/"
+  DEV_PORTAL_CLUSTER_ISSUER: letsencrypt-prod
+  DEV_PORTAL_SERVICE_NAME: devportal-external
+  DEV_PORTAL_SERVICE_PORT: 80
+  DEV_PORTAL_SERVICE_PATH: "/"
+  RUDDER_URL: "http://dp-rudder:80" # This is for the rudder-migration-service, remove this when removing that
+  CONFIGURATION_MGT_URL: "http://configuration-service:8080"
+  ENDPOINT_RESOLVER_URL: "http://endpoint-resolver:9090"
+  SERVICE_REGISTRY_URL: "http://resource-registry:9090"
+  CONFIG_MAPPING_SERVICE_URL: "http://configuration-service:8084"
+  CONNECTION_SERVICE_URL: "http://connection-service:9000"
+  CUSTOM_URL_MANAGER_URL: "http://choreo-url-management:9090/url-mgt"
+  JOB_TTL_SECONDS_AFTER_FINISHED: 360
+  CRONJOB_SUCCESSFUL_JOBS_HISTORY_LIMIT: 2
+  SCHEMA_SERVICE_URL: "http://configuration-schema-service:80"
+  CHOREO_STS_MGT_URL: http://sts-mgt-service:3000/api/v1/sts-proxy
+  PDP_CAPABILITIES_ALLOWED_ADD_ITEMS: CHOWN,DAC_OVERRIDE,SETGID,SETUID,NET_BIND_SERVICE
+  PDP_CAPABILITIES_ALLOWED_DROP_ITEMS: ALL
+  PDP_CAPABILITIES_DROP_NONE_ALLOWED: true
+  MSSQL_HOST: {{ .Values.config.mssqlHost}}
+  SENTRY: {{ .Values.config.sentry }}
+  SERVER_PORT: {{ .Values.config.serverPort }}
+  CHOREO_ENV: {{ .Values.config.choreoEnv }}
+  DEV_DATAPLANE_CLUSTER_ID: {{ .Values.config.devDataplaneClusterId }}
+  PROD_DATAPLANE_CLUSTER_ID: {{ .Values.config.prodDataplaneClusterId }}
+  DATAPLANE_SHARED_CR_HOSTS: {{ .Values.config.dataplaneSharedCRHosts }}
+  APIM_SERVER_URL: {{ .Values.config.apimServerUrl }}
+  APIM_REST_API_CONSUMER_KEY: {{ .Values.config.apimRestApiConsumerKey }}
+  APIM_REVISION_LIMIT: {{ .Values.config.apimRevisionLimit }}
+  PERISCOPE_HOST: {{ .Values.config.periscopeHost }}
+  AUTO_UNDEPLOY_INTERVAL_HOURS: {{ .Values.config.autoUndeployIntervalHours }}
+  AUTO_UNDEPLOY_AFTER_HOURS: {{ .Values.config.autoUndeployAfterHours }}
+  AUTO_UNDEPLOY_EXCLUDED_ORGS: {{ .Values.config.autoUndeployExcludedOrgs | join "," }}
+  HPA_ENABLED: {{ .Values.config.hpaEnabled }}
+  QUOTA_LIMITER_ENABLED: {{ .Values.config.quotaLimiterEnabled }}
+  APP_GATEWAY_FOR_WEB_APPS_ENABLED: {{ .Values.config.appGatewayForWebAppsEnabled }}
+  DB_LOG_LEVEL: {{ .Values.config.dbLogLevel }}
+  DB_CONN_TIMEOUT_SECONDS: {{ .Values.config.dbConnTimeoutSeconds }}
+  DB_MAX_IDLE_TIME_SECONDS: {{ .Values.config.dbMaxIdleTimeSeconds }}
+  DB_MAX_LIFETIME_SECONDS: {{ .Values.config.dbMaxLifetimeSeconds }}
+  DB_CONN_POOL_RETRIES_ENABLED: {{ .Values.config.dbConnPoolRetriesEnabled }}
+  DB_MAX_IDLE_COUNT: {{ .Values.config.dbMaxIdleCount }}
+  GORM_SLOW_THRESHOLD_MILLISECONDS: {{ .Values.config.gormSlowThresholdMilliseconds }}
+  CUSTOM_URL_CLUSTER_ID: {{ .Values.config.customUrlClusterId }}
+  CUSTOM_URL_US_DATAPLANE_ID: {{ .Values.config.customUrlUsDataplaneId }}
+  CUSTOM_URL_EU_DATAPLANE_ID: {{ .Values.config.customUrlEuDataplaneId }}
+  CUSTOM_URL_US_ROUTING_CLUSTER_ID: {{ .Values.config.customUrlUsRoutingClusterId }}
+  CUSTOM_URL_EU_ROUTING_CLUSTER_ID: {{ .Values.config.customUrlEuRoutingClusterId }}
+  CUSTOM_URL_US_CNAME: {{ .Values.config.customUrlUsCname }}
+  CUSTOM_URL_EU_CNAME: {{ .Values.config.customUrlEuCname }}
+  CUSTOM_URL_NAMESPACE: {{ .Values.config.customUrlNamespace }}
+  CUSTOM_URL_CNAME: {{ .Values.config.customUrlCname }}
+  CUSTOM_URL_INGRESS_CLASS_NAME: {{ .Values.config.customUrlIngressClassName }}
+  DEV_PORTAL_CLUSTER_ID: {{ .Values.config.devPortalClusterId }}
+  DEV_PORTAL_NAMESPACE: {{ .Values.config.devPortalNamespace }}
+  DEV_PORTAL_CNAME: {{ .Values.config.devPortalCname }}
+  DEV_PORTAL_INGRESS_CLASS_NAME: {{ .Values.config.devPortalIngressClassName }}
+  DEV_PORTAL_INTER_CLUSTER_URL: {{ .Values.config.devPortalInterClusterUrl }}
+  JOB_ACTIVE_DEADLINE_SECONDS: {{ .Values.config.jobActiveDeadlineSeconds }}
+  JOB_BACKOFF_LIMIT: {{ .Values.config.jobBackoffLimit }}
+  ALERT_SERVICE_URL: {{ .Values.config.alertServiceUrl }}
+  CHOREO_ST_ENDPOINT: {{ .Values.config.choreoStEndpoint }}
+  CHOREO_IDP_ID: {{ .Values.config.choreoIdpId }}
+  ALERT_REST_API_CONSUMER_KEY: {{ .Values.config.alertRestApiConsumerKey }}
+  NAMESPACE_MIGRATION_DEFAULT_RETRY_COUNT: {{ .Values.config.namespaceMigrationDefaultRetryCount }}
+  GITHUB_API_LIMIT: {{ .Values.config.githubApiLimit }}
+  GITHUB_API_LIMIT_INTERVAL_MINUTES: {{ .Values.config.githubApiLimitIntervalMinutes }}
+  MI_INTEGRATION_RW_MODE_ENABLED: {{ .Values.config.miIntegrationRwModeEnabled }}
+  DNS_RES_INIT_CONTAINER_ENABLED: {{ .Values.config.dnsResInitContainerEnabled }}
+  DEPLOY_FROM_PROXY_DEPLOYER_ENABLED: {{ .Values.config.deployFromProxyDeployerEnabled }}
+  DISABLE_ORG_BASED_ENVIRONMENTS: {{ .Values.config.disableOrgBasedEnvironments }}
+  REDIS_HOST: {{ .Values.config.redisHost }}
+  REDIS_PORT: {{ .Values.config.redisPort }}
+  REDIS_DB_INDEX: {{ .Values.config.redisDbIndex }}
+  REDIS_DB_PREFIX: {{ .Values.config.redisDbPrefix }}
+  REDIS_SERVER_NAMES: {{ .Values.config.redisServerNames | join "," }}
+  REDIS_US_CDP_2_HOST: {{ .Values.config.redisUsCdp2Host }}
+  REDIS_US_CDP_2_PORT: {{ .Values.config.redisUsCdp2Port }}
+  REDIS_US_CDP_2_DATA_PLANE_IDS: {{ .Values.config.redisUsCdp2DataPlaneIds }}
+  REDIS_EU_CDP_HOST: {{ .Values.config.redisEuCdpHost }}
+  REDIS_EU_CDP_PORT: {{ .Values.config.redisEuCdpPort }}
+  REDIS_EU_CDP_DATA_PLANE_IDS: {{ .Values.config.redisEuCdpDataPlaneIds }}
+  WEB_APPS_INGRESS_CLASS: {{ .Values.config.webAppsIngressClass }}
+  WEB_APPS_PDP_INGRESS_CLASS: {{ .Values.config.webAppsPdpIngressClass }}
+  WEB_APPS_DP_INTERNAL_LB: {{ .Values.config.webAppsDpInternalLb }}
+  ORG_PROJECT_QUERY_PARAMS_REQUIRED: {{ .Values.config.orgProjectQueryParamsRequired }}
+  REQUIRE_ENV_QUERY_PARAM_FOR_CONFIGS: {{ .Values.config.requireEnvQueryParamForConfigs }}
+  INVOKE_URL_ORG_ID_PREFIX_EXCLUSIONS: {{ .Values.config.invokeUrlOrgIdPrefixExclusions | join "," }}
+  WEB_APPS_VHOST_US: {{ .Values.config.webAppsVhostUs }}
+  WEB_APPS_VHOST_EU: {{ .Values.config.webAppsVhostEu }}
+  WEB_APPS_VHOST_IND: {{ .Values.config.webAppsVhostInd }}
+  WEB_APPS_SHORT_URL_VHOST_US: {{ .Values.config.webAppsShortUrlVhostUs }}
+  WEB_APPS_SHORT_URL_VHOST_EU: {{ .Values.config.webAppsShortUrlVhostEu }}
+  REGION_NAMES: {{ .Values.config.regionNames | join "," }}
+  REGION_US_TEMPLATE_REGION: {{ .Values.config.regionUsTemplateRegion }}
+  REGION_US_WEB_APP_VHOST: {{ .Values.config.regionUsWebAppVhost }}
+  REGION_US_WEB_APP_SHORT_URL_VHOST: {{ .Values.config.regionUsWebAppShortUrlVhost }}
+  REGION_US_SKIP_WEB_APP_INGRESS: {{ .Values.config.regionUsSkipWebAppIngress }}
+  REGION_EU_TEMPLATE_REGION: {{ .Values.config.regionEuTemplateRegion }}
+  REGION_EU_WEB_APP_VHOST: {{ .Values.config.regionEuWebAppVhost }}
+  REGION_EU_WEB_APP_SHORT_URL_VHOST: {{ .Values.config.regionEuWebAppShortUrlVhost }}
+  REGION_EU_SKIP_WEB_APP_INGRESS: {{ .Values.config.regionEuSkipWebAppIngress }}
+  REGION_US_CDP_2_TEMPLATE_REGION: {{ .Values.config.regionUsCdp2TemplateRegion }}
+  REGION_US_CDP_2_WEB_APP_VHOST: {{ .Values.config.regionUsCdp2WebAppVhost }}
+  REGION_US_CDP_2_WEB_APP_SHORT_URL_VHOST: {{ .Values.config.regionUsCdp2WebAppShortUrlVhost }}
+  REGION_US_CDP_2_SKIP_WEB_APP_INGRESS: {{ .Values.config.regionUsCdp2SkipWebAppIngress }}
+  K8S_API_MIGRATION_TASK_ENABLED: {{ .Values.config.k8sApiMigrationTaskEnabled }}
+  K8S_API_MIGRATION__MIGRATE_CRONJOBS: {{ .Values.config.k8sApiMigrationMigrateCronjobs }}
+  K8S_API_MIGRATION__MIGRATE_HPAS: {{ .Values.config.k8sApiMigrationMigrateHpas }}
+  K8S_AUTOSCALING_API_VERSION: {{ .Values.config.k8sAutoscalingApiVersion }}
+  K8S_CRONJOB_API_VERSION: {{ .Values.config.k8sCronjobApiVersion }}
+  KEDA_INTERCEPTOR_SERVICE: {{ .Values.config.kedaInterceptorService }}
+  CLOUD_DATAPLANE_CLUSTER_SERVICE_IP_RANGE: {{ .Values.config.cloudDataplaneClusterServiceIpRange }}
+  DEPLOYMENT_TRACKS_ENABLED: {{ .Values.config.deploymentTracksEnabled }}
+  UNIFIED_CONFIG_MAPPING_ENABLED_ORGS: {{ .Values.config.unifiedConfigMappingEnabledOrgs }}
+  DEPLOY_ALL_APIS_VIA_PROXY_DEPLOYER: {{ .Values.config.deployAllApisViaProxyDeployer }}
+  INTERNAL_MARKETPLACE_FEATURE_ENABLED: {{ .Values.config.internalMarketplaceFeatureEnabled }}
+  UNIFIED_CONFIG_DEPLOYMENT_ENABLED: {{ .Values.config.unifiedConfigDeploymentEnabled }}
+  DELETE_DANGLING_DEPLOY_HISTORY_ENTRIES: {{ .Values.config.deleteDanglingDeployHistoryEntries }}
+  ENABLE_CUSTOM_URLS: {{ .Values.config.enableCustomUrls }}
+  CILIUM_CLUSTER_WIDE_NETWORK_POLICY_ENABLED: {{ .Values.config.ciliumClusterWideNetworkPolicyEnabled }}
+  DEFAULT_USER_APP_KV_DATA_PLANE_ID: {{ .Values.config.defaultUserAppKvDataPlaneId }}
+  CDP_POD_PRIORITY_CLASS_NAME: {{ .Values.config.cdpPodPriorityClassName }}
+  SCALE_TO_ZERO_FEATURE_ENABLED: {{ .Values.config.scaleToZeroFeatureEnabled }}
+  SKIP_NAMESPACE_DEPLOY_ON_ENV_CREATE: {{ .Values.config.skipNamespaceDeployOnEnvCreate }}
+  ENABLE_ENDPOINT_SHORT_URL: {{ .Values.config.enableEndpointShortUrl }}
+  SHORT_URL_ENABLED_ORGS: {{ .Values.config.shortUrlEnabledOrgs }}
+  DEPLOY_HISTORY_MAX_AGE_MONTHS: {{ .Values.config.deployHistoryMaxAgeMonths }}
+  DEPLOY_HISTORY_DELETE_BATCH_SIZE: {{ .Values.config.deployHistoryDeleteBatchSize }}
+  DEPLOY_HISTORY_CLEAN_UP_ENABLED: {{ .Values.config.deployHistoryCleanUpEnabled }}
+  JOB_CONFIG_ENABLED: {{ .Values.config.jobConfigEnabled }}
+  ENABLE_CONNECTION_USAGE_FOR_ALL_COMPONENT_TYPES: {{ .Values.config.enableConnectionUsageForAllComponentTypes }}
+  MARKETPLACE_INTELLIGENT_ROUTING_ENABLED: {{ .Values.config.marketplaceIntelligentRoutingEnabled }}
+  RESILIENCY_CONFIG_ENABLED: {{ .Values.config.resiliencyConfigEnabled }}
+  COPY_CONTAINER_PORTS_ON_PROMOTE: {{ .Values.config.copyContainerPortsOnPromote }}
+  PDP_OAUTH_AGENT_SVC: {{ .Values.config.pdpOauthAgentSvc }}
+  PDP_GATEWAY_SVC: {{ .Values.config.pdpGatewaySvc }}
+  APP_GATEWAY_FOR_PDPS_ENABLED: {{ .Values.config.appGatewayForPdpsEnabled }}
+  NEW_BUILD_FLOW_ENABLED: {{ .Values.config.newBuildFlowEnabled }}
+  ENABLE_SPOT_NODE_SCHEDULING: {{ .Values.config.enableSpotNodeScheduling }}
+  ENABLE_SPOT_NODE_SCHEDULING_FOR_PAID_TIER: {{ .Values.config.enableSpotNodeSchedulingForPaidTier }}
+  ENABLE_SPOT_NODE_SCHEDULING_FOR_CRITICAL_ENV: {{ .Values.config.enableSpotNodeSchedulingForCriticalEnv }}
+  ENABLE_TOPOLOGY_SPREAD_CONSTRAINTS: {{ .Values.config.enableTopologySpreadConstraints }}
+  K8S_CRONJOB_TIMEZONE_MIGRATION_ENABLED: {{ .Values.config.k8sCronjobTimezoneMigrationEnabled }}
+  KEDA_HTTP_ADD_ON_MIGRATION_ENABLED: {{ .Values.config.kedaHttpAddOnMigrationEnabled }}
+  APIM_USER_FOR_OAUTH_APP_CREATION: {{ .Values.config.apimUserForOauthAppCreation }}
+  EU_DATA_PLANE_ID: {{ .Values.config.euDataPlaneId }}
+  CILIUM_EGRESS_POLICY_ENABLED: {{ .Values.config.ciliumEgressPolicyEnabled }}
+  STS_MANAGEMENT_SERVICE_ENABLED: {{ .Values.config.stsManagementServiceEnabled }}
+  ENABLE_API_KEY_FOR_PUBLIC_APIS: {{ .Values.config.enableApiKeyForPublicApis }}
+  SET_API_KEY_AS_DEFAULT_SECURITY_SCHEME_FOR_PUBLIC_APIS: {{ .Values.config.setApiKeyAsDefaultSecuritySchemeForPublicApis }}
+  ENABLE_API_KEY_DEFAULT_SECURITY_SCHEME: {{ .Values.config.enableApiKeyDefaultSecurityScheme }}
+  FETCH_OAS_FROM_USER_APP_ENABLED_ORGS: {{ .Values.config.fetchOasFromUserAppEnabledOrgs }}
+  SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED: {{ .Values.config.schemaBasedConfigDeploymentEnabled }}
+  SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED_ORGS: {{ .Values.config.schemaBasedConfigDeploymentEnabledOrgs }}
+  API_KEY_ENABLED_PDP_ORGS: {{ .Values.config.apiKeyEnabledPdpOrgs }}
+  LATEST_COMPONENT_YAML_SCHEMA_VERSION: {{ .Values.config.latestComponentYamlSchemaVersion }}
+  ENABLE_UNIFIED_CONFIG_MAPPING_FOR_MI: {{ .Values.config.enableUnifiedConfigMappingForMi }}
+  UNIFIED_CONFIG_MAPPING_FOR_MI_ENABLED_ORGS: {{ .Values.config.unifiedConfigMappingForMiEnabledOrgs }}

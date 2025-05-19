@@ -15,12 +15,12 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: dp-mizzen
+  name: dp-rudder
   namespace: {{ .Values.global.namespaces.system }}
 spec:
   minAvailable: "50%"
   selector:
     matchLabels:
-      {{- include "dp-mizzen.labels" . | nindent 6 }}
+      {{- include "dp-rudder.labels" . | nindent 6 }}
 {{- end }}
 {{- end }}

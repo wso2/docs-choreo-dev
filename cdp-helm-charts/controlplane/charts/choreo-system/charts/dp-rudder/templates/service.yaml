@@ -1,6 +1,3 @@
-{{- if .Values.autoscaling.enabled }}
-{{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
-{{- if ge $minReplicas 2 }}
 # -------------------------------------------------------------------------------------
 #
 # Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
@@ -12,15 +9,18 @@
 #
 # --------------------------------------------------------------------------------------
 
-apiVersion: policy/v1
-kind: PodDisruptionBudget
+apiVersion: v1
+kind: Service
 metadata:
-  name: dp-mizzen
+  labels:
+    {{- include "dp-rudder.labels" . | nindent 4 }}
+  name: dp-rudder
   namespace: {{ .Values.global.namespaces.system }}
 spec:
-  minAvailable: "50%"
   selector:
-    matchLabels:
-      {{- include "dp-mizzen.labels" . | nindent 6 }}
-{{- end }}
-{{- end }}
+    {{- include "dp-rudder.labels" . | nindent 4 }}
+  ports:
+    - name: dp-rudder-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port

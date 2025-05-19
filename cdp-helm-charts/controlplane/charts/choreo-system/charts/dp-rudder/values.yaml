@@ -1,0 +1,223 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicaCount: 1
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/dp-rudder
+  tag: latest
+serviceAccount:
+  annotations: {}
+secrets:
+  mssqlPassword:
+    path: choreo-cp/data/choreo-system/dp-rudder
+    key: mssqlPassword
+  apimRestApiConsumerSecret:
+    path: choreo-cp/data/choreo-system/dp-rudder
+    key: apimRestApiConsumerSecret
+  alertRestApiConsumerSecret:
+    path: choreo-cp/data/choreo-system/dp-rudder
+    key: alertRestApiConsumerSecret
+  redisPassword:
+    path: choreo-cp/data/choreo-system/dp-rudder
+    key: redisPassword
+  redisUsCdp2Password:
+    path: choreo-cp/data/choreo-system/dp-rudder
+    key: redisUsCdp2Password
+vault:
+  roleName: dp-rudder
+config:
+  mssqlHost: sqlfg-choreo-choreo-rudder-db-prod.database.windows.net
+  sentry: https://a9dff1e948e14341be390906e0511a55@o350818.ingest.sentry.io/5571990
+  serverPort: 3000
+  choreoEnv: PROD
+  devDataplaneClusterId: "72FF49CF-AB6C-EE11-9937-6045BDB25610"
+  prodDataplaneClusterId: "72FF49CF-AB6C-EE11-9937-6045BDB25610"
+  dataplaneSharedCRHosts: choreoproduserappsflamingo.azurecr.io
+  apimServerUrl: https://choreo-am-service.prod-choreo-apim:9443
+  apimRestApiConsumerKey: dsfo7mn62P42qfbfCt2lOYMG5aka
+  apimRevisionLimit: 20
+  periscopeHost: periscope.choreo.dev
+  autoUndeployIntervalHours: 1
+  autoUndeployAfterHours: 3
+  autoUndeployExcludedOrgs: 
+    - ee6ab715-301e-4d1e-8431-1bed2b64684b
+    - 6ab68973-635f-421f-8c28-5d9d9d31d0dc
+    - 60efab9a-6d2d-4518-9c9d-33e750c6e816
+    - 5c35d322-db1c-41e3-811c-cb682af54468
+    - 838229c5-3ca7-4b4a-b1ee-eab73a7beeed
+    - de6c9797-7abf-4d58-959d-6280acb5c248
+    - 4a5f0e57-db70-4be7-a85f-1373dce5ad54
+    - 82d26742-afe1-4ed2-bf5e-0034635f0a07
+    - 9e979875-bc74-4e49-8a48-b18155d04043
+    - b22217d0-958b-428e-a30b-7206af4b746c
+    - d5bf27b3-7029-4076-97d2-b7937585e512
+    - ad088c1d-5e29-4f8d-86e7-963b555cfcba
+    - 9d2b57ae-4349-44f2-971c-106ae09d244d
+    - 5659b6b7-1063-41ed-8e39-d91857699255
+    - ac7bcfac-ffe1-4b05-876c-04848fabbfb0
+    - 4a90af06-55d2-4f46-8abc-3d282dab8841
+    - 946acf4e-134a-4032-862e-6863390f78c5
+    - 11fc0468-644c-4cc6-be7d-46b5bffcd914
+    - 29af1583-08f0-4444-918c-fa8760647555
+    - 0289955b-5261-4ff3-89a1-f75536c265ff
+    - 5081074e-314e-444f-a3b9-1a5a8ea7d8fb
+    - 3a907137-52a3-4196-9e0d-22d054ea5789
+    - cc9fc80a-7204-44a5-9f21-1b49f0b2138e
+    - 24b70856-5fb8-43ad-a317-a48cd7a515da
+    - d82e54eb-92bd-40a2-99a7-147998695626
+    - aa318c2d-f470-40cd-bd2f-d05ee29eb163
+    - 42807e1f-07ba-4fb0-a6d2-ecc7b41dd143
+    - bc5814d2-4d31-4a9e-be2d-fdb955e394fd
+    - fb7a58ae-41dc-454f-9c44-49f353b4c968
+    - c112eada-316e-46a7-9705-df75e4a30edc
+    - 055cae80-31fb-4ff6-8bb0-0bcc5ec67a5e
+    - 6cdb8516-b72e-46f5-a67a-a8495883e00d
+    - e2fe78c5-94ac-45ad-913e-75be13c4afbd
+  hpaEnabled: true
+  quotaLimiterEnabled: false
+  appGatewayForWebAppsEnabled: true
+  dbLogLevel: 2
+  dbConnTimeoutSeconds: 20
+  dbMaxIdleTimeSeconds: 7
+  dbMaxLifetimeSeconds: 10
+  dbConnPoolRetriesEnabled: true
+  dbMaxIdleCount: 30
+  gormSlowThresholdMilliseconds: 200
+  customUrlClusterId: "72FF49CF-AB6C-EE11-9937-6045BDB25610"
+  customUrlUsDataplaneId: "72FF49CF-AB6C-EE11-9937-6045BDB25610"
+  customUrlEuDataplaneId: "13791D4D-6E6D-EE11-9937-6045BDB25610"
+  customUrlUsRoutingClusterId: "72FF49CF-AB6C-EE11-9937-6045BDB25610"
+  customUrlEuRoutingClusterId: "13791D4D-6E6D-EE11-9937-6045BDB25610"
+  customUrlUsCname: customdns.e1-us-east-azure.choreoapis.dev
+  customUrlEuCname: customdns.e1-eu-north-azure.choreoapis.dev
+  customUrlNamespace: prod-choreo-apim
+  customUrlCname: customdns.e1-us-east-azure.choreoapis.dev
+  customUrlIngressClassName: prod-choreo-apim-nginx
+  devPortalClusterId: "72FF49CF-AB6C-EE11-9937-6045BDB25610"
+  devPortalNamespace: prod-choreo-apim
+  devPortalCname: customdns.devportal.choreo.dev
+  devPortalIngressClassName: prod-choreo-apim-nginx
+  devPortalInterClusterUrl: devportal.prod-controlplane.internal
+  jobActiveDeadlineSeconds: 3600
+  jobBackoffLimit: 0
+  alertServiceUrl: https://choreocontrolplane.choreo.dev/93tu
+  choreoStEndpoint: https://sts.choreo.dev
+  choreoIdpId: "6da03db5-5039-4eeb-ba3d-7e117108dff1"
+  alertRestApiConsumerKey: MQjlmyM244mbgC9STsBxhXorD9Ma
+  namespaceMigrationDefaultRetryCount: 10
+  githubApiLimit: 200
+  githubApiLimitIntervalMinutes: 20
+  miIntegrationRwModeEnabled: true
+  dnsResInitContainerEnabled: true
+  deployFromProxyDeployerEnabled: true
+  disableOrgBasedEnvironments: true
+  redisHost: choreo-prod-global-adapter-redis.redis.cache.windows.net
+  redisPort: 6380
+  redisDbIndex: 1
+  redisDbPrefix: webapps
+  redisServerNames: 
+    - US_CDP_2
+    - EU_CDP
+  redisUsCdp2Host: choreo-prod-cdp2-wu2-global-adapter.redis.cache.windows.net
+  redisUsCdp2Port: 6380
+  redisUsCdp2DataPlaneIds: FC5EA931-D2CF-EE11-85FC-6045BD8626EB
+  redisEuCdpHost: choreo-prod-eu-global-adapter-redis.redis.cache.windows.net
+  redisEuCdpPort: 6380
+  redisEuCdpDataPlaneIds: 13791D4D-6E6D-EE11-9937-6045BDB25610
+  webAppsIngressClass: prod-choreo-webapps-nginx
+  webAppsPdpIngressClass: choreo-webapps-nginx
+  webAppsDpInternalLb: 172.24.129.200
+  orgProjectQueryParamsRequired: true
+  requireEnvQueryParamForConfigs: true
+  invokeUrlOrgIdPrefixExclusions: 
+    - d7bc81cc-675e-4506-9fbd-75570d4d5711
+    - bf659be2-490b-450f-ab3c-15212e85c725
+    - 11737422-7078-8510-1074-820892631194
+    - f5aad5f4-4cac-40df-b0ed-e0c3ca8ae985
+    - aa09155e-7c66-4eba-8f39-b32862014891
+  webAppsVhostUs: e1-us-east-azure.choreoapps.dev
+  webAppsVhostEu: e1-eu-north-azure.choreoapps.dev
+  webAppsVhostInd: e1-in-central-azure.choreoapps.dev
+  webAppsShortUrlVhostUs: choreoapps.dev
+  webAppsShortUrlVhostEu: ne.choreoapps.dev
+  regionNames: 
+    - US
+    - EU
+    - US_CDP_2
+  regionUsTemplateRegion: US
+  regionUsWebAppVhost: e1-us-east-azure.choreoapps.dev
+  regionUsWebAppShortUrlVhost: choreoapps.dev
+  regionUsSkipWebAppIngress: true
+  regionEuTemplateRegion: EU
+  regionEuWebAppVhost: e1-eu-north-azure.choreoapps.dev
+  regionEuWebAppShortUrlVhost: ne.choreoapps.dev
+  regionEuSkipWebAppIngress: true
+  regionUsCdp2TemplateRegion: US-CDP-2
+  regionUsCdp2WebAppVhost: e1-us-cdp-2.choreoapps.dev
+  regionUsCdp2WebAppShortUrlVhost: us-cdp2.choreoapps.dev
+  regionUsCdp2SkipWebAppIngress: true
+  k8sApiMigrationTaskEnabled: false
+  k8sApiMigrationMigrateCronjobs: true
+  k8sApiMigrationMigrateHpas: true
+  k8sAutoscalingApiVersion: v2
+  k8sCronjobApiVersion: 'batch/v1'
+  kedaInterceptorService: keda-http-add-on-interceptor-proxy.keda.svc.cluster.local
+  cloudDataplaneClusterServiceIpRange: 172.19.0.0/16
+  deploymentTracksEnabled: true
+  unifiedConfigMappingEnabledOrgs: ""
+  deployAllApisViaProxyDeployer: true
+  internalMarketplaceFeatureEnabled: true
+  unifiedConfigDeploymentEnabled: true
+  deleteDanglingDeployHistoryEntries: false
+  enableCustomUrls: true
+  ciliumClusterWideNetworkPolicyEnabled: true
+  defaultUserAppKvDataPlaneId: 72FF49CF-AB6C-EE11-9937-6045BDB25610
+  cdpPodPriorityClassName: paid-userapps
+  scaleToZeroFeatureEnabled: true
+  skipNamespaceDeployOnEnvCreate: true
+  enableEndpointShortUrl: true
+  shortUrlEnabledOrgs: ""
+  deployHistoryMaxAgeMonths: 12
+  deployHistoryDeleteBatchSize: 200
+  deployHistoryCleanUpEnabled: true
+  jobConfigEnabled: true
+  enableConnectionUsageForAllComponentTypes: true
+  marketplaceIntelligentRoutingEnabled: true
+  resiliencyConfigEnabled: true
+  copyContainerPortsOnPromote: true
+  pdpOauthAgentSvc: "choreo-app-gateway-oauth-agent.choreodp-system.svc.cluster.local"
+  pdpGatewaySvc: "choreo-app-gateway.choreodp-system.svc.cluster.local"
+  appGatewayForPdpsEnabled: false
+  newBuildFlowEnabled: false
+  enableSpotNodeScheduling: false
+  enableSpotNodeSchedulingForPaidTier: false
+  enableSpotNodeSchedulingForCriticalEnv: false
+  enableTopologySpreadConstraints: true
+  k8sCronjobTimezoneMigrationEnabled: true
+  kedaHttpAddOnMigrationEnabled: true
+  apimUserForOauthAppCreation: oauth-app-default-user
+  euDataPlaneId: 13791D4D-6E6D-EE11-9937-6045BDB25610
+  ciliumEgressPolicyEnabled: true
+  stsManagementServiceEnabled: true
+  enableApiKeyForPublicApis: true
+  setApiKeyAsDefaultSecuritySchemeForPublicApis: false
+  enableApiKeyDefaultSecurityScheme: true
+  fetchOasFromUserAppEnabledOrgs: ""
+  schemaBasedConfigDeploymentEnabled: true
+  schemaBasedConfigDeploymentEnabledOrgs: ""
+  apiKeyEnabledPdpOrgs: ""
+  latestComponentYamlSchemaVersion: 1.2
+  enableUnifiedConfigMappingForMi: false
+  unifiedConfigMappingForMiEnabledOrgs: ""
