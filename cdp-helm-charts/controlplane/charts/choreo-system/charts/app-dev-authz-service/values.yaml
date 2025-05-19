@@ -23,8 +23,8 @@ serviceAccount:
   annotations: {}
 config:
   logLevel: INFO
+  dbURL: "jdbc:sqlserver://choreo-prod-mssql-server.database.windows.net:1433;databaseName=choreo_app_dev_authz_svc_db;"
 secrets:
   authzDBPassword:
     path: choreo-cp/data/choreo-system/app-dev-authz-service
     key: authzDBPassword
-  dbURL: "jdbc:sqlserver://choreo-prod-mssql-server.database.windows.net:1433;databaseName=choreo_app_dev_authz_svc_db;"
