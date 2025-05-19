@@ -57,6 +57,9 @@ dependencies:
   - name: dp-cloud-manager
     version: 1.0.0
     condition: dp-cloud-manager.enabled
+  - name: dp-garbage-collector
+    version: 1.0.0
+    condition: dp-garbage-collector.enabled
   - name: dp-mizzen
     version: 1.0.0
     condition: dp-mizzen.enabled
