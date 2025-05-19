@@ -1,0 +1,40 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicaCount: 1
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/sts-mgt-service
+  tag: latest
+serviceAccount:
+  annotations: {}
+secrets:
+  apimRestApiConsumerSecret:
+    path: choreo-cp/data/choreo-system/sts-mgt-service
+    key: apimRestApiConsumerSecret
+  choreostsMgtDbPassword:
+    path: choreo-cp/data/choreo-system/sts-mgt-service
+    key: choreostsMgtDbPassword
+  apimClientSecret:
+    path: choreo-cp/data/choreo-system/sts-mgt-service
+    key: apimClientSecret
+vault:
+  roleName: sts-mgt-service
+config:
+  dbHost: postgresql-choreo-prod-eastus2-api-001.postgres.database.azure.com
+  apimClientKey: dsfo7mn62P42qfbfCt2lOYMG5aka
+  choreoIdpId: 6da03db5-5039-4eeb-ba3d-7e117108dff1
+  websubHubPublisherEnabled: false
+  websubHubBaseUrl: https://publish.websubhub.choreo.dev/hub
+  tokenRevocationClientId: ""

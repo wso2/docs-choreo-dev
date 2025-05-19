@@ -89,6 +89,8 @@ choreo-system:
     enabled: true
   dp-cloud-manager:
     enabled: true
+  dp-garbage-collector:
+    enabled: true
   dp-mizzen:
     enabled: true
   dp-project-manager:
@@ -96,6 +98,8 @@ choreo-system:
   dp-rudder:
     enabled: true
   dp-secret-manager:
+    enabled: true
+  sts-mgt-service:
     enabled: true
 choreo-authorization:
   enabled: true

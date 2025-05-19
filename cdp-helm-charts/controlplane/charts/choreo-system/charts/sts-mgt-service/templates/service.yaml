@@ -10,13 +10,16 @@
 # --------------------------------------------------------------------------------------
 
 apiVersion: v1
-kind: ConfigMap
+kind: Service
 metadata:
-  name: dp-garbage-collector
-  namespace: {{ .Values.global.namespaces.system }}
   labels:
-    {{ include "dp-garbage-collector.labels" . | indent 4 }}
-data:
-  MONGODB_USER: {{ .Values.config.mongodbUser }}
-  MONGODB_HOST: {{ .Values.config.mongodbHost }}
-  MONGODB_DATABASE: {{ .Values.config.mongodbDatabase }}
+    {{- include "sts-mgt-service.labels" . | nindent 4 }}
+  name: sts-mgt-service
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  selector:
+    {{- include "sts-mgt-service.labels" . | nindent 4 }}
+  ports:
+    - name: service-port
+      port: 3000
+      targetPort: service-port
