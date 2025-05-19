@@ -36,3 +36,4 @@ appVersion: "1.0.0"
 dependencies:
   - name: resource-authorization-service
     version: 1.0.0
+    condition: resource-authorization-service.enabled

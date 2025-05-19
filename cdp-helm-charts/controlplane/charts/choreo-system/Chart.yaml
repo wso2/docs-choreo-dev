@@ -26,29 +26,46 @@ appVersion: "1.0.0"
 dependencies:
   - name: api-server
     version: 1.0.0
+    condition: api-server.enabled
+  - name: apim-proxy-deployer
+    version: 1.0.0
+    condition: apim-proxy-deployer.enabled
   - name: app-dev-authz-service
     version: 1.0.0
+    condition: app-dev-authz-service.enabled
   - name: app-service
     version: 1.0.0
+    condition: app-service.enabled
   - name: choreo-console
     version: 1.0.0
+    condition: choreo-console.enabled
   - name: connection-service
     version: 1.0.0
+    condition: connection-service.enabled
   - name: cp-graphql
     version: 1.0.0
+    condition: cp-graphql.enabled
   - name: delete-manager
     version: 1.0.0
+    condition: delete-manager.enabled
   - name: devops-portal-api
     version: 1.0.0
+    condition: devops-portal-api.enabled
   - name: dp-cicd
     version: 1.0.0
+    condition: dp-cicd.enabled
   - name: dp-cloud-manager
     version: 1.0.0
+    condition: dp-cloud-manager.enabled
   - name: dp-mizzen
     version: 1.0.0
+    condition: dp-mizzen.enabled
   - name: dp-project-manager
     version: 1.0.0
+    condition: dp-project-manager.enabled
   - name: dp-rudder
     version: 1.0.0
+    condition: dp-rudder.enabled
   - name: dp-secret-manager
     version: 1.0.0
+    condition: dp-secret-manager.enabled

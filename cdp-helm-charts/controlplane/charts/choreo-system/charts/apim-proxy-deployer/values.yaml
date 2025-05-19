@@ -1,0 +1,44 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicas: 1
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/choreo-apim-proxy-deployer
+  tag: latest
+vault:
+  roleName: apim-proxy-deployer
+serviceAccount:
+  annotations: {}
+config:
+  listenerTimeout: 150.5
+  logLevel: INFO
+  dbURL: "jdbc:sqlserver://sqlfg-choreo-choreo-proxy-deployer-db-prod.database.windows.net:1433;database=choreo_proxy_deployer_db;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
+  tokenIssuer: "https://sts.choreo.dev:443/oauth2/token"
+  jwksEndpoint: "https://sts.choreo.dev/oauth2/jwks"
+  apimServiceURL: "https://sts.choreo.dev"
+  apimClientID: FA0XQruMd51WQ_1tGv4SRKmdXF8a
+  introspectionURL: "https://sts.choreo.dev:443/oauth2/introspect"
+  websubhubUrl: "https://publish.websubhub.choreo.dev/hub"
+  pmRudderIdSync: false
+secrets:
+  sqlDBPassword:
+    path: choreo-cp/data/choreo-system/apim-proxy-deployer
+    key: sqlDBPassword
+  apimClientSecret:
+    path: choreo-cp/data/choreo-system/apim-proxy-deployer
+    key: apimClientSecret
+  introspectionAdminPassword:
+    path: choreo-cp/data/choreo-system/apim-proxy-deployer
+    key: introspectionAdminPassword

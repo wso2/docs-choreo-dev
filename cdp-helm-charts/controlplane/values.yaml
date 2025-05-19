@@ -33,8 +33,24 @@ global:
     authz: choreo-authorization
 choreo-apim:
   enabled: true
+  apim-devportal:
+    enabled: true
+  app-gateway-oauth-agent:
+    enabled: true
+  choreo-connect-global-adapter:
+    enabled: true
+  choreo-governance-service:
+    enabled: true
+  choreo-linter-service:
+    enabled: true
+  config-deployer-service:
+    enabled: true
+  product-apim:
+    enabled: true
 spicedb-operator:
   enabled: true
+  spicedb-operator:
+    enabled: true
 choreo-system:
   enabled: true
   commonConfigs:
@@ -51,3 +67,37 @@ choreo-system:
     codeServerInitImage: choreocontrolplane.azurecr.io/choreoipaas/choreo-ballerina-code-server-init:master-6db799ff6bfbdf656ab4affdfbb26838f8350e99
     synapseResourceGeneratorVersion: 1.0.31
     apimMediationCodeGenerator: 1.5.11
+  api-server:
+    enabled: true
+  apim-proxy-deployer:
+    enabled: true
+  app-dev-authz-service:
+    enabled: true
+  app-service:
+    enabled: true
+  choreo-console:
+    enabled: true
+  connection-service:
+    enabled: true
+  cp-graphql:
+    enabled: true
+  delete-manager:
+    enabled: true
+  devops-portal-api:
+    enabled: true
+  dp-cicd:
+    enabled: true
+  dp-cloud-manager:
+    enabled: true
+  dp-mizzen:
+    enabled: true
+  dp-project-manager:
+    enabled: true
+  dp-rudder:
+    enabled: true
+  dp-secret-manager:
+    enabled: true
+choreo-authorization:
+  enabled: true
+  resource-authorization-service:
+    enabled: true

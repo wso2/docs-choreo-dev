@@ -26,3 +26,4 @@ appVersion: "1.0.0"
 dependencies:
   - name: spicedb-operator
     version: 1.0.0
+    condition: spicedb-operator.enabled
