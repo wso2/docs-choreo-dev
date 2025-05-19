@@ -1,0 +1,88 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicas: 1
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/api-server
+  tag: latest
+vault:
+  roleName: api-server
+serviceAccount:
+  annotations: {}
+config:
+  idp:
+    clientId: choreoportalapplication
+    tokenUrl: https://id.choreo.dev/oauth2/token
+    redirectUrls: '[ https://console.choreo.dev/ ]'
+    jwksUrl: https://id.choreo.dev/oauth2/jwks
+    jwksCacheRefreshInterval: 1h
+    jwksCacheTTL: 12h
+    kmIssuer: https://sts.choreo.dev:443/oauth2/token
+    jwtProviderAudiences:
+      - ${KM_AUDIENCE}
+      - ${BALLERINA_CENTRAL_AUDIENCE}
+      - ${BALLERINA_CLI_AUDIENCE}
+      - ${BALLERINA_CENTRAL_CODE_SERVER_AUDIENCE}
+      - ${BALLERINA_CENTRAL_INVITATION_AUDIENCE}
+      - ${SITE24x7_AUDIENCE}
+      - 0EzD3eIwQEeYHRIaR3CuQmWK_JQa
+      - ${CHOREO_CLI_AUDIENCE}
+      - ${CHOREO_PAT_CLIENT_AUDIENCE}
+      - ${ICP_SAAS_TEMP_AUDIENCE}
+      - ${APIM_SAAS_TEMP_AUDIENCE}
+    kmJwksUrl: https://sts.choreo.dev:443/oauth2/jwks
+    asgardeoIssuer: https://api.asgardeo.io/oauth2/token
+    asgardeoAudience: ChoreoSecureTokenService
+    asgardeoJwksUrl: https://api.asgardeo.io/oauth2/jwks
+    cpEnforcerIssuer: wso2.org/products/am
+    cpEnforcerJWTIssuer: |
+      -----BEGIN CERTIFICATE-----
+      MIIDhDCCAmygAwIBAgIUGs1v1cJ6zfhCJVXtGj9cPZuzLlkwDQYJKoZIhvcNAQEL
+      BQAwfDELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExEjAQBgNVBAcM
+      CVBhbG8gQWx0bzERMA8GA1UECgwIV1NPMiBJbmMxFDASBgNVBAsMC0Nob3Jlby1B
+      UElNMRswGQYDVQQDDBJqd3Qtc3RzLmNob3Jlby5kZXYwHhcNMjIwMTEwMDYxNTIy
+      WhcNMjMwMTEwMDYxNTIyWjB8MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZv
+      cm5pYTESMBAGA1UEBwwJUGFsbyBBbHRvMREwDwYDVQQKDAhXU08yIEluYzEUMBIG
+      A1UECwwLQ2hvcmVvLUFQSU0xGzAZBgNVBAMMEmp3dC1zdHMuY2hvcmVvLmRldjCC
+      ASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANSzVHe4O5AbXCHEcCICAOEf
+      v4Qe464SjJsh/BmhOk0stCyTmtW+nI1O07Qbz0rt0+aE9Rc4YPiLvQcCdW1v/Ov/
+      hPIYibPHl12jFUPvVZsJrZIBNq7lUTzcD8YFQgcYj3jfDgwZ6EN2gMGGw/xPEVux
+      jTemRMFYIE13JkpIrYGeuoMZJkBJCt3GlQw8VSmG62MDXSFGf35xaEH/ajxPaP+4
+      hUemEAU6/ET/rVQ7Lwc+uWL9YOIeqWtAWJ/2blkqQKLrx4LFyEUB/iNphlnWsoUb
+      V9QAIWegSuMbEXwA5BSod1JSzOLB7Za+8TLEv7h8BqlksnnRzcSlvzo9xUeb61UC
+      AwEAATANBgkqhkiG9w0BAQsFAAOCAQEAoZKTbMgD3p6oozsQ2PEGlMOI6qHVu8Ox
+      WRw9FQuycs0VoxRcSrTVF5YrSVlxfM5Mi+cZrF6cqQaujzwMnciVhC6yauadeZlj
+      Glce8IR+YwkXk/8//VOt9ICVlzRBSbNqNKQGc2AR/6upNh4t1WBrxeO6sNVs7wpR
+      09LRbPKJ3N/dp19DTPkyKIwGY7PIBG3d99XN6IzGL+T7UKgYGHosOqq78R299V0r
+      +J90esqDGvxBUVHz2ip9bstp4g9TZKJsMPnT2ecW2V4lZs8sJNdj/XyYbQgw8so7
+      LQXiPaKqAkl9/igmQmqlQG/6LR8oR+c2upk9VVHlJ7uP2mNRoOWyKA==
+      -----END CERTIFICATE-----
+    issuer: https://id.choreo.dev:443/oauth2/token
+    audience:
+      - choreoportalapplication
+    jwtValidationLeeway: 30s
+    systemUserIdpIds:
+      - 9e383c8d-92ee-4a00-ad7e-af0a52376e8f
+  middleware:
+    logging:
+      publicKey: 6bpDAz2WTiIW6KVErYaN10q8BeD7QTCQNFWTMs1FPik=
+    eventPublish:
+      websubHubBaseUrl: https://publish.websubhub.choreo.dev/hub
+  apimTokenExchangeConfig:
+    url: https://sts.choreo.dev/oauth2/token
+secrets:
+  idpClientSecret:
+    key: idpClientSecret
+    path: choreo-cp/data/choreo-system/api-server
