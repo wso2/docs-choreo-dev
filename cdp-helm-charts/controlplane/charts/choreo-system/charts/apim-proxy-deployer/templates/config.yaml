@@ -37,4 +37,4 @@ data:
   WEBSUB_HUB_URL: {{ .Values.config.websubhubUrl | quote }}
   WEBSUB_HUB_TOPIC: {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle }}
   APP_SERVICE_URL: http://app-service:8080
-  PM_RUDDER_ID_SYNC: {{ .Values.config.pmRudderIdSync }}
+  PM_RUDDER_ID_SYNC: {{ .Values.config.pmRudderIdSync | quote }}
