@@ -101,6 +101,8 @@ choreo-system:
     enabled: true
   sts-mgt-service:
     enabled: true
+  subscriptions-service:
+    enabled: true
 choreo-authorization:
   enabled: true
   resource-authorization-service:
