@@ -1,0 +1,41 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-key-service
+  namespace: {{ .Values.global.namespaces.system }}
+  labels:
+    {{ include "api-key-service.labels" . | indent 4 }}
+data:
+  SERVER_REQUEST_BUFFER_SIZE: {{ .Values.config.serverRequestBufferSize | quote}}
+  DB_HOST: {{ .Values.config.dbHost }}
+  DB_PORT: "5432"
+  DB_NAME: choreo_api_key_svc_db
+  DB_USERNAME: choreo_api_key_svc_db_user
+  DB_PASSWORD_FILE: "/mnt/csi/secret-api-key-svc/CHOREO_API_KEY_SVC_DB_PASSWORD"
+  DB_SSL_MODE: require
+  OAUTH_AGENT_BASE_URL: http://app-gateway-oauth-agent.choreo-apim.svc.cluster.local:8080
+  MIZZEN_BASE_URL: "http://dp-mizzen"
+  CLOUD_MANAGER_BASE_URL: "http://dp-cloud-manager"
+  DP_OAUTH_AGENT_BASE_URL: "http://app-gateway-oauth-agent:8080"
+  KEY_LENGTH: {{ .Values.config.keyLength | quote }}
+  WEBSUB_HUB_PUBLISHER_ENABLED: {{ .Values.config.websubHubPublisherEnabled | quote}}
+  WEBSUB_HUB_BASE_URL: {{ .Values.config.websubHubBaseUrl }}
+  WEBSUB_HUB_TOPIC: {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle | quote }}
+  SIGNATURE_VALIDATION_ENABLED: {{ .Values.config.signatureValidationEnabled | quote }}
+  STS_MGT_SERVICE_BASE_URL: http://sts-mgt-service:3000/api/v1/sts-proxy
+  APIM_CLIENT_KEY: {{ .Values.config.apimClientKey }}
+  APIM_CLIENT_SECRET_FILE: "/mnt/csi/secret-api-key-svc/APIM_REST_API_CONSUMER_SECRET"
+  APIM_CLIENT_BASE_URL: http://choreo-am-service.choreo-apim:9763
+  CHOREO_IDP_BASE_URL: {{ .Values.config.choreoIdpBaseUrl }}
+  CHOREO_IDP_ID: {{ .Values.config.choreoIdpId | quote}}

@@ -24,6 +24,9 @@ version: 1.0.0
 appVersion: "1.0.0"
 
 dependencies:
+  - name: api-key-service
+    version: 1.0.0
+    condition: api-key-service.enabled
   - name: api-server
     version: 1.0.0
     condition: api-server.enabled
