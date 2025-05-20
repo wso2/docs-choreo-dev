@@ -36,11 +36,11 @@ data:
   REACT_APP_CHOREO_STEP_BASED_ENTERPRISE_TIER_UUID: 01ec1f84-ce3d-122e-ac9b-f10c95fd72da
   REACT_APP_CHOREO_ENTERPRISE_TIER_UUID: 4abe3757-86f6-47de-994f-f02fb0522e99
   REACT_APP_CHOREO_DEVELOPER_TIER_UUID: 41e29802-f4bb-456c-a92e-b14cca67c4bb
-  REACT_APP_BALLERINA_LOW_CODE_RESOURCES_VERSION: {{ .Values.config.ballerinaLowCodeResourcesVersion }}
+  REACT_APP_BALLERINA_LOW_CODE_RESOURCES_VERSION: {{ .Values.config.ballerinaLowCodeResourcesVersion | quote }}
   REACT_APP_SAMPLE_BALLERINA_VERSION: {{ .Values.config.sampleBallerinaVersion }}
   REACT_APP_CHOREO_SAMPLES_VERSION: {{ .Values.config.choreoSamplesVersion }}
   REACT_APP_HOTJAR_ID: ''
-  REACT_APP_HOTJAR_VERSION: {{ .Values.config.hotjarVersion }}
+  REACT_APP_HOTJAR_VERSION: {{ .Values.config.hotjarVersion | quote }}
   REACT_APP_API_BASE_URL: {{ .Values.config.apiBaseUrl }}
   REACT_APP_PROJECT_API_BASE_URL: {{ .Values.config.projectAPIBaseUrl }}
   REACT_APP_DECLARATIVE_API_BASE_URL: {{ .Values.config.declarativeApiBaseUrl }}
@@ -76,11 +76,11 @@ data:
   REACT_APP_ASGARDEO_SDK_AUTHORIZATION_ENDPOINT_URL: {{ .Values.config.asgardeoSDKAuthorizationEndpointUrl }}
   REACT_APP_ASGARDEO_SDK_TOKEN_ENDPOINT_URL: {{ .Values.config.asgardeoSDKTokenEndpointUrl }}
   REACT_APP_ASGARDEO_SDK_LOGOUT_ENDPOINT_URL: {{ .Values.config.asgardeoSDKLogoutEndpointUrl }}
-  REACT_APP_ASGARDEO_SDK_OVERRIDE_WELLKNOWN_ENDPOINT: true
+  REACT_APP_ASGARDEO_SDK_OVERRIDE_WELLKNOWN_ENDPOINT: "true"
   REACT_APP_ASGARDEO_SDK_SCOPES: {{ .Values.config.asgardeoSDKScopes | join "|" }}
   REACT_APP_DEVPORTAL_SCOPES: {{ .Values.config.devportalScopes | join " " }}
   REACT_APP_ASGARDEO_EX_TOKEN_ENDPOINT: {{ .Values.config.asgardeoExTokenEndpoint }}
-  REACT_APP_ASGARDEO_EX_ATTACH_TOKEN: {{ .Values.config.asgardeoExAttachToken }}
+  REACT_APP_ASGARDEO_EX_ATTACH_TOKEN: {{ .Values.config.asgardeoExAttachToken | quote }}
   REACT_APP_ASGARDEO_EX_CLIENT_ID: {{ .Values.config.asgardeoExClientId }}
   REACT_APP_ASGARDEO_EX_GRANT_TYPE: urn:ietf:params:oauth:grant-type:token-exchange
   REACT_APP_ASGARDEO_EX_SUB_TOKEN_TYPE: urn:ietf:params:oauth:token-type:jwt
@@ -91,17 +91,17 @@ data:
   REACT_APP_ASGARDEO_EX_RETURN_SESSION: "true"
   REACT_APP_ASGARDEO_EX_SIGNIN_REQUIRED: "true"
   REACT_APP_ASGARDEO_SESSION_EXTENSION_RESOURCE: /t/a/identity/extend-session
-  REACT_APP_ASGARDEO_SESSION_EXTENSION_INTERVAL: {{ .Values.config.asgardeoSessionExtensionInterval }}
+  REACT_APP_ASGARDEO_SESSION_EXTENSION_INTERVAL: {{ .Values.config.asgardeoSessionExtensionInterval | quote }}
   REACT_APP_ORGANIZATION_ENDPOINT: {{ .Values.config.organizationEndpoint }}
   REACT_APP_INSIGHTS_QUERY_API_URL: {{ .Values.config.insightsQueryApiUrl }}
   REACT_APP_INSIGHTS_ALERT_API_URL: {{ .Values.config.insightsAlertApiUrl }}
-  REACT_APP_INSIGHTS_ENABLE_CUSTOM_REPORTS: {{ .Values.config.insightsEnableCustomReports }}
-  REACT_APP_INSIGHTS_ENABLE_GEO_MAP: {{ .Values.config.insightsEnableGeoMap }}
+  REACT_APP_INSIGHTS_ENABLE_CUSTOM_REPORTS: {{ .Values.config.insightsEnableCustomReports | quote }}
+  REACT_APP_INSIGHTS_ENABLE_GEO_MAP: {{ .Values.config.insightsEnableGeoMap | quote }}
   REACT_APP_ORG_MANAGEMENT_API_URL: {{ .Values.config.orgManagementApiUrl }}
   REACT_APP_ORG_MANAGEMENT_API_URL_V2: {{ .Values.config.orgManagementApiUrlV2 }}
   REACT_APP_AUDIT_LOGGING_API_URL: {{ .Values.config.auditLoggingApiUrl }}
   REACT_APP_AUDIT_LOGGING_API_BASE_URL: {{ .Values.config.auditLoggingApiBaseUrl }}
-  REACT_APP_ENABLE_SEMANTIC_VERSIONED_AUDIT_LOGGING_API: {{ .Values.config.enableSemanticVersionedAuditLoggingApi }}
+  REACT_APP_ENABLE_SEMANTIC_VERSIONED_AUDIT_LOGGING_API: {{ .Values.config.enableSemanticVersionedAuditLoggingApi | quote }}
   REACT_APP_COMPONENT_CREATION_STATUS_API_URL: {{ .Values.config.componentCreationStatusApiUrl }}
   REACT_APP_COMPONENT_MANAGEMENT_API_URL: {{ .Values.config.componentManagementApiUrl }}
   REACT_APP_COMPONENT_UTILS_API_URL: {{ .Values.config.componentUtilsApiUrl }}
@@ -115,7 +115,7 @@ data:
   REACT_APP_BILLING_CONSOLE_URL: {{ .Values.config.billingConsoleUrl }}
   REACT_APP_SUBSCRIPTION_API_URL: {{ .Values.config.subscriptionApiUrl }}
   REACT_APP_ENABLE_BILLING_FEATURE: {{ .Values.config.enableBillingFeature | quote }}
-  REACT_APP_ENABLE_CONNECTOR_PUBLISH_FEATURE: {{ .Values.config.enableConnectorPublishFeature }}
+  REACT_APP_ENABLE_CONNECTOR_PUBLISH_FEATURE: {{ .Values.config.enableConnectorPublishFeature | quote }}
   REACT_APP_ENABLE_CONNECTOR_DELETE_AND_REPUBLISH_FEATURE: {{ .Values.config.enableConnectorDeleteAndRepublishFeature | quote }}
   REACT_APP_ENABLE_ENTERPRISE_LOGIN_ORGS_FEATURE: {{ .Values.config.enableEnterpriseLoginOrgsFeature | quote }}
   REACT_APP_ENABLE_CYBERTRUCK_BANNER: {{ .Values.config.enableCybertruckBanner | quote }}
@@ -130,21 +130,21 @@ data:
   REACT_APP_GATEWAY_BASE_URL: {{ .Values.config.gatewayBaseUrl }}
   REACT_APP_CONSOLE_ORIGIN: {{ .Values.config.consoleOrigin }}
   REACT_APP_ALERT_CONFIG_BASE_URL: {{ .Values.config.alertConfigBaseUrl }}
-  REACT_APP_FEATURE_FLAG_ALERT_CONFIG: {{ .Values.config.featureFlagAlertConfig }}
+  REACT_APP_FEATURE_FLAG_ALERT_CONFIG: {{ .Values.config.featureFlagAlertConfig | quote }}
   REACT_APP_AZURE_INSIGHTS_KEY: {{ .Values.config.azureInsightsKey }}
   REACT_APP_CUSTOM_DOMAINS_CNAME_RECORD: {{ .Values.config.customDomainsCnameRecord }}
   REACT_APP_CUSTOM_DOMAINS_CNAME_RECORD_US: {{ .Values.config.customDomainsCnameRecordUs }}
   REACT_APP_CUSTOM_DOMAINS_CNAME_RECORD_EU: {{ .Values.config.customDomainsCnameRecordEu }}
   REACT_APP_DEV_PORTAL_CUSTOM_DOMAINS_CNAME_RECORD: {{ .Values.config.devPortalCustomDomainsCnameRecord }}
-  REACT_APP_FEATURE_SHOW_DEV_PORTAL_CUSTOM_DOMAIN: {{ .Values.config.featureShowDevPortalCustomDomain }}
-  REACT_APP_FEATURE_ENABLE_API_VISIBILITY_SWITCH: {{ .Values.config.featureEnableApiVisibilitySwitch }}
-  REACT_APP_FEATURE_SHOW_USER_EMAIL_CONSENT: {{ .Values.config.featureShowUserEmailConsent }}
-  REACT_APP_FEATURE_SHOW_TOS_CONSENT: {{ .Values.config.featureShowTosConsent }}
+  REACT_APP_FEATURE_SHOW_DEV_PORTAL_CUSTOM_DOMAIN: {{ .Values.config.featureShowDevPortalCustomDomain | quote }}
+  REACT_APP_FEATURE_ENABLE_API_VISIBILITY_SWITCH: {{ .Values.config.featureEnableApiVisibilitySwitch | quote }}
+  REACT_APP_FEATURE_SHOW_USER_EMAIL_CONSENT: {{ .Values.config.featureShowUserEmailConsent | quote }}
+  REACT_APP_FEATURE_SHOW_TOS_CONSENT: {{ .Values.config.featureShowTosConsent | quote }}
   REACT_APP_ENABLE_CONTEST_SIGNUP: {{ .Values.config.enableContestSignup | quote }}
   REACT_APP_FEATURE_DISABLE_ANONYMOUS_LOGIN_BUTTON: {{ .Values.config.featureDisableAnonymousLoginButton | quote }}
   REACT_APP_DISABLE_ENTERPRISE_LOGIN: {{ .Values.config.disableEnterpriseLogin | quote }}
   REACT_GOOGLE_CAPTCHA_SITE_KEY: {{ .Values.config.reactGoogleCaptchaSiteKey }}
-  REACT_DISABLE_GOOGLE_CAPTCHA: {{ .Values.config.reactDisableGoogleCaptcha }}
+  REACT_DISABLE_GOOGLE_CAPTCHA: {{ .Values.config.reactDisableGoogleCaptcha | quote }}
   REACT_APP_ENABLE_GCP_SUBSCRIPTION_FEATURE: {{ .Values.config.enableGcpSubscriptionFeature | quote }}
   REACT_APP_ENABLE_DEMO_ORG_FEATURE: {{ .Values.config.enableDemoOrgFeature | quote }}
   REACT_APP_DEMO_ORG_HANDLE: {{ .Values.config.demoOrgHandle }}
@@ -154,13 +154,13 @@ data:
   REACT_APP_ENABLE_UNIFIED_LOGS_VIEW: {{ .Values.config.enableUnifiedLogsView | quote }}
   REACT_APP_SYS_API_PREFIX: {{ .Values.config.sysApiPrefix }}
   REACT_APP_FEATURE_FLAG_MAINTENANCE_TYPE: {{ .Values.config.featureFlagMaintenanceType }}
-  REACT_APP_FEATURE_FLAG_MAINTENANCE_BANNER: {{ .Values.config.featureFlagMaintenanceBanner }}
+  REACT_APP_FEATURE_FLAG_MAINTENANCE_BANNER: {{ .Values.config.featureFlagMaintenanceBanner | quote }}
   REACT_APP_FEATURE_FLAG_MAINTENANCE_DATE_AND_TIME: {{ .Values.config.featureFlagMaintenanceDateAndTime }}
   REACT_APP_FEATURE_FLAG_MAINTENANCE_MESSAGE_SLACK_LINK: {{ .Values.config.featureFlagMaintenanceMessageSlackLink }}
   SENTRY_ENV: {{ .Values.config.sentryEnv }}
   SENTRY_DSN: {{ .Values.config.sentryDsn }}
-  SENTRY_SAMPLE_RATE: {{ .Values.config.sentrySampleRate }}
-  REACT_VWO_ACCOUNT_ID: {{ .Values.config.reactVwoAccountId }}
+  SENTRY_SAMPLE_RATE: {{ .Values.config.sentrySampleRate | quote }}
+  REACT_VWO_ACCOUNT_ID: {{ .Values.config.reactVwoAccountId | quote }}
   REACT_TERMS_OF_USE_LINK: {{ .Values.config.reactTermsOfUseLink }}
   REACT_PRIVACY_POLICY_LINK: {{ .Values.config.reactPrivacyPolicyLink }}
   REACT_SUPPORT_LINK: {{ .Values.config.reactSupportLink }}
@@ -177,13 +177,13 @@ data:
   REACT_APP_GH_APP_AUTH_REDIRECTION_URL: {{ .Values.config.ghAppAuthRedirectionUrl }}
   REACT_APP_GH_APP_INSTALL_URL: {{ .Values.config.ghAppInstallUrl }}
   REACT_HIDDEN_SAMPLE_LIST: {{ .Values.config.reactHiddenSampleList | join "|" }}
-  REACT_APP_SHOW_AUTO_UNDEPLOYMENT_BANNER: {{ .Values.config.showAutoUndeploymentBanner }}
-  REACT_APP_SHOW_SCALE_TO_ZERO_BANNER: {{ .Values.config.showScaleToZeroBanner }}
-  REACT_APP_BALLERINA_LOW_CODE_EDITOR_VERSION: {{ .Values.config.ballerinaLowCodeEditorVersion }}
-  REACT_APP_FEATURE_FLAG_CODE_EDITOR_SSO: {{ .Values.config.featureFlagCodeEditorSso }}
-  REACT_APP_NOTIFICATION_BANNER_INTERVAL: {{ .Values.config.notificationBannerInterval }}
+  REACT_APP_SHOW_AUTO_UNDEPLOYMENT_BANNER: {{ .Values.config.showAutoUndeploymentBanner | quote }}
+  REACT_APP_SHOW_SCALE_TO_ZERO_BANNER: {{ .Values.config.showScaleToZeroBanner | quote }}
+  REACT_APP_BALLERINA_LOW_CODE_EDITOR_VERSION: {{ .Values.config.ballerinaLowCodeEditorVersion | quote }}
+  REACT_APP_FEATURE_FLAG_CODE_EDITOR_SSO: {{ .Values.config.featureFlagCodeEditorSso | quote }}
+  REACT_APP_NOTIFICATION_BANNER_INTERVAL: {{ .Values.config.notificationBannerInterval | quote }}
   REACT_APP_ENABLE_TWITTER_SHARE_FEATURE: {{ .Values.config.enableTwitterShareFeature | quote }}
-  REACT_APP_FEATURE_FLAG_COMPONENT_INSIGHTS: {{ .Values.config.featureFlagComponentInsights }}
+  REACT_APP_FEATURE_FLAG_COMPONENT_INSIGHTS: {{ .Values.config.featureFlagComponentInsights | quote }}
   REACT_APP_ENABLE_INTERNAL_API_FEATURE: {{ .Values.config.enableInternalApiFeature | quote }}
   REACT_APP_ENABLE_BYOC_FEATURE: {{ .Values.config.enableByocFeature | quote }}
   REACT_APP_ENABLE_EXTERNAL_CI_FEATURE: {{ .Values.config.enableExternalCiFeature | quote }}
@@ -195,15 +195,15 @@ data:
   REACT_APP_PROJECT_DP_REGIONS: {{ .Values.config.projectDpRegions | join "|" }}
   REACT_APP_GIT_HUB_URL: {{ .Values.config.gitHubUrl }}
   REACT_APP_ENABLE_AUTO_DEPLOY_BY_DEFAULT: {{ .Values.config.enableAutoDeployByDefault | quote }}
-  REACT_APP_CONFIGURABLE_WEBHOOK_ENABLED: {{ .Values.config.configurableWebhookEnabled }}
+  REACT_APP_CONFIGURABLE_WEBHOOK_ENABLED: {{ .Values.config.configurableWebhookEnabled | quote }}
   REACT_APP_ENABLE_IPAAS_FEATURE: {{ .Values.config.enableIpaasFeature | quote }}
-  REACT_APP_ENABLE_DEFAULT_ORG_CREATION: {{ .Values.config.enableDefaultOrgCreation }}
-  REACT_APP_ENABLE_CONFIG_INIT_ON_COMP_CREATION: {{ .Values.config.enableConfigInitOnCompCreation }}
+  REACT_APP_ENABLE_DEFAULT_ORG_CREATION: {{ .Values.config.enableDefaultOrgCreation | quote }}
+  REACT_APP_ENABLE_CONFIG_INIT_ON_COMP_CREATION: {{ .Values.config.enableConfigInitOnCompCreation | quote }}
   REACT_APP_ASGARDEO_KEY_MANAGER_BASE_URL: {{ .Values.config.asgardeoKeyManagerBaseUrl }}
-  REACT_APP_ENABLE_ASGARDEO_KEY_MANAGER_SWITCH: {{ .Values.config.enableAsgardeoKeyManagerSwitch }}
-  REACT_APP_ENABLE_CONFIGURE_AZURE_SUBSCRIPTION_FEATURE: {{ .Values.config.enableConfigureAzureSubscriptionFeature }}
-  REACT_APP_ENABLE_INTEGRATED_DEVOPS: {{ .Values.config.enableIntegratedDevops }}
-  REACT_APP_ENABLE_DEMO_ORG: {{ .Values.config.enableDemoOrg }}
+  REACT_APP_ENABLE_ASGARDEO_KEY_MANAGER_SWITCH: {{ .Values.config.enableAsgardeoKeyManagerSwitch | quote }}
+  REACT_APP_ENABLE_CONFIGURE_AZURE_SUBSCRIPTION_FEATURE: {{ .Values.config.enableConfigureAzureSubscriptionFeature | quote }}
+  REACT_APP_ENABLE_INTEGRATED_DEVOPS: {{ .Values.config.enableIntegratedDevops | quote }}
+  REACT_APP_ENABLE_DEMO_ORG: {{ .Values.config.enableDemoOrg | quote }}
   REACT_APP_ROLE_MAPPING_MANAGE: {{ printf "urn:%s:usermanagement:role_mapping_manage" .Values.global.choreosystem.orgHandle }}
   REACT_APP_ROLE_MAPPING_VIEW: {{ printf "urn:%s:usermanagement:role_mapping_view" .Values.global.choreosystem.orgHandle }}
   REACT_APP_ROLE_MAPPING_CREATE: {{ printf "urn:%s:usermanagement:role_mapping_create" .Values.global.choreosystem.orgHandle }}
@@ -266,125 +266,125 @@ data:
   REACT_APP_SELF_SIGNUP_MANAGE: {{ printf "urn:%s:organizationmanagement:self_signup_manage" .Values.global.choreosystem.orgHandle }}
   REACT_APP_AUDIT_LOGS_VIEW: {{ printf "urn:%s:choreoauditloggingapi:audit_logs_view" .Values.global.choreosystem.orgHandle }}
   REACT_APP_AUDIT_LOGS_MANAGE: {{ printf "urn:%s:choreoauditloggingapi:audit_logs_manage" .Values.global.choreosystem.orgHandle }}
-  REACT_APP_ENABLE_ADDING_SF_LEAD: {{ .Values.config.enableAddingSfLead }}
+  REACT_APP_ENABLE_ADDING_SF_LEAD: {{ .Values.config.enableAddingSfLead | quote }}
   REACT_APP_IPIFY_SERVICE_URL: {{ .Values.config.ipifyServiceUrl }}
   REACT_APP_PDP_DOMAIN_CUSTOMIZED_ORGS: {{ .Values.config.pdpDomainCustomizedOrgs }}
-  REACT_APP_ENABLE_EMAIL_LOGIN: {{ .Values.config.enableEmailLogin }}
+  REACT_APP_ENABLE_EMAIL_LOGIN: {{ .Values.config.enableEmailLogin | quote }}
   REACT_APP_POST_REGISTER_CALLBACK_URL: {{ .Values.config.postRegisterCallbackUrl }}
   REACT_APP_TENANT_URL_PREFIX: {{ .Values.config.tenantUrlPrefix }}
   REACT_APP_REGISTER_MAIL_TEMPLATE_NAME: {{ .Values.config.registerMailTemplateName }}
   REACT_APP_ASGARDEO_SIGNUP_URL: {{ .Values.config.asgardeoSignupUrl }}
   REACT_APP_ENV_WEBAPP_SUBDOMAIN_CONFIG: {{ .Values.config.envWebappSubdomainConfig }}
-  REACT_APP_ENABLE_WEBAPP_SHORT_URL_CONFIG: {{ .Values.config.enableWebappShortUrlConfig }}
+  REACT_APP_ENABLE_WEBAPP_SHORT_URL_CONFIG: {{ .Values.config.enableWebappShortUrlConfig | quote }}
   REACT_APP_PDP_CREATION_ENABLED_ORGS: {{ .Values.config.pdpCreationEnabledOrgs }}
   REACT_APP_PDP_CREATION_ENABLED_CLOUDS: {{ .Values.config.pdpCreationEnabledClouds }}
   REACT_APP_ENV_WEBAPP_SHORT_URL_DOMAIN_US: {{ .Values.config.envWebappShortUrlDomainUs }}
   REACT_APP_ENV_WEBAPP_SHORT_URL_DOMAIN_EU: {{ .Values.config.envWebappShortUrlDomainEu }}
   REACT_APP_ENV_WEBAPP_SHORT_URL_DOMAIN_IND: {{ .Values.config.envWebappShortUrlDomainInd }}
-  REACT_APP_MAX_NO_OF_ORG_ENVS_ALLOWED: {{ .Values.config.maxNoOfOrgEnvsAllowed }}
+  REACT_APP_MAX_NO_OF_ORG_ENVS_ALLOWED: {{ .Values.config.maxNoOfOrgEnvsAllowed | quote }}
   REACT_APP_BITBUCKET_SERVER_CUSTOMER_ORGS: {{ .Values.config.bitbucketServerCustomerOrgs }}
   REACT_APP_CUSTOMIZABLE_CI_ENABLED_ORGS: {{ .Values.config.customizableCiEnabledOrgs }}
   REACT_APP_INTERNAL_MARKETPLACE_API_URL: {{ .Values.config.internalMarketplaceApiUrl }}
-  REACT_APP_FEATURE_FLAG_BUILT_IN_IDP: {{ .Values.config.featureFlagBuiltInIdp }}
-  REACT_APP_FEATURE_FLAG_APPLICATION_SECURITY: {{ .Values.config.featureFlagApplicationSecurity }}
-  REACT_APP_ENABLE_REDIS_SERVICE_CREATION: {{ .Values.config.enableRedisServiceCreation }}
+  REACT_APP_FEATURE_FLAG_BUILT_IN_IDP: {{ .Values.config.featureFlagBuiltInIdp | quote }}
+  REACT_APP_FEATURE_FLAG_APPLICATION_SECURITY: {{ .Values.config.featureFlagApplicationSecurity | quote }}
+  REACT_APP_ENABLE_REDIS_SERVICE_CREATION: {{ .Values.config.enableRedisServiceCreation | quote }}
   REACT_APP_PLATFORM_SERVICES_API_BASE_URL: {{ .Values.config.platformServicesApiBaseUrl }}
-  REACT_APP_ENABLE_MI_SCHEDULED_INTEGRATION: {{ .Values.config.enableMiScheduledIntegration }}
-  REACT_APP_ENABLE_BUILD_DEPLOY_PAGE_SEPARATION: {{ .Values.config.enableBuildDeployPageSeparation }}
-  REACT_APP_ENABLE_TASK_EXECUTIONS_FEATURE: {{ .Values.config.enableTaskExecutionsFeature }}
-  REACT_APP_FEATURE_DISABLE_APP_DEV_PERMISSION_ENV_BINDING: {{ .Values.config.featureDisableAppDevPermissionEnvBinding }}
+  REACT_APP_ENABLE_MI_SCHEDULED_INTEGRATION: {{ .Values.config.enableMiScheduledIntegration | quote }}
+  REACT_APP_ENABLE_BUILD_DEPLOY_PAGE_SEPARATION: {{ .Values.config.enableBuildDeployPageSeparation | quote }}
+  REACT_APP_ENABLE_TASK_EXECUTIONS_FEATURE: {{ .Values.config.enableTaskExecutionsFeature | quote }}
+  REACT_APP_FEATURE_DISABLE_APP_DEV_PERMISSION_ENV_BINDING: {{ .Values.config.featureDisableAppDevPermissionEnvBinding | quote }}
   REACT_APP_CONFIG_GROUP_MANAGEMENT_API_URL: {{ .Values.config.configGroupManagementApiUrl }}
   REACT_APP_CONFIG_MAPPING_SERVICE_URL: {{ .Values.config.configMappingServiceUrl }}
   REACT_APP_DEPENDENCY_CONFIG_URL: {{ .Values.config.dependencyConfigUrl }}
-  REACT_APP_ENABLE_APP_GATEWAY: {{ .Values.config.enableAppGateway }}
-  REACT_APP_FEATURE_FLAG_DEV_PORTAL_IDP_CONFIG: {{ .Values.config.featureFlagDevPortalIdpConfig }}
-  REACT_APP_ENABLE_ASYNC_COMPONENT_CREATION: {{ .Values.config.enableAsyncComponentCreation }}
+  REACT_APP_ENABLE_APP_GATEWAY: {{ .Values.config.enableAppGateway | quote }}
+  REACT_APP_FEATURE_FLAG_DEV_PORTAL_IDP_CONFIG: {{ .Values.config.featureFlagDevPortalIdpConfig | quote }}
+  REACT_APP_ENABLE_ASYNC_COMPONENT_CREATION: {{ .Values.config.enableAsyncComponentCreation | quote }}
   REACT_APP_COMPONENT_MGT_BASE_URL: {{ .Values.config.componentMgtBaseUrl }}
   REACT_APP_APIM_STS_BASE_URL: {{ .Values.config.apimStsBaseUrl }}
   REACT_APP_CONFIG_SVC_BASE_URL: {{ .Values.config.configSvcBaseUrl }}
   REACT_APP_APPDEV_AUTHZ_BASE_URL: {{ .Values.config.appdevAuthzBaseUrl }}
   REACT_APP_BUILT_IN_IDP_USER_MGT_BASE_URL: {{ .Values.config.builtInIdpUserMgtBaseUrl }}
-  REACT_APP_ENABLE_ROLE_GROUP_MAPPING: {{ .Values.config.enableRoleGroupMapping }}
-  REACT_APP_FEATURE_FLAG_APP_GW_SETTINGS: {{ .Values.config.featureFlagAppGwSettings }}
-  REACT_APP_ENABLE_COMPONENT_NOTIFICATION: {{ .Values.config.enableComponentNotification }}
+  REACT_APP_ENABLE_ROLE_GROUP_MAPPING: {{ .Values.config.enableRoleGroupMapping | quote }}
+  REACT_APP_FEATURE_FLAG_APP_GW_SETTINGS: {{ .Values.config.featureFlagAppGwSettings | quote }}
+  REACT_APP_ENABLE_COMPONENT_NOTIFICATION: {{ .Values.config.enableComponentNotification | quote }}
   REACT_APP_DOC_LINK_SCALE_TO_ZERO: {{ .Values.config.docLinkScaleToZero }}
   REACT_APP_CHOREO_APPROVAL_WORKFLOWS_DOC_URL: {{ .Values.config.choreoApprovalWorkflowsDocUrl }}
   REACT_APP_COMPONENT_NOTIFICATION_TEXT: {{ .Values.config.componentNotificationText }}
   REACT_APP_COMPONENT_NOTIFICATION_LINK_TEXT: {{ .Values.config.componentNotificationLinkText }}
   REACT_APP_COMPONENT_NOTIFICATION_LINK: {{ .Values.config.componentNotificationLink }}
-  REACT_APP_ENABLE_APP_GW_SETTINGS_IN_CONFIGURE_DRAWER: {{ .Values.config.enableAppGwSettingsInConfigureDrawer }}
+  REACT_APP_ENABLE_APP_GW_SETTINGS_IN_CONFIGURE_DRAWER: {{ .Values.config.enableAppGwSettingsInConfigureDrawer | quote }}
   REACT_APP_CHOREO_MANAGED_AUTH_DOC_URL: {{ .Values.config.choreoManagedAuthDocUrl }}
-  REACT_APP_ENABLE_CUSTOM_URL_MAPPINGS_FEATURE: {{ .Values.config.enableCustomUrlMappingsFeature }}
-  REACT_APP_ENABLE_CUSTOM_DOMAINS_FEATURE: {{ .Values.config.enableCustomDomainsFeature }}
+  REACT_APP_ENABLE_CUSTOM_URL_MAPPINGS_FEATURE: {{ .Values.config.enableCustomUrlMappingsFeature | quote }}
+  REACT_APP_ENABLE_CUSTOM_DOMAINS_FEATURE: {{ .Values.config.enableCustomDomainsFeature | quote }}
   REACT_APP_CHOREO_URL_MANAGER_URL: {{ .Values.config.choreoUrlManagerUrl }}
   REACT_APP_CUSTOM_DOMAINS_DISABLED_CDPS: {{ .Values.config.customDomainsDisabledCdps }}
   REACT_APP_SERVICE_QSG_DOC_LINK: {{ .Values.config.serviceQsgDocLink }}
   REACT_APP_WEBAPP_QSG_DOC_LINK: {{ .Values.config.webappQsgDocLink }}
-  REACT_APP_RUN_TASKS_WITH_PARAMETERS: {{ .Values.config.runTasksWithParameters }}
-  REACT_APP_QUEUED_STATUS_POLLING_INTERVAL: {{ .Values.config.queuedStatusPollingInterval }}
-  REACT_APP_IN_PROGRESS_STATUS_POLLING_INTERVAL: {{ .Values.config.inProgressStatusPollingInterval }}
+  REACT_APP_RUN_TASKS_WITH_PARAMETERS: {{ .Values.config.runTasksWithParameters | quote }}
+  REACT_APP_QUEUED_STATUS_POLLING_INTERVAL: {{ .Values.config.queuedStatusPollingInterval | quote }}
+  REACT_APP_IN_PROGRESS_STATUS_POLLING_INTERVAL: {{ .Values.config.inProgressStatusPollingInterval | quote }}
   REACT_APP_CHOREO_MANAGED_AUTH_LOCAL_DEV_DOC_URL: {{ .Values.config.choreoManagedAuthLocalDevDocUrl }}
   REACT_APP_CHOREO_MANAGED_AUTH_LOCAL_DEV_PROXY_PACKAGE: {{ .Values.config.choreoManagedAuthLocalDevProxyPackage | quote }}
-  REACT_APP_ENABLE_MANAGED_AUTH_LOCAL_DEV: {{ .Values.config.enableManagedAuthLocalDev }}
-  REACT_APP_ENABLE_CHOREO_AUTHORIZATION: {{ .Values.config.enableChoreoAuthorization }}
+  REACT_APP_ENABLE_MANAGED_AUTH_LOCAL_DEV: {{ .Values.config.enableManagedAuthLocalDev | quote }}
+  REACT_APP_ENABLE_CHOREO_AUTHORIZATION: {{ .Values.config.enableChoreoAuthorization | quote }}
   REACT_APP_ENABLE_CHOREO_AUTHORIZATION_DATE: {{ .Values.config.enableChoreoAuthorizationDate }}
   REACT_APP_CHOREO_CONSOLE_TEST_HEADER: {{ .Values.config.choreoConsoleTestHeader }}
-  REACT_APP_ENABLE_CHOREO_PROJECT_AUTHORIZATION: {{ .Values.config.enableChoreoProjectAuthorization }}
-  REACT_APP_ENABLE_API_KEY_FEATURE: {{ .Values.config.enableApiKeyFeature }}
-  REACT_APP_ENABLE_EXTERNAL_CONSUMER_COMPONENT: {{ .Values.config.enableExternalConsumerComponent }}
+  REACT_APP_ENABLE_CHOREO_PROJECT_AUTHORIZATION: {{ .Values.config.enableChoreoProjectAuthorization | quote }}
+  REACT_APP_ENABLE_API_KEY_FEATURE: {{ .Values.config.enableApiKeyFeature | quote }}
+  REACT_APP_ENABLE_EXTERNAL_CONSUMER_COMPONENT: {{ .Values.config.enableExternalConsumerComponent | quote }}
   REACT_APP_CONNECTIONS_ENABLED_COMPONENT_TYPES: {{ .Values.config.connectionsEnabledComponentTypes | join "|" }}
-  REACT_APP_ENABLE_MARKETPLACE_INT_ROUTING_FEATURE: {{ .Values.config.enableMarketplaceIntRoutingFeature }}
+  REACT_APP_ENABLE_MARKETPLACE_INT_ROUTING_FEATURE: {{ .Values.config.enableMarketplaceIntRoutingFeature | quote }}
   REACT_APP_FEATURE_FLAG_MAINTENANCE_CUSTOM_MESSAGE: {{ .Values.config.featureFlagMaintenanceCustomMessage }}
-  REACT_APP_ENABLE_DEFAULT_ENDPOINT_URL_FEATURE: {{ .Values.config.enableDefaultEndpointUrlFeature }}
-  REACT_APP_ENABLE_APPROVAL_WORKFLOW_FEATURE: {{ .Values.config.enableApprovalWorkflowFeature }}
+  REACT_APP_ENABLE_DEFAULT_ENDPOINT_URL_FEATURE: {{ .Values.config.enableDefaultEndpointUrlFeature | quote }}
+  REACT_APP_ENABLE_APPROVAL_WORKFLOW_FEATURE: {{ .Values.config.enableApprovalWorkflowFeature | quote }}
   REACT_APP_AI_COPILOT_URL_SUFFIX: {{ .Values.config.aiCopilotUrlSuffix }}
   REACT_APP_AI_COPILOT_DATACOLLECTOR_BASE_URL: {{ .Values.config.aiCopilotDatacollectorBaseUrl }}
   REACT_APP_AI_COPILOT_BLOG_URL: {{ .Values.config.aiCopilotBlogUrl }}
-  REACT_APP_ENABLE_COMPONENT_NAME_FLOW_CONSOLE: {{ .Values.config.enableComponentNameFlowConsole }}
-  REACT_APP_ENABLE_RESILIENCY_FEATURE: {{ .Values.config.enableResiliencyFeature }}
-  REACT_APP_ENABLE_CDP_RESILIENCY_FEATURE: {{ .Values.config.enableCdpResiliencyFeature }}
-  REACT_APP_ENABLE_SERVICE_STATUS_DISPLAY: {{ .Values.config.enableServiceStatusDisplay }}
-  REACT_APP_ENABLE_ASYNC_WEBAPP_CREATION: {{ .Values.config.enableAsyncWebappCreation }}
-  REACT_APP_ENABLE_RUN_WITH_ARGS_FOR_BALLERINA: {{ .Values.config.enableRunWithArgsForBallerina }}
-  REACT_APP_ENABLE_ENVIRONMENT_DELETION_FEATURE: {{ .Values.config.enableEnvironmentDeletionFeature }}
+  REACT_APP_ENABLE_COMPONENT_NAME_FLOW_CONSOLE: {{ .Values.config.enableComponentNameFlowConsole | quote }}
+  REACT_APP_ENABLE_RESILIENCY_FEATURE: {{ .Values.config.enableResiliencyFeature | quote }}
+  REACT_APP_ENABLE_CDP_RESILIENCY_FEATURE: {{ .Values.config.enableCdpResiliencyFeature | quote }}
+  REACT_APP_ENABLE_SERVICE_STATUS_DISPLAY: {{ .Values.config.enableServiceStatusDisplay | quote }}
+  REACT_APP_ENABLE_ASYNC_WEBAPP_CREATION: {{ .Values.config.enableAsyncWebappCreation | quote }}
+  REACT_APP_ENABLE_RUN_WITH_ARGS_FOR_BALLERINA: {{ .Values.config.enableRunWithArgsForBallerina | quote }}
+  REACT_APP_ENABLE_ENVIRONMENT_DELETION_FEATURE: {{ .Values.config.enableEnvironmentDeletionFeature | quote }}
   REACT_APP_BUILD_TIME_ENVIRONMENT_VARIABLES_DOC_LINK: {{ .Values.config.buildTimeEnvironmentVariablesDocLink }}
   REACT_APP_CUSTOMIZABLE_CI_DOC_LINK: {{ .Values.config.customizableCiDocLink }}
   REACT_APP_CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG: {{ .Values.config.customSubscriptionPolicyHandlingOrg | quote }}
-  REACT_APP_ENABLE_ASYNC_MANUAL_SCHEDULE_TASK_CREATION: {{ .Values.config.enableAsyncManualScheduleTaskCreation }}
-  REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION: {{ .Values.config.enableAsyncEventHandlerTestRunnerCreation }}
+  REACT_APP_ENABLE_ASYNC_MANUAL_SCHEDULE_TASK_CREATION: {{ .Values.config.enableAsyncManualScheduleTaskCreation | quote }}
+  REACT_APP_ENABLE_ASYNC_EVENT_HANDLER_TEST_RUNNER_CREATION: {{ .Values.config.enableAsyncEventHandlerTestRunnerCreation | quote }}
   REACT_APP_CHOREO_RESOURCE_AUTHZ_DOC_URL: {{ .Values.config.choreoResourceAuthzDocUrl }}
   REACT_APP_DOWNLOAD_LOGS_PAGE_SIZE: {{ .Values.config.downloadLogsPageSize }}
   REACT_APP_APPROVAL_ORGS: {{ .Values.config.approvalOrgs | quote }}
   REACT_APP_SUBSCRIPTION_APPROVAL_ORGS: {{ .Values.config.subscriptionApprovalOrgs | quote }}
-  REACT_APP_ENABLE_DT_DELETE_CONSOLE: {{ .Values.config.enableDtDeleteConsole }}
+  REACT_APP_ENABLE_DT_DELETE_CONSOLE: {{ .Values.config.enableDtDeleteConsole | quote }}
   REACT_APP_EXECUTE_PAGE_OBS_API_ENABLED_ORGS: {{ .Values.config.executePageObsApiEnabledOrgs | quote }}
   REACT_APP_API_GOVERNANCE_BASE_URL: {{ .Values.config.apiGovernanceBaseUrl }}
-  REACT_APP_ENABLE_GEN_AI_SERVICES: {{ .Values.config.enableGenAiServices }}
+  REACT_APP_ENABLE_GEN_AI_SERVICES: {{ .Values.config.enableGenAiServices | quote }}
   REACT_APP_OPEN_AI_TEMPLATE_ID: {{ .Values.config.openAiTemplateId }}
   REACT_APP_MISTRAL_AI_TEMPLATE_ID: {{ .Values.config.mistralAiTemplateId }}
   REACT_APP_ANTROPIC_AI_TEMPLATE_ID: {{ .Values.config.antropicAiTemplateId }}
   REACT_APP_AZURE_OPEN_AI_TEMPLATE_ID: {{ .Values.config.azureOpenAiTemplateId }}
-  REACT_APP_ENABLE_QUICK_DEPLOY_SAMPLES_FEATURE: {{ .Values.config.enableQuickDeploySamplesFeature }}
+  REACT_APP_ENABLE_QUICK_DEPLOY_SAMPLES_FEATURE: {{ .Values.config.enableQuickDeploySamplesFeature | quote }}
   REACT_APP_STS_MGT_SVC_BASE_URL: {{ .Values.config.stsMgtSvcBaseUrl }}
   REACT_APP_API_KEY_SERVICE_URL: {{ .Values.config.apiKeyServiceUrl }}
-  REACT_APP_ALLOW_PUBLISHING_API_KEY_ENABLED_APIS: {{ .Values.config.allowPublishingApiKeyEnabledApis }}
-  REACT_APP_ENABLE_STS_MANAGEMENT_SERVICE: {{ .Values.config.enableStsManagementService }}
+  REACT_APP_ALLOW_PUBLISHING_API_KEY_ENABLED_APIS: {{ .Values.config.allowPublishingApiKeyEnabledApis | quote }}
+  REACT_APP_ENABLE_STS_MANAGEMENT_SERVICE: {{ .Values.config.enableStsManagementService | quote }}
   REACT_APP_GH_PROXY_ENABLED_ORGS: {{ .Values.config.ghProxyEnabledOrgs }}
-  REACT_APP_ENABLE_MULTI_VISIBILITY_SUPPORT: {{ .Values.config.enableMultiVisibilitySupport }}
+  REACT_APP_ENABLE_MULTI_VISIBILITY_SUPPORT: {{ .Values.config.enableMultiVisibilitySupport | quote }}
   REACT_APP_PREVIEW_FEATURE_ENABLE_LIST: {{ .Values.config.previewFeatureEnableList }}
-  REACT_APP_COST_OPTIMIZATION_FEATURE: {{ .Values.config.costOptimizationFeature }}
-  REACT_APP_ENABLE_AUTOMATION_PIPELINES_FEATURE: {{ .Values.config.enableAutomationPipelinesFeature }}
+  REACT_APP_COST_OPTIMIZATION_FEATURE: {{ .Values.config.costOptimizationFeature | quote }}
+  REACT_APP_ENABLE_AUTOMATION_PIPELINES_FEATURE: {{ .Values.config.enableAutomationPipelinesFeature | quote }}
   REACT_APP_CHOREO_MIGRATE_SOURCE_CONFIG_DOC_URL: {{ .Values.config.choreoMigrateSourceConfigDocUrl }}
-  REACT_APP_ENABLE_NON_BUILDPACK_BUILD_CONFIGS: {{ .Values.config.enableNonBuildpackBuildConfigs }}
-  REACT_APP_ENABLE_PULL_LATEST_SUBMODULES: {{ .Values.config.enablePullLatestSubmodules }}
+  REACT_APP_ENABLE_NON_BUILDPACK_BUILD_CONFIGS: {{ .Values.config.enableNonBuildpackBuildConfigs | quote }}
+  REACT_APP_ENABLE_PULL_LATEST_SUBMODULES: {{ .Values.config.enablePullLatestSubmodules | quote }}
   REACT_APP_CONFIG_SCHEMA_API_URL: {{ .Values.config.configSchemaApiUrl }}
   REACT_APP_API_KEY_SUPPORTED_PDP_ORGS: {{ .Values.config.apiKeySupportedPdpOrgs }}
-  REACT_APP_ENABLE_URL_CUSTOMIZATION_WORKFLOW: {{ .Values.config.enableUrlCustomizationWorkflow }}
+  REACT_APP_ENABLE_URL_CUSTOMIZATION_WORKFLOW: {{ .Values.config.enableUrlCustomizationWorkflow | quote }}
   REACT_APP_COST_OPTIMIZATION_CP_URL: {{ .Values.config.costOptimizationCpUrl }}
-  REACT_APP_ENABLE_USER_PROVIDED_ENDPOINT: {{ .Values.config.enableUserProvidedEndpoint }}
-  REACT_APP_ENABLE_API_SETTINGS_UX: {{ .Values.config.enableApiSettingsUx }}
-  REACT_APP_ENABLE_MCP_SERVER_SUPPORT: {{ .Values.config.enableMcpServerSupport }}
-  REACT_APP_SET_API_KEY_AS_DEFAULT_SECURITY_SCHEME: {{ .Values.config.setApiKeyAsDefaultSecurityScheme }}
-  REACT_APP_ENABLE_API_KEY_SCOPE_SUPPORT: {{ .Values.config.enableApiKeyScopeSupport }}
+  REACT_APP_ENABLE_USER_PROVIDED_ENDPOINT: {{ .Values.config.enableUserProvidedEndpoint | quote }}
+  REACT_APP_ENABLE_API_SETTINGS_UX: {{ .Values.config.enableApiSettingsUx | quote }}
+  REACT_APP_ENABLE_MCP_SERVER_SUPPORT: {{ .Values.config.enableMcpServerSupport | quote }}
+  REACT_APP_SET_API_KEY_AS_DEFAULT_SECURITY_SCHEME: {{ .Values.config.setApiKeyAsDefaultSecurityScheme | quote }}
+  REACT_APP_ENABLE_API_KEY_SCOPE_SUPPORT: {{ .Values.config.enableApiKeyScopeSupport | quote }}
   REACT_APP_PROJECT_NAME_DENY_LIST: {{ .Values.config.projectNameDenyList | join "," }}
-  REACT_APP_ENABLE_DATA_PLANE_INSIGHTS: {{ .Values.config.enableDataPlaneInsights }}
+  REACT_APP_ENABLE_DATA_PLANE_INSIGHTS: {{ .Values.config.enableDataPlaneInsights | quote }}

@@ -46,7 +46,7 @@ data:
   REGISTRY_CREDENTIAL_ID: {{ .Values.config.registryCredentialId }}
   RUDDER_WEBHOOK_URL: {{ .Values.config.rudderWebhookUrl }}
   NEW_RUDDER_WEBHOOK_URL: {{ .Values.config.newRudderWebhookUrl }}
-  ENABLE_NEW_RUDDER_WEBHOOK_URL: {{ .Values.config.enableNewRudderWebhookUrl }}
+  ENABLE_NEW_RUDDER_WEBHOOK_URL: {{ .Values.config.enableNewRudderWebhookUrl | quote }}
   CHOREO_GITOPS_BOT_USERNAME: {{ .Values.config.choreoGitopsBotUsername }}
   CHOREO_GITOPS_BOT_EMAIL: {{ .Values.config.choreoGitopsBotEmail }}
   CHOREO_APPS_BOT_USERNAME: {{ .Values.config.choreoAppsBotUsername }}
@@ -54,7 +54,7 @@ data:
   ON_COMMIT_WEBHOOK_APP_REPO: {{ .Values.config.onCommitWebhookAppRepo }}
   ON_COMMIT_AUTO_BUILD_WEBHOOK_APP_REPO: {{ .Values.config.onCommitAutoBuildWebhookAppRepo }}
   ON_PUSH_CONFIG_WEBHOOK_APP_REPO: {{ .Values.config.onPushConfigWebhookAppRepo }}
-  CONFIGURABLE_WEBHOOK_ENABLED: {{ .Values.config.configurableWebhookEnabled }}
+  CONFIGURABLE_WEBHOOK_ENABLED: {{ .Values.config.configurableWebhookEnabled | quote }}
   BALLERINA_CENTRAL_ENV: {{ .Values.config.ballerinaCentralEnv }}
   BALLERINA_CENTRAL_API: {{ .Values.config.ballerinaCentralApi }}
   CHOREO_ID_TOKEN_HOST: {{ .Values.config.choreoIdTokenHost }}
@@ -66,48 +66,48 @@ data:
   GITHUB_RUNNERS_WEBHOOK: {{ .Values.config.githubRunnersWebhook }}
   AZURE_CUSTOMER_ID: {{ .Values.config.azureCustomerId }}
   AUTO_DEPLOY_ALERT_API_URL: {{ .Values.config.autoDeployAlertApiUrl }}
-  ENABLE_AUTO_DEPLOY_BY_DEFAULT: {{ .Values.config.enableAutoDeployByDefault }}
-  ENABLE_PR_SENT_BY_DEFAULT: {{ .Values.config.enablePrSentByDefault }}
+  ENABLE_AUTO_DEPLOY_BY_DEFAULT: {{ .Values.config.enableAutoDeployByDefault | quote }}
+  ENABLE_PR_SENT_BY_DEFAULT: {{ .Values.config.enablePrSentByDefault | quote }}
   CHOREO_PRIVATE_ACR_SERVER: {{ .Values.config.choreoPrivateAcrServer }}
   CHOREO_PRIVATE_ACR_USER: {{ .Values.config.choreoPrivateAcrUser }}
   SUBSCRIPTION_SERVICE_URL: {{ .Values.config.subscriptionServiceUrl }}
   STEP_BASED_FREE_TIER_UUID: {{ .Values.config.stepBasedFreeTierUuid }}
   COMPONENT_BASED_FREE_TIER_UUID: {{ .Values.config.componentBasedFreeTierUuid }}
   FREE_TIER_UUID: {{ .Values.config.freeTierUuid }}
-  GH_REPO_FILTER_ON_CHOREO_SUBSCRIPTION: {{ .Values.config.ghRepoFilterOnChoreoSubscription }}
+  GH_REPO_FILTER_ON_CHOREO_SUBSCRIPTION: {{ .Values.config.ghRepoFilterOnChoreoSubscription | quote }}
   ORG_LEVEL_WEBHOOK_ENABLED_ORGS: {{ .Values.config.orgLevelWebhookEnabledOrgs }}
   ON_PUSH_CONFIG_WEBHOOK_CALLBACK_URL: {{ .Values.config.onPushConfigWebhookCallbackUrl }}
-  BUILDPACKS_ENABLE: {{ .Values.config.buildpacksEnable }}
-  BUILDPACKS_TEST_RUNNER_ENABLE: {{ .Values.config.buildpacksTestRunnerEnable }}
+  BUILDPACKS_ENABLE: {{ .Values.config.buildpacksEnable | quote }}
+  BUILDPACKS_TEST_RUNNER_ENABLE: {{ .Values.config.buildpacksTestRunnerEnable | quote }}
   BUILDPACKS_ENABLED_TEST_ORGS: {{ .Values.config.buildpacksEnabledTestOrgs }}
-  MI_BUILDPACKS_ENABLE: {{ .Values.config.miBuildpacksEnable }}
-  ENABLE_ASYNC_OPERATIONS: {{ .Values.config.enableAsyncOperations }}
-  MI_BUILDPACKS_ENABLED_TEST_ORGS: {{ .Values.config.miBuildpacksEnabledTestOrgs }}
+  MI_BUILDPACKS_ENABLE: {{ .Values.config.miBuildpacksEnable | quote }}
+  ENABLE_ASYNC_OPERATIONS: {{ .Values.config.enableAsyncOperations | quote }}
+  MI_BUILDPACKS_ENABLED_TEST_ORGS: {{ .Values.config.miBuildpacksEnabledTestOrgs | quote }}
   BUILDPACKS_BUILDER_VERSION: {{ .Values.config.buildpacksBuilderVersion }}
   MI_BUILDPACKS_BLOB_CONTAINER_HOST: {{ .Values.config.miBuildpacksBlobContainerHost }}
   CUSTOMIZABLE_CI_ENABLED_ORGS: {{ .Values.config.customizableCiEnabledOrgs | join "," }}
-  CUSTOMIZABLE_CI_ENABLED_FOR_FREE_TIER: {{ .Values.config.customizableCiEnabledForFreeTier }}
-  CUSTOMIZABLE_CI_ENABLED_FOR_PAID_CDP: {{ .Values.config.customizableCiEnabledForPaidCdp }}
+  CUSTOMIZABLE_CI_ENABLED_FOR_FREE_TIER: {{ .Values.config.customizableCiEnabledForFreeTier | quote }}
+  CUSTOMIZABLE_CI_ENABLED_FOR_PAID_CDP: {{ .Values.config.customizableCiEnabledForPaidCdp | quote }}
   CUSTOMIZABLE_CI_ENABLED_WORKFLOWS: {{ .Values.config.customizableCiEnabledWorkflows | join "," }}
   CUSTOMIZABLE_CI_ENABLED_WORKFLOWS_FOR_PAID_CDP: {{ .Values.config.customizableCiEnabledWorkflowsForPaidCdp | join "," }}
   CUSTOMIZABLE_CI_ENABLED_WORKFLOWS_FOR_PAID_PDP: {{ .Values.config.customizableCiEnabledWorkflowsForPaidPdp | join "," }}
   CUSTOMIZABLE_CI_DISABLE_ORGS: {{ .Values.config.customizableCiDisableOrgs }}
   CUSTOM_WORKFLOW_ENABLED_ORGS: {{ .Values.config.customWorkflowEnabledOrgs }}
-  IS_CUSTOMIZABLE_CI_ENABLED_FOR_PAID_ORGS: {{ .Values.config.isCustomizableCiEnabledForPaidOrgs }}
+  IS_CUSTOMIZABLE_CI_ENABLED_FOR_PAID_ORGS: {{ .Values.config.isCustomizableCiEnabledForPaidOrgs | quote }}
   CUSTOMIZABLE_CI_ENABLED_PDPS: {{ .Values.config.customizableCiEnabledPdps }}
   ARGO_STORAGE_CLASS: {{ .Values.config.argoStorageClass }}
-  ARGO_POD_AFFINITY_ENABLED: {{ .Values.config.argoPodAffinityEnabled }}
+  ARGO_POD_AFFINITY_ENABLED: {{ .Values.config.argoPodAffinityEnabled | quote }}
   ARGO_POD_AFFINITY_LABEL: {{ .Values.config.argoPodAffinityLabel }}
   ARGO_POD_AFFINITY_TOPOLOGY_KEY: {{ .Values.config.argoPodAffinityTopologyKey }}
-  ARGO_POD_AFFINITY_WEIGHT: {{ .Values.config.argoPodAffinityWeight }}
+  ARGO_POD_AFFINITY_WEIGHT: {{ .Values.config.argoPodAffinityWeight | quote }}
   ARGO_FREE_TIER_STORAGE_SIZE: {{ .Values.config.argoFreeTierStorageSize }}
   ARGO_PAID_CDP_STORAGE_SIZE: {{ .Values.config.argoPaidCdpStorageSize }}
-  ARGO_BUILD_PACK_CACHING_ENABLED: {{ .Values.config.argoBuildPackCachingEnabled }}
-  ARGO_RESOURCE_LIMITS_ENABLED: {{ .Values.config.argoResourceLimitsEnabled }}
-  ARGO_SUCCESS_WORKFLOW_TTL: {{ .Values.config.argoSuccessWorkflowTtl }}
-  ARGO_FAILED_WORKFLOW_TTL: {{ .Values.config.argoFailedWorkflowTtl }}
-  ARGO_ACTIVE_DEADLINE_SECONDS_FREE_TIER: {{ .Values.config.argoActiveDeadlineSecondsForFreeTier }}
-  ARGO_ACTIVE_DEADLINE_SECONDS_PAID_CDP: {{ .Values.config.argoActiveDeadlineSecondsForPaidCdp }}
+  ARGO_BUILD_PACK_CACHING_ENABLED: {{ .Values.config.argoBuildPackCachingEnabled | quote }}
+  ARGO_RESOURCE_LIMITS_ENABLED: {{ .Values.config.argoResourceLimitsEnabled | quote }}
+  ARGO_SUCCESS_WORKFLOW_TTL: {{ .Values.config.argoSuccessWorkflowTtl | quote }}
+  ARGO_FAILED_WORKFLOW_TTL: {{ .Values.config.argoFailedWorkflowTtl | quote }}
+  ARGO_ACTIVE_DEADLINE_SECONDS_FREE_TIER: {{ .Values.config.argoActiveDeadlineSecondsForFreeTier | quote }}
+  ARGO_ACTIVE_DEADLINE_SECONDS_PAID_CDP: {{ .Values.config.argoActiveDeadlineSecondsForPaidCdp | quote }}
   ARGO_LIGHT_WEIGHT_FREE_TIER_CPU_LIMIT: {{ .Values.config.argoLightWeightFreeTierCpuLimit }}
   ARGO_LIGHT_WEIGHT_FREE_TIER_MEMORY_LIMIT: {{ .Values.config.argoLightWeightFreeTierMemoryLimit }}
   ARGO_LIGHT_WEIGHT_FREE_TIER_CPU_REQUEST: {{ .Values.config.argoLightWeightFreeTierCpuRequest }}
@@ -120,7 +120,7 @@ data:
   ARGO_MID_WEIGHT_FREE_TIER_MEMORY_LIMIT: {{ .Values.config.argoMidWeightFreeTierMemoryLimit }}
   ARGO_MID_WEIGHT_FREE_TIER_CPU_REQUEST: {{ .Values.config.argoMidWeightFreeTierCpuRequest }}
   ARGO_MID_WEIGHT_FREE_TIER_MEMORY_REQUEST: {{ .Values.config.argoMidWeightFreeTierMemoryRequest }}
-  ARGO_MID_WEIGHT_PAID_CDP_CPU_LIMIT: {{ .Values.config.argoMidWeightPaidCdpCpuLimit }}
+  ARGO_MID_WEIGHT_PAID_CDP_CPU_LIMIT: {{ .Values.config.argoMidWeightPaidCdpCpuLimit | quote }}
   ARGO_MID_WEIGHT_PAID_CDP_MEMORY_LIMIT: {{ .Values.config.argoMidWeightPaidCdpMemoryLimit }}
   ARGO_MID_WEIGHT_PAID_CDP_CPU_REQUEST: {{ .Values.config.argoMidWeightPaidCdpCpuRequest }}
   ARGO_MID_WEIGHT_PAID_CDP_MEMORY_REQUEST: {{ .Values.config.argoMidWeightPaidCdpMemoryRequest }}
@@ -128,50 +128,50 @@ data:
   ARGO_HEAVY_WEIGHT_FREE_TIER_MEMORY_LIMIT: {{ .Values.config.argoHeavyWeightFreeTierMemoryLimit }}
   ARGO_HEAVY_WEIGHT_FREE_TIER_CPU_REQUEST: {{ .Values.config.argoHeavyWeightFreeTierCpuRequest }}
   ARGO_HEAVY_WEIGHT_FREE_TIER_MEMORY_REQUEST: {{ .Values.config.argoHeavyWeightFreeTierMemoryRequest }}
-  ARGO_HEAVY_WEIGHT_PAID_CDP_CPU_LIMIT: {{ .Values.config.argoHeavyWeightPaidCdpCpuLimit }}
+  ARGO_HEAVY_WEIGHT_PAID_CDP_CPU_LIMIT: {{ .Values.config.argoHeavyWeightPaidCdpCpuLimit | quote }}
   ARGO_HEAVY_WEIGHT_PAID_CDP_MEMORY_LIMIT: {{ .Values.config.argoHeavyWeightPaidCdpMemoryLimit }}
   ARGO_HEAVY_WEIGHT_PAID_CDP_CPU_REQUEST: {{ .Values.config.argoHeavyWeightPaidCdpCpuRequest }}
   ARGO_HEAVY_WEIGHT_PAID_CDP_MEMORY_REQUEST: {{ .Values.config.argoHeavyWeightPaidCdpMemoryRequest }}
   ARGO_FREE_TIER_NODE_POOL: {{ .Values.config.argoFreeTierNodePool }}
   ARGO_PAID_CDP_NODE_POOL: {{ .Values.config.argoPaidCdpNodePool }}
-  ARGO_RETRY_STRATEGY_ENABLED: {{ .Values.config.argoRetryStrategyEnabled }}
-  ARGO_RETRY_STRATEGY_LIMIT: {{ .Values.config.argoRetryStrategyLimit }}
+  ARGO_RETRY_STRATEGY_ENABLED: {{ .Values.config.argoRetryStrategyEnabled | quote }}
+  ARGO_RETRY_STRATEGY_LIMIT: {{ .Values.config.argoRetryStrategyLimit | quote }}
   ARGO_RETRY_STRATEGY_RETRY_POLICY: {{ .Values.config.argoRetryStrategyRetryPolicy }}
   ARGO_RETRY_STRATEGY_BACKOFF_DURATION: {{ .Values.config.argoRetryStrategyBackoffDuration }}
   ARGO_RETRY_STRATEGY_MAX_DURATION: {{ .Values.config.argoRetryStrategyMaxDuration }}
-  ARGO_RETRY_STRATEGY_FACTOR: {{ .Values.config.argoRetryStrategyFactor }}
-  ARGO_BUILD_PACK_MEMORY_REQUEST: {{ .Values.config.argoBuildPackMemoryRequest }}
-  ARGO_BUILD_PACK_MEMORY_LIMIT: {{ .Values.config.argoBuildPackMemoryLimit }}
-  ARGO_BUILD_PACK_CPU_REQUEST: {{ .Values.config.argoBuildPackCpuRequest }}
-  ARGO_BUILD_PACK_CPU_LIMIT: {{ .Values.config.argoBuildPackCpuLimit }}
-  ARGO_BALLERINA_MEMORY_REQUEST: {{ .Values.config.argoBallerinaMemoryRequest }}
-  ARGO_BALLERINA_MEMORY_LIMIT: {{ .Values.config.argoBallerinaMemoryLimit }}
-  ARGO_BALLERINA_CPU_REQUEST: {{ .Values.config.argoBallerinaCpuRequest }}
-  ARGO_BALLERINA_CPU_LIMIT: {{ .Values.config.argoBallerinaCpuLimit }}
-  ARGO_BYOC_MEMORY_REQUEST: {{ .Values.config.argoByocMemoryRequest }}
-  ARGO_BYOC_MEMORY_LIMIT: {{ .Values.config.argoByocMemoryLimit }}
-  ARGO_BYOC_CPU_REQUEST: {{ .Values.config.argoByocCpuRequest }}
-  ARGO_BYOC_CPU_LIMIT: {{ .Values.config.argoByocCpuLimit }}
-  ARGO_MI_MEMORY_REQUEST: {{ .Values.config.argoMiMemoryRequest }}
-  ARGO_MI_MEMORY_LIMIT: {{ .Values.config.argoMiMemoryLimit }}
-  ARGO_MI_CPU_REQUEST: {{ .Values.config.argoMiCpuRequest }}
-  ARGO_MI_CPU_LIMIT: {{ .Values.config.argoMiCpuLimit }}
-  ARGO_WEBAPP_MEMORY_REQUEST: {{ .Values.config.argoWebappMemoryRequest }}
-  ARGO_WEBAPP_MEMORY_LIMIT: {{ .Values.config.argoWebappMemoryLimit }}
-  ARGO_WEBAPP_CPU_REQUEST: {{ .Values.config.argoWebappCpuRequest }}
-  ARGO_WEBAPP_CPU_LIMIT: {{ .Values.config.argoWebappCpuLimit }}
-  ARGO_GIT_PROXY_MEMORY_REQUEST: {{ .Values.config.argoGitProxyMemoryRequest }}
-  ARGO_GIT_PROXY_MEMORY_LIMIT: {{ .Values.config.argoGitProxyMemoryLimit }}
-  ARGO_GIT_PROXY_CPU_REQUEST: {{ .Values.config.argoGitProxyCpuRequest }}
-  ARGO_GIT_PROXY_CPU_LIMIT: {{ .Values.config.argoGitProxyCpuLimit }}
-  ARGO_TEST_RUNNER_MEMORY_REQUEST: {{ .Values.config.argoTestRunnerMemoryRequest }}
-  ARGO_TEST_RUNNER_MEMORY_LIMIT: {{ .Values.config.argoTestRunnerMemoryLimit }}
-  ARGO_TEST_RUNNER_CPU_REQUEST: {{ .Values.config.argoTestRunnerCpuRequest }}
-  ARGO_TEST_RUNNER_CPU_LIMIT: {{ .Values.config.argoTestRunnerCpuLimit }}
-  ARGO_PRISM_MOCK_SERVICE_MEMORY_REQUEST: {{ .Values.config.argoPrismMockServiceMemoryRequest }}
-  ARGO_PRISM_MOCK_SERVICE_MEMORY_LIMIT: {{ .Values.config.argoPrismMockServiceMemoryLimit }}
-  ARGO_PRISM_MOCK_SERVICE_CPU_REQUEST: {{ .Values.config.argoPrismMockServiceCpuRequest }}
-  ARGO_PRISM_MOCK_SERVICE_CPU_LIMIT: {{ .Values.config.argoPrismMockServiceCpuLimit }}
+  ARGO_RETRY_STRATEGY_FACTOR: {{ .Values.config.argoRetryStrategyFactor | quote }}
+  ARGO_BUILD_PACK_MEMORY_REQUEST: {{ .Values.config.argoBuildPackMemoryRequest | quote }}
+  ARGO_BUILD_PACK_MEMORY_LIMIT: {{ .Values.config.argoBuildPackMemoryLimit | quote }}
+  ARGO_BUILD_PACK_CPU_REQUEST: {{ .Values.config.argoBuildPackCpuRequest | quote }}
+  ARGO_BUILD_PACK_CPU_LIMIT: {{ .Values.config.argoBuildPackCpuLimit | quote }}
+  ARGO_BALLERINA_MEMORY_REQUEST: {{ .Values.config.argoBallerinaMemoryRequest | quote }}
+  ARGO_BALLERINA_MEMORY_LIMIT: {{ .Values.config.argoBallerinaMemoryLimit | quote }}
+  ARGO_BALLERINA_CPU_REQUEST: {{ .Values.config.argoBallerinaCpuRequest | quote }}
+  ARGO_BALLERINA_CPU_LIMIT: {{ .Values.config.argoBallerinaCpuLimit | quote }}
+  ARGO_BYOC_MEMORY_REQUEST: {{ .Values.config.argoByocMemoryRequest | quote }}
+  ARGO_BYOC_MEMORY_LIMIT: {{ .Values.config.argoByocMemoryLimit | quote }}
+  ARGO_BYOC_CPU_REQUEST: {{ .Values.config.argoByocCpuRequest | quote }}
+  ARGO_BYOC_CPU_LIMIT: {{ .Values.config.argoByocCpuLimit | quote }}
+  ARGO_MI_MEMORY_REQUEST: {{ .Values.config.argoMiMemoryRequest | quote }}
+  ARGO_MI_MEMORY_LIMIT: {{ .Values.config.argoMiMemoryLimit | quote }}
+  ARGO_MI_CPU_REQUEST: {{ .Values.config.argoMiCpuRequest | quote }}
+  ARGO_MI_CPU_LIMIT: {{ .Values.config.argoMiCpuLimit | quote }}
+  ARGO_WEBAPP_MEMORY_REQUEST: {{ .Values.config.argoWebappMemoryRequest | quote }}
+  ARGO_WEBAPP_MEMORY_LIMIT: {{ .Values.config.argoWebappMemoryLimit | quote }}
+  ARGO_WEBAPP_CPU_REQUEST: {{ .Values.config.argoWebappCpuRequest | quote }}
+  ARGO_WEBAPP_CPU_LIMIT: {{ .Values.config.argoWebappCpuLimit | quote }}
+  ARGO_GIT_PROXY_MEMORY_REQUEST: {{ .Values.config.argoGitProxyMemoryRequest | quote }}
+  ARGO_GIT_PROXY_MEMORY_LIMIT: {{ .Values.config.argoGitProxyMemoryLimit | quote }}
+  ARGO_GIT_PROXY_CPU_REQUEST: {{ .Values.config.argoGitProxyCpuRequest | quote }}
+  ARGO_GIT_PROXY_CPU_LIMIT: {{ .Values.config.argoGitProxyCpuLimit | quote }}
+  ARGO_TEST_RUNNER_MEMORY_REQUEST: {{ .Values.config.argoTestRunnerMemoryRequest | quote }}
+  ARGO_TEST_RUNNER_MEMORY_LIMIT: {{ .Values.config.argoTestRunnerMemoryLimit | quote }}
+  ARGO_TEST_RUNNER_CPU_REQUEST: {{ .Values.config.argoTestRunnerCpuRequest | quote }}
+  ARGO_TEST_RUNNER_CPU_LIMIT: {{ .Values.config.argoTestRunnerCpuLimit | quote }}
+  ARGO_PRISM_MOCK_SERVICE_MEMORY_REQUEST: {{ .Values.config.argoPrismMockServiceMemoryRequest |quote }}
+  ARGO_PRISM_MOCK_SERVICE_MEMORY_LIMIT: {{ .Values.config.argoPrismMockServiceMemoryLimit | quote }}
+  ARGO_PRISM_MOCK_SERVICE_CPU_REQUEST: {{ .Values.config.argoPrismMockServiceCpuRequest | quote }}
+  ARGO_PRISM_MOCK_SERVICE_CPU_LIMIT: {{ .Values.config.argoPrismMockServiceCpuLimit | quote }}
   ARGO_STRUCTURE: {{ .Values.config.argoStructure }}
   ARGO_CONTAINER_SET_ENABLED_ORGS: {{ .Values.config.argoContainerSetEnabledOrgs }}
   ARGO_ENVIRONMENT_SETUP_IMAGE: {{ .Values.config.argoEnvironmentSetupImage }}
@@ -202,39 +202,39 @@ data:
   BD_AWS_SINGLE_IMAGE_REPO_ENABLED_ORGS: {{ .Values.config.bdAwsSingleImageRepoEnabledOrgs }}
   MEDIATION_WF_CODE_GENV: {{ .Values.config.mediationWfCodeGenv }}
   MEDIATION_WF_CODEGEN_FP: {{ .Values.config.mediationWfCodegenFp }}
-  DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW: {{ .Values.config.disableBallerinaConfigGenerationWorflow }}
-  DISABLE_BALLERINA_OBSERVABILITY: {{ .Values.config.disableBallerinaObservability }}
+  DISABLE_BALLERINA_CONFIG_GENERATION_WORFLOW: {{ .Values.config.disableBallerinaConfigGenerationWorflow | quote }}
+  DISABLE_BALLERINA_OBSERVABILITY: {{ .Values.config.disableBallerinaObservability | quote }}
   CHOREO_MANAGED_BUILDPACK_LIFECYCLE_IMAGE: {{ .Values.config.choreoManagedBuildpackLifecycleImage }}
   GOOGLE_BUILDPACK_LIFECYCLE_IMAGE: {{ .Values.config.googleBuildpackLifecycleImage }}
   GOOGLE_BUILDPACK_RUN_IMAGE: {{ .Values.config.googleBuildpackRunImage }}
   CHOREO_MANAGED_BUILDPACK_RUN_IMAGE: {{ .Values.config.choreoManagedBuildpackRunImage }}
-  DISABLE_MI_CREATE_APP_WORKFLOW: {{ .Values.config.disableMiCreateAppWorkflow }}
-  DISABLE_MI_CONFIG_GENERATION_WORKFLOW: {{ .Values.config.disableMiConfigGenerationWorkflow }}
-  ENABLE_TRANSACTION_WF_CREATION: {{ .Values.config.enableTransactionWfCreation }}
+  DISABLE_MI_CREATE_APP_WORKFLOW: {{ .Values.config.disableMiCreateAppWorkflow | quote }}
+  DISABLE_MI_CONFIG_GENERATION_WORKFLOW: {{ .Values.config.disableMiConfigGenerationWorkflow | quote }}
+  ENABLE_TRANSACTION_WF_CREATION: {{ .Values.config.enableTransactionWfCreation | quote }}
   DOCKER_REGISTRY_USERNAME: {{ .Values.config.dockerRegistryUsername }}
   LOG_LEVEL: {{ .Values.config.logLevel }}
-  GITHUB_SUBMODULES_SUPPORT_ENABLED: {{ .Values.config.githubSubmodulesSupportEnabled }}
+  GITHUB_SUBMODULES_SUPPORT_ENABLED: {{ .Values.config.githubSubmodulesSupportEnabled | quote }}
   CHOREO_GITHUB_RUNNER_APP_CLIENT_ID: {{ .Values.config.choreoGithubRunnerAppClientId }}
   CHOREO_GITHUB_RUNNER_APP_OPAQUE_CLIENT_ID: {{ .Values.config.choreoGithubRunnerAppOpaqueClientId }}
   MIZZEN_API_URL: {{ .Values.config.mizzenApiUrl }}
   SECRET_MANAGER_API_URL: {{ .Values.config.secretManagerApiUrl }}
   USER_SERVICE_URL: {{ .Values.config.userServiceUrl }}
-  ENABLE_SOURCE_CONFIG_VALIDATION: {{ .Values.config.enableSourceConfigValidation }}
-  ENABLE_PRIVATE_REPO_BUILD_RESTRICTIONS_ON_FREE_TIER: {{ .Values.config.enablePrivateRepoBuildRestrictionsOnFreeTier }}
-  ENABLE_SAVING_REPO_VISIBILITY_STATE: {{ .Values.config.enableSavingRepoVisibilityState }}
+  ENABLE_SOURCE_CONFIG_VALIDATION: {{ .Values.config.enableSourceConfigValidation | quote }}
+  ENABLE_PRIVATE_REPO_BUILD_RESTRICTIONS_ON_FREE_TIER: {{ .Values.config.enablePrivateRepoBuildRestrictionsOnFreeTier | quote }}
+  ENABLE_SAVING_REPO_VISIBILITY_STATE: {{ .Values.config.enableSavingRepoVisibilityState | quote }}
   APIM_SERVICE_URL: {{ .Values.config.apimServiceUrl }}
   PROXY_BUILD_WF_VERSION: {{ .Values.config.proxyBuildWfVersion }}
   PROXY_BUILD_WF_FILE_PATH: {{ .Values.config.proxyBuildWfFilePath }}
-  ENABLE_DOCKERHUB_USER_ROTATION: {{ .Values.config.enableDockerhubUserRotation }}
+  ENABLE_DOCKERHUB_USER_ROTATION: {{ .Values.config.enableDockerhubUserRotation | quote }}
   CP_GW_URL: {{ .Values.config.cpGwUrl }}
   AZURE_CONTAINER_REGISTRY_USERNAME: {{ .Values.config.azureContainerRegistryUsername }}
   PROXY_DEPLOYER_URL: {{ .Values.config.proxyDeployerUrl }}
-  TRAFFIC_ROUTING_PROXY_DISABLED: {{ .Values.config.trafficRoutingProxyDisabled }}
-  ENABLE_ASYNC_INITIAL_BUILD: {{ .Values.config.enableAsyncInitialBuild }}
-  ENABLE_SAVE_SRC_CONFIG_DETAILS: {{ .Values.config.enableSaveSrcConfigDetails }}
-  LATEST_COMPONENT_YAML_SCHEMA_VERSION: {{ .Values.config.latestComponentYamlSchemaVersion }}
+  TRAFFIC_ROUTING_PROXY_DISABLED: {{ .Values.config.trafficRoutingProxyDisabled | quote }}
+  ENABLE_ASYNC_INITIAL_BUILD: {{ .Values.config.enableAsyncInitialBuild | quote }}
+  ENABLE_SAVE_SRC_CONFIG_DETAILS: {{ .Values.config.enableSaveSrcConfigDetails | quote }}
+  LATEST_COMPONENT_YAML_SCHEMA_VERSION: {{ .Values.config.latestComponentYamlSchemaVersion | quote }}
   SOURCE_CONFIG_MIGRATION_DOC_LINK: {{ .Values.config.sourceConfigMigrationDocLink }}
-  ENABLE_GET_BUILD_CONFIG_FROM_BUILDPACK_DETAILS: {{ .Values.config.enableGetBuildConfigFromBuildpackDetails }}
-  DISABLE_CONFIGURABLE_CHECK_ALERT: {{ .Values.config.disableConfigurableCheckAlert }}
+  ENABLE_GET_BUILD_CONFIG_FROM_BUILDPACK_DETAILS: {{ .Values.config.enableGetBuildConfigFromBuildpackDetails | quote }}
+  DISABLE_CONFIGURABLE_CHECK_ALERT: {{ .Values.config.disableConfigurableCheckAlert | quote }}
   CONFIGURABLE_ALERT_ENABLED_ORGS: {{ .Values.config.configurableAlertEnabledOrgs | join "," }}
   AZURE_TENANT_ID: {{ .Values.config.azureTenantId }}
