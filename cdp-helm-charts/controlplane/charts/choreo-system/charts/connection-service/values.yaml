@@ -30,7 +30,7 @@ config:
   logLevel: INFO
 secrets:
   apimClientSecret:
-    path: choreo-cp/data/choreo-system/app-service
+    path: choreo-cp/data/choreo-system/connection-service
     key: apimClientSecret
   connectionDBPassword:
     path: choreo-cp/data/choreo-system/connection-service
