@@ -45,6 +45,9 @@ dependencies:
   - name: choreo-console
     version: 1.0.0
     condition: choreo-console.enabled
+  - name: configuration-service
+    version: 1.0.0
+    condition: configuration-service.enabled
   - name: connection-service
     version: 1.0.0
     condition: connection-service.enabled

@@ -81,6 +81,8 @@ choreo-system:
     enabled: true
   choreo-console:
     enabled: true
+  configuration-service:
+    enabled: true
   connection-service:
     enabled: true
   cp-graphql:

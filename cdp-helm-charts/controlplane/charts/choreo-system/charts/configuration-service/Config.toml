@@ -1,0 +1,18 @@
+[cp_configuration_service.config]
+configServerPort = 8080
+internalHealthCheckPort = 8081
+externalHealthCheckPort = 8082
+maxHeaderSize = 65536
+secretManagerUrl = "http://dp-secret-manager:80"
+cloudManagerUrl = "http://dp-cloud-manager:80"
+resourceRegistryUrl = "http://resource-registry:9090"
+dbHost = {{ .Values.config.dbHost | quote }}
+dbUsername = "choreo_configuration_service_db_user"
+dbName = "choreo_configuration_service_db"
+dbPasswordPath = "/mnt/csi/secret-configuration-service/CONFIGURATION_SERVICE_DB_PASSWORD"
+mappingDbHost = {{ .Values.config.mappingDbHost | quote }}
+mappingDbUsername = "choreo_configuration_mapping_service_admin_db_user"
+mappingDbName = "choreo_configuration_mapping_service_db"
+mappingDbPasswordPath = "/mnt/csi/secret-configuration-service/CONFIGURATION_MAPPING_SERVICE_DB_PASSWORD"
+authzClientEndpoint = "http://choreo-resource-authorization-service.choreo-authorization.svc.cluster.local:9090"
+isInstanceBasedAuthzEnabled = {{ .Values.config.isInstanceBasedAuthzEnabled }}
