@@ -77,6 +77,8 @@ choreo-system:
     enabled: true
   app-service:
     enabled: true
+  audit-logging:
+    enabled: true
   choreo-console:
     enabled: true
   connection-service:

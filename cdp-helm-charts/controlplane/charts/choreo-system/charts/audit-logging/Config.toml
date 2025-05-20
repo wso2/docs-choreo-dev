@@ -1,0 +1,40 @@
+[choreo.audit_logging.configs]
+auditEventListenerApiPort = 8090
+stsClientId = "{{ .Values.config.stsClientId }}"
+stsTokenEndpointHost = "{{ .Values.config.stsTokenEndpointHost }}"
+hubURL = "{{ .Values.config.hubURL }}"
+topic = {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle }}
+callbackURL = "{{ .Values.config.callbackURL }}"
+azureLogIngestionBaseUrl = "{{ .Values.config.azureLogIngestionBaseUrl }}"
+azureDcrImmutableId = "{{ .Values.config.azureDcrImmutableId }}"
+azureCustomTableName = "ChoreoAuditLogs_CL"
+azureLogIngestionAPIVersion = "2021-11-01-preview"
+azureLogIngestionAPIScopes = "https://monitor.azure.com//.default"
+azureLogIngestionClientRetryInterval = 1.0
+azureLogIngestionClientRetryCount = 3
+enableEventCollectViaAMA = {{ .Values.config.enableEventCollectViaAMA }}
+enableEventCollectViaAzureIngestionAPI = {{ .Values.config.enableEventCollectViaAzureIngestionAPI }}
+enableEventQueryFromCustomTable = {{ .Values.config.enableEventQueryFromCustomTable }}
+auditLoggingApiPort = 8080
+region = {{ .Values.config.region | quote }}
+clusterName = {{ .Values.config.clusterName | quote }}
+namespace = {{ .Values.global.namespaces.system }}
+containerName = {{ .Values.config.containerName | quote }}
+auditLogFilter = "[AUDIT_LOG]"
+healthCheckInterval = "10m"
+azureLaTenantId = {{ .Values.config.azureLaTenantId | quote }}
+azureLaClientId = {{ .Values.config.azureLaClientId | quote }}
+choreoJwtIssuer = {{ .Values.config.choreoJwtIssuer | quote }}
+choreoBackendJwtIssuer = "wso2.org/products/am"
+choreoJwtAudience = {{ .Values.config.choreoJwtAudience | quote }}
+site24x7JwtAudience = {{ .Values.config.site24x7JwtAudience | quote }}
+authAudienceList = {{ .Values.config.authAudienceList | join "," }}
+choreoJwtJwksUrl = {{ .Values.config.choreoJwtJwksUrl | quote }}
+choreoBackendJwtJwksUrl = {{ .Values.config.choreoBackendJwtJwksUrl | quote }}
+site24x7OrgUuid = {{ .Values.config.site24x7OrgUuid | quote }}
+healthCheckServicePort = 9090
+[choreo.audit_logging.configs.azureLaWorkspaceIds]
+US = {{ .Values.config.usAzureLaWorkspaceId | quote }}
+
+[ballerina.log]
+level = {{ .Values.config.logLevel | quote }}
