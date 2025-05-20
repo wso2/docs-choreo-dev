@@ -72,6 +72,9 @@ dependencies:
   - name: dp-secret-manager
     version: 1.0.0
     condition: dp-secret-manager.enabled
+  - name: email-service
+    version: 1.0.0
+    condition: email-service.enabled
   - name: sts-mgt-service
     version: 1.0.0
     condition: sts-mgt-service.enabled
