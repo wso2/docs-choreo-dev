@@ -57,7 +57,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: dp-garbage-collector
-            - secretKeyRef:
+            - secretRef:
                 name: dp-garbage-collector
           securityContext:
             allowPrivilegeEscalation: false

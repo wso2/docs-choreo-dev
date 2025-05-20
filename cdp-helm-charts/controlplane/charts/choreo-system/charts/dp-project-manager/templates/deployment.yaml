@@ -58,7 +58,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: dp-project-manager
-            - secretKeyRef:
+            - secretRef:
                 name: dp-project-manager
           securityContext:
             allowPrivilegeEscalation: false
