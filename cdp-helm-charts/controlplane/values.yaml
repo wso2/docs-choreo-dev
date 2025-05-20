@@ -99,6 +99,8 @@ choreo-system:
     enabled: true
   dp-secret-manager:
     enabled: true
+  email-service:
+    enabled: true
   sts-mgt-service:
     enabled: true
 choreo-authorization:

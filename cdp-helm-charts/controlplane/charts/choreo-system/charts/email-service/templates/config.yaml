@@ -1,0 +1,27 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: email-service
+  labels:
+    {{- include "email-service.labels" . | nindent 4 }}
+  namespace: {{ .Values.global.namespaces.system }}
+data:
+  MAIL_SMTP_AUTH: "true"
+  MAIL_SMTPNSTARTTLS_ENABLE: "false"
+  templates_contents_BCENTRAL_EMAIL_INVITATION: "templates/bcentral/confirmation.txt"
+  templates_contents_BCENTRAL_EMAIL_INVITATION_SUCCESS: "templates/bcentral/welcome-invitee.txt"
+  templates_contents_BCENTRAL_EMAIL_NEW_ORG: "templates/bcentral/welcome-new-org.txt"
+  templates_contents_CHOREO_EMAIL_INVITATION: "templates/choreo/org-invitation.txt"
+  templates_subjects_CHOREO_EMAIL_INVITATION_SUBJECT: "You have been invited to join the '$organization' organization in Choreo"
+  sender_emails_choreo: {{ .Values.config.senderEmailsChoreo | quote }}
