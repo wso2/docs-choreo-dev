@@ -15,6 +15,7 @@ metadata:
   labels:
     {{- include "resource-authorization-service.labels" . | nindent 4 }}
   name: choreo-resource-authorization-service
+  namespace: {{ .Values.global.namespaces.authz }}
 spec:
   ports:
     - name: service-port

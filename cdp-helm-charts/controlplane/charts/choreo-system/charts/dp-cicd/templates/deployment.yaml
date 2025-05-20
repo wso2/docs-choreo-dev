@@ -18,6 +18,7 @@ metadata:
   labels:
     {{- include "dp-cicd.labels" . | nindent 4 }}
   name: dp-cicd
+  namespace: {{ .Values.global.namespaces.system }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicas }}
