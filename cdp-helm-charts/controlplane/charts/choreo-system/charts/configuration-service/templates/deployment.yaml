@@ -17,6 +17,7 @@ metadata:
   labels:
     {{- include "configuration-service.labels" . | nindent 4 }}
   name: configuration-service
+  namespace: {{ .Values.global.namespaces.system }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicas }}
