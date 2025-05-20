@@ -61,7 +61,7 @@ data:
   CHOREO_ID_CLIENT_ID: {{ .Values.config.choreoIdClientId }}
   APP_INSIGHTS_KEY: {{ .Values.config.appInsightsKey }}
   GITHUB_APP_NAME: {{ .Values.config.githubAppName }}
-  GITHUB_APP_ID: {{ .Values.config.githubAppId }}
+  GITHUB_APP_ID: {{ .Values.config.githubAppId | quote }}
   GITHUB_APP_CLIENT_ID: {{ .Values.config.githubAppClientId }}
   GITHUB_RUNNERS_WEBHOOK: {{ .Values.config.githubRunnersWebhook }}
   AZURE_CUSTOMER_ID: {{ .Values.config.azureCustomerId }}

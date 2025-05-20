@@ -192,6 +192,6 @@ data:
   SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED: {{ .Values.config.schemaBasedConfigDeploymentEnabled | quote }}
   SCHEMA_BASED_CONFIG_DEPLOYMENT_ENABLED_ORGS: {{ .Values.config.schemaBasedConfigDeploymentEnabledOrgs }}
   API_KEY_ENABLED_PDP_ORGS: {{ .Values.config.apiKeyEnabledPdpOrgs }}
-  LATEST_COMPONENT_YAML_SCHEMA_VERSION: {{ .Values.config.latestComponentYamlSchemaVersion }}
+  LATEST_COMPONENT_YAML_SCHEMA_VERSION: {{ .Values.config.latestComponentYamlSchemaVersion | quote }}
   ENABLE_UNIFIED_CONFIG_MAPPING_FOR_MI: {{ .Values.config.enableUnifiedConfigMappingForMi | quote }}
   UNIFIED_CONFIG_MAPPING_FOR_MI_ENABLED_ORGS: {{ .Values.config.unifiedConfigMappingForMiEnabledOrgs }}

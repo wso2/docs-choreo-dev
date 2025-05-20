@@ -318,7 +318,7 @@ config:
   codeChallengeLink: https://choreo.dev/cybertruck
   requestDemoLink: https://wso2.com/choreo/request-demo/
   supportPortalLink: https://cloud-support.wso2.com/wso2_cloud_support
-  reactIntroVideoUrl: ''
+  reactIntroVideoUrl: ""
   whatfixDevScriptUrl: https://whatfix.com/c9fb1d90-71f0-11ec-a69b-2a8342861064/embed/embed.nocache.js
   whatfixProdScriptUrl: https://cdn.whatfix.com/prod/c9fb1d90-71f0-11ec-a69b-2a8342861064/embed/embed.nocache.js
   ghAppClientId: Iv1.804167a242012c66
@@ -348,7 +348,7 @@ config:
   enableGraphqlFeature: true
   proxyDeployerBaseUrl: https://app.choreo.dev/proxy/deployer/v1
   userEnabledFeaturePreviewList: Web Application Creation
-  choreoSaasOfferUrl: ''
+  choreoSaasOfferUrl: ""
   projectDpRegions:
     - US
     - EU
@@ -377,7 +377,7 @@ config:
   pdpCreationEnabledClouds: vultr
   envWebappShortUrlDomainUs: choreoapps.dev
   envWebappShortUrlDomainEu: ne.choreoapps.dev
-  envWebappShortUrlDomainInd: ''
+  envWebappShortUrlDomainInd: ""
   maxNoOfOrgEnvsAllowed: 5
   bitbucketServerCustomerOrgs: f1373e7c-c19a-4441-947d-89c0b861635a|aa09155e-7c66-4eba-8f39-b32862014891|8e95904b-ebee-452f-8c00-95994da9c821
   customizableCiEnabledOrgs: 14cda240-49fb-4a31-bb03-0c324c4bde6f
@@ -450,7 +450,7 @@ config:
     - miEventHandler
     - miWebhook
   enableMarketplaceIntRoutingFeature: True
-  featureFlagMaintenanceCustomMessage:
+  featureFlagMaintenanceCustomMessage: ""
   enableDefaultEndpointUrlFeature: True
   enableApprovalWorkflowFeature: true
   aiCopilotUrlSuffix: "/systemapis/aicopilot/v1.0/copilot"
