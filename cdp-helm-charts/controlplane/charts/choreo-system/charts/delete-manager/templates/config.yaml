@@ -17,8 +17,8 @@ metadata:
   labels:
     {{- include "delete-manager.labels" . | nindent 4 }}
 data:
-  PORT: 8000
-  MSSQL_PORT: 1433
+  PORT: "8000"
+  MSSQL_PORT: "1433"
   MSSQL_USER: choreo_delete_manager_admin_db_user
   MSSQL_DBNAME: choreo_delete_manager_db
   RUDDER_URL: http://dp-rudder
@@ -55,6 +55,6 @@ data:
   NEGOTIATOR_URL: negotiator:9092
   GCHAT_SPACE_ID: {{ .Values.config.gchatSpaceId }}
   BALLERINA_CENTRAL_URL: {{ .Values.config.ballerinaCentralURL }}
-  ENABLE_INSTANCE_BASED_AUTHORIZATION: true
-  ENABLE_CRYPTO_KEY_DELETION: true
-  ENABLE_APP_DEV_STS_DELETION: true
+  ENABLE_INSTANCE_BASED_AUTHORIZATION: "true"
+  ENABLE_CRYPTO_KEY_DELETION: "true"
+  ENABLE_APP_DEV_STS_DELETION: "true"

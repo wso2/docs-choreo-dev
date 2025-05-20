@@ -51,9 +51,9 @@ data:
   REACT_APP_CIO_CONFIGURATOR_API_URL: {{ .Values.config.cioConfiguratorApiUrl }}
   REACT_APP_API_BALLERINA_CENTRAL_URL: {{ .Values.config.apiBallerinaCentralUrl }}
   REACT_APP_MOESIF_API_BASE_URL: {{ .Values.config.moesifApiBaseUrl }}
-  REACT_APP_IS_MOESIF_SETTINGS_PAGE_ENABLED: true
-  REACT_APP_ENABLE_DEPLOYMENT_TRACK_LISTING: true
-  REACT_APP_ENABLE_CONFIG_GROUP_MANAGEMENT: false
+  REACT_APP_IS_MOESIF_SETTINGS_PAGE_ENABLED: "true"
+  REACT_APP_ENABLE_DEPLOYMENT_TRACK_LISTING: "true"
+  REACT_APP_ENABLE_CONFIG_GROUP_MANAGEMENT: "false"
   REACT_APP_GTM_ID: {{ .Values.config.gtmId }}
   REACT_APP_API_MANAGER_BASE_URL: {{ .Values.config.apiManagerBaseUrl }}
   REACT_APP_CRYPTO_KEY_SERVICE_BASE_URL: {{ .Values.config.cryptoKeyServiceBaseUrl }}
@@ -69,10 +69,10 @@ data:
   REACT_APP_ASGARDEO_SDK_CLIENT_ID: {{ .Values.config.asgardeoSDKClientId }}
   REACT_APP_ASGARDEO_SDK_SERVER_ORIGIN: {{ .Values.config.asgardeoSDKServerOrigin }}
   REACT_APP_ASGARDEO_SDK_CLIENT_HOST: {{ .Values.config.asgardeoSDKClientHost }}
-  REACT_APP_ASGARDEO_SDK_ENABLE_PKCE: true
-  REACT_APP_ASGARDEO_SDK_CHECK_SESSION_INTERVAL: -1
-  REACT_APP_ASGARDEO_SDK_DISABLE_SIGNIN_SILENTLY: true
-  REACT_APP_ASGARDEO_SDK_AUTO_LOGOUT_ON_TOKEN_REFRESH_ERROR: false
+  REACT_APP_ASGARDEO_SDK_ENABLE_PKCE: "true"
+  REACT_APP_ASGARDEO_SDK_CHECK_SESSION_INTERVAL: "-1"
+  REACT_APP_ASGARDEO_SDK_DISABLE_SIGNIN_SILENTLY: "true"
+  REACT_APP_ASGARDEO_SDK_AUTO_LOGOUT_ON_TOKEN_REFRESH_ERROR: "false"
   REACT_APP_ASGARDEO_SDK_AUTHORIZATION_ENDPOINT_URL: {{ .Values.config.asgardeoSDKAuthorizationEndpointUrl }}
   REACT_APP_ASGARDEO_SDK_TOKEN_ENDPOINT_URL: {{ .Values.config.asgardeoSDKTokenEndpointUrl }}
   REACT_APP_ASGARDEO_SDK_LOGOUT_ENDPOINT_URL: {{ .Values.config.asgardeoSDKLogoutEndpointUrl }}
@@ -87,9 +87,9 @@ data:
   REACT_APP_ASGARDEO_EX_REQ_TOKEN_TYPE: urn:ietf:params:oauth:token-type:jwt
   REACT_APP_ASGARDEO_EX_SCOPES: {{ .Values.config.asgardeoExScopes | join " " }}
   REACT_APP_ASGARDEO_EX_ID: apim-token-exchange
-  REACT_APP_ASGARDEO_EX_RETURN_RESPONSE: true
-  REACT_APP_ASGARDEO_EX_RETURN_SESSION: true
-  REACT_APP_ASGARDEO_EX_SIGNIN_REQUIRED: true
+  REACT_APP_ASGARDEO_EX_RETURN_RESPONSE: "true"
+  REACT_APP_ASGARDEO_EX_RETURN_SESSION: "true"
+  REACT_APP_ASGARDEO_EX_SIGNIN_REQUIRED: "true"
   REACT_APP_ASGARDEO_SESSION_EXTENSION_RESOURCE: /t/a/identity/extend-session
   REACT_APP_ASGARDEO_SESSION_EXTENSION_INTERVAL: {{ .Values.config.asgardeoSessionExtensionInterval }}
   REACT_APP_ORGANIZATION_ENDPOINT: {{ .Values.config.organizationEndpoint }}
@@ -114,18 +114,18 @@ data:
   REACT_APP_CDN_THEME_URL: {{ .Values.config.cdnThemeUrl }}
   REACT_APP_BILLING_CONSOLE_URL: {{ .Values.config.billingConsoleUrl }}
   REACT_APP_SUBSCRIPTION_API_URL: {{ .Values.config.subscriptionApiUrl }}
-  REACT_APP_ENABLE_BILLING_FEATURE: {{ .Values.config.enableBillingFeature }}
+  REACT_APP_ENABLE_BILLING_FEATURE: {{ .Values.config.enableBillingFeature | quote }}
   REACT_APP_ENABLE_CONNECTOR_PUBLISH_FEATURE: {{ .Values.config.enableConnectorPublishFeature }}
-  REACT_APP_ENABLE_CONNECTOR_DELETE_AND_REPUBLISH_FEATURE: {{ .Values.config.enableConnectorDeleteAndRepublishFeature }}
-  REACT_APP_ENABLE_ENTERPRISE_LOGIN_ORGS_FEATURE: {{ .Values.config.enableEnterpriseLoginOrgsFeature }}
-  REACT_APP_ENABLE_CYBERTRUCK_BANNER: {{ .Values.config.enableCybertruckBanner }}
-  REACT_APP_ALLOW_RBAC: {{ .Values.config.allowRbac }}
-  REACT_APP_ENABLE_MEDIATION_POLICY_FEATURE: {{ .Values.config.enableMediationPolicyFeature }}
-  REACT_APP_ENABLE_MICROSOFT_LOGIN: {{ .Values.config.enableMicrosoftLogin }}
-  REACT_APP_ENABLE_GOOGLE_SIGNUP: {{ .Values.config.enableGoogleSignup }}
-  REACT_APP_ENABLE_GITHUB_SIGNUP: {{ .Values.config.enableGithubSignup }}
-  REACT_APP_ENABLE_MICROSOFT_SIGNUP: {{ .Values.config.enableMicrosoftSignup }}
-  REACT_APP_ENABLE_BANNER_STATUS: {{ .Values.config.enableBannerStatus }}
+  REACT_APP_ENABLE_CONNECTOR_DELETE_AND_REPUBLISH_FEATURE: {{ .Values.config.enableConnectorDeleteAndRepublishFeature | quote }}
+  REACT_APP_ENABLE_ENTERPRISE_LOGIN_ORGS_FEATURE: {{ .Values.config.enableEnterpriseLoginOrgsFeature | quote }}
+  REACT_APP_ENABLE_CYBERTRUCK_BANNER: {{ .Values.config.enableCybertruckBanner | quote }}
+  REACT_APP_ALLOW_RBAC: {{ .Values.config.allowRbac | quote }}
+  REACT_APP_ENABLE_MEDIATION_POLICY_FEATURE: {{ .Values.config.enableMediationPolicyFeature | quote }}
+  REACT_APP_ENABLE_MICROSOFT_LOGIN: {{ .Values.config.enableMicrosoftLogin | quote }}
+  REACT_APP_ENABLE_GOOGLE_SIGNUP: {{ .Values.config.enableGoogleSignup | quote }}
+  REACT_APP_ENABLE_GITHUB_SIGNUP: {{ .Values.config.enableGithubSignup | quote }}
+  REACT_APP_ENABLE_MICROSOFT_SIGNUP: {{ .Values.config.enableMicrosoftSignup | quote }}
+  REACT_APP_ENABLE_BANNER_STATUS: {{ .Values.config.enableBannerStatus | quote }}
   REACT_APP_CONNECTOR_BALLERINA_VERSION: {{ .Values.config.connectorBallerinaVersion }}
   REACT_APP_GATEWAY_BASE_URL: {{ .Values.config.gatewayBaseUrl }}
   REACT_APP_CONSOLE_ORIGIN: {{ .Values.config.consoleOrigin }}
@@ -140,18 +140,18 @@ data:
   REACT_APP_FEATURE_ENABLE_API_VISIBILITY_SWITCH: {{ .Values.config.featureEnableApiVisibilitySwitch }}
   REACT_APP_FEATURE_SHOW_USER_EMAIL_CONSENT: {{ .Values.config.featureShowUserEmailConsent }}
   REACT_APP_FEATURE_SHOW_TOS_CONSENT: {{ .Values.config.featureShowTosConsent }}
-  REACT_APP_ENABLE_CONTEST_SIGNUP: {{ .Values.config.enableContestSignup }}
-  REACT_APP_FEATURE_DISABLE_ANONYMOUS_LOGIN_BUTTON: {{ .Values.config.featureDisableAnonymousLoginButton }}
-  REACT_APP_DISABLE_ENTERPRISE_LOGIN: {{ .Values.config.disableEnterpriseLogin }}
+  REACT_APP_ENABLE_CONTEST_SIGNUP: {{ .Values.config.enableContestSignup | quote }}
+  REACT_APP_FEATURE_DISABLE_ANONYMOUS_LOGIN_BUTTON: {{ .Values.config.featureDisableAnonymousLoginButton | quote }}
+  REACT_APP_DISABLE_ENTERPRISE_LOGIN: {{ .Values.config.disableEnterpriseLogin | quote }}
   REACT_GOOGLE_CAPTCHA_SITE_KEY: {{ .Values.config.reactGoogleCaptchaSiteKey }}
   REACT_DISABLE_GOOGLE_CAPTCHA: {{ .Values.config.reactDisableGoogleCaptcha }}
-  REACT_APP_ENABLE_GCP_SUBSCRIPTION_FEATURE: {{ .Values.config.enableGcpSubscriptionFeature }}
-  REACT_APP_ENABLE_DEMO_ORG_FEATURE: {{ .Values.config.enableDemoOrgFeature }}
+  REACT_APP_ENABLE_GCP_SUBSCRIPTION_FEATURE: {{ .Values.config.enableGcpSubscriptionFeature | quote }}
+  REACT_APP_ENABLE_DEMO_ORG_FEATURE: {{ .Values.config.enableDemoOrgFeature | quote }}
   REACT_APP_DEMO_ORG_HANDLE: {{ .Values.config.demoOrgHandle }}
   REACT_APP_DEMO_ORG_WEB_APP_URL: {{ .Values.config.demoOrgWebAppUrl }}
   REACT_APP_DEMO_ORG_VIEWER_SCOPES: {{ .Values.config.demoOrgViewerScopes | join " " }}
-  REACT_APP_ENABLE_AUDIT_LOGS_VIEW: {{ .Values.config.enableAuditLogsView }}
-  REACT_APP_ENABLE_UNIFIED_LOGS_VIEW: {{ .Values.config.enableUnifiedLogsView }}
+  REACT_APP_ENABLE_AUDIT_LOGS_VIEW: {{ .Values.config.enableAuditLogsView | quote }}
+  REACT_APP_ENABLE_UNIFIED_LOGS_VIEW: {{ .Values.config.enableUnifiedLogsView | quote }}
   REACT_APP_SYS_API_PREFIX: {{ .Values.config.sysApiPrefix }}
   REACT_APP_FEATURE_FLAG_MAINTENANCE_TYPE: {{ .Values.config.featureFlagMaintenanceType }}
   REACT_APP_FEATURE_FLAG_MAINTENANCE_BANNER: {{ .Values.config.featureFlagMaintenanceBanner }}
@@ -182,21 +182,21 @@ data:
   REACT_APP_BALLERINA_LOW_CODE_EDITOR_VERSION: {{ .Values.config.ballerinaLowCodeEditorVersion }}
   REACT_APP_FEATURE_FLAG_CODE_EDITOR_SSO: {{ .Values.config.featureFlagCodeEditorSso }}
   REACT_APP_NOTIFICATION_BANNER_INTERVAL: {{ .Values.config.notificationBannerInterval }}
-  REACT_APP_ENABLE_TWITTER_SHARE_FEATURE: {{ .Values.config.enableTwitterShareFeature }}
+  REACT_APP_ENABLE_TWITTER_SHARE_FEATURE: {{ .Values.config.enableTwitterShareFeature | quote }}
   REACT_APP_FEATURE_FLAG_COMPONENT_INSIGHTS: {{ .Values.config.featureFlagComponentInsights }}
-  REACT_APP_ENABLE_INTERNAL_API_FEATURE: {{ .Values.config.enableInternalApiFeature }}
-  REACT_APP_ENABLE_BYOC_FEATURE: {{ .Values.config.enableByocFeature }}
-  REACT_APP_ENABLE_EXTERNAL_CI_FEATURE: {{ .Values.config.enableExternalCiFeature }}
-  REACT_APP_ENABLE_KAFKA_AS_A_SERVICE: {{ .Values.config.enableKafkaAsAService }}
-  REACT_APP_ENABLE_GRAPHQL_FEATURE: {{ .Values.config.enableGraphqlFeature }}
+  REACT_APP_ENABLE_INTERNAL_API_FEATURE: {{ .Values.config.enableInternalApiFeature | quote }}
+  REACT_APP_ENABLE_BYOC_FEATURE: {{ .Values.config.enableByocFeature | quote }}
+  REACT_APP_ENABLE_EXTERNAL_CI_FEATURE: {{ .Values.config.enableExternalCiFeature | quote }}
+  REACT_APP_ENABLE_KAFKA_AS_A_SERVICE: {{ .Values.config.enableKafkaAsAService | quote }}
+  REACT_APP_ENABLE_GRAPHQL_FEATURE: {{ .Values.config.enableGraphqlFeature | quote }}
   REACT_APP_PROXY_DEPLOYER_BASE_URL: {{ .Values.config.proxyDeployerBaseUrl }}
   REACT_APP_USER_ENABLED_FEATURE_PREVIEW_LIST: {{ .Values.config.userEnabledFeaturePreviewList }}
   REACT_APP_CHOREO_SAAS_OFFER_URL: {{ .Values.config.choreoSaasOfferUrl }}
   REACT_APP_PROJECT_DP_REGIONS: {{ .Values.config.projectDpRegions | join "|" }}
   REACT_APP_GIT_HUB_URL: {{ .Values.config.gitHubUrl }}
-  REACT_APP_ENABLE_AUTO_DEPLOY_BY_DEFAULT: {{ .Values.config.enableAutoDeployByDefault }}
+  REACT_APP_ENABLE_AUTO_DEPLOY_BY_DEFAULT: {{ .Values.config.enableAutoDeployByDefault | quote }}
   REACT_APP_CONFIGURABLE_WEBHOOK_ENABLED: {{ .Values.config.configurableWebhookEnabled }}
-  REACT_APP_ENABLE_IPAAS_FEATURE: {{ .Values.config.enableIpaasFeature }}
+  REACT_APP_ENABLE_IPAAS_FEATURE: {{ .Values.config.enableIpaasFeature | quote }}
   REACT_APP_ENABLE_DEFAULT_ORG_CREATION: {{ .Values.config.enableDefaultOrgCreation }}
   REACT_APP_ENABLE_CONFIG_INIT_ON_COMP_CREATION: {{ .Values.config.enableConfigInitOnCompCreation }}
   REACT_APP_ASGARDEO_KEY_MANAGER_BASE_URL: {{ .Values.config.asgardeoKeyManagerBaseUrl }}

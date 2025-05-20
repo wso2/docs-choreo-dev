@@ -17,20 +17,20 @@ metadata:
   labels:
     {{ include "dp-mizzen.labels" . | indent 4 }}
 data:
-  PORT: 8080
+  PORT: "8080"
   SERVICE_RUDDER_URL: http://dp-rudder
-  REDIS_TLS: 1
-  MSSQL_PORT: 1443
+  REDIS_TLS: "1"
+  MSSQL_PORT: "1443"
   MSSQL_USERNAME: choreo_mizzen_admin_db_user
   MSSQL_DATABASE: choreo_mizzen_db
-  REDIS_PORT: 6380
+  REDIS_PORT: "6380"
   NODE_OPTIONS: "--max-http-header-size=65000"
   NODE_ENV: {{ .Values.config.nodeEnvironment }}
   MSSQL_HOST: {{ .Values.config.mssqlHost }}
   REDIS_HOST: {{ .Values.config.redisHost }}
   HOST_DNS: {{ .Values.config.hostDns }}
-  RB_HEALTH_CHECK_ENABLED: {{ .Values.config.healthCheckEnabled }}
-  RB_HEALTH_CHECK_INITIAL_DELAY_SECONDS: {{ .Values.config.healthCheckInitialDelaySeconds }}
-  RB_HEALTH_CHECK_INTERVAL_MS: {{ .Values.config.healthCheckIntervalMiliSeconds }}
-  RB_HEALTH_CHECK_HISTORY_LIMIT_SECONDS: {{ .Values.config.healthCheckHistoryLimitSeconds }}
-  RB_HEALTH_CHECK_SUCCESS_THRESHOLD: {{ .Values.config.healthCheckSuccessThreshold }}
+  RB_HEALTH_CHECK_ENABLED: {{ .Values.config.healthCheckEnabled | quote }}
+  RB_HEALTH_CHECK_INITIAL_DELAY_SECONDS: {{ .Values.config.healthCheckInitialDelaySeconds | quote }}
+  RB_HEALTH_CHECK_INTERVAL_MS: {{ .Values.config.healthCheckIntervalMiliSeconds | quote }}
+  RB_HEALTH_CHECK_HISTORY_LIMIT_SECONDS: {{ .Values.config.healthCheckHistoryLimitSeconds | quote }}
+  RB_HEALTH_CHECK_SUCCESS_THRESHOLD: {{ .Values.config.healthCheckSuccessThreshold | quote }}

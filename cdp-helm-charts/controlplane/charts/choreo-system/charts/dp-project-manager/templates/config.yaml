@@ -20,7 +20,7 @@ data:
   RUDDER_URL: http://dp-rudder:80
   CICD_URL: http://dp-cicd:80
   SUBSCRIPTION_SERVICE_URL: subscriptions:9090
-  DELETION_PERIOD_IN_MONTHS: 3
+  DELETION_PERIOD_IN_MONTHS: "3"
   AUTHZ_SERVICE_AUTHORIZATION_HEADER_NAME: x-jwt-assertion
   NODE_OPTIONS: "--max-http-header-size=65000"
   API_KEY_SVC_URL: http://api-key-service:8080
@@ -32,14 +32,14 @@ data:
   MONGODB_DATABASE: {{ .Values.config.mongodbDatabase }}
   DEFAULT_REGION: {{ .Values.config.defaultRegion }}
   AVAILABLE_REGIONS: {{ .Values.config.availableRegions | quote }}
-  PROJECT_ENV_INIT_ENABLED: {{ .Values.config.projectEnvInitEnabled }}
-  REPO_VISIBILITY_ENABLED: {{ .Values.config.repoVisibilityEnabled }}
-  COMPONENT_RESTRICTION_FEATURE_ENABLED: {{ .Values.config.componentRestrictionFeatureEnabled }}
+  PROJECT_ENV_INIT_ENABLED: {{ .Values.config.projectEnvInitEnabled | quote }}
+  REPO_VISIBILITY_ENABLED: {{ .Values.config.repoVisibilityEnabled | quote }}
+  COMPONENT_RESTRICTION_FEATURE_ENABLED: {{ .Values.config.componentRestrictionFeatureEnabled | quote }}
   APIM_URL: {{ .Values.config.apimUrl }}
   APIM_CLIENT_ID: {{ .Values.config.apimClientId }}
-  MARKETPLACE_APIM_APP_CREATION_ENABLED: {{ .Values.config.marketplaceApimAppCreationEnabled }}
-  NEW_PROJECT_HANDLER_FLOW_ENABLED: {{ .Values.config.newProjectHandlerFlowEnabled }}
-  NEW_COMPONENT_HANDLER_FLOW_ENABLED: {{ .Values.config.newComponentHandlerFlowEnabled }}
+  MARKETPLACE_APIM_APP_CREATION_ENABLED: {{ .Values.config.marketplaceApimAppCreationEnabled | quote }}
+  NEW_PROJECT_HANDLER_FLOW_ENABLED: {{ .Values.config.newProjectHandlerFlowEnabled | quote }}
+  NEW_COMPONENT_HANDLER_FLOW_ENABLED: {{ .Values.config.newComponentHandlerFlowEnabled | quote }}
   AUTHZ_SERVICE_GRPC_ENDPOINT: {{ .Values.config.authzServiceGrpcEndpoint | quote}}
-  AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED: {{ .Values.config.authzServiceProjectAuthorizationEnabled }}
-  ENABLE_STS_MGT_SERVICE: {{ .Values.config.enableStsManagementService }}
+  AUTHZ_SERVICE_PROJECT_AUTHORIZATION_ENABLED: {{ .Values.config.authzServiceProjectAuthorizationEnabled | quote }}
+  ENABLE_STS_MGT_SERVICE: {{ .Values.config.enableStsManagementService | quote }}

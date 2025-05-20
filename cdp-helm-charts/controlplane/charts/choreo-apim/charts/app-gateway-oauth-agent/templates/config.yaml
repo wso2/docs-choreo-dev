@@ -20,8 +20,8 @@ data:
   ENC_KEY_FILE_PATH: /etc/agent-secrets/OAUTH_AGENT_ENC_KEY
   REDIS_PWD_FILE_PATH: /etc/agent-secrets/REDIS_PASSWORD
   PAT_CLIENT_SECRET_FILE_PATH: /etc/agent-secrets/PAT_CLIENT_SECRET
-  REDIS_PORT: {{ .Values.global.redis.port}}
-  REDIS_HOST: {{ .Values.global.redis.host}}
+  REDIS_PORT: {{ .Values.global.redis.port | quote }}
+  REDIS_HOST: {{ .Values.global.redis.host }}
   REDIS_DB: "1"
   PAT_CLIENT_ID: {{ .Values.config.patClientId | quote }}
   PAT_CLIENT_TOKEN_EP: {{ .Values.config.patClientTokenEp | quote }}

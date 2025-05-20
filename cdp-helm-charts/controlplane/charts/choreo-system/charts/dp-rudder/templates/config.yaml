@@ -19,7 +19,7 @@ metadata:
 data:
   MSSQL_USER: choreo_rudder_admin_db_user
   MSSQL_DBNAME: choreo_rudder_db
-  MSSQL_PORT: 1433
+  MSSQL_PORT: "1433"
   SECRET_MANAGER_URL: http://dp-secret-manager
   MIZZEN_URL: "http://dp-mizzen"
   CLOUD_CONNECTOR_URL: http://dp-cloud-manager
@@ -35,11 +35,11 @@ data:
   DATAPLANE_INGRESS_ALLOWED_NS_LABEL: userapp-ingress-allowed
   CUSTOM_URL_CLUSTER_ISSUER: letsencrypt-prod
   CUSTOM_URL_SERVICE_NAME: choreo-nginx-service
-  CUSTOM_URL_SERVICE_PORT: 9443
+  CUSTOM_URL_SERVICE_PORT: "9443"
   CUSTOM_URL_SERVICE_PATH: "/"
   DEV_PORTAL_CLUSTER_ISSUER: letsencrypt-prod
   DEV_PORTAL_SERVICE_NAME: devportal-external
-  DEV_PORTAL_SERVICE_PORT: 80
+  DEV_PORTAL_SERVICE_PORT: "80"
   DEV_PORTAL_SERVICE_PATH: "/"
   RUDDER_URL: "http://dp-rudder:80" # This is for the rudder-migration-service, remove this when removing that
   CONFIGURATION_MGT_URL: "http://configuration-service:8080"
@@ -48,8 +48,8 @@ data:
   CONFIG_MAPPING_SERVICE_URL: "http://configuration-service:8084"
   CONNECTION_SERVICE_URL: "http://connection-service:9000"
   CUSTOM_URL_MANAGER_URL: "http://choreo-url-management:9090/url-mgt"
-  JOB_TTL_SECONDS_AFTER_FINISHED: 360
-  CRONJOB_SUCCESSFUL_JOBS_HISTORY_LIMIT: 2
+  JOB_TTL_SECONDS_AFTER_FINISHED: "360"
+  CRONJOB_SUCCESSFUL_JOBS_HISTORY_LIMIT: "2"
   SCHEMA_SERVICE_URL: "http://configuration-schema-service:80"
   CHOREO_STS_MGT_URL: http://sts-mgt-service:3000/api/v1/sts-proxy
   PDP_CAPABILITIES_ALLOWED_ADD_ITEMS: CHOWN,DAC_OVERRIDE,SETGID,SETUID,NET_BIND_SERVICE
@@ -173,8 +173,8 @@ data:
   COPY_CONTAINER_PORTS_ON_PROMOTE: {{ .Values.config.copyContainerPortsOnPromote }}
   PDP_OAUTH_AGENT_SVC: {{ .Values.config.pdpOauthAgentSvc }}
   PDP_GATEWAY_SVC: {{ .Values.config.pdpGatewaySvc }}
-  APP_GATEWAY_FOR_PDPS_ENABLED: {{ .Values.config.appGatewayForPdpsEnabled }}
-  NEW_BUILD_FLOW_ENABLED: {{ .Values.config.newBuildFlowEnabled }}
+  APP_GATEWAY_FOR_PDPS_ENABLED: {{ .Values.config.appGatewayForPdpsEnabled | quote }}
+  NEW_BUILD_FLOW_ENABLED: {{ .Values.config.newBuildFlowEnabled | quote }}
   ENABLE_SPOT_NODE_SCHEDULING: {{ .Values.config.enableSpotNodeScheduling }}
   ENABLE_SPOT_NODE_SCHEDULING_FOR_PAID_TIER: {{ .Values.config.enableSpotNodeSchedulingForPaidTier }}
   ENABLE_SPOT_NODE_SCHEDULING_FOR_CRITICAL_ENV: {{ .Values.config.enableSpotNodeSchedulingForCriticalEnv }}
@@ -183,8 +183,8 @@ data:
   KEDA_HTTP_ADD_ON_MIGRATION_ENABLED: {{ .Values.config.kedaHttpAddOnMigrationEnabled }}
   APIM_USER_FOR_OAUTH_APP_CREATION: {{ .Values.config.apimUserForOauthAppCreation }}
   EU_DATA_PLANE_ID: {{ .Values.config.euDataPlaneId }}
-  CILIUM_EGRESS_POLICY_ENABLED: {{ .Values.config.ciliumEgressPolicyEnabled }}
-  STS_MANAGEMENT_SERVICE_ENABLED: {{ .Values.config.stsManagementServiceEnabled }}
+  CILIUM_EGRESS_POLICY_ENABLED: {{ .Values.config.ciliumEgressPolicyEnabled | quote }}
+  STS_MANAGEMENT_SERVICE_ENABLED: {{ .Values.config.stsManagementServiceEnabled | quote }}
   ENABLE_API_KEY_FOR_PUBLIC_APIS: {{ .Values.config.enableApiKeyForPublicApis }}
   SET_API_KEY_AS_DEFAULT_SECURITY_SCHEME_FOR_PUBLIC_APIS: {{ .Values.config.setApiKeyAsDefaultSecuritySchemeForPublicApis }}
   ENABLE_API_KEY_DEFAULT_SECURITY_SCHEME: {{ .Values.config.enableApiKeyDefaultSecurityScheme }}
