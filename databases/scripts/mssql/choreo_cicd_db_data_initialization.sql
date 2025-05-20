@@ -80,6 +80,14 @@ INSERT INTO buildpack
 (id, buildpackImage, supportedVersions, displayName, isDefault, buidpackProviderOrgUuid, [language], versionEnvVariable, provider, iconUrl, builderId) 
 VALUES('f9e4820e-6284-11ee-8c99-0242ac120018', '', '', 'Ballerina Buildpack', 1, '0', 'ballerina', 'BALLERINA_VERSION', 'Choreo Managed', '/images/buildpacks/ballerina.svg', '3a78c3b2-c61b-4a84-a3fe-13203f3d1803');
 
+INSERT INTO buildpack 
+(id,buildpackImage,supportedVersions,displayName,isDefault,buidpackProviderOrgUuid,[language],versionEnvVariable,provider,iconUrl,builderId) 
+VALUES ('bae27e1b-012e-4ef9-8f5a-3c5d21e3c113','','','NPM',1,'0','npm','','Choreo','/images/buildpacks/npm.svg','3A78C3B2-C61B-4A84-A3FE-13203F3D1803');
+
+INSERT INTO buildpack 
+(id,buildpackImage,supportedVersions,displayName,isDefault,buidpackProviderOrgUuid,[language],versionEnvVariable,provider,iconUrl,builderId) 
+VALUES ('6280ab1c-c2ab-426a-89d8-a0934d43675f','','','PyPI',1,'0','pypi','','Choreo','/images/buildpacks/pypi.svg','3A78C3B2-C61B-4A84-A3FE-13203F3D1803');
+
 -- Template Types
 
 INSERT INTO component_type
@@ -443,8 +451,8 @@ VALUES('F3E3C113-560D-4422-8464-19393A20969E', 'PRIVATE_APP_TOKEN', 'Private App
 
 INSERT INTO buildpack_component_type_mapping
 (typeId, buildpackId)
-VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e9', 'f9e4820e-6284-11ee-8c99-0242ac120004');
+VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e9', '6280ab1c-c2ab-426a-89d8-a0934d43675f');
 
 INSERT INTO buildpack_component_type_mapping
 (typeId, buildpackId)
-VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e9', 'f9e4820e-6284-11ee-8c99-0242ac120003');
+VALUES('33315c0e-b6ef-4df4-b159-854b5eb650e9', 'bae27e1b-012e-4ef9-8f5a-3c5d21e3c113');
