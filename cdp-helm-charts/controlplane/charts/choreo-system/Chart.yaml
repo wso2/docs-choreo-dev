@@ -39,6 +39,9 @@ dependencies:
   - name: app-service
     version: 1.0.0
     condition: app-service.enabled
+  - name: audit-logging
+    version: 1.0.0
+    condition: audit-logging.enabled
   - name: choreo-console
     version: 1.0.0
     condition: choreo-console.enabled
