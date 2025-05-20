@@ -406,9 +406,9 @@ config:
   enableComponentNotification: False
   docLinkScaleToZero: https://wso2.com/choreo/docs/devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero/
   choreoApprovalWorkflowsDocUrl: "https://wso2.com/choreo/docs/administer/configure-approvals-for-choreo-workflows/#permissions-to-review-and-respond-to-approval-requests"
-  componentNotificationText: ''
-  componentNotificationLinkText: ''
-  componentNotificationLink: ''
+  componentNotificationText: ""
+  componentNotificationLinkText: ""
+  componentNotificationLink: ""
   enableAppGwSettingsInConfigureDrawer: True
   choreoManagedAuthDocUrl: https://wso2.com/choreo/docs/authentication-and-authorization/secure-web-applications-with-managed-authentication/#secure-web-applications-with-managed-authentication
   enableCustomUrlMappingsFeature: True
