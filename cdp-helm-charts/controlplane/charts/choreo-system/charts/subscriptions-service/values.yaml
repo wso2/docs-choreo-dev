@@ -1,0 +1,42 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicaCount: 1
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/choreo-subscriptions
+  tag: latest
+serviceAccount:
+  annotations: {}
+vault:
+  roleName: subscriptions-service
+config:
+  dbURL: "jdbc:sqlserver://sqlfg-choreo-choreo-subscriptions-db-prod.database.windows.net:1433;database=choreo_subscriptions_db;SendStringParametersAsUnicode=false"
+  redisHost: choreo-prod-redis.redis.cache.windows.net:6380
+  asbURL: https://choreo-prod-servicebus-ns.servicebus.windows.net
+  logLevel: INFO
+  stepDBURL: "jdbc:sqlserver://sqlfg-choreo-choreo-step-db-prod.database.windows.net;databaseName=choreo_step_db"
+secrets:
+  dbPassword:
+    path: choreo-cp/data/choreo-system/subscriptions-service
+    key: dbPassword
+  stepDBPassword:
+    path: choreo-cp/data/choreo-system/subscriptions-service
+    key: stepDBPassword
+  redisPassword:
+    path: choreo-cp/data/choreo-system/subscriptions-service
+    key: redisPassword
+  asbAuthToken:
+    path: choreo-cp/data/choreo-system/subscriptions-service
+    key: asbAuthToken

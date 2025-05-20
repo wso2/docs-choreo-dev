@@ -78,3 +78,6 @@ dependencies:
   - name: sts-mgt-service
     version: 1.0.0
     condition: sts-mgt-service.enabled
+  - name: subscriptions-service
+    version: 1.0.0
+    condition: subscriptions-service.enabled
