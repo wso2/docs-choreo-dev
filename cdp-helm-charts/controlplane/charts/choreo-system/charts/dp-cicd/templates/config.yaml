@@ -17,18 +17,18 @@ metadata:
   labels:
     {{ include "dp-cicd.labels" . | indent 4 }}
 data:
-  SERVER_PORT: 8080
+  SERVER_PORT: "8080"
   DB_NAME: choreo_cicd_db
-  DB_PORT: 1433
+  DB_PORT: "1433"
   DB_USERNAME: choreo_cicd_admin_db_user
   DB_TYPE: mssql
   CLOUD_CONNECTOR_URL: http://dp-cloud-manager
   SENTRY: https://b3d0a52a966b46edb34287daff8d411c@o350818.ingest.sentry.io/5599109
-  GITOPS_ORG_ID: 0
+  GITOPS_ORG_ID: "0"
   GITOPS_ORG_PROJECT_ID: global
-  APP_ORG_ID: 0
+  APP_ORG_ID: "0"
   APP_ORG_PROJECT_ID: global
-  REGISTRY_ORG_ID: 0
+  REGISTRY_ORG_ID: "0"
   REGISTRY_PROJECT_ID: global
   CLOUD_MANAGER_API_URL: http://dp-cloud-manager
   RUDDER_API_URL: http://dp-rudder
