@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip2: CKV_K8S_38=Required by linkerD
+  labels:
+    choreo.component: choreo-apim-proxy-deployer
+  name: choreo-apim-proxy-deployer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-apim-proxy-deployer
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-apim-proxy-deployer
+        antiaffinity: choreo-apim-proxy-deployer
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-apim-proxy-deployer
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-apim-proxy-deployer:latest
+          envFrom:
+            - secretRef:
+                name: secret-choreo-apim-proxy-deployer
+            - configMapRef:
+                name: env-proxy-deployer
+          ports:
+            - containerPort: 9095      # This is a temporary http gateway until the CORS issues fixed. https://github.com/ballerina-platform/ballerina-standard-library/issues/1475
+              name: http-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: http-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: http-port
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 300m
+              memory: 650Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10001 # to fix CKV_K8S_40 use uid > 10000
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL  # Fixes CKV_K8S_37
+                - NET_RAW # Fixes CKV_K8S_28
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-choreo-apim-proxy-deployer
+              mountPath: "/mnt/csi/secret-choreo-apim-proxy-deployer"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-apim-proxy-deployer
+        - name: secret-choreo-apim-proxy-deployer
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-choreo-apim-proxy-deployer
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              choreo.component: choreo-apim-proxy-deployer
+          maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+        - labelSelector:
+            matchLabels:
+              choreo.component: choreo-apim-proxy-deployer
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway

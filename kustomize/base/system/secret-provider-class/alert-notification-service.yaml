@@ -1,0 +1,26 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-alert-notification-service
+spec:
+  secretObjects:
+    - secretName: secret-alert-notification-service
+      type: Opaque
+      data:
+        - objectName: EVENTHUB_SHARED_ACCESS_KEY
+          key: EVENTHUB_SHARED_ACCESS_KEY
+        - objectName: ALERT_CHOREO_DB_PASSWORD
+          key: ALERT_CHOREO_DB_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: alert-notification-service-incoming-eventhub-shared-access-key
+          objectType: secret
+          objectAlias: EVENTHUB_SHARED_ACCESS_KEY
+          objectVersion: "{{.EVENTHUB_SHARED_ACCESS_KEY}}"
+        - |
+          objectName: choreo-alerts-db-mssql-password
+          objectType: secret
+          objectAlias: ALERT_CHOREO_DB_PASSWORD
+          objectVersion: "{{.ALERT_CHOREO_DB_PASSWORD}}"

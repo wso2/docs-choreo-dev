@@ -1,0 +1,111 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2024, WSO2 LLC. (http://wso2.com) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    checkov.io/skip1: "CKV_K8S_AZURE_WSO2_2=Linkerd is disable for dataplane"
+  labels:
+    choreo.component: milvus-proxy-service
+  name: milvus-proxy-service
+  namespace: choreo-ai
+spec:
+  selector:
+    matchLabels:
+      choreo.component: milvus-proxy
+  template:
+    metadata:
+      labels:
+        choreo.component: milvus-proxy
+        antiaffinity: milvus-proxy
+      annotations:
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+        seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: milvus-proxy
+          envFrom:
+            - configMapRef:
+                name: env-milvus-proxy-cm
+            - secretRef:
+                name: milvus-proxy-secret
+          image: choreocontrolplane.azurecr.io/choreoipaas/milvus-proxy:latest
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 250m
+              memory: 250Mi
+          ports:
+            - containerPort: 8000
+              name: milvus-px-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: milvus-px-port
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: milvus-px-port
+              path: /health
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - mountPath: /mnt/csi/secret-milvus-proxy
+              name: milvus-proxy-secret
+              readOnly: true
+            - mountPath: /tmp
+              name: temp-volume
+      volumes:
+        - name: milvus-proxy-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: milvus-proxy-secret
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: temp-volume
+          emptyDir: {}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  antiaffinity: milvus-proxy
+              topologyKey: kubernetes.io/hostname

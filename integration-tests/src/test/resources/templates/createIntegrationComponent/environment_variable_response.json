@@ -1,0 +1,11 @@
+{
+  "ID": "id",
+  "name": "env-map-name",
+  "data": {
+  },
+  "keys": [
+  ],
+  "metadata": {
+    "isMiEnvVariableMap": true
+  }
+}

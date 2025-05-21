@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-dp-mizzen-agent
+spec:
+  secretObjects:
+    - secretName: secret-dp-mizzen-agent
+      type: Opaque
+      data:
+        - objectName: TOKEN
+          key: TOKEN
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: {{.TOKEN_OBJ_NAME | default "dp-mizzen-useast2-token"}}
+          objectType: secret
+          objectAlias: TOKEN
+          objectVersion: "{{.TOKEN}}"

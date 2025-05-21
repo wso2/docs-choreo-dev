@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cio-internal-metric-collector
+  labels:
+    choreo.component: cio-internal-metric-collector
+spec:
+  schedule: 0 */2 * * * # At minute 0 past every 2nd hour.
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+            linkerd.io/inject: disabled
+          labels:
+            choreo.component: cio-internal-metric-collector
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: cio-internal-metric-collector
+              image: choreocontrolplane.azurecr.io/choreoipaas/cio-internal-metric-collector:latest
+              securityContext:
+                runAsUser: 10001
+                runAsGroup: 10001
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
+              envFrom:
+                - configMapRef:
+                    name: cm-cio-internal-metric-collector
+              resources:
+                limits:
+                  cpu: 1
+                  memory: 768Mi
+                requests:
+                  cpu: 500m
+                  memory: 512Mi
+              volumeMounts:
+                - name: config
+                  mountPath: /home/ballerina/Config.toml
+                  subPath: Config.toml
+          serviceAccountName: sa-choreo-default
+          volumes:
+            - name: config
+              configMap:
+                name: cm-file-cio-internal-metric-collector

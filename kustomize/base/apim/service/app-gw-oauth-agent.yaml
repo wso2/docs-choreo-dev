@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: app-gateway-oauth-agent
+  name: app-gateway-oauth-agent
+spec:
+  ports:
+    - name: agoa-port
+      port: 8080
+      protocol: TCP
+      targetPort: agoa-port
+  selector:
+    choreo.component: app-gateway-oauth-agent

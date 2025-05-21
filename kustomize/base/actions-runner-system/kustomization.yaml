@@ -1,0 +1,6 @@
+resources:
+  - deployment
+  - hpa
+  - secret-provider-class
+
+namespace: actions-runner-system

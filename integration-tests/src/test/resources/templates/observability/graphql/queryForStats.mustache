@@ -1,0 +1,73 @@
+query stats(
+  serviceMetrics(
+    obsId: {{obsId}}
+    version: {{version}}
+    from: {{from}}
+    to: {{to}}
+    module: {{module}}
+    entryPointFuncModule: {{entryPointFuncModule}}
+    entryPointSvcName: {{entryPointSvcName}}
+    entryPointFuncName: {{entryPointFuncName}}
+    entryPointResourceAccessor: {{entryPointResourceAccessor}}
+    callerConnectorType: {{callerConnectorType}}
+    breakSize: {{breakSize}}
+  ) {
+    successfulRequestCount
+    failedRequestCount
+    meanResponseTime
+    successfulRequestCountHistogram {
+      time
+      value
+      __typename
+    }
+    failedRequestCountHistogram {
+      time
+      value
+      __typename
+    }
+    __typename
+  }
+  serviceLatencyPercentiles(
+    obsId: {{obsId}}
+    version: {{version}}
+    from: {{from}}
+    to: {{to}}
+    module: {{module}}
+    entryPointFuncModule: {{entryPointFuncModule}}
+    entryPointSvcName: {{entryPointSvcName}}
+    entryPointFuncName: {{entryPointFuncName}}
+    entryPointResourceAccessor: {{entryPointResourceAccessor}}
+    breakSize: {{breakSize}}
+  ) {
+    latencyPercentilesHistogram {
+      time
+      values
+      __typename
+    }
+    __typename
+  }
+  invocationMetrics(
+    obsId: {{obsId}}
+    version: {{version}}
+    from: {{from}}
+    to: {{to}}
+    module: {{moduleId}}
+  ) {
+    successfulInvocationCounts {
+      name
+      value
+      __typename
+    }
+    failedInvocationCounts {
+      name
+      value
+      __typename
+    }
+    meanInvocationTimes {
+      name
+      value
+      __typename
+    }
+    __typename
+  }
+}

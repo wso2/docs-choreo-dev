@@ -1,0 +1,172 @@
+{
+    "name": "{{apiName}}",
+    "displayName": "{{apiName}}",
+    "description": "This is a simple API for Pizza Shack online pizza delivery store.",
+    "context": "{{basePath}}",
+    "version": "v1.0",
+    "provider": "admin",
+    "lifeCycleStatus": "CREATED",
+    "wsdlInfo": null,
+    "wsdlUrl": null,
+    "responseCachingEnabled": false,
+    "cacheTimeout": 300,
+    "hasThumbnail": false,
+    "isDefaultVersion": false,
+    "isRevision": false,
+    "revisionedApiId": null,
+    "revisionId": 0,
+    "enableSchemaValidation": false,
+    "type": "HTTP",
+    "audience": null,
+    "transport": [
+        "http",
+        "https"
+    ],
+    "tags": [
+        "add",
+        "substract"
+    ],
+    "policies": [
+        "Unlimited"
+    ],
+    "throttlingLimit": {
+        "requestCount": 10,
+        "unit": "MINUTE"
+    },
+    "authorizationHeader": "Authorization",
+    "securityScheme": [
+        "oauth2",
+        "oauth_basic_auth_api_key_mandatory"
+    ],
+    "maxTps": {
+        "production": 1000,
+        "sandbox": 1000
+    },
+    "visibility": "PUBLIC",
+    "visibleRoles": [
+        ""
+    ],
+    "visibleTenants": [],
+    "mediationPolicies": [],
+    "subscriptionAvailability": "CURRENT_TENANT",
+    "subscriptionAvailableTenants": [
+        ""
+    ],
+    "additionalProperties": [],
+    "additionalPropertiesMap": {},
+    "monetization": null,
+    "accessControl": "NONE",
+    "accessControlRoles": [],
+    "businessInformation": {
+        "businessOwner": "John Doe",
+        "businessOwnerEmail": "johndoe@wso2.com",
+        "technicalOwner": "Jane Roe",
+        "technicalOwnerEmail": "janeroe@wso2.com"
+    },
+    "corsConfiguration": {
+        "corsConfigurationEnabled": false,
+        "accessControlAllowOrigins": [
+            "*"
+        ],
+        "accessControlAllowCredentials": false,
+        "accessControlAllowHeaders": [
+            "authorization",
+            "Access-Control-Allow-Origin",
+            "Content-Type",
+            "SOAPAction",
+            "apikey",
+            "Internal-Key"
+        ],
+        "accessControlAllowMethods": [
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE",
+            "PATCH",
+            "OPTIONS"
+        ]
+    },
+    "websubSubscriptionConfiguration": {
+        "enable": false,
+        "secret": "",
+        "signingAlgorithm": "SHA1",
+        "signatureHeader": "x-hub-signature"
+    },
+    "workflowStatus": null,
+    "createdTime": "1676027528613",
+    "lastUpdatedTime": null,
+    "endpointConfig": {
+        "endpoint_type": "http",
+        "production_endpoints": {
+            "url": "{{productionEndpoint}}"
+        }
+    },
+    "endpointImplementationType": "ENDPOINT",
+    "scopes": [],
+    "scopePrefix": null,
+    "operations": [
+        {
+            "id": "",
+            "target": "/users",
+            "verb": "GET",
+            "authType": "Application & Application User",
+            "throttlingPolicy": "Unlimited",
+            "throttlingLimit": {
+                "requestCount": -1,
+                "unit": "MINUTE"
+            },
+            "scopes": [],
+            "usedProductIds": [],
+            "amznResourceName": null,
+            "amznResourceTimeout": null,
+            "payloadSchema": null,
+            "uriMapping": null,
+            "operationPolicies": {
+                "request": [],
+                "response": [],
+                "fault": []
+            }
+        },
+        {
+            "id": "",
+            "target": "/user/{userId}",
+            "verb": "GET",
+            "authType": "Application & Application User",
+            "throttlingPolicy": "Unlimited",
+            "throttlingLimit": {
+                "requestCount": -1,
+                "unit": "MINUTE"
+            },
+            "scopes": [],
+            "usedProductIds": [],
+            "amznResourceName": null,
+            "amznResourceTimeout": null,
+            "payloadSchema": null,
+            "uriMapping": null,
+            "operationPolicies": {
+                "request": [],
+                "response": [],
+                "fault": []
+            }
+        }
+    ],
+    "threatProtectionPolicies": null,
+    "categories": [],
+    "keyManagers": [
+        "all"
+    ],
+    "serviceInfo": null,
+    "advertiseInfo": {
+        "advertised": false,
+        "apiExternalProductionEndpoint": null,
+        "apiExternalSandboxEndpoint": null,
+        "originalDevPortalUrl": null,
+        "apiOwner": "admin",
+        "vendor": "WSO2"
+    },
+    "gatewayVendor": "wso2",
+    "gatewayType": "wso2/synapse",
+    "asyncTransportProtocols": [
+        ""
+    ]
+}

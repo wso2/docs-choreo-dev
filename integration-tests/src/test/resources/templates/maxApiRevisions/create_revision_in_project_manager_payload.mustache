@@ -1,0 +1,3 @@
+{
+  "query": "mutation {   createRevision(       orgHandler: \"{{orgHandler}}\",       build: {           componentId: \"{{componentId}}\",           versionId: \"{{versionId}}\",           buildId: \"{{buildId}}\",           revisionId: \"{{newRevisionId}}\",           environmentId: \"{{environmentId}}\"       }   )   {       revisions {           id,           revisionId,           createdDate,           environments,           updatedDate       }   }}"
+}

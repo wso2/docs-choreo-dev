@@ -1,0 +1,6 @@
+resources:
+  - cdn-tls-synchronizer
+  - sa-choreo-default.yaml
+  - sa-connector-builder-kubectl-executor.yaml
+  - role-connector-builder-kubectl-executor.yaml
+  - role-binding-connector-builder-kubectl-executor.yaml

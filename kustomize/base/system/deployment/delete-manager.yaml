@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: delete-manager
+    choreo.dataplane: "true"
+  name: delete-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: delete-manager
+  template:
+    metadata:
+      labels:
+        choreo.component: delete-manager
+        antiaffinity: delete-manager
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: '60'
+    spec:
+      automountServiceAccountToken: true
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: delete-manager
+          imagePullPolicy: Always
+          image: choreocontrolplane.azurecr.io/choreoipaas/delete-manager:latest
+          resources:
+            limits:
+              cpu: 150m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          envFrom:
+            - configMapRef:
+                name: env-dp-delete-manager
+            - configMapRef:
+                name: cm-dp-delete-manager
+            - secretRef:
+                name: secret-delete-manager
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10001
+            runAsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+              add: ["NET_RAW"]
+          ports:
+            - containerPort: 8000
+              name: http-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /api/v1/healthz
+              port: http-port
+          livenessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /api/v1/healthz
+              port: http-port
+          volumeMounts:
+            - name: secret-delete-manager
+              mountPath: /mnt/csi/secret-delete-manager
+              readOnly: true
+      volumes:
+        - name: secret-delete-manager
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-delete-manager
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - delete-manager
+              topologyKey: kubernetes.io/hostname

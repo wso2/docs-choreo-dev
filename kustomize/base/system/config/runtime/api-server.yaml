@@ -1,0 +1,85 @@
+idp:
+  clientId: ${IDP_CLIENT_ID}
+  clientSecret: ${IDP_CLIENT_SECRET}
+  tokenUrl: ${IDP_TOKEN_URL}
+  redirectUrls: {{.REDIRECT_URLS}}
+  jwks: # DEPRECATED. See 'jwksEndpoints'.
+    url: ${IDP_JWKS_URL}
+    cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
+    cacheTtl: ${JWKS_CACHE_TTL}
+  jwtProviders:
+    - issuer: ${KM_ISSUER}
+      audiences: {{.JWT_PROVIDERS_AUDIENCES}}
+      jwks:
+        url: ${KM_JWKS_URL}
+        cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
+        cacheTtl: ${JWKS_CACHE_TTL}
+    - issuer: ${ASGARDEO_ISSUER}
+      audiences:
+        - ${ASGARDEO_AUDIENCE}
+      jwks:
+        url: ${ASGARDEO_JWKS_URL}
+        cacheRefreshInterval: ${JWKS_CACHE_REFRESH_INTERVAL}
+        cacheTtl: ${JWKS_CACHE_TTL}
+    - issuer: ${CP_ENFORCER_ISSUER}
+      skipClaimsValidation: true  # Skip claim validation until https://github.com/wso2-enterprise/choreo/issues/10549 is fixed
+      publicKey: ${CP_ENFORCER_JWT_CERT}
+  issuer: ${IDP_ISSUER}   # DEPRECATED. See 'issuers'.
+  audience: {{.IDP_AUDIENCE}}
+  jwtValidationLeeway: ${IDP_JWT_VALIDATION_LEEWAY}
+  skipJwtValidation: false
+  cookies:
+    maxAge: 86400
+    secure: ${IDP_COOKIES_SECURE}
+    httpOnly: true
+  systemUserIdpIds: {{.SYSTEM_USER_IDP_ID}}
+auth:
+  enable: true
+middleware:
+  logging:
+    dumpRequestBody: true
+    dumpRequestHeaders: true
+    dumpResponseBody: true
+    dumpResponseHeaders: true
+    publicKey: ${MIDDLEWARE_LOGGING_PUBLIC_KEY}
+  eventPublish:
+    websubHubPublisherConfig:
+      websubHubBaseUrl: ${MIDDLEWARE_EVENT_PUBLISH_WEBSUBHUB_URL}
+      hubTopic: ${MIDDLEWARE_EVENT_PUBLISH_WEBSUBHUB_TOPIC}
+    enable: ${MIDDLEWARE_EVENT_PUBLISH_ENABLE}
+  instanceBasedAuthz:
+    enabled: ${ENABLE_INSTANCE_BASED_AUTHZ}
+upstream:
+  app-service: app-service:8080
+  workspace-manager: workspace-manager:8080
+  app-deployer: app-deployer:8080
+  limiter: quota-limiter:9090
+  dp-project-manager: dp-project-manager:80
+  dp-cicd: dp-cicd:80
+  dp-rudder: dp-rudder:80
+  organization-management: organization-management:8080
+  authz-service: ${AUTHZ_SERVICE_ENDPOINT}
+logger:
+  level: ${LOGGER_LEVEL}    # todo: change this to info after the new components get stable in prod.
+  encoding: console
+  development: ${LOGGER_DEVELOPMENT}
+  disableStacktrace: ${LOGGER_DISABLE_STACKTRACE}
+  encoderConfig:
+    timeKey: time
+    levelKey: level
+    nameKey: logger
+    callerKey: caller
+    messageKey: message
+    stacktraceKey: stacktrace
+    lineEnding: "\n"
+    levelEncoder: capitalColor
+    timeEncoder: iso8601
+    durationEncoder: string
+    callerEncoder: short
+  outputPaths: stdout
+  errorOutputPaths: stdout # we send errors to stdout in dev so that we can easily grep without redirect
+apimTokenExchangeConfig:
+  tokenExchangeUrl: ${APIM_TOKEN_URL}
+  subjectTokenType: urn:ietf:params:oauth:token-type:jwt
+  requestedTokenType: urn:ietf:params:oauth:token-type:jwt
+  grantType: urn:ietf:params:oauth:grant-type:token-exchange

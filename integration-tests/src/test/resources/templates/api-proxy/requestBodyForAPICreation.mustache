@@ -1,0 +1,14 @@
+{
+    "name":"{{apiName}}",
+    "version":"{{version}}",
+    "description":"This api is used to connect to the {{apiName}} service",
+    "context":"{{context}}",
+    "policies":["Bronze"],
+    "scopePrefix": "{{scopePrefix}}",
+    "visibility": "PRIVATE",
+    "endpointConfig":{
+        "endpoint_type":"http",
+        "production_endpoints":{"url":"{{productionEndpoint}}"},
+        "sandbox_endpoints":{"url":"{{sandboxEndpoint}}"}
+    }
+}

@@ -1,0 +1,119 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+global:
+  choreosystem:
+    orgHandle: choreosystem
+    orgUUID: ""
+  asgardeo:
+    consoleUrl: https://console.asgardeo.io
+  vault:
+    url: http://vault.vault:8200
+  redis:
+    host: redis-cluster.redis.svc.cluster.local
+    port: "6379"
+  image:
+    registry: choreocontrolplane.azurecr.io
+    pullSecrets:
+      - name: choreo-image-pull-secret
+  namespaces:
+    apim: choreo-apim
+    system: choreo-system
+    observability: choreo-observability
+    ai: choreo-ai
+    spicedbOperator: spicedb-operator
+    authz: choreo-authorization
+choreo-apim:
+  enabled: true
+  apim-devportal:
+    enabled: true
+  app-gateway-oauth-agent:
+    enabled: true
+  choreo-connect-global-adapter:
+    enabled: true
+  choreo-governance-service:
+    enabled: true
+  choreo-linter-service:
+    enabled: true
+  config-deployer-service:
+    enabled: true
+  product-apim:
+    enabled: true
+spicedb-operator:
+  enabled: true
+  spicedb-operator:
+    enabled: true
+choreo-system:
+  enabled: true
+  commonConfigs:
+    ballerinaLowCodeResourcesVersion: 20230110-1125
+    sampleBallerinaVersion: 2201.3.1
+    scraperImage: choreocontrolplane.azurecr.io/choreoipaas/cio-incident-data-scraper:main-9d6fde7b4f1345ff5a58b9354191f1cc417b1bc5
+    githubScraperImage: choreocontrolplane.azurecr.io/choreoipaas/cio-incident-data-scraper:main-9d6fde7b4f1345ff5a58b9354191f1cc417b1bc5
+    servicenowScraperImage: choreocontrolplane.azurecr.io/choreoipaas/cio-servicenow-incident-scraper:main-048e1a979b282d0533bfd02ddb61dd9e9f057542
+    buildpacksBuilderImage: choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:0.2.88
+    choreoSamplesVersion: v84
+    unitTestRunnerImage: choreocontrolplane.azurecr.io/choreoipaas/choreo-unit-test-runner:0.0.3
+    workspaceImage: choreocontrolplane.azurecr.io/choreoipaas/workspace:master-1efd4ae3582ad15306462a9625abad295ad21384
+    codeServerImage: choreocontrolplane.azurecr.io/choreoipaas/choreo-ballerina-code-server:master-6db799ff6bfbdf656ab4affdfbb26838f8350e99
+    codeServerInitImage: choreocontrolplane.azurecr.io/choreoipaas/choreo-ballerina-code-server-init:master-6db799ff6bfbdf656ab4affdfbb26838f8350e99
+    synapseResourceGeneratorVersion: 1.0.31
+    apimMediationCodeGenerator: 1.5.11
+  api-key-service:
+    enabled: true
+  api-server:
+    enabled: true
+  apim-proxy-deployer:
+    enabled: true
+  app-dev-authz-service:
+    enabled: true
+  app-service:
+    enabled: true
+  audit-logging:
+    enabled: true
+  choreo-console:
+    enabled: true
+  configuration-service:
+    enabled: true
+  connection-service:
+    enabled: true
+  cp-graphql:
+    enabled: true
+  delete-manager:
+    enabled: true
+  devops-portal-api:
+    enabled: true
+  dp-cicd:
+    enabled: true
+  dp-cloud-manager:
+    enabled: true
+  dp-garbage-collector:
+    enabled: true
+  dp-mizzen:
+    enabled: true
+  dp-project-manager:
+    enabled: true
+  dp-rudder:
+    enabled: true
+  dp-secret-manager:
+    enabled: true
+  email-service:
+    enabled: true
+  organization-management:
+    enabled: true
+  sts-mgt-service:
+    enabled: true
+  subscriptions-service:
+    enabled: true
+choreo-authorization:
+  enabled: true
+  resource-authorization-service:
+    enabled: true

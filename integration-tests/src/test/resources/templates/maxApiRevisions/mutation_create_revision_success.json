@@ -1,0 +1,29 @@
+{
+  "data": {
+    "createRevision": {
+      "revisions": [
+        {
+          "id":"@ignore@",
+          "revisionId":"@ignore@",
+          "createdDate":"@ignore@",
+          "environments":[],
+          "updatedDate":"@ignore@"
+        },
+        {
+          "id":"@ignore@",
+          "revisionId":"@ignore@",
+          "createdDate":"@ignore@",
+          "environments":[],
+          "updatedDate":"@ignore@"
+        },
+        {
+          "id":"@ignore@",
+          "revisionId":"@ignore@",
+          "createdDate":"@ignore@",
+          "environments":["@ignore@"],
+          "updatedDate":"@ignore@"
+        }
+      ]
+    }
+  }
+}

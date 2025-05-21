@@ -1,0 +1,103 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2023, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+configMapGenerator:
+  - name: testgpt-cm-file
+    behavior: create
+    files:
+      - testgpt/Config.toml
+  - name: testgpt-cm
+    behavior: create
+    literals:
+      - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+  - name: env-obs-assistant-cm
+    behavior: create
+    literals:
+      - LOG_API_URL={{.LOG_API_URL}}
+      - SYS_METRICS_API_URL={{.SYS_METRICS_API_URL}}
+      - APP_METRICS_API_URL={{.APP_METRICS_API_URL}}
+      - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
+  - name: env-insights-assistant-cm
+    behavior: create
+    literals:
+      - INSIGHT_API_URL={{.INSIGHT_API_URL}}
+      - CIO_API_URL={{.CIO_API_URL}}
+      - CP_GRAPHQL_API_URL={{.CP_GRAPHQL_API_URL}}
+      - CP_API_URL={{.CP_API_URL}}
+      - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
+      - REGION={{.REGION}}
+      - ORG_API_URL={{.ORG_API_URL}}
+      - LOG_LEVEL={{.LOG_LEVEL}}
+  - name: env-docs-assistant
+    behavior: create
+    literals:
+      - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
+      - CP_AZURE_OPENAI_ENDPOINT={{.CP_AZURE_OPENAI_ENDPOINT | default "https://eastus2.api.cognitive.microsoft.com/" }}
+      - ZILLIZ_CLOUD_URI={{.ZILLIZ_CLOUD_URI}}
+      - CHOREO_TOKEN_ENDPOINT={{.CHOREO_TOKEN_ENDPOINT}}
+      - PROXY_URL={{.PROXY_URL}}
+      - ENABLED_RERANKER={{.ENABLED_RERANKER}}
+      - COLLECTION_NAME={{.COLLECTION_NAME}}
+      - AZURE_DEPLOYMENT_EMBEDDING={{.AZURE_DEPLOYMENT_EMBEDDING | default "choreo-ai-embedding" }}
+      - OPENAI_API_VERSION={{.OPENAI_API_VERSION | default "2023-12-01-preview" }}
+      - AZURE_DEPLOYMENT_CHAT={{.AZURE_DEPLOYMENT_CHAT | default "choreo-ai-chat-4o" }}
+  - name: env-marketplace-assistant-cm
+    behavior: create
+    literals:
+      - ZILLIZ_CLOUD_URI={{.ZILLIZ_CLOUD_URI}}
+      - AZURE_ENDPOINT={{.AZURE_ENDPOINT}}
+      - AZURE_CHAT_DEPLOYMENT={{.AZURE_CHAT_DEPLOYMENT}}
+      - AZURE_CHAT_VERSION={{.AZURE_CHAT_VERSION}}
+      - AZURE_EMBEDDING_DEPLOYMENT={{.AZURE_EMBEDDING_DEPLOYMENT}}
+      - SOURCE_PLATFORM={{.SOURCE_PLATFORM}}
+      - COLLECTION_NAME={{.COLLECTION_NAME}}
+      - PROXY_URL={{.PROXY_URL}}
+  - name: env-ai-copilot-cm
+    behavior: create
+    literals:
+      - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT}}
+      - CHOREO_JWT_AUDIENCE={{.CHOREO_JWT_AUDIENCE}}
+      - CHOREO_JWT_JWKS_URL={{.CHOREO_JWT_JWKS_URL}}
+      - REDIS_HOST_URL={{.REDIS_HOST_URL}}
+      - DOCS_ASSISTANT_ENABLED={{.DOCS_ASSISTANT_ENABLED}}
+      - MARKETPLACE_ASSISTANT_ENABLED={{.MARKETPLACE_ASSISTANT_ENABLED}}
+      - TEST_ASSISTANT_ENABLED={{.TEST_ASSISTANT_ENABLED}}
+      - RUNTIME_METRICS_ASSISTANT_ENABLED={{.RUNTIME_METRICS_ASSISTANT_ENABLED}}
+      - TLS_ENABLED_REDIS={{.TLS_ENABLED_REDIS | default "true" }}
+      - DATA_COLLECTOR_URL={{.DATA_COLLECTOR_URL}}
+      - CHOREO_TOKEN_ENDPOINT={{.CHOREO_TOKEN_ENDPOINT}}
+  - name: env-cost-optimizer
+    behavior: create
+    literals:
+      - THANOS_BASE_URL={{.THANOS_BASE_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/" }}
+      - CPU_RATE_PER_HOUR={{.CPU_RATE_PER_HOUR | default "0.0139" }}
+      - RAM_RATE_PER_HOUR={{.RAM_RATE_PER_HOUR | default "0.00000000000647" }}
+      - LOG_LEVEL={{.LOG_LEVEL | default "INFO"}}
+      - REDIS_PORT={{.REDIS_PORT | default "6379"}}
+      - BASE_REDIS_NODE={{.BASE_REDIS_NODE | default "redis-cluster-{}.redis-cluster-headless.redis.svc.cluster.local"}}
+      - NO_OF_REDIS_NODES={{.NO_OF_REDIS_NODES | default "6"}}
+      - SCOPE_CONFIG={{.SCOPE_CONFIG | default "choreo:deployment_manage"}}
+      - REDIS_USERNAME={{.REDIS_USERNAME | default "cost_optimizer_user"}}
+      - REDIS_NODE={{.REDIS_NODE | default "redis-cluster-headless.redis.svc.cluster.local:6379"}}
+      - RECOMMENDATION_MIN_DOLLARS={{.RECOMMENDATION_MIN_DOLLARS | default "0.1"}}
+      - STEP={{.STEP | default "300"}}
+  - name: env-cost-optimizer-dp-daily-cron-cm
+    behavior: create
+    literals:
+      - THANOS_BASE_URL={{.THANOS_BASE_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/" }}
+      - RECOMMENDATION_ENDPOINT_URL={{.RECOMMENDATION_ENDPOINT_URL | default "http://cost-optimizer:8000" }}
+      - BATCH_SIZE={{.BATCH_SIZE | default "10"}}
+  - name: env-cost-optimizer-dp-monthly-cron-cm
+    behavior: create
+    literals:
+      - THANOS_BASE_URL={{.THANOS_BASE_URL | default "http://thanos-querier.choreo-observability:10902/api/v1/" }}
+      - COST_OPTIMIZER_URL={{.COST_OPTIMIZER_URL | default "http://cost-optimizer:8000" }}
+      - BATCH_SIZE={{.BATCH_SIZE | default "10"}}

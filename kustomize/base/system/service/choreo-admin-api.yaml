@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: choreo-admin-api
+  name: choreo-admin-api
+spec:
+  ports:
+    - name: service-port
+      port: 9090
+      targetPort: service-port
+    - name: health-port
+      port: 9093
+      targetPort: health-port
+  selector:
+    choreo.component: choreo-admin-api

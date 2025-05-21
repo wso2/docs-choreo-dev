@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip4: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip5: CKV_K8S_43=The image tag gets updated to component git hash when deploying
+  labels:
+    choreo.component: connectords
+  name: connectords
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: connectords
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: connectords
+        antiaffinity: connectords
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: connectords
+          env:
+            - name: IDP_JWKS_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: IDP_JWKS_ENDPOINT
+                  name: cm-idp-replica
+            - name: CHOREO_APP_SERVICE_GRPC_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: CHOREO_APP_SERVICE_GRPC_ADDRESS
+                  name: cm-connectords-cp
+          envFrom:
+            - configMapRef:
+                name: env-connectords
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connectords:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 12000
+            runAsGroup: 12000
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /health
+          ports:
+            - containerPort: 9090
+              name: cds-sport
+              protocol: TCP
+            - containerPort: 9091
+              name: health
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 300m
+              memory: 500Mi
+            requests:
+              cpu: 200m
+              memory: 400Mi
+          volumeMounts:
+            - mountPath: /home/ballerina/Config.toml
+              name: bal-config-volume
+              subPath: Config.toml
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+      volumes:
+        - configMap:
+            name: cm-file-connectords
+          name: bal-config-volume
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - connectords
+              topologyKey: kubernetes.io/hostname

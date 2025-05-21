@@ -1,0 +1,31 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    {{- include "organization-management.labels" . | nindent 4 }}
+  name: organization-management
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  selector:
+    {{- include "organization-management.labels" . | nindent 4 }}
+  ports:
+    - name: http
+      port: 9090
+      targetPort: http
+    - name: health-public
+      port: 9092
+      targetPort: health-public
+    - name: grpc
+      port: 8080
+      targetPort: grpc

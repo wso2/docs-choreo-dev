@@ -1,0 +1,8 @@
+{
+  "query": "query($orgFilter: OrgFilter!) { listEnvironments(org: $orgFilter) { id externalEnvId internalEnvId sandboxEnvId name type }}",
+  "variables": {
+    "orgFilter": {
+      "orgId": "{{orgId}}"
+    }
+  }
+}

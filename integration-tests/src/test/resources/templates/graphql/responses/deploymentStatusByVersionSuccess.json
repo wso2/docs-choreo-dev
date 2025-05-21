@@ -1,0 +1,19 @@
+{
+  "data": {
+    "deploymentStatusByVersion": [
+      {
+        "id": "@ignore@",
+        "sha": "@ignore@",
+        "completed_at": "@ignore@",
+        "started_at": "@ignore@",
+        "name": "Choreo Generated Build Deploy Action",
+        "status": "completed",
+        "conclusion": "success",
+        "isAutoDeploy": false,
+        "failureReason": 0,
+        "sourceCommitId": "@ignore@",
+        "conclusionV2": "success"
+      }
+    ]
+  }
+}

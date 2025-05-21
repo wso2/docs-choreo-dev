@@ -1,0 +1,15 @@
+{
+  "query": "query {
+    deploymentFrequency(
+      startTime: \"{{startTime}}\"
+      endTime: \"{{endTime}}\"
+      granularity: WEEKLY
+      isProd: true
+    ) {
+      totalDeployments
+      dataPoints
+      relativeChangeInDeployment
+      perfLevel
+    }
+  }"
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="choreoIntegrationTests" parallel="classes" thread-count="10">
+    <test name="choreo">
+        <classes>
+            <class name="com.wso2.choreo.integration.common.TestContext"/>
+            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation"/>
+            <class name="com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage"/>
+            <class name="com.wso2.choreo.integration.tests.byoi.TestBYOIComponent"/>
+            <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommit"/>
+            <class name="com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommitMonoRepo"/>
+            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationRestComponentFromRoot"/>
+            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateMiMultiRestEndpointServiceFromSubPath"/>
+            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationRestComponentWithVulnerable"/>
+            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventComponent"/>
+            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationMICustomConfig"/>
+            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventContainerComponent"/>
+            <class name="com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationMISecretAndCert"/>
+            <class name="com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase"/>
+            <class name="com.wso2.choreo.integration.tests.observability.AppMetricsObservabilityAPITestCase"/>
+            <class name="com.wso2.choreo.integration.tests.logs.DPLogsAPITestCase"/>
+            <class name="com.wso2.choreo.integration.tests.themeManagement.ThemePreference"/>
+            <class name="com.wso2.choreo.integration.tests.selfSignup.ChoreoSelfSignup" />
+            <class name="com.wso2.choreo.integration.tests.jwtValidation.TestClientJWTValidation"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestBYOCDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithOperationRateLimit"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithAPIRateLimit"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestWebhookDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestBallerinaServiceDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestWebSocketServiceDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestManualTriggerDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestBuildpackDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestBuildpackGitLabDp"/>
+            <class name="com.wso2.choreo.integration.tests.dp.TestPrismMockDp"/>
+            <class name="com.wso2.choreo.integration.tests.buildpacks.Buildpack"/>
+            <class name="com.wso2.choreo.integration.tests.connections.ChoreoConnections"/>
+             <class name="com.wso2.choreo.integration.tests.connections.DatabaseConnectionsTest"/>
+            <class name="com.wso2.choreo.integration.tests.resourceAuthorization.ResourceAuthorizationTests"/>
+            <class name="com.wso2.choreo.integration.tests.keysetmanagement.KeysetManagementTests"/>
+            <class name="com.wso2.choreo.integration.tests.appdevsts.AppDevSTSTests"/>
+            <class name="com.wso2.choreo.integration.tests.managedAuthentication.ManagedAuthenticationTests"/>
+            <class name="com.wso2.choreo.integration.tests.apim.internalEndpoints.InternalEndpoints" />
+            <class name="com.wso2.choreo.integration.tests.managedAuthentication.localDevelopment.LocalDevelopmentTests" />
+            <class name="com.wso2.choreo.integration.tests.appdevUserManagement.AppdevUserManagementTests" />
+            <class name="com.wso2.choreo.integration.tests.appdevAuthorization.AppdevAuthorizationTests" />
+            <class name="com.wso2.choreo.integration.tests.auditLogging.AuditLogging" />
+            <class name="com.wso2.choreo.integration.tests.environments.TestOrgEnvironments" />
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAPI"/>
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAuthAPI"/>
+            <class name="com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI"/>
+            <class name="com.wso2.choreo.integration.tests.pat.PATManagementTests"/>
+            <class name="com.wso2.choreo.integration.tests.thirdpartyServices.ThirdPartyServices"/>
+            <class name="com.wso2.choreo.integration.tests.configurations.TestSchemaConfigurations"/>
+            <class name="com.wso2.choreo.integration.tests.devPortalApiKey.DevPortalAPIKey"/>
+            <class name="com.wso2.choreo.integration.tests.configurations.TestConfigurationGroups"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,114 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicas: 1
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/choreo-cp-graphql
+  tag: latest
+vault:
+  roleName: cp-graphql
+serviceAccount:
+  annotations: {}
+config:
+  apimClientId: "ymy2brRWj2CKqtB6X6inBrcTUZIa"
+  apimScopes:
+    - apim:admin
+    - apim:api_create
+    - apim:api_delete
+    - apim:api_import_export
+    - apim:api_product_import_export
+    - apim:api_publish
+    - apim:api_view
+    - apim:app_import_export
+    - apim:client_certificates_add
+    - apim:client_certificates_update
+    - apim:client_certificates_view
+    - apim:document_create
+    - apim:document_manage
+    - apim:ep_certificates_add
+    - apim:ep_certificates_update
+    - apim:ep_certificates_view
+    - apim:external_services_discover
+    - apim:mediation_policy_create
+    - apim:mediation_policy_manage
+    - apim:mediation_policy_view
+    - apim:pub_alert_manage
+    - apim:publisher_settings
+    - apim:shared_scope_manage
+    - apim:subscription_block
+    - apim:subscription_view
+    - apim:threat_protection_policy_create
+    - apim:threat_protection_policy_manage
+    - apim:publisher_settings
+  jwtIssuer: https://sts.choreo.dev:443/oauth2/token
+  jwksEndpoint: https://sts.choreo.dev:443/oauth2/jwks
+  audienceConsole: ciwnWuwZfbcdzBUcnkhKvi_mcBUa
+  audienceSite24x7Application: 25yGYggke6fmZUWSDJSnyh0YFGYa
+  audienceVSCodeClient: GWj5MzWNrOB28jX_wu5ZGu7I1VIa
+  audienceList:
+    - choreodevportal
+    - ciwnWuwZfbcdzBUcnkhKvi_mcBUa
+    - 25yGYggke6fmZUWSDJSnyh0YFGYa
+    - GWj5MzWNrOB28jX_wu5ZGu7I1VIa
+    - https://sts.choreo.dev:443/oauth2/token
+    - 0EzD3eIwQEeYHRIaR3CuQmWK_JQa
+    - Fu48ZbRFQsvzGe3ZVkGt2W5K1yga
+    - nSnVD_EnCjsVFHyJhCGG6aFM5Isa
+    - xVfztni11SKLgZOZ16VBmrl2fQIa
+    - F8ytfAHD7bO3bpUdi2wlWEDqslwa
+  hpaEnabledOrgs:
+    - wso2digitaloperationsuser
+    - tianyuanshi
+  maxQueryDepth: 7
+  websubhubUrl: https://publish.websubhub.choreo.dev/hub
+  enableQuotaLimiter: false
+  enableChoreoManagedRepoCreationBlocking: true
+  enableChoreoManagedRepoComponentFetchBlocking: true
+  choreoManagedRepoComponentEnabledOrgs: ""
+  enableGithubOrgUserValidation: false
+  enableRBAC: true
+  enableEventPublish: true
+  enableEventPublisherMTLS: true
+  enableBannerStatus: true
+  enableDBBasedNotifications: false
+  invokeUrlOrgIdPrefixExcludedOrgs:
+    - d7bc81cc-675e-4506-9fbd-75570d4d5711
+    - bf659be2-490b-450f-ab3c-15212e85c725
+    - 11737422-7078-8510-1074-820892631194
+    - f5aad5f4-4cac-40df-b0ed-e0c3ca8ae985
+    - aa09155e-7c66-4eba-8f39-b32862014891
+  enableCustomURLMappings: true
+  passUserTokenForProjectManager: true
+  enableResolverExecutionTimeLogger: false
+  maxHeaderSize: 65536
+  enableWorkflowApprovalValidation: true
+  enableCloudManagerHTTP11Client: false
+  enableChoreoAppdevSTSCreation: true
+  logLevel: INFO
+  logLevelHTTP: INFO
+  logLevelGRPC: INFO
+  logLevelUtils: INFO
+  logLevelAPIs: INFO
+  serviceStatusVisible: false
+  incidentMessageName: DockerImagePull
+  incidentMessageStatus: UP
+  incidentMessage: "We are currently investigating intermittent build failures. Active deployments (running services, APIs, jobs, etc) are not affected. Our team is working to resolve the issue."
+secrets:
+  keystorePassword:
+    path: choreo-cp/data/choreo-system/cp-graphql
+    key: keystorePassword
+  keystorePFX:
+    path: choreo-cp/data/choreo-system/cp-graphql
+    key: keystorePFX

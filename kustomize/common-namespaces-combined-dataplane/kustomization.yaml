@@ -1,0 +1,6 @@
+resources:
+  - choreo-ai
+  - choreo-observability
+  - keda
+  - tools
+  - choreo-egress-gateway

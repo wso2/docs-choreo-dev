@@ -1,0 +1,4 @@
+resources:
+  - configurable.yaml
+  - httpscaledobjects.yaml
+  - configuration.yaml

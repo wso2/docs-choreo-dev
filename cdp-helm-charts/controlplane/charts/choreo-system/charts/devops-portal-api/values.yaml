@@ -1,0 +1,48 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicas: 1
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/choreo-devops-portal-api
+  tag: latest
+vault:
+  roleName: devops-portal-api
+serviceAccount:
+  annotations: {}
+config:
+  logLevel: INFO
+  maxEnvPerOrg: 5
+  cdpCapacityList:
+    - region: US
+      value: 15000
+    - region: EU
+      value: 10000
+    - region: US-CDP-2
+      value: 10000
+  defaultCdpCapacity: 10000
+  usCDPList:
+    - US
+  euCDPList:
+    - EU
+  enableEventPublish: false
+  websubhubUrl: https://publish.websubhub.choreo.dev/hub
+  featureFlagApdevSTS: true
+  featureFlagDefaultEnvIdpConfig: true
+  defaultIDPId: 6da03db5-5039-4eeb-ba3d-7e117108dff1
+  restAPIConsumerKey: dsfo7mn62P42qfbfCt2lOYMG5aka
+secrets:
+  apimRestAPIConsumerSecret:
+    path: choreo-cp/data/choreo-system/devops-portal-api
+    key: apimRestAPIConsumerSecret

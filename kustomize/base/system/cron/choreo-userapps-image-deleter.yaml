@@ -1,0 +1,69 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: userapps-image-deleter
+  labels:
+    choreo.component: userapps-image-deleter
+spec:
+  schedule: 0 5 * * 3
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+            linkerd.io/inject: disabled
+          labels:
+            choreo.component: userapps-image-deleter
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: userapps-image-deleter
+              image: choreocontrolplane.azurecr.io/choreoipaas/choreo-userapps-image-deleter:latest
+              securityContext:
+                runAsUser: 10001
+                runAsGroup: 10001
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
+              env:
+                - name: AZURE_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      key: AZURE_CLIENT_SECRET
+                      name: secret-userapps-image-deleter
+              envFrom:
+                - configMapRef:
+                    name: cm-userapps-image-deleter
+                - configMapRef:
+                    name: env-userapps-image-deleter
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 100Mi
+                requests:
+                  cpu: 150m
+                  memory: 75Mi
+              volumeMounts:
+                - mountPath: /mnt/csi/secret-userapps-image-deleter
+                  name: secret-userapps-image-deleter
+                  readOnly: true
+          volumes:
+            - name: secret-userapps-image-deleter
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-userapps-image-deleter
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          serviceAccountName: sa-choreo-default

@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip3: CKV_K8S_38=Required by linkerd
+  labels:
+    choreo.component: alert-notification-service
+  name: alert-notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: alert-notification-service
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: alert-notification-service
+        antiaffinity: alert-notification-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+        config.linkerd.io/proxy-memory-request: 30Mi
+    spec:
+      automountServiceAccountToken: true
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - env:
+            - name: EVENTHUB_SHARED_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-alert-notification-service
+                  key: EVENTHUB_SHARED_ACCESS_KEY
+            - name: ALERT_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-alert-notification-service
+                  key: ALERT_CHOREO_DB_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: env-alert-notification-service
+            - configMapRef:
+                name: cm-alert-notification-service
+          image: choreocontrolplane.azurecr.io/choreoipaas/alert-notification-service:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          name: alert-notification-service
+          volumeMounts:
+            - name: secret-alert-notification-service
+              mountPath: "/mnt/csi/secret-alert-notification-service"
+              readOnly: true
+          ports:
+            - containerPort: 9090
+              name: an-port
+              protocol: TCP
+            - containerPort: 9092
+              name: mgt-port
+              protocol: TCP
+            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+              name: health
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 768Mi
+      volumes:
+        - name: secret-alert-notification-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-alert-notification-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+      topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              choreo.component: alert-notification-service
+          maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+        - labelSelector:
+            matchLabels:
+              choreo.component: alert-notification-service
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway

@@ -1,0 +1,194 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: product-apim
+  namespace: {{ .Values.global.namespaces.apim }}
+  labels:
+    {{- include "product-apim.labels" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+      {{- include "product-apim.labels" . | nindent 6 }}
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: choreo-system
+            k8s:io.kubernetes.pod.namespace: choreo-system-nginx-ingress
+        - matchLabels:
+            choreo.component: choreo-connect-global-adapter
+        - matchLabels:
+            cc.component: choreo-connect-adapter
+        - matchLabels:
+            choreo.component: choreo-governance-service
+        - matchLabels:
+            {{- include "product-apim.labels" . | nindent 12 }}
+        - matchLabels:
+            app.kubernetes.io/instance: controlplane-internal-nginx-ingress
+            k8s:io.kubernetes.pod.namespace: controlplane-internal-nginx-ingress
+        - matchLabels:
+            choreo.component: cp-gw-adapter
+            k8s:io.kubernetes.pod.namespace: choreo-system
+      toPorts:
+        - ports:
+            - port: "9443"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            cc.component: choreo-connect-deployment
+        - matchLabels:
+            choreo.component: app-gateway-oauth-agent
+        - matchLabels:
+            global.adapter: private
+        - matchLabels:
+            choreo.component: obsmanager
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: cp-consolidated-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: dp-rudder
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: dp-project-manager
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: delete-manager
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: devops-portal-api
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: endpoint-resolver
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: cp-graphql
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: connection-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: choreo-url-management
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: apim-proxy-deployer
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: cp-consolidated-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: pdp-manager
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: workflow-mgt
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: api-key-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: sts-mgt-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            app.kubernetes.io/instance: choreo-cp-analytics-internal-nginx-ingress
+            k8s:io.kubernetes.pod.namespace: choreo-cp-analytics-internal-nginx-ingress
+        - matchLabels:
+            choreo.component: cp-gw-adapter
+            k8s:io.kubernetes.pod.namespace: choreo-system
+      toPorts:
+        - ports:
+            - port: "9763"
+              protocol: TCP
+  egress:
+    - toEntities:
+        - world # test this to external entities, remove this and test, block the metadata endpoint
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s:k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEndpoints:
+        - matchLabels:
+            choreo.component: dp-rudder
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: dp-project-manager
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: sts-mgt-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+      toPorts:
+        - ports:
+            - port: "3000"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            choreo.component: dp-cloud-manager
+            k8s:io.kubernetes.pod.namespace: choreo-system
+      toPorts:
+        - ports:
+            - port: "3200"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            choreo.component: app-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: app-dev-user-mgt-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: choreo-governance-service
+        - matchLabels:
+            choreo.component: api-key-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: dp-mizzen
+            k8s:io.kubernetes.pod.namespace: choreo-system
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            {{- include "product-apim.labels" . | nindent 12 }}
+      toPorts:
+        - ports:
+            - port: "9443"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            choreo.component: choreo-url-management
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: app-dev-authz-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+        - matchLabels:
+            choreo.component: subscriptions
+            k8s:io.kubernetes.pod.namespace: choreo-system
+      toPorts:
+        - ports:
+            - port: "9090"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            choreo.component: workflow-mgt
+            k8s:io.kubernetes.pod.namespace: choreo-system
+      toPorts:
+        - ports:
+            - port: "9082"
+              protocol: TCP

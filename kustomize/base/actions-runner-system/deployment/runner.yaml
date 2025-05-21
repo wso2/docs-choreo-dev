@@ -1,0 +1,48 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: runners
+  annotations: {}
+spec:
+  replicas: 1
+  template:
+    metadata: {}
+    spec:
+      volumeMounts:
+        - name: docker-cache-volume
+          mountPath: /mnt/docker-cache
+      volumes:
+        - name: docker-cache-volume
+          hostPath:
+            path: /mnt/docker-cache
+            type: DirectoryOrCreate
+      organization: choreo-userapps-gitops-prod
+      image: choreocontrolplane.azurecr.io/choreoipaas/gh-runner:latest
+      resources:
+        limits:
+          cpu: 750m
+          memory: 2Gi
+        requests:
+          cpu: 250m
+          memory: 512Mi
+      tolerations:
+        - effect: NoSchedule
+          key: ghrunner
+          operator: Exists
+      nodeSelector:
+        execution-mode: ghrunner
+      workDir: /home/runner/workspace
+      env:
+        - name: DISABLE_RUNNER_UPDATE
+          value: "true"
+        - name: LOG_DEBUG_DISABLED
+          value: "true"
+      labels:
+        - choreo-custom-runner
+      dockerdContainerResources:
+        limits:
+          cpu: "1"
+          memory: 2Gi
+        requests:
+          cpu: 500m
+          memory: 512Mi

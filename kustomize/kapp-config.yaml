@@ -1,0 +1,90 @@
+apiVersion: kapp.k14s.io/v1alpha1
+kind: Config
+
+rebaseRules:
+  - path: [spec, replicas]
+    type: copy
+    sources: [existing, new]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: apps/v1
+          kind: Deployment
+
+  - path: [spec, replicas]
+    type: copy
+    sources: [new, existing]
+    resourceMatchers:
+      - kindNamespaceNameMatcher:
+          kind: Deployment
+          namespace: keda
+          name: keda-http-add-on-scaler
+
+  - path: [spec, replicas]
+    type: copy
+    sources: [new, existing]
+    resourceMatchers:
+      - kindNamespaceNameMatcher:
+          kind: Deployment
+          namespace: keda
+          name: keda-http-add-on-operator
+
+  - path: [spec, replicas]
+    type: copy
+    sources: [new, existing]
+    resourceMatchers:
+      - kindNamespaceNameMatcher:
+          kind: Deployment
+          namespace: keda
+          name: keda-operator
+
+  - path: [spec, replicas]
+    type: copy
+    sources: [existing, new]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: actions.summerwind.dev/v1alpha1
+          kind: RunnerDeployment
+
+  - path: [spec, effectiveTime]
+    type: copy
+    sources: [existing, new]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: actions.summerwind.dev/v1alpha1
+          kind: RunnerDeployment
+
+  - path: [spec, selector]
+    type: copy
+    sources: [existing, new]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: actions.summerwind.dev/v1alpha1
+          kind: RunnerDeployment
+
+  - path: [spec, capacityReservations]
+    type: copy
+    sources: [existing, new]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: actions.summerwind.dev/v1alpha1
+          kind: HorizontalRunnerAutoscaler
+
+  - paths:
+      - [metadata, annotations, pv.kubernetes.io/bound-by-controller]
+      - [spec, claimRef]
+    type: copy
+    sources: [existing, new]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: v1
+          kind: PersistentVolume
+
+  - paths:
+      - [data]
+      - [metadata, annotations, kubernetes.io/legacy-token-last-used]
+    type: copy
+    sources: [existing, new]
+    resourceMatchers:
+      - apiVersionKindMatcher:
+          apiVersion: v1
+          kind: Secret

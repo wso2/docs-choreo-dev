@@ -1,0 +1,34 @@
+[choreo.step_enforcer.config]
+testEnabled = false
+jobEnabled = true
+
+[choreo.step_enforcer.asb]
+timeToLive = 60
+
+[choreo.step_enforcer.impl]
+billingDay = 1
+subscriptionRetrievalBatchSize = 2000
+choreoUsageNotificationEmails = "{{.IMPL_NOTIFICATIONS}}"
+globalBillingResetEventEnabled = true
+
+[choreo.step_enforcer.clients]
+subscriptionServiceUrl = "http://subscriptions:9090"
+choreoEmailServiceUrl = "https://email-service"
+choreoUserServiceUrl = "http://app-service:8080"
+choreoNotificationServiceUrl = "http://alert-notification-service:9090"
+timeout = 60.0
+retryCount = 30
+interval = 1.0
+maxInterval = 120.0
+backoffFactor = 2.0
+
+[choreo.step_enforcer.db]
+user = "choreo_step_db_user"
+loginTimeout = 10000
+useSsl = false
+poolSize = 15
+minIdle = 5
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
+format = "json"

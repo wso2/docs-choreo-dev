@@ -1,0 +1,7 @@
+# Namespace of the linkerd-viz deployment
+env_url: .dv
+env: dev
+namespace: linkerd-viz
+# Ingress details
+ingress:
+  class: linkerd-viz-dasbhoard

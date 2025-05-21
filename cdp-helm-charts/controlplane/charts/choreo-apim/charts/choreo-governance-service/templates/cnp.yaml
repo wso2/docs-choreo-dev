@@ -1,0 +1,77 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: choreo-governance-service
+  namespace: {{ .Values.global.namespaces.apim }}
+  labels:
+    {{- include "choreo-governance-service.labels" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+      {{- include "choreo-governance-service.labels" . | nindent 6 }}
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            choreo.component: apim-am
+        - matchLabels:
+            cc.component: choreo-connect-deployment
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s:k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEndpoints:
+        - matchLabels:
+            choreo.component: choreo-linter-service
+        - matchLabels:
+            choreo.component: app-service
+            k8s:io.kubernetes.pod.namespace: choreo-system
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            choreo.component: resource-authorization-service
+            k8s:io.kubernetes.pod.namespace: choreo-authorization
+      toPorts:
+        - ports:
+            - port: "9090"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            choreo.component: apim-am
+      toPorts:
+        - ports:
+            - port: "9443"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            choreo.component: dp-project-manager
+            k8s:io.kubernetes.pod.namespace: choreo-system
+      toPorts:
+        - ports:
+            - port: "3000"
+              protocol: TCP

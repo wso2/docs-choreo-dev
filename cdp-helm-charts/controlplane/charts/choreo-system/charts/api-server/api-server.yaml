@@ -1,0 +1,96 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+idp:
+  clientId: {{ .Values.config.idp.clientId }}
+  clientSecret: ${IDP_CLIENT_SECRET}
+  tokenUrl: {{ .Values.config.idp.tokenUrl }}
+  redirectUrls: {{ .Values.config.idp.redirectUrls }}
+  jwks: # DEPRECATED. See 'jwksEndpoints'.
+    url: {{ .Values.config.idp.jwksUrl }}
+    cacheRefreshInterval: {{ .Values.config.idp.jwksCacheRefreshInterval }}
+    cacheTtl: {{ .Values.config.idp.jwksCacheTTL }}
+  jwtProviders:
+    - issuer: {{ .Values.config.idp.kmIssuer }}
+      audiences: '[ {{ join ", " .Values.config.idp.jwtProviderAudiences }} ]'
+      jwks:
+        url: {{ .Values.config.idp.kmJwksUrl }}
+        cacheRefreshInterval: {{ .Values.config.idp.jwksCacheRefreshInterval }}
+        cacheTtl: {{ .Values.config.idp.jwksCacheTTL }}
+    - issuer: {{ .Values.config.idp.asgardeoIssuer }}
+      audiences:
+        - {{ .Values.config.idp.asgardeoAudience }}
+      jwks:
+        url: {{ .Values.config.idp.asgardeoJwksUrl }}
+        cacheRefreshInterval: {{ .Values.config.idp.jwksCacheRefreshInterval }}
+        cacheTtl: {{ .Values.config.idp.jwksCacheTTL }}
+    - issuer: {{ .Values.config.idp.cpEnforcerIssuer }}
+      skipClaimsValidation: true  # Skip claim validation until https://github.com/wso2-enterprise/choreo/issues/10549 is fixed
+      publicKey: {{ .Values.config.idp.cpEnforcerJWTIssuer | b64enc | quote }}
+  issuer: {{ .Values.config.idp.issuer }} # DEPRECATED. See 'issuers'.
+  audience: '[ {{ join ", " .Values.config.idp.audience }} ]'
+  jwtValidationLeeway: {{ .Values.config.idp.jwtValidationLeeway }}
+  skipJwtValidation: false
+  cookies:
+    maxAge: 86400
+    secure: true
+    httpOnly: true
+  systemUserIdpIds: '[ {{ join ", " .Values.config.idp.systemUserIdpIds }} ]'
+auth:
+  enable: true
+middleware:
+  logging:
+    dumpRequestBody: true
+    dumpRequestHeaders: true
+    dumpResponseBody: true
+    dumpResponseHeaders: true
+    publicKey: {{ .Values.config.middleware.logging.publicKey }}
+  eventPublish:
+    websubHubPublisherConfig:
+      websubHubBaseUrl: {{ .Values.config.middleware.eventPublish.websubHubBaseUrl }}
+      hubTopic: {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle }}
+    enable: true
+  instanceBasedAuthz:
+    enabled: true
+upstream:
+  app-service: app-service:8080
+  workspace-manager: workspace-manager:8080
+  app-deployer: app-deployer:8080
+  limiter: quota-limiter:9090
+  dp-project-manager: dp-project-manager:80
+  dp-cicd: dp-cicd:80
+  dp-rudder: dp-rudder:80
+  organization-management: organization-management:8080
+  authz-service: choreo-resource-authorization-service.choreo-authorization.svc.cluster.local:9090
+logger:
+  level: info
+  encoding: console
+  development: false
+  disableStacktrace: true
+  encoderConfig:
+    timeKey: time
+    levelKey: level
+    nameKey: logger
+    callerKey: caller
+    messageKey: message
+    stacktraceKey: stacktrace
+    lineEnding: "\n"
+    levelEncoder: capitalColor
+    timeEncoder: iso8601
+    durationEncoder: string
+    callerEncoder: short
+  outputPaths: stdout
+  errorOutputPaths: stdout # we send errors to stdout in dev so that we can easily grep without redirect
+apimTokenExchangeConfig:
+  tokenExchangeUrl: {{ .Values.config.apimTokenExchangeConfig.url }}
+  subjectTokenType: urn:ietf:params:oauth:token-type:jwt
+  requestedTokenType: urn:ietf:params:oauth:token-type:jwt
+  grantType: urn:ietf:params:oauth:grant-type:token-exchange

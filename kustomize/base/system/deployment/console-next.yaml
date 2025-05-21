@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip2: CKV_K8S_38=Required by LinkerD
+    checkov.io/skip3: CKV_K8S_22=Not possible to do ATM, as there are some files such as logs and configs written
+  labels:
+    choreo.component: console-next
+  name: console-next
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: console-next
+  template:
+    metadata:
+      labels:
+        choreo.component: console-next
+        antiaffinity: console-next
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-console-next:latest
+          name: console-next
+          ports:
+            - containerPort: 8080
+              name: con-v2-port
+              protocol: TCP
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 10000
+            runAsGroup: 10000
+            capabilities:
+              drop:
+                - ALL
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /index.html
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /index.html
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            limits:
+              cpu: 200m
+              memory: 150Mi
+            requests:
+              cpu: 150m
+              memory: 100Mi
+          env:
+            - name: REACT_APP_BALLERINA_LOW_CODE_RESOURCES_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: common-env-variables
+                  key: BALLERINA_LOW_CODE_RESOURCES_VERSION
+            - name: REACT_APP_SAMPLE_BALLERINA_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: common-env-variables
+                  key: SAMPLE_BALLERINA_VERSION
+            - name: REACT_APP_CHOREO_SAMPLES_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: common-env-variables
+                  key: CHOREO_SAMPLES_VERSION
+          envFrom:
+            - configMapRef:
+                name: env-console-next
+            - configMapRef:
+                name: cm-console-next
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - console-next
+              topologyKey: kubernetes.io/hostname

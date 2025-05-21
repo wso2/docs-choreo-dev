@@ -1,0 +1,37 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicas: 1
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/connection-service
+  tag: latest
+vault:
+  roleName: connection-service
+serviceAccount:
+  annotations: {}
+config:
+  choreoIdpId: "6da03db5-5039-4eeb-ba3d-7e117108dff1"
+  apimClientId: "dsfo7mn62P42qfbfCt2lOYMG5aka"
+  choreoStsUrl: "https://sts.choreo.dev"
+  dbUrl: "jdbc:sqlserver://choreo-prod-mssql-server.database.windows.net:1433;databaseName=choreo_connection_service_db;"
+  websubHubUrl: https://publish.websubhub.choreo.dev/hub
+  logLevel: INFO
+secrets:
+  apimClientSecret:
+    path: choreo-cp/data/choreo-system/connection-service
+    key: apimClientSecret
+  connectionDBPassword:
+    path: choreo-cp/data/choreo-system/connection-service
+    key: connectionDBPassword

@@ -1,0 +1,99 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=Required by LinkerD
+  labels:
+    {{ include "choreo-governance-service.labels" . | indent 4 }}
+  name: choreo-governance-service
+  namespace: {{ .Values.global.namespaces.apim }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{ include "choreo-governance-service.labels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ include "choreo-governance-service.labels" . | indent 8 }}
+    spec:
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "choreo-governance-service.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}
+      serviceAccountName: choreo-governance-service
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-governance-service
+          image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: 8080
+              name: service-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /api/v1/healthz/readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /api/v1/healthz/liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: choreo-governance-service-conf
+              mountPath: /home/wso2
+              readOnly: true
+            - name: secret-choreo-governance-service
+              mountPath: /mnt/csi/secret-choreo-governance-service
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: choreo-governance-service-conf
+          configMap:
+            name: choreo-governance-service
+        - name: secret-choreo-governance-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: choreo-governance-service

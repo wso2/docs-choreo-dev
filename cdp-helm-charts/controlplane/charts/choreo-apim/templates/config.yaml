@@ -1,0 +1,51 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: feature-flags
+  namespace: {{ .Values.global.namespaces.apim }}
+  labels:
+    {{- include "choreo-apim.labels" . | nindent 4 }}
+data:
+  FEATURE_FLAG_DEFAULT: "true"
+  FEATURE_FLAG_MONGODB_DIRECT_SEARCH: "true"
+  FEATURE_FLAG_URL_VALIDATION: "true"
+  FEATURE_STEP_QUOTA_LIMITING: "true"
+  LOG4J_FORMAT_MSG_NO_LOOKUPS: "true"
+  FEATURE_FLAG_MONGODB_SINGLE_COLLECTION: "true"
+  FEATURE_FLAG_APP_KEY_GEN_RBAC_ENABLED: "true"
+  EXTERNAL_IDP_ENABLED: "true"
+  FEATURE_FLAG_TEST_TOKENS_AUD: "true"
+  FEATURE_FLAG_IN_BUILT_AUTHZ_ENABLED: "true"
+  CHOREO_STS_DOMAIN: choreosts.dev
+  APP_SHARING_ENABLED: "true"
+  SHARING_ENABLED_ORGS: "*"
+  DISABLE_DEFAULT_STS_CLAIM_MAPPING: "true"
+  ENABLE_KEY_ENV_VALIDATION: "true"
+  FEATURE_FLAG_CUSTOM_EP_EXTRACTOR_ENABLED_ORG: ""
+  FEATURE_FLAG_CUSTOM_EP_EXTRACTOR_ENABLED: "true"
+  FEATURE_FLAG_ENABLE_CUSTOM_URLS: "true"
+  CUSTOM_SUBSCRIPTION_POLICY_HANDLING_ORG: "*"
+  ASGARDEO_AUTH_HEADER_PREFIX: "SystemApp"
+  SUBSCRIPTION_WORKFLOW_ORGS: "*"
+  SUBSCRIPTION_APPROVAL_ORGS: "*"
+  FEATURE_SUBSCRIPTION_SERVICE_ENABLED: "true"
+  GOVERNANCE_CHECK_ENABLED_ORGS: ""
+  IS_VERSION_MAPPING_ENABLED_FOR_ASGARDEO_API_RESOURCE: "true"
+  APIM_DEFAULT_PDP_SYSTEM_USER: "pdp-system-user"
+  ENABLE_API_COMPOSITION: "true"
+  ENABLE_DEVPORTAL_V2: "true"
+  TOKEN_ENDPOINT_THROTTLING_ENABLED_ORGS: ""
+  TOKEN_ENDPOINT_THROTTLING_REQUEST_COUNT: "200"
+  TOKEN_ENDPOINT_THROTTLING_CACHE_KEY_DURATION_MINS: "2"
+  IS_CORS_OVERRIDE_ENABLED: "true"

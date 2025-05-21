@@ -1,0 +1,36 @@
+[choreo.choreo_subscriptions.api]
+billingDay = 25
+
+[choreo.choreo_subscriptions.config.database]
+url = {{ .Values.config.dbURL | quote }}
+user = "choreo_subscriptions_db_user"
+loginTimeout = 10000
+useSsl = false
+poolSize = 15
+minIdle = 5
+
+[choreo.choreo_subscriptions.db]
+user = "choreo_step_db_user"
+loginTimeout = 60
+useSsl = true
+poolSize = 15
+minIdle = 5
+
+[choreo.choreo_subscriptions.config.redisClient]
+host = {{ .Values.config.redisHost | quote }}
+cacheKeyPrefix = "choreo_subscriptions."
+enableSsl = true
+connectionTimeout = 5000
+connectionPooling = true
+isClusterConnection = false
+startTls = false
+verifyPeer = false
+database = 3
+
+[choreo.choreo_subscriptions.asb]
+url = {{ .Values.config.asbURL | quote }}
+timeout = 60
+
+[ballerina.log]
+level = {{ .Values.config.logLevel | quote }}
+format = "json"

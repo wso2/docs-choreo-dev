@@ -1,0 +1,77 @@
+# The configuration file for mgw
+
+[keystore]
+  certPath = "/home/wso2/security/keystore/global-adapter.pem"
+  keyPath = "/home/wso2/security/keystore/global-adapter.key"
+
+[truststore]
+  location = "/home/wso2/security/truststore"
+
+[mizzen]
+host = "{{.MIZZEN_HOST}}"
+
+[partitionExceedAlertSettings]
+namespace = "$env{PARTITION_CHECK_NAMESPACE}"
+pollingInterval = "900s"
+retryInterval = "5s"
+retryCount = 20
+
+# Control plane's connection details
+[controlPlane]
+  serviceUrl = "https://choreo-am-service:9443/"
+  username = "{{.CONTROLPLANE_USERNAME}}"
+  password = "$env{cp_admin_pwd}"
+  #retryInterval = 5
+  #skipSSLVerification=true
+  # Message broker connection URL of the control plane
+  [controlPlane.brokerConnectionParameters]
+    eventListeningEndpoints = ["$env{ASB_CONNECTION_STRING}"]
+    reconnectInterval = 5000
+    reconnectRetryCount = 60
+
+[environmentConfig]
+{{range .DATAPLANES}}
+[[environmentConfig.dataplanes]]
+  id="{{.DATAPALNE_ID}}"
+  partitionSize = {{.PARTITION_SIZE | default 1000}}
+  [environmentConfig.dataplanes.redisServer]
+    host = '{{.REDIS_HOST}}'
+    port = 6380
+    password = '{{.REDIS_PASSWORD | default "$env{REDIS_PASSWORD}"}}'
+    clientName = 'global-adapter'
+    databaseIndex = 0
+    testDatabaseIndex = 6
+    connectionPoolSize = 3
+    maxRetryCount = 10
+{{end}}
+
+[server]
+  host = '0.0.0.0'
+  port = '9843'
+  partitionSize = 1000
+  [[server.users]]
+    username = '{{.SERER_USERNAME}}'
+    password = '$env{ga_admin_pwd}'
+
+[database]
+  name = 'choreo_global_adapter_db'
+  username = 'choreo_global_adapter_db_user'
+  password = '$env{ga_db_pwd}'
+  host = '{{.DB_HOST}}'
+  port = 1433
+  validationQuery = 'select 1'
+  [database.pooloptions]
+  maxActive = 500
+  maxIdle = 30
+
+[redisServer]
+  host = '{{.DEFAULT_REDIS_HOST}}'
+  port = 6380
+  password = '$env{REDIS_PASSWORD}'
+  clientName = 'global-adapter'
+  databaseIndex = 0
+  connectionPoolSize = 3
+  maxRetryCount = 10
+
+[orgBlocking]
+  enabled = true

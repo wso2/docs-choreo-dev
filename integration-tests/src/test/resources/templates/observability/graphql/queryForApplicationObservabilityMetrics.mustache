@@ -1,0 +1,10 @@
+{
+  "operationName": "hubbleRequestMetrics",
+  "variables": {
+    "destinationReleaseId": "{{destinationReleaseId}}",
+    "to":  "{{to}}",
+    "from":  "{{from}}",
+    "breakSize":  "{{breakSize}}"
+  },
+  "query": "query hubbleRequestMetrics(\n      $destinationReleaseId: String!\n      $from: String!\n      $to: String!\n      $breakSize: String!\n    ) {\n      hubbleRequestMetrics(\n        destinationReleaseId: $destinationReleaseId\n        from: $from\n        to: $to\n        breakSize: $breakSize\n      ) {\n        latencyPercentiles\n        latencyMeanHistogram {\n          time\n          value\n        }\n        latencyPercentilesHistogram {\n          time\n          values\n        }\n        successfulRequestCountHistogram {\n          time\n          value\n        }\n        failedRequestCountHistogram {\n          time\n          value\n        }\n        totalRequestCountHistogram {\n          time\n          value\n        }\n      }\n    }"
+}

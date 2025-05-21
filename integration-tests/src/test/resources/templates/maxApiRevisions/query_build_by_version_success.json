@@ -1,0 +1,18 @@
+{
+  "data":{
+    "buildsByVersion":[
+      {
+        "id":"@ignore@",
+        "createdDate":"@ignore@",
+        "versionId":"@ignore@",
+        "buildId":"@ignore@",
+        "commitHash":"@ignore@",
+        "commitMessage":"@ignore@",
+        "revisions":[
+          {"revisionId":"@ignore@", "createdDate":"@ignore@", "description":null, "environments":[]},
+          {"revisionId":"@ignore@", "createdDate":"@ignore@", "description":null, "environments":[]},
+          {"revisionId":"@ignore@", "createdDate":"@ignore@", "description":null, "environments":["@ignore@"]}]
+      }
+    ]
+  }
+}

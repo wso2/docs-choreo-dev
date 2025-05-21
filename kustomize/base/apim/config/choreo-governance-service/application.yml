@@ -1,0 +1,57 @@
+# Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC. and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+
+server:
+  servlet:
+    context-path: /api/v1
+  max-http-request-header-size: 100KB
+
+governance-service:
+  database:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: {{.CHOREO_GOVERNANCE_SERVICE_DB_URL}}
+    username: choreo_governance_db_user
+    password: "@_from_file_(/mnt/csi/secret-choreo-governance-service/CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD)"
+    pool:
+      maxActiveConnectionsCount: 100
+      initialConnectionCount: 5
+      minIdleConnectionCount: 5
+      maxWaitTimeMs: 10000
+      validationQuery: SELECT 1
+      testOnBorrow: true
+      testWhileIdle: false
+      removeAbandonedTimeoutSec: 60
+      logAbandoned: false
+      abandonWhenPercentageFull: 50
+  feature-flags:
+    disableDatabaseConnection: {{.DISABLE_DATABASE_CONNECTION | default true}}
+    validateRulesetContent: {{.VALIDATE_RULESET_CONTENT | default false}}
+    excludedOrgsFromAuthorization: {{.EXCLUDED_ORGS_FROM_AUTHORIZATION | default ""}}
+    enableAIGovernance: {{.ENABLE_AI_GOVERNANCE | default false}}
+  endpoints:
+    apimBasePath: "https://choreo-am-service:9443/api/am/publisher/v2"
+    appService: {{.APP_SERVICE_BASE_URL}}
+    projectManager: {{.PROJECT_MANAGER_BASE_URL}}
+    linterServiceBasePath: "http://choreo-linter-service:8080/linter-service"
+    resourceAuthorizationService: {{.RESOURCE_AUTHORIZATION_SERVICE_BASE_URL}}
+    governanceAIServiceBasePath: {{.GOVERNANCE_AI_APP_BASE_URL}}
+    aiAppTokenEndpoint: {{.APIM_AI_APP_TOKEN_ENDPOINT_URL}}
+  apim:
+    superAdminUserName: {{.APIM_SUPER_ADMIN_USERNAME}}
+    superAdminPassword: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_SUPER_ADMIN_PASSWORD)"
+  ai-service-app:
+    clientId: {{.APIM_AI_CLIENT_ID}}
+    clientSecret: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_AI_CLIENT_SECRET)"
+  default-rulesets:
+    filePath: "/home/wso2/resources/default-rulesets"
+  default-documents:
+    filePath: "/home/wso2/resources/default-documents"
+  security:
+    privilegedClients:
+      - clientId: "{{.GITHUB_RUNNER_APP_CLIENT_ID}}"
+        name: GitHub Runner App
+    organizationIdHeader: "x-organization-id"

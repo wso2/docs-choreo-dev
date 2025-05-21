@@ -1,0 +1,95 @@
+apiVersion: v2
+name: choreo-system
+description: A Helm chart for Kubernetes
+
+# A chart can be either an 'application' or a 'library' chart.
+#
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+#
+# Library charts provide useful utilities or functions for the chart developer. They're included as
+# a dependency of application charts to inject those utilities and functions into the rendering
+# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 1.0.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "1.0.0"
+
+dependencies:
+  - name: api-key-service
+    version: 1.0.0
+    condition: api-key-service.enabled
+  - name: api-server
+    version: 1.0.0
+    condition: api-server.enabled
+  - name: apim-proxy-deployer
+    version: 1.0.0
+    condition: apim-proxy-deployer.enabled
+  - name: app-dev-authz-service
+    version: 1.0.0
+    condition: app-dev-authz-service.enabled
+  - name: app-service
+    version: 1.0.0
+    condition: app-service.enabled
+  - name: audit-logging
+    version: 1.0.0
+    condition: audit-logging.enabled
+  - name: choreo-console
+    version: 1.0.0
+    condition: choreo-console.enabled
+  - name: configuration-service
+    version: 1.0.0
+    condition: configuration-service.enabled
+  - name: connection-service
+    version: 1.0.0
+    condition: connection-service.enabled
+  - name: cp-graphql
+    version: 1.0.0
+    condition: cp-graphql.enabled
+  - name: delete-manager
+    version: 1.0.0
+    condition: delete-manager.enabled
+  - name: devops-portal-api
+    version: 1.0.0
+    condition: devops-portal-api.enabled
+  - name: dp-cicd
+    version: 1.0.0
+    condition: dp-cicd.enabled
+  - name: dp-cloud-manager
+    version: 1.0.0
+    condition: dp-cloud-manager.enabled
+  - name: dp-garbage-collector
+    version: 1.0.0
+    condition: dp-garbage-collector.enabled
+  - name: dp-mizzen
+    version: 1.0.0
+    condition: dp-mizzen.enabled
+  - name: dp-project-manager
+    version: 1.0.0
+    condition: dp-project-manager.enabled
+  - name: dp-rudder
+    version: 1.0.0
+    condition: dp-rudder.enabled
+  - name: dp-secret-manager
+    version: 1.0.0
+    condition: dp-secret-manager.enabled
+  - name: email-service
+    version: 1.0.0
+    condition: email-service.enabled
+  - name: organization-management
+    version: 1.0.0
+    condition: organization-management.enabled
+  - name: sts-mgt-service
+    version: 1.0.0
+    condition: sts-mgt-service.enabled
+  - name: subscriptions-service
+    version: 1.0.0
+    condition: subscriptions-service.enabled

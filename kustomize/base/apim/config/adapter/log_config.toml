@@ -1,0 +1,32 @@
+# The logging configuration file for control plane
+######### root Level ########
+logfile = "/dev/null"
+logLevel = "INFO"
+
+[rotation]
+MaxSize = 10    #meabytes
+MaxBackups = 3
+MaxAge =  2   #days
+Compress = true
+
+######### package Level ############
+# LogLevels = "DEBG", "FATL", "ERRO", "WARN", "INFO", "PANC"
+
+[[pkg]]
+name = "github.com/wso2/micro-gw/pkg/mgw"
+logLevel = "INFO"
+
+[[pkg]]
+name = "github.com/wso2/micro-gw/pkg/oasparser"
+logLevel = "INFO"
+
+
+[accessLogs]
+enable = true
+logType = "json" # "text" or "json"
+logfile = "/dev/stdout"
+
+# "secondaryLogFormat" is the log format that is append after "reservedLogFormat". This can be used by dev for debug purpose.
+# For example: secondaryLogFormat = "'%REQUEST_TX_DURATION%' '%RESPONSE_TX_DURATION%'"
+# Find the default values of "reservedLogFormat" from https://github.com/wso2/product-microgateway/blob/choreo/resources/conf/log_config.toml
+secondaryLogFormat = ""

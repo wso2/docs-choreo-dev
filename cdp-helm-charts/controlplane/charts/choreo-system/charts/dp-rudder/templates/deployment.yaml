@@ -1,0 +1,104 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    {{- include "dp-rudder.labels" . | nindent 4 }}
+  name: dp-rudder
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "dp-rudder.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dp-rudder.labels" . | nindent 8 }}
+    spec:
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "dp-rudder.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}
+      automountServiceAccountToken: true
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: dp-rudder
+          imagePullPolicy: Always
+          image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+            requests:
+              cpu: 200m
+              memory: 200Mi
+          envFrom:
+            - configMapRef:
+                name: dp-rudder
+            - secretRef:
+                name: dp-rudder
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          ports:
+            - containerPort: 3000
+              name: http-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+          volumeMounts:
+            - name: secret-dp-rudder
+              mountPath: /mnt/csi/secret-dp-rudder
+              readOnly: true
+      volumes:
+        - name: secret-dp-rudder
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: dp-rudder
+      restartPolicy: Always
+      serviceAccountName: dp-rudder

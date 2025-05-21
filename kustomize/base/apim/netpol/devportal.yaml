@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-devportal-ingress-network-policy
+spec:
+  ingress:
+    - {}
+  podSelector:
+    matchLabels:
+      choreo.component: apim-devportal
+  policyTypes:
+    - Ingress

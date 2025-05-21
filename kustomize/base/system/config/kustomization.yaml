@@ -1,0 +1,603 @@
+resources:
+  - env
+
+configMapGenerator:
+  - name: cm-choreo-testbase-db
+    behavior: create
+    literals:
+      - CHOREO_DB_NAME=choreo_testbase_db
+      - CHOREO_DB_MAX_POOL=50
+      - CHOREO_DB_PORT=1433
+      - CHOREO_DB_USERNAME=choreo_testbase_db_user
+      - CHOREO_DB_DRIVER=sqlserver
+  - name: cm-admin-api
+    behavior: create
+    literals:
+      - MAX_HEADER_SIZE=64000
+  - name: cm-testbase
+    behavior: create
+    literals:
+      - CHOREO_APP_DEPLOYER_SERVICE_GRPC_ADDRESS=http://app-deployer:8080
+      - CHOREO_WS_MANAGER_SERVICE_GRPC_ADDRESS=http://workspace-manager:8080
+      - CHOREO_APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+  - name: cm-choreo-org-activity-update
+    behavior: create
+    literals:
+      - SCHEDULED_HOUR={{.SCHEDULED_HOUR}}
+      - DB_USER=choreo_app_db_user
+      - DB_SERVER={{.DB_SERVER}}
+      - DB_DATABASE=choreo_app_db
+      - DB_PORT=1433
+      - SUBS_DB_USER=choreo_subscriptions_db_user
+      - SUBS_DB_SERVER={{.SUBS_DB_SERVER}}
+      - SUBS_DB_DATABASE=choreo_subscriptions_db
+      - SUBS_DB_PORT=1433
+      - STORAGE_ACCOUNT_NAME={{.STORAGE_ACCOUNT_NAME}}
+      - STORAGE_ACCOUNT_URL={{.STORAGE_ACCOUNT_URL}}
+      - STORAGE_CONTAINER_NAME={{.STORAGE_CONTAINER_NAME}}
+      - SCIM_BACKEND_API_USER_NAME=choreo-user-data-retriever
+      - LOG_ANALYTICS_QUERY_URL={{.LOG_ANALYTICS_QUERY_URL}}
+      - LOG_ANALYTICS_RESOURCE={{.LOG_ANALYTICS_RESOURCE}}
+      - LOG_ANALYTICS_CLIENT_ID={{.LOG_ANALYTICS_CLIENT_ID}}
+      - AZURE_TOKEN_URL={{.AZURE_TOKEN_URL}}
+      - ADX_RESOURCE={{.ADX_RESOURCE}}
+      - ADX_QUERY_URL={{.ADX_QUERY_URL}}
+      - ADX_QUERY_DB={{.ADX_QUERY_DB}}
+      - CLUSTER_NAME_SPACE={{.CLUSTER_NAME_SPACE}}
+      - CLUSTER_NAMES={{.CLUSTER_NAMES}}
+      - WHITELISTED_ORGS={{.WHITELISTED_ORGS}}
+  - name: cm-idp-replica
+    behavior: create
+    literals:
+      - IDP_AUTH_RESPONSE_COOKIE_MAX_AGE="86400"
+      - IDP_TOKEN_ENDPOINT=/oauth2/token
+      - IDP_JWKS_ENDPOINT=/oauth2/jwks
+      - IDP_SCIM_USERS_ENDPOINT=/wso2/scim/Users
+  - name: cm-email-service
+    behavior: create
+    literals:
+      - MAIL_SMTP_AUTH="true"
+      - MAIL_SMTPNSTARTTLS_ENABLE="false"
+      - templates_contents_BCENTRAL_EMAIL_INVITATION="templates/bcentral/confirmation.txt"
+      - templates_contents_BCENTRAL_EMAIL_INVITATION_SUCCESS="templates/bcentral/welcome-invitee.txt"
+      - templates_contents_BCENTRAL_EMAIL_NEW_ORG="templates/bcentral/welcome-new-org.txt"
+      - templates_contents_CHOREO_EMAIL_INVITATION="templates/choreo/org-invitation.txt"
+      - templates_subjects_CHOREO_EMAIL_INVITATION_SUBJECT="You have been invited to join the '$organization' organization in Choreo"
+  - name: cm-telemetry
+    behavior: create
+    literals:
+      - NEGOTIATOR_GRPC_ADDRESS=http://negotiator:9092
+      - NEGOTIATOR_HEALTHZ_ADDRESS=http://negotiator:9093
+      - REDIS_PORT=6380
+      - REDIS_SSL=true
+      - REDIS_DATABASE=3
+  - name: cm-obsmanager
+    behavior: create
+    literals:
+      - APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+      - RUDDER_ADDRESS=http://dp-rudder:80
+      - PROJECT_MANAGER_ADDRESS=http://dp-project-manager:80
+      - CICD_ADDRESS=http://dp-cicd:80
+  - name: cm-connectords-cp
+    behavior: create
+    literals:
+      - CHOREO_APP_SERVICE_GRPC_ADDRESS=http://app-service:8080
+  - name: cm-connector-builder
+    behavior: create
+    literals:
+      - APIM_PROXY_PUBLISHER_API=/api/am/publisher/v2/apis
+      - GITHUB_API=https://api.github.com
+      - GATEWAY_JWKS_ENDPOINT=/oauth2/jwks
+      - SERVICE_PORT=9090
+      - HEALTH_SERVICE_PROT=9091
+      - CHOREO_BALLERINA_VERSION=2201.0.0
+      - DP_CLOUD_MANAGER_ENDPOINT=http://dp-cloud-manager:80
+      - CP_GRAPHQL_ENDPOINT=http://cp-graphql:9095
+      - CP_GRAPHQL_ENDPOINT_V2=http://cp-graphql:9090
+  - name: cm-choreo-app-db
+    behavior: create
+    literals:
+      - CHOREO_DB_NAME=choreo_app_db
+      - CHOREO_DB_PORT=1433
+      - CHOREO_DB_USERNAME=choreo_app_db_user
+      - CHOREO_DB_DRIVER=sqlserver
+  - name: cm-dp-mizzen
+    behavior: create
+    literals:
+      - PORT=8080
+      - SERVICE_RUDDER_URL=http://dp-rudder
+      - REDIS_TLS=1
+      - MSSQL_PORT=1443
+      - MSSQL_USERNAME=choreo_mizzen_admin_db_user
+      - MSSQL_DATABASE=choreo_mizzen_db
+      - REDIS_PORT=6380
+      - NODE_OPTIONS="--max-http-header-size=65000"
+  - name: cm-multivariate-anomaly-detector-notification-manager
+    behavior: create
+    literals:
+      - SYSTEM_USER_ID="choreo:system"
+      - APPSERVICE_GRPC_URL="http://app-service:8080"
+      - EMAIL_SERVICE_URL="https://email-service:443"
+      - RUDDER_URL="http://dp-rudder:80"
+      - PROJECT_MANAGER_URL="http://dp-project-manager:80"
+      - APPROVED_EMAILS="nilushan@wso2.com,isururuh@wso2.com,malithj@wso2.com,choreoanomalydetectortest@gmail.com"
+  - name: cm-app-service-cp
+    behavior: create
+    literals:
+      - DB_USERNAME=choreo_app_db_user
+      - DB_PORT=1433
+      - DB_DRIVER=sqlserver
+      - ORG_REMOVER_REQUEST_TOPIC=org-remover-request
+      - ORG_REMOVER_RESULT_TOPIC=org-remover-result
+      - MARKETING_CONSENT_APP_CLIENT_KEY=Nu6mQCnJfoEARU6dQm3PMZnoai0a
+      - APIM_TOKEN_EP=https://api.asgardeo.io/t/wso2/oauth2/token
+      - PARDOT_EP=2021-11-01/9yzthx
+      - PARDOT_SVC_URL=https://apis.wso2.com/gnvy/lead-form-submission/endpoint-9090-803/v1.0/lead-form
+      - EMAIL_CONSENT_SVC_URL=https://apis.wso2.com/gnvy/gdpr-mailing-consent-check/endpoint-9090-803/v1.0
+  - name: cm-dp-cicd
+    behavior: create
+    literals:
+      - SERVER_PORT=8080
+      - DB_NAME=choreo_cicd_db
+      - DB_PORT=1433
+      - DB_USERNAME=choreo_cicd_admin_db_user
+      - DB_TYPE=mssql
+      - CLOUD_CONNECTOR_URL=http://dp-cloud-manager
+      - SENTRY=https://b3d0a52a966b46edb34287daff8d411c@o350818.ingest.sentry.io/5599109
+      - GITOPS_ORG_ID=0
+      - GITOPS_ORG_PROJECT_ID=global
+      - APP_ORG_ID=0
+      - APP_ORG_PROJECT_ID=global
+      - REGISTRY_ORG_ID=0
+      - REGISTRY_PROJECT_ID=global
+      - CLOUD_MANAGER_API_URL=http://dp-cloud-manager
+      - RUDDER_API_URL=http://dp-rudder
+      - RESILIENT_INVOKER_URL=http://cp-rrs:9095
+      - CICD_SERVICE_URL=http://dp-cicd
+      - STATUS_INFO_SERVICE_URL=http://cp-sis:9091
+      - AZURE_LOGS_TABLE=GithubWorkflowLogs
+      - PROJECT_MANAGER_API_URL=http://dp-project-manager
+      - BUILDPACKS_BUILDER_IMAGE="choreocontrolplane.azurecr.io/choreoipaas/choreo-buildpacks/builder:alpine"
+      - BUILDPACKS_DOCKER_ACR="choreocontrolplane.azurecr.io"
+  - name: cm-runner-cleaner
+    behavior: create
+    literals:
+      - CLOUD_MANAGER_API_URL=http://dp-cloud-manager
+  - name: cm-dp-cloud-manager
+    behavior: create
+    literals:
+      - SECRET_MANAGER_URL=http://dp-secret-manager/api/v1
+      - RUDDER_URL=http://dp-rudder/api/v1/
+      - PROJECT_MANAGER_URL=http://dp-project-manager:80
+      - CICD_URL=http://dp-cicd:80
+      - SERVER_PORT=3200
+      - DB_USERNAME=choreo_cloud_manager_admin_db_user
+      - DB_NAME=choreo_cloud_manager_db
+      - DB_PORT=1443
+      - DB_TYPE=mssql
+      - ACR_URL_TEMPLATE="https://%s/acr/v1/%s"
+  - name: cm-organization-remover-cp
+    behavior: create
+    literals:
+      - ASB_REQUEST_TOPIC=org-remover-request
+      - ASB_RESULT_TOPIC=org-remover-result
+      - ASB_RESULT_SUB=org-remover
+      - ORG_REMOVER_DB_USERNAME=choreo_org_remover_db_user
+      - ORG_REMOVER_DB_PORT=1433
+      - ORG_REMOVER_DB_DRIVER=sqlserver
+      - BASIC_AUTH_USERNAME=admin
+      - SERVER_PORT=8080
+  - name: cm-alert-notification-service
+    behavior: create
+    literals:
+      - RUDDER_URL="http://dp-rudder"
+      - APPSERVICE_GRPC_URL="http://app-service:8080"
+      - SYSTEM_USER_ID="choreo:system"
+      - PROJECT_MANAGER_URL="http://dp-project-manager"
+      - RETRY_INTERVAL=3
+      - RETRY_ATTEMPTS=3
+      - BACKOFF_FACTOR=2.0
+      - MAX_WAIT_INTERVAL=20
+      - CONNECTION_TIMEOUT=2
+      - ALERT_DB_PORT=1433
+      - ALERT_DB_NAME=choreo-alerts-db
+  - name: cm-alert-configuration-service
+    behavior: create
+    literals:
+      - ALERT_DB_PORT=1433
+      - ALERT_DB_NAME=choreo-alerts-db
+  - name: cm-dp-delete-manager
+    behavior: create
+    literals:
+      - PORT=8000
+      - MSSQL_PORT=1433
+      - MSSQL_USER=choreo_delete_manager_admin_db_user
+      - MSSQL_DBNAME=choreo_delete_manager_db
+      - RUDDER_URL=http://dp-rudder
+      - CICD_URL=http://dp-cicd
+      - PROJECT_MANAGER_URL=http://dp-project-manager
+      - RESOURCE_REGISTRY_URL=http://resource-registry:9090
+      - CLOUD_MANAGER_URL=http://dp-cloud-manager
+      - PLATFORM_SERVICES_MANAGER_URL=http://platform-services-manager
+      - PROXY_DEPLOYER_URL=http://choreo-apim-proxy-deployer:9095
+      - ASB_DELETE_QUEUE_NAME=delete-manager
+      - ASB_COMPONENT_DELETE_QUEUE_NAME=delete-manager
+      - ASB_ENVIRONMENT_DELETE_QUEUE_NAME=delete-environments
+      - ASB_DEPLOYMENT_TRACK_DELETE_QUEUE_NAME=delete-deployment-tracks
+      - API_SERVER_URL=http://api-server
+      - GCHAT_URL=https://chat.googleapis.com
+      - APP_SERVICE_URL=app-service:8080
+      - CRYPTO_KEY_SERVICE_URL=http://crypto-key-service:9091
+      - CONFIG_SERVICE_URL=http://configuration-service:8080
+      - CONFIG_MAPPING_SERVICE_URL=http://configuration-service:8084
+      - URL_MANAGER_URL=http://choreo-url-management:9090
+      - MIZZEN_URL=http://dp-mizzen
+      - SPEC_POPULATOR_URL=http://spec-populator.choreo-ai:8000
+      - APP_DEV_AUTHZ_URL=http://app-dev-authorization-service:9090
+      - APP_DEV_USER_MGT_URL=http://app-dev-user-mgt-service:8080
+      - MOESIF_SERVICE_URL=http://moesif-service:8080
+      - APPDEV_STS_MGT_URL=http://sts-mgt-service:3000
+      - API_KEY_SERVICE_URL=http://api-key-service:8080
+  - name: cm-dp-project-manager
+    behavior: create
+    literals:
+      - RUDDER_URL=http://dp-rudder:80
+      - CICD_URL=http://dp-cicd:80
+      - SUBSCRIPTION_SERVICE_URL=subscriptions:9090
+      - DELETION_PERIOD_IN_MONTHS=3
+      - AUTHZ_SERVICE_AUTHORIZATION_HEADER_NAME=x-jwt-assertion
+      - NODE_OPTIONS="--max-http-header-size=65000"
+  - name: cm-platform-services-manager
+    behavior: create
+    literals:
+      - DB_NAME=choreo_platform_service_manager_db
+      - DB_USER=choreo_platform_service_manager_db_user
+      - DB_PORT=1433
+      - SUBSCRIPTION_SVC_ADDRESS=subscriptions:9090
+      - APP_SERVICE_ADDRESS=app-service:8080
+      - RESOURCE_REGISTRY_SVC_URL=http://resource-registry:9090
+      - RESILIENT_INVOCATION_SVC_URL=http://cp-rrs:9095
+      - PLATFORM_SERVICES_MANAGER_SVC_URL=http://platform-services-manager:80
+      - CONFIGURATION_SVC_URL=http://configuration-service:8080
+      - CLOUD_MANAGER_URL=http://dp-cloud-manager
+      - AIVEN_PROJECT_NAME_PREFIX=choreo-org
+  - name: cm-dp-rudder
+    behavior: create
+    literals:
+      - MSSQL_USER=choreo_rudder_admin_db_user
+      - MSSQL_DBNAME=choreo_rudder_db
+      - MSSQL_PORT=1433
+      - SECRET_MANAGER_URL=http://dp-secret-manager
+      - MIZZEN_URL="http://dp-mizzen"
+      - CLOUD_CONNECTOR_URL=http://dp-cloud-manager
+      - AUTH_URL=http://dp-project-manager
+      - CICD_URL=http://dp-cicd
+      - APIM_PROXY_DEPLOYER_URL=http://choreo-apim-proxy-deployer:9095
+      - QUOTA_LIMITER_SVC_ADDRESS=quota-limiter:9090
+      - APP_SERVICE_ADDRESS=app-service:8080
+      - NEGOTIATOR_ADDRESS=negotiator:9092
+      - SUBSCRIPTION_SVC_ADDRESS=subscriptions:9090
+      - OBS_ADDRESS=obsapi:9096
+      - DATAPLANE_BLOCKED_CIDR_LIST=169.254.169.254/32
+      - DATAPLANE_INGRESS_ALLOWED_NS_LABEL=userapp-ingress-allowed
+      - CUSTOM_URL_CLUSTER_ISSUER=letsencrypt-prod
+      - CUSTOM_URL_SERVICE_NAME=choreo-nginx-service
+      - CUSTOM_URL_SERVICE_PORT=9443
+      - CUSTOM_URL_SERVICE_PATH=/
+      - DEV_PORTAL_CLUSTER_ISSUER=letsencrypt-prod
+      - DEV_PORTAL_SERVICE_NAME=devportal-external
+      - DEV_PORTAL_SERVICE_PORT=80
+      - DEV_PORTAL_SERVICE_PATH=/
+      - RUDDER_URL="http://dp-rudder:80" # This is for the rudder-migration-service, remove this when removing that
+      - CONFIGURATION_MGT_URL="http://configuration-service:8080"
+      - ENDPOINT_RESOLVER_URL="http://endpoint-resolver:9090"
+      - SERVICE_REGISTRY_URL="http://resource-registry:9090"
+      - CONFIG_MAPPING_SERVICE_URL="http://configuration-service:8084"
+      - CONNECTION_SERVICE_URL="http://connection-service:9000"
+      - CUSTOM_URL_MANAGER_URL="http://choreo-url-management:9090/url-mgt"
+      - JOB_TTL_SECONDS_AFTER_FINISHED=360
+      - CRONJOB_SUCCESSFUL_JOBS_HISTORY_LIMIT=2
+      - SCHEMA_SERVICE_URL="http://configuration-schema-service:80"
+  - name: cm-console-next
+    behavior: create
+    literals:
+      - REACT_APP_FIDP_GOOGLE=google
+      - REACT_APP_FIDP_GITHUB=github
+      - REACT_APP_FIDP_MICROSOFT=microsoft
+      - REACT_APP_FIDP_ENTERPRISE=EnterpriseIDP
+      - REACT_APP_FIDP_E2E=choreoe2etest
+      - REACT_APP_FIDP_ANONYMOUS=choreoanonymous
+      - REACT_APP_FEATURE_TOS_SERVICE_NAME=choreo
+      - REACT_APP_GA_TRACKING_CODE=UA-206124793-2
+      - REACT_APP_APIM_PUBLISHER_ENDPOINT_PREFIX=/api/am/publisher/v2/
+      - REACT_APP_APIM_ADMIN_ENDPOINT_PREFIX=/api/am/admin/v2/
+      - REACT_APP_ASGARDEO_SDK_STORAGE_TYPE=sessionStorage
+      - REACT_APP_AUTHENTICATOR_GOOGLE=GoogleOIDCAuthenticator
+      - REACT_APP_AUTHENTICATOR_GITHUB=GithubAuthenticator
+      - REACT_APP_AUTHENTICATOR_ANONYMOUS=OpenIDConnectAuthenticator
+      - REACT_APP_AUTHENTICATOR_ENTERPRISE=EnterpriseIDPAuthenticator
+      - REACT_CHOREO_HOME_PAGE='https://wso2.com/choreo/'
+      - REACT_APP_CHOREO_STEP_BASED_ENTERPRISE_TIER_UUID='01ec1f84-ce3d-122e-ac9b-f10c95fd72da'
+      - REACT_APP_CHOREO_ENTERPRISE_TIER_UUID='4abe3757-86f6-47de-994f-f02fb0522e99'
+      - REACT_APP_CHOREO_DEVELOPER_TIER_UUID='41e29802-f4bb-456c-a92e-b14cca67c4bb'
+  - name: cm-userapps-image-deleter
+    behavior: create
+    literals:
+      - AZURE_TENANT_ID="da76d684-740f-4d94-8717-9d5fb21dd1f9"
+      - RUDDER_HOST="http://dp-rudder:80"
+      - EMAIL_USER_SECRET_FILE_PATH="/mnt/csi/secret-userapps-image-deleter/EMAIL_USERNAME"
+      - EMAIL_PASSWORD_SECRET_FILE_PATH="/mnt/csi/secret-userapps-image-deleter/EMAIL_PASSWORD"
+  - name: cm-cdn-tlscert-synchronizer
+    behavior: create
+    literals:
+      - TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - KEYVAULT_NAME=shared-fe-apps-cdn-60
+  - name: cm-file-devops-portal-api
+    behavior: create
+    files:
+      - devops-portal-api/Config.toml
+  - name: cm-file-apim-service
+    behavior: create
+    files:
+      - apim-service/Config.toml
+  - name: cm-file-admin-api
+    behavior: create
+    files:
+      - admin-api/Config.toml
+  - name: cm-file-apim-proxy-deployer
+    behavior: create
+    files:
+      - apim-proxy-deployer/Config.toml
+  - name: cm-file-connectords
+    behavior: create
+    files:
+      - connectords/Config.toml
+  - name: cm-file-cp-graphql
+    behavior: create
+    files:
+      - cp-graphql/Config.toml
+  - name: cm-file-configuration-service
+    behavior: create
+    files:
+      - configuration-service/Config.toml
+  - name: cm-file-declarative-api
+    behavior: create
+    files:
+      - declarative-api/Config.toml
+  - name: cm-file-moesif-service
+    behavior: create
+    files:
+      - moesif-service/Config.toml
+  - name: cm-file-telemetry
+    behavior: create
+    files:
+      - obs/telemetry/Config.toml
+  - name: cm-file-obsmanager
+    behavior: create
+    files:
+      - obs/obsmanager/Config.toml
+  - name: cm-file-organization-remover
+    behavior: create
+    files:
+      - org-remover/organization-remover.yaml
+  - name: cm-file-organization-management
+    behavior: create
+    files:
+      - organization-management/Config.toml
+  - name: cm-file-quota-limiter
+    behavior: create
+    files:
+      - quota-limiter/Config.toml
+  - name: cm-file-subscriptions
+    behavior: create
+    files:
+      - subscriptions/Config.toml
+  - name: cm-file-api-server
+    behavior: create
+    files:
+      - runtime/api-server.yaml
+  - name: cm-file-app-service
+    behavior: create
+    files:
+      - runtime/app-service.yaml
+  - name: cm-file-step-enforcer
+    behavior: create
+    files:
+      - step-enforcer/Config.toml
+  - name: cm-file-step-usage-publisher
+    behavior: create
+    files:
+      - step-usage-publisher/Config.toml
+  - name: cm-file-step-aggregator
+    behavior: create
+    files:
+      - step-aggregator/Config.toml
+  - name: cm-cio-internal-metric-collector
+    behavior: create
+    literals:
+      - RUDDER_URL="http://dp-rudder:80"
+      - CIO_PROXY_URL="http://cio-event-collector-service:8080"
+  - name: cm-cio-query-api
+    behavior: create
+    literals:
+      - CIO_ADX_DB="cio-metrics"
+      - USER_SERVICE_ENDPOINT="http://app-service:8080"
+      - PROJECT_MANAGER_ENDPOINT="http://dp-project-manager:80"
+      - API_SERVER_ENDPOINT="http://api-server"
+      - RUDDER_ENDPOINT="http://dp-rudder:80"
+  - name: cm-file-cio-event-collector
+    behavior: create
+    files:
+      - cio-dashboard/event-collector-service/Config.toml
+  - name: cm-file-cio-internal-metric-collector
+    behavior: create
+    files:
+      - cio-dashboard/internal-metric-collector/Config.toml
+  - name: cm-file-cio-query-api
+    behavior: create
+    files:
+      - cio-dashboard/query-api/Config.toml
+  - name: cm-file-cio-incident-configurator
+    behavior: create
+    files:
+      - cio-dashboard/incident-configurator/Config.toml
+  - name: cm-cio-incident-configurator
+    behavior: create
+    literals:
+      - RUDDER_URL="http://dp-rudder:80"
+      - CICD_URL="http://dp-cicd"
+      - USER_SERVICE_URL=http://app-service:8080
+      - MIZZEN_URL=http://dp-mizzen
+      - CLOUD_MANAGER_SERVICE_URL=http://dp-cloud-manager:80
+      - LOGAPI_URL=http://loggingapi:9097
+      - SECRET_MANAGER_URL=http://dp-secret-manager:80
+  - name: cm-file-crypto-key-service
+    behavior: create
+    files:
+      - crypto-key-service/Config.toml
+  - name: cm-file-choreo-metered-usage-handler
+    behavior: create
+    files:
+      - choreo-metered-usage-handler/Config.toml
+  - name: cm-choreo-metered-usage-handler-daily-publisher
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="daily"
+  - name: cm-choreo-metered-usage-handler-monthly-publisher
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="monthly"
+  - name: cm-choreo-metered-usage-handler-collector
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="collector"
+  - name: cm-choreo-metered-usage-handler-daily-publisher-dynamic
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="publisher"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="dynamic-monthly"
+  - name: cm-choreo-metered-usage-handler-platform-svc-cost-collector
+    behavior: create
+    literals:
+      - CHOREO_USAGE_HANDLER_CRONJOB_MODE="platform-cost-collector"
+      - CHOREO_USAGE_PUBLISHING_FREQUENCY="daily"
+  - name: cm-file-choreo-metered-usage-handler-service
+    behavior: create
+    files:
+      - choreo-metered-usage-handler-service/Config.toml
+  - name: cm-dp-secret-manager
+    behavior: create
+    literals:
+      - MIZZEN_URL="http://dp-mizzen"
+      - KV_RESOLVER_INTERNAL_SVC_URL="http://dp-kv-resolver"
+      - CLOUD_MANAGER_URL="http://dp-cloud-manager"
+  - name: cm-file-marketplace
+    behavior: create
+    files:
+      - marketplace/Config.toml
+  - name: cm-file-cp-resilient-invoker
+    behavior: create
+    files:
+      - cp-resilient-invoker/Config.toml
+  - name: cm-file-cp-consolidated-service
+    behavior: create
+    files:
+      - cp-consolidated-app/Config.toml
+  - name: cm-file-cp-rrs
+    behavior: create
+    files:
+      - cp-rrs/Config.toml
+  - name: cm-file-workflow-mgt
+    behavior: create
+    files:
+      - workflow-mgt/Config.toml
+  - name: cm-file-audit-logging
+    behavior: create
+    files:
+      - audit-logging/Config.toml
+  - name: cm-dp-helmhub
+    behavior: create
+    literals:
+      - PORT=8080
+      - ARTIFACT_HUB_URL='https://artifacthub.io/api/v1'
+      - RUDDER_URL="http://dp-rudder"
+      - MIZZEN_URL="http://dp-mizzen"
+      - MSSQL_PORT=1433
+      - MSSQL_USER=choreo_helmhub_db_user
+      - MSSQL_DBNAME=choreo_helmhub_db
+  - name: cm-pdp-manager
+    behavior: create
+    literals:
+      - PORT=8080
+      - RUDDER_URL=http://dp-rudder
+      - CLOUD_MANAGER_URL=http://dp-cloud-manager
+      - MIZZEN_URL=http://dp-mizzen
+      - CP_GATEWAY_ADAPTER_URL=http://cp-gw-adapter:8080
+      - DOCKER_HUB_URL=https://hub.docker.com
+      - KV_RESOLVER_INTERNAL_SVC_URL="http://dp-kv-resolver"
+      - RIS_SCHEDULER_URL=http://cp-rrs:9095
+      - SELF_URL=http://pdp-manager:80
+      - APP_SERVICE_GRPC_ADDRESS=app-service:8080
+      - DB_USER=choreo_pdp_manager_db_user
+      - DB_NAME=choreo_pdp_manager_db
+      - WSO2_AZURE_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+  - name: cm-file-resource-registry
+    behavior: create
+    files:
+      - resource-registry/Config.toml
+  - name: cm-appdev-user-mgt
+    behavior: create
+    literals:
+      - UM_DATABASE_USERNAME="choreo_app_dev_user_mgt_db_user"
+      - UM_DATABASE_PASSWORD_FILE=UM_DB_PASSWORD
+      - UM_AUTHORIZATION_HEADER_NAME="x-jwt-assertion"
+  - name: cm-files-appdev-user-mgt
+    behavior: create
+    files:
+      - app-dev-user-mgt-service/application.properties
+      - app-dev-user-mgt-service/log4j2.yaml
+  - name: cm-file-appdev-authorization
+    behavior: create
+    files:
+      - app-dev-authorization-service/Config.toml
+  - name: cm-file-cp-endpoint-resolver
+    behavior: create
+    files:
+      - cp-endpoint-resolver/Config.toml
+  - name: cm-file-connection-service
+    behavior: create
+    files:
+      - connection-service/Config.toml
+  - name: cm-app-dev-authorization
+    behavior: create
+    literals:
+      - DB_USERNAME="choreo_app_dev_authz_svc_db_user"
+  - name: cm-file-cp-gw-adapter
+    behavior: create
+    files:
+      - cp-gw-adapter/config.toml
+  - name: cm-file-choreo-url-management
+    behavior: create
+    files:
+      - choreo-url-management/Config.toml
+  - name: cm-rudder-cleanup-tasks
+    behavior: create
+    literals:
+      - RUDDER_BASE_URL="http://dp-rudder:80"
+      - EXECUTION_CLEANUP_RESOURCE_PATH="internal/admin/cleanup-executions"
+  - name: cm-log-controller
+    behavior: create
+    literals:
+      - AZURE_LA_TENANT_ID=da76d684-740f-4d94-8717-9d5fb21dd1f9
+      - SUBSCRIPTION_GRPC_ADDRESS=subscriptions:9090
+      - EMAIL_SERVICE_URL="https://email-service:443"
+      - MIZZEN_URL="http://dp-mizzen"
+      - REDIS_PORT=6380
+      - REDIS_SSL=true
+      - REDIS_DATABASE=3
+  - name: cm-file-configuration-schema-service
+    behavior: create
+    files:
+      - configuration-schema-service/configuration-schema-service.yaml

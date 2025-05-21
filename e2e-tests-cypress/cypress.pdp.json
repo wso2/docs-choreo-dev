@@ -1,0 +1,25 @@
+{
+  "defaultCommandTimeout": 90000,
+  "pageLoadTimeout": 120000,
+  "responseTimeout": 120000,
+  "integrationFolder": "cypress/e2e-smoke/",
+  "testFiles": [
+    "./**/1.1-create-api-from-oas-flow.ts",
+    "./**/1.2-create-api-from-rest-endpoint.ts",
+    "./**/1.3-create-rest-api-from-scratch.ts",
+    "./**/1.4-create-webhook-slackTrigger.ts",
+    "./**/1.5-create-manualTrigger.ts",
+    "./**/2.1-marketplace-search.spec.ts",
+    "./**/1.1-devportal-test.ts"
+  ],
+  "viewportHeight": 1080,
+  "viewportWidth": 1920,
+  "chromeWebSecurity": false,
+  "video": true,
+  "screenshotsFolder": "cypress/screenshots/e2e-smoke",
+  "videosFolder": "cypress/videos/e2e-smoke",
+  "videoUploadOnPasses": false,
+  "videoCompression": false,
+  "watchForFileChanges": false,
+  "scrollBehavior":false
+}

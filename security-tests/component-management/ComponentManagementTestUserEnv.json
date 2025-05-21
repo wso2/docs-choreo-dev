@@ -1,0 +1,261 @@
+{
+	"id": "ec11d535-7550-4b2e-bd61-6e339f73cb62",
+	"name": "ComponentExperienceEnvironmentVariablesOfTestUserA",
+	"values": [
+		{
+			"key": "host",
+			"value": "https://apis.preview-dv.choreo.dev",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "adminToken",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "projectId",
+			"value": "1adfea12-e574-4631-9b39-5663e2102856",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "componentHandler",
+			"value": "qqkflj",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "orgHandler",
+			"value": "choreointegrationtestsuserdevdlwqo",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "orgId",
+			"value": "3752",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "devEnvId",
+			"value": "031975c8-5bff-4013-b03a-1fbbd70e9a54\n\n",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "orgUuid",
+			"value": "31b9e3fe-4a92-4921-8be1-70f065b5b406",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "componentId",
+			"value": "af74c89f-e422-40e3-9e24-0e3721d7ef2f",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "versionId",
+			"value": "A517A7C3-5E48-4F5B-B67A-C2B96AB88DEA",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "moduleName",
+			"value": "Github Trigger",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "commitHash",
+			"value": "dbce0a35ba2de8be07c2e86bbdbf110de9c8b8b8\n\n",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "sourceReleaseId",
+			"value": "f9b2aff0-a12e-45c9-81ff-e87e03eba7ce\n\n",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "targetEnvironmentId",
+			"value": "bc2f31b1-a0be-4f23-b425-17f6fca7d536",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "cronFrequency",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "releaseIds",
+			"value": "[]",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "releaseId",
+			"value": "60aa2c3f-7618-4004-9d81-78d3f4a0b14d ",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "projectName",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "componentName",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "apiID",
+			"value": "ef389e67-8fd4-4ff1-aed4-b3c45b2b6232",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "ballerinaVersion",
+			"value": "swan-lake-alpha5",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "srcGitRepoUrl",
+			"value": "https://github.com/choreo-test-apps\n/byor-service-app1\n/tree/main",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "repositorySubPath",
+			"value": "Ballerina/Test1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "secretRef",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "repoName",
+			"value": "byor-service-app1\n\n",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "dockerFilePath",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "dockerContextPath",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "bitbucketUrl",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "componentType",
+			"value": "ballerinaService",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gitOrgHandle",
+			"value": "choreo-test-apps\n\n",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "prodEnvId",
+			"value": " bc2f31b1-a0be-4f23-b425-17f6fca7d536",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "appPwd",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "bitbucketOrgName",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gitLabServerUrl",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gitLabServerAccessToken",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "credentialID",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "runID",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "endpointId",
+			"value": "8e50ca0c-6ee5-43b1-9a90-0641caaf4965",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "apiDefinitionPath",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "dirPath",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "buildId",
+			"value": "86d942b31-dbd8-4a85-bb34-9ecafe3eb9bf",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "userId",
+			"value": "acc9b7f4-884d-4efc-8754-b00fdde1f8ba",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-08-21T09:31:21.994Z",
+	"_postman_exported_using": "Postman/10.17.2"
+}

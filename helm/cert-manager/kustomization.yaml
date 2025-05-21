@@ -1,0 +1,104 @@
+helmCharts:
+  - name: cert-manager
+    includeCRDs: true
+    valuesInline:
+      global:
+        leaderElection:
+          namespace: cert-manager
+      deploymentAnnotations:
+        checkov.io/skip2: CKV_K8S_9=Readiness probe is not defined
+        checkov.io/skip3: CKV_K8S_38=SA is needed
+        checkov.io/skip4: CKV_K8S_AZURE_WSO2_2=LinkerD not needed
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 100m
+        limits:
+          memory: 200Mi
+          cpu: 200m
+      clusterResourceNamespace: cert-manager
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        readOnlyRootFilesystem: true
+        runAsUser: 10500
+      fullnameOverride: cert-manager
+      podDisruptionBudget:
+        enabled: true
+      extraArgs:
+        - --dns01-recursive-nameservers-only
+        - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53
+      startupapicheck:
+        enabled: false
+      cainjector:
+        deploymentAnnotations:
+          checkov.io/skip2: CKV_K8S_8=Liveness probe is not defined
+          checkov.io/skip3: CKV_K8S_9=Readiness probe is not defined
+          checkov.io/skip4: CKV_K8S_38=SA is needed
+          checkov.io/skip5: CKV_K8S_AZURE_WSO2_2=LinkerD not needed
+        containerSecurityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+          runAsUser: 10500
+        resources:
+          requests:
+            memory: 500Mi
+            cpu: 100m
+          limits:
+            memory: 600Mi
+            cpu: 200m
+        image:
+          repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-cainjector
+          tag: v1.14.3
+        replicaCount: 2
+        podDisruptionBudget:
+          enabled: true
+      image:
+        repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-controller
+        tag: v1.14.3
+      installCRDs: true
+      replicaCount: 2
+      webhook:
+        deploymentAnnotations:
+          checkov.io/skip2: CKV_K8S_38=SA is needed
+          checkov.io/skip3: CKV_K8S_AZURE_WSO2_2=LinkerD not needed
+        containerSecurityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+          runAsUser: 10500
+        resources:
+          requests:
+            memory: 100Mi
+            cpu: 100m
+          limits:
+            memory: 100Mi
+            cpu: 100m
+        image:
+          repository: choreocontrolplane.azurecr.io/jetstack/cert-manager-webhook
+          tag: v1.14.3
+        replicaCount: 2
+        podDisruptionBudget:
+          enabled: true
+      acmesolver:
+        image:
+          registry: choreocontrolplane.azurecr.io
+          repository: jetstack/cert-manager-acmesolver
+    releaseName: cert-manager
+    version: v1.14.3
+    namespace: cert-manager
+    repo: oci://choreocontrolplane.azurecr.io/helm
+
+resources:
+  - namespace.yaml
+
+commonAnnotations:
+  checkov.io/skip1: CKV_K8S_155=Managed by cert-manager
+  kapp.k14s.io/disable-default-label-scoping-rules: ""

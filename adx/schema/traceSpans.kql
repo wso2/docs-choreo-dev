@@ -1,0 +1,41 @@
+// -------------------------------------------------------------------------------------
+//
+// Copyright (c) 2020, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+//
+// This software is the property of WSO2 Inc. and its suppliers, if any.
+// Dissemination of any information or reproduction of any material contained
+// herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+// You may not alter or remove any copyright or other notice from copies of this content.
+//
+// --------------------------------------------------------------------------------------
+
+.create table traceSpans (
+spanId: string,
+parentSpanId: string,
+traceId: string,
+obsId: string,
+nodeId: string,
+version: string,
+timestamp: datetime,
+duration: long,
+tags: dynamic,
+checkpoints: dynamic,
+operationName: string,
+serviceName: string
+);
+
+.create table traceSpans ingestion json mapping "traceSpansMapping"
+    '['
+    '    { "column" : "spanId", "Properties":{"Path":"$.spanId"}},'
+    '    { "column" : "parentSpanId", "Properties":{"Path":"$.parentSpanId"}},'
+    '    { "column" : "traceId", "Properties":{"Path":"$.traceId"}},'
+    '    { "column" : "obsId", "Properties":{"Path":"$.obsId"}},'
+    '    { "column" : "nodeId", "Properties":{"Path":"$.nodeId"}},'
+    '    { "column" : "version", "Properties":{"Path":"$.version"}},'
+    '    { "column" : "timestamp", "Properties":{"Path":"$.timestamp"}},'
+    '    { "column" : "duration", "Properties":{"Path":"$.duration"}},'
+    '    { "column" : "tags", "Properties":{"Path":"$.tags"}},'
+    '    { "column" : "checkpoints", "Properties":{"Path":"$.checkpoints"}},'
+    '    { "column" : "operationName", "Properties":{"Path":"$.operationName"}},'
+    '    { "column" : "serviceName", "Properties":{"Path":"$.serviceName"}}'
+    ']';

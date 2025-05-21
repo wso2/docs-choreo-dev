@@ -1,0 +1,83 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip2: CKV_K8S_38=Required by LinkerD
+    checkov.io/skip3: CKV_K8S_22=Not possible to do ATM, as there are some files such as logs and configs written
+  labels:
+    {{- include "choreo-console.labels" . | nindent 4 }}
+  name: choreo-console
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "choreo-console.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "choreo-console.labels" . | nindent 8 }}
+    spec:
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "choreo-console.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          name: console-next
+          ports:
+            - containerPort: 8080
+              name: con-v2-port
+              protocol: TCP
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 10000
+            runAsGroup: 10000
+            capabilities:
+              drop:
+                - ALL
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /index.html
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /index.html
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            limits:
+              cpu: 200m
+              memory: 150Mi
+            requests:
+              cpu: 150m
+              memory: 100Mi
+          envFrom:
+            - configMapRef:
+                name: choreo-console
+      serviceAccountName: choreo-console

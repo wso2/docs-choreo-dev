@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: console-next
+  name: console-next
+spec:
+  ports:
+    - name: con-v2-port
+      port: 8080
+      targetPort: con-v2-port
+  selector:
+    choreo.component: console-next

@@ -1,0 +1,214 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_38=Service account token is required when using Linkerd
+  labels:
+    choreo.component: apim-am
+  name: choreo-apim-am-deployment
+spec:
+  progressDeadlineSeconds: 900
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      deployment: choreo-am
+  template:
+    metadata:
+      labels:
+        deployment: choreo-am
+        choreo.component: apim-am
+        antiaffinity: choreo-apim-am-deployment
+      annotations:
+        linkerd.io/inject: enabled
+        config.linkerd.io/skip-outbound-ports: "3306"
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  antiaffinity: choreo-apim-am-deployment
+              topologyKey: kubernetes.io/hostname
+      automountServiceAccountToken: true
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: wso2am
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-product-apim:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /internal/data/v1/healthz
+              port: 9443
+              scheme: HTTPS
+            initialDelaySeconds: 100
+            periodSeconds: 20
+            timeoutSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /internal/data/v1/healthz
+              port: 9443
+              scheme: HTTPS
+            initialDelaySeconds: 50
+            periodSeconds: 10
+            timeoutSeconds: 15
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - ${WSO2_SERVER_HOME}/bin/api-manager.sh stop
+          resources:
+            requests:
+              memory: 6Gi
+              cpu: "2"
+            limits:
+              memory: 6Gi
+              cpu: "2.5"
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - all
+              add:
+                - NET_RAW
+          ports:
+            - containerPort: 9763
+              protocol: "TCP"
+            - containerPort: 9443
+              protocol: "TCP"
+          envFrom:
+            - configMapRef:
+                name: cm-feature-flags
+            - secretRef:
+                name: secret-apim-keystore-passwords
+            - secretRef:
+                name: secret-apim-db
+            - secretRef:
+                name: secret-apim
+            - secretRef:
+                name: secret-asb
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: JVM_MEM_OPTS
+              value: "-XX:InitialRAMPercentage=59.0 -XX:MaxRAMPercentage=59.0"
+            - name: PROFILE_NAME
+              value: control-plane
+            - name: DEPLOYMENT_TYPE_PROD_PREFIXES
+              value: "prod, systemapis"
+          volumeMounts:
+            - name: apim-vol
+              mountPath: /home/wso2carbon/wso2am-4.0.0-SNAPSHOT
+            - name: wso2am-conf
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
+            - name: apim-docker-entrypoint
+              mountPath: /home/wso2carbon/docker-entrypoint.sh
+              subPath: docker-entrypoint.sh
+            - name: mysql-connector-jar
+              mountPath: /home/wso2carbon/wso2-artifact-volume/repository/components/lib
+            - name: secret-apim-keystores
+              mountPath: /mnt/csi/secret-apim-keystores
+              readOnly: true
+            - name: secret-apim-keystores
+              mountPath: /home/wso2carbon/wso2-keystores/primary-keystore.pfx
+              readOnly: true
+              subPath: APIM_PRIMARY_KEYSTORE
+            - name: secret-apim-keystores
+              mountPath: /home/wso2carbon/wso2-keystores/tls-keystore.pfx
+              readOnly: true
+              subPath: APIM_TLS_KEYSTORE
+            - name: secret-apim-keystores
+              mountPath: /home/wso2carbon/wso2-keystores/internal-keystore.pfx
+              readOnly: true
+              subPath: APIM_INTERNAL_KEYSTORE
+            - name: apim-truststore
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/resources/security/client-truststore.jks
+              subPath: client-truststore.jks
+            - name: secret-apim
+              mountPath: /mnt/csi/secret-apim
+              readOnly: true
+            - name: secret-apim-db
+              mountPath: /mnt/csi/secret-apim-db
+              readOnly: true
+            - name: secret-asb
+              mountPath: /mnt/csi/secret-asb
+              readOnly: true
+      serviceAccountName: sa-choreo-apim
+      volumes:
+        - name: apim-vol
+          emptyDir: {}
+        - name: wso2am-conf
+          configMap:
+            name: choreo-apim-am-conf
+        - name: apim-docker-entrypoint
+          configMap:
+            name: choreo-apim-docker-entrypoint
+            defaultMode: 0407
+        - name: mysql-connector-jar
+          emptyDir: {}
+        - name: secret-apim-keystores
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-keystores
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: apim-truststore
+          configMap:
+            name: choreo-apim-truststore
+        - name: secret-apim
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-apim-db
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim-db
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-asb
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-asb
+            nodePublishSecretRef:
+              name: csi-secret-store-azure

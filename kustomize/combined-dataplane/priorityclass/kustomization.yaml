@@ -1,0 +1,5 @@
+resources:
+  - ../../shared-components/priorityclass
+  - fluent-bit.yaml
+  - choreo-system.yaml
+  - paid-userapps.yaml

@@ -1,0 +1,17 @@
+{
+  "query": "query {
+    gitTokenPermissions(input: {
+      bitbucketToken: {
+        username: \"{{bitbucketOrgName}}\",
+        appPassword: \"{{appPwd}}\"
+      }
+    }) {
+      hasOrgs
+      hasRepos
+      prWrite
+      accountRead
+      webhookWrite
+      validCredential
+    }
+  }"
+}

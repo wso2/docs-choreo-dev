@@ -1,0 +1,6 @@
+resources:
+  - deny-all.yaml
+  - loggingapi.yaml
+  - obsapi.yaml
+  - obsapi-v2.yaml
+  - sys-obsapi.yaml

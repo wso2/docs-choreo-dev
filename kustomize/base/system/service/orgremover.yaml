@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: organization-remover
+  name: organization-remover
+spec:
+  ports:
+    - name: org-rem-port
+      port: 8080
+      targetPort: org-rem-port
+  selector:
+    choreo.component: organization-remover

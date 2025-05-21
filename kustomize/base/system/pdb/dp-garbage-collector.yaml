@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: dp-garbage-collector
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: dp-garbage-collector

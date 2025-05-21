@@ -1,0 +1,11 @@
+mutation {
+      updateDeploymentTrack(
+        input:{
+          componentId: "{{componentId}}",
+          id: "{{versionId}}",
+          enableAutoDeploy: true
+        }
+      ) {
+        autoDeployEnabled
+      }
+    }

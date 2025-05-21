@@ -1,0 +1,44 @@
+mutation {
+createComponent(
+component: {
+name: "{{name}}",
+description: "",
+orgId: {{orgId}},
+orgHandler: "{{orgHandler}}",
+projectId: "{{projectId}}",
+labels: "",
+componentType: "byocRestApi",
+port: 8080,
+oasFilePath: "",
+accessibility: "external",
+byocConfig: {
+dockerfilePath: "Dockerfile",
+dockerContext:".",
+srcGitRepoUrl:"{{srcGitRepoUrl}}",
+srcGitRepoBranch: "main"
+}
+}
+)
+{
+id,
+createdAt,
+updatedAt,
+name,
+handle,
+organizationId,
+projectId,
+orgHandle,
+type,
+description,
+imageRegistryId,
+imageRegistry {
+id,
+createdAt,
+updatedAt,
+cloudConnectorId,
+imageRepositoryName
+},
+componentType,
+httpBased
+}
+}

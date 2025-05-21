@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: apim-devportal
+  name: apim-devportal-svc
+spec:
+  type: ClusterIP
+  ports:
+    - name: devportal-port
+      port: 8080
+      targetPort: devportal-port
+  selector:
+    choreo.component: apim-devportal

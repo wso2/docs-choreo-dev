@@ -1,0 +1,13 @@
+[choreo.moesif.microService.config]
+dbPort=1433
+serverPortInternal=8080
+serverPortExternal=8081
+internalHealthCheckPort=9091
+externalHealthCheckPort=9092
+authPwdSecretPath="/mnt/csi/secret-moesif-service/MOESIF_AUTH_PWD"
+mssqlPwdSecretPath="/mnt/csi/secret-moesif-service/CHOREO_MOESIF_KEY_MANAGEMENT_DB_MSSQL_PASSWORD"
+pvtKeySecretPath="/mnt/csi/secret-moesif-service/MOESIF_TLS_PVT_KEY"
+publicCertSecretPath="/mnt/csi/secret-moesif-service/MOESIF_TLS_PUBLIC_CERT"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"

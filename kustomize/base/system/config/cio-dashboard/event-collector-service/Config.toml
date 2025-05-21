@@ -1,0 +1,7 @@
+[ballerina.log]
+format = "json"
+level = "{{.LOG_LEVEL}}"
+
+[[ballerina.log.modules]]
+name = "choreo/event_collector_service"
+level = "{{.LOG_LEVEL_EVENT_COLLECTOR_SERVICE}}"

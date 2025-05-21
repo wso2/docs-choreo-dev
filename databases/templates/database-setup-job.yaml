@@ -1,0 +1,96 @@
+---
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 Inc. and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: choreo-datasource-setup-job
+  namespace: {{ .Values.namespace }}
+  annotations:
+    checkov.io/skip1: CKV_K8S_29=Suppressing False positive
+    checkov.io/skip2: CKV_K8S_31=Suppressing False positive
+    seccomp.security.alpha.kubernetes.io/pod: "docker/default"
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: database-client
+          image: {{.Values.database.client.image.repository}}
+          imagePullPolicy: {{ .Values.database.client.image.pullPolicy }}
+          env:
+            - name: AZURE_DB_SERVICE_HOST
+              value: {{ .Values.azure.database.server }}
+            - name: AZURE_DB_SERVICE_PORT
+              value: "3306"
+            - name: SCRIPT_HOME
+              value: "/sql-scripts"
+          resources:
+            requests:
+              memory: {{ .Values.database.client.resources.requests.memory }}
+              cpu: {{ .Values.database.client.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.database.client.resources.limits.memory }}
+              cpu: {{ .Values.database.client.resources.limits.cpu }}
+          command:
+            - sh
+            - /setup.sh
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10005
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: structure-dbscripts-config-volume
+              mountPath: /sql-scripts/structure
+            - name: init-dbscripts-config-volume
+              mountPath: /sql-scripts/init
+            - name: structure-dbscripts-idp-config-volume
+              mountPath: /sql-scripts/structure-idp
+            - name: setup-script-volume
+              mountPath: /setup.sh
+              subPath: setup.sh
+            - name: choreo-secrets-volume
+              mountPath: /mnt/secrets-store
+              readOnly: true
+            - name: azure-database-cert-volume
+              mountPath: /certs
+              readOnly: true
+      volumes:
+        - name: structure-dbscripts-config-volume
+          configMap:
+            name: dbscripts-for-structure-configmap
+        - name: init-dbscripts-config-volume
+          configMap:
+            name: dbscripts-for-init-configmap
+        - name: structure-dbscripts-idp-config-volume
+          configMap:
+            name: dbscripts-for-structure-idp-configmap
+        - name: setup-script-volume
+          configMap:
+            name: setup-script-configmap
+            defaultMode: 0700
+        - name: choreo-secrets-volume
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ .Values.azure.keyVault.secretProviderClass }}
+            nodePublishSecretRef:
+              name: {{ .Values.azure.keyVault.activeDirectory.servicePrincipal.credentialsSecretName }}
+        - name: azure-database-cert-volume
+          secret:
+            secretName: {{ .Values.azure.database.azureDatabaseCACertSecretName }}
+      restartPolicy: Never
+      automountServiceAccountToken: false

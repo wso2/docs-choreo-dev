@@ -1,0 +1,96 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dp-mizzen-agent
+  labels:
+    choreo.component: dp-mizzen-agent
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_8=Does not utilize a livenessProbe by design
+    checkov.io/skip3: CKV_K8S_9=Does not utilize a readinessProbe by design
+    checkov.io/skip4: CKV_K8S_38=Required to access the kube-apiserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: dp-mizzen-agent
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        choreo.component: dp-mizzen-agent
+        antiaffinity: dp-mizzen-agent
+        userapp-ingress-allowed: "true"
+    spec:
+      automountServiceAccountToken: true
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/dp-mizzen-agent:latest
+          imagePullPolicy: Always
+          name: dp-mizzen-agent
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 200m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          envFrom:
+            - configMapRef:
+                name: env-dp-mizzen-agent
+            - secretRef:
+                name: secret-dp-mizzen-agent
+          volumeMounts:
+            - name: secret-dp-mizzen-agent
+              mountPath: /mnt/csi/secret-dp-mizzen-agent
+              readOnly: true
+      volumes:
+        - name: secret-dp-mizzen-agent
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-mizzen-agent
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: dp-mizzen-agent-sa
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - dp-mizzen-agent
+              topologyKey: kubernetes.io/hostname

@@ -1,0 +1,17 @@
+{
+  "data": {
+    "commitHistory": [
+      {
+        "author": {
+          "name": "choreo-userapps-gitops-bot-prod",
+          "date": "2022-01-07T11:04:06Z",
+          "email": "choreo-userapps-gitops-bot-prod@wso2.com",
+          "avatarUrl": "https://avatars.githubusercontent.com/u/test"
+        },
+        "message": "Choreo Files Generated",
+        "sha": "test-sha",
+        "isLatest": true
+      }
+    ]
+  }
+}

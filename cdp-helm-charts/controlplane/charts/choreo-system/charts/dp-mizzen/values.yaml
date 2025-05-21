@@ -1,0 +1,46 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicaCount: 1
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/dp-mizzen
+  tag: latest
+serviceAccount:
+  annotations: {}
+secrets:
+  mssqlPassword:
+    path: choreo-cp/data/choreo-system/dp-mizzen
+    key: mssqlPassword
+  serviceBusConnectionString:
+    path: choreo-cp/data/choreo-system/dp-mizzen
+    key: serviceBusConnectionString
+  redisPassword:
+    path: choreo-cp/data/choreo-system/dp-mizzen
+    key: redisPassword
+  jwtKey:
+    path: choreo-cp/data/choreo-system/dp-mizzen
+    key: jwtKey
+vault:
+  roleName: dp-mizzen
+config:
+  nodeEnvironment: production
+  mssqlHost: sqlfg-choreo-choreo-mizzen-db-prod.database.windows.net
+  redisHost: choreo-prod-redis.redis.cache.windows.net
+  hostDns: ws://mizzen.controlplane.internal
+  healthCheckEnabled: true
+  healthCheckInitialDelaySeconds: 5
+  healthCheckIntervalMiliSeconds: 1000
+  healthCheckHistoryLimitSeconds: 20
+  healthCheckSuccessThreshold: 0.75

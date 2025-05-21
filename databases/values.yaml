@@ -1,0 +1,59 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 Inc. and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+namespace: reloader
+
+# Azure service configurations
+azure:
+  database:
+    server: "xxxxxxxxxx"
+    # Kubernetes Secret packaging the server certificate required for communicating with the Azure MySQL server over SSL
+    # For advanced details refer to the official documentation (https://docs.microsoft.com/en-us/azure/mysql/howto-configure-ssl#step-1-obtain-ssl-certificate)
+    azureDatabaseCACertSecretName: "azure-database-ca-cert"
+
+  keyVault:
+    # Name of the target Azure Key Vault instance
+    name: "xxxxxxxxxx"
+    # SecretProviderClass for Secrets Store CSI Driver for Azure Key Vault
+    # Refer to official documentation (https://github.com/Azure/secrets-store-csi-driver-provider-azure#create-your-own-secretproviderclass-object)
+    secretProviderClass: "choreo-database-secret-provider-class"
+    activeDirectory:
+      # Service Principal created for transacting with the target Azure Key Vault
+      # For advanced details refer to official documentation (https://github.com/Azure/secrets-store-csi-driver-provider-azure/blob/master/docs/service-principal-mode.md)
+      servicePrincipal:
+        appId: "xxxxxxxxxx"
+        credentialsSecretName: "key-vault-credentials"
+      # Azure Active Directory Tenant ID of the target Key Vault
+      tenantId: "xxxxxxxxxx"
+    resourceManager:
+      # Subscription ID of the target Azure Key Vault
+      subscriptionId: "xxxxxxxxxx"
+      # Name of the Azure Resource Group to which the target Azure Key Vault belongs
+      resourceGroup: "xxxxxxxxxx"
+
+# Database setup configurations
+database:
+  # Database client side configurations
+  client:
+    image:
+      repository: choreocontrolplane.azurecr.io/imega/mysql-client:latest
+      pullPolicy: "Always"
+    resources:
+      requests:
+        # The minimum amount of memory that should be allocated for the Job Pod
+        memory: "128Mi"
+        # The minimum amount of CPU that should be allocated for the Job Pod
+        cpu: "100m"
+      limits:
+        # The maximum amount of memory that should be allocated for the Job Pod
+        memory: "128Mi"
+        # The maximum amount of CPU that should be allocated for the Job Pod
+        cpu: "100m"

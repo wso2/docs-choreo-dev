@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: web-ingress
+  namespace: {{.Values.namespace}}
+  annotations:
+    checkov.io/skip1: CKV_K8S_153=Suppressing till finding a solution
+    kubernetes.io/ingress.class: '{{.Values.ingress.class}}'
+    nginx.ingress.kubernetes.io/upstream-vhost: $service_name.$namespace.svc.cluster.local:8084
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Origin "";
+      proxy_hide_header l5d-remote-ip;
+      proxy_hide_header l5d-server-id;
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: web-ingress-auth
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+    nginx.ingress.kubernetes.io/backend-protocol: http
+    nginx.ingress.kubernetes.io/permanent-redirect-code: "301"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/service-upstream: "true"
+    nginx.ingress.kubernetes.io/whitelist-source-range: 172.16.194.0/24
+spec:
+  tls:
+    - hosts:
+        - "metrics{{.Values.env_url}}.choreo.dev"
+      secretName: '{{.Values.env}}-choreo-system-wildcard-tls'
+  rules:
+    - host: "metrics{{.Values.env_url}}.choreo.dev"
+      http:
+        paths:
+          - backend:
+              serviceName: web
+              servicePort: 8084

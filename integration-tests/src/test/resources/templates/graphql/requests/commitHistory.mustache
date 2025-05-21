@@ -1,0 +1,13 @@
+query {
+      commitHistory(componentId: "{{componentId}}") {
+          author {
+            name
+            date
+            email
+            avatarUrl
+          }
+        message
+        sha
+        isLatest
+    }
+  }

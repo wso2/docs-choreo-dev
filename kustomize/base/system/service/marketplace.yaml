@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: marketplace
+  name: marketplace
+spec:
+  ports:
+    - name: mktplace
+      port: 9090
+      targetPort: mktplace-port
+    - name: healthz
+      port: 9092
+      targetPort: healthz
+    - name: dp-conf
+      port: 9091
+      targetPort: dp-conf-port
+
+  selector:
+    choreo.component: marketplace

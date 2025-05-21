@@ -1,0 +1,12 @@
+{
+  "query": "query {
+    meanTimesToRecovery(
+      startTime: \"{{startTime}}\"
+      endTime: \"{{endTime}}\"
+      granularity: WEEKLY
+    ) {
+      timestamp
+      recoveryTime
+    }
+  }"
+}

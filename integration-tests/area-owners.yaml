@@ -1,0 +1,223 @@
+emailSubject: Integration Test Failed
+releaseOwners:
+  - choreo-group@wso2.com
+  - amilam@wso2.com
+  - uvindra@wso2.com
+  - isurupi@wso2.com
+areaOwners:
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventComponent
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationMICustomConfig
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationMISecretAndCert
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.deploy.AutoDeployOnCommit
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateMiMultiRestEndpointServiceFromSubPath
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationRestComponentFromRoot
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestIntegrationRestComponentWithVulnerable
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestBYOCDp
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.maxApiRevisions.CreateMaxAPIRevisionsUsingSettingsPage
+    assignees:
+      - malinthaa@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithOperationRateLimit
+    assignees:
+      - malinthaa@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestProxyApiDpWithAPIRateLimit
+    assignees:
+      - malinthaa@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.buildpacks.Buildpack
+    assignees:
+      - janakas@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestWebhookDp
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.connections.ChoreoConnections
+    assignees:
+      - hasithah@wso2.com
+      - tishan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestBallerinaServiceDp
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestWebSocketServiceDp
+    assignees:
+      - thushani@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestBuildpackDp
+    assignees:
+      - janakas@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestBuildpackGitLabDp
+    assignees:
+      - yashodha@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.observability.SysObservabilityAPITestCase
+    assignees:
+      - lakmal@wso2.com
+      - tharinduw@wso2.com
+      - nilushan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.insights.InsightsAPI
+    assignees:
+      - lakmal@wso2.com
+      - rashmin@wso2.com
+      - rukshan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.insights.InsightsAuthAPI
+    assignees:
+      - lakmal@wso2.com
+      - rashmin@wso2.com
+      - rukshan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.insights.InsightsAlertsAPI
+    assignees:
+      - lakmal@wso2.com
+      - rashmin@wso2.com
+      - rukshan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.logs.DPLogsAPITestCase
+    assignees:
+      - lakmal@wso2.com
+      - tharinduw@wso2.com
+      - nilushan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestManualTriggerDp
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.themeManagement.ThemePreference
+    assignees:
+      - sumedhas@wso2.com
+      - keshiha@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.dp.TestGraphQLServiceDp
+    assignees:
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.jwtValidation.TestClientJWTValidation
+    assignees:
+      - viduranga@wso2.com
+      - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.integrationComponent.TestCreateIntegrationEventContainerComponent
+    assignees:
+      - chameerar@wso2.com
+      - asankaab@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.maxApiRevisions.TestBasicAPIRevisionCreation
+    assignees:
+      - malinthaa@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.devOps.Ci.DevOpsCiElevatedAccessCheck
+    assignees:
+      - sumudul@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.devOps.Ci.DevOpsClustersElevatedAccessCheck
+    assignees:
+      - sumudul@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.devOps.Ci.DevOpsComponentsAPIElevatedAccessCheck
+    assignees:
+      - sumudul@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.devOps.Ci.DevOpsComponentsIntegrationElevatedAccessCheck
+    assignees:
+      - sumudul@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.devOps.Ci.DevOpsEnvironmentsElevatedAccessCheck
+    assignees:
+      - sumudul@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.devOps.Ci.DevOpsMetricsElevatedAccessCheck
+    assignees:
+      - sumudul@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.devOps.Ci.DevOpsOrganizationsElevatedAccessCheck
+    assignees:
+      - sumudul@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.devOps.Ci.DevOpsVolumeElevatedAccessCheck
+    assignees:
+      - sumudul@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.devportal.DevportalElevatedAccessCheck
+    assignees:
+      - chathurangas@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.deliveryInsights.DeliveryInsightsElevatedAccessCheck
+    assignees:
+      - stefinie@ws02.com
+  - testClass: com.wso2.choreo.integration.tests.security.componentManagement.ComponentManagementElevatedAccessCheck
+    assignees:
+      - yasithag@wso2.com
+      - yashodha@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.organizationManagement.CustomDomains.OrgMgtCustomDomainsElevatedAccessCheck
+    assignees:
+      - ketharan@ws02.com
+  - testClass: com.wso2.choreo.integration.tests.security.organizationManagement.OrgApi.OrgMgtOrgApiElevatedAccessCheck
+    assignees:
+      - ketharan@ws02.com
+  - testClass: com.wso2.choreo.integration.tests.security.organizationManagement.UserManagement.UserMgtElevatedAccessCheck
+    assignees:
+      - ketharan@ws02.com
+  - testClass: com.wso2.choreo.integration.tests.security.billing.BillingElevatedAccessCheck
+    assignees:
+      - ayesh@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.integrationComponents.IntegrationComponentsElevatedAccessCheck
+    assignees:
+      - chameerar@wso2.com
+      - rukshan@ws02.com
+  - testClass: com.wso2.choreo.integration.tests.security.configManagement.ConfigManagementElevatedAccessCheck
+    assignees:
+      - lakshans@ws02.com
+  - testClass: com.wso2.choreo.integration.tests.security.apim.Publisher.ApimPublisherElevatedAccessCheck
+    assignees:
+      - renuka@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.security.apim.ProxyDeployer.ApimProxyDeployerElevatedAccessCheck
+    assignees:
+      - renuka@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.keysetmanagement.KeysetManagementTests
+    assignees:
+      - suvin@wso2.com
+      - thumula@wso2.com
+      - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.resourceAuthorization.ResourceAuthorizationTests
+    assignees:
+      - suvin@wso2.com
+      - mevan@wso2.com
+      - viduranga@wso2.com
+      - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.managedAuthentication.ManagedAuthenticationTests
+    assignees:
+      - thumula@wso2.com
+      - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.managedAuthentication.localDevelopment.LocalDevelopmentTests
+    assignees:
+      - suvin@wso2.com
+      - thumula@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.appdevUserManagement.AppdevUserManagementTests
+    assignees:
+      - suvin@wso2.com
+      - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.appdevAuthorization.AppdevAuthorizationTests
+    assignees:
+      - suvin@wso2.com
+      - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.auditLogging.AuditLogging
+    assignees:
+      - sumedhas@wso2.com
+      - rolandh@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.connections.DatabaseConnectionsTest
+    assignees:
+      - hansi@wso2.com
+      - menaka@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.pat.PATManagementTests
+    assignees:
+      - mevan@wso2.com
+      - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.appdevsts.AppDevSTSTests
+    assignees:
+      - suvin@wso2.com
+      - senthalan@wso2.com
+  - testClass: com.wso2.choreo.integration.tests.devPortalApiKey.DevPortalAPIKey
+    assignees:
+      - charithr@wso2.com
+      - senthalan@wso2.com

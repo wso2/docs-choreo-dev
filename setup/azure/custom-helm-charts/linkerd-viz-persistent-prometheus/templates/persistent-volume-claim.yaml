@@ -1,0 +1,20 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  labels:
+    linkerd.io/extension: viz
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/part-of: Linkerd
+    app.kubernetes.io/version: stable-2.10.2
+    component: prometheus
+  name: pvc-prometheus-storage
+  namespace: {{.Values.namespace}}
+spec:
+  accessModes:
+    - "ReadWriteMany"
+  storageClassName: {{.Values.persistentVolume.storageClassName}}
+  volumeMode: Filesystem
+  volumeName: pv-{{.Values.env}}-prometheus-storage
+  resources:
+    requests:
+      storage: {{.Values.persistentVolume.storage}}

@@ -1,0 +1,5 @@
+# Code owners configuration for deployment artifacts
+* @ruwany @chalitha1989 @chirangaalwis @Rovinovic @SachithKasthuriarachchi @shananjana @udhanMti @janethavi @hiranadikari @ranikamadurawe
+
+# protect the CODEOWNERS file
+/.github/CODEOWNERS @ruwany @chirangaalwis @chalitha1989

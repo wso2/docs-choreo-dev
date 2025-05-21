@@ -1,0 +1,61 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+server:
+  servlet:
+    context-path: /api/v1
+  max-http-request-header-size: 100KB
+
+governance-service:
+  database:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: {{ .Values.config.dbURL }}
+    username: choreo_governance_db_user
+    password: "@_from_file_(/mnt/csi/secret-choreo-governance-service/CHOREO_GOVERNANCE_DB_MSSQL_PASSWORD)"
+    pool:
+      maxActiveConnectionsCount: 100
+      initialConnectionCount: 5
+      minIdleConnectionCount: 5
+      maxWaitTimeMs: 10000
+      validationQuery: SELECT 1
+      testOnBorrow: true
+      testWhileIdle: false
+      removeAbandonedTimeoutSec: 60
+      logAbandoned: false
+      abandonWhenPercentageFull: 50
+  feature-flags:
+    disableDatabaseConnection: {{ .Values.config.disableDatabaseConnection }}
+    validateRulesetContent: {{ .Values.config.validateRulesetContent }}
+    excludedOrgsFromAuthorization: {{ .Values.config.excludedOrgsFromAuthorization | quote }}
+    enableAIGovernance: {{ .Values.config.enableAIGovernance }}
+  endpoints:
+    apimBasePath: "https://choreo-am-service:9443/api/am/publisher/v2"
+    appService: app-service.choreo-system:8080
+    projectManager: http://dp-project-manager.choreo-system:80
+    linterServiceBasePath: http://choreo-linter-service:8080/linter-service
+    resourceAuthorizationService: choreo-resource-authorization-service.choreo-authorization.svc.cluster.local:9090
+    governanceAIServiceBasePath: {{ .Values.config.governanceAIServiceBasePath }}
+    aiAppTokenEndpoint: {{ .Values.config.aiAppTokenEndpoint }}
+  apim:
+    superAdminUserName: choreo_apim_admin
+    superAdminPassword: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_SUPER_ADMIN_PASSWORD)"
+  ai-service-app:
+    clientId: {{ .Values.config.aiServiceAppClientId }}
+    clientSecret: "@_from_file_(/mnt/csi/secret-choreo-governance-service/APIM_AI_CLIENT_SECRET)"
+  default-rulesets:
+    filePath: "/home/wso2/resources/default-rulesets"
+  default-documents:
+    filePath: "/home/wso2/resources/default-documents"
+  security:
+    privilegedClients:
+      - clientId: {{ .Values.config.githubRunnerAppClientId }}
+        name: GitHub Runner App
+    organizationIdHeader: "x-organization-id"

@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: platform-service-manager-stats-reporter
+spec:
+  schedule: "0 0 * * *"
+  startingDeadlineSeconds: 600
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 3600
+      backoffLimit: 4
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+        spec:
+          containers:
+            - name: platform-services-manager-stats-reporter
+              image: choreocontrolplane.azurecr.io/choreoipaas/platform-services-manager:latest
+              args: ["-cost-logger"]
+              envFrom:
+                - configMapRef:
+                    name: env-choreo-platform-services-manager
+                - secretRef:
+                    name: secret-choreo-platform-services-manager
+                - configMapRef:
+                    name: cm-platform-services-manager
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 250Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                seccompProfile:
+                  type: RuntimeDefault
+                runAsUser: 10001
+                runAsGroup: 10001
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              volumeMounts:
+                - name: secret-choreo-platform-services-manager
+                  mountPath: "/mnt/csi/secret-choreo-platform-services-manager"
+                  readOnly: true
+          restartPolicy: Never
+          securityContext:
+            runAsUser: 10001
+            runAsGroup: 10001
+          volumes:
+            - name: secret-choreo-platform-services-manager
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-choreo-platform-services-manager
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          serviceAccountName: sa-choreo-default
+          automountServiceAccountToken: false

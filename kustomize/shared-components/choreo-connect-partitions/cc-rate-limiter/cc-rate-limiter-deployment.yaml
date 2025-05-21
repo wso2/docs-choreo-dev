@@ -1,0 +1,173 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2023, LLC Inc. (http://wso2.com) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+
+# Deployment for Rate Limiter
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
+    secret.reloader.stakater.com/reload: "rate-limiter-cert"
+    kapp.k14s.io/change-group: "choreo-connect-rate-limiter"
+    kapp.k14s.io/change-rule: "upsert after upserting choreo-connect-adapter"
+  name: choreo-connect-rate-limiter
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        userapp-ingress-allowed: "true"
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  cc.component: choreo-connect-rate-limiter
+                  choreo.component: choreo-connect
+              topologyKey: kubernetes.io/hostname
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10500
+        runAsGroup: 10500
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+        - name: init-container
+          command:
+            - sh
+            - -c
+            - (timeout 50 sh -c "until nslookup periscope.choreo.dev; do echo waiting for dns; sleep 1; done"; exit 0) > /dev/null 2>&1
+          image: choreocontrolplane.azurecr.io/init-container:1.0.0
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 50m
+            limits:
+              memory: 100Mi
+              cpu: 100m
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+      containers:
+        - name: choreo-connect-rate-limiter
+          volumeMounts:
+            - mountPath: /home/wso2/security/truststore/mg.pem
+              name: mgw-common-cert-vol
+              readOnly: true
+              subPath: mg.pem
+            - mountPath: /home/wso2/security/keystore/rate-limiter.key
+              name: secret-cc-rate-limiter
+              readOnly: true
+              subPath: RATE_LIMITER_KEYSTORE_KEY
+            - mountPath: /home/wso2/security/keystore/rate-limiter.pem
+              name: secret-cc-rate-limiter-cert
+              readOnly: true
+              subPath: RATE_LIMITER_KEYSTORE_CERT
+            - name: secret-cc-rate-limiter
+              mountPath: /mnt/csi/secret-cc-rate-limiter
+              readOnly: true
+            - name: secret-cc-rate-limiter-cert
+              mountPath: /mnt/csi/secret-cc-rate-limiter-cert
+              readOnly: true
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-rate-limiter:latest
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+              add: ["NET_RAW"]
+          env:
+            - name: REDIS_AUTH
+              valueFrom:
+                secretKeyRef:
+                  key: RATE_LIMITER_REDIS_AUTH_KEY
+                  name: secret-cc-rate-limiter
+          envFrom:
+            - configMapRef:
+                name: cm-feature-flags
+            - configMapRef:
+                name: env-cc-rate-limiter
+          resources:
+            requests:
+              memory: 250Mi
+              cpu: 100m
+            limits:
+              memory: 500Mi
+              cpu: 150m
+          ports:
+            - containerPort: 8090
+            - containerPort: 8091
+            - containerPort: 6070
+          startupProbe:
+            httpGet:
+              port: 8090
+              path: /healthcheck
+              scheme: HTTP
+            periodSeconds: 5
+            failureThreshold: 30
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              port: 8090
+              path: /healthcheck
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              port: 8090
+              path: /healthcheck
+              scheme: HTTP
+            initialDelaySeconds: 8
+            periodSeconds: 5
+            timeoutSeconds: 5
+      volumes:
+        - name: mgw-common-cert-vol
+          configMap:
+            name: mgw-common-cert
+        - name: secret-cc-rate-limiter
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-rate-limiter
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-cc-rate-limiter-cert
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-rate-limiter-cert
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always

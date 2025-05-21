@@ -1,0 +1,30 @@
+mutation{
+    createComponent(
+        component: {
+            name: "{{name}}",
+            orgId: {{orgId}},
+            orgHandler: "{{orgHandler}}",
+            displayName: "{{displayName}}",
+            displayType: "{{displayType}}",
+            projectId: "{{projectId}}",
+            labels: "",
+            version: "v1.0",
+            description: "",
+            apiId: "{{apiId}}",
+            ballerinaVersion: "swan-lake-alpha5",
+            triggerChannels: "",
+            triggerID: null,
+            httpBase: true,
+            sampleTemplate: "",
+            accessibility: "external",
+            repositorySubPath: "",
+            repositoryType: "",
+            repositoryBranch: "",
+            initializeAsBallerinaProject: false,
+            enableCellDiagram: false,
+            {{#isPublicRepo}}
+                isPublicRepo: {{isPublicRepo}}
+            {{/isPublicRepo}}
+        }
+    ){        id, orgId, projectId, handler      }
+}

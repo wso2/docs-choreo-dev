@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cdn-tlscert-synchronizer
+  name: cdn-tlscert-synchronizer
+  annotations:
+    checkov.io/skip1: CKV_K8S_AZURE_WSO2_2=LinkerD is not required since this is a non-choreo service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cdn-tlscert-synchronizer
+  template:
+    metadata:
+      labels:
+        app: cdn-tlscert-synchronizer
+    spec:
+      serviceAccountName: cdn-tls-synchronizer
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-cdn-tlscert-synchronizer:latest
+          name: choreo-cdn-tlscert-synchronizer
+          readinessProbe:
+            exec:
+              command: ["cat", "/tmp/ready"]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command: ["pgrep", "entrypoint.sh"]
+            initialDelaySeconds: 60
+            periodSeconds: 30
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 256Mi
+              cpu: 150m
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          envFrom:
+            - configMapRef:
+                name: cm-cdn-tlscert-synchronizer
+            - configMapRef:
+                name: env-cdn-tlscert-synchronizer
+          volumeMounts:
+            - name: secret-cdn-tls-cert-synchronizer
+              mountPath: /mnt/sp.id
+              readOnly: true
+              subPath: SERVICE_PROVIDER_ID
+            - name: secret-cdn-tls-cert-synchronizer
+              mountPath: /mnt/sp.password
+              readOnly: true
+              subPath: SERVICE_PROVIDER_PASSWORD
+            - name: service-account-token-volume
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
+            - name: mount
+              mountPath: /mnt
+            - name: tmp
+              mountPath: /tmp
+            - name: azure
+              mountPath: /.azure
+      volumes:
+        - name: secret-cdn-tls-cert-synchronizer
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cdn-tls-cert-synchronizer
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: service-account-token-volume
+          secret:
+            secretName: cdn-tls-synchronizer-token
+        # Volume mounts for system functionalities
+        - name: mount
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+        - name: azure
+          emptyDir: {}

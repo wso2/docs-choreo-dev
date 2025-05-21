@@ -1,0 +1,29 @@
+{
+  "name": "e2e-tests-cypress",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cypress-real-events": "^1.13.0",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@cypress/code-coverage": "^3.13.9",
+    "cypress": "^13.16.1",
+    "cypress-fail-fast": "^7.1.1"
+  },
+  "scripts": {
+    "pretest": "npm run clean:reports",
+    "e2etest:headless": "npx cypress run --headless",
+    "devportal-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-stable/devportal/*.ts'",
+    "console-e2etest:headless": "npx cypress run --headless --spec 'cypress/e2e-stable/console/**/*'",
+    "test": "npm run devportal-e2etest:headless || npm run console-e2etest:headless || npm run posttest",
+    "local": "npm run e2etest:headless || npm run posttest",
+    "e2etest:pdp": "npx cypress run -C cypress.pdp.json ",
+    "cy:coverage": "nyc report --reporter=text-summary --reporter=lcov",
+    "cy:run": "cypress run",
+    "parallel": "cypress-parallel -s cy:run -t 4 -d 'cypress/e2e-stable/console/**/*'"
+  },
+  "author": "",
+  "license": "ISC"
+}

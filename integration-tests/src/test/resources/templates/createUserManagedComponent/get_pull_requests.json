@@ -1,0 +1,10 @@
+{
+  "data":{
+    "componentPullRequests":[
+      {
+        "url":"https://github.com/choreo-integration-tests/choreo-app/pull/1",
+        "number":1
+      }
+    ]
+  }
+}

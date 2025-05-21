@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="choreoIntegrationTests_security" parallel="classes" thread-count="2">
+    <test name="choreo">
+        <classes>
+            <class name="com.wso2.choreo.integration.common.SecurityTestContext"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Ci.DevOpsCiElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Clusters.DevOpsClustersElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.ComponentsAPI.DevOpsComponentsAPIElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.ComponentsIntegration.DevOpsComponentsIntegrationElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Environments.DevOpsEnvironmentsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Metrics.DevOpsMetricsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Organizations.DevOpsOrganizationsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devOps.Volume.DevOpsVolumeElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.devportal.DevportalElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.deliveryInsights.DeliveryInsightsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.componentManagement.ComponentManagementElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.organizationManagement.CustomDomains.OrgMgtCustomDomainsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.organizationManagement.OrgApi.OrgMgtOrgApiElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.organizationManagement.UserManagement.UserMgtElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.billing.BillingElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.integrationComponents.IntegrationComponentsElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.configManagement.ConfigManagementElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.apim.Publisher.ApimPublisherElevatedAccessCheck"/>
+            <class name="com.wso2.choreo.integration.tests.security.apim.ProxyDeployer.ApimProxyDeployerElevatedAccessCheck"/>
+        </classes>
+    </test>
+</suite>

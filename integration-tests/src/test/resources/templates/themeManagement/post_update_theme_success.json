@@ -1,0 +1,63 @@
+{
+    "palette": {
+      "type": "light",
+      "background": {
+        "primary": {
+          "light": "#0d43e5",
+          "dark": "#9A97EB"
+        },
+        "secondary": {
+          "light": "#3b1010",
+          "dark": "#542C3A"
+        }
+      },
+      "text": {
+        "primary": {
+          "light": "#411313",
+          "dark": "#493AA5"
+        },
+        "secondary": {
+          "light": "#86d424",
+          "dark": "#f50057"
+        }
+      },
+      "button": {
+        "primary": {
+          "light": "#9c2d95",
+          "dark": "#303f9f"
+        },
+        "secondary": {
+          "light": "#a5b856",
+          "dark": "#303f9f"
+        }
+      }
+    },
+    "typography": {
+      "headings": {
+        "fontFamily": "Verdana"
+      },
+      "body": {
+        "fontFamily": "Arial"
+      },
+      "p": {
+        "fontFamily": "Gilmer"
+      }
+    },
+    "assets": {
+      "logoUrl": {
+        "header": "https://wso2.cachefly.net/wso2/sites/all/2020-theme/images/wso2-logo.svg",
+        "footer": "https://devportal.preview-dv.choreo.dev/themes/default/images/wso2-logo.svg",
+        "favicon": "https://devportal.preview-dv.choreo.dev/themes/default/images/favicon.ico"
+      }
+    },
+    "homePage": {
+      "banner": "https://devportal.choreo.dev/themes/default/images/banner.svg",
+      "title": "Welcome to dev portal",
+      "subtitle": "Hello there, Use our unlimited APIs to automate, innovate, and connect to millions of customers."
+    },
+    "footerLinks": {
+      "terms": "https://wso2.com/choreo/terms-of-use/",
+      "privacyPolicy": "https://wso2.com/choreo/privacy-policy/",
+      "support": "https://discord.com/channels/955510916064092180/955513399037546536"
+    }
+  }

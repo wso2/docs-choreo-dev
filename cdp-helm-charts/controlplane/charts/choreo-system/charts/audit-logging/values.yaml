@@ -1,0 +1,57 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicas: 1
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/choreo-audit-logging
+  tag: latest
+vault:
+  roleName: audit-logging
+serviceAccount:
+  annotations: {}
+config:
+  stsClientId: OZ6XP8s2S2f3jDkM28V9k4ckeBka
+  stsTokenEndpointHost: https://sts.choreo.dev:443
+  hubURL: https://subscribe.websubhub.choreo.dev/hub
+  callbackURL: https://apis.choreo.dev/audit-event-listener/1.0.0/
+  azureLogIngestionBaseUrl: https://dce-choreo-log-ing-ep-prod-eastus2-001-4231.eastus2-1.ingest.monitor.azure.com
+  azureDcrImmutableId: dcr-678a839b0f0d410188effbb5e371ef90
+  enableEventCollectViaAMA: true
+  enableEventCollectViaAzureIngestionAPI: true
+  enableEventQueryFromCustomTable: true
+  region: US
+  clusterName: choreo-prod-controlplane-aks
+  containerName: audit-logging
+  azureLaTenantId: da76d684-740f-4d94-8717-9d5fb21dd1f9
+  azureLaClientId: a52f5b73-41c9-44fa-8281-1a9596b3cb3e
+  choreoJwtIssuer: https://sts.choreo.dev:443/oauth2/token
+  choreoJwtAudience: ciwnWuwZfbcdzBUcnkhKvi_mcBUa
+  site24x7JwtAudience: 25yGYggke6fmZUWSDJSnyh0YFGYa
+  authAudienceList: 
+    - ciwnWuwZfbcdzBUcnkhKvi_mcBUa
+    - 25yGYggke6fmZUWSDJSnyh0YFGYa
+    - nSnVD_EnCjsVFHyJhCGG6aFM5Isa
+  choreoJwtJwksUrl: https://sts.choreo.dev:443/oauth2/jwks
+  choreoBackendJwtJwksUrl: https://apis.choreo.dev/.wellknown/jwks
+  site24x7OrgUuid: ee6ab715-301e-4d1e-8431-1bed2b64684b
+  usAzureLaWorkspaceId: 428606da-1dea-4101-9dc7-26a377a2640e
+  logLevel: INFO
+secrets:
+  stsClientSecret:
+    path: choreo-cp/data/choreo-system/audit-logging
+    key: stsClientSecret
+  azureLAClientSecret:
+    path: choreo-cp/data/choreo-system/audit-logging
+    key: azureLAClientSecret

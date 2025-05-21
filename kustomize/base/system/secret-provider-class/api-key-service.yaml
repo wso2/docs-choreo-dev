@@ -1,0 +1,24 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-api-key-service
+spec:
+  secretObjects:
+    - secretName: secret-api-key-service
+      type: Opaque
+      data:
+        - objectName: CHOREO_API_KEY_SVC_DB_PASSWORD
+          key: CHOREO_API_KEY_SVC_DB_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-api-key-svc-db-postgresql-password
+          objectType: secret
+          objectAlias: CHOREO_API_KEY_SVC_DB_PASSWORD
+          objectVersion: "{{.CHOREO_API_KEY_SVC_DB_PASSWORD}}"
+        - |
+          objectName: apim-REST-API-CONSUMER-SECRET
+          objectType: secret
+          objectAlias: APIM_REST_API_CONSUMER_SECRET
+          objectVersion: "{{.APIM_REST_API_CONSUMER_SECRET}}"

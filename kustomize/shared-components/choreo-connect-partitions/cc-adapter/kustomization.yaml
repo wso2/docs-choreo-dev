@@ -1,0 +1,35 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+
+resources:
+  - cc-adapter-deployment.yaml
+  - cc-adapter-hpa.yaml
+  - cc-adapter-pdb.yaml
+  - cc-adapter-service.yaml
+
+configMapGenerator:
+  - name: env-cc-adapter
+    behavior: create
+    literals:
+      - ADAPTER_PRIVATE_KEY_PATH="/home/wso2/security/keystore/mg.key"
+      - ADAPTER_PUBLIC_CERT_PATH="/home/wso2/security/keystore/mg.pem"
+      - localLabel=""
+      - environmentLabel=""
+      - AZURE_SDK_GO_LOGGING=""
+      - ENABLE_PAID_ORGS_FROM_SUBSCRIPTION_SERVICE="true"
+
+commonLabels:
+  cc.component: choreo-connect-adapter

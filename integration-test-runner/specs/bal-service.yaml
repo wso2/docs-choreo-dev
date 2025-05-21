@@ -1,0 +1,57 @@
+---
+kind: Ballerina-Service-US
+actions:
+  - action: CreateProject
+    params:
+      region: US
+      description: Ballerina service project
+      placeholder: testproject
+  - action: CreateComponent
+    params:
+      srcGitRepoURL: https://github.com/wso2/choreo-samples
+      repositoryBranch: main
+      repositorySubPath: greeting-service
+      displayType: ballerinaService
+      buildPack: Ballerina
+      accessibility: external
+      isPublicRepo: 'true'
+      project: testproject
+      placeholder: servicecomp
+  - action: WaitForBuild
+    params:
+      component: servicecomp
+  - action: GetEnvironments
+    params:
+      project: testproject
+  - action: DeployComponent
+    params:
+      component: servicecomp
+  - action: PromoteComponent
+    params:
+      component: servicecomp
+  - action: InvokeDeployment
+    params:
+      component: servicecomp
+      method: GET
+      resource: "/"
+      queryParams: name=Hello
+      statusCode: '200'
+      response: |-
+        {
+          "from": "Choreo",
+          "to": "Hello",
+          "message": "Welcome to Choreo!"
+        }
+  - action: InvokePromotion
+    params:
+      component: servicecomp
+      method: GET
+      resource: "/"
+      queryParams: name=Hello
+      statusCode: '200'
+      response: |-
+        {
+          "from": "Choreo",
+          "to": "Hello",
+          "message": "Welcome to Choreo!"
+        }

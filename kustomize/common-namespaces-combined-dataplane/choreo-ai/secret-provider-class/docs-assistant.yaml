@@ -1,0 +1,54 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-docs-assistant
+spec:
+  secretObjects:
+    - secretName: secret-docs-assistant
+      type: Opaque
+      data:
+        - objectName: AZURE_OPENAI_API_KEY
+          key: AZURE_OPENAI_API_KEY
+        - objectName: ZILLIZ_CLOUD_API_KEY
+          key: ZILLIZ_CLOUD_API_KEY
+        - objectName: CP_AZURE_OPENAI_API_KEY
+          key: CP_AZURE_OPENAI_API_KEY
+        - objectName: COHERE_API_KEY
+          key: COHERE_API_KEY
+        - objectName: PROXY_CONSUMER_KEY
+          key: PROXY_CONSUMER_KEY
+        - objectName: PROXY_CONSUMER_SECRET
+          key: PROXY_CONSUMER_SECRET
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: {{.AZURE_OPENAI_API_KEY_OBJ_NAME | default "ai-cogsvc-dp-eastus2-primary-access-key"}}
+          objectType: secret
+          objectAlias: AZURE_OPENAI_API_KEY
+          objectVersion: "{{.AZURE_OPENAI_API_KEY}}"
+        - |
+          objectName: ai-zilliz-CLUSTER-API-KEY
+          objectType: secret
+          objectAlias: ZILLIZ_CLOUD_API_KEY
+          objectVersion: "{{.ZILLIZ_CLOUD_API_KEY}}"
+        - |
+          objectName: ai-cogsvc-cp-eastus2-primary-access-key
+          objectType: secret
+          objectAlias: CP_AZURE_OPENAI_API_KEY
+          objectVersion: "{{.CP_AZURE_OPENAI_API_KEY}}"
+        - |
+          objectName: cohere-api-key
+          objectType: secret
+          objectAlias: COHERE_API_KEY
+          objectVersion: "{{.COHERE_API_KEY}}"
+        - |
+          objectName: ai-milvus-proxy-docs-assistant-consumer-key
+          objectType: secret
+          objectAlias: PROXY_CONSUMER_KEY
+          objectVersion: {{.MILVUS_PROXY_CONSUMER_KEY}}
+        - |
+          objectName: ai-milvus-proxy-docs-assistant-consumer-secret
+          objectType: secret
+          objectAlias: PROXY_CONSUMER_SECRET
+          objectVersion: {{.MILVUS_PROXY_CONSUMER_SECRET}}

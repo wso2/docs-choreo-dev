@@ -1,0 +1,10 @@
+{
+    "operationName": "projectDiagram",
+    "variables": {
+        "envName": "{{environment}}",
+        "projectId": "{{ballerinaComponentProjectId}}",
+        "fromTime": "{{from}}",
+        "toTime": "{{to}}"
+    },
+    "query": "query projectDiagram($envName: String!, $projectId: String!, $fromTime: String!, $toTime: String!) {\n  projectDiagram(\n    projectId: $projectId\n    envName: $envName\n    from: $fromTime\n    to: $toTime\n  ) {\n    linkList {\n      sourceNodeId\n      destinationNodeId\n      requestCount\n      errorCount\n      avgLatency\n      p99Latency\n      p90Latency\n      p50Latency\n      __typename\n    }\n    nodeList {\n      nodeId\n      nodeType\n      componentId\n      componentName\n      apiVersion\n      ip\n      __typename\n    }\n    __typename\n  }\n}\n"
+}

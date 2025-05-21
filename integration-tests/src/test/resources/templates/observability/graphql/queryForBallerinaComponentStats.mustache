@@ -1,0 +1,18 @@
+{
+  "operationName":"stats",
+  "variables":
+    {
+      "observeId":"{{ballerinaComponentObsId}}",
+      "version":"{{ballerinaComponentVersionId}}",
+      "moduleId":"{{ballerinaComponentModuleId}}",
+      "entryPointFuncModule":"{{ballerinaComponentEntryPointFuncModule}}",
+      "entryPointSvcName":"{{ballerinaComponentEntryPointSvcName}}",
+      "entryPointFuncName":"{{ballerinaComponentEntryPointFuncName}}",
+      "entryPointResourceAccessor":"{{ballerinaComponentEntryPointResourceAccessor}}",
+      "callerType":null,
+      "from":"{{from}}",
+      "to":"{{to}}",
+      "breakSize":"864s"
+    },
+  "query":"query stats($observeId: String!, $version: String!, $from: String!, $to: String!, $moduleId: String!, $entryPointFuncModule: String!, $entryPointSvcName: String!, $entryPointFuncName: String!, $entryPointResourceAccessor: String, $callerType: String, $breakSize: String!) {\n  serviceMetrics(\n    obsId: $observeId\n    version: $version\n    from: $from\n    to: $to\n    module: $moduleId\n    entryPointFuncModule: $entryPointFuncModule\n    entryPointSvcName: $entryPointSvcName\n    entryPointFuncName: $entryPointFuncName\n    entryPointResourceAccessor: $entryPointResourceAccessor\n    callerConnectorType: $callerType\n    breakSize: $breakSize\n  ) {\n    successfulRequestCount\n    failedRequestCount\n    meanResponseTime\n    successfulRequestCountHistogram {\n      time\n      value\n      __typename\n    }\n    failedRequestCountHistogram {\n      time\n      value\n      __typename\n    }\n    meanResponseTimeHistogram {\n      time\n      value\n      __typename\n    }\n    __typename\n  }\n  serviceLatencyPercentiles(\n    obsId: $observeId\n    version: $version\n    from: $from\n    to: $to\n    module: $moduleId\n    entryPointFuncModule: $entryPointFuncModule\n    entryPointSvcName: $entryPointSvcName\n    entryPointFuncName: $entryPointFuncName\n    entryPointResourceAccessor: $entryPointResourceAccessor\n    breakSize: $breakSize\n  ) {\n    latencyPercentilesHistogram {\n      time\n      values\n      __typename\n    }\n    __typename\n  }\n}\n"
+}

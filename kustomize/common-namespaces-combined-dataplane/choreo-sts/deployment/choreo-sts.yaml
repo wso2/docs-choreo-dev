@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: choreo-sts
+  name: choreo-sts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: choreo-sts
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-sts
+        antiaffinity: choreo-sts
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreosts
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-sts:latest
+          envFrom:
+            - configMapRef:
+                name: cm-choreo-sts
+            - configMapRef:
+                name: env-choreo-sts
+          ports:
+            - containerPort: 9000
+              name: service-port
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 60
+            periodSeconds: 60
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /health
+          resources:
+            limits:
+              cpu: 750m
+              memory: 3Gi
+            requests:
+              cpu: 350m
+              memory: 2Gi
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: choreo-sts-config
+              mountPath: /home/wso2/configuration.yaml
+              subPath: configuration.yaml
+            - name: app-properties
+              mountPath: /home/wso2/application.properties
+              subPath: application.properties
+              readOnly: true
+            - name: app-properties
+              mountPath: /home/wso2/log4j2.yaml
+              subPath: log4j2.yaml
+              readOnly: true
+            - name: secret-choreo-sts
+              mountPath: "/mnt/csi/secret-choreo-sts/client-secret-encryption-key.txt"
+              subPath: "client-secret-encryption-key.txt"
+              readOnly: true
+            - name: secret-choreo-sts
+              mountPath: "/mnt/csi/secret-choreo-sts/default-signing-keystore.keystore"
+              subPath: "default-signing-keystore.keystore"
+              readOnly: true
+            - name: secret-choreo-sts
+              mountPath: "/mnt/csi/secret-choreo-sts/default-signing-keystore-password.txt"
+              subPath: "default-signing-keystore-password.txt"
+              readOnly: true
+            - name: secret-choreo-sts
+              mountPath: "/mnt/csi/secret-choreo-sts/redis-password.txt"
+              subPath: "redis-password.txt"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: app-properties
+          configMap:
+            name: cm-files-choreo-sts-app-properties
+        - name: choreo-sts-config
+          configMap:
+            name: cm-files-choreo-sts-config-file
+        - name: secret-choreo-sts
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-choreo-sts
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-sts
+              topologyKey: kubernetes.io/hostname

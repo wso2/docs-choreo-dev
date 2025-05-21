@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: alert-configuration-service
+spec:
+  minAvailable: "50%"
+  selector:
+    matchLabels:
+      choreo.component: alert-configuration-service

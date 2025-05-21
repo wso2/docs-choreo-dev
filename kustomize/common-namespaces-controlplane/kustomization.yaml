@@ -1,0 +1,5 @@
+resources:
+  - cert-manager
+  - choreo-ai
+  - spicedb-operator
+  - tools

@@ -1,0 +1,22 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: usage-service-ingress-tls-secret
+  labels:
+    app: metered-usage-handler-service
+spec:
+  secretObjects:
+    - secretName: usage-handler-service-tls
+      type: kubernetes.io/tls
+      data:
+        - objectName: usage-service-ingress-tls-certificate-keystore
+          key: tls.key
+        - objectName: usage-service-ingress-tls-certificate-keystore
+          key: tls.crt
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: usage-service-ingress-tls-certificate-keystore
+          objectType: secret
+          objectVersion: "{{.USAGE_SERVICE_INGRESS_TLS_CERTIFICATE_KEYSTORE}}"

@@ -1,0 +1,13 @@
+resources:
+  - devportal-deployment.yaml
+  - am-deployment.yaml
+  - choreo-connect-global-adapter-v2.yaml
+  - ga-health-check-deployment.yaml
+  - apk-config-ds-deployment.yaml
+  - choreo-governance-service.yaml
+  - choreo-linter-service.yaml
+  - app-gw-oauth-agent.yaml
+  - choreo-connect-common-private-global-adapter.yaml
+
+commonAnnotations:
+  config.linkerd.io/skip-outbound-ports: 3306,443,2587,25,1433,6380

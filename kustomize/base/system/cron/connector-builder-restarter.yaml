@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: connector-builder-rollout-restarter
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=SA is required to perform kubectl commands
+spec:
+  schedule: '0 0 * * *'
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+        spec:
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          serviceAccountName: connector-builder-kubectl-executor-sa
+          containers:
+            - name: connector-builder-restart-cron
+              image: choreocontrolplane.azurecr.io/bitnami/kubectl:1.27.5
+              securityContext:
+                readOnlyRootFilesystem: true
+                allowPrivilegeEscalation: false
+                runAsNonRoot: true
+                runAsUser: 10500
+                capabilities:
+                  drop:
+                    - ALL
+              command:
+                - kubectl
+                - rollout
+                - restart
+                - deployment/connector-builder
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 100Mi
+                limits:
+                  cpu: 150m
+                  memory: 150Mi
+          restartPolicy: Never
+  successfulJobsHistoryLimit: 3

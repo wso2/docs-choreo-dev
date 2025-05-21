@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: delete-manager
+    choreo.dataplane: "true"
+  name: delete-manager
+spec:
+  ports:
+    - name: delete-manager-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port
+  selector:
+    choreo.component: delete-manager

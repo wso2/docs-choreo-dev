@@ -1,0 +1,11 @@
+resources:
+  - devportal-service.yaml
+  - am-service.yaml
+  - choreo-connect-global-adapter.yaml
+  - choreo-connect-global-adapter-v2.yaml
+  - choreo-connect-internal-global-adapter.yaml
+  - config-deployer-service.yaml
+  - choreo-governance-service.yaml
+  - choreo-linter-service.yaml
+  - app-gw-oauth-agent.yaml
+  - choreo-connect-common-private-global-adapter.yaml

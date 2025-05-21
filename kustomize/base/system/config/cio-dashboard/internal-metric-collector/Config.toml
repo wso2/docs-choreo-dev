@@ -1,0 +1,7 @@
+[ballerina.log]
+format = "json"
+level = "{{.LOG_LEVEL}}"
+
+[[ballerina.log.modules]]
+name = "choreo/choreo_cio_internal_metric_collector"
+level = "{{.LOG_LEVEL_INTERNAL_METRIC_COLLECTOR}}"

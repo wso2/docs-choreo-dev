@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: choreo-obsapi-v2
+  name: choreo-obsapi-v2
+spec:
+  ports:
+    - name: obsapi-v2-port
+      port: 9095
+      targetPort: obsapi-v2-port
+  selector:
+    choreo.component: obsapi-v2

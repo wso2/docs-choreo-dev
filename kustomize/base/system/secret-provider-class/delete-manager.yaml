@@ -1,0 +1,54 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-delete-manager
+spec:
+  secretObjects:
+    - secretName: secret-delete-manager
+      type: Opaque
+      data:
+        - objectName: MSSQL_PASSWORD
+          key: MSSQL_PASSWORD
+        - objectName: ASB_CONNECTION_STRING
+          key: ASB_CONNECTION_STRING
+        - objectName: APIM_REST_API_CONSUMER_SECRET
+          key: APIM_REST_API_CONSUMER_SECRET
+        - objectName: APIM_ADMIN_PASSWORD
+          key: APIM_ADMIN_PASSWORD
+        - objectName: GCHAT_KEY
+          key: GCHAT_KEY
+        - objectName: GCHAT_TOKEN
+          key: GCHAT_TOKEN
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-delete-manager-db-mssql-password
+          objectType: secret
+          objectAlias: MSSQL_PASSWORD
+          objectVersion: "{{.MSSQL_PASSWORD}}"
+        - |
+          objectName: dp-mizzen-service-bus-connection-string
+          objectType: secret
+          objectAlias: ASB_CONNECTION_STRING
+          objectVersion: "{{.ASB_CONNECTION_STRING}}"
+        - |
+          objectName: delete-manager-service-apim-service-provider-consumer-secret
+          objectType: secret
+          objectAlias: APIM_REST_API_CONSUMER_SECRET
+          objectVersion: "{{.APIM_REST_API_CONSUMER_SECRET}}"
+        - |
+          objectName: apim-super-admin-password
+          objectType: secret
+          objectAlias: APIM_ADMIN_PASSWORD
+          objectVersion: "{{.APIM_ADMIN_PASSWORD}}"
+        - |
+          objectName: googlechat-WEBHOOK-KEY
+          objectType: secret
+          objectAlias: GCHAT_KEY
+          objectVersion: "{{.GCHAT_KEY}}"
+        - |
+          objectName: googlechat-WEBHOOK-TOKEN
+          objectType: secret
+          objectAlias: GCHAT_TOKEN
+          objectVersion: "{{.GCHAT_TOKEN}}"

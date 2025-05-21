@@ -1,0 +1,32 @@
+env: dev
+
+## General Parameters
+# Namespace to install the Prometheus Deployment
+namespace: linkerd-viz
+# Namespaces of the Linkerd-viz installation
+linkerdVizNamespace: linkerd-viz
+# Namespace of the Linkerd installation
+linkerdNamespace: linkerd
+
+# Details of the persistent volume
+persistentVolume:
+  # GroupID and UserID used to access the Azure File Share
+  groupID: 65534
+  userID: 65534
+  # K8S Secret Resource and Namespace to access the Azure File Share
+  azureSecretName: secret-azure-storage-account
+  azureSecretNamespace: dev-choreo-system
+  # File Share Name
+  shareName: prometheus-data
+  # Storage Class Name
+  storageClassName: manual
+  persistentVolumeReclaimPolicy: Retain
+  # Storage Size, Make sure it is less than the Actual File Share
+  storage: 100Gi
+
+# Details of the Prometheus Deployment
+prometheus:
+  # Retention Period of metrics (Lowest Possible Value is 2h, Highest is dependent on the Persistent Volume Size)
+  retentionPeriod: 7d
+  # Image Pull policy
+  imagePullPolicy: IfNotPresent

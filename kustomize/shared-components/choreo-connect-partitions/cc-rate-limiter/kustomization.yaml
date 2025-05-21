@@ -1,0 +1,61 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2023, WSO2 LLC. (http://wso2.com) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+
+resources:
+  - cc-rate-limiter-deployment.yaml
+  - cc-rate-limiter-headless-service.yaml
+#   - cc-rate-limiter-hpa.yaml
+#   - cc-rate-limiter-pdb.yaml
+
+configMapGenerator:
+  - name: env-cc-rate-limiter
+    behavior: create
+    literals:
+      - HOST="0.0.0.0"
+      - PORT="8090"
+      - USE_STATSD="false"
+      - LOG_LEVEL="INFO"
+      - LOCAL_CACHE_SIZE_IN_BYTES="1024000"
+      - LIMIT_RESPONSE_HEADERS_ENABLED="false"
+      # Redis
+      - REDIS_SOCKET_TYPE="tcp"
+      - REDIS_URL="" # should be configured in the overlay
+      - REDIS_PIPELINE_WINDOW="0.2ms"
+      - REDIS_PIPELINE_LIMIT="0"
+      - REDIS_TLS="true"
+      - REDIS_TLS_CLIENT_CERT=""
+      - REDIS_TLS_CLIENT_KEY=""
+      - REDIS_TLS_CACERT=""
+      - CACHE_KEY_PREFIX="CC_RATELIMIT:"
+      # gRPC server
+      - GRPC_HOST="0.0.0.0"
+      - GRPC_PORT="8091"
+      - GRPC_SERVER_USE_TLS="true"
+      - GRPC_SERVER_TLS_KEY="/home/wso2/security/keystore/rate-limiter.key"
+      - GRPC_SERVER_TLS_CERT="/home/wso2/security/keystore/rate-limiter.pem"
+      - GRPC_CLIENT_TLS_CACERT="/home/wso2/security/truststore/mg.pem"
+      - GRPC_CLIENT_TLS_SAN="router"
+      # xDS config server
+      - RATE_LIMITER_LABEL="Production and Sandbox"
+      - CONFIG_GRPC_XDS_SERVER_URL="adapter:18001"
+      - CONFIG_GRPC_XDS_SERVER_USE_TLS="true"
+      - CONFIG_GRPC_XDS_CLIENT_TLS_KEY="/home/wso2/security/keystore/rate-limiter.key"
+      - CONFIG_GRPC_XDS_CLIENT_TLS_CERT="/home/wso2/security/keystore/rate-limiter.pem"
+      - CONFIG_GRPC_XDS_SERVER_TLS_CACERT="/home/wso2/security/truststore/mg.pem"
+      - CONFIG_GRPC_XDS_SERVER_TLS_SAN="adapter"
+
+commonLabels:
+  cc.component: choreo-connect-rate-limiter

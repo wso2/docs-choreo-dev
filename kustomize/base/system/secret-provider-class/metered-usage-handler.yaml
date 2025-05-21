@@ -1,0 +1,54 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-choreo-metered-usage-handler
+spec:
+  secretObjects:
+    - secretName: secret-choreo-metered-usage-handler
+      type: Opaque
+      data:
+        - objectName: STRIPE_TOKEN
+          key: STRIPE_TOKEN
+        - objectName: CHOREO_USAGE_DB_PASSWORD
+          key: CHOREO_USAGE_DB_PASSWORD
+        - objectName: AZURE_AUTH_APP_CLIENT_SECRET
+          key: AZURE_AUTH_APP_CLIENT_SECRET
+        - objectName: CLIENT_ID
+          key: CLIENT_ID
+        - objectName: CLIENT_SECRET
+          key: CLIENT_SECRET
+        - objectName: USAGE_COLLECTOR_TRUSTSTORE_PASSWORD
+          key: USAGE_COLLECTOR_TRUSTSTORE_PASSWORD
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: billing-stripe-token
+          objectType: secret
+          objectAlias: STRIPE_TOKEN
+          objectVersion: "{{.STRIPE_TOKEN}}"
+        - |
+          objectName: choreo-usage-db-mssql-password
+          objectType: secret
+          objectAlias: CHOREO_USAGE_DB_PASSWORD
+          objectVersion: "{{.CHOREO_USAGE_DB_PASSWORD}}"
+        - |
+          objectName: billing-AZURE-AUTH-APP-CLIENT-SECRET
+          objectType: secret
+          objectAlias: AZURE_AUTH_APP_CLIENT_SECRET
+          objectVersion: "{{.AZURE_AUTH_APP_CLIENT_SECRET}}"
+        - |
+          objectName: metered-usage-handler-client-id
+          objectType: secret
+          objectAlias: CLIENT_ID
+          objectVersion: "{{.CLIENT_ID}}"
+        - |
+          objectName: metered-usage-handler-client-secret
+          objectType: secret
+          objectAlias: CLIENT_SECRET
+          objectVersion: "{{.CLIENT_SECRET}}"
+        - |
+          objectName: choreo-metered-usage-handler-CLIENT-TRUSTSTORE-PASSWORD
+          objectType: secret
+          objectAlias: USAGE_COLLECTOR_TRUSTSTORE_PASSWORD
+          objectVersion: "{{.USAGE_COLLECTOR_TRUSTSTORE_PASSWORD}}"

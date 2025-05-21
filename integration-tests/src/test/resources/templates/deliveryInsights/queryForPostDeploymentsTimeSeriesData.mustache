@@ -1,0 +1,13 @@
+{
+    "query": "query {
+        deployments(
+            startTime: \"{{startTime}}\"
+            endTime: \"{{endTime}}\"
+            granularity: WEEKLY
+            isProd: false
+        ) {
+            timestamp
+            count
+        }
+    }"
+}

@@ -1,0 +1,14 @@
+{
+    "operationName": "metricDensity",
+    "variables": {
+        "observeId": "{{observeId}}",
+        "version": "{{version}}",
+        "timeRanges": [
+            "1h",
+            "1d",
+            "7d",
+            "30d"
+        ]
+    },
+    "query": "query metricDensity($observeId: String!, $version: String!, $timeRanges: [String]!) {\n  metricDensity(obsId: $observeId, version: $version, timeRanges: $timeRanges) {\n    metricCounts {\n      range\n      count\n      __typename\n    }\n    __typename\n  }\n}\n"
+}

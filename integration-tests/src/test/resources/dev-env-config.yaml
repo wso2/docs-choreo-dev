@@ -1,0 +1,61 @@
+accountInfo:
+  TEST_USER_EMAIL: choreo-integration-test-user-dev@wso2.com@carbon.super
+  TEST_USER_IDP_ID: 8616ebca-3376-4cfa-bf76-91abc00982a8
+  #TEST_USER_PASSWORD:
+  TEST_CHOREO_ORG_ID: 3752
+  TEST_CHOREO_ORG_HANDLE: choreointegrationtestsuserdevdlwqo
+  TEST_CHOREO_ORG_UUID: 31b9e3fe-4a92-4921-8be1-70f065b5b406
+  TEST_CHOREO_APP_DEV_STS_ORG_ID: 8825
+  TEST_CHOREO_APP_DEV_STS_ORG_HANDLE: choreodpstsintegrationtestuser
+  TEST_CHOREO_APP_DEV_STS_ORG_UUID: 2677c81b-79a8-4c2e-a55b-11a2af6ac8c7
+authInfo:
+  STS_ENDPOINT: https://sts.preview-dv.choreo.dev
+  STS_CLIENT_ID: szuIZKNy9KIaJxv5PDdM06RXfeca
+  #STS_CLIENT_SECRET:
+  ASGARDEO_ENDPOINT: https://dev.api.asgardeo.io
+  ASGARDEO_CLIENT_ID: d0ydULDEa0BkT6t7ZyZJFkDU4FEa
+  #ASGARDEO_CLIENT_SECRET:
+  CP_APP_CLIENT_ID: W5HKbT7_3hHFU6rY9iRbFDzH41ga
+  #CP_APP_CLIENT_SECRET:
+common:
+  REGIONS: EU,US
+  CHOREO_ENDPOINT: https://app.preview-dv.choreo.dev
+  CHOREO_NEW_APP_SERVICE_ENDPOINT: https://apis.preview-dv.choreo.dev
+  CHOREO_CP_GW_ENDPOINT: https://choreocontrolplane.preview-dv.choreo.dev
+  BAL_REGISTRY_URL: https://api.dev-central.ballerina.io/2.0/registry
+  GITHUB_ENDPOINT: https://api.github.com
+  GITHUB_ORG: choreo-test-apps
+  GITHUB_TEST_USER_ORG: choreo-integration-test-user-dev
+  GITLAB_SECRETREF: ccf0692a-c8ad-4ade-9fac-1a7f39b19bdb
+  #GITHUB_TEST_USER_PAT:
+  #GITHUB_PAT:
+  GMAIL_API_CK: 412441153337-r3a3sj5ecba3a04aqlb3l05ro25tf08l.apps.googleusercontent.com
+  #GMAIL_API_CS:
+  #GMAIL_API_REFRESH_TOKEN:
+  COMMIT_LIST_EXAMPLE_RESPONSE: templates/getCommitList/query_get_commit_list_success_dev.json
+  TOKEN_SCOPES: scopes/dev-scopes.yaml
+  IS_PDP_ENABLED: "false"
+insights:
+  INSIGHTS_ENDPOINT: https://analytics-event-auth.dv.choreo.dev
+  INSIGHTS_ONPREM_KEY: cae0f0d0-11f3-4603-86ab-2a38eac3f155
+alerts:
+  #ALERT_MAIL_IMAP_PASS:
+  ALERT_ORG_UUID: b545f89e-b328-4ff3-8a47-0ae964674957
+  ALERT_RELEASE_ID: de821f3e-9418-449f-99d9-687831b5b3f7
+selfSignup:
+  SELF_SIGNUP_ORG_UUID: 7c03ac3e-f161-4d4f-bb22-0ff2ca655705
+  SELF_SIGNUP_ORG_ID: 8438
+  SELF_SIGNUP_ORG_HANDLE: choreoselfsignup
+  SELF_SIGNUP_ORG_ADMIN_EMAIL: samchoreots@gmail.com@carbon.super
+  #SELF_SIGNUP_ORG_ADMIN_PASSWORD:
+themeManagement:
+  THEME_ENDPOINT: https://apis.preview-dv.choreo.dev
+  CDN_THEME_ENDPOINT: https://choreodevdevportalcdn19.blob.core.windows.net/
+logs:
+  CHOREO_SYSTEM_API_PREFIX: https://783c6c4d-8b9b-4190-b70a-e717ab1ee739-systemapis.
+  CHOREO_US_DP_URL: e1-us-east-azure.preview-dv.choreoapis.dev
+  CHOREO_EU_DP_URL: e1-eu-north-azure.preview-dv.choreoapis.dev
+resourceAuthorization:
+  RESOURCE_AUTHZ_USER_EMAIL: choreo-authz-test-user@wso2.com@carbon.super
+  RESOURCE_AUTHZ_USER_UUID: 80ab41b3-508b-42b5-a02a-0f39a79d7b57
+  #RESOURCE_AUTHZ_USER_PASSWORD:

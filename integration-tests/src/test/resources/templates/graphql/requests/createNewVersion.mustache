@@ -1,0 +1,11 @@
+mutation {
+    createVersion(
+        orgHandler:"{{orgHandler}}",
+        orgUuid:"{{orgUuid}}",
+        version:"v2.0",
+        componentId:"{{componentId}}",
+        componentType: "{{componentType}}",
+        apiId: "{{apiId}}",
+        branch: "{{branch}}"
+    ) { id, apiVersion}
+}

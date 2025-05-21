@@ -1,0 +1,16 @@
+mutation {
+    deployComponent(
+      deployment: {
+        componentId: "{{.ComponentId}}"
+        versionId: "{{.VersionId}}"
+        envId: "{{.EnvId}}"
+        branch: "{{.Branch}}"
+        sha: "{{.Sha}}"
+        cron: ""
+        shaDate: "{{.ShaDate}}"
+      }
+    ) {
+      message
+      success
+    }
+}

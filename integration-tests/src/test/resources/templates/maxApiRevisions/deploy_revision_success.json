@@ -1,0 +1,18 @@
+[
+  {
+    "revisionUuid": "@ignore@",
+    "name": "@ignore@",
+    "vhost": "@ignore@",
+    "displayOnDevportal": false,
+    "deployedTime": null,
+    "successDeployedTime": "@ignore@"
+  },
+  {
+    "revisionUuid": "@ignore@",
+    "name": "@ignore@",
+    "vhost": "@ignore@",
+    "displayOnDevportal": true,
+    "deployedTime": "@ignore@",
+    "successDeployedTime": null
+  }
+]

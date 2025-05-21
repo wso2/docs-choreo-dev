@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: prod-choreo-system-wildcard-cert
+  namespace: cert-manager
+spec:
+  dnsNames:
+    - choreo.dev
+    - '*.choreo.dev'
+  issuerRef:
+    kind: Issuer
+    name: choreo-letsencrypt-prod
+  secretName: prod-choreo-system-wildcard-tls

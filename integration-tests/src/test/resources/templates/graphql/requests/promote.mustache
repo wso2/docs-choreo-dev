@@ -1,0 +1,12 @@
+mutation {
+  promote(
+    componentId: "{{componentId}}"
+    promoteSchema: {
+      apiVersionId: "{{apiVersionId}}"
+      sourceReleaseId: "{{sourceReleaseId}}"
+      targetEnvironmentId: "{{targetEnvironmentId}}"
+      cronFrequency: ""
+      deploymentPipelineId: "{{deploymentPipelineId}}
+    }
+  )
+}

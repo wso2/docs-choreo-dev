@@ -1,0 +1,1004 @@
+{
+	"info": {
+		"_postman_id": "b54a9cb6-a0cf-49c0-a644-2ca61f769719",
+		"name": "User Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "4676893"
+	},
+	"item": [
+		{
+			"name": "getUserDetailByUUId Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"accept-encoding": true,
+					"connection": true,
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users/{{USER_IDP_ID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteOrganizationMemberByUserIdpId Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users/{{DELETE_USER_IDP_ID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "ListUsersByOrgHandle Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateRolesOfUserByIdpId Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"additionRoleHandles\":[\"api-subscriber\"]}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/users/{{USER_IDP_ID}}/roles"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPermissions Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/113.0",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/roles/permissions"
+			},
+			"response": []
+		},
+		{
+			"name": "GetRolesByOrgHandle Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles?include=members",
+					"protocol": "https",
+					"host": [
+						"{{CP_GATEWAY_HOST}}"
+					],
+					"path": [
+						"user-mgt",
+						"1.0.0",
+						"orgs",
+						"{{ORG_HANDLE}}",
+						"roles"
+					],
+					"query": [
+						{
+							"key": "include",
+							"value": "members"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRoleInAnOrganization Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"displayName\": \"{{CREATE_ROLE_NAME}}\",\n    \"description\": \"{{CREATE_ROLE_DESCRIPTION}}\",\n    \"tags\": [],\n    \"permissions\": [\n        {\n            \"id\": \"{{CREATE_ROLE_PERMISSION_ID}}\",\n            \"domainArea\": \"{{CREATE_ROLE_DOMAIN_AREA}}\",\n            \"handle\": \"{{CREATE_ROLE_HANDLE}}\"\n        }\n    ]\n}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles"
+			},
+			"response": []
+		},
+		{
+			"name": "GetRoleDetailsByRoleHandle Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}?include=permissions",
+					"protocol": "https",
+					"host": [
+						"{{CP_GATEWAY_HOST}}"
+					],
+					"path": [
+						"user-mgt",
+						"1.0.0",
+						"orgs",
+						"{{ORG_HANDLE}}",
+						"roles",
+						"{{ROLE_HANDLE}}"
+					],
+					"query": [
+						{
+							"key": "include",
+							"value": "permissions"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateOrganizationRoleByHandle Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"deletionPermissionList\":[],\"additionPermissionList\":[{\"handle\":\"apim:admin\"},{\"handle\":\"apim:tier_manage\"}]}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateRolePermissionsByRoleHandle Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"content-type": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"deletionPermissionList\":[],\"additionPermissionList\":[{\"handle\":\"apim:prod_key_manage\"},{\"handle\":\"apim:sand_key_manage\"},{\"handle\":\"apim:subscribe\"},{\"handle\":\"apim:app_manage\"},{\"handle\":\"apim:sub_manage\"},{\"handle\":\"apim:app_import_export\"},{\"handle\":\"apim:api_key\"}]}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}"
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAnOrganizationRoleByRoleHandle Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{DELETE_ROLE_HANDLE}}"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateMembersOfAnOrganiizationByRoleHandle Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true,
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"additionUserIds\":[\"{{USER_TO_ADD_TO_THE_ROLE}}\"]}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/roles/{{ROLE_HANDLE}}/users"
+			},
+			"response": []
+		},
+		{
+			"name": "ListGroupRoleMappingsByOrgHandle Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateGroupRoleMappingForOrg Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"groupName\":\"{{GROUP_NAME}}\",\"roleList\":[\"developer\",\"api-subscriber\"]}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateGroupRoleMappingForOrgByGroupName Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"groupName\":\"{{GROUP_NAME}}\",\"roleList\":[\"developer\",\"api-subscriber\",\"admin\"]}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings/{{GROUP_NAME}}"
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteGroupRoleMappingForOrgByGroupName Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/group-role-mappings/{{GROUP_NAME}}"
+			},
+			"response": []
+		},
+		{
+			"name": "GetMemberInvitationsByOrgHandle Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations"
+			},
+			"response": []
+		},
+		{
+			"name": "InviteMemberToTheOrg Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"application\":\"choreo\",\"emails\":[\"{{INVITED_USER_EMAIL}}\"],\"roles\":[\"developer\"]}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations"
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteMemberInvitation Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations?email={{INVITED_USER_EMAIL}}",
+					"protocol": "https",
+					"host": [
+						"{{CP_GATEWAY_HOST}}"
+					],
+					"path": [
+						"user-mgt",
+						"1.0.0",
+						"orgs",
+						"{{ORG_HANDLE}}",
+						"invitations"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{INVITED_USER_EMAIL}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetInvitationByOrgHandleAndInvitationUUID Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "apis.choreo.dev",
+						"disabled": true
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations/{{INVITATION_UUID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "AcceptInvitationByOrgHandleAndInvitationUUID Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-length": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+						"disabled": true
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{ORG_HANDLE}}/invitations/{{INVITATION_UUID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "ValidateOrganizationName Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{ASGARDEO_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/validate/orgname?orgName={{ORG_HANDLE}}&email={{ORG_OWNER_EMAIL}}",
+					"protocol": "https",
+					"host": [
+						"{{CP_GATEWAY_HOST}}"
+					],
+					"path": [
+						"user-mgt",
+						"1.0.0",
+						"validate",
+						"orgname"
+					],
+					"query": [
+						{
+							"key": "orgName",
+							"value": "{{ORG_HANDLE}}"
+						},
+						{
+							"key": "email",
+							"value": "{{ORG_OWNER_EMAIL}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ValidateUser Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{ASGARDEO_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/validate/user"
+			},
+			"response": []
+		},
+		{
+			"name": "AddEnterpriseUser Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{ASGARDEO_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"isDevportalUser\":true}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/add-enterprise-user"
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterUserAndProvisionOrganization Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{ASGARDEO_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"organization\":{\"name\":\"{{NEW_ORG_NAME}}\"},\"termsAccepted\":true,\"serviceName\":\"choreo\"}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/register-user"
+			},
+			"response": []
+		},
+		{
+			"name": "GetTosConsentByIdpId Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/consent/tos?idpId={{USER_IDP_ID}}&serviceName=choreo",
+					"protocol": "https",
+					"host": [
+						"{{CP_GATEWAY_HOST}}"
+					],
+					"path": [
+						"user-mgt",
+						"1.0.0",
+						"consent",
+						"tos"
+					],
+					"query": [
+						{
+							"key": "idpId",
+							"value": "{{USER_IDP_ID}}"
+						},
+						{
+							"key": "serviceName",
+							"value": "choreo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetEmailConsent Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/consent/user"
+			},
+			"response": []
+		},
+		{
+			"name": "SetEmailConsent Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/consent/user?isGiven=false",
+					"protocol": "https",
+					"host": [
+						"{{CP_GATEWAY_HOST}}"
+					],
+					"path": [
+						"user-mgt",
+						"1.0.0",
+						"consent",
+						"user"
+					],
+					"query": [
+						{
+							"key": "isGiven",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SetTosValue Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"idp_id\":\"{{USER_IDP_ID}}\",\"service_name\":\"choreo\",\"is_accepted\":true}"
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/consent/tos"
+			},
+			"response": []
+		},
+		{
+			"name": "AddToSalesForceLead Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ip_address\":\"61.245.170.189\"}"
+				},
+				"url": "https://{{API_SERVER_HOST}}/user/salesforce-lead"
+			},
+			"response": []
+		},
+		{
+			"name": "SelfSubscribeToChoreoSystemOrg Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://{{CP_GATEWAY_HOST}}/user-mgt/1.0.0/orgs/{{SELF_SUBSCRIBE_ORG_NAME}}/self-subscribe"
+			},
+			"response": []
+		}
+	]
+}

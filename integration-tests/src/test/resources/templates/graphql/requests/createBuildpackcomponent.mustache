@@ -1,0 +1,47 @@
+mutation {
+  createBuildpackComponent(
+    component: {
+      name: "{{name}}"
+      displayName: "{{name}}"
+      description: ""
+      orgId: {{orgId}}
+      orgHandler: "{{orgHandler}}"
+      projectId: "{{projectId}}"
+      labels: ""
+      componentType: "{{componentType}}"
+      port: 8080
+      oasFilePath: ""
+      accessibility: "external"
+      isAsyncCreationEnabled: true
+      buildpackConfig: {
+        buildpackId: "{{buildpackId}}"
+        languageVersion: "{{languageVersion}}"
+        buildContext: "{{buildContext}}"
+        srcGitRepoUrl: "{{srcGitRepoUrl}}"
+        srcGitRepoBranch: "main"
+      },
+      isPublicRepo: {{isPublicRepo}}
+    }
+  ) {
+    id
+    createdAt
+    updatedAt
+    name
+    handle
+    organizationId
+    projectId
+    orgHandle
+    type
+    description
+    imageRegistryId
+    imageRegistry {
+      id
+      createdAt
+      updatedAt
+      cloudConnectorId
+      imageRepositoryName
+    }
+    componentType
+    httpBased
+  }
+}

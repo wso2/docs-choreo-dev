@@ -1,0 +1,37 @@
+mutation {
+    createComponent(
+        component: {
+          name: "{{componentName}}",
+          orgId: {{orgId}},
+          orgHandler: "{{orgHandler}}",
+          displayName: "{{componentName}}",
+          displayType: "ballerinaService",
+          projectId: "{{projectId}}",
+          labels: "",
+          version: "v1.0",
+          description: "",
+          apiId: "",
+          ballerinaVersion: "{{ballerinaVersion}}",
+          triggerChannels: "",
+          triggerID: null,
+          httpBase: true,
+          sampleTemplate: "",
+          accessibility: "external",
+          srcGitRepoUrl: "{{srcGitRepoUrl}}",
+          repositorySubPath: "{{repositorySubPath}}",
+          repositoryType: "UserManagedEmpty",
+          repositoryBranch: "main",
+          initializeAsBallerinaProject: false,
+          enableCellDiagram: true,
+          secretRef: "",
+          {{#isPublicRepo}}
+              isPublicRepo: {{isPublicRepo}}
+          {{/isPublicRepo}}
+        }
+      ) {
+        id
+        orgId
+        projectId
+        handler
+      }
+  }

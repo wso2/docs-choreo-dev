@@ -1,0 +1,65 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: dp-rudder-webapp-deployment-hour-enforcer
+spec:
+  schedule: "*/30 * * * *"
+  concurrencyPolicy: Replace
+  suspend: false
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      ttlSecondsAfterFinished: 300
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+        spec:
+          automountServiceAccountToken: false
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: dp-rudder
+              imagePullPolicy: Always
+              image: choreocontrolplane.azurecr.io/choreoipaas/dp-rudder:latest
+              args: ["-audit-webapp-deployment-hour"]
+              resources:
+                limits:
+                  cpu: 100m
+                  memory: 150Mi
+                requests:
+                  cpu: 50m
+                  memory: 100Mi
+              envFrom:
+                - configMapRef:
+                    name: env-dp-rudder
+                - configMapRef:
+                    name: cm-dp-rudder
+                - secretRef:
+                    name: secret-dp-rudder
+              securityContext:
+                allowPrivilegeEscalation: false
+                seccompProfile:
+                  type: RuntimeDefault
+                runAsUser: 10001
+                runAsGroup: 10001
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - all
+              volumeMounts:
+                - name: secret-dp-rudder
+                  mountPath: /mnt/csi/secret-dp-rudder
+                  readOnly: true
+          volumes:
+            - name: secret-dp-rudder
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-dp-rudder
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          restartPolicy: Never
+          serviceAccountName: sa-choreo-default

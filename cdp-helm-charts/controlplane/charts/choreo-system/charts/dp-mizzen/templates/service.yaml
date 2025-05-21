@@ -1,0 +1,42 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    {{- include "dp-mizzen.labels" . | nindent 4 }}
+  name: dp-mizzen
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  selector:
+    {{- include "dp-mizzen.labels" . | nindent 4 }}
+  ports:
+    - name: dp-mizzen-http-port
+      port: 80
+      protocol: TCP
+      targetPort: http-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    {{- include "dp-mizzen.labels" . | nindent 4 }}
+  name: dp-mizzen-ws
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  selector:
+    {{- include "dp-mizzen.labels" . | nindent 4 }}
+  ports:
+    - name: dp-mizzen-ws-port
+      port: 80
+      protocol: TCP
+      targetPort: ws-port

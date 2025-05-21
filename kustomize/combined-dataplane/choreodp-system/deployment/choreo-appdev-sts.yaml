@@ -1,0 +1,117 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC. and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: choreo-appdev-sts
+  name: choreo-appdev-sts
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      choreo.component: choreo-appdev-sts
+  template:
+    metadata:
+      labels:
+        choreo.component: choreo-appdev-sts
+        antiaffinity: choreo-appdev-sts
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-appdev-sts
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-appdev-sts:latest
+          ports:
+            - containerPort: 9000
+              name: service-port
+          readinessProbe:
+            initialDelaySeconds: 15 # Spring takes ~13 seconds to start up
+            timeoutSeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /health
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: service-port
+              path: /health
+          resources:
+            limits:
+              cpu: 750m
+              memory: 1Gi
+            requests:
+              cpu: 350m
+              memory: 512Mi
+          securityContext:
+            runAsUser: 10500
+            runAsGroup: 10500
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: choreo-appdev-sts-tmp-files
+              mountPath: /tmp
+            - name: choreo-appdev-sts-config
+              mountPath: /home/wso2/config
+            - name: choreo-appdev-sts-secrets
+              mountPath: "/mnt/csi/choreo-appdev-sts-secrets/client-secret-encryption-key.txt"
+              subPath: "DP_STS_CLIENT_SECRET_ENCRYPTION_KEY"
+              readOnly: true
+            - name: choreo-appdev-sts-secrets
+              mountPath: "/mnt/csi/choreo-appdev-sts-secrets/redis-password.txt"
+              subPath: "CHOREO_STS_REDIS_PASSWORD"
+              readOnly: true
+            - name: choreo-appdev-sts-secrets
+              mountPath: "/mnt/csi/choreo-appdev-sts-secrets/cp-consumer-secret.txt"
+              subPath: "APP_DEV_STS_APP_CLIENT_SECRET"
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: choreo-appdev-sts-tmp-files
+          emptyDir: {}
+        - name: choreo-appdev-sts-config
+          configMap:
+            name: cm-files-choreo-appdev-sts
+        - name: choreo-appdev-sts-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: choreo-appdev-sts-secrets
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - choreo-appdev-sts
+              topologyKey: kubernetes.io/hostname

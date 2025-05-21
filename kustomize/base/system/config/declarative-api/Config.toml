@@ -1,0 +1,12 @@
+[cp_declarative_api.config]
+servicePort = 8080
+internalHealthCheckPort = 8081
+maxHeaderSize = 65536
+appServiceUrl = "http://app-service:8080"
+graphqlUrl = "http://cp-graphql:9095"
+rudderUrl = "http://dp-rudder:80"
+configServiceUrl = "http://configuration-service:8080"
+configMappingServiceUrl = "http://configuration-service:8084"
+devopsUrl = "http://devops-portal-api:8089"
+subscriptionServiceUrl = "http://subscriptions:9090"
+apiServerUrl = "http://api-server:80"

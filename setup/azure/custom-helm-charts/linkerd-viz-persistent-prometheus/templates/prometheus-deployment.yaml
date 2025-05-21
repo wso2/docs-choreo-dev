@@ -1,0 +1,92 @@
+# Source: linkerd-viz/templates/prometheus.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    linkerd.io/extension: viz
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/part-of: Linkerd
+    app.kubernetes.io/version: stable-2.10.2
+    component: prometheus
+    namespace: {{.Values.namespace}}
+  name: prometheus
+  namespace: {{.Values.namespace}}
+  annotations:
+    checkov.io/skip1: CKV_K8S_22=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_31=Suppressing False positive
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      linkerd.io/extension: viz
+      component: prometheus
+      namespace: {{.Values.namespace}}
+  template:
+    metadata:
+      annotations:
+        linkerd.io/created-by: linkerd/helm stable-2.10.2
+        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+      labels:
+        linkerd.io/extension: viz
+        component: prometheus
+        namespace: {{.Values.namespace}}
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      securityContext:
+        fsGroup: {{.Values.persistentVolume.groupID}}
+      containers:
+        - args:
+            - --log.level=info
+            - --config.file=/etc/prometheus/prometheus.yml
+            - --storage.tsdb.path=/data
+            - --storage.tsdb.retention.time={{.Values.prometheus.retentionPeriod}}
+          image: prom/prometheus:v2.19.3
+          imagePullPolicy: {{.Values.prometheus.imagePullPolicy}}
+          livenessProbe:
+            httpGet:
+              path: /-/healthy
+              port: 9090
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+          name: prometheus
+          ports:
+            - containerPort: 9090
+              name: admin-http
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: 9090
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "500m"
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: {{.Values.persistentVolume.userID}}
+            runAsGroup: {{.Values.persistentVolume.groupID}}
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - mountPath: /data
+              name: data
+            - mountPath: /etc/prometheus/prometheus.yml
+              name: prometheus-config
+              subPath: prometheus.yml
+              readOnly: true
+      serviceAccountName: prometheus
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-prometheus-storage
+        - configMap:
+            name: prometheus-config
+          name: prometheus-config

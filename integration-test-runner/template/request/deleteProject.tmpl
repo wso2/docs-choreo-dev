@@ -1,0 +1,8 @@
+mutation{
+    deleteProject(
+        orgId: {{.OrgId}},
+        projectId: "{{.ProjectId}}"          
+    ){
+        status, details
+    }
+}

@@ -1,0 +1,227 @@
+{
+    "name": "Elevated Access Test - Service 1",
+    "description": "",
+    "context": "/elevated-access-test/context/service-1",
+    "version": "v1.0",
+    "provider": "choreo_dev_apim_admin",
+    "lifeCycleStatus": "PUBLISHED",
+    "wsdlInfo": null,
+    "wsdlUrl": null,
+    "responseCachingEnabled": false,
+    "cacheTimeout": 300,
+    "hasThumbnail": false,
+    "isDefaultVersion": false,
+    "isRevision": false,
+    "enableBackendJWT": false,
+    "revisionedApiId": null,
+    "revisionId": 0,
+    "enableSchemaValidation": false,
+    "type": "HTTP",
+    "audience": null,
+    "transport": [
+        "http",
+        "https"
+    ],
+    "tags": [],
+    "policies": [
+        "Unlimited"
+    ],
+    "apiThrottlingPolicy": null,
+    "throttlingLimit": null,
+    "authorizationHeader": "Authorization",
+    "securityScheme": [
+        "oauth2",
+        "oauth_basic_auth_api_key_mandatory"
+    ],
+    "maxTps": null,
+    "visibility": "PRIVATE",
+    "visibleRoles": [
+        ""
+    ],
+    "visibleTenants": [],
+    "mediationPolicies": [],
+    "subscriptionAvailability": "CURRENT_TENANT",
+    "subscriptionAvailableTenants": [
+        ""
+    ],
+    "additionalProperties": [
+        {
+            "name": "projectId",
+            "value": "c0fb925e-a2ef-4e8a-9b92-2f0e433b054d",
+            "display": true
+        },
+        {
+            "name": "accessibility",
+            "value": "external",
+            "display": true
+        },
+        {
+            "name": "org",
+            "value": "renukafernando",
+            "display": true
+        },
+        {
+            "name": "application",
+            "value": "Golang Service",
+            "display": true
+        },
+        {
+            "name": "applicationId",
+            "value": "e5f034cb-c4b1-4ac4-aa66-df40e1e458a4",
+            "display": true
+        },
+        {
+            "name": "endpointType",
+            "value": "REST",
+            "display": true
+        }
+    ],
+    "additionalPropertiesMap": {
+        "projectId__display": {
+            "name": "projectId",
+            "value": "c0fb925e-a2ef-4e8a-9b92-2f0e433b054d",
+            "display": false
+        },
+        "accessibility__display": {
+            "name": "accessibility",
+            "value": "external",
+            "display": false
+        },
+        "org__display": {
+            "name": "org",
+            "value": "renukafernando",
+            "display": false
+        },
+        "application__display": {
+            "name": "application",
+            "value": "Golang Service",
+            "display": false
+        },
+        "applicationId__display": {
+            "name": "applicationId",
+            "value": "e5f034cb-c4b1-4ac4-aa66-df40e1e458a4",
+            "display": false
+        },
+        "endpointType__display": {
+            "name": "endpointType",
+            "value": "REST",
+            "display": false
+        }
+    },
+    "monetization": null,
+    "accessControl": "NONE",
+    "accessControlRoles": [],
+    "businessInformation": {
+        "businessOwner": null,
+        "businessOwnerEmail": null,
+        "technicalOwner": null,
+        "technicalOwnerEmail": null
+    },
+    "corsConfiguration": {
+        "corsConfigurationEnabled": false,
+        "accessControlAllowOrigins": [
+            "*"
+        ],
+        "accessControlAllowCredentials": false,
+        "accessControlAllowHeaders": [
+            "authorization",
+            "Access-Control-Allow-Origin",
+            "Content-Type",
+            "SOAPAction",
+            "apikey",
+            "API-Key",
+            "testKey"
+        ],
+        "accessControlAllowMethods": [
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE",
+            "PATCH",
+            "OPTIONS"
+        ]
+    },
+    "websubSubscriptionConfiguration": {
+        "enable": false,
+        "secret": "",
+        "signingAlgorithm": "SHA1",
+        "signatureHeader": "x-hub-signature"
+    },
+    "workflowStatus": null,
+    "createdTime": "1686889901502",
+    "lastUpdatedTime": "2023-07-05 07:43:49.319",
+    "endpointConfig": {
+        "endpoint_type": "http",
+        "production_endpoints": {
+            "url": "http://golang-service-3192360657.dp-development-default-project-224-321563503.svc.cluster.local:8080/bar"
+        }
+    },
+    "endpointImplementationType": "ENDPOINT",
+    "scopes": [],
+    "scopePrefix": null,
+    "operations": [
+        {
+            "id": "",
+            "target": "/hello",
+            "verb": "GET",
+            "authType": "Application & Application User",
+            "throttlingPolicy": "Unlimited",
+            "throttlingLimit": {
+                "requestCount": -1,
+                "unit": "MINUTE"
+            },
+            "scopes": [],
+            "usedProductIds": [],
+            "amznResourceName": null,
+            "amznResourceTimeout": null,
+            "payloadSchema": null,
+            "uriMapping": null,
+            "operationPolicies": {
+                "request": [],
+                "response": [],
+                "fault": []
+            }
+        },
+        {
+            "id": "",
+            "target": "/hello",
+            "verb": "POST",
+            "authType": "Application & Application User",
+            "throttlingPolicy": "Unlimited",
+            "throttlingLimit": {
+                "requestCount": -1,
+                "unit": "MINUTE"
+            },
+            "scopes": [],
+            "usedProductIds": [],
+            "amznResourceName": null,
+            "amznResourceTimeout": null,
+            "payloadSchema": null,
+            "uriMapping": null,
+            "operationPolicies": {
+                "request": [],
+                "response": [],
+                "fault": []
+            }
+        }
+    ],
+    "threatProtectionPolicies": null,
+    "categories": [],
+    "keyManagers": [
+        "all"
+    ],
+    "serviceInfo": null,
+    "advertiseInfo": {
+        "advertised": false,
+        "apiExternalProductionEndpoint": null,
+        "apiExternalSandboxEndpoint": null,
+        "originalDevPortalUrl": null,
+        "apiOwner": "choreo_dev_apim_admin",
+        "vendor": "WSO2"
+    },
+    "gatewayVendor": "wso2",
+    "gatewayType": "wso2/synapse",
+    "asyncTransportProtocols": [
+        ""
+    ]
+}

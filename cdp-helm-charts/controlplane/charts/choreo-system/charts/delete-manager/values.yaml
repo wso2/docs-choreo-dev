@@ -1,0 +1,49 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+replicas: 1
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+image:
+  repository: choreoipaas/delete-manager
+  tag: latest
+vault:
+  roleName: delete-manager
+serviceAccount:
+  annotations: {}
+config:
+  env: prod
+  mssqlHost: sqlfg-choreo-choreo-delete-manager-db-prod.database.windows.net
+  connectorBuilderUrl: https://app.choreo.dev
+  apimClientId: ymy2brRWj2CKqtB6X6inBrcTUZIa
+  gchatSpaceId: AAAAG_THA0Q
+  ballerinaCentralURL: https://api.central.ballerina.io
+secrets:
+  mssqlPassword:
+    path: choreo-cp/data/choreo-system/cp-graphql
+    key: mssqlPassword
+  asbConectionString:
+    path: choreo-cp/data/choreo-system/cp-graphql
+    key: asbConectionString
+  apimRestAPIConsumerSecret:
+    path: choreo-cp/data/choreo-system/cp-graphql
+    key: apimRestAPIConsumerSecret
+  apimAdminPassword:
+    path: choreo-cp/data/choreo-system/cp-graphql
+    key: apimAdminPassword
+  gchatKey:
+    path: choreo-cp/data/choreo-system/cp-graphql
+    key: gchatKey
+  gchatToken:
+    path: choreo-cp/data/choreo-system/cp-graphql
+    key: gchatToken

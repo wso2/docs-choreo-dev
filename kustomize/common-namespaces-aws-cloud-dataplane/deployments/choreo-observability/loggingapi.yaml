@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loggingapi
+spec:
+  template:
+    spec:
+      containers:
+        - name: loggingapi
+          volumeMounts:
+            - name: loggingapi-secret
+              $patch: delete
+      volumes:
+        - name: loggingapi-secret
+          $patch: delete

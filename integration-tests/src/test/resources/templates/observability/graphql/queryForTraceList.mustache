@@ -1,0 +1,16 @@
+{
+    "operationName": "traceList",
+    "variables": {
+        "observeId": "{{observeId}}",
+        "version": "{{version}}",
+        "moduleId": "{{moduleId}}",
+        "entryPointFuncModule": "{{entryPointFuncModule}}",
+        "entryPointSvcName": "{{entryPointSvcName}}",
+        "entryPointFuncName": "{{entryPointFuncName}}",
+        "entryPointResourceAccessor": "get",
+        "callerType": null,
+        "from": "{{from}}",
+        "to": "{{to}}"
+    },
+    "query": "query traceList($observeId: String!, $version: String!, $from: String!, $to: String!, $moduleId: String!, $entryPointFuncModule: String!, $entryPointSvcName: String!, $entryPointFuncName: String!, $entryPointResourceAccessor: String, $callerType: String) {\n  requestTraceGroup(\n    obsId: $observeId\n    version: $version\n    from: $from\n    to: $to\n    module: $moduleId\n    entryPointFuncModule: $entryPointFuncModule\n    entryPointSvcName: $entryPointSvcName\n    entryPointFuncName: $entryPointFuncName\n    entryPointResourceAccessor: $entryPointResourceAccessor\n    callerConnectorType: $callerType\n  ) {\n    traces {\n      traceId\n      startTime\n      duration\n      errorStatus\n      httpStatusCode\n      __typename\n    }\n    totalCount\n    __typename\n  }\n}\n"
+}

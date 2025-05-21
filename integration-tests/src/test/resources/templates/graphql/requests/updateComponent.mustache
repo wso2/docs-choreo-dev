@@ -1,0 +1,29 @@
+{
+  "query": "mutation {
+    updateComponent(
+      component: {
+        id: "{{componentId}}",
+        displayName: "IntegraionAsAPI",
+        description: "Updated the description",
+        version: "v1.0",
+        labels: "Business Intelligence/Dashboards,Business Intelligence/Data Warehouse"
+      }
+    ) {
+      id
+      name
+      handler
+      description
+      displayType
+      displayName
+      orgId
+      orgHandler
+      version
+      labels
+      createdAt
+      updatedAt
+      projectId
+      apiId
+      httpBased
+    }
+  }"
+}

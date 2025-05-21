@@ -1,0 +1,4 @@
+resources:
+  - cc-adapter
+  - cc-deployment
+  - cc-rate-limiter

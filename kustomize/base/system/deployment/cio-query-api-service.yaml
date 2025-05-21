@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: cio-query-api-service
+  name: cio-query-api-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: cio-query-api-service
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: cio-query-api-service
+        antiaffinity: cio-query-api-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: cio-query-api-service
+          imagePullPolicy: Always
+          image: choreocontrolplane.azurecr.io/choreoipaas/cio-query-api:latest
+          resources:
+            limits:
+              cpu: 750m
+              memory: 768Mi
+            requests:
+              cpu: 300m
+              memory: 500Mi
+          envFrom:
+            - configMapRef:
+                name: env-cio-query-api
+            - configMapRef:
+                name: cm-cio-query-api
+            - secretRef:
+                name: secret-cio-query-api
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 10500
+            runAsGroup: 10500
+            capabilities:
+              drop:
+                - ALL
+          ports:
+            - containerPort: 4000
+              name: service-port
+              protocol: TCP
+            - containerPort: 8086
+              name: health-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 20
+            periodSeconds: 20
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /readiness
+              port: health-port
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /liveness
+              port: health-port
+          volumeMounts:
+            - name: secret-cio-query-api
+              mountPath: "/mnt/csi/secret-cio-query-api"
+              readOnly: true
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+      volumes:
+        - name: secret-cio-query-api
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cio-query-api
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: config
+          configMap:
+            name: cm-file-cio-query-api
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - cio-query-api-service
+              topologyKey: kubernetes.io/hostname

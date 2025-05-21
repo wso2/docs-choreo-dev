@@ -1,0 +1,112 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=Temporarily suppressing till fixing
+  labels:
+    {{- include "audit-logging.labels" . | nindent 4 }}
+  name: audit-logging
+  namespace: {{ .Values.global.namespaces.system }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "audit-logging.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "audit-logging.labels" . | nindent 8 }}
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: audit-logging
+          image: {{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          envFrom:
+            - secretRef:
+                name: audit-logging
+          ports:
+            - containerPort: 8080
+              name: service-port
+            - containerPort: 8090
+              name: listener-port
+            - containerPort: 9090      # To be used for readiness/liveness probes (internal)
+              name: health-port
+          readinessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /readiness
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: health-port
+              path: /liveness
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 300m
+              memory: 300Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - name: config
+              mountPath: /home/ballerina/Config.toml
+              subPath: Config.toml
+            - name: secret-audit-logging
+              mountPath: "/mnt/csi/secret-audit-logging"
+              readOnly: true
+            - name: mount-ballerina-internal-log
+              mountPath: ballerina-internal.log
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: audit-logging
+        - name: secret-audit-logging
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: audit-logging
+        # Volume mounts for system functionalities
+        - name: mount-ballerina-internal-log
+          emptyDir: {}
+      serviceAccountName: audit-logging
+      {{- if .Values.autoscaling.enabled }}
+      {{- $minReplicas := .Values.autoscaling.minReplicas | int64 }}
+      {{- if ge $minReplicas 2 }}
+      {{- include "audit-logging.affinity" . | nindent 6 }}
+      {{- end }}
+      {{- end }}

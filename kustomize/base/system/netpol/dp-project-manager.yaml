@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: netpol-dp-project-manager
+spec:
+  podSelector:
+    matchLabels:
+      choreo.component: dp-project-manager
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - port: 80
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: choreo-ai
+          podSelector:
+            matchLabels:
+              choreo.component: cost-optimizer-cp

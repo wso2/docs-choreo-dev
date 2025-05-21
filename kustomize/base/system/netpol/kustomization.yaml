@@ -1,0 +1,5 @@
+resources:
+  - namespace.yaml
+  - dp-mizzen-ws.yaml
+  - dp-project-manager.yaml
+  - dp-rudder.yaml

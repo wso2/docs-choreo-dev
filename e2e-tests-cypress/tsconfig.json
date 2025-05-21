@@ -1,0 +1,26 @@
+{
+
+  "compilerOptions": {
+    "strict": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "module": "ES6",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "lib": [
+      "ES6",
+      "dom"
+    ],
+    "target": "ES6",
+    "types": [
+      "cypress",
+      "node",
+      "cypress-real-events"
+    ],
+  },
+  "include": [
+    "**/*.ts"
+, "cypress/plugins/index.js"  ]
+}

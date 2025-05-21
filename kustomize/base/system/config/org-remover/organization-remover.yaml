@@ -1,0 +1,66 @@
+db:
+  username: ${ORG_REMOVER_DB_USERNAME}
+  password: ${ORG_REMOVER_DB_PASSWORD}
+  protocol: tcp
+  host: ${ORG_REMOVER_DB_HOST}
+  port: ${ORG_REMOVER_DB_PORT}
+  name: choreo_org_remover_db
+  driver: ${ORG_REMOVER_DB_DRIVER}
+  loc: UTC
+  allowNativePasswords: true
+  checkConnLiveness: true
+  tlsConfig: skip-verify
+  parseTime: true
+  additionalParams:
+    autocommit: "true"
+    time_zone: "'+00:00'"
+
+logger:
+  level: ${LOGGER_LEVEL}
+  encoding: console
+  development: ${LOGGER_DEVELOPMENT}
+  disableStacktrace: ${LOGGER_DISABLE_STACKTRACE}
+  encoderConfig:
+    timeKey: time
+    levelKey: level
+    nameKey: logger
+    callerKey: caller
+    messageKey: message
+    stacktraceKey: stacktrace
+    lineEnding: "\n"
+    levelEncoder: capitalColor
+    timeEncoder: iso8601
+    durationEncoder: string
+    callerEncoder: short
+  outputPaths: stdout
+  errorOutputPaths: stdout
+
+orgRemoverRequest:
+  orgBatchSize: 1
+  connectionString: ${ASB_CONNECTION_STRING}
+  topic: ${ASB_REQUEST_TOPIC}
+  resultTopic: ${ASB_RESULT_TOPIC}
+  resultSubscription: ${ASB_RESULT_SUB}
+  componentNameRegex: "^choreo-([a-z])+$"
+  choreoSystemOrgHandle: {{.CHOREO_SYSTEM_ORG_HANDLE}}
+  choreoSystemOrgUuid: {{.CHOREO_SYSTEM_ORG_UUID}}
+  excludeCentralOrgRegistry: {{.EXCLUDE_CENTRAL_ORG_REGISTRY}}
+
+emailService:
+  host: email-service
+  path: service/sendEmail
+  receivers: {{.EMAIL_RECEIVERS}}
+
+server:
+  skipAuthenticationCheck: ${SKIP_AUTH_CHECK}
+  username: ${BASIC_AUTH_USERNAME}
+  password: ${BASIC_AUTH_PASSWORD}
+  port: ${SERVER_PORT}
+
+upstream:
+  app-service: app-service:8080
+
+deleteManager:
+  host: delete-manager:80/api/v1
+ballerinaCentral:
+  host: {{.BAL_CENTRAL_HOST}}

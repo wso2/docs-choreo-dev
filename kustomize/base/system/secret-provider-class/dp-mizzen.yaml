@@ -1,0 +1,40 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: secret-dp-mizzen
+spec:
+  secretObjects:
+    - secretName: secret-dp-mizzen
+      type: Opaque
+      data:
+        - objectName: MSSQL_PASSWORD
+          key: MSSQL_PASSWORD
+        - objectName: SERVICE_BUS_CONNECTION_STRING
+          key: SERVICE_BUS_CONNECTION_STRING
+        - objectName: REDIS_PASSWORD
+          key: REDIS_PASSWORD
+        - objectName: JWT_KEY
+          key: JWT_KEY
+  parameters:
+    objects: |
+      array:
+        - |
+          objectName: choreo-dp-mizzen-db-mssql-password
+          objectType: secret
+          objectAlias: MSSQL_PASSWORD
+          objectVersion: "{{.MSSQL_PASSWORD}}"
+        - |
+          objectName: dp-mizzen-service-bus-connection-string
+          objectType: secret
+          objectAlias: SERVICE_BUS_CONNECTION_STRING
+          objectVersion: "{{.SERVICE_BUS_CONNECTION_STRING}}"
+        - |
+          objectName: common-redis-primary-access-key
+          objectType: secret
+          objectAlias: REDIS_PASSWORD
+          objectVersion: "{{.REDIS_PASSWORD}}"
+        - |
+          objectName: dp-mizzen-JWT-KEY
+          objectType: secret
+          objectAlias: JWT_KEY
+          objectVersion: "{{.JWT_KEY}}"

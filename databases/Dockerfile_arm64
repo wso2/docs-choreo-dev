@@ -1,0 +1,35 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2023, WSO2 LLC. (https://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC. and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content."
+#
+# --------------------------------------------------------------------------------------
+
+# Derived from official Azure SQL edge image (our base image)
+FROM mcr.microsoft.com/azure-sql-edge:1.0.7
+
+# Switch to root user for access to apt-get install
+USER root
+
+# Install go-sqlcmd
+RUN wget https://github.com/microsoft/go-sqlcmd/releases/download/v0.14.0/sqlcmd-v0.14.0-linux-arm64.tar.bz2 \
+    && mkdir -p /opt/mssql-tools/bin/ \
+    && tar -xf sqlcmd-v0.14.0-linux-arm64.tar.bz2 -C /opt/mssql-tools/bin/
+
+# Create  directory
+RUN mkdir -p /db-script-data
+WORKDIR /db-script-data
+
+# Bundle files
+COPY initialize-db-script-arm64.sh entrypoint-arm64.sh scripts/ /db-script-data/
+
+# Grant permissions for the initialize-db-script-arm64 script to be executable
+RUN chmod +x /db-script-data/initialize-db-script-arm64.sh
+
+# Switch back to mssql user and run the entrypoint script
+USER mssql
+ENTRYPOINT ["/bin/bash", "./entrypoint-arm64.sh"]

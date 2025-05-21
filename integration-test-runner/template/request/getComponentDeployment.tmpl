@@ -1,0 +1,39 @@
+query {
+    componentDeployment(
+    orgHandler: "{{.OrgHandler}}"
+    orgUuid: "{{.OrgUuid}}"
+    componentId: "{{.ComponentId}}"
+    versionId: "{{.VersionId}}"
+    environmentId: "{{.EnvId}}"
+    ) {
+        environmentId
+        configCount
+        apiId
+        releaseId
+        apiRevision {
+            id
+            displayName
+        }
+        build{
+            buildId
+            deployedAt
+            commit {
+                author {
+                    name
+                    date
+                    email
+                    avatarUrl
+                }
+                sha
+                message
+                isLatest
+            }
+        }
+    invokeUrl
+    versionId
+    deploymentStatus
+    deploymentStatusV2
+    version
+    cron
+    }
+}

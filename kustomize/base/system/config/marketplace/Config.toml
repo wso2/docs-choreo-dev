@@ -1,0 +1,17 @@
+[marketplace.config]
+servicePort=9090
+dependencyConfigServicePort=9091
+healthPort=9092
+resourceRegistryEndpoint="http://resource-registry:9090/resource-registry"
+endpointResolverEndpoint="http://endpoint-resolver:9090/endpoint/resolver/v1"
+configurationServiceEndpoint="http://configuration-service:8080"
+projectManagerEndpoint="http://dp-project-manager:80/api/v1"
+secretManagerEndpoint="http://dp-secret-manager:80/api/v1"
+connResiliencyEnabled = {{.CONN_RESILIENCY_FEATURE_ENABLED | default false}}
+enableEventPublish = {{.ENABLE_EVENT_PUBLISH | default false}}
+websubHubUrl = "{{.WEBSUB_HUB_URL}}"
+websubHubTopic = "{{.WEBSUB_HUB_TOPIC}}"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
+format="json"

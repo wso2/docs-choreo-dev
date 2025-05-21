@@ -1,0 +1,18 @@
+{
+   "query":"query($dataFilter: DataFilter!, $timeFilter: TimeFilter!) {    getTotalTraffic(filter: $timeFilter, dataFilter: $dataFilter)    getTotalErrors(filter: $timeFilter, dataFilter: $dataFilter)    getOverallLatency(filter: $timeFilter, dataFilter: $dataFilter)}",
+   "variables":{
+      "timeFilter":{
+         "from":"{{fromTime}}",
+         "to":"{{toTime}}"
+      },
+      "dataFilter":{
+         "orgId":"{{orgId}}",
+         "environmentIds":[
+            "{{externalEnvId}}",
+            "{{internalEnvId}}",
+            "{{sandboxEnvId}}"
+         ],
+         "tenant":"{{tenant}}"
+      }
+   }
+}

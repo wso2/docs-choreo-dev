@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: organization-remover
+  name: organization-remover
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: organization-remover
+  template:
+    metadata:
+      labels:
+        choreo.component: organization-remover
+        antiaffinity: organization-remover
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/choreo-org-cleanup-service:latest
+          name: organization-remover
+          env:
+            - name: ASB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  key: ASB_CONNECTION_STRING
+                  name: secret-organization-remover
+            - name: ORG_REMOVER_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: ORG_REMOVER_DB_PASSWORD
+                  name: secret-organization-remover
+            - name: BASIC_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: BASIC_AUTH_PASSWORD
+                  name: secret-organization-remover
+          envFrom:
+            - configMapRef:
+                name: env-organization-remover
+            - configMapRef:
+                name: cm-organization-remover-cp
+          ports:
+            - containerPort: 8080
+              name: org-rem-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            httpGet:
+              path: /readyz
+              port: org-rem-port
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 30
+            httpGet:
+              path: /livez
+              port: org-rem-port
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 12000
+            runAsGroup: 12000
+            readOnlyRootFilesystem: true
+            name: organization-remover
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: secret-organization-remover
+              mountPath: "/mnt/csi/secret-organization-remover"
+              readOnly: true
+            - name: config
+              mountPath: /organization-remover.yaml
+              subPath: organization-remover.yaml
+            - name: config
+              mountPath: /org-service/organization-remover.yaml
+              subPath: organization-remover.yaml
+          resources:
+            limits:
+              cpu: 150m
+              memory: 150Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+      volumes:
+        - name: secret-organization-remover
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-organization-remover
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: config
+          configMap:
+            name: cm-file-organization-remover
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - organization-remover
+              topologyKey: kubernetes.io/hostname

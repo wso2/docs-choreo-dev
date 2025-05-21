@@ -1,0 +1,24 @@
+helmCharts:
+  - name: reflector
+    valuesInline:
+      fullnameOverride: reflector
+      image:
+        repository: choreocontrolplane.azurecr.io/emberstack/kubernetes-reflector
+    releaseName: reflector
+    namespace: reflector
+    version: 7.1.288
+    repo: oci://choreocontrolplane.azurecr.io/helm
+
+resources:
+  - namespace.yaml
+  - secret-provider-class.yaml
+
+patches:
+  - path: reflector-patch.yaml
+  - path: patch.json
+    target:
+      group: secrets-store.csi.x-k8s.io
+      version: v1
+      kind: SecretProviderClass
+
+namespace: reflector

@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: podman-image-cache
+  namespace: dev-choreodp-system
+  labels:
+    app: podman-image-cache
+spec:
+  selector:
+    matchLabels:
+      app: podman-image-cache
+  template:
+    metadata:
+      labels:
+        app: podman-image-cache
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.azure.com/scalesetpriority
+                    operator: In
+                    values:
+                      - spot
+              - matchExpressions:
+                  - key: nodepool
+                    operator: In
+                    values:
+                      - build-nodepool
+      tolerations:
+        - key: "choreo-deployments"
+          operator: "Equal"
+          value: "userapps"
+          effect: "NoSchedule"
+        - key: "kubernetes.azure.com/scalesetpriority"
+          operator: "Equal"
+          value: "spot"
+          effect: "NoSchedule"
+        - key: "argo-build"
+          operator: "Equal"
+          value: "dedicated"
+          effect: "NoSchedule"
+      initContainers:
+        - name: podman-cache-init
+          image: choreocontrolplane.azurecr.io/choreoipaas/argo-buildpack-build:main-d08de6a080d7c1fcd259de9efb5697890adaca04
+          env:
+            - name: AZURE_CONTAINER_REGISTRY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: AZURE_CONTAINER_REGISTRY_PASSWORD
+                  name: secret-buildpack-cache-daemonset
+          envFrom:
+            - configMapRef:
+                name: env-buildpack-cache-daemonset
+          command:
+            - bash
+            - -c
+            - |
+              #!/bin/bash
+              set -e
+              mkdir -p /mnt/podman-cache
+
+              echo "Logging in to ACR"
+              podman login -u "$AZURE_CONTAINER_REGISTRY_USERNAME" -p "$AZURE_CONTAINER_REGISTRY_PASSWORD" choreocontrolplane.azurecr.io
+
+              LIFECYCLE_IMAGE="choreocontrolplane.azurecr.io/buildpacksio/lifecycle:${LIFECYCLE_IMAGE_TAG}"
+              BUILDER_IMAGE="choreocontrolplane.azurecr.io/buildpacks/builder:${BUILDER_IMAGE_TAG}"
+              RUN_IMAGE="choreocontrolplane.azurecr.io/buildpacks/google-22/run:${RUN_IMAGE_TAG}"
+
+              to_filename() {
+                echo "$1" | sed 's|[/:]|_|g'
+              }
+
+              LIFECYCLE_TAR="/mnt/podman-cache/$(to_filename "$LIFECYCLE_IMAGE").tar"
+              if [[ -f "$LIFECYCLE_TAR" ]]; then
+                echo "lifecycleImage already exists"
+              else
+                echo "Pulling lifecycleImage"
+                podman pull "$LIFECYCLE_IMAGE"
+                podman save -o "$LIFECYCLE_TAR" "$LIFECYCLE_IMAGE"
+              fi
+
+              BUILDER_TAR="/mnt/podman-cache/$(to_filename "$BUILDER_IMAGE").tar"
+              if [[ -f "$BUILDER_TAR" ]]; then
+                echo "builderImage already exists"
+              else
+                echo "Pulling builderImage"
+                podman pull "$BUILDER_IMAGE"
+                podman save -o "$BUILDER_TAR" "$BUILDER_IMAGE"
+              fi
+
+              RUN_TAR="/mnt/podman-cache/$(to_filename "$RUN_IMAGE").tar"
+              if [[ -f "$RUN_TAR" ]]; then
+                echo "runImage already exists"
+              else
+                echo "Pulling runImage"
+                podman pull "$RUN_IMAGE"
+                podman save -o "$RUN_TAR" "$RUN_IMAGE"
+              fi
+
+              echo "All images cached successfully."
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: cache-volume
+              mountPath: /mnt/podman-cache
+            - name: secret-buildpack-cache-daemonset
+              mountPath: /mnt/csi/secret-buildpack-cache-daemonset
+              readOnly: true
+      containers:
+        - name: podman-dummy
+          image: choreocontrolplane.azurecr.io/choreoipaas/argo-buildpack-build:main-d08de6a080d7c1fcd259de9efb5697890adaca04
+          command: ["sleep", "infinity"]
+          securityContext:
+            privileged: true
+      volumes:
+        - name: cache-volume
+          hostPath:
+            path: /mnt/podman-cache
+            type: DirectoryOrCreate
+        - name: secret-buildpack-cache-daemonset
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-buildpack-cache-daemonset
+            nodePublishSecretRef:
+              name: csi-secret-store-azure

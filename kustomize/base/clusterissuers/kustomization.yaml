@@ -1,0 +1,4 @@
+resources:
+  - choreo-dev.yaml
+  - mychoreoapp-com.yaml
+  - selfsigned.yaml

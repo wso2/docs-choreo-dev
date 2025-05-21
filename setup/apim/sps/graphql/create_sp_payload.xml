@@ -1,0 +1,11 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://org.apache.axis2/xsd" xmlns:xsd1="http://model.common.application.identity.carbon.wso2.org/xsd" xmlns:xsd2="http://script.model.common.application.identity.carbon.wso2.org/xsd">
+    <soap:Header/>
+    <soap:Body>
+        <xsd:createApplication>
+            <xsd:serviceProvider>
+                <xsd1:applicationName>{GRAPHQL_SP_NAME}</xsd1:applicationName>
+                <xsd1:description>Super tenant SP used by the CP GRAPHQL component</xsd1:description>
+            </xsd:serviceProvider>
+        </xsd:createApplication>
+    </soap:Body>
+</soap:Envelope>

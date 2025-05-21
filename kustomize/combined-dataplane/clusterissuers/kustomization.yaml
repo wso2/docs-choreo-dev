@@ -1,0 +1,5 @@
+resources:
+  - choreoapis.yaml
+  - choreoapps.yaml
+  - bijira.yaml
+  - bijiraapis.yaml

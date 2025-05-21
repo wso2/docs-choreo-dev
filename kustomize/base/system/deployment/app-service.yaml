@@ -1,0 +1,308 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: app-service
+  name: app-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: app-service
+  template:
+    metadata:
+      labels:
+        choreo.component: app-service
+        antiaffinity: app-service
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: choreocontrolplane.azurecr.io/choreoipaas/app-service:latest
+          name: app-service
+          env:
+            - name: CHOREO_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-db
+                  key: CHOREO_DB_PASSWORD
+            - name: GITHUB_BOT_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: GITHUB_BOT_ACCESS_TOKEN
+            - name: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: USER_FEEDBACK_AZURE_BLOB_ACCOUNT_KEY
+            - name: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
+            - name: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: BETA_PROGRAM_PREFINERY_INVITATION_DECODER_KEY
+            - name: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: CENTRAL_ORG_REGISTRY_CERTIFICATE_KEY
+            - name: MARKETING_CONSENT_APP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: MARKETING_CONSENT_APP_CLIENT_SECRET
+            - name: ASGARDEO_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: ASGARDEO_CLIENT_SECRET
+            - name: IDP_APP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: IDP_APP_CLIENT_SECRET
+            - name: IDP_BACKEND_API_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-idp
+                  key: IDP_BACKEND_API_CLIENT_SECRET
+            - name: SCIM_BACKEND_API_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-idp
+                  key: SCIM_BACKEND_API_USER_PASSWORD
+                  optional: true
+            - name: AZURE_KEY_VAULT_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-key-vault
+                  key: AZURE_KEY_VAULT_CLIENT_SECRET
+            - name: SERVICE_NOW_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secret-service-now
+                  key: SERVICE_NOW_CLIENT_ID
+            - name: SERVICE_NOW_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-service-now
+                  key: SERVICE_NOW_CLIENT_SECRET
+            - name: SERVICE_NOW_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-service-now
+                  key: SERVICE_NOW_USERNAME
+            - name: SERVICE_NOW_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-service-now
+                  key: SERVICE_NOW_PASSWORD
+            - name: ASB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-organization-remover
+                  key: ASB_CONNECTION_STRING
+            - name: APIM_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-runtime
+                  key: APIM_CLIENT_SECRET
+            - name: PARDOT_USER_LIST_REGISTRATION_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: PARDOT_USER_LIST_REGISTRATION_APP_KEY
+            - name: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: PARDOT_USER_LIST_REGISTRATION_APP_SECRET
+            - name: API_MANAGER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-api-manager
+                  key: API_MANAGER_CLIENT_SECRET
+            - name: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: SALESFORCE_LEAD_VIA_PARDOT_APP_KEY
+            - name: SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: SALESFORCE_LEAD_VIA_PARDOT_APP_SECRET
+            - name: MAX_MIND_GEO_LOC_COUNTRY_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: MAX_MIND_GEO_LOC_COUNTRY_USERNAME
+            - name: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: MAX_MIND_GEO_LOC_COUNTRY_PASSWORD
+            - name: PARDOT_STALE_USER_HANDLING_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: PARDOT_STALE_USER_HANDLING_APP_KEY
+            - name: PARDOT_STALE_USER_HANDLING_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secret-app-service
+                  key: PARDOT_STALE_USER_HANDLING_APP_SECRET
+          envFrom:
+            - configMapRef:
+                name: env-app-service
+            - configMapRef:
+                name: cm-app-service-cp
+          ports:
+            - containerPort: 8080
+              name: grpc-port
+          readinessProbe:
+            exec:
+              command:
+                - /bin/grpc_health_probe
+                - -addr=:8080
+            initialDelaySeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - "/bin/sh"
+                - "-c"
+                - "bin/grpc_health_probe -addr=:8080 2>&1 | grep -q SERVING"
+            initialDelaySeconds: 20
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 12000
+            runAsGroup: 12000
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          volumeMounts:
+            - mountPath: /app-service.yaml
+              name: config
+              subPath: app-service.yaml
+            - name: secret-app-db
+              mountPath: "/mnt/csi/secret-app-db"
+              readOnly: true
+            - name: secret-app-service
+              mountPath: "/mnt/csi/secret-app-service"
+              readOnly: true
+            - name: secret-idp
+              mountPath: "/mnt/csi/secret-idp"
+              readOnly: true
+            - name: secret-key-vault
+              mountPath: "/mnt/csi/secret-key-vault"
+              readOnly: true
+            - name: secret-service-now
+              mountPath: "/mnt/csi/secret-service-now"
+              readOnly: true
+            - name: secret-organization-remover
+              mountPath: "/mnt/csi/secret-organization-remover"
+              readOnly: true
+            - name: secret-runtime
+              mountPath: "/mnt/csi/secret-runtime"
+              readOnly: true
+            - name: secret-api-manager
+              mountPath: "/mnt/csi/secret-api-manager"
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: cm-file-app-service
+        - name: secret-api-manager
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-api-manager
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-app-db
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-app-db
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-app-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-app-service
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-idp
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-idp
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-key-vault
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-key-vault
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-service-now
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-service-now
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-organization-remover
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-organization-remover
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-runtime
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-runtime
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - app-service
+              topologyKey: kubernetes.io/hostname

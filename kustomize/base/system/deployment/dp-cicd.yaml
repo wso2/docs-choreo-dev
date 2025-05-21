@@ -1,0 +1,181 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing till fixing
+    checkov.io/skip2: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+  labels:
+    choreo.component: dp-cicd
+    choreo.dataplane: "true"
+  name: dp-cicd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: dp-cicd
+  template:
+    metadata:
+      labels:
+        choreo.component: dp-cicd
+        antiaffinity: dp-cicd
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      automountServiceAccountToken: true
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: dp-cicd
+          imagePullPolicy: Always
+          image: choreocontrolplane.azurecr.io/choreoipaas/dp-cicd:latest
+          resources:
+            limits:
+              cpu: 1
+              memory: 1.5G
+            requests:
+              cpu: 500m
+              memory: 500M
+          envFrom:
+            - configMapRef:
+                name: env-dp-cicd
+            - configMapRef:
+                name: cm-dp-cicd
+            - secretRef:
+                name: secret-dp-cicd-docker-hub-users
+          env:
+            - name: DOCKER_REGISTRY_PAT
+              valueFrom:
+                secretKeyRef:
+                  key: DOCKER_REGISTRY_PAT
+                  name: secret-dp-cicd
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: DB_PASSWORD
+                  name: secret-dp-cicd
+            - name: GITHUB_APP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITHUB-APP-CLIENT-SECRET
+                  name: secret-dp-cicd
+            - name: GITHUB_APP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITHUB-APP-PRIVATE-KEY
+                  name: secret-dp-cicd
+            - name: LOG_ANALYTICS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: LOG-ANALYTICS-KEY
+                  name: secret-dp-cicd
+            - name: CHOREO_PRIVATE_ACR_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO_PRIVATE_ACR_SECRET
+                  name: secret-dp-cicd
+            - name: CHOREO_GITHUB_RUNNER_APP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITHUB-RUNNER-APP-CLIENT-SECRET
+                  name: secret-dp-cicd
+            - name: CHOREO_GITHUB_RUNNER_APP_OPAQUE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITHUB-RUNNER-APP-OPAQUE-CLIENT-SECRET
+                  name: secret-dp-cicd
+            - name: AZURE_CONTAINER_REGISTRY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: AZURE-CONTAINER-REGISTRY-PASSWORD
+                  name: secret-dp-cicd
+            - name: GITOPS_APP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITOPS-APP-CLIENT-SECRET
+                  name: secret-dp-cicd
+            - name: GITOPS_APP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: CHOREO-GITOPS-APP-PRIVATE-KEY
+                  name: secret-dp-cicd
+            - name: BUILDPACKS_BUILDER_IMAGE
+              valueFrom:
+                configMapKeyRef:
+                  key: BUILDPACKS_BUILDER_IMAGE
+                  name: common-env-variables
+            - name: UNIT_TEST_RUNNER_IMAGE
+              valueFrom:
+                configMapKeyRef:
+                  key: UNIT_TEST_RUNNER_IMAGE
+                  name: common-env-variables
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          ports:
+            - containerPort: 8080
+              name: http-port
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 40
+            timeoutSeconds: 120
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+          livenessProbe:
+            initialDelaySeconds: 40
+            timeoutSeconds: 120
+            periodSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /healthz
+              port: http-port
+          volumeMounts:
+            - name: secret-dp-cicd
+              mountPath: "/mnt/csi/secret-dp-cicd"
+              readOnly: true
+            - name: secret-dp-cicd-docker-hub-users
+              mountPath: /mnt/csi/secret-dp-cicd-docker-hub-users
+              readOnly: true
+      volumes:
+        - name: secret-dp-cicd
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-cicd
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-dp-cicd-docker-hub-users
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-dp-cicd-docker-hub-users
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - dp-cicd
+              topologyKey: kubernetes.io/hostname

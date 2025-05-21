@@ -1,0 +1,29 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: rate-limiter-cert
+spec:
+  commonName: rate-limiter
+  secretName: rate-limiter-cert
+  privateKey:
+    algorithm: RSA
+    size: 4096
+    encoding: PKCS8
+  dnsNames:
+    - rate-limiter
+    - choreo-connect
+  subject:
+    organizations:
+      - WSO2
+    organizationalUnits:
+      - WSO2
+    localities:
+      - "Mountain View"
+    provinces:
+      - CA
+    countries:
+      - US
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io

@@ -1,0 +1,289 @@
+# --------------------------------------------------------------------
+# Copyright (c) 2022, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# -----------------------------------------------------------------------
+
+# Deployment for router and enforcer
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_25=Temporarily suppressing as there is no defined fix for this by the Bridgecrew
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=LinkerD is not enabled
+    secret.reloader.stakater.com/reload: "rate-limiter-cert"
+    kapp.k14s.io/change-group: "choreo-connect-deployment"
+    kapp.k14s.io/change-rule: "upsert after upserting choreo-connect-adapter"
+  name: choreo-connect-deployment
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        userapp-ingress-allowed: "true"
+    spec:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "4"
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  cc.component: choreo-connect-deployment
+                  choreo.component: choreo-connect
+              topologyKey: kubernetes.io/hostname
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10500
+        runAsGroup: 10500
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: choreo-connect-enforcer
+          volumeMounts:
+            - mountPath: /home/wso2/security/truststore/wso2carbon.pem
+              name: enforcer-truststore
+              readOnly: true
+              subPath: wso2carbon.pem
+            - mountPath: /home/wso2/security/truststore/publisher-truststore.pem
+              name: enforcer-truststore
+              readOnly: true
+              subPath: publisher-truststore.pem
+            - mountPath: /home/wso2/security/truststore/mg.pem
+              name: mgw-common-cert-vol
+              readOnly: true
+              subPath: mg.pem
+            - name: enforcer-truststore
+              mountPath: /home/wso2/security/truststore/apim-service-root.pem
+              subPath: apim-service-root.pem
+            - mountPath: /home/wso2/security/keystore/mg.key
+              name: secret-cc-deployment
+              readOnly: true
+              subPath: ENFORCER_KEYSTORE_KEY
+            - mountPath: /home/wso2/security/keystore/mg.pem
+              name: mgw-common-cert-vol
+              readOnly: true
+              subPath: mg.pem
+            - mountPath: /home/wso2/security/jwt/key.pem
+              name: secret-cc-deployment
+              readOnly: true
+              subPath: ENFORCER_JWT_KEYSTORE_KEY
+            - mountPath: /home/wso2/security/jwt/cert.pem
+              name: secret-cc-deployment
+              readOnly: true
+              subPath: ENFORCER_JWT_KEYSTORE_CERTIFICATE
+            - mountPath: /home/wso2/conf
+              name: enforcer-config
+            - mountPath: /home/wso2/lib/dropins
+              name: dropins-vol
+            - name: secret-apim
+              mountPath: /mnt/csi/secret-apim
+              readOnly: true
+            - name: secret-mgw-analytics
+              mountPath: /mnt/csi/secret-mgw-analytics
+              readOnly: true
+            - name: secret-cc-deployment
+              mountPath: /mnt/csi/secret-cc-deployment
+              readOnly: true
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-enforcer:latest
+          imagePullPolicy: Always
+          lifecycle:
+            preStop:
+              exec:
+                # Graceful shutdown has not been implemented in the enforcer, hence keep the process running for
+                # 30 seconds (10 seconds + 20 seconds (Enforcer -> Router connection timeout is 20 seconds))
+                command: ["/bin/sleep", "30"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+              add: ["NET_RAW"]
+          envFrom:
+            - configMapRef:
+                name: cm-feature-flags
+            - configMapRef:
+                name: env-cc-enforcer
+          env:
+            - name: analytics_authToken
+              valueFrom:
+                secretKeyRef:
+                  key: ANALYTICS_AUTH_TOKEN
+                  name: secret-mgw-analytics
+            - name: moesif_ms_auth_pwd
+              valueFrom:
+                secretKeyRef:
+                  key: MOESIF_MS_AUTH_PWD
+                  name: secret-mgw-analytics
+          resources:
+            requests:
+              memory: "3.5Gi"
+              cpu: "750m"
+            limits:
+              memory: "3.5Gi"
+              cpu: "1"
+          ports:
+            - containerPort: 8081
+            - containerPort: 9001
+          startupProbe:
+            exec:
+              command: ["sh", "check_health.sh"]
+            periodSeconds: 5
+            failureThreshold: 30
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["sh", "check_health.sh"]
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command: ["sh", "check_health.sh"]
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 5
+        - name: choreo-connect-router
+          volumeMounts:
+            - mountPath: /home/wso2/security/keystore/mg.pem
+              name: mgw-common-cert-vol
+              readOnly: true
+              subPath: mg.pem
+            - mountPath: /home/wso2/security/keystore/mg.key
+              name: secret-cc-deployment
+              readOnly: true
+              subPath: ROUTER_KEYSTORE_KEY
+            - mountPath: /home/wso2/security/truststore/mg.pem
+              name: mgw-common-cert-vol
+              readOnly: true
+              subPath: mg.pem
+            - name: secret-cc-rate-limiter-cert
+              mountPath: /home/wso2/security/truststore/rate-limiter.pem
+              subPath: RATE_LIMITER_KEYSTORE_CERT
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-mgw-router:latest
+          imagePullPolicy: Always
+          lifecycle:
+            preStop:
+              exec:
+                # Passing the SIGTERM signal to the process to gracefully shutdown
+                # Keeping the process running for 10 seconds to run for sometimes as this is a new change we've done.
+                command: ["/bin/sleep", "10"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+              add: ["NET_RAW"]
+          envFrom:
+            - configMapRef:
+                name: cm-feature-flags
+            - configMapRef:
+                name: env-cc-router
+          resources:
+            requests:
+              memory: "3.5Gi"
+              cpu: 200m
+            limits:
+              memory: "3.5Gi"
+              cpu: 300m
+          ports:
+            - containerPort: 9000
+            - containerPort: 9095
+          startupProbe:
+            httpGet:
+              port: 9095
+              path: /ready
+              scheme: HTTPS
+              httpHeaders:
+                - name: Host
+                  value: gw.wso2.com
+            failureThreshold: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              port: 9095
+              path: /health
+              scheme: HTTPS
+              httpHeaders:
+                - name: Host
+                  value: gw.wso2.com
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              port: 9095
+              path: /ready
+              scheme: HTTPS
+              httpHeaders:
+                - name: Host
+                  value: gw.wso2.com
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 5
+      volumes:
+        - name: enforcer-config
+          configMap:
+            name: mgw-adapter-enforcer-conf
+        - name: dropins-vol
+          emptyDir: {}
+        - name: enforcer-truststore
+          configMap:
+            name: mgw-enforcer-truststore
+        - name: mgw-common-cert-vol
+          configMap:
+            name: mgw-common-cert
+        - name: secret-apim
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-apim
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-mgw-analytics
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-mgw-analytics
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-cc-deployment
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-deployment
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+        - name: secret-cc-rate-limiter-cert
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-cc-rate-limiter-cert
+            nodePublishSecretRef:
+              name: csi-secret-store-azure
+      restartPolicy: Always

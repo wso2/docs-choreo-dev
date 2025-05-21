@@ -1,0 +1,26 @@
+mutation {
+    createIntegrationComponent(
+       component: {
+          name: "{{componentName}}",
+          displayName: "{{componentName}}",
+          description: "",
+          orgId: {{orgId}},
+          orgHandler: "{{orgHandler}}",
+          projectId: "{{projectId}}",
+          labels: "",
+          componentType: "miApiService",
+          accessibility: "external",
+          srcGitRepoUrl: "{{srcGitRepoUrl}}",
+          srcGitRepoBranch: "main",
+          repositorySubPath: "{{repositorySubPath}}",
+          oasFilePath: "",
+          version: "v1.0",
+          secretRef: ""
+        }
+      ) {
+        id
+        organizationId
+        projectId
+        handle
+      }
+  }

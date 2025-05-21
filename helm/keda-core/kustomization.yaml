@@ -1,0 +1,48 @@
+helmCharts:
+  - name: keda
+    valuesInline:
+      image:
+        keda:
+          registry: choreocontrolplane.azurecr.io
+          repository: kedacore/keda
+          tag: "2.14.1"
+        metricsApiServer:
+          registry: choreocontrolplane.azurecr.io
+          repository: kedacore/keda-metrics-apiserver
+          tag: "2.14.1"
+        pullPolicy: Always
+      webhooks:
+        enabled: false
+      networkPolicy:
+        enabled: false
+      serviceAccount:
+        operator:
+          create: true
+        metricServer:
+          create: true
+        webhooks:
+          create: false
+      podSecurityContext:
+        operator:
+          runAsNonRoot: true
+          runAsUser: 10001
+          runAsGroup: 10001
+          fsGroup: 10001
+        metricServer:
+          runAsNonRoot: true
+          runAsUser: 10001
+          runAsGroup: 10001
+          fsGroup: 10001
+      rbac:
+        create: true
+    includeCRDs: true
+    releaseName: keda
+    namespace: keda
+    version: 2.14.1
+    repo: oci://choreocontrolplane.azurecr.io/helm
+
+commonAnnotations:
+  kapp.k14s.io/disable-default-label-scoping-rules: ""
+resources:
+  - namespace.yaml
+  - keda-netpol.yaml

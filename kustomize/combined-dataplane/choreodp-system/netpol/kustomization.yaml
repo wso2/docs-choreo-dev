@@ -1,0 +1,2 @@
+resources:
+  - deny-metadata-egress.yaml

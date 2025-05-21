@@ -1,0 +1,8 @@
+{
+    "users":["choreo_governance_db_user"],
+    "choreo_governance_db_user":"choreo-governance-db-mssql-password",
+    "choreo_governance_db_user_permissions":["SELECT","INSERT","UPDATE","DELETE","EXECUTE"],
+    "dev_mssql_ddl_user":"database-user-DEV-MSSQL-DDL-USER",
+    "dev_mssql_ddl_user_permissions":["SELECT","INSERT","UPDATE","DELETE"]
+}
+

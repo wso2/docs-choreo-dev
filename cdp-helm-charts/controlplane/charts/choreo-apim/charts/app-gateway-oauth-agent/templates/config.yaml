@@ -1,0 +1,28 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-gateway-oauth-agent
+  labels:
+    {{- include "app-gateway-oauth-agent.labels" . | nindent 4 }}
+  namespace: {{ .Values.global.namespaces.apim }}
+data:
+  ENC_KEY_FILE_PATH: /etc/agent-secrets/OAUTH_AGENT_ENC_KEY
+  REDIS_PWD_FILE_PATH: /etc/agent-secrets/REDIS_PASSWORD
+  PAT_CLIENT_SECRET_FILE_PATH: /etc/agent-secrets/PAT_CLIENT_SECRET
+  REDIS_PORT: {{ .Values.global.redis.port | quote }}
+  REDIS_HOST: {{ .Values.global.redis.host }}
+  REDIS_DB: "1"
+  PAT_CLIENT_ID: {{ .Values.config.patClientId | quote }}
+  PAT_CLIENT_TOKEN_EP: {{ .Values.config.patClientTokenEp | quote }}
+  PAT_TOKEN_TTL_BUFFER: {{ .Values.config.patTokenTtlBuffer | quote }}

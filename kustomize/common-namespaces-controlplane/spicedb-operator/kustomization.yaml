@@ -1,0 +1,11 @@
+resources:
+  - namespace
+  - crd
+  - service-account
+  - cr
+  - crb
+  - deployment
+  - cluster
+  - secret-provider-class
+
+namespace: spicedb-operator

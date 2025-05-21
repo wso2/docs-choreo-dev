@@ -1,0 +1,46 @@
+// -------------------------------------------------------------------------------------
+//
+// Copyright (c) 2020, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+//
+// This software is the property of WSO2 Inc. and its suppliers, if any.
+// Dissemination of any information or reproduction of any material contained
+// herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+// You may not alter or remove any copyright or other notice from copies of this content.
+//
+// --------------------------------------------------------------------------------------
+
+.create external table TraceSpansDataLake (
+spanId: string,
+parentSpanId: string,
+traceId: string,
+obsId: string,
+nodeId: string,
+version: string,
+timestamp: datetime,
+duration: long,
+tags: dynamic,
+checkpoints: dynamic,
+operationName: string,
+serviceName:string
+)
+kind=adl
+partition by (Date:datetime = bin(timestamp, 1d))
+dataformat=csv
+(
+   h@'abfss://tracespans@<storage-account-name>.dfs.core.windows.net/;sharedkey=<account-key>'
+)
+with (includeHeaders = "All")
+
+.create-or-alter continuous-export TraceSpansDataLakeCE
+over (traceSpans)
+to table TraceSpansDataLake
+with
+(intervalBetweenRuns=1h)
+<| traceSpans
+| extend srcModule = extractjson("$.['src.module']", tostring(tags))
+| extend efModule = extractjson("$.['entrypoint.function.module']", tostring(tags))
+| extend srcModuleHash = hash_sha256(tostring(srcModule))
+| extend efModuleHash = hash_sha256(tostring(efModule))
+| extend tags = todynamic(replace_string(replace_string(tostring(tags), srcModule, srcModuleHash), efModule, efModuleHash))
+| extend checkpoints = todynamic(replace_string(replace_string(tostring(checkpoints), srcModule, srcModuleHash), efModule, efModuleHash))
+| project-away srcModule, efModule, srcModuleHash, efModuleHash

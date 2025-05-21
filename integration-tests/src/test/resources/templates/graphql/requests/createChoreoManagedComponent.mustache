@@ -1,0 +1,25 @@
+mutation{ createComponent(
+        component: {
+                name: "{{name}}",
+                orgId: {{orgId}},
+                orgHandler: "{{orgHandler}}",
+                displayName: "{{name}}",
+                displayType: "restAPI",
+                projectId: "{{projectId}}",
+                labels: "",
+                version: "v1.0",
+                description: "",
+                apiId: "",
+                ballerinaVersion: "swan-lake-alpha5",
+                triggerChannels: "",
+                triggerID: null,
+                httpBase: true,
+                sampleTemplate: "",
+                accessibility: "external",
+                repositorySubPath: "",
+                repositoryType: "",
+                repositoryBranch: "",
+        }
+    )
+{id, orgId, projectId, handler}
+}

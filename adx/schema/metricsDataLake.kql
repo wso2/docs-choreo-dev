@@ -1,0 +1,41 @@
+// -------------------------------------------------------------------------------------
+//
+// Copyright (c) 2020, WSO2 Inc. (http://www.wso2.com). All Rights Reserved.
+//
+// This software is the property of WSO2 Inc. and its suppliers, if any.
+// Dissemination of any information or reproduction of any material contained
+// herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+// You may not alter or remove any copyright or other notice from copies of this content.
+//
+// --------------------------------------------------------------------------------------
+
+.create external table MetricsDataLake (
+timestamp: datetime,
+obsId: string,
+nodeId: string,
+version: string,
+metricName:string,
+value: real,
+tags: dynamic
+)
+kind=adl
+partition by (Date:datetime = bin(timestamp, 1d))
+dataformat=csv
+(
+   h@'abfss://metrics@<storage-account-name>.dfs.core.windows.net/;sharedkey=<account-key>'
+)
+with (includeHeaders = "All")
+
+.create-or-alter continuous-export MetricsDataLakeCE
+over (metrics)
+to table MetricsDataLake
+with
+(intervalBetweenRuns=1h)
+<| metrics
+| where metricName != 'telemetry_health_check'
+| extend srcModule = iff(metricName == 'up', '', extractjson("$.['src.module']", tostring(tags)))
+| extend efModule = iff(metricName == 'up', '', extractjson("$.['entrypoint.function.module']", tostring(tags)))
+| extend srcModuleHash = iff(metricName == 'up', '', hash_sha256(tostring(srcModule)))
+| extend efModuleHash = iff(metricName == 'up', '', hash_sha256(tostring(efModule)))
+| extend tags = iff(metricName == 'up', tags, todynamic(replace_string(replace_string(tostring(tags), srcModule, srcModuleHash), efModule, efModuleHash)))
+| project-away srcModule, efModule, srcModuleHash, efModuleHash

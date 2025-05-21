@@ -1,0 +1,68 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scheduled-mssql-tasks
+spec:
+  schedule: "30 4 * * *"
+  concurrencyPolicy: Replace
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 86400
+      template:
+        metadata:
+          annotations:
+            seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+        spec:
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+          automountServiceAccountToken: false
+          containers:
+            - name: scheduled-mssql-tasks
+              image: choreocontrolplane.azurecr.io/mssql-tools:1.0.0
+              imagePullPolicy: Always
+              securityContext:
+                runAsUser: 10500
+                runAsGroup: 10500
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
+              env:
+                - name: VALUES_PATH
+                  value: /secrets
+                - name: LOG_LEVEL
+                  value: "INFO"
+              volumeMounts:
+                - name: config-volume
+                  mountPath: /mnt/config.yaml
+                  subPath: config.yaml
+                - name: secret-volume
+                  mountPath: /secrets
+                  readOnly: true
+                - name: script-volume
+                  mountPath: /scripts
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 200Mi
+                requests:
+                  cpu: 100m
+                  memory: 100Mi
+          volumes:
+            - name: config-volume
+              configMap:
+                name: cm-file-scheduled-mssql-tasks-config
+            - name: script-volume
+              emptyDir: {}
+            - name: secret-volume
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: secret-mssql-scheduler
+                nodePublishSecretRef:
+                  name: csi-secret-store-azure
+          restartPolicy: OnFailure

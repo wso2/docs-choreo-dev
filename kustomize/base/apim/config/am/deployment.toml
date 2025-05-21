@@ -1,0 +1,696 @@
+[server]
+hostname = "{{.SERVER_HOST_NAME}}"
+node_ip = "$env{NODE_IP}"
+#offset=0
+mode = "single" #single or ha
+base_path = "${carbon.protocol}://${carbon.host}:${carbon.management.port}"
+#discard_empty_caches = false
+server_role = "control-plane"
+enable_traffic_management = false
+
+[super_admin]
+username = "{{.SUPER_ADMIN_USERNAME}}"
+password = "$env{SUPER_ADMIN_PSWD}"
+create_admin_account = true
+
+[user_store]
+type = "database_unique_id"
+
+[user_store.properties]
+UsernameJavaScriptRegEx="^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^[\\S]{3,40}$"
+UsernameJavaRegEx="^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^[\\S]{3,40}$"
+PasswordJavaRegEx = "^[\\S]{5,30}$"
+PasswordJavaScriptRegEx = "^[\\S]{5,30}$"
+RolenameJavaScriptRegEx = "^[\\S]{3,50}$"
+RolenameJavaRegEx = "^[\\S]{3,50}$"
+CaseInsensitiveUsername = false
+
+[realm_manager]
+data_source = "WSO2USER_DB"
+
+[database.apim_db]
+type = "mssql"
+url = "{{.APIM_DB_URL}}"
+username = "choreo_apim_db_user"
+password = "$env{CHOREO_APIM_DB_PASSWORD}"
+driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+validationQuery = "SELECT 1"
+
+[database.apim_db.pool_options]
+maxActive = "100"
+maxWait = "60000"
+# (maxAge): do not keep the same connection live over 12 hours (43200000ms)
+maxAge = "43200000"
+minIdle = "10"
+testOnBorrow = "true"
+testWhileIdle = "true"
+validationQueryTimeout = "2"
+validationInterval = "30000"
+defaultAutoCommit = "true"
+removeAbandoned = "true"
+removeAbandonedTimeout = "180"
+logAbandoned = "true"
+jdbcInterceptors="SlowQueryReport(threshold=200); org.wso2.am.choreo.extensions.core.jdbcpool.ConnectionLoggingInterceptor"
+
+[database.shared_db]
+type = "mssql"
+url = "{{.SHARED_DB_URL}}"
+username = "choreo_apim_shared_db_user"
+password = "$env{CHOREO_APIM_SHARED_DB_PASSWORD}"
+driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+validationQuery = "SELECT 1"
+
+[database.shared_db.pool_options]
+maxActive = "100"
+maxWait = "60000"
+# (maxAge): do not keep the same connection live over 12 hours (43200000ms)
+maxAge = "43200000"
+minIdle = "10"
+testOnBorrow = "true"
+testWhileIdle = "true"
+validationQueryTimeout = "2"
+validationInterval = "30000"
+defaultAutoCommit = "true"
+removeAbandoned = "true"
+removeAbandonedTimeout = "180"
+logAbandoned = "true"
+jdbcInterceptors="{{.SHARED_DB_JDBS_INTERCEPTORS}}"
+
+[database.user]
+url = "{{.DB_URL}}"
+username = "choreo_apim_user_db_user"
+password = "$env{CHOREO_APIM_USER_DB_PASSWORD}"
+driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+validationQuery = "SELECT 1"
+
+[database.user.pool_options]
+maxActive= "100"
+maxWait = "60000"
+# (maxAge): do not keep the same connection live over 12 hours (43200000ms)
+maxAge = "43200000"
+minIdle = "10"
+testOnBorrow = "true"
+testWhileIdle = "true"
+validationQueryTimeout = "2"
+validationInterval = "30000"
+defaultAutoCommit = "true"
+removeAbandoned = "true"
+removeAbandonedTimeout = "180"
+logAbandoned = "true"
+jdbcInterceptors="SlowQueryReport(threshold=200)"
+
+[apim.registry]
+type = "mongodb"
+
+[apim.persistence.properties]
+connection_string = "{{.APIM_PERSISTENCE_CS}}"
+api_uri = "https://cloud.mongodb.com/api/atlas/v1.0"
+group_id = "{{.APIM_PERSISTENCE_GROUP_ID}}"
+cluster_name = "choreo-apim"
+public_key = "$env{MONGO_DB_ATLAS_PUBLIC_KEY}"
+private_key = "$env{MONGO_DB_ATLAS_PRIVATE_KEY}"
+thread_count = 5
+retry_count = 3
+create_atlas_search_indexes = false
+
+[http_access_log]
+useLogger = true
+pattern = "%h %A %l %u %t %r %s %b %{Referer}i %{User-Agent}i %{X-Forwarded-For}i %T"
+
+[keystore.primary]
+file_name =  "primary-keystore.pfx"
+type =  "PKCS12"
+password =  "$env{PRIMARY_KEYSTORE_PSWD}"
+alias =  "wso2carbon"
+key_password =  "$env{PRIMARY_KEYSTORE_KEY_PSWD}"
+
+[keystore.tls]
+file_name =  "tls-keystore.pfx"
+type =  "PKCS12"
+password =  "$env{TLS_KEYSTORE_PSWD}"
+alias =  "wso2carbon"
+key_password =  "$env{TLS_KEYSTORE_KEY_PSWD}"
+
+[keystore.internal]
+file_name =  "internal-keystore.pfx"
+type =  "PKCS12"
+password =  "$env{INTERNAL_KEYSTORE_PSWD}"
+alias =  "wso2carbon"
+key_password =  "$env{INTERNAL_KEYSTORE_KEY_PSWD}"
+
+[truststore]
+file_name = "client-truststore.jks"
+type = "JKS"
+password = "$env{TRUSTSTORE_PSWD}"
+
+{{range .ENVIRONMENTS}}
+[[apim.gateway.environment]]
+name = "{{.NAME}}"
+type = "{{.TYPE}}"
+display_in_api_console = true
+description = "{{.DESCRIPTION}}"
+show_as_token_endpoint_url = true
+service_url = "https://choreo-am-gateway-service:${mgt.transport.https.port}/services/"
+username= "${admin.username}"
+password= "${admin.password}"
+ws_endpoint = "ws://localhost:9099"
+wss_endpoint = "wss://localhost:8099"
+http_endpoint = "{{.HTTP_ENDPOINT}}"
+https_endpoint = "{{.HTTPS_ENDPINT}}"
+display_name = "{{.DISPLAY_NAME}}"
+data_plane_id = "{{.DATAPLANE_ID}}"
+gateway_accessibility_type = "{{.ACCESSIBILITY_TYPE}}"
+{{end}}
+
+#[apim.cache.gateway_token]
+#enable = true
+#expiry_time = "900s"
+
+#[apim.cache.resource]
+#enable = true
+#expiry_time = "900s"
+
+#[apim.cache.km_token]
+#enable = false
+#expiry_time = "15m"
+
+#[apim.cache.recent_apis]
+#enable = false
+
+#[apim.cache.scopes]
+#enable = true
+
+#[apim.cache.publisher_roles]
+#enable = true
+
+#[apim.cache.jwt_claim]
+#enable = true
+#expiry_time = "15m"
+
+#[apim.cache.tags]
+#expiry_time = "2m"
+
+[apim.analytics]
+enable = false
+
+[apim.choreo_audit_events]
+enable = true
+websub_hub_url = "{{.WEBSUBHUB_URL}}"
+websub_hub_topic = "{{.WEBSUBHUB_TOPIC}}"
+queue_size = 20000
+worker_thread_count = 2
+
+[apim.api_quota_limit]
+enable = false
+
+[apim.key_manager]
+service_url = "https://choreo-am-service:9443/services/"
+#username = "$ref{super_admin.username}"
+#password = "$ref{super_admin.password}"
+#pool.init_idle_capacity = 50
+#pool.max_idle = 100
+#key_validation_handler_type = "default"
+#key_validation_handler_type = "custom"
+#key_validation_handler_impl = "org.wso2.carbon.apimgt.keymgt.handlers.DefaultKeyValidationHandler"
+
+#[apim.idp]
+#server_url = "https://localhost:${mgt.transport.https.port}"
+#authorize_endpoint = "https://localhost:${mgt.transport.https.port}/oauth2/authorize"
+#oidc_logout_endpoint = "https://localhost:${mgt.transport.https.port}/oidc/logout"
+#oidc_check_session_endpoint = "https://localhost:${mgt.transport.https.port}/oidc/checksession"
+
+#[apim.jwt]
+#enable = true
+#encoding = "base64" # base64,base64url
+#generator_impl = "org.wso2.carbon.apimgt.keymgt.token.JWTGenerator"
+#claim_dialect = "http://wso2.org/claims"
+#convert_dialect = false
+#header = "X-JWT-Assertion"
+#signing_algorithm = "SHA256withRSA"
+#enable_user_claims = true
+#claims_extractor_impl = "org.wso2.carbon.apimgt.impl.token.ExtendedDefaultClaimsRetriever"
+
+[apim.oauth_config]
+#enable_outbound_auth_header = false
+#auth_header = "Authorization"
+#revoke_endpoint = "https://localhost:${https.nio.port}/revoke"
+enable_token_encryption = true
+#enable_token_hashing = false
+
+[apim.publisher]
+key_issuer = "{{.PUBLISHER_KEY_ISSUER}}"
+
+[apim.devportal]
+url = "{{.DEVPORTAL_URL}}"
+display_multiple_versions = true
+create_default_application = false
+key_issuer = "{{.DEVPORTAL_KEY_ISSUER}}"
+#enable_application_sharing = false
+#if application_sharing_type, application_sharing_impl both defined priority goes to application_sharing_impl
+#application_sharing_type = "default" #changed type, saml, default #todo: check the new config for rest api
+#application_sharing_impl = "org.wso2.carbon.apimgt.impl.SAMLGroupIDExtractorImpl"
+#display_deprecated_apis = false
+#enable_comments = true
+#enable_ratings = true
+#enable_forum = true
+#enable_anonymous_mode=true
+
+[[apim.devportal.application_attributes]]
+required=false
+hidden=false
+default=""
+name="scopes"
+description="scopes of the application"
+
+[[apim.devportal.application_attributes]]
+required=false
+hidden=true
+default=""
+name="asgardeo_app_id"
+description="asgardeo app id"
+
+[[apim.devportal.application_attributes]]
+required=false
+hidden=true
+default=""
+name="asgardeo_app_id_sandbox"
+description="asgardeo sandbox app id"
+
+[[apim.devportal.application_attributes]]
+required=false
+hidden=false
+default=""
+name="isDpSystemApp"
+description="dataplane system application"
+
+[[apim.devportal.application_attributes]]
+required=false
+hidden=false
+default=""
+name="isManagementApp"
+description="management application for system apis"
+
+[[apim.devportal.application_attributes]]
+required=false
+hidden=false
+default=""
+name="isChoreoManaged"
+description="choreo managed management application"
+
+[apim.devportal.v2]
+access_url = "{{.DEVPORTAL_V2_URL}}"
+access_header = "api-key"
+access_key = "$env{DEVPORTAL_V2_ACCESS_KEY}"
+
+[apim.cors]
+allow_origins = "*"
+allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
+allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey","API-Key","testKey"]
+allow_credentials = false
+
+#[apim.throttling]
+#event_duplicate_url = ["tcp://choreo-am-2-service:5672"]
+#service_url = "https://choreo-eventhub-service:${mgt.transport.https.port}/services/"
+#enable_data_publishing = true
+#enable_policy_deploy = true
+#enable_blacklist_condition = true
+#enable_persistence = true
+#throttle_decision_endpoints = ["tcp://choreo-eventhub-1-service:5672","tcp://choreo-eventhub-2-service:5672"]
+
+#[apim.throttling.blacklist_condition]
+#start_delay = "5m"
+#period = "1h"
+
+#[apim.throttling.jms]
+#start_delay = "5m"
+
+#[apim.throttling.event_sync]
+#hostName = "0.0.0.0"
+#port = 11224
+
+#[apim.throttling.event_management]
+#hostName = "0.0.0.0"
+#port = 10005
+
+# [[apim.throttling.url_group]]
+# traffic_manager_urls = ["tcp://choreo-am-1-service:9611"]
+# traffic_manager_auth_urls = ["ssl://choreo-am-1-service:9711"]
+# type = "loadbalance"
+
+# [[apim.throttling.url_group]]
+# traffic_manager_urls = ["tcp://choreo-am-2-service:9611"]
+# traffic_manager_auth_urls = ["ssl://choreo-am-2-service:9711"]
+# type = "loadbalance"
+
+#[apim.workflow]
+#enable = false
+#service_url = "https://localhost:9445/bpmn"
+#username = "$ref{super_admin.username}"
+#password = "$ref{super_admin.password}"
+#callback_endpoint = "https://localhost:${mgt.transport.https.port}/api/am/admin/v0.17/workflows/update-workflow-status"
+#token_endpoint = "https://localhost:${https.nio.port}/token"
+#client_registration_endpoint = "https://localhost:${mgt.transport.https.port}/client-registration/v0.17/register"
+#client_registration_username = "$ref{super_admin.username}"
+#client_registration_password = "$ref{super_admin.password}"
+
+#data bridge config
+#[transport.receiver]
+#type = "binary"
+#worker_threads = 10
+#session_timeout = "30m"
+#keystore.file_name = "$ref{keystore.tls.file_name}"
+#keystore.password = "$ref{keystore.tls.password}"
+#tcp_port = 9611
+#ssl_port = 9711
+#ssl_receiver_thread_pool_size = 100
+#tcp_receiver_thread_pool_size = 100
+#ssl_enabled_protocols = ["TLSv1","TLSv1.1","TLSv1.2"]
+#ciphers = ["SSL_RSA_WITH_RC4_128_MD5","SSL_RSA_WITH_RC4_128_SHA"]
+
+#[apim.notification]
+#from_address = "APIM.com"
+#username = "APIM"
+#password = "APIM+123"
+#hostname = "localhost"
+#port = 3025
+#enable_start_tls = false
+#enable_authentication = true
+
+#[apim.token.revocation]
+#notifier_impl = "org.wso2.carbon.apimgt.keymgt.events.TokenRevocationNotifierImpl"
+#enable_realtime_notifier = true
+#realtime_notifier.ttl = 5000
+#enable_persistent_notifier = true
+#persistent_notifier.hostname = "https://localhost:2379/v2/keys/jti/"
+#persistent_notifier.ttl = 5000
+#persistent_notifier.username = "root"
+#persistent_notifier.password = "root"
+
+[[event_handler]]
+name="userPostSelfRegistration"
+subscriptions=["POST_ADD_USER"]
+
+[service_provider]
+sp_name_regex = ".*"
+
+[[event_listener]]
+id = "token_revocation"
+type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
+name = "org.wso2.is.notification.ApimOauthEventInterceptor"
+order = 1
+
+[event_listener.properties]
+notification_endpoint = "https://choreo-am-service:9443/internal/data/v1/notify"
+username = "${admin.username}"
+password = "${admin.password}"
+'header.X-WSO2-KEY-MANAGER' = "default"
+
+[[event_listener]]
+id = "token_exchange_audit_logger"
+type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
+name = "org.wso2.is.notification.APIMTokenExchangeAuditLogger"
+order = 2
+
+[event.default_listener]
+user_management_audit_logger.enable=false
+
+[transport.https.properties]
+proxyPort = 443
+maxHttpHeaderSize="65536"
+
+#[apim.event_hub]
+#service_url = "https://choreo-eventhub-service:9443"
+#event_listening_endpoints = ["tcp://choreo-eventhub-1-service:5672","tcp://choreo-eventhub-2-service:5672"]
+
+#[[apim.event_hub.publish.url_group]]
+#urls = ["tcp://choreo-eventhub-1-service:9611"]
+#auth_urls = ["ssl://choreo-eventhub-1-service:9711"]
+
+#[[apim.event_hub.publish.url_group]]
+#urls = ["tcp://choreo-eventhub-2-service:9611"]
+#auth_urls = ["ssl://choreo-eventhub-2-service:9711"]
+
+[apim.event_hub.publish.properties]
+event_publishing_endpoint = "$env{ASB_CONNECTION_STRING}"
+reconnect_interval = 1
+reconnect_retry_count = 10
+
+[database.local]
+url = "jdbc:h2:./repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE"
+
+[indexing]
+enable = false
+
+{{range .SERVICE_PROVIDERS}}
+[[choreo.serviceProvider]]
+clientId="{{.CLIENT_ID}}"
+scopes="{{.SCOPES}}"
+isInternal="{{.IS_INTERNAL | default "false"}}"
+{{end}}
+
+[choreo.ChoreoTokenHandler]
+appServiceUrl="{{.APP_SERVICE_URL}}"
+authzServiceUrl="{{.AUTHZ_SERVICE_URL}}"
+authzServiceEnabled={{.AUTHZ_SERVICE_ENABLED}}
+choreoControlPlaneOrgUuid="{{.CP_ORG_ID}}"
+choreoControlPlaneOrgHandle="{{.CP_ORG_HANDLE | default "choreosystem"}}"
+allowed_claims="aut, given_name, authenticated_idp, name, family_name, middle_name, nickname, updated_at, email, email_verified, groups, username, is_eidp"
+instanceBasedAuthzServiceEnabled={{.INSTANCE_BASED_AUTHZ_SERVICE_ENABLED}}
+instanceBasedAuthzServiceDisabledOrgs="{{.INSTANCE_BASED_AUTHZ_SERVICE_DISABLED_ORGS}}"
+
+[choreo.azure_service_bus]
+connection_string = "$env{ASB_CONNECTION_STRING}"
+
+{{range .PER_ORG_CONNECTIONS}}
+[[choreo.per_org_connection]]
+orgId="{{.ORG_ID}}"
+connection_string = "{{.CONNECTION_STRING}}"
+{{end}}
+
+{{range .AZURE_SERVICE_BUS_POOL}}
+[[choreo.azure_service_bus_pool]]
+id = {{.ID}}
+name = "{{.NAME}}"
+connection_string = "{{.CONNECTION_STRING}}"
+capacity = {{.CAPACITY}}
+{{end}}
+
+[choreo.azure_service_bus.org_cleanup]
+enabled = true
+worker_threads = 10
+executor = "choreo-apim"
+subscription = "choreo-apim"
+topic = "org-remover-request"
+result_topic = "org-remover-result"
+
+[choreo.choreo_api_quota_limiter]
+quota_limit_service_hostname = "{{.QUOTA_LIMIT_HOSTNAME}}"
+quotaLimit_service_port = "9090"
+
+[[apim.jwt.issuer]]
+name = "{{.JWT_ISSUER_NAME}}"
+jwks.url = "{{.JWT_JWKS_URL}}"
+
+{{range .JWT_AUDIENCES}}
+[[apim.rest_api.jwt.audience]]
+basepath = "{{.BASEPATH}}"
+audience = "{{.AUDIENCE}}"
+{{end}}
+
+[[oauth.custom_grant_type]]
+name="urn:ietf:params:oauth:grant-type:token-exchange"
+grant_handler="org.wso2.am.choreo.extensions.token.handler.ChoreoTokenExchangeGrantHandler"
+grant_validator="org.wso2.carbon.identity.oauth2.grant.token.exchange.TokenExchangeGrantValidator"
+[oauth.custom_grant_type.properties]
+IdTokenAllowed=true
+
+[oauth.extensions.token_types.token_type]
+name="JWT"
+issuer="org.wso2.am.choreo.extensions.token.handler.ChoreoJWTTokenIssuer"
+
+[oauth.grant_type.jwt_bearer]
+enable = true
+grant_handler = "org.wso2.carbon.identity.oauth2.grant.jwt.JWTBearerGrantHandler"
+grant_validator = "org.wso2.carbon.identity.oauth2.grant.jwt.JWTGrantValidator"
+
+[oauth.grant_type.jwt]
+enable_iat_validation="true"
+iat_validity_period=300
+
+[oauth.token_cleanup]
+retain_access_tokens_for_auditing=false
+
+[[resource.access_control]]
+context="(.*)/fileupload/resource(.*)"
+secure=false
+http_method = "all"
+
+[[resource.access_control]]
+context="(.*)/fileupload/(.*)"
+secure=true
+http_method = "all"
+permissions = ["/permission/protected/"]
+
+[[resource.access_control]]
+context="/services/(.*)"
+secure=true
+http_method="all"
+permissions=["/permission/protected/"]
+
+[[resource.access_control]]
+context = "(.*)/((\\.+)|(.*;+.*)|%2e)/(.*)"
+http_method = "all"
+permissions = ["/"]
+secure = true
+
+[apim.operation_policy]
+provider = "bcentral"
+url = "{{.OPERATION_POLICY_URL}}"
+
+[choreo.asgardeo_system_app]
+token_endpoint="{{.ASGARDEO_SYSTEM_APP_TOKEN_ENDPOINT}}"
+client_id="CHOREO_SYSTEM_APP_MANAGER"
+client_secret="$env{ASGARDEO_SYSTEM_APP_CLIENT_SECRET}"
+authz_endpoint="{{.ASGARDEO_SYSTEM_AUTHZ_TOKEN_ENDPOINT}}"
+
+{{range .PER_ORG_SETTINGS}}
+[[choreo.asgardeo.per_org_settings]]
+org_id="{{.ORG_ID}}"
+app_owner="app_creator"
+app_jwt_token_sub_claim="email"
+{{end}}
+
+[identity.auth_framework.endpoint] 
+app_password="$env{APIM_DASHBOARD_USER_PWD}"
+
+[account_recovery.endpoint.auth] 
+hash="$env{APIM_DASHBOARD_USER_PWD_SHA256}"
+
+[transport.http.properties]
+maxHttpHeaderSize="65536"
+
+[cache.jwks_cache]
+timeout = 1800
+
+[oauth.jwks_endpoint]
+connection_timeout = 10000
+read_timeout = 30000
+
+[choreo.api_backend_url_validation]
+enable_organization_validation = true
+
+[choreo.rudder]
+endpoint_url = "{{.RUDDER_ENDPOINT_URL}}"
+enable_domain_cache = false
+
+[choreo.project_manager]
+endpoint_url = "{{.PROJECT_MANAGER_ENDPOINT_URL}}"
+enabled = {{.PROJECT_MANAGER_ENDPOINT_ENABLED | default false}}
+
+[choreo.cloud_manager]
+endpoint_url = "{{.CLOUD_MANAGER_ENDPOINT_URL}}"
+
+[choreo.mizzen]
+endpoint_url = "{{.MIZZEN_ENDPOINT_URL | default ""}}"
+
+[choreo.URLManager]
+endpoint_url = "{{.URL_MANAGER_ENDPOINT_URL}}"
+
+[authentication.authenticator.choreo_in_built_idp_authenticator]
+name="choreo_in_built_idp_authenticator"
+enable=true
+parameters.userMgtServiceUrl="{{.IDP_AUTH_USER_MGT_URL}}"
+
+[authentication.endpoints]
+login_url="/auth/signin"
+retry_url="/auth/error"
+
+[oauth.endpoints]
+oauth2_error_page="$ref{server.base_path}/auth/error"
+
+[choreo.builtin.authorization]
+service_url="{{.AUTHORIZATION_SERVICE_URL}}"
+
+[choreo.app_service]
+url="{{.APP_SVC_URL}}"
+
+[choreo.subscription_service]
+url="{{.SUBSCRIPTION_SVC_URL}}"
+
+[cache.app_info_cache]
+enable = true
+timeout = "60"
+capacity = "5000"
+
+[[default.subscription.policy]]
+display_name = "Unlimited"
+request_count = "-1"
+time_unit = "min"
+description = "Allows unlimited requests"
+api_type = "REST"
+
+[[default.subscription.policy]]
+display_name = "Gold"
+request_count = "5000"
+time_unit = "min"
+description = "Allows 5000 requests per minute"
+api_type = "REST"
+
+[[default.subscription.policy]]
+display_name = "Silver"
+request_count = "2000"
+time_unit = "min"
+description = "Allows 2000 requests per minute"
+api_type = "REST"
+
+[[default.subscription.policy]]
+display_name = "Bronze"
+request_count = "1000"
+time_unit = "min"
+description = "Allows 1000 requests per minute"
+api_type = "REST"
+
+[[default.subscription.policy]]
+display_name = "AsyncUnlimited"
+request_count = "-1"
+time_unit = "min"
+description = "Allows unlimited events"
+api_type = "WS"
+
+[choreo.governanceService]
+endpoint_url = "http://choreo-governance-service:8080"
+worker_count = "5"
+max_reties = "3"
+retry_delay = "2000"
+
+[[oauth.custom_grant_type]]
+grant_handler = "org.wso2.am.choreo.extensions.token.handler.pat.ChoreoPATGrantHandler"
+grant_validator = "org.wso2.am.choreo.extensions.token.handler.pat.ChoreoPATGrantValidator"
+name = "pat"
+
+[choreo.pat_handler]
+client_id="{{.PAT_CLIENT_ID}}"
+pat_service_url="{{.API_KEY_SERVICE_ENDPOINT_URL}}"
+
+[choreo.workflowMgtService]
+endpoint_url = "{{.WORKFLOW_MGT_ENDPOINT_URL | default ""}}"
+max_retries = "3"
+retry_delay = "1000"
+
+[choreo.appdev.sts]
+management_service_url="{{.STS_MANAGEMENT_SERVICE_URL | default "http://localhost:3000/api/v1"}}"
+
+[choreo.api_key_service]
+endpoint_url="{{.API_KEY_SERVICE_ENDPOINT_URL | default ""}}"
+
+[apim.ai]
+enable = "{{.APIM_AI_ENABLE}}"
+client_id = "{{.APIM_AI_CLIENT_ID}}"
+client_secret = "$env{APIM_AI_CLIENT_SECRET}"
+token_endpoint = "{{.APIM_AI_TOKEN_ENDPOINT}}"
+devportal_theming.endpoint = "{{.APIM_AI_DEVPORTAL_THEMING_ENDPOINT}}"
+api_design.endpoint =  "{{.APIM_AI_API_DESIGN_ENDPOINT}}"
+
+[choreo.system_metrics]
+enable="{{.APIM_SYSTEM_METRICS_ENABLED | default "true"}}"
+log_interval="{{.APIM_SYSTEM_METRICS_LOG_INTERVAL | default "3s"}}"

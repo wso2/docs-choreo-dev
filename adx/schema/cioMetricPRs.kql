@@ -1,0 +1,37 @@
+// Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
+
+// This software is the property of WSO2 Inc. and its suppliers, if any.
+// Dissemination of any information or reproduction of any material contained
+// herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+// You may not alter or remove any copyright or other notice from copies of this content.
+
+.create table PRsRaw (
+    timestamp: datetime,
+    orgId: string,
+    projectId: string,
+    componentId: string,
+    prId: string,
+    status: string,
+    duration: decimal,
+    additions: int,
+    deletions: int,
+    reviewComments: int,
+    updatedTime: datetime,
+    properties: string
+);
+
+.create table PRsRaw ingestion json mapping "PRsRawMapping"
+    '['
+    '    { "column" : "timestamp", "Properties":{"Path":"$.createdTime"}},'
+    '    { "column" : "orgId", "Properties":{"Path":"$.organizationId"}},'
+    '    { "column" : "projectId", "Properties":{"Path":"$.projectId"}},'
+    '    { "column" : "componentId", "Properties":{"Path":"$.componentId"}},'
+    '    { "column" : "prId", "Properties":{"Path":"$.prId"}},'
+    '    { "column" : "status", "Properties":{"Path":"$.status"}},'
+    '    { "column" : "duration", "Properties":{"Path":"$.duration"}},'
+    '    { "column" : "additions", "Properties":{"Path":"$.additions"}},'
+    '    { "column" : "deletions", "Properties":{"Path":"$.deletions"}},'
+    '    { "column" : "reviewComments", "Properties":{"Path":"$.reviewComments"}},'
+    '    { "column" : "updatedTime", "Properties":{"Path":"$.updatedTime"}},'
+    '    { "column" : "properties", "Properties":{"Path":"$.properties"}}'
+    ']';

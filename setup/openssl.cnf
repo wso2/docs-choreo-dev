@@ -1,0 +1,23 @@
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+[req_distinguished_name]
+countryName = SL
+countryName_default = SL
+stateOrProvinceName = Western
+stateOrProvinceName_default = Western
+localityName = Colombo
+localityName_default = Colombo
+organizationalUnitName = Choreo
+organizationalUnitName_default = Choreo
+commonName = *.choreo.local
+commonName_max = 64
+[ v3_req ]
+# Extensions to add to a certificate request
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = *.choreo.local
+DNS.2 = periscope.dev.choreo.local
+DNS.3 = app.dev.choreo.local

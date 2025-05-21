@@ -1,0 +1,16 @@
+mutation{
+    createProject(project: 
+    		{
+                name: "{{.Name}}",
+                description: "{{.Description}}",
+                projectHandler: "{{.ProjectHandler}}",
+                orgId: {{.OrgId}},
+                orgHandler: "{{.OrgHandler}}",
+                version: "1.0.0",
+                region:"{{.Region}}",
+            }
+    )
+        {
+        	id, orgId, name, version, createdDate, handler, region, description, deploymentPipelineId, type, updatedAt, defaultDeploymentPipelineId
+        }
+}

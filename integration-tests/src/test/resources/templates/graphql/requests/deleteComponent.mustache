@@ -1,0 +1,12 @@
+mutation {
+  deleteComponentV2(
+    orgHandler: "{{orgHandler}}",
+    componentId: "{{componentId}}",
+    projectId: "{{projectId}}"
+  ) {
+    status
+    canDelete
+    message
+    encodedData
+  }
+}

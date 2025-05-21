@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    choreo.component: app-service
+  name: app-service
+spec:
+  ports:
+    - name: app-service-port
+      port: 8080
+      protocol: TCP
+      targetPort: grpc-port
+  selector:
+    choreo.component: app-service

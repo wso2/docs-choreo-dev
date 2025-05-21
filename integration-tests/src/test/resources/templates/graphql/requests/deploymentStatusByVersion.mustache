@@ -1,0 +1,18 @@
+query {
+  deploymentStatusByVersion(
+    componentId: "{{componentId}}"
+    versionId: "{{latestVersionId}}"
+  ) {
+    id
+    sha
+    completed_at
+    started_at
+    name
+    status
+    conclusion
+    conclusionV2
+    isAutoDeploy
+    failureReason
+    sourceCommitId
+  }
+}

@@ -1,0 +1,74 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2023, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+configMapGenerator:
+  - name: env-spec-populator-cm
+    behavior: create
+    literals:
+      - AZURE_DEPLOYMENT={{.AZURE_DEPLOYMENT | default ""}}
+      - AZURE_ENDPOINT={{.AZURE_ENDPOINT | default ""}}
+      - COLLECTION_NAME={{.COLLECTION_NAME | default ""}}
+      - CREATE_COLLECTION={{.CREATE_COLLECTION | default ""}}
+      - MILVERSE_URL={{.MILVERSE_URL | default ""}}
+      - SOURCE_PLATFORM={{.SOURCE_PLATFORM | default ""}}
+      - EXCLUDED_ORG_LIST={{.EXCLUDED_ORG_LIST | default ""}}
+      - LOG_LEVEL={{.LOG_LEVEL | default "INFO"}}
+  - name: env-milvus-proxy-cm
+    behavior: create
+    literals:
+      - MILVERSE_URL={{.MILVERSE_URL | default ""}}
+      - LOG_LEVEL={{.LOG_LEVEL | default "INFO"}}
+  - name: env-docs-updater
+    behavior: create
+    literals:
+      - AZURE_OPENAI_ENDPOINT={{.AZURE_OPENAI_ENDPOINT | default ""}}
+      - ZILLIZ_CLOUD_URI={{.ZILLIZ_CLOUD_URI | default ""}}
+      - DOCS_COLLECTION={{.DOCS_COLLECTION | default ""}}
+      - COMMITS_COLLECTION={{.COMMITS_COLLECTION | default ""}}
+  - name: env-copilot-datacollector-cm
+    behavior: create
+    literals:
+      - DB_SERVER={{.DB_SERVER | default ""}}
+      - DB_USER=choreo_ai_copilot_db_user
+      - DB_PORT=1433
+      - DB_NAME=choreo_ai_copilot_db
+      - DB_PASSWORD_FILE=/mnt/csi/secret-copilot-datacollector/DB_PASSWORD
+      - GOOGLE_APPLICATION_CREDENTIALS=/mnt/csi/secret-copilot-datacollector/BQ_SERVICE_ACCOUNT_KEY
+      - BQ_PROJECT_ID={{.BQ_PROJECT_ID | default ""}}
+      - BQ_DATASET_ID={{.BQ_DATASET_ID | default ""}}
+      - ORG_MANAGER_SCOPE={{.ORG_MANAGER_SCOPE | default ""}}
+      - WEBSUBHUB_PUBLISHER_ENABLED={{.WEBSUBHUB_PUBLISHER_ENABLED | default "false"}}
+      - WEBSUBHUB_PUBLISHER_TOPIC={{.WEBSUBHUB_PUBLISHER_TOPIC | default "choreosystem-choreo_cp_events_topic"}}
+      - WEBSUBHUB_PUBLISHER_URL={{.WEBSUBHUB_PUBLISHER_URL | default ""}}
+  - name: env-cost-optimizer-cp-cm
+    behavior: create
+    literals:
+      - DB_SERVER={{.DB_SERVER | default ""}}
+      - DB_USER=choreo_cost_optimizer_db_user
+      - DB_PORT=1433
+      - DB_NAME=choreo_cost_optimizer_db
+      - DB_PASSWORD_FILE=/mnt/csi/secret-cost-optimizer-cp/DB_PASSWORD
+      - SCOPE={{.SCOPE | default "choreo:deployment_manage"}}
+      - MIZZEN_BASE_URL={{.MIZZEN_BASE_URL | default ""}}
+      - PROJECT_MANAGER_SERVICE_BASE_URL={{.PROJECT_MANAGER_SERVICE_BASE_URL | default ""}}
+      - DPCOST_SERVICE_BASE_URL={{.DPCOST_SERVICE_BASE_URL | default "http://cost-optimizer.choreo-ai:8000"}}
+      - DATAPLANE_IDS={{.DATAPLANE_IDS | default ""}}
+      - WEBSUBHUB_PUBLISHER_ENABLED={{.WEBSUBHUB_PUBLISHER_ENABLED | default "false"}}
+      - WEBSUBHUB_PUBLISHER_TOPIC={{.WEBSUBHUB_PUBLISHER_TOPIC | default ""}}
+      - WEBSUBHUB_PUBLISHER_URL={{.WEBSUBHUB_PUBLISHER_URL | default ""}}
+      - COST_SAVINGS_THRESHOLD={{.COST_SAVINGS_THRESHOLD | default "0.2"}}
+  - name: env-cost-optimizer-cp-cron-cm
+    behavior: create
+    literals:
+      - CP_COST_SERVICE_URL={{.CP_COST_SERVICE_URL | default "http://cost-optimizer-cp.choreo-ai:8080"}}
+      - RUDDER_SERVICE_URL={{.RUDDER_SERVICE_URL | default ""}}
+      - AUTO_APPLY_COST_THRESHOLD={{.AUTO_APPLY_COST_THRESHOLD | default "0.2"}}
+      - IS_DEBUG={{.IS_DEBUG | default "false"}}

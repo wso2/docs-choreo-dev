@@ -1,0 +1,519 @@
+/*
+ * Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com). All Rights Reserved.
+ *
+ * This software is the property of WSO2 LLC. and its suppliers, if any.
+ * Dissemination of any information or reproduction of any material contained
+ * herein is strictly forbidden, unless permitted by WSO2 in accordance with
+ * the WSO2 Commercial License available at http://wso2.com/licenses.
+ * For specific language governing the permissions and limitations under
+ * this license, please see the license as well as any agreement you’ve
+ * entered into with WSO2 governing the purchase of this software and any
+ * associated services.
+ */
+
+package com.wso2.choreo.integration.apis.component;
+
+import com.consol.citrus.TestActionRunner;
+import com.consol.citrus.exceptions.ValidationException;
+import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.http.message.HttpMessageHeaders;
+import com.consol.citrus.message.DefaultMessage;
+import com.consol.citrus.message.Message;
+import com.consol.citrus.message.MessageType;
+import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.consol.citrus.validation.json.JsonMessageValidationContext;
+import com.consol.citrus.validation.json.JsonTextMessageValidator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.wso2.choreo.integration.apis.ControlPlaneAPI;
+import com.wso2.choreo.integration.common.ComponentUtils;
+import com.wso2.choreo.integration.common.MessageUtils;
+import com.wso2.choreo.integration.common.TestContext;
+import com.wso2.choreo.integration.common.choreoproject.ChoreoComponent;
+import com.wso2.choreo.integration.common.exceptions.TokenRetrievalException;
+import com.wso2.choreo.integration.common.utils.ObjectMapperUtil;
+import com.wso2.choreo.integration.config.ConfigDefinition;
+import com.wso2.choreo.integration.config.Configuration;
+import com.wso2.choreo.integration.models.commithistory.Commit;
+import com.wso2.choreo.integration.models.keymanager.KeyGenResponseDTO;
+import lombok.extern.log4j.Log4j2;
+import org.apache.http.client.utils.URIBuilder;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static com.consol.citrus.container.RepeatOnErrorUntilTrue.Builder.repeatOnError;
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.validation.json.JsonMessageValidationContext.Builder.json;
+
+@Log4j2
+public class Component extends ControlPlaneAPI {
+    private static final String CONTEXT = "/component-mgt/1.0.0";
+    private static final String MANAGED_AUTH_ENABLE_LOCAL_DEVELOPMENT_ENDPOINT = "/managed-auth/local-development";
+    private static final String COMPONENT_CREATION_STATUS_ENDPOINT = "/component-creation/v1";
+
+    public static void triggerConfigurableGeneration(TestActionRunner runner, HttpClient client,
+            ChoreoComponent component, List<Commit> commitHistory, String branchName) throws Exception {
+        String componentId = component.getId();
+        String latestVersionId = component.getLatestApiVersion().getId();
+        String latestCommitSha = component.getLatestCommitHash(commitHistory.toArray(Commit[]::new));
+        String orgHandle = component.getOrgHandler();
+        String projectId = component.getProjectId();
+
+        String configGenerationTriggerURI = CONTEXT.concat("/orgs/").concat(orgHandle).concat("/projects/")
+                .concat(projectId).concat("/triggers/").concat("configurable-generation");
+        Map<String, Object> requestBodyMap = new HashMap<>() {
+            {
+                put("componentId", componentId);
+                put("versionId", latestVersionId);
+                put("branch", branchName);
+                put("sha", latestCommitSha);
+            }
+        };
+
+        String configurationsRequestBody = MessageUtils.generateJson(requestBodyMap).replace("required",
+                "isRequired");
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(configGenerationTriggerURI)
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(configurationsRequestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(HttpStatus.OK)));
+    }
+
+    public static void waitForAsyncComponentCreationSuccess(TestNGCitrusSpringSupport runner, HttpClient client,
+                                                            String accessToken, String componentId) {
+        runner.$(repeatOnError()
+                .until("i = 3")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(COMPONENT_CREATION_STATUS_ENDPOINT.concat("/operation-status?ids=")
+                                        .concat(componentId))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response(HttpStatus.OK)
+                                .message()
+                                .type(MessageType.JSON)
+                                .body(new ClassPathResource("templates/createComponent/async_component_create_status.json"))
+                                .validate(json()
+                                )));
+    }
+
+    public static void waitForComponentCreationSuccess(TestNGCitrusSpringSupport runner, HttpClient client,
+            String accessToken,
+            String projectId,
+            String componentId) throws IOException {
+        String expectedResponse = ComponentUtils.generateStringFromTemplate(
+                "templates/createComponent/get_create_status_success.json", null);
+        runner.variable("isComponentCreationSuccess", false);
+        runner.$(repeatOnError()
+                .until("(i = 50) or ( ${isComponentCreationSuccess} = true )")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(CONTEXT.concat("/orgs/")
+                                        .concat(ORG_HANDLE)
+                                        .concat("/projects/")
+                                        .concat(projectId)
+                                        .concat("/components/")
+                                        .concat(componentId)
+                                        .concat("/init/status"))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code == HttpStatus.OK.value()) {
+                                        JsonTextMessageValidator validator = new JsonTextMessageValidator();
+                                        Message expected = new DefaultMessage(expectedResponse);
+                                        validator.validateMessage(message, expected, context,
+                                                new JsonMessageValidationContext());
+                                        context.setVariable("isComponentCreationSuccess", true);
+                                    }
+                                })));
+    }
+
+    public static JsonArray getDeploymentBuildSteps(TestActionRunner runner, HttpClient client, String accessToken,
+            String projectId,
+            String componentId, String runId) {
+        AtomicReference<JsonArray> steps = new AtomicReference<>(new JsonArray());
+        runner.$(repeatOnError()
+                .until("i = 10")
+                .index("i")
+                .autoSleep(5000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(CONTEXT.concat("/orgs/")
+                                        .concat(ORG_HANDLE)
+                                        .concat("/projects/")
+                                        .concat(projectId)
+                                        .concat("/components/")
+                                        .concat(componentId)
+                                        .concat("/runs/")
+                                        .concat(runId)
+                                        .concat("/logs"))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
+                                    String payload = message.getPayload(String.class);
+                                    JsonObject dataJsonObject = new JsonParser().parse(payload).getAsJsonObject()
+                                            .getAsJsonObject("data");
+                                    steps.set(dataJsonObject.getAsJsonObject("build").getAsJsonArray("steps"));
+                                })));
+
+        return steps.get();
+
+    }
+
+    public static void waitForComponentBuildDeployComplete(TestNGCitrusSpringSupport runner, HttpClient client, String accessToken,
+                                                      String projectId,
+                                                      String componentId, String runId, int sleepInterval) {
+        runner.variable("isComponentBuildDeployCompleted", false);
+        runner.$(repeatOnError()
+                .autoSleep(sleepInterval * 1000)
+                .until("(i = 10) or ( ${isComponentBuildDeployCompleted} = true )")
+                .index("i")
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .get(CONTEXT.concat("/orgs/")
+                                        .concat(ORG_HANDLE)
+                                        .concat("/projects/")
+                                        .concat(projectId)
+                                        .concat("/components/")
+                                        .concat(componentId)
+                                        .concat("/runs/")
+                                        .concat(runId)
+                                        .concat("/logs"))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http().client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
+                                    String payload = message.getPayload(String.class);
+                                    JsonObject jsonObject = new JsonParser().parse(payload).getAsJsonObject();
+                                    JsonObject data = Optional.ofNullable(jsonObject)
+                                            .map(json -> json.getAsJsonObject("data"))
+                                            .orElseThrow(() -> new ValidationException("Response does not contain [data] field."));
+                                    Optional<JsonElement> buildData = Optional.ofNullable(data.get("build"));
+                                    boolean isBuildCompleted = buildData
+                                        .map(build -> build.getAsJsonObject().get("status"))
+                                        .filter(JsonElement::isJsonPrimitive)
+                                        .map(JsonElement::getAsString)
+                                        .filter("completed"::equals)
+                                        .isPresent();
+                                    if (!isBuildCompleted) {
+                                        throw new ValidationException("Build is not completed.");
+                                    }
+                                    boolean hasFailedBuildSteps = buildData
+                                        .map(build -> build.getAsJsonObject().get("steps"))
+                                        .filter(JsonElement::isJsonArray)
+                                        .map(JsonElement::getAsJsonArray)
+                                        .map(steps -> {
+                                            for (JsonElement stepElement : steps) {
+                                                JsonObject step = stepElement.getAsJsonObject();
+                                                String stepStatus = Optional.ofNullable(step.get("status"))
+                                                        .filter(JsonElement::isJsonPrimitive)
+                                                        .map(JsonElement::getAsString)
+                                                        .orElse(null);
+                                                if ("failure".equals(stepStatus)) {
+                                                    return true;
+                                                }
+                                            }
+                                            return false;
+                                        })
+                                        .orElseThrow(() -> new ValidationException("Build does not contain any steps."));
+                                    if (hasFailedBuildSteps) {
+                                        throw new ValidationException("Build contains failed steps.");
+                                    }
+                                    Optional<JsonElement> deployData = Optional.ofNullable(data.get("deploy"));
+                                    boolean isDeployCompleted = deployData
+                                        .map(deploy -> deploy.getAsJsonObject().get("status"))
+                                        .filter(JsonElement::isJsonPrimitive)
+                                        .map(JsonElement::getAsString)
+                                        .filter("completed"::equals)
+                                        .isPresent();
+                                    if (!isDeployCompleted) {
+                                        throw new ValidationException("Deployment is not completed.");
+                                    }
+                                    boolean hasFailedDeploySteps = deployData
+                                        .map(deploy -> deploy.getAsJsonObject().get("steps"))
+                                        .filter(JsonElement::isJsonArray)
+                                        .map(JsonElement::getAsJsonArray)
+                                        .map(steps -> {
+                                            for (JsonElement stepElement : steps) {
+                                                JsonObject step = stepElement.getAsJsonObject();
+                                                String stepStatus = Optional.ofNullable(step.get("status"))
+                                                        .filter(JsonElement::isJsonPrimitive)
+                                                        .map(JsonElement::getAsString)
+                                                        .orElse(null);
+                                                if ("failure".equals(stepStatus)) {
+                                                    return true;
+                                                }
+                                            }
+                                            return false;
+                                        })
+                                        .orElseThrow(() -> new ValidationException("Deployment does not contain any steps."));
+                                    if (hasFailedDeploySteps) {
+                                        throw new ValidationException("Deployment contains failed steps.");
+                                    }
+                                })));
+    }
+
+    public static KeyGenResponseDTO generateKeys(TestActionRunner runner, HttpClient client, String orgHandle,
+                                                 String environmentId, String projectId, String componentId,
+                                                 String componentType, HashMap<String, Object> keyGenRequest)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        AtomicReference<String> responseDTO = new AtomicReference<>();
+        String requestBody = ObjectMapperUtil.mapToString(keyGenRequest);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(getKeyGenURL(orgHandle, environmentId, projectId, componentId, componentType))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken(orgHandle))
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
+                                    try {
+                                        KeyGenResponseDTO response = new ObjectMapper()
+                                                .readValue(message.getPayload().toString(),
+                                                        KeyGenResponseDTO.class);
+                                        if (response.getClientId() == null || response.getClientSecret() == null) {
+                                            throw new RuntimeException("Response fields are empty");
+                                        }
+                                        responseDTO.set(message.getPayload(String.class));
+                                    } catch (JsonProcessingException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                })));
+
+        return new ObjectMapper().readValue(responseDTO.get(), KeyGenResponseDTO.class);
+    }
+
+    public static KeyGenResponseDTO regenerateKeysets(TestActionRunner runner, HttpClient client, String orgHandle,
+                                                      String environmentId, String projectId, String componentId,
+                                                      String componentType, String oAuthAppId)
+            throws TokenRetrievalException, IOException, URISyntaxException {
+
+        AtomicReference<String> responseDTO = new AtomicReference<>();
+
+        String url = getKeyRegenerateURL(orgHandle, environmentId, projectId, componentId, componentType, oAuthAppId);
+        URIBuilder uriBuilder = new URIBuilder(url);
+        uriBuilder.addParameter("organizationId", Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_UUID));
+        uriBuilder.addParameter("project_id", projectId);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .put(uriBuilder.build().toString())
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken(orgHandle))
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON)),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response()
+                                .message()
+                                .validate((message, context) -> {
+                                    int code = (int) message.getHeader(HttpMessageHeaders.HTTP_STATUS_CODE);
+                                    if (code != HttpStatus.OK.value()) {
+                                        throw new ValidationException("Unexpected HTTP Response Status Code: " + code);
+                                    }
+                                    try {
+                                        KeyGenResponseDTO response = new ObjectMapper()
+                                                .readValue(message.getPayload().toString(),
+                                                        KeyGenResponseDTO.class);
+                                        if (response.getClientId() == null) {
+                                            throw new RuntimeException("Response fields are empty");
+                                        }
+                                        responseDTO.set(message.getPayload(String.class));
+                                    } catch (JsonProcessingException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                })));
+
+        return new ObjectMapper().readValue(responseDTO.get(), KeyGenResponseDTO.class);
+    }
+
+    public static void addExternalIdpKeys(TestActionRunner runner, HttpClient client,
+                    String projectId, String componentId, String environmentId,
+                    HashMap<String, Object> keyMappingRequest, HttpStatus expectedStatus)
+                    throws TokenRetrievalException, IOException, URISyntaxException {
+
+        String requestBody = ObjectMapperUtil.mapToString(keyMappingRequest);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(getKeyMappingEndpointURL(environmentId, projectId, componentId))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(expectedStatus)
+                                .message()));
+    }
+
+    public static void configureLocalDevelopmentForManagedAuthentication(TestActionRunner runner, HttpClient client,
+                    String projectId, String componentId, String releaseId,
+                    HashMap<String, Object> localDevelopmentConfigureRequest, HttpStatus expectedStatus)
+                    throws TokenRetrievalException, IOException, URISyntaxException {
+
+            String requestBody = ObjectMapperUtil.mapToString(localDevelopmentConfigureRequest);
+
+        runner.$(repeatOnError()
+                .until("i = 5")
+                .index("i")
+                .autoSleep(30000)
+                .actions(
+                        http()
+                                .client(client)
+                                .send()
+                                .post(getToggleLocalDevelopmentURL(projectId, componentId, releaseId))
+                                .message()
+                                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                                .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                                .accept(String.valueOf(MediaType.APPLICATION_JSON))
+                                .body(requestBody),
+                        http()
+                                .client(client)
+                                .receive()
+                                .response(expectedStatus)
+                                .message()));
+    }
+
+    private static String getKeyGenURL(String orgHandle, String environmentId, String projectId, String componentId,
+                                       String componentType) {
+
+        return getKeyManagerCommonURL(orgHandle, environmentId, projectId, componentId)
+                + "/generate?keyType=sandbox&componentType=" + componentType;
+    }
+
+    private static String getKeyRegenerateURL(String orgHandle, String environmentId, String projectId,
+                                              String componentId, String componentType, String oAuthAppId) {
+
+        return getKeyManagerCommonURL(orgHandle, environmentId, projectId, componentId) + "/" + oAuthAppId
+                + "?keyType=sandbox&componentType=" + componentType;
+    }
+
+    private static String getKeyMappingEndpointURL(String environmentId, String projectId, String componentId) {
+
+        return getKeyManagerCommonURL(Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE), environmentId,
+                projectId, componentId) + "/map";
+    }
+
+    private static String getKeyManagerCommonURL(String orgHandle, String environmentId, String projectId, String componentId) {
+
+        return CONTEXT + "/orgs/" + orgHandle + "/projects/" + projectId + "/components/" + componentId
+                + "/environments/" + environmentId + "/key-sets";
+    }
+
+    private static String getToggleLocalDevelopmentURL(String projectId, String componentId, String releaseId) {
+
+        return CONTEXT + "/orgs/" + Configuration.getConfig(ConfigDefinition.TEST_CHOREO_ORG_HANDLE)
+                + "/projects/" + projectId + "/components/" + componentId + "/releases/" + releaseId
+                + MANAGED_AUTH_ENABLE_LOCAL_DEVELOPMENT_ENDPOINT;        
+    }
+
+    private static String getAccessToken() throws TokenRetrievalException, IOException, URISyntaxException {
+
+        return TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs();
+    }
+
+    private static String getAccessToken(String orgHandle) throws TokenRetrievalException, IOException,
+            URISyntaxException {
+
+        return TestContext.getTestUserTokenHandler().getTestTokenForCPAPIs(orgHandle);
+    }
+}

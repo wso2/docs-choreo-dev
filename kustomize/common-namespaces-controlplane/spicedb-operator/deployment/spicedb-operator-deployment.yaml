@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the spicedb operator
+    checkov.io/skip2: CKV_K8S_AZURE_WSO2_2=this is the CRD operator
+  labels:
+    app: spicedb-operator
+    app.kubernetes.io/instance: spicedb-operator
+  name: spicedb-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spicedb-operator
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: spicedb-operator
+        app.kubernetes.io/instance: spicedb-operator
+    spec:
+      containers:
+        - args:
+            - run
+            - -v=4
+            - --crd=false
+            - --config
+            - /opt/operator/config.yaml
+          image: ghcr.io/authzed/spicedb-operator:v1.12.0
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          name: spicedb-operator
+          ports:
+            - containerPort: 8080
+              name: prometheus
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 1
+            successThreshold: 1
+            timeoutSeconds: 15
+          resources:
+            limits:
+              cpu: 250m
+              memory: 128Mi
+            requests:
+              cpu: 20m
+              memory: 32Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 65532
+            runAsNonRoot: true
+            runAsUser: 65532
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+            - name: secret-choreo-resource-authorization-service
+              mountPath: "/mnt/csi/secret-authz-management"
+              readOnly: true
+      securityContext:
+        runAsGroup: 65532
+        runAsNonRoot: true
+        runAsUser: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: spicedb-operator
+      volumes:
+        - name: secret-choreo-resource-authorization-service
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-spicedb
+            nodePublishSecretRef:
+              name: csi-secret-store-azure

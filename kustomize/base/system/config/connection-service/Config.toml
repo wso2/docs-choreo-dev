@@ -1,0 +1,34 @@
+[connection_service.config]
+servicePort=9000
+healthPort=9001
+
+configurationServiceEndpoint = "http://configuration-service:8080"
+resourceRegistryEndpoint = "http://resource-registry:9090/resource-registry"
+consoleApiClientEndpoint = "{{.CONSOLE_API_URL}}"
+keyManagerClientEndpoint = "{{.KEY_MANAGER_API_URL}}"
+apimHost = "{{.APIM_HOST_URL}}"
+projectManagerEndpoint = "http://dp-project-manager:80"
+endpointResolverEndpoint = "http://endpoint-resolver:9090"
+authzClientEndpoint = "{{.AUTHZ_CLIENT_ENDPOINT}}"
+choreoIdpId = "{{.CHOREO_IDP_ID}}"
+rudderClientEndpoint = "http://dp-rudder:80"
+apimClientId = "{{.APIM_REST_API_CONSUMER_KEY}}"
+choreoStsUrl = "{{.CHOREO_STS_URL}}"
+connectionDatabaseEnabled = {{.CONNECTION_DB_ENABLED | default false}}
+connectionListingFromDBEnabled = {{.CONNECTION_LISTING_ENABLED | default false}}
+connectionListingV2Enabled = {{.CONNECTION_LISTING_V2_ENABLED | default false}}
+dbUrl = "{{.CONNECTION_DB_URL}}"
+dbUser = "{{.CONNECTION_DB_USER}}"
+instanceBasedAuthzEnabled = {{.INSTANCE_BASED_AUTHZ_ENABLED | default false}}
+secretManagerEndpoint = "http://dp-secret-manager:80/api/v1"
+platformServicesManagerEndpoint = "http://platform-services-manager:80"
+enableEventPublish = {{.ENABLE_EVENT_PUBLISH | default false}}
+websubHubUrl = "{{.WEBSUB_HUB_URL}}"
+websubHubTopic = "{{.WEBSUB_HUB_TOPIC}}"
+enableSTSManagementService = {{.ENABLE_STS_MANAGEMENT_SERVICE | default false}}
+choreoStsMgtServiceUrl = "http://sts-mgt-service:3000/api/v1/sts-proxy"
+apiKeyServiceEndpoint = "http://api-key-service:8080/api/v1"
+
+[ballerina.log]
+level = "{{.LOG_LEVEL}}"
+format="json"

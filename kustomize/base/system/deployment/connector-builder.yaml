@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_38=The SA token is required for the linkerd to define service identity
+    checkov.io/skip2: CKV_K8S_28=Temporarily suppressing till fixing
+    checkov.io/skip3: CKV_K8S_37=Temporarily suppressing till fixing
+    checkov.io/skip4: CKV_K8S_20=Temporarily suppressing till fixing
+  labels:
+    choreo.component: connector-builder
+  name: connector-builder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      choreo.component: connector-builder
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        choreo.component: connector-builder
+        antiaffinity: connector-builder
+      annotations:
+        linkerd.io/inject: enabled
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: "60"
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: env-connector-builder
+            - configMapRef:
+                name: cm-idp-replica
+            - configMapRef:
+                name: cm-connector-builder
+          image: choreocontrolplane.azurecr.io/choreoipaas/choreo-connector-builder:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 10500
+            runAsGroup: 10500
+            readOnlyRootFilesystem: true
+          name: connector-builder
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp
+          ports:
+            - containerPort: 9090
+              name: c-builder-port
+              protocol: TCP
+            - containerPort: 9091      # To be used for readiness/liveness probes (internal)
+              name: health
+              protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: c-builder-port
+              path: /user-connectors/healthz
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              port: c-builder-port
+              path: /user-connectors/healthz
+          resources:
+            limits:
+              cpu: 400m
+              memory: 1Gi
+            requests:
+              cpu: 200m
+              memory: 800Mi
+      volumes:
+        - emptyDir: {}
+          name: tmp
+      restartPolicy: Always
+      serviceAccountName: sa-choreo-default
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: antiaffinity
+                    operator: In
+                    values:
+                      - connector-builder
+              topologyKey: kubernetes.io/hostname
