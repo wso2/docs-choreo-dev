@@ -28,9 +28,9 @@ config:
   logLevel: INFO
   stepDBURL: "jdbc:sqlserver://sqlfg-choreo-choreo-step-db-prod.database.windows.net;databaseName=choreo_step_db"
 secrets:
-  dbPassword:
+  subscriptionsDBPassword:
     path: choreo-cp/data/choreo-system/subscriptions-service
-    key: dbPassword
+    key: subscriptionsDBPassword
   stepDBPassword:
     path: choreo-cp/data/choreo-system/subscriptions-service
     key: stepDBPassword

@@ -107,6 +107,8 @@ choreo-system:
     enabled: true
   email-service:
     enabled: true
+  organization-management:
+    enabled: true
   sts-mgt-service:
     enabled: true
   subscriptions-service:

@@ -1,0 +1,14 @@
+# choreo app db configs
+[choreo.choreo_organization_management.configs]
+portOffset = 0
+portOffsetGrpcService = 0
+user = "choreo_app_db_user"
+loginTimeout = 60
+useSsl = false
+poolSize = 15
+minIdle = 5
+testEnabled = false
+emailServiceUrl = "https://email-service"
+resourceDir = "resources/"
+keyStorePath = "/home/ballerina/keystore/clientKeyStore.p12"
+keyStorePasswordPath = "/mnt/csi/secret-organization-management/KEYSTORE_PASSWORD"

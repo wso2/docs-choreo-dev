@@ -84,6 +84,9 @@ dependencies:
   - name: email-service
     version: 1.0.0
     condition: email-service.enabled
+  - name: organization-management
+    version: 1.0.0
+    condition: organization-management.enabled
   - name: sts-mgt-service
     version: 1.0.0
     condition: sts-mgt-service.enabled

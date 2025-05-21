@@ -1,0 +1,38 @@
+# -------------------------------------------------------------------------------------
+#
+# Copyright (c) 2025, WSO2 LLC (http://www.wso2.com). All Rights Reserved.
+#
+# This software is the property of WSO2 LLC and its suppliers, if any.
+# Dissemination of any information or reproduction of any material contained
+# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
+# You may not alter or remove any copyright or other notice from copies of this content.
+#
+# --------------------------------------------------------------------------------------
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: organization-management
+  namespace: {{ .Values.global.namespaces.system }}
+  labels:
+    {{ include "organization-management.labels" . | indent 4 }}
+data:
+  Config.toml: |
+    {{ tpl (.Files.Get "Config.toml") . | nindent 4 }}
+  CHOREO_APP_DB_URL: {{ .Values.config.choreoAppDBUrl }}
+  CHOREO_DEFAULT_THEME_PATH: {{ .Values.config.choreoDefaultThemePath }}
+  CHOREO_JWT_ISSUER: {{ .Values.config.choreoJwtIssuer }}
+  CHOREO_JWT_AUDIENCE: {{ .Values.config.choreoJwtAudience }}
+  CHOREO_JWT_JWKS_URL: {{ .Values.config.choreoJwtJwksUrl }}
+  AZURE_STORAGE_ACCOUNT: {{ .Values.config.azureStorageAccount }}
+  CHOREO_AUTH_HANDLER_AUDIENCES: {{ .Values.config.choreoAuthHandlerAudiences | join "," }}
+  CHOREO_SYSTEM_ORG_UUID: {{ .Values.global.choreosystem.orgUUID }}
+  CHOREO_DEVPORTAL_BASE_URL: {{ .Values.config.choreoDevportalBaseUrl }}
+  ROLE_MANAGE: {{ printf "urn:%s:usermanagement:role_manage" .Values.global.choreosystem.orgHandle }}
+  ENABLE_EVENT_PUBLISH: {{ .Values.config.enableEventPublish | quote }}
+  WEBSUB_HUB_URL: {{ .Values.config.websubHubUrl }}
+  WEBSUB_HUB_TOPIC: {{ printf "%s-choreo_cp_events_topic" .Values.global.choreosystem.orgHandle | quote }}
+  ENABLE_EVENT_PUBLISHER_MTLS: {{ .Values.config.enableEventPublisherMTLS | quote }}
+  CHOREO_SUBSCRIPTION_DB_URL: {{ .Values.config.choreoSubscriptionDBUrl }}
+  CHOREO_SUBSCRIPTION_DB_USER: "choreo_subscriptions_db_user"
+  MAX_ACTIVE_USERS: {{ .Values.config.maxActiveUsers | quote }}
