@@ -3725,7 +3725,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 id="q-what-is-a-project-in-choreo">Q: What is a project in Choreo?<a class="headerlink" href="#q-what-is-a-project-in-choreo" title="Permanent link">&para;</a></h3>
 <p>A project is a logical grouping of related components to help you organize your work. Each project provides runtime isolation through namespaces when you deploy components.</p>
 <h3 id="q-what-is-a-component-in-choreo">Q: What is a component in Choreo?<a class="headerlink" href="#q-what-is-a-component-in-choreo" title="Permanent link">&para;</a></h3>
-<p>A component is a workload designed to run on Choreo. Examples of components include integrations, APIs, microservices, manual/scheduled jobs, web apps, and triggers.</p>
+<p>A component is a workload designed to run on Choreo. Examples of components include integrations, APIs, microservices, manual/scheduled jobs, web apps, triggers and API proxies.</p>
 <h3 id="q-what-is-the-difference-between-an-internal-and-external-api">Q: What is the difference between an internal and external API?<a class="headerlink" href="#q-what-is-the-difference-between-an-internal-and-external-api" title="Permanent link">&para;</a></h3>
 <p>In Choreo, you can publish an API as an internal or an external API. A user or an application can access an external API publicly over the internet, whereas an internal API is only accessible through other components within the same organization. </p>
 <h3 id="q-what-is-a-connector-in-choreo-marketplace">Q: What is a connector in Choreo Marketplace?<a class="headerlink" href="#q-what-is-a-connector-in-choreo-marketplace" title="Permanent link">&para;</a></h3>
@@ -3843,12 +3843,15 @@ home directory of your operating system.</p>
 <div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-o-<span class="w"> </span>https://cli.choreo.dev/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
 </code></pre></div></p>
 <h3 id="q-what-are-the-supported-component-types-in-the-cli">Q: What are the supported component types in the CLI?<a class="headerlink" href="#q-what-are-the-supported-component-types-in-the-cli" title="Permanent link">&para;</a></h3>
-<p>The Choreo CLI currently supports the following component types:
-- Service
-- Web Application
-- Webhook
-- Scheduled Task
-- Manual Task</p>
+<p>The Choreo CLI currently supports the following component types:</p>
+<ul>
+<li>Service</li>
+<li>Web Application</li>
+<li>Webhook</li>
+<li>Scheduled Task</li>
+<li>Manual Task</li>
+<li>API Proxy</li>
+</ul>
 <h3 id="q-how-do-i-get-help-with-a-specific-command-in-the-cli">Q: How do I get help with a specific command in the CLI?<a class="headerlink" href="#q-how-do-i-get-help-with-a-specific-command-in-the-cli" title="Permanent link">&para;</a></h3>
 <p>You can get help with a specific command by running the following command:
 <div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>choreo<span class="w"> </span>&lt;command&gt;<span class="w"> </span>--help
