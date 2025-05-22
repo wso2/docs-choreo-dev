@@ -131,7 +131,7 @@ For example,
      ```
 
     !!! note
-         Alternatively, Choreo's managed authentication provides the GET endpoint `/auth/userinfo` to retrieve user information claims. Invoke this endpoint with cookies attached to the request that are coming from the user's browser. The server sends a `200 OK` response with the user information in JSON format in the response body if the user has signed in. If the user is not signed in, the server sends a `401 Unauthorized` response.
+         Alternatively, Choreo's managed authentication provides the GET endpoint `/auth/userinfo` to retrieve user information claims. Invoke this endpoint with cookies attached to the request that is coming from the user's browser. The server sends a `200 OK` response with the user information in JSON format in the response body if the user has signed in. If the user is not signed in, the server sends a `401 Unauthorized` response.
 
 ### Step 1.3: Implement the sign-out functionality
 
