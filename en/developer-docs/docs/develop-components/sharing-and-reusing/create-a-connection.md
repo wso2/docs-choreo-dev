@@ -77,3 +77,6 @@ To create a connection to a service or a database, follow the step-by-step instr
         During connection creation, secret values for the lowest environment are visible, allowing you to copy them for local use if necessary. Secret values for higher environments remain hidden to ensure security
     
     For step-by-step instructions on using a database in your component, see [Use a Database Connection in Your Component](./use-a-database-connection-in-your-component.md).
+
+!!! tip
+    You can refer to [this guide](../../connect-to-remote-dependencies-while-developing/) to learn how to test connections during creation and afterward. This helps you develop applications that depend on Choreo connections more easily in your local environment.

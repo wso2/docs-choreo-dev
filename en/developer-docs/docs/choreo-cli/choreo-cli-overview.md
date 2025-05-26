@@ -27,4 +27,6 @@ Choreo serves as a comprehensive internal platform-as-a-service. The Choreo CLI 
 
 - **Monitor with Logs** : The integrated log functionality in the Choreo CLI allows you to effectively monitor your components. You can access valuable insights into your components behavior and performance directly from the command line.
 
+- **Develop with Remote Dependencies** : Use the Choreo CLI or VS Code extension to securely connect your local environment to Choreo for real-time testing and validation — see the [guide](../../develop-components/connect-to-remote-dependencies-while-developing/#using-cli) for details.
+
 For troubleshooting tips and answers to frequently asked questions, see the [Choreo CLI FAQ](../references/faq.md#choreo-cli).
