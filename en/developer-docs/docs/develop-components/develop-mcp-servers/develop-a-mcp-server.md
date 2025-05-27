@@ -75,7 +75,7 @@ Now that you have built the component, it's time to deploy the mcp server.
 5. Review the **Endpoint Details** and click **Deploy**.
 
     !!! note
-        - In Choreo, by default endpoint authentication is enabled. You can disable the security if you don't require it.
+        - In Choreo, by default endpoint authentication is enabled. You can disable endpoint authentication if you don't require it.
         - Deploying the service component may take some time. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
 
 Once you have successfully deployed the service, you can test your server. You can view the invoke URL details from the **Overview** tab in left navigation menu.
@@ -87,7 +87,7 @@ Once you have successfully deployed the service, you can test your server. You c
 
 You can test the deployed MCP Server with an external client.
 
-Since security is enabled for the server, a token must be generated to connect the external client to the server. Follow below steps to generate the token. Refer [develop an external consumer](../develop-an-external-consumer.md) for more details.
+As security is enabled for the server, a token must be generated to connect the external client to the server. Follow below steps to generate the token. Refer [develop an external consumer](../develop-an-external-consumer.md) for more details.
 
 1. Create an external consumer component from the component creation wizard
 2. Go to the **Connections** tab in left navigation menu and select **Service** type
@@ -101,7 +101,7 @@ Since security is enabled for the server, a token must be generated to connect t
 Download and install [postman](https://www.postman.com/downloads/) in your machine.
 
 1. Create a new request with MCP type
-2. Paste the MCP server URL copied from step 3
+2. Paste the MCP server URL copied from [step 3](#step-3-deploy)
 3. Select server's communication method as HTTP
 4. In the **Authorization** section, select **Bearer Token** as auth type and paste the generated token
 5. Click **Connect** button
