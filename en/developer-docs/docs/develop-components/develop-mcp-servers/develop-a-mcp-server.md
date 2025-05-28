@@ -93,7 +93,12 @@ As security is enabled for the server, a token must be generated to connect the 
 2. Go to the **Connections** tab in left navigation menu and select **Service** type
 3. Create a connection by selecting the already deployed Mcp Server component
 4. Go to the component **Settings** page and click on **Generate Keys** button
-5. Use those credentials to generate the authorization token for the deployed MCP server
+5. Use those credentials to generate the authorization token for the deployed MCP server. You can get the **Token Endpoint** from **Identity Provider Connection Data** section. To generate the token, use the following curl command.
+
+```
+curl -k -X POST <token-endpoint> -d "grant_type=client_credentials"
+-H "Authorization: Basic Base64(consumer-key:consumer-secret)"
+```
 
 ### Test the MCP Server with Postman
 
