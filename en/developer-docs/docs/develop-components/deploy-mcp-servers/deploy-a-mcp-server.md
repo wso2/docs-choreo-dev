@@ -123,7 +123,7 @@ Install [Inspector](https://github.com/modelcontextprotocol/inspector) in your m
 
 ### Test the MCP Server with Vscode
 1. Create mcp.json files in .vscode directory to add an MCP server to your directory. Refer [Use MCP servers in VS Code](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) for more details.
-2. Add the MCP server URL details in **servers** section in mcp.json file. 
+2. Add the MCP server URL details in **servers** section in the mcp.json file. 
 3. Paste the generated token as a header. For example,
 
 ```
