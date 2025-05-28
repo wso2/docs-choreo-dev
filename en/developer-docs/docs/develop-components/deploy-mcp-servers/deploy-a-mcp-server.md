@@ -1,4 +1,4 @@
-# Develop a MCP Server
+# Deploy a MCP Server
 
 Choreo allows you to create and deploy MCP Server applications in Python and Node.js. 
 
@@ -110,3 +110,50 @@ Download and install [postman](https://www.postman.com/downloads/) in your machi
 3. Select server's communication method as HTTP
 4. In the **Authorization** section, select **Bearer Token** as auth type and paste the generated token
 5. Click **Connect** button
+
+### Test the MCP Server with Inspector
+
+**Prerequisites** <br>
+Install [Inspector](https://github.com/modelcontextprotocol/inspector) in your machine.
+
+1. Select **SSE** as transport type
+2. Paste the MCP server URL copied from [step 3](#step-3-deploy) in the **URL** input field
+3. Paste the generated token in the **Bearer Token** input field
+4. Click **Connect** button
+
+### Test the MCP Server with Vscode
+1. Create mcp.json files in .vscode directory to add an MCP server to your directory. Refer [Use MCP servers in VS Code](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) for more details.
+2. Add the MCP server URL details in **servers** section in mcp.json file. 
+3. Paste the generated token as a header. For example,
+
+```
+{
+    "servers": {
+        "github-mcp-server": {
+            "type": "sse",
+            "url": "<sse endpoint of deployed MCP server>",
+            "headers": { "Authorization": "Bearer  <token>" }
+        }
+    }
+}
+```
+4. Start the MCP server.
+5. Use chat space in Agent mode.
+
+Currently, Cursor does not support authenticating MCP servers. Hence, you have to disable endpoint authentication as mentioned in [step 3](#step-3-deploy)
+
+### Test the MCP Server with Cursor
+1. Open **Settings** page in Cursor
+2. Click **MCP** tab in left navigation menu
+3. Click **Add new global MCP server** button
+4. Add the MCP server URL details in **mcpServers** section in mcp.json file. For example,
+
+```
+{
+  "mcpServers": {
+    "github-mcp-server": {
+      "url": "<sse endpoint of deployed MCP server>"
+    }
+  }
+}
+```
