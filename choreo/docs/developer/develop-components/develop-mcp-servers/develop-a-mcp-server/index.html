@@ -1597,6 +1597,26 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#step-4-test" class="md-nav__link">
+    Step 4: Test
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-the-mcp-server-with-postman" class="md-nav__link">
+    Test the MCP Server with Postman
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3984,6 +4004,26 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#step-4-test" class="md-nav__link">
+    Step 4: Test
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-the-mcp-server-with-postman" class="md-nav__link">
+    Test the MCP Server with Postman
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4128,15 +4168,42 @@ If you need to rebuild the component later, follow the steps below.</p>
 <p>Review the <strong>Endpoint Details</strong> and click <strong>Deploy</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Deploying the service component may take some time. Once deployed, the <strong>Development</strong> environment card indicates the <strong>Deployment Status</strong> as <strong>Active</strong>.</p>
+<ul>
+<li>In Choreo, by default endpoint authentication is enabled. You can disable endpoint authentication if you don't require it.</li>
+<li>Deploying the service component may take some time. Once deployed, the <strong>Development</strong> environment card indicates the <strong>Deployment Status</strong> as <strong>Active</strong>.</li>
+</ul>
 </div>
 </li>
 </ol>
-<p>Once you have successfully deployed the service, you can test your server. You can view the invoke URL details from the <strong>Test</strong> tab in left navigation menu.</p>
+<p>Once you have successfully deployed the service, you can test your server. You can view the invoke URL details from the <strong>Overview</strong> tab in left navigation menu.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>The path for SSE subscription is <strong>/sse</strong>, and the path for messages is <strong>/messages</strong>.</p>
 </div>
+<h2 id="step-4-test">Step 4: Test<a class="headerlink" href="#step-4-test" title="Permanent link">&para;</a></h2>
+<p>You can test the deployed MCP Server with an external client.</p>
+<p>As security is enabled for the server, a token must be generated to connect the external client to the server. Follow below steps to generate the token. Refer <a href="../../develop-an-external-consumer/">develop an external consumer</a> for more details.</p>
+<ol>
+<li>Create an external consumer component from the component creation wizard</li>
+<li>Go to the <strong>Connections</strong> tab in left navigation menu and select <strong>Service</strong> type</li>
+<li>Create a connection by selecting the already deployed Mcp Server component</li>
+<li>Go to the component <strong>Settings</strong> page and click on <strong>Generate Keys</strong> button</li>
+<li>Use those credentials to generate the authorization token for the deployed MCP server. You can get the <strong>Token Endpoint</strong> from <strong>Identity Provider Connection Data</strong> section. To generate the token, use the following curl command.</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl -k -X POST &lt;token-endpoint&gt; -d &quot;grant_type=client_credentials&quot;
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>-H &quot;Authorization: Basic Base64(consumer-key:consumer-secret)&quot;
+</code></pre></div>
+
+<h3 id="test-the-mcp-server-with-postman">Test the MCP Server with Postman<a class="headerlink" href="#test-the-mcp-server-with-postman" title="Permanent link">&para;</a></h3>
+<p><strong>Prerequisites</strong> <br>
+Download and install <a href="https://www.postman.com/downloads/">postman</a> in your machine.</p>
+<ol>
+<li>Create a new request with MCP type</li>
+<li>Paste the MCP server URL copied from <a href="#step-3-deploy">step 3</a></li>
+<li>Select server's communication method as HTTP</li>
+<li>In the <strong>Authorization</strong> section, select <strong>Bearer Token</strong> as auth type and paste the generated token</li>
+<li>Click <strong>Connect</strong> button</li>
+</ol>
 
 
 
