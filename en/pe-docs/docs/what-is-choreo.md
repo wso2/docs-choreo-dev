@@ -3,7 +3,7 @@
 Choreo is an Internal Developer Platform (IDP) built to help platform engineering teams build and scale high-performing developer platforms. It provides a unified control plane and self-service portal for managing infrastructure, CI/CD, security, governance, and observability across all stages of the software delivery lifecycle.
 Choreo is designed to reduce the cognitive and operational load for developers while giving platform teams full control and visibility. Built with extensibility and multi-cloud support, it accelerates how organizations ship secure, compliant, and reliable applications.
 
-![what is choreo](../assets/img/what-is-choreo.png){.cInlineImage-full}
+![Diagram of Choreo platform capabilities](../assets/img/what-is-choreo.png){.cInlineImage-full}
 
 ## Key capabilities of Choreo
 
