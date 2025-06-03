@@ -4082,9 +4082,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><code>Duration</code>: The time taken for the gateway to serve the request.  </li>
 </ul>
 </li>
-<li>
-<p><code>gatewayCode</code>: Indicates the state of the request from the gateway perspective. Possible values are as follows:</p>
-<ul>
+<li><code>gatewayCode</code>: Indicates the state of the request from the gateway perspective. Possible values are as follows:<ul>
 <li><code>BACKEND_RESPONSE</code>:  Indicates successful processing of the request by the gateway with a response to the client from the backend application.</li>
 <li><code>CORS_RESPONSE</code>: Denotes a CORS (Cross Origin Resource Sharing) request.</li>
 <li><code>AUTH_FAILURE</code>: Indicates a request failure at the gateway due to authentication or authorization issues, such as an invalid token.</li>
@@ -4094,14 +4092,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><code>BACKEND_TIMEOUT</code>: Indicates a request timeout when calling the backend application from the gateway.</li>
 <li><code>GATEWAY_ERROR</code>: Indicates a request failure due to an erroneous behavior in the gateway.</li>
 </ul>
-<div class="admonition info">
-<p class="admonition-title">Note</p>
-<p>Occasionally, a request may not fit into any of the above categories. In such instances, the <code>gatewayCode</code> is displayed as <code>UNKNOWN</code>.</p>
-</div>
 </li>
-<li>
-<p><code>statusCode</code>: The HTTP status code returned to the client.</p>
-</li>
+<li><code>statusCode</code>: The HTTP status code returned to the client.</li>
 <li><code>componentVersion</code>: The version of the invoked component.</li>
 <li><code>envName</code>: The environment of the inbound request. For example, Development, Production, etc.</li>
 </ul>
