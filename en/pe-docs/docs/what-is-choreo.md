@@ -14,11 +14,11 @@ Choreo is designed to reduce the cognitive and operational load for developers w
 ### Application Delivery
 - **Seamless Git Integration**: Native integration with GitHub, BitBucket, and GitLab to support GitOps-based workflows.
 - **Automated CI/CD Pipelines**: Automates build and deployment pipelines with support for extensions using Argo Workflows.
-- **Secrets & Config Management**: Securely manage secrets, configurations, and API gateways natively within the platform.
+- **Secrets & Config Management**: Securely manage secrets, configurations, and configurations for API gateways natively within the platform.
 
 ### Observability
 - **Centralized Logging**: Aggregate and analyze logs seamlessly with Fluentbit and OpenSearch, enabling rapid root-cause analysis.
-- **Granular Metrics**: Monitor system performance, optimize resource utilization, troubleshoot issues, and ensure reliability across deployments with Cilium Hubble and Prometheus.
+- **Granular Metrics**: Monitor system performance, optimize resource utilization, troubleshoot issues, and ensure reliability across deployments with Cilium and Prometheus.
 - **Proactive Alerts**: Set custom thresholds to detect anomalies, automate incident responses, and prevent downtime before it impacts users.
 
 ### Security
