@@ -123,7 +123,7 @@ nav:
       - Develop a Webhook: develop-components/develop-a-webhook.md
       - Develop an External Consumer: develop-components/develop-an-external-consumer.md
       - Develop Integrations:
-          - Develop an Integration with Integration Studio: develop-components/develop-integrations/develop-an-integration-with-integration-studio.md
+          - Develop an WSO2 MI integration as an API Service: develop-components/develop-integrations/develop-an-integration-as-an-api-service.md
           - Develop an Event Handler: develop-components/develop-integrations/develop-an-event-handler.md
           - Develop a Scheduled Task: develop-components/develop-integrations/develop-a-scheduled-task.md
           - Develop a Manual Task: develop-components/develop-integrations/develop-a-manual-task.md
