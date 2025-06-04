@@ -111,7 +111,7 @@ You can customize the connection behavior to the remote project by modifying the
                   "project": "default-project",
                   "component": "my-component",
                   "env": "test-env",
-                  "skip-connection": ["test-conn1"]
+                  "skipConnection": ["test-conn1"]
               }
           }
       ]
