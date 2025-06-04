@@ -73,4 +73,4 @@ In this guide, you will:
 3. Click **Publish**. This changes the lifecycle stage to **Published** and exposes the integration as an API in the Choreo Developer Portal.
    - To view the published API, click **Go to Devportal**. In the Developer Portal, you can manage subscriptions and generate access tokens for testing.
 
-Now you have successfully exposed an WSO2 MI integration as a REST API in Choreo!
+Now you have successfully exposed a WSO2 MI integration as a REST API in Choreo!
