@@ -19,6 +19,9 @@ The Choreo CLI allows you to create a local subshell environment that is bridged
     choreo login
     ```
 
+!!! tip
+    For testing in CI environments, login to Choreo CLI using a [personal access token](../../choreo-cli/manage-authentication-with-personal-access-tokens/).    
+
 ### Connect to a project
 
 1. The following command will create a subshell that will be connected to your remote project environment.
@@ -58,8 +61,6 @@ The Choreo CLI allows you to create a local subshell environment that is bridged
 !!! tip
     Execute the command `choreo connect --help` to explore all available advanced options and flags.
 
-!!! tip
-    For testing in CI environments, login to Choreo CLI using a [personal access token](../../choreo-cli/manage-authentication-with-personal-access-tokens/).       
              
 ## Using VS Code
 
