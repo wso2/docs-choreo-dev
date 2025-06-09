@@ -12,7 +12,7 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-an-integration-with-integration-studio/">
+        <link rel="canonical" href="https://wso2.com/choreo/docs/develop-components/develop-integrations/develop-an-integration-as-an-api-service/">
       
       
         <link rel="prev" href="../../develop-an-external-consumer/">
@@ -25,7 +25,7 @@
     
     
       
-        <title>Develop an Integration with Integration Studio - Choreo Documentation | AI-Native Internal Developer Platform</title>
+        <title>Develop an WSO2 MI integration as an API Service - Choreo Documentation | AI-Native Internal Developer Platform</title>
       
     
     
@@ -140,7 +140,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#develop-an-integration-with-integration-studio" class="md-skip">
+        <a href="#develop-an-integration-as-an-api-service" class="md-skip">
           Skip to content
         </a>
       
@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Develop an Integration with Integration Studio
+              Develop an WSO2 MI integration as an API Service
             
           </span>
         </div>
@@ -1483,12 +1483,12 @@ document.addEventListener('DOMContentLoaded', function() {
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Develop an Integration with Integration Studio
+          Develop an WSO2 MI integration as an API Service
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Develop an Integration with Integration Studio
+        Develop an WSO2 MI integration as an API Service
       </a>
       
         
@@ -1521,15 +1521,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-deploy-the-integration-component" class="md-nav__link">
-    Step 2: Deploy the integration component
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-test-the-integration" class="md-nav__link">
-    Step 3: Test the integration
+  <a href="#step-2-test-the-integration" class="md-nav__link">
+    Step 2: Test the integration
   </a>
   
 </li>
@@ -3985,15 +3978,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-deploy-the-integration-component" class="md-nav__link">
-    Step 2: Deploy the integration component
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-test-the-integration" class="md-nav__link">
-    Step 3: Test the integration
+  <a href="#step-2-test-the-integration" class="md-nav__link">
+    Step 2: Test the integration
   </a>
   
 </li>
@@ -4027,53 +4013,32 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
 
-<h1 id="develop-an-integration-with-integration-studio">Develop an Integration with Integration Studio<a class="headerlink" href="#develop-an-integration-with-integration-studio" title="Permanent link">&para;</a></h1>
-<p>Choreo simplifies the process of building, deploying, and managing integration components, making it easy to expose integrations as APIs. This guide walks you through the steps to expose an integration created in WSO2 Integration Studio as an API in Choreo.</p>
+<h1 id="develop-an-integration-as-an-api-service">Develop an integration as an API service<a class="headerlink" href="#develop-an-integration-as-an-api-service" title="Permanent link">&para;</a></h1>
+<p>Choreo simplifies the process of building, deploying, and managing integration components, making it easy to expose integrations as APIs. This guide walks you through the steps to expose an integration as a managed API service in Choreo.</p>
 <p>In this guide, you will:
-- Create a component to expose a sample integration from the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a> as an API.
+- Create a component to expose an integration using a sample from the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a>.
 - Deploy, test, and observe the integration component.
 - Publish the integration component as an API to the Choreo Developer Portal.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul>
-<li>To develop integrations for <strong>Manual Task</strong> and <strong>Schedule Task</strong> components in Choreo, use the <strong>automation mode</strong> in the WSO2 Micro Integrator. See <a href="https://apim.docs.wso2.com/en/4.2.0/install-and-setup/install/running-the-mi-in-automation-mode/">Running MI in Automation Mode</a>.</li>
-<li>For other component types (Service, webhook, event-handler, etc.), use the <strong>server mode</strong>.</li>
-</ul>
+<p>To develop integrations for <strong>Manual Task</strong> and <strong>Schedule Task</strong> components in Choreo, use the <strong>automation mode</strong> in the WSO2 Micro Integrator. See <a href="https://mi.docs.wso2.com/en/latest/install-and-setup/install/running-the-mi-in-automation-mode/">Running MI in Automation Mode</a>.</p>
 </div>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ol>
-<li>
-<p>If you're signing in to the Choreo Console for the first time, create an organization:</p>
-<ul>
+<li>If you're signing in to the Choreo Console for the first time, create an organization:<ul>
 <li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in.</li>
 <li>Enter a unique organization name. For example, <code>Stark Industries</code>.</li>
 <li>Read and accept the privacy policy and terms of use.</li>
 <li>Click <strong>Create</strong>. This creates the organization and opens the <strong>Project Home</strong> page.</li>
 </ul>
 </li>
-<li>
-<p>Fork the <a href="https://github.com/wso2/choreo-samples">Choreo samples repository</a>, which contains the sample integration for this guide.</p>
-</li>
 </ol>
 <h2 id="step-1-create-the-integration-component">Step 1: Create the integration component<a class="headerlink" href="#step-1-create-the-integration-component" title="Permanent link">&para;</a></h2>
 <ol>
-<li>
-<p>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in. This opens the <strong>Project Home</strong> page.</p>
-</li>
-<li>
-<p>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</p>
-</li>
+<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in. This opens the <strong>Project Home</strong> page.</li>
+<li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
 <li>Click the <strong>Service</strong> card.</li>
-<li>
-<p>Click <strong>Authorize with GitHub</strong> to connect your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the <a href="https://github.com/marketplace/choreo-apps">Choreo GitHub App</a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <strong>Choreo GitHub App</strong> requires the following permissions:
-- Read and write access to code and pull requests.
-- Read access to issues and metadata.</p>
-<p>You can <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps">revoke access</a> if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.</p>
-</div>
-</li>
+<li>Click <strong>Use Public GitHub Repository</strong>.</li>
 <li>
 <p>Enter the following repository details:</p>
 <table>
@@ -4085,12 +4050,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </thead>
 <tbody>
 <tr>
-<td><strong>Organization</strong></td>
-<td>Your GitHub account</td>
-</tr>
-<tr>
-<td><strong>Repository</strong></td>
-<td><code>choreo-samples</code></td>
+<td><strong>Repository URL</strong></td>
+<td><a href="https://github.com/wso2/choreo-samples">https://github.com/wso2/choreo-samples</a></td>
 </tr>
 <tr>
 <td><strong>Branch</strong></td>
@@ -4098,13 +4059,10 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 <tr>
 <td><strong>Component Directory</strong></td>
-<td><code>hello-world-mi</code></td>
+<td><code>/hello-world-mi</code></td>
 </tr>
 </tbody>
 </table>
-</li>
-<li>
-<p>Select WSO2 MI as the build pack (since you're creating the REST API from a <a href="https://wso2.com/micro-integrator/">WSO2 Integration Studio</a> project).</p>
 </li>
 <li>
 <p>Provide a unique name and description for the component:</p>
@@ -4117,47 +4075,32 @@ document.addEventListener('DOMContentLoaded', function() {
 </thead>
 <tbody>
 <tr>
-<td><strong>Component Name</strong></td>
+<td><strong>Display Name</strong></td>
 <td><code>Hello World</code></td>
 </tr>
 <tr>
+<td><strong>Name</strong></td>
+<td>This will be automatically generated based on the display name.</td>
+</tr>
+<tr>
 <td><strong>Description</strong></td>
-<td><code>Hello World REST API</code></td>
+<td><code>MI Hello World REST API</code></td>
 </tr>
 </tbody>
 </table>
 </li>
 <li>
-<p>Click <strong>Create</strong>. Choreo initializes the component with the sample integration.</p>
+<p>Select <code>WSO2 MI</code> as the <strong>Build Preset</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create and Deploy</strong>. Choreo initializes the component, builds it, and deploys it to the development environment.</p>
 </li>
 </ol>
-<h2 id="step-2-deploy-the-integration-component">Step 2: Deploy the integration component<a class="headerlink" href="#step-2-deploy-the-integration-component" title="Permanent link">&para;</a></h2>
-<ol>
-<li>
-<p>In the Choreo Console left navigation menu, click <strong>Deploy</strong>.</p>
-</li>
-<li>
-<p>Configure and deploy:</p>
-</li>
-<li>In the <strong>Build Area</strong> card, click <strong>Configure &amp; Deploy</strong>.</li>
-<li>In the <strong>Configurations</strong> pane, click <strong>Next</strong>. This displays the endpoint details ready for deployment.</li>
-<li>
-<p>Click <strong>Deploy</strong>. This deploys the integration component to the development environment.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<ul>
-<li>Choreo uses <a href="../../../choreo-concepts/endpoint/">endpoints</a> to expose <strong>Service</strong> components to the network. Learn more about configuring endpoints in <a href="../../configure-endpoints/">Configure Endpoints</a>.</li>
-<li>Automatic deployment is enabled by default, so only the first deployment needs to be done manually.</li>
-</ul>
-</div>
-</li>
-</ol>
-<p>The <strong>Development</strong> card shows the <strong>Deployment Status</strong> as <strong>Active</strong> when the integration is successfully deployed.</p>
-<h2 id="step-3-test-the-integration">Step 3: Test the integration<a class="headerlink" href="#step-3-test-the-integration" title="Permanent link">&para;</a></h2>
+<h2 id="step-2-test-the-integration">Step 2: Test the integration<a class="headerlink" href="#step-2-test-the-integration" title="Permanent link">&para;</a></h2>
 <ol>
 <li>In the Choreo Console left navigation menu, click <strong>Test</strong> and then click <strong>Console</strong>.</li>
 <li>In the OpenAPI Console, select <strong>Development</strong> from the environment drop-down list.</li>
-<li>Expand the <strong>GET /integration</strong> operation.</li>
+<li>Expand the <strong>GET /</strong> operation.</li>
 <li>Click <strong>Try it out</strong>, then click <strong>Execute</strong>. This sends a request to your deployed integration.</li>
 <li>
 <p>Check the response:</p>
@@ -4171,15 +4114,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </ol>
 <h2 id="step-4-observe-the-integration">Step 4: Observe the integration<a class="headerlink" href="#step-4-observe-the-integration" title="Permanent link">&para;</a></h2>
 <ol>
-<li>
-<p>Click <strong>Observability</strong> in the left navigation menu to monitor the performance of the integration component.</p>
+<li>In the Choreo Console left navigation menu, click <strong>Observability</strong> and then select one of the following options to monitor the performance of the integration component:<ul>
+<li><strong>Alerts</strong>: View and configure alerts based on predefined conditions.</li>
+<li><strong>Metrics</strong>: Monitor performance metrics and system statistics.</li>
+<li><strong>Runtime Logs</strong>: Access and analyze runtime execution logs.</li>
+</ul>
 </li>
-<li>
-<p>View metrics:</p>
-</li>
-<li>Observe throughput and latencies of requests over time.</li>
-<li>View logs generated during a specific period.</li>
-<li>Analyze the flame graph (Diagnostics View) for performance insights.</li>
 </ol>
 <p>For more details, see <a href="../../../monitoring-and-insights/observability-overview/">Observability Overview</a>.</p>
 <h2 id="step-5-publish-the-integration-component">Step 5: Publish the integration component<a class="headerlink" href="#step-5-publish-the-integration-component" title="Permanent link">&para;</a></h2>
@@ -4189,7 +4129,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Click <strong>Publish</strong>. This changes the lifecycle stage to <strong>Published</strong> and exposes the integration as an API in the Choreo Developer Portal.</li>
 <li>To view the published API, click <strong>Go to Devportal</strong>. In the Developer Portal, you can manage subscriptions and generate access tokens for testing.</li>
 </ol>
-<p>Now you have successfully exposed an integration designed in WSO2 Integration Studio as a REST API in Choreo!</p>
+<p>Now you have successfully exposed a WSO2 MI integration as a REST API in Choreo!</p>
 
 
 

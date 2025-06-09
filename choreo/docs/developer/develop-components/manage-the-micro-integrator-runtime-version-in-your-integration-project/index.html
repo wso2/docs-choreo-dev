@@ -1473,8 +1473,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../develop-integrations/develop-an-integration-with-integration-studio/" class="md-nav__link">
-        Develop an Integration with Integration Studio
+      <a href="../develop-integrations/develop-an-integration-as-an-api-service/" class="md-nav__link">
+        Develop an WSO2 MI integration as an API Service
       </a>
     </li>
   
@@ -1634,49 +1634,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
-  <a href="#version-management-in-wso2-integration-studio" class="md-nav__link">
-    Version management in WSO2 Integration Studio
+  <a href="#version-management-in-mi-extension-for-vs-code" class="md-nav__link">
+    Version management in MI extension for VS Code
   </a>
-  
-    <nav class="md-nav" aria-label="Version management in WSO2 Integration Studio">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#configure-a-micro-integrator-runtime-environment-in-integration-studio" class="md-nav__link">
-    Configure a Micro Integrator runtime environment in Integration Studio
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#convention-for-version-interpretation-in-choreo-deployments" class="md-nav__link">
-    Convention for version interpretation in Choreo deployments
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#migrate-between-runtime-versions" class="md-nav__link">
-    Migrate between runtime versions
-  </a>
-  
-    <nav class="md-nav" aria-label="Migrate between runtime versions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#update-the-runtime-version-in-the-integration-project" class="md-nav__link">
-    Update the runtime version in the integration project
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -3997,49 +3957,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
-  <a href="#version-management-in-wso2-integration-studio" class="md-nav__link">
-    Version management in WSO2 Integration Studio
+  <a href="#version-management-in-mi-extension-for-vs-code" class="md-nav__link">
+    Version management in MI extension for VS Code
   </a>
-  
-    <nav class="md-nav" aria-label="Version management in WSO2 Integration Studio">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#configure-a-micro-integrator-runtime-environment-in-integration-studio" class="md-nav__link">
-    Configure a Micro Integrator runtime environment in Integration Studio
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#convention-for-version-interpretation-in-choreo-deployments" class="md-nav__link">
-    Convention for version interpretation in Choreo deployments
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#migrate-between-runtime-versions" class="md-nav__link">
-    Migrate between runtime versions
-  </a>
-  
-    <nav class="md-nav" aria-label="Migrate between runtime versions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#update-the-runtime-version-in-the-integration-project" class="md-nav__link">
-    Update the runtime version in the integration project
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4066,109 +3986,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="manage-the-micro-integrator-runtime-version-in-your-integration-project">Manage the Micro Integrator Runtime Version in Your Integration Project<a class="headerlink" href="#manage-the-micro-integrator-runtime-version-in-your-integration-project" title="Permanent link">&para;</a></h1>
-<p>Choreo allows you to use a preferred WSO2 Micro Integrator (MI) runtime version in your integration project. Currently, Choreo supports MI product versions 4.1.0 and 4.2.0. You have the flexibility to deploy WSO2 updates within these specified versions. </p>
-<p>When you create an integration project, you can specify a required runtime version to gain control over the environment in which your integration runs. This version management capability empowers you to tailor your projects depending on your runtime requirements, enhancing the customization and adaptability of your integration workflows.</p>
+<p>Choreo lets you pick a specific WSO2 Micro Integrator (MI) runtime version for your integration project. This helps you control how your integrations run, ensuring they work correctly with your Synapse configurations and giving you access to the latest features or security updates.</p>
+<p>Choreo currently supports MI versions 4.1.0, 4.2.0, 4.3.0, and 4.4.0.</p>
 <h2 id="understand-the-version-string">Understand the version string<a class="headerlink" href="#understand-the-version-string" title="Permanent link">&para;</a></h2>
-<p>WSO2 Micro Integrator (MI) utilizes a versioning system consisting of three-digit numbers, such as <code>4.1.0</code> and <code>4.2.0</code>, following semantic versioning principles. The product remains committed to receiving updates from WSO2, including security fixes, bug resolutions, and enhancements. Within the Choreo platform, the MI runtime version is constructed by combining the product release version with its corresponding update level.</p>
-<p>In Choreo, the MI runtime version is structured as a four-digit number, for example, <code>4.1.0.14</code> or <code>4.2.0.17</code>. The first three digits represent the product release version, while the last digit signifies the update level of the product. The fourth digit is optional and can be omitted.</p>
 <p><a class="glightbox" href="../../assets/img/develop-components/micro-integrator/version-string.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Version string" src="../../assets/img/develop-components/micro-integrator/version-string.png" /></a></p>
-<h2 id="version-management-in-wso2-integration-studio">Version management in WSO2 Integration Studio<a class="headerlink" href="#version-management-in-wso2-integration-studio" title="Permanent link">&para;</a></h2>
-<p>If you are using <a href="https://wso2.com/integration/integration-studio/">WSO2 Integration Studio</a> to build and deploy integration artifacts in WSO2 Micro Integrator, you can create multiple runtime environments and execute projects on any selected environment. WSO2 Integration Studio also allows you to configure multiple Micro Integrator runtime environments, offering flexibility and customization in the execution of integration processes.</p>
-<p>You can specify the Runtime version when you create an integration project in WSO2 Integration Studio. In the project creation wizard, specify the runtime version in the <strong>Runtime version</strong> field, as shown below.
-<a class="glightbox" href="../../assets/img/develop-components/micro-integrator/specify_runtime_version.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Specify Runtime version" src="../../assets/img/develop-components/micro-integrator/specify_runtime_version.png" /></a></p>
-<p>An integration project is structured as a Maven project with multiple sub-modules. The root <code>pom.xml</code> file holds crucial information about the target runtime. The runtime version you configure when you create a new project is saved within the root <code>pom.xml</code> file. The version information is stored in the <project.runtime.version> element under the <properties> in the <code>pom.xml</code> file. If there is a need to update the runtime version, you have the flexibility to modify the value to a valid runtime version and ensure that the project runs in the required runtime environment.</p>
-<p><a class="glightbox" href="../../assets/img/develop-components/micro-integrator/project-runtime-version.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="project runtime version" src="../../assets/img/develop-components/micro-integrator/project-runtime-version.png" /></a></p>
-<p>You can establish multiple runtime environments by utilizing updated MI instances. With a valid WSO2 subscription, you can also access and download updates to set up an updated MI server locally. This update process allows you to select a preferred update level as the runtime version. Consequently, you can run your integration on a runtime with the latest updates, ensuring optimal performance and access to new features.</p>
-<h3 id="configure-a-micro-integrator-runtime-environment-in-integration-studio">Configure a Micro Integrator runtime environment in Integration Studio<a class="headerlink" href="#configure-a-micro-integrator-runtime-environment-in-integration-studio" title="Permanent link">&para;</a></h3>
-<p>If you are using <a href="https://wso2.com/integration/integration-studio/">WSO2 Integration Studio</a>, follow these steps to set up a remote server instance with a Micro Integrator runtime environment to execute your integration project:</p>
+<p>WSO2 MI uses a standard semantic three-digit version such as <code>4.1.0</code> or <code>4.2.0</code>. In Choreo, the MI runtime version is shown as a four-digit number, for example, <code>4.1.0.14</code> or <code>4.2.0.17</code>.</p>
+<div class="admonition info">
+<p class="admonition-title">Important</p>
+<p>When you specify the MI version, you can either use the full four-digit number (e.g., <code>4.1.0.14</code>) or just the first three digits (e.g., <code>4.1.0</code>). If you only provide the first three digits, Choreo will automatically use the latest available update for that main product version.</p>
+</div>
+<h2 id="version-management-in-mi-extension-for-vs-code">Version management in MI extension for VS Code<a class="headerlink" href="#version-management-in-mi-extension-for-vs-code" title="Permanent link">&para;</a></h2>
+<p>If you are using the <a href="https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/install-wso2-mi-for-vscode/">Micro Integrator extension for VS Code</a> to develop WSO2 MI integration projects, you can specify the runtime version when you create a project. In the project creation form, specify the runtime version in the <strong>Micro Integrator runtime version</strong> field.</p>
+<p>An integration project is structured as a Maven project with multiple sub-modules. The root <code>pom.xml</code> file holds the runtime version you configure when you create a new project. The version information is stored in the <code>&lt;project.runtime.version&gt;</code> element under the <code>&lt;properties&gt;</code> section in the <code>pom.xml</code> file. If there is a need to update the runtime version, you should modify the value in the <code>&lt;project.runtime.version&gt;</code> element to a valid runtime version.</p>
 <div class="admonition info">
 <p class="admonition-title">Note</p>
-<p>If you have not downloaded and installed WSO2 Integration Studio, you can follow the <a href="https://apim.docs.wso2.com/en/latest/integrate/develop/installing-wso2-integration-studio/">installation instructions</a> in the WSO2 API Manager documentation.</p>
+<p>If you have a valid WSO2 subscription, you can also access and download updates to set up an updated MI server locally. Use <a href="https://mi.docs.wso2.com/en/latest/install-and-setup/setup/updating-mi/">WSO2 Update Tool</a> to get the latest updates that are available for a particular product release. </p>
 </div>
-<ol>
-<li>Launch WSO2 Integration Studio and click <strong>Add Server</strong> in the <strong>Getting Started</strong> view.
-   <a class="glightbox" href="../../assets/img/develop-components/micro-integrator/add-server.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Add server" src="../../assets/img/develop-components/micro-integrator/add-server.png" /></a></li>
-<li>In the <strong>Define a New Server</strong> dialog, click to expand the <code>WSO2</code> directory and select <strong>WSO2 Remote Server</strong>.
-   <a class="glightbox" href="../../assets/img/develop-components/micro-integrator/define-a-remote-server-instance.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Define a remote server instance" src="../../assets/img/develop-components/micro-integrator/define-a-remote-server-instance.png" /></a></li>
-<li>
-<p>Enter the WSO2 Micro Integrator Management API URL in the <strong>Server URL</strong> field and click <strong>Test Connection</strong>.</p>
-<div class="admonition info">
-<p class="admonition-title">Note</p>
-<p>The Management API of WSO2 Micro Integrator is an internal REST API introduced to substitute MI admin services. The default HTTPS port of the Management API of WSO2 Micro Integrator is <code>9164</code>. If you have not manually changed the default port, you must set the Management API URL as <code>https://localhost:9164/management</code>.  If you have changed the default HTTPS port, you must set the port number appropriately when specifying the <strong>Server URL</strong>. For more information on the default ports of WSO2 Micro Integrator, see <a href="https://apim.docs.wso2.com/en/latest/install-and-setup/setup/reference/default-product-ports/#micro-integrator-ports">WSO2 Micro Integrator default ports</a> in the WSO2 API Manager documentation.</p>
-</div>
-<p><a class="glightbox" href="../../assets/img/develop-components/micro-integrator/set-server-url.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Set server URL" src="../../assets/img/develop-components/micro-integrator/set-server-url.png" /></a></p>
-</li>
-<li>
-<p>Click <strong>Finish</strong>.</p>
-</li>
-<li>In the <strong>Add and Remove</strong> dialog, select the integration components to move from the left side to the right side.</li>
-<li>Click <strong>Add &gt;</strong>.</li>
-<li>Click <strong>Finish</strong>. </li>
-</ol>
-<p>Your integration project is now running in a remote server instance with the Micro Integrator runtime environment you require.
-If you need to make changes to the integration project, expand the remote server instance, right-click on the deployed exporter project, and select <strong>Redeploy</strong> to apply the changes.</p>
-<p><a class="glightbox" href="../../assets/img/develop-components/micro-integrator/redeploy-project.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Redeploy project" src="../../assets/img/develop-components/micro-integrator/redeploy-project.png" /></a></p>
-<h2 id="convention-for-version-interpretation-in-choreo-deployments">Convention for version interpretation in Choreo deployments<a class="headerlink" href="#convention-for-version-interpretation-in-choreo-deployments" title="Permanent link">&para;</a></h2>
-<p>You can use the following convention to indicate the required MI runtime version in your integration project:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Version format</strong></th>
-<th><strong>Example</strong></th>
-<th><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Product version</td>
-<td><code>4.1.0</code>, <code>4.2.0</code></td>
-<td>Deploy on the latest update level of the mentioned product version.</td>
-</tr>
-<tr>
-<td>Product version with update level</td>
-<td><code>4.1.0.15</code>, <code>4.2.0.17</code></td>
-<td>Deploy on the exact update level of the mentioned product version.</td>
-</tr>
-<tr>
-<td>GA version</td>
-<td><code>4.1.0.0</code>, <code>4.2.0.0</code></td>
-<td>Deploy on the exact GA version without any update.</td>
-</tr>
-<tr>
-<td>Default version</td>
-<td>Empty value</td>
-<td>Deploy on the latest update level of the default product version.</td>
-</tr>
-</tbody>
-</table>
-<p>Choreo utilizes Alpine images for configuring and deploying the Micro Integrator runtime. This includes automated configuration of the JRE/JDK, customized to the compatibility of the chosen runtime version, simplifying the setup procedure.</p>
-<h2 id="migrate-between-runtime-versions">Migrate between runtime versions<a class="headerlink" href="#migrate-between-runtime-versions" title="Permanent link">&para;</a></h2>
-<p>Changing the runtime version in an integration project may become necessary during product version upgrades or when you want to apply updates. </p>
-<p>To change the runtime version of a MI Integration, follow the below steps.</p>
-<h3 id="update-the-runtime-version-in-the-integration-project">Update the runtime version in the integration project<a class="headerlink" href="#update-the-runtime-version-in-the-integration-project" title="Permanent link">&para;</a></h3>
-<p>To change the runtime version in the integration project, follow the steps below:
-1. Open the project in Integration Studio.
-2. Right-click on the project and select <strong>Change Runtime MI Version</strong>.
-    <a class="glightbox" href="../../assets/img/develop-components/micro-integrator/click_change_runtime.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Update Runtime version" src="../../assets/img/develop-components/micro-integrator/click_change_runtime.png" /></a>
-3.  Specify the new runtime version as shown below:
-    <a class="glightbox" href="../../assets/img/develop-components/micro-integrator/update_runtime_version.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Update Runtime version" src="../../assets/img/develop-components/micro-integrator/update_runtime_version.png" /></a>
-4. Alternatively, you can manually update the version by opening the root <code>pom.xml</code> file.  Open pom.xml and change the required runtime version in <code>&lt;project.runtime.version&gt;</code> element under <code>&lt;properties&gt;</code> section.</p>
-<p>To test the changes locally, you must download and set up the runtime environment locally. Then, you must <a href="#configure-a-micro-integrator-runtime-environment-in-integration-studio">configure the Integration Studio runtime environment</a> by directing it to the locally installed MI runtime. Once the setup is complete, you can deploy your integrations on the MI runtime environment and proceed to the testing phase.</p>
-<p>After completing the tests to ensure everything works as expected, you can follow below steps to deploy the project in Choreo:</p>
-<ol>
-<li>Commit and push the changes to your repository.</li>
-<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in.</li>
-<li>Select your project from the <strong>Project</strong> list in the header.</li>
-<li>Select your MI integration component from the <strong>Component</strong> list in the header.</li>
-<li>In the left navigation menu, click <strong>Build</strong>.</li>
-<li>Select the latest commit and click <strong>Build</strong>.</li>
-<li>In the left navigation menu, click <strong>Deploy</strong>.</li>
-<li>Click on the <strong>Configure and Deploy</strong> and deploy the component.</li>
-<li>Verify the Runtime version by checking the logs by selecting the <strong>Runtime Logs</strong> under the <strong>Observability</strong> section.</li>
-</ol>
-<p>You will see the runtime version in the logs as shown below:
-  <a class="glightbox" href="../../assets/img/develop-components/micro-integrator/runtime_version_in_logs.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Runtime version in logs" src="../../assets/img/develop-components/micro-integrator/runtime_version_in_logs.png" /></a></p>
-<p>Next, you must conduct additional testing in the development environment on Choreo before you promote the integration to production environments.</p>
 <h2 id="troubleshoot-errors">Troubleshoot errors<a class="headerlink" href="#troubleshoot-errors" title="Permanent link">&para;</a></h2>
 <p>The following error codes can help you troubleshoot errors that occur during the integration component build:</p>
 <table>
