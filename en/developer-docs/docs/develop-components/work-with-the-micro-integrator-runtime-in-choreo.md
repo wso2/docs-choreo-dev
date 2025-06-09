@@ -1,104 +1,84 @@
 # Work with the Micro Integrator Runtime in Choreo
 
-WSO2 Micro Integrator (WSO2 MI) is a lightweight, high-performance integration runtime. It allows you to run integrations developed using WSO2 Integration Studio within Choreo. 
+[WSO2 Micro Integrator (WSO2 MI)](https://mi.docs.wso2.com/en/latest/) is a lightweight, high-performance integration runtime. It allows you to run integrations developed with WSO2 Synapse.
 
 The topics on this page walk you through the key aspects you need to understand to use the WSO2 MI runtime effectively in Choreo.
 
 ## Integration types
 
-Choreo supports the following WSO2 MI integrations that cater to different use cases and requirements. Each integration type serves a specific purpose. Therefore, it is essential to understand their differences to easily choose the most appropriate integration for your use case.
+Choreo supports creating the following component types using WSO2 MI integrations that cater to different use cases and requirements. Each integration type serves a specific purpose. Therefore, it is essential to understand their differences to easily choose the most appropriate integration for your use case.
 
-- **Service**: Exposes an integration as an API via HTTP, making it possible to create a RESTful interface for your integration services. This type is ideal for scenarios where you need to provide an API for external systems or clients to interact with your integration.
+- **Service**: Exposes an integration as an API via HTTP, making it possible to create a RESTful interface for your integration service such as [data services](https://mi.docs.wso2.com/en/latest/develop/creating-artifacts/data-services/creating-data-services/). This type is ideal for scenarios where you need to provide an API for external systems or clients to interact with your integration.
 - **Event Handler**: Triggers an integration based on external events such as messages arriving on a queue or updates in a database. This type is well-suited for implementing event-driven architectures or responding to changes in your system's environment.
 - **Scheduled Task**: Runs an integration automatically at predefined time intervals, ensuring that specific integration tasks occur at regular intervals. This type is ideal for batch processing, data synchronization, or periodic maintenance tasks.
 - **Manual Task**: Initiates an integration via user action, giving you full control over when the integration executes. This type is useful for on-demand tasks, testing, or debugging purposes.
 
-## Develop integrations with WSO2 Integration Studio
+## Develop integrations with the WSO2 Micro Integrator VS Code extension
 
-[WSO2 Integration Studio](https://wso2.com/integration/integration-studio/) is a powerful, Eclipse-based graphical development environment that enables you to build and deploy integration artifacts in WSO2 Micro Integrator. This comprehensive IDE offers a robust set of tools for designing and testing integration flows and crafting integration artifacts. By utilizing the visual, drag-and-drop capabilities of WSO2 Integration Studio, developers can significantly reduce the time and effort needed to construct and deploy integration flows.
+We recommend using the [WSO2 Micro Integrator VS Code Extension](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/mi-for-vscode-overview/) for developing your integration projects. This powerful extension offers an AI-powered, low-code development experience right within your familiar VS Code environment, significantly reducing setup time, boosting productivity, and enhancing your overall development workflow.
 
-In addition to streamlining the development process, Integration Studio offers features such as debugging, testing, and version control to ensure the quality and reliability of integration flows. By creating an Integration project and Composite Exporter project in WSO2 Integration Studio, developers can export their integration projects as a single deployment artifact, known as a composite application. This composite application encompasses all the components and configurations necessary for deploying the integration project to WSO2 Micro Integrator.
+Install the extension and start developing: [Install WSO2 MI for VS Code](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/install-wso2-mi-for-vscode/)
 
-The Composite Exporter project simplifies the deployment process by allowing developers to package their integration projects as a single, self-contained artifact that can be easily deployed and managed. This approach enhances the consistency and reliability of integration projects while streamlining the overall deployment process.
-
-To start developing integrations with WSO2 Micro Integrator, see [WSO2 Micro Integrator documentation - Developing Integration Solutions](https://mi.docs.wso2.com/en/latest/develop/intro-integration-development/).
-
-## Integration project directory structure
-
-An Integration Project in WSO2 Integration Studio is a multi-module Maven project that can contain multiple modules with WSO2 Synapse configurations and a composite application module to export all the configurations as a single deployable artifact.
-
-An integration project directory structure includes the following key components:
-
- - WSO2 Synapse configurations: These modules contain the essential configurations for the integration project.
- - Composite Application module: This module is responsible for exporting all the Synapse configurations as a single deployable artifact.
-
-Optionally, you can include the following components in your integration project:
-
- - OpenAPI definition file: You can add the OpenAPI definition file to any location within the project. When creating a component, you'll need to define the path to this file. Choreo will automatically generate an OpenAPI definition for you based on your integration project, if you don't provide one.
- - Java libraries: If your integration project requires additional Java libraries, you can add them to the libs directory located in the project root.
- - deployment.toml file: This optional configuration file allows you to customize the preconfigured settings of WSO2 MI instances running on Choreo. By including this file, you can tailor the behavior of your WSO2 MI instances to better suit your project's specific requirements.
-
-Understanding the Integration Project directory structure is crucial for organizing your project and ensuring that all necessary components are included in the final deployable artifact.
+### Key benefits of developing with the VS Code extension:
+- Familiar VS Code Ecosystem: Develop integrations in an environment you are already familiar with, reducing your learning curve.
+- AI-Powered Copilot: Leverage AI assistance to generate configurations and project structures by simply describing your integration needs.
+- AI-Powered Data Mapping: Transform data effortlessly between various formats using an intuitive, AI-driven visual mapper.
+- Seamless Visual Editor: Design your integration flows with ease using a smooth, drag-and-drop graphical interface.
 
 ## OpenAPI support
 
-OpenAPI Support plays a crucial role in enhancing the functionality of integrations exposed as APIs. By providing an OpenAPI definition for your exposed integration, you can streamline testing and management processes, ensuring a more efficient and user-friendly experience. Choreo will automatically generate an OpenAPI definition for you based on your integration project, if you don't provide one, saving you time and effort.
+For **Service** component types, Choreo automatically generates an OpenAPI definition based on your integration project. If you prefer to use your own OpenAPI file, you can do so by configuring Endpoints. For more information, see the [Configure Endpoints](../develop-components/configure-endpoints.md) section. 
 
-To incorporate OpenAPI support, store the OpenAPI definition file within the repository hosting your Integration Studio project. When creating the project, simply point to the file's location in the repository. If needed, you can change the location of the OpenAPI definition file later via the deploy page.
+Either way, Choreo uses this OpenAPI specification to provide an integrated OpenAPI Console for testing REST endpoints of Service components. For more information on testing, see [Test REST Endpoints via the OpenAPI Console](../testing/test-rest-endpoints-via-the-openapi-console.md).
 
-![Open API file](../assets/img/develop-components/micro-integrator/openapi_file.png)
+## Third-party libraries
 
-By leveraging OpenAPI Support, you can optimize the way you test and manage your integrations, resulting in a more efficient development process and a smoother user experience.
+The use of third-party libraries in your Micro Integrator project can offer several advantages, such as enhanced functionality, improved integration capabilities, and reduced development time.
 
-## Work with third-party libraries
+### For Standard JAR Libraries (.jar)
+To include standard `.jar` libraries:
 
-The use of third-party libraries in your Micro Integrator project can offer several advantages, such as enhanced functionality, improved integration capabilities, optimized performance, and reduced development time.
+1. Create a new directory named `libs` at the root of your project.
 
-Here are some of the benefits of adding third-party JARs to the Micro Integrator:
+2. Add your required `.jar` files into this `libs` directory.
 
- - Increased functionality: Third-party libraries can extend the core Micro Integrator distribution, allowing for greater flexibility and customization of integration solutions.
- - Enhanced integration capabilities: Third-party libraries enable the Micro Integrator to interact with existing systems such as databases or other APIs, improving overall integration capabilities.
- - Optimized performance: By offering optimized implementations of common functions, third-party libraries can improve the performance of the Micro Integrator.
- - Efficient development: Developers can avoid re-implementing commonly used functions, reducing development time and increasing efficiency.
+The Micro Integrator runtime will automatically include these libraries when your component is deployed, making sure all necessary dependencies are available at runtime.
 
-To incorporate third-party libraries into your Micro Integrator project, create a new directory called `libs` at the
-root of your project. If your project root and GitHub repository root are not the same, place the `libs` directory in
-the project root. After adding the required JAR files to the `libs` directory, the Micro Integrator runtime will
-automatically include them when deploying the component. This process ensures that any dependencies needed by your
-integration flow are available at runtime.
+### For OSGi Bundle JARs (.jar)
+If your project requires OSGi bundle JARs:
 
-In addition to `jar` libraries, you may also need to incorporate OSGi bundle JARs into your project. To do this,
-create another directory called `dropins` at the root of your project. Similarly, if the project root and GitHub
-repository root differ, place the `dropins` directory in the project root. Within the `dropins` directory, add the OSGi
-bundle JAR files. The OSGI runtime will pick up these bundles during deployment, enabling you to utilize their
-functionality within your Micro Integrator project.
+1. Create another new directory named `dropins` at the root of your project.
+
+2. Add your OSGi bundle `.jar` files into this `dropins` directory.
+
+The OSGi runtime will automatically pick up these bundles during deployment, enabling their functionality within your Micro Integrator project.
+
+!!! warning "Note"
+    If your project's root directory is different from your GitHub repository's root, make sure to place both the `libs` and `dropins` directories in your project's root.
 
 ![Libs directory](../assets/img/develop-components/micro-integrator/libs_dir.png)
 
 ## Importing custom certificates to MI
 
-The feature enables Choreo MI users to import certificates into the MI `client-truststore.jks` file. This functionality
-proves valuable when users need to establish connections with servers or services utilizing SSL/TLS encryption and
-possessing self-signed certificates or certificates issued by private certificate authorities (CAs) that are not
-automatically trusted. Importing the certificate to the MI `client-truststore.jks` file enables MI clients to establish secure connections with
-the server or service seamlessly, eliminating SSL/TLS errors or warnings.
+This feature allows you to import custom certificates into the Micro Integrator (MI) runtime. This is essential when your MI component needs to connect to servers or services that use SSL/TLS encryption with self-signed certificates or certificates issued by private certificate authorities (CAs) that are not automatically trusted. By importing these certificates, MI clients can establish secure connections without SSL/TLS errors.
 
-Before importing the certificate, it is necessary to obtain the certificate file, which can be in PEM or DER format. You
-can get the certificate from the server or service provider or export it from a web browser. Certificates should be
-added to the `/wso2mi/certs/` folder. Users need to verify that the mount path for the certificate file aligns with this
-specific path.
+First, obtain the certificate file. It can be in either PEM or DER format. You can usually get the certificate from the server/service provider or by exporting it from a web browser.
+
+Choreo expects certificate files to be mounted into the `/wso2mi/certs/` directory within the MI runtime. Choreo will then automatically import certificate files in this directory into the MI's `client-truststore.jks`.
+
+Follow these steps to mount your certificate to the `/wso2mi/certs/` directory:
 
 1. In the Choreo console, select the component you wish to add a certificate to.
-2. From the left navigation click **Deploy**.
+2. From the left navigation click **DevOps**.
 3. Click on the **Configs and Secrets** tab.
 4. Click **Create**.
-5. Select **ConfigMap** as the **Config Type** and **File Mount** as the **Mount Type**.
-6. Click **Next**.
+5. Select **File Mount** as the **Mount Type**.
+6. Check **Mark as a Secret**.
 7. Specify the following values as mount configurations:
 
     | **Field**       | **Value**                                              |                                    
     |-----------------|--------------------------------------------------------|
-    | **Config Name** | An appropriate name for the certificate.             |
+    | **Display Name** | An appropriate name for the certificate.             |
     | **Mount path**  | `/wso2mi/certs/<filename>`. For example, `/wso2mi/certs/certificate.crt` |
 
 8. Click **Upload File** and attach the certificate.
@@ -106,54 +86,80 @@ specific path.
 
 ## Working with sensitive data using MI Secure Vault
 
-MI Secure Vault is a feature that allows users to securely store sensitive data, such as passwords and tokens, and
-provide access to that data to MI Integrations. This feature provides an added layer of security to your integrations by
-reducing the risk of accidental exposure of sensitive data.
+[MI Secure Vault](https://mi.docs.wso2.com/en/latest/install-and-setup/setup/security/encrypting-plain-text/) is a feature that allows users to securely access sensitive data, such as passwords and tokens in MI integrations. When you add secrets within Choreo, they are made available to the Secure Vault for your integration to consume.
 
-To use MI Secure Vault to work with sensitive data, follow these steps:
+To add a secret to your MI component, follow these steps:
 
-1. Select the component from the Choreo Console.
-2. From the left navigation, click Deploy.
-3. Click on the **Configure and Deploy**.
-4. Click on the **Add Environment Configurations**
+1. Select the MI component from the Choreo Console.
+2. From the left navigation, click **Deploy**.
+3. Click on **Configure and Deploy**.
+4. In the **Configuration** step, click **+ Add** in the **Environment Configurations** section.
 5. Specify the following values as configurations:
 
     | **Field**       | **Value**                                 |                                    
     |-------------------------------------------|--------------------------------------------------------|
-    | **Name** | An appropriate name for the secret/alias. |
+    | **Name** | An appropriate name for the secret/alias. For example, `user_pass`|
     | **Value**       | Value for the secret                      |
 
-6. Select **Mark as a Secret**.
+6. Check **Mark as a Secret**.
 7. Click **Add**.
-8. Click **Deploy**.
-9. Once the secret has been created, you can access it in your integration code using the following syntax:
+8. Click **Next**.
+9. In the **Endpoint Details** step, click **Deploy**.
+10. Once the secret has been created, you can access it in your integration code using the following syntax:
 
 ```xml
 <property name="secret_value_1" expression="wso2:vault-lookup('user_pass')" scope="default" type="STRING"/>
 ```
-This code retrieves the secret named "user_pass" from the MI Secure Vault and stores it in the property named "
-secret_value_1". You can then use this property in your integration code to access the secret value.
+This code retrieves the secret named `user_pass` from the MI Secure Vault and stores it in the property named `secret_value_1`. You can then use this property in your integration code to access the secret value.
 
-For more information on these features, see the [Accessing secrets](https://mi.docs.wso2.com/en/latest/install-and-setup/setup/security/encrypting-plain-text/#step-3-accessing-secrets) section of the MI Secure Vault documentation. By using MI
-Secure Vault to store and access sensitive data in your integrations, you can ensure that your integrations
-remain secure and protect sensitive data from unauthorized access.
+For more information on these features, see the [Accessing secrets](https://mi.docs.wso2.com/en/latest/install-and-setup/setup/security/encrypting-plain-text/#step-3-accessing-secrets) section of the MI Secure Vault documentation.
 
+## Environment variables
+
+When managing environment-specific configurations across multiple deployment environments (like development, staging, and production), the recommended approach is to use environment variables. 
+
+To add environment variables to your MI component, follow these steps:
+
+1. Select the MI component from the Choreo Console.
+2. From the left navigation, click **Deploy**.
+3. Click on **Configure and Deploy**.
+4. In the **Configuration** step, click **+ Add** in the **Environment Configurations** section.
+5. Specify the following values as configurations:
+
+    | **Field**       | **Value**                                 |                                    
+    |-------------------------------------------|--------------------------------------------------------|
+    | **Name** | An appropriate name for the environment variable. For example, `DB_HOST`|
+    | **Value**       | Value for the environment variable                      |
+
+6. Click **Add**.
+7. Click **Next**.
+8. In the **Endpoint Details** step, click **Deploy**.
+9. Once the environment variable has been created, you can access it in your integration code using the following syntax:
+
+```xml
+<property expression="get-property('env', 'DB_HOST')" name="db-host" scope="default" type="STRING"/>
+```
+
+!!! info "Note"
+    You can add as many configurations as you want.
 
 ## Scan third-party libraries to identify security vulnerabilities
 
-Scanning third-party libraries for security vulnerabilities is essential for identifying potential weaknesses in an application that could be exploited by attackers. Taking a proactive approach to security helps organizations detect and mitigate risks before they can be exploited, preventing data breaches, system compromises, and other security incidents.
+Scanning third-party libraries for security vulnerabilities is crucial for identifying potential weaknesses that attackers could exploit. This proactive approach helps detect and fix risks before they lead to data breaches or system compromises.
 
-Choreo incorporates a security vulnerability scanning process during deployment. It uses Trivy to scan and detect critical vulnerabilities in third-party libraries added to the integration component. If the scan uncovers any critical vulnerabilities, the deployment process is halted. The deployment pane displays the Trivy scan status and any security failures in the Library (Trivy) vulnerable scan step, which can be accessed by clicking on it. Once the vulnerability has been addressed, you can redeploy the component.
+Choreo includes a security vulnerability scan during deployment, using Trivy to detect critical vulnerabilities in any third-party libraries you've added to your `libs` and `dropins` directories.
 
-## Customize WSO2 Micro Integrator preconfigured settings
+If the scan finds critical vulnerabilities, Choreo will stop the build process. You can view the Trivy scan status and any security failures in the **Library (Trivy) vulnerability scan** and **Dropins (Trivy) vulnerability scan** steps within the **Build Details** pane. Once you've fixed the vulnerability, you can redeploy your component.
 
-Customizing WSO2 Micro Integrator Preconfigured Settings is essential for ensuring that the integration solution works optimally within the specific context of your organization. While WSO2 MI comes with preconfigured settings designed for general use, these settings may not be suitable for every organization's unique requirements. Customizing these settings can help optimize performance and ensure compatibility with your organization's systems and applications.
+## Customize WSO2 Micro Integrator pre-configured settings
 
-To customize the preconfigured settings of WSO2 MI instances running on Choreo, define a `deployment.toml` file in the GitHub repository subpath of your Micro Integrator project:
+WSO2 Micro Integrator (MI) comes with general pre-configured settings, but your organization may need to customize them for advanced use cases.
+
+To customize the pre-configured settings of WSO2 MI instances running on Choreo, create a `deployment.toml` file in the GitHub repository subpath of your Micro Integrator project:
 
 ![deployment.toml](../assets/img/develop-components/micro-integrator/config_file.png)
 
-!!! note
+!!! warning "Important"
     If you change critical configuration parameters such as port offset and hostname, it can break internal communication.
     Therefore, the recommended approach is to update only the necessary configuration parameters.
 
@@ -178,61 +184,43 @@ parameter.connection_factory_type = "queue"
 parameter.cache_level = "consumer"
 ```
 
-## Environment variables
+## Customize Logging for Micro Integrator in Choreo
 
-Using environment variables is a recommended practice when developing integration artifacts with WSO2 Integration Studio, as it improves configuration management, security, portability, and manageability. By leveraging environment variables, organizations can streamline the management and maintenance of their integrations, ensuring that updates can be implemented quickly and efficiently.
+Logging is essential for monitoring and troubleshooting your Micro Integrator components in Choreo. You can configure and customize logging according to your requirements. Logging configurations can be added to each Choreo environment, allowing you to fine-tune logging depending on the specific environment or deployment scenario.
 
-The component's Deploy page provides a user-friendly interface to manage environment variables across different environments. For information on managing environment variables for complex use cases, see [Configurations and secrets](../devops-and-ci-cd/manage-configurations-and-secrets.md).
-
-![Environment variables](../assets/img/develop-components/micro-integrator/env_variables.png)
-
-Environment variables offer several benefits:
-
- - Configuration management: They simplify the process of managing and updating configuration settings, making it easier to maintain consistency across different environments.
- - Security: Environment variables help protect sensitive information by storing it securely and separating it from the main codebase.
- - Portability: By using environment variables, you can ensure that your integration artifacts can be easily migrated and deployed across various environments with minimal changes.
- - Manageability: Environment variables offer a centralized way to manage configuration settings, making it easier to update and maintain your integrations over time.
-
-For a comprehensive list of parameters that can be configured as environment variables, see [WSO2 Micro Integrator documentation - Injecting Parameters - Supported parameters](https://mi.docs.wso2.com/en/latest/develop/injecting-parameters/#supported-parameters).
-
-## Configure logging
-
-Configuring logging is crucial when developing and maintaining a software system, as it can significantly improve efficiency during the development, testing, and maintenance phases of the software development process. Logging captures events and messages that occur during an application's execution, providing valuable insights for troubleshooting and debugging issues.
-
-With Micro Integrator instances, you can configure and customize logging according to your requirements. Logging configurations can be added to each MI instance's environment, allowing you to fine-tune logging depending on the specific environment or deployment scenario.
-
-To configure logging in MI instances, follow the steps given below: 
-
-!!! tip
-     You can use environment variables with specific naming conventions.
+To customize logging in MI instances, follow the steps given below: 
 
 1. Start the variable name with `logging_level_` followed by the package or class name.
-2. Replace the dot character in the package name with an underscore.
+2. Replace the dot (`.`) characters in the package or class name with underscores(`_`).
 3. Set the variable value to the required logging level for the corresponding package or class.
 
-    For example, to enable wire logs, change the logging level of the `org.apache.synapse.transport.http.wire` package to `debug`. 
 
-To configure logging, set the environment variable as follows:
+For example, to enable wire logs, change the logging level of the `org.apache.synapse.transport.http.wire` package to `debug`, set the environment variable as follows:
 
-1. In the left navigation menu, click **Deploy** and then click **Configs & Secrets**. 
-2. Click **+ Create**. 
-3. Select **ConfigMap** as the **Config Type** and **Environment Variables** as the **Mount Type**. 
-4. Click **Next**. 
-5. Specify the following values as mount configurations:
+1. Select the MI component from the Choreo Console.
+2. From the left navigation, click **Deploy**.
+3. Click on **Configure and Deploy**.
+4. In the **Configuration** step, click **+ Add** in the **Environment Configurations** section.
+5. Specify the following values as configurations:
 
     | **Field**       | **Value**                                              |                                    
     |-----------------|--------------------------------------------------------|
-    | **Config Name** | An appropriate name for the configuration.             |
     | **Name**        | `logging_level_org_apache_synapse_transport_http_wire` |
     | **Value**       | `debug`                                                |
 
-6. Click **Create**.
+6. Click **Add**.
+7. Click **Next**.
+8. In the **Endpoint Details** step, click **Deploy**.
+
+Once the environment variable is set, the logging level for the specified package or class will be updated accordingly. You can add as many logging configurations as you need by following the same steps.
 
 ## Connectors
 
-WSO2 Micro Integrator (MI) Connectors are prebuilt connectors designed to simplify integration between WSO2 MI and various other systems. They enable seamless connections to databases, message brokers, REST APIs, and more, allowing you to perform actions such as sending messages, executing queries, or retrieving data. These connectors are easy to use, making it straightforward to incorporate them into your WSO2 MI integration flows. Micro Integrator connectors are versatile and can be utilized in various integration scenarios, including data integration, service-oriented architecture (SOA) integration, and event-driven architecture (EDA) integration.
+WSO2 Micro Integrator (MI) Connectors are prebuilt extensions that simplify integrating MI with various external systems. They enable seamless connections to databases, message brokers, REST APIs, and more, allowing you to perform actions such as sending messages, executing queries, or retrieving data within your integration flows.
 
-WSO2 Integration Studio is a comprehensive development environment that facilitates the creation of integration flows using WSO2 Micro Integrator Connectors. With Integration Studio, you can design and implement integration flows that connect diverse systems and execute various actions, such as sending messages, executing queries, or retrieving data. You can build integration flows using either prebuilt connectors provided by WSO2 MI or custom connectors developed using the Connector Development Toolkit. Integration Studio offers a graphical user interface that simplifies the process of building and testing integration flows while also providing a set of tools for managing and deploying these flows in a WSO2 MI runtime environment.
+These versatile connectors are easy to use and can be incorporated into diverse integration scenarios, including data, service-oriented architecture (SOA), and event-driven architecture (EDA) integrations.
+
+You can design and implement integration flows using these connectors within the WSO2 MI VS Code Extension. This environment allows you to build flows using either WSO2 MI's prebuilt connectors or custom connectors developed with the Connector Development Toolkit. The VS Code Extension provides a graphical user interface that simplifies the process of building and testing these integration flows.
 
 For more information, see the following topics in the WSO2 Micro Integrator documentation.
 
@@ -241,7 +229,7 @@ For more information, see the following topics in the WSO2 Micro Integrator docu
 
 ## Deploying integrations in Choreo 
 
-WSO2 MI buildpack is where you can deploy integrations developed with WSO2 Micro Integrator as an API. In this preset, you have three different ways to define endpoints. Choreo gives priory to the definition of endpoints in the below-mentioned order. 
+WSO2 MI buildpack is where you can deploy integrations developed with WSO2 Micro Integrator as an API. In this preset, you have three different ways to define endpoints. Choreo gives priority to the definition of endpoints in the below-mentioned order. 
 
 1. **Using component.yaml file**
 This is the most flexible method to define endpoints. You can configure the endpoint details with the `component.yaml` configuration file. Place this file in the `.choreo` directory in the project path of the component. 
@@ -249,10 +237,10 @@ If the Micro Integrator project has inbound endpoints, you can expose them via d
 
     To learn about the `component.yaml` file, see [Overview of the component.yaml file](../develop-components/manage-component-source-configurations.md#overview-of-the-componentyaml-file).
 
-3. **Auto generating endpoints**
-If `component.yaml` is not provided and if the source Micro Integrator project has APIs, Choreo scans the project and generates the API endpoints. If the project has few APIs, an endpoint will be generated for each API. The visibility of this auto-generated endpoint is set to `Public` by default. You can change the visibility in the deployment flow.
+2. **Auto generating endpoints**
+If `component.yaml` is not provided and if the source Micro Integrator project has APIs, Choreo scans the project and generates the API endpoints. If the project has a few APIs, an endpoint will be generated for each API. The visibility of this auto-generated endpoint is set to `Public` by default. You can change the visibility in the deployment flow.
 
-4. **Provide default endpoints**
+3. **Provide default endpoints**
 If `component.yaml` is not provided and if the source Micro Integrator project doesn't have APIs, Choreo generates a default endpoint which will expose the default micro integrator port (8290) with `Public` visibility and wildcard context.
 
 !!! note
@@ -260,11 +248,4 @@ If `component.yaml` is not provided and if the source Micro Integrator project d
 
 ## Explore Choreo examples on GitHub
 
-For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our samples in Choreo Console. You can filter out the samples based on the buildpack `WSO2 MI`. This will point you to the samples in the [Choreo samples GitHub repository](https://github.com/wso2/choreo-samples)
-
-### [Choreo samples - GitHub Repository](https://github.com/wso2/choreo-samples)
-
-- **Fork the Repository**: Start by forking the repository to your account.
-
-- **Explore & run**: Navigate through the different integration scenarios. Each example has a README.md with setup and execution instructions.
-
+For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our [Choreo Samples](../choreo-samples/samples-overview.md). You can filter out the samples based on the buildpack `WSO2 MI`.
