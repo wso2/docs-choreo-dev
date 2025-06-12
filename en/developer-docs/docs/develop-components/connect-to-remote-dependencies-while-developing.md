@@ -8,7 +8,7 @@ This connected environment acts as a temporary link to your Choreo deployment. I
 
 ## Using CLI
 
-The Choreo CLI allows you to create a local subshell environment that is bridged to your deployed Choreo environment.
+The Choreo CLI allows you to create a local subshell that is bridged to your deployed Choreo environment.
 
 ### Prerequisites
 
