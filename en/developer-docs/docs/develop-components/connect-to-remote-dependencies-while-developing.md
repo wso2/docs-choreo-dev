@@ -30,29 +30,49 @@ The Choreo CLI allows you to create a local subshell that is bridged to your dep
     choreo connect --project default-project
     ```
 
-2. Execute the command to run your component locally within the Choreo subshell.
+2. Execute the command to run your component locally within the Choreo subshell. For example:
+
+    ``` sh
+    go run main.go
+    ```
+
+Once your application is running within the Choreo subshell:
+
+- All connection configurations belonging to the selected project will be automatically injected into your application as environment variables.
+- Outgoing network requests made by your application to its dependent services will be securely redirected by the Choreo CLI to the relevant services in your remote environment.
+
+Your application will now run connected to its remote dependencies for local development.
+
 
 ### Advanced examples
 
-- Connecting with the context of a specific component
+- **Focusing Connection on a Specific Component**
+
+    By default, all connection configurations within your project are injected into the subshell. If you only want to focus on a particular component's connections, you can pass it as a flag:
 
     ``` sh
     choreo connect --project default-project --component my-component
     ```
 
-- By default, you'll connect to the development environment. Use the command below to connect to other non-critical environments.
+- **Connecting to Different Environments**
+
+    By default, connection is established with your development environment. To connect to other *non-critical* environments, use the `choreo connect` command with the following flag:
 
     ``` sh
     choreo connect --project default-project --env test-env
     ```
 
-- By default, choreo connect injects all connection configurations. To use locally running dependencies instead, and skip injecting specific configurations, use the following command.
+- **Skipping Remote Dependencies**
+
+    Sometimes, you might run certain dependencies locally. By default, `choreo connect` injects all connection configurations. To use your locally running dependencies instead and skip injecting specific configurations, use the choreo connect command with the following flags:
 
     ``` sh
     choreo connect --project default-project --skip-connection test-conn1 --skip-connection test-conn2 
     ```
 
-- Combine the choreo connect command with your application's start command to create a subshell and launch your app within it.
+- **Combining Connect with Application Startup**
+
+    You might want to combine the `choreo connect` command and your application's start command into a single command. This automates the creation of the subshell and the launch of your application, reducing manual steps in your development process:
 
     ``` sh
     choreo connect --project default-project -- go run main,go
@@ -62,7 +82,7 @@ The Choreo CLI allows you to create a local subshell that is bridged to your dep
     Execute the command `choreo connect --help` to explore all available advanced options and flags.
 
              
-## Using VS Code
+## Debug using VS Code
 
 The Choreo VS Code extension allows you to ensure that applications you launch and debug via VS Code are connected to your Choreo deployed project environment.
 
