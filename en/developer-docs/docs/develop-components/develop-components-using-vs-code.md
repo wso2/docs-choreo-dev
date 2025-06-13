@@ -2,6 +2,16 @@
 
 The [Choreo VS Code extension](https://marketplace.visualstudio.com/items?itemName=WSO2.choreo) provides comprehensive component management capabilities to streamline local development within Choreo.
 
+## Key Features
+
+- **Manage Projects**: Work with Choreo projects directly in your VS Code workspace.
+- **Create Components**: Generate components linked to your application source.
+- **Trigger Builds**: Initiate builds in the cloud and view detailed build logs.
+- **Deploy Builds**: Deploy builds to your preferred Choreo environments.
+- **Test Services**: Verify functionality of publicly exposed service endpoints.
+- **Monitor Components**: Access runtime logs and monitor your deployed components.
+- **Connect Locally to Dependencies**: Link your app to dependent connections while developing. See [guide](../../develop-components/connect-to-remote-dependencies-while-developing/#using-vs-code).
+
 ## Prerequisites
 
 To ensure a smooth development experience with the Choreo extension, make sure you have the following:

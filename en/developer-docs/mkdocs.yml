@@ -147,6 +147,7 @@ nav:
       - Submit and Manage Workflow Approval Requests: develop-components/submit-and-manage-workflow-approval-requests.md
       - Develop Components Using VS Code: develop-components/develop-components-using-vs-code.md
       - Use Configuration Form for Managing Configurations: develop-components/use-configuration-form.md
+      - Connect to Remote Dependencies While Developing: develop-components/connect-to-remote-dependencies-while-developing.md
   - Integrate and Manage External Services:
       - Integrate and Manage Third-Party Services: integrate-and-manage-external-services/integrate-and-manage-third-party-services.md
       - Integrate and Manage Generative AI Services: integrate-and-manage-external-services/integrate-and-manage-gen-ai-services.md
