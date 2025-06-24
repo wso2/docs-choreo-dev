@@ -91,6 +91,15 @@ Now that your API is deployed in both development and production environments an
 
 ## Step 5: Publish the API proxy
 
+**Publishing** makes your API available in the **Choreo Developer Portal (Devportal)**, enabling application developers to access and use it. In Choreo, the **Production** environment is exposed to the **Devportal**  by default. After completing Step 4, the API is only available to the internal developers within your organization for testing purposes. To make the API accessible for external application developers, go to the **Deploy** page and **Promote** the API to the **Production** environment by following the same steps outlined in Step 4.
+
+If you need to change the default environments exposed to the Devportal, refer to the [Configure Exposed Environments to Developer Portal](../administer/configure-exposed-environments-to-developer-portal.md) documentation.
+
+Once the API is successfully promoted, it will become available in the **Production** environment. You can then proceed with the publishing steps below to make it publicly accessible.
+
+!!! note
+    Organizations created before **April 24th, 2025**, will have the **Development** environment exposed by default. Hence, organizations created before this date does not require to promote API to the **Production** environment.
+
 1. In the left navigation menu, click **Manage** and then click **Lifecycle**. This opens the **Lifecycle** page, where you can see the different lifecycle stages of the API. The current lifecycle stage is **Created**.
 2. Click **Publish**.
 3. In the **Publish API** dialog, click **Confirm** to proceed with publishing the API with the specified display name. If you want to change the display name, make the necessary changes and then click **Confirm**. This changes the API lifecycle state to **Published**.

@@ -105,8 +105,15 @@ Now that you have a tested API proxy, you can publish it and make it available f
 
 ### Step 4.2: Publish the API proxy
 
+**Publishing** makes your API available in the **Choreo Developer Portal (Devportal)**, enabling application developers to access and use it. In Choreo, the **Production** environment is exposed to the **Devportal**  by default. After completing Step 4.1, the API is only available to the internal developers within your organization for testing purposes. To make the API accessible for external application developers, go to the **Deploy** page and **Promote** the API to the **Production** environment by following the same steps outlined in Step 4.1.
 
- **Publishing** makes your API available in the **Choreo Developer Portal**, enabling application developers to access and use it.
+If you need to change the default environments exposed to the Devportal, refer to the [Configure Exposed Environments to Developer Portal](../../administer/configure-exposed-environments-to-developer-portal.md
+) documentation.
+
+Once the API is successfully promoted, it will become available in the **Production** environment. You can then proceed with the publishing steps below to make it publicly accessible.
+
+!!! note
+    Organizations created before **April 24th, 2025**, will have the **Development** environment exposed by default. Hence, organizations created before this date does not require to promote API to the **Production** environment.
 
 1. In the left navigation menu, click **Lifecycle** under **Manage**. This takes you to the **Lifecycle** page.
 2. Click **Publish**.
