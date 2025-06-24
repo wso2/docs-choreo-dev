@@ -4175,6 +4175,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </ol>
 <p>Now that your API is deployed in both development and production environments and can be invoked, the next step is to publish it so that consumers can discover and subscribe to it.</p>
 <h2 id="step-5-publish-the-api-proxy">Step 5: Publish the API proxy<a class="headerlink" href="#step-5-publish-the-api-proxy" title="Permanent link">&para;</a></h2>
+<p><strong>Publishing</strong> makes your API available in the <strong>Choreo Developer Portal (Devportal)</strong>, enabling application developers to access and use it. In Choreo, the <strong>Production</strong> environment is exposed to the <strong>Devportal</strong>  by default. After completing Step 4, the API is only available to the internal developers within your organization for testing purposes. To make the API accessible for external application developers, go to the <strong>Deploy</strong> page and <strong>Promote</strong> the API to the <strong>Production</strong> environment by following the same steps outlined in Step 4.</p>
+<p>If you need to change the default environments exposed to the Devportal, refer to the <a href="../../administer/configure-exposed-environments-to-developer-portal/">Configure Exposed Environments to Developer Portal</a> documentation.</p>
+<p>Once the API is successfully promoted, it will become available in the <strong>Production</strong> environment. You can then proceed with the publishing steps below to make it publicly accessible.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Organizations created before <strong>April 24<sup>th</sup>, 2025</strong>, will have the <strong>Development</strong> environment exposed by default. Hence, organizations created before this date does not require to promote API to the <strong>Production</strong> environment.</p>
+</div>
 <ol>
 <li>In the left navigation menu, click <strong>Manage</strong> and then click <strong>Lifecycle</strong>. This opens the <strong>Lifecycle</strong> page, where you can see the different lifecycle stages of the API. The current lifecycle stage is <strong>Created</strong>.</li>
 <li>Click <strong>Publish</strong>.</li>
