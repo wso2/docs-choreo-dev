@@ -48,9 +48,14 @@ Ballerina is an open-source programming language designed for the cloud. It simp
 Asgardeo is an identity provider (IdP) that allows developers to secure access for consumers, business partners, employees, and APIs. Asgardeo is Choreo’s default IDP. To learn more, visit https://wso2.com/asgardeo/.
 
 ### Q: Why don’t I see the region selector on the project creation page?
-If you are a Choreo cloud data plane user, you can create projects in multiple regions only if you have a paid subscription in Choreo. Otherwise, your projects will be created in the same region you selected when onboarding the organization.
+The region selector has been removed. Projects derive their region(s) from the Environments available to them through the assigned [Continuous Deployment (CD) Pipeline](https://wso2.com/choreo/docs/devops-and-ci-cd/manage-continuous-deployment-pipelines/). Additional Environments can be made available to a Project by defining a new CD Pipeline at the Organization and then assigning it to that Project or adding the environments to the project assigned pipeline.
+To target a specific region (for example, EU), on a Cloud Data Plane (CDP), you must:
 
-If you are a private data plane user, there will be no region selector in project creation at all.
+- Create a new Environment (or a set of Environments) on the EU CDP under your Organization.
+- Create a new CD Pipeline that deploys to these new Environments on the EU CDP or add the environments to the project assigned pipeline.
+- Assign this CD Pipeline to your Project.
+
+The same concept applies for Private Data Planes (PDPs) as well, but the region(s) are decided based on where your PDP is physically located.
 
 ### Q: As a Cloud Data Plane user, how can I create components in multiple data planes?
 When an organization admin onboards a new organization in Choreo, they can choose the preferred data plane. Choreo then sets the selected data plane as the default for the entire organization. Subsequently, users within the free tier of the cloud data plane can create components only in the set default data plane. If a free-tier user needs to create components in a different data plane, the user must get a paid subscription.
