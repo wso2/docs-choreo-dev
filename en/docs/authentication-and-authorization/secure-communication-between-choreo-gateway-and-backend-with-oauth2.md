@@ -1,8 +1,6 @@
-# Secure Communication Between Choreo Gateway and Backend with OAuth2
+# Secure Communication Between the Choreo Gateway and Your Backend with OAuth2
 
-OAuth2 is an industry-standard authorization framework that enables secure, delegated access to protected resources without exposing user credentials. By issuing scoped access tokens, OAuth2 ensures that clients (like the Choreo Gateway) can authenticate to backend services in a controlled, auditable manner.
-
-The following diagram depicts this scenario:
+OAuth2 is an industry-standard authorization framework that enables secure, delegated access to protected resources without exposing user credentials. By issuing scoped access tokens, OAuth2 ensures that clients can authenticate to backend services in a controlled, auditable manner.
 
 ## Configure OAuth2 to establish secure connectivity
 
@@ -31,6 +29,9 @@ To configure the OAuth2 policy, follow the steps given below:
 
 !!! tip
     Use `${parameterName}` syntax to reference environment-specific values for the Token URL, client ID, or secret.
+
+!!! note
+    By default, the token is set to the Authorization header. However, it is possible to set the token to any preferred header through the given input field.      
 
 ### Step 2: Deploy the API
 
