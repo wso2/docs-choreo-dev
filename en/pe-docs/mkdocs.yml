@@ -98,7 +98,7 @@ nav:
       - Credentials:
             - Set Up Git Provider Authentication: infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments.md
             - Use Your Own Container Registry: infrastructure/credentials/use-your-own-container-registry.md
-  - User Management: 
+  - User Management:
       - Users:
             - Manage  Members of an Organization: user-management/users/manage-members-of-an-organization.md
             - Configure Enterprise Login: user-management/users/configure-enterprise-login.md
@@ -156,7 +156,7 @@ nav:
               - Choreo Insights API: insights/work-with-choreo-insights-api/choreo-insights-api.md
       - Cost Insights: insights/cost-optimization.md
   - Observability:
-      - Alerts: 
+      - Alerts:
           - Configure Alerts: observability/alerts/configure-alerts.md
       - Runtime Logs: observability/runtime-logs.md
       - Private Data Plane Logs: observability/private-data-plane-logs.md
@@ -167,7 +167,7 @@ nav:
           - Configure Identity Providers for Developer Portal: api-management/developer-portal/configure-identity-providers-for-developer-portal.md
           - Configure Exposed Environments to Developer Portal: api-management/developer-portal/configure-exposed-environments-to-developer-portal.md
       - API Analytics:
-          - Integrate Choreo with Moesif for Analytics: api-management/api-analytics/integrate-choreo-with-moesif.md   
+          - Integrate Choreo with Moesif for Analytics: api-management/api-analytics/integrate-choreo-with-moesif.md
       - Consumer IDPs:
           - Set Up a User Store with Choreo’s Built-In Identity Provider: api-management/consumer-idps/configure-a-user-store-with-built-in-idp.md
           - Set Up Asgardeo as an External IdP for Choreo APIs: api-management/consumer-idps/configure-asgardeo-as-an-external-idp.md
@@ -227,7 +227,7 @@ extra_css:
   # - assets/css/theme.css
   # - assets/css/prism.css
   # - assets/lib/json-formatter/json-formatter.css
-
+  - assets/stylesheets/region-selector.css
   - assets/lib/highlightjs/styles/vs.min.css
   - assets/css/blue-palette-alt2.css
   - assets/css/choreotheme.css
@@ -240,6 +240,7 @@ extra_javascript:
   # - assets/js/theme.js
   #- assets/js/prism-ballerina.js
   - assets/js/choreotheme.js
+  - assets/javascripts/region-selector.js
 
 extra:
   social:
