@@ -1,0 +1,126 @@
+/**
+ * Styles for the Choreo Region Selector popup
+ */
+#region-selector-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+#region-selector-modal .modal-content {
+    background-color: #ffffff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 300px;
+    max-width: 90%;
+    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+#region-selector-modal h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+#region-selector-modal p {
+    color: #5f6368;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+#region-selector-modal .radio-container {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#region-selector-modal .radio-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+#region-selector-modal input[type="radio"] {
+    margin-right: 8px;
+    accent-color: #545CEC;
+}
+
+#region-selector-modal .flag-icon {
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+#region-selector-modal .radio-label {
+    cursor: pointer;
+    font-weight: 500;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+#region-selector-modal .remember-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#region-selector-modal input[type="checkbox"] {
+    margin-right: 10px;
+    accent-color: #545CEC;
+}
+
+#region-selector-modal .checkbox-label {
+    color: #5f6368;
+    cursor: pointer;
+}
+
+#region-selector-modal .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+#region-selector-modal .cancel-button {
+    padding: 12px 24px;
+    background-color: transparent;
+    color: #5f6368;
+    border: 2px solid #e1e5e9;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+#region-selector-modal .cancel-button:hover {
+    border-color: #545CEC;
+    color: #545CEC;
+}
+
+#region-selector-modal .proceed-button {
+    padding: 12px 24px;
+    background-color: #545CEC;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+#region-selector-modal .proceed-button:hover {
+    background-color: #4248c7;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
