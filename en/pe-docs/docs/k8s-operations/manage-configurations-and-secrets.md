@@ -18,7 +18,7 @@ Choreo treats all configurations and secrets as sensitive content, but lets you 
 
 ## Add an environment variable to your container
 
-To apply environment variables to your component:
+To add environment variables to your component:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
@@ -36,7 +36,7 @@ To apply environment variables to your component:
 
 ## Add a file mount to your container
 
-To apply a file mount to your component:
+To add a file mount to your component:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
@@ -96,7 +96,7 @@ You can modify Ballerina configurables via the **CD Pipelines** page when deploy
 
 ### Add an environment variable to your container
 
-To apply environment variables through the alternative method:
+To add environment variables:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
@@ -120,7 +120,7 @@ To apply environment variables through the alternative method:
 
 ### Add a file mount to your container
 
-To apply a file mount to your component:
+To add a file mount to your component:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
@@ -155,7 +155,7 @@ To apply a file mount to your component:
 
 ### Update an existing configuration or secret
 
-To update a configuration or secret through the alternative method:
+To update a configuration or secret:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
@@ -165,7 +165,7 @@ To update a configuration or secret through the alternative method:
 
 ### Delete an existing configuration or a secret
 
-To delete a configuration or secret through the alternative method:
+To delete a configuration or secret:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
