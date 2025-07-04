@@ -2404,29 +2404,29 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
-  <a href="#apply-a-file-mount-to-your-container" class="md-nav__link">
-    Apply a file mount to your container
+  <a href="#add-an-environment-variable-to-your-container" class="md-nav__link">
+    Add an environment variable to your container
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#apply-environment-variables-to-your-container" class="md-nav__link">
-    Apply environment variables to your container
+  <a href="#add-a-file-mount-to-your-container" class="md-nav__link">
+    Add a file mount to your container
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#update-an-existing-configuration-or-secret" class="md-nav__link">
-    Update an existing configuration or secret
+  <a href="#update-an-existing-configuration-or-a-secret" class="md-nav__link">
+    Update an existing configuration or a secret
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#delete-an-existing-configuration-or-secret" class="md-nav__link">
-    Delete an existing configuration or secret
+  <a href="#delete-an-existing-configuration-or-a-secret" class="md-nav__link">
+    Delete an existing configuration or a secret
   </a>
   
 </li>
@@ -2435,6 +2435,47 @@ document.addEventListener('DOMContentLoaded', function() {
   <a href="#manage-ballerina-configurables" class="md-nav__link">
     Manage Ballerina configurables
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-configuration-management-approach" class="md-nav__link">
+    Alternative configuration management approach
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternative configuration management approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-an-environment-variable-to-your-container_1" class="md-nav__link">
+    Add an environment variable to your container
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-a-file-mount-to-your-container_1" class="md-nav__link">
+    Add a file mount to your container
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-an-existing-configuration-or-secret" class="md-nav__link">
+    Update an existing configuration or secret
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-an-existing-configuration-or-a-secret_1" class="md-nav__link">
+    Delete an existing configuration or a secret
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4008,29 +4049,29 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
-  <a href="#apply-a-file-mount-to-your-container" class="md-nav__link">
-    Apply a file mount to your container
+  <a href="#add-an-environment-variable-to-your-container" class="md-nav__link">
+    Add an environment variable to your container
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#apply-environment-variables-to-your-container" class="md-nav__link">
-    Apply environment variables to your container
+  <a href="#add-a-file-mount-to-your-container" class="md-nav__link">
+    Add a file mount to your container
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#update-an-existing-configuration-or-secret" class="md-nav__link">
-    Update an existing configuration or secret
+  <a href="#update-an-existing-configuration-or-a-secret" class="md-nav__link">
+    Update an existing configuration or a secret
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#delete-an-existing-configuration-or-secret" class="md-nav__link">
-    Delete an existing configuration or secret
+  <a href="#delete-an-existing-configuration-or-a-secret" class="md-nav__link">
+    Delete an existing configuration or a secret
   </a>
   
 </li>
@@ -4039,6 +4080,47 @@ document.addEventListener('DOMContentLoaded', function() {
   <a href="#manage-ballerina-configurables" class="md-nav__link">
     Manage Ballerina configurables
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-configuration-management-approach" class="md-nav__link">
+    Alternative configuration management approach
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternative configuration management approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-an-environment-variable-to-your-container_1" class="md-nav__link">
+    Add an environment variable to your container
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-a-file-mount-to-your-container_1" class="md-nav__link">
+    Add a file mount to your container
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-an-existing-configuration-or-secret" class="md-nav__link">
+    Update an existing configuration or secret
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-an-existing-configuration-or-a-secret_1" class="md-nav__link">
+    Delete an existing configuration or a secret
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4061,117 +4143,187 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>Choreo allows you to easily manage and version your component's configurations and secrets as <strong>file mounts</strong> or <strong>environment variables</strong>.</p>
 <div class="admonition info">
 <p class="admonition-title">Note</p>
-<p>All configurations and secrets applied to a Choreo component are stored in an encrypted secret vault in the cloud data plane, which is managed by WSO2.
-If you are on a private data plane, the configurations and secrets are stored in an Azure key vault or AWS secret manager attached to your data plane in your cloud environment.</p>
+<p>All configurations and secrets are stored in an encrypted secret vault in the cloud data plane managed by WSO2.
+For private data planes, they are stored in your cloud environment's attached secret manager.</p>
 </div>
 <h2 id="the-difference-between-configurations-and-secrets">The difference between configurations and secrets<a class="headerlink" href="#the-difference-between-configurations-and-secrets" title="Permanent link">&para;</a></h2>
-<p>Choreo considers all configurations and secrets to be sensitive content when storing them, but gives you the option to choose between secret or configuration when you create a file mount or an environment variable.</p>
+<p>Choreo treats all configurations and secrets as sensitive content, but lets you choose between secret or configuration when creating file mounts or environment variables.</p>
 <ul>
-<li><strong>Secrets</strong> are write-only. Once you create a secret, you cannot see or retrieve its content via the Choreo Console. However, you can overwrite the existing content at any time.</li>
+<li><strong>Secrets</strong> are write-only. Once created, you cannot view or retrieve their content via the Choreo Console, but you can overwrite them anytime.</li>
 <li>
-<p><strong>Configurations</strong> can be read and updated via the Choreo Console after you create them.</p>
+<p><strong>Configurations</strong> can be read and updated via the Choreo Console after creation.</p>
 <div class="admonition info">
 <p class="admonition-title">Note</p>
-<p>If you want to include sensitive data such as database passwords, cloud credentials, service accounts, and so on, the recommended approach is to use a secret instead of a configuration.</p>
+<p>For sensitive data such as database passwords, cloud credentials, or service accounts, use secrets rather than configurations.</p>
 </div>
 </li>
 </ul>
-<h2 id="apply-a-file-mount-to-your-container">Apply a file mount to your container<a class="headerlink" href="#apply-a-file-mount-to-your-container" title="Permanent link">&para;</a></h2>
-<p>Follow these steps to apply a file mount to a component you have created:</p>
+<h2 id="add-an-environment-variable-to-your-container">Add an environment variable to your container<a class="headerlink" href="#add-an-environment-variable-to-your-container" title="Permanent link">&para;</a></h2>
+<p>To add environment variables to your component:</p>
 <ol>
 <li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the <strong>Component Listing</strong> pane, click on the component for which you want to define configurations and secrets.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configs &amp; Secrets</strong>.</li>
-<li>Click <strong>+ Create</strong>.</li>
-<li>In the <strong>Create a Config or Secret</strong> pane, click <strong>File Mount</strong>.</li>
+<li>Click your component in the <strong>Component Listing</strong> pane.</li>
+<li>Navigate to <strong>Deploy</strong> page in the left menu.</li>
+<li>Click <strong>Manage Configs and Secrets</strong> in the environment card.</li>
+<li>Expand <strong>Environment Variables</strong> and click <strong>+ Add a Configuration</strong>.</li>
 <li>
-<p>If you want to create the file mount as a secret, select <strong>Mark as a Secret</strong>. Otherwise, proceed to the next step.</p>
+<p>Enter the variable name and value. Mark as a secret if the value is sensitive.</p>
 <div class="admonition info">
-<p class="admonition-title">Note</p>
-<p>If you create the file mount as a secret, you will not be able to read the file content after you create the file mount.</p>
+<p class="admonition-title">Note<p>Secret environment variables cannot be read after creation.</p>
+</p>
 </div>
 </li>
 <li>
-<p>In the <strong>Display Name</strong> field, specify a name for the file mount.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>The display name does not affect the file mount or its content. It is only a reference to identify the configuration or secret you create.</p>
-</div>
+<p>Click <strong>Add</strong>.</p>
 </li>
+<li>Click <strong>Save and Deploy</strong>.</li>
+</ol>
+<h2 id="add-a-file-mount-to-your-container">Add a file mount to your container<a class="headerlink" href="#add-a-file-mount-to-your-container" title="Permanent link">&para;</a></h2>
+<p>To add a file mount to your component:</p>
+<ol>
+<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
+<li>Click your component in the <strong>Component Listing</strong> pane.</li>
+<li>Navigate to <strong>Deploy</strong> page in the left menu.</li>
+<li>Click <strong>Manage Configs and Secrets</strong> in the environment card.</li>
+<li>Expand <strong>File Mount</strong> and click <strong>+ Add a File Mount</strong>.</li>
+<li>Specify the <strong>Mount Path</strong> where the file should be mounted inside the container. Use an absolute path including filename and extension.</li>
 <li>
-<p>In the <strong>File Mount Path</strong> field, specify where to mount the file inside the container. Use an absolute file path with the file name and extension if applicable.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>The file name in the mount path does not need to match the configuration name or the name of the file you upload.</p>
-</div>
-</li>
-<li>
-<p>Upload a configuration file or copy and paste the configuration content into the editor.</p>
-</li>
-<li>
-<p>Click <strong>Create</strong>.</p>
+<p>Enter or paste the configuration content. Mark as a secret if the content is sensitive.</p>
 <div class="admonition info">
-<p class="admonition-title">Note</p>
-<p>Configurations and secrets are applied immediately to your environment on creation. To ensure that the container reflects the new content, your existing running replicas undergo a rolling restart.</p>
-</div>
-</li>
-</ol>
-<h2 id="apply-environment-variables-to-your-container">Apply environment variables to your container<a class="headerlink" href="#apply-environment-variables-to-your-container" title="Permanent link">&para;</a></h2>
-<p>Follow these steps to apply environment variables to a component you have created:</p>
-<ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the <strong>Component Listing</strong> pane, click on the component for which you want to define configurations and secrets.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configs &amp; Secrets</strong>.</li>
-<li>Click <strong>+ Create</strong>.</li>
-<li>In the <strong>Create a Config or Secret</strong> pane, click <strong>Environment Variables</strong>.</li>
-<li>
-<p>If you want to create the environment variable values as secrets, select <strong>Mark as a Secret</strong>. Otherwise, proceed to the next step.</p>
-<div class="admonition info">
-<p class="admonition-title">Note</p>
-<p>If you create environment variables as secrets, you will not be able to read the values you set for the environment variables after you create them.</p>
+<p class="admonition-title">Note<p>Secret file mounts cannot be read after creation.</p>
+</p>
 </div>
 </li>
 <li>
-<p>In the <strong>Display Name</strong> field, specify a name to identify the configuration or secret.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>The display name you specify does not affect the environment variables you set. It is only a reference to identify the configuration or secret you create.</p>
-</div>
+<p>Click <strong>Save</strong>.</p>
 </li>
-<li>
-<p>Under <strong>Add Environment Variables</strong>, specify the necessary environment variables as key-value pairs. You can click <strong>Add Item</strong> to add any number of environment variables.</p>
-</li>
-<li>
-<p>Click <strong>Create</strong>.</p>
-</li>
+<li>Click <strong>Save and Deploy</strong>.</li>
 </ol>
-<h2 id="update-an-existing-configuration-or-secret">Update an existing configuration or secret<a class="headerlink" href="#update-an-existing-configuration-or-secret" title="Permanent link">&para;</a></h2>
-<p>Follow these steps to update a configuration or secret you have defined:</p>
+<h2 id="update-an-existing-configuration-or-a-secret">Update an existing configuration or a secret<a class="headerlink" href="#update-an-existing-configuration-or-a-secret" title="Permanent link">&para;</a></h2>
+<p>To update a configuration or secret:</p>
 <ol>
 <li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the <strong>Component Listing</strong> pane, click on the component for which you want to update configurations and secrets.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configs &amp; Secrets</strong>.</li>
-<li>Click the edit icon corresponding to the configuration or secret you want to update.</li>
-<li>Apply the necessary changes and click <strong>Save</strong>.</li>
+<li>Click your component in the <strong>Component Listing</strong> pane.</li>
+<li>Navigate to <strong>Deploy</strong> page in the left menu.</li>
+<li>Click <strong>Manage Configs and Secrets</strong> in the environment card.</li>
+<li>To update an environment variable, expand <strong>Environment Variables</strong> and click the edit icon next to the variable.
+   To update a file mount, expand <strong>File Mount</strong> and click the edit icon next to the file.</li>
+<li>Click <strong>Update</strong>.</li>
+<li>Click <strong>Save and Deploy</strong>.</li>
 </ol>
-<h2 id="delete-an-existing-configuration-or-secret">Delete an existing configuration or secret<a class="headerlink" href="#delete-an-existing-configuration-or-secret" title="Permanent link">&para;</a></h2>
-<p>Follow these steps to delete a configuration or secret you have defined:</p>
+<h2 id="delete-an-existing-configuration-or-a-secret">Delete an existing configuration or a secret<a class="headerlink" href="#delete-an-existing-configuration-or-a-secret" title="Permanent link">&para;</a></h2>
+<p>To delete a configuration or secret:</p>
 <ol>
 <li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the <strong>Component Listing</strong> pane, click on the component for which you want to delete configurations and secrets.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configs &amp; Secrets</strong>.</li>
-<li>Click the delete icon corresponding to the configuration or secret you want to delete.</li>
-<li>Enter the name of the configuration or secret to confirm deletion.</li>
-<li>Click <strong>Delete</strong>.</li>
+<li>Click your component in the <strong>Component Listing</strong> pane.</li>
+<li>Navigate to <strong>Deploy</strong> page in the left menu.</li>
+<li>Click <strong>Manage Configs and Secrets</strong> in the environment card.</li>
+<li>To delete an environment variable, expand <strong>Environment Variables</strong> and click the delete icon next to the variable.
+   To delete a file mount, expand <strong>File Mount</strong> and click the delete icon next to the file.</li>
+<li>Confirm the deletion when prompted.</li>
+<li>Click <strong>Save and Deploy</strong>.</li>
 </ol>
 <h2 id="manage-ballerina-configurables">Manage Ballerina configurables<a class="headerlink" href="#manage-ballerina-configurables" title="Permanent link">&para;</a></h2>
-<p>Choreo manages the <a href="https://ballerina.io/learn/by-example/configurable-variables/">Ballerina configurables</a> for the Ballerina components you create.</p>
-<p>When you deploy or promote a Ballerina application, you can modify the Ballerina configurables via the <strong>Deploy</strong> page.</p>
+<p>Choreo manages <a href="https://ballerina.io/learn/by-example/configurable-variables/">Ballerina configurables</a> for your Ballerina components.</p>
+<p>You can modify Ballerina configurables via the <strong>Deploy</strong> page when deploying or promoting a Ballerina application.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>You can use configurables instead of environment variables to add file mounts to a Ballerina component.
+<p>Use configurables instead of environment variables to add file mounts to Ballerina components.
   Environment variables are primarily for components written in other languages.</p>
 </div>
+<h2 id="alternative-configuration-management-approach">Alternative configuration management approach<a class="headerlink" href="#alternative-configuration-management-approach" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This alternative method is not recommended for managing configurations and secrets in Choreo.</p>
+</div>
+<h3 id="add-an-environment-variable-to-your-container_1">Add an environment variable to your container<a class="headerlink" href="#add-an-environment-variable-to-your-container_1" title="Permanent link">&para;</a></h3>
+<p>To add environment variables:</p>
+<ol>
+<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
+<li>Click your component in the <strong>Component Listing</strong> pane.</li>
+<li>Navigate to <strong>DevOps</strong> &gt; <strong>Configs &amp; Secrets</strong> in the left menu.</li>
+<li>Click <strong>+ Create</strong>.</li>
+<li>Select <strong>Environment Variables</strong> in the <strong>Create a Config or Secret</strong> pane.</li>
+<li>
+<p>Select <strong>Mark as a Secret</strong> if the values contain sensitive information.</p>
+<div class="admonition info">
+<p class="admonition-title">Note</p>
+<p>Secret environment variables cannot be read after creation.</p>
+</div>
+</li>
+<li>
+<p>Enter a <strong>Display Name</strong> to identify this configuration.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The display name is for identification only and doesn't affect the actual environment variables.</p>
+</div>
+</li>
+<li>
+<p>Enter your environment variables as key-value pairs. Click <strong>Add Item</strong> to create additional variables.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+</ol>
+<h3 id="add-a-file-mount-to-your-container_1">Add a file mount to your container<a class="headerlink" href="#add-a-file-mount-to-your-container_1" title="Permanent link">&para;</a></h3>
+<p>To add a file mount to your component:</p>
+<ol>
+<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
+<li>Click your component in the <strong>Component Listing</strong> pane.</li>
+<li>Navigate to <strong>DevOps</strong> &gt; <strong>Configs &amp; Secrets</strong> in the left menu.</li>
+<li>Click <strong>+ Create</strong>.</li>
+<li>Select <strong>File Mount</strong> in the <strong>Create a Config or Secret</strong> pane.</li>
+<li>
+<p>Select <strong>Mark as a Secret</strong> if the file contains sensitive information.</p>
+<div class="admonition info">
+<p class="admonition-title">Note</p>
+<p>Secret file mounts cannot be read after creation.</p>
+</div>
+</li>
+<li>
+<p>Enter a <strong>Display Name</strong> to identify this file mount.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The display name is for identification only and doesn't affect the file mount or its content.</p>
+</div>
+</li>
+<li>
+<p>Specify the <strong>File Mount Path</strong> where the file should be mounted inside the container. Use an absolute path including filename and extension.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The mount path filename doesn't need to match your configuration name or uploaded filename.</p>
+</div>
+</li>
+<li>
+<p>Either upload a configuration file or paste content directly into the editor.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+<div class="admonition info">
+<p class="admonition-title">Note</p>
+<p>Configurations and secrets apply immediately. Your container's running replicas will undergo a rolling restart to reflect the changes.</p>
+</div>
+</li>
+</ol>
+<h3 id="update-an-existing-configuration-or-secret">Update an existing configuration or secret<a class="headerlink" href="#update-an-existing-configuration-or-secret" title="Permanent link">&para;</a></h3>
+<p>To update a configuration or secret:</p>
+<ol>
+<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
+<li>Click your component in the <strong>Component Listing</strong> pane.</li>
+<li>Navigate to <strong>DevOps</strong> &gt; <strong>Configs &amp; Secrets</strong> in the left menu.</li>
+<li>Click the edit icon next to the configuration or secret you want to update.</li>
+<li>Make your changes and click <strong>Save</strong>.</li>
+</ol>
+<h3 id="delete-an-existing-configuration-or-a-secret_1">Delete an existing configuration or a secret<a class="headerlink" href="#delete-an-existing-configuration-or-a-secret_1" title="Permanent link">&para;</a></h3>
+<p>To delete a configuration or secret:</p>
+<ol>
+<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
+<li>Click your component in the <strong>Component Listing</strong> pane.</li>
+<li>Navigate to <strong>DevOps</strong> &gt; <strong>Configs &amp; Secrets</strong> in the left menu.</li>
+<li>Click the delete icon next to the configuration or secret you want to delete.</li>
+<li>Type the name to confirm deletion.</li>
+<li>Click <strong>Delete</strong>.</li>
+</ol>
 
 
 
