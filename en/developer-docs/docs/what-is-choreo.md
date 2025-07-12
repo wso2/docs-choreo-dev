@@ -4,6 +4,14 @@
 
 ![Diagram of Choreo capabilities](../assets/img/what-is-choreo.png){.cInlineImage-full}
 
+!!! info "Global Availability"
+    **Choreo is now available in two regions worldwide:**
+
+    - 🇺🇸 **US Region**: [console.choreo.dev](https://console.choreo.dev)
+    - 🇪🇺 **EU Region**: [console.eu.choreo.dev](https://console.eu.choreo.dev)
+
+    **Important**: No data is shared between regions. Resources created in one region are not available in the other region. This includes projects, components, APIs, services, configurations, secrets, user data, and monitoring data. Choose the region that meets your data residency and compliance requirements.
+
 ## Key capabilities of Choreo
 
 ### Architecture and Design
