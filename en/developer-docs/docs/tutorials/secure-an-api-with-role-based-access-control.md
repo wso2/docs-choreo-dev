@@ -25,7 +25,7 @@ Let’s take a look at the steps to implement the scenario described above using
 ### Prerequisites
 
 - If you're signing in to the Choreo Console for the first time, create an organization:
-   1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your preferred method.
+   1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
    2. Enter a unique organization name. For example, `Stark Industries`.
    3. Read and accept the privacy policy and terms of use.
    4. Click **Create**.
@@ -34,7 +34,7 @@ This creates the organization and opens the home page of the default project cre
 
 ### Step 1: Create an API proxy component and deploy it
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
 2. To create an API proxy component, follow the instructions in [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy). This opens the **Resources** pane, where you can define resources for the API proxy.
 3. In the **Resources** pane, add the following resources:
     - **GET** `/users`
@@ -82,7 +82,7 @@ Now, application developers can discover the API, subscribe to it, and invoke it
 
 ### Step 3: Subscribe to the published API
 
-1. Go to the [API Developer Portal](https://devportal.choreo.dev/) and click **Applications** on the top menu.
+1. Go to the [Choreo Developer Portal](https://devportal.choreo.dev/) and click **Applications** on the top menu.
 2. Click **+Create**.
 3. Enter `User Management App` as the **Application Name** and click **Create**.
 4. In the Developer Portal left navigation menu, click **Production** under **Credentials**.
@@ -136,7 +136,7 @@ Now, application developers can discover the API, subscribe to it, and invoke it
     - Replace `<base64(clientId:clientSecret)>` with the Base64-encoded value of `clientId:clientSecret`.
 
 4. Extract the access token from the response.
-5. Go to the [API Developer Portal](https://devportal.choreo.dev/) and try out the API using the access token. Observe that `Alex` can only access the following resources:
+5. Go to the [Choreo Developer Portal](https://devportal.choreo.dev/) and try out the API using the access token. Observe that `Alex` can only access the following resources:
     - **GET /users**
     - **GET /users/{userID}**
 

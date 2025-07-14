@@ -13,20 +13,20 @@ In this guide, you will:
 ## Prerequisites
 
 1. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-2. Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample proxy source](https://github.com/wso2/choreo-samples/tree/main/department-api-proxy-from-github).  
+2. Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample proxy source](https://github.com/wso2/choreo-samples/tree/main/department-api-proxy-from-github).
 
 ## Step 1: Create an API proxy
 
 You can create an API proxy either by selecting the source from a GitHub repository, uploading an OpenAPI specification file, or providing an OpenAPI specification URL. This guide demonstrates how to create an API proxy using a GitHub repository as the source.
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card. This opens the **Create an API Proxy** pane.
 
@@ -37,8 +37,8 @@ You can create an API proxy either by selecting the source from a GitHub reposit
         The **Choreo GitHub App** requires the following permissions:
          - Read and write access to code and pull requests.
          - Read access to issues and metadata.
-        
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.    
+
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
 
 5. Enter the following repository details:
 
@@ -73,7 +73,7 @@ You can create an API proxy either by selecting the source from a GitHub reposit
     |-----------------|--------------------------------------------|
     | **Component Display Name**| `Department Service`                    |
     | **Component Name**        | `department-service`                    |
-    | **Description**           | `This is a sample proxy for department service`     |    
+    | **Description**           | `This is a sample proxy for department service`     |
 
 8. Click **Create**. This creates the API proxy component and takes you to the **Build** page.
 

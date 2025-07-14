@@ -33,15 +33,15 @@ When creating a new group to invite members, be sure to assign a role to the gro
 
 Choreo roles are defined as follows:
 
-- **Admin**: Performs all administrative tasks including user management, Developer Portal customization, project management, analytics configuration, and domain management.  
-- **API Publisher**: Discovers, creates, publishes, deletes, tests, and manages APIs.  
-- **API Subscriber**: Subscribes to APIs, manages subscriptions and applications, and generates and manages API keys.  
-- **Billing Admin**: Handles billing administration including viewing tiers, managing organizations and invoices, and managing subscriptions and payment methods.  
-- **Choreo DevOps**:   Manages deployment, monitoring, and reliability of components in Choreo.    
-- **Choreo Platform Engineer**: Performs infrastructure, governance, service mesh, and monitoring tasks.  
-- **Developer**: Develops, deploys, and manages cloud-native applications at scale.  
-- **External API Subscriber**: Consumes APIs with Developer Portal access and can join an organization exclusively for API usage.  
-- **Environment Manager (Deprecated):** Previously responsible for managing deployment environments.  
+- **Admin**: Performs all administrative tasks including user management, Developer Portal customization, project management, analytics configuration, and domain management.
+- **API Publisher**: Discovers, creates, publishes, deletes, tests, and manages APIs.
+- **API Subscriber**: Subscribes to APIs, manages subscriptions and applications, and generates and manages API keys.
+- **Billing Admin**: Handles billing administration including viewing tiers, managing organizations and invoices, and managing subscriptions and payment methods.
+- **Choreo DevOps**:   Manages deployment, monitoring, and reliability of components in Choreo.
+- **Choreo Platform Engineer**: Performs infrastructure, governance, service mesh, and monitoring tasks.
+- **Developer**: Develops, deploys, and manages cloud-native applications at scale.
+- **External API Subscriber**: Consumes APIs with Developer Portal access and can join an organization exclusively for API usage.
+- **Environment Manager (Deprecated):** Previously responsible for managing deployment environments.
 
 _Note: The **Choreo DevOps** role has been replaced with the **Choreo Platform Engineer** role. However, organizations that previously had Choreo DevOps role will continue to see and use both roles with their existing functionality._
 
@@ -49,7 +49,7 @@ _Note: The **Choreo DevOps** role has been replaced with the **Choreo Platform E
 
 The Organization ID serves as a unique identifier for each organization. To get the organization ID, follow the steps below:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. Click on the **Organization** list on the header and select your organization.
 3. In the left navigation, click **User Management** and then click on **Users**.
 4. Click **Copy ID**.
@@ -58,7 +58,7 @@ The Organization ID serves as a unique identifier for each organization. To get 
 
 The organization handle is a unique string that directly corresponds to your organization's name. To get the organization handle, follow the steps below:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. Click on the **Organization** list on the header and select your organization.
 3. In the left navigation, click **User Management** and then click on **Users**.
 4. Click **Copy Handle**.

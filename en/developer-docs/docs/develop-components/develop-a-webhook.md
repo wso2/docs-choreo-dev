@@ -13,7 +13,7 @@ In this tutorial, you will address the requirement by doing the following:
 ## Prerequisites
 
 1. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -26,7 +26,7 @@ In this tutorial, you will address the requirement by doing the following:
 
 To create a Webhook component, follow these steps:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your preferred method.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Webhook** card.
 4. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -92,7 +92,7 @@ To allow the webhook to read the labels of issues in a specific GitHub repositor
     |------------------|--------------------------------------------------------------------|
     | **Payload URL**  | The invoke URL you copied in Step 3, sub-step 1.                   |
     | **Content Type** | Select `application/json`                                          |
-    | **Secret**       | The last webhook secret you configured in [Step 2](#step-2-deploy).| 
+    | **Secret**       | The last webhook secret you configured in [Step 2](#step-2-deploy).|
 
     !!! tip
         - **Buildpack** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the buildpack. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the buildpack.

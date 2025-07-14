@@ -6,8 +6,8 @@ Choreo provides a secure and user-friendly approach to accomplish this requireme
 
 ## Become a member of the Choreo System organization
 
-1. Access the Developer Portal of the `Choreo System` organization via [https://devportal.choreo.dev/choreosystem/applications](https://devportal.choreo.dev/choreosystem/applications) and sign in using your preferred method.
-   
+1. Access the Developer Portal of the `Choreo System` organization via the [Choreo Developer Portal](https://devportal.choreo.dev/choreosystem/applications) and sign in using your preferred method.
+
 2. To obtain access to the `Choreo System` organization, click **Request Access**.
 
     ![Request access](../../assets/img/monitoring-and-insights/work-with-choreo-insights-api/request-access.png){.cInlineImage-full}
@@ -16,7 +16,7 @@ Choreo provides a secure and user-friendly approach to accomplish this requireme
 
 To create an application and generate keys, follow the steps below:
 
-1. To create a new application in the `Choreo System` organization, click **+ Create Application**. 
+1. To create a new application in the `Choreo System` organization, click **+ Create Application**.
 
 2. Enter a name for the application and click **Create**. This creates the application and takes you to the **Overview** page.
 
@@ -32,7 +32,7 @@ To create an application and generate keys, follow the steps below:
 5. To specify an appropriate token expiry time for the application, follow the steps given below:
     1. In the **Application Keys** pane, click to expand **Advanced Configurations**.
     2. Specify an appropriate value in the **Application access token expiry time** field and click **Update**.
-   
+
         ![Update token expiry time](../../assets/img/monitoring-and-insights/work-with-choreo-insights-api/update-token-expirary-time.png){.cInlineImage-threeQuarter}
 
 6. Execute the following cURL command to generate an access token:
@@ -49,10 +49,10 @@ To create an application and generate keys, follow the steps below:
     !!! info
         To obtain your organization handle, follow the steps given below:
 
-         1. Go to [https://console.choreo.dev](https://console.choreo.dev) and sign in using your preferred method.
+         1. Go to the [Choreo Console](https://console.choreo.dev) and sign in using your preferred method.
          2. In the Choreo Console, click your username in the top right corner.
          3. In the drop-down menu, click **Settings**.
-         4. In the **Organization** pane, click **Copy Handle**. 
+         4. In the **Organization** pane, click **Copy Handle**.
 
     You can use the generated token to access the Insights API exposed via [https://choreocontrolplane.choreo.dev/93tu/insights/1.0.0/query-api](https://choreocontrolplane.choreo.dev/93tu/insights/1.0.0/query-api).
 

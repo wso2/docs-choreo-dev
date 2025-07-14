@@ -1,4 +1,4 @@
-# Generate an Access Token
+# Generate an Access Token.
 
 Using access tokens for request authorization enhances security by preventing certain types of denial-of-service (DoS) attacks on published APIs. API consumers generate access tokens to access APIs, including them as string values in HTTP header requests.
 

@@ -4,10 +4,10 @@ The Developer Portal allows API consumers to find and consume APIs with ease. Yo
 
 To customize the Developer Portal theme, follow the steps given below:
 
-!!! Note - 
+!!! Note -
     To customize the Developer Portal theme for an organization, you must have **Manage Custom Theme**, **Create Custom Theme**, **View Custom Theme**, **Delete Custom Theme** and/or **Deploy Custom Theme** permission(s) under **ORGANIZATION-MANAGEMENT** permission group respectively. - You cannot undo a change and restore or revert to a previous version of the theme. However, you can reset it to the default theme.
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using a Google/ GitHub/ Microsoft account.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/) using a Google/ GitHub/ Microsoft account.
 
 2. In the Choreo Console header, go to the **Organization** list and select your organization.
 
@@ -29,7 +29,7 @@ To customize the Developer Portal theme, follow the steps given below:
 
     5. To apply the changes to the Developer Portal, toggle the **Go Live** switch. To confirm that you want to go live with the changes, click **Enable** in the message that appears.
 
-7. Sign in to the Choreo Developer Portal at [https://devportal.choreo.dev](https://devportal.choreo.dev).
+7. Sign in to the [Choreo Developer Portal](https://devportal.choreo.dev).
 
 The **Home** page will appear as it did in the preview.
 
@@ -37,7 +37,7 @@ The **Home** page will appear as it did in the preview.
 
 To reset the Developer Portal theme to the default theme, follow the steps given below:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using a Google, GitHub, or Microsoft account.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/) using a Google, GitHub, or Microsoft account.
 
 2. In the Choreo Console header, go to the **Organization** list and select your organization.
 

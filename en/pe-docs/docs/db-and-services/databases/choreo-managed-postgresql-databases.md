@@ -4,15 +4,15 @@ PostgreSQL on Choreo offers fully Choreo-managed, efficient object-relational da
 
 ## Create a Choreo-managed PostgreSQL database
 
-Follow the steps below to create a Choreo-managed PostgreSQL database: 
+Follow the steps below to create a Choreo-managed PostgreSQL database:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the header, click the **Organization** list. This opens the organization home page.
 3. In the left navigation menu, click **DB & Services** and then **Databases**.
 4. Click **Create** and select **PostgreSQL** as the database type. Provide a display name for this server and follow the instructions.
 5. Select your preferred cloud provider from AWS, Azure, GCP, or Digital Ocean.
     - The cloud provider is used to provision the compute and storage infrastructure for your database.
-    - There is no functional difference between databases created on different cloud providers, apart from changes to service plans (and associated costs). 
+    - There is no functional difference between databases created on different cloud providers, apart from changes to service plans (and associated costs).
 6. Choose the region for your database.
    - Available regions will depend on the selected cloud provider. Choreo currently supports US and EU regions across all providers.
 7. Select the service plan.
@@ -20,15 +20,15 @@ Follow the steps below to create a Choreo-managed PostgreSQL database:
 
 ## Create a Choreo-managed PostgreSQL vector database
 
-Follow the steps below to create a Choreo-managed PostgreSQL vector database: 
+Follow the steps below to create a Choreo-managed PostgreSQL vector database:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/).
+1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the header, click the **Organization** list. This opens the organization home page.
 3. In the left navigation menu, click **DB & Services** and then **Vector Databases**.
 4. Follow steps 4 onwards in the [Create a Choreo-managed PostgreSQL database](#create-a-choreo-managed-postgresql-database) section.
 
 !!! Note -
-      Once the database is created, you can add it to the marketplace so developers can discover these databases and use them in their applications. For more details, see [Add Choreo-Managed Databases and Caches to the Marketplace.](../add-choreo-managed-databases-and-caches-to-the-marketplace) 
+      Once the database is created, you can add it to the marketplace so developers can discover these databases and use them in their applications. For more details, see [Add Choreo-Managed Databases and Caches to the Marketplace.](../add-choreo-managed-databases-and-caches-to-the-marketplace)
 
 
 ## Connecting to your Choreo-managed PostgreSQL database

@@ -5,6 +5,14 @@ Choreo is designed to reduce the cognitive and operational load for developers w
 
 ![Diagram of Choreo platform capabilities](../assets/img/what-is-choreo.png){.cInlineImage-full}
 
+!!! info "Global Availability"
+    **Choreo is now available in two regions worldwide:**
+
+    - 🇺🇸 **US Region**: [console.choreo.dev](https://console.choreo.dev)
+    - 🇪🇺 **EU Region**: [console.eu.choreo.dev](https://console.eu.choreo.dev)
+
+    **Important**: No data is shared between regions. Resources created in one region are not available in the other region. This includes projects, components, APIs, services, configurations, secrets, user data, and monitoring data. Choose the region that meets your data residency and compliance requirements.
+
 ## Key capabilities of Choreo
 
 ### Infrastructure Automation
@@ -25,7 +33,7 @@ Choreo is designed to reduce the cognitive and operational load for developers w
 - **Network Security**: Use eBPF, Cilium, and WireGuard for end-to-end encryption, fine-grained L3/L4 ingress and egress policies, and microsegmented architecture to minimize attack surfaces and prevent lateral movement.
 - **API & Access Control**: Enforce authentication, authorization, and rate-limiting through API gateways, while Role-Based Access Control (RBAC) ensures secure, granular access to projects, environments, and resources.
 - **Container & Application Security**: Choreo automatically scans container images for vulnerabilities in all CI/CD pipelines and ensures runtime protection with robust security measures, reducing risks in production environments.
-- **Granular Console Access Control**: Implement role-based permissions and identity management for granular user access control for the console facilitating multiple user roles and personas. 
+- **Granular Console Access Control**: Implement role-based permissions and identity management for granular user access control for the console facilitating multiple user roles and personas.
 
 ### Developer Self-Service Portal
 - **Internal Marketplace**: Provide a centralized hub for developers to discover and reuse existing services and resources  across the organization, fostering collaboration and reuse.

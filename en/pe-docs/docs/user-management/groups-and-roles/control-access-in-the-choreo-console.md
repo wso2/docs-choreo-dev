@@ -8,7 +8,7 @@ Choreo uses **Roles**, **Groups**, and a **Mapping level** to control access to 
 - **Group** : Group is a collection of users. A user group requires a role or multiple roles to be assigned to it so that the users in those groups get the relevant permissions via the assigned roles. [Learn more](../../choreo-concepts/organization.md#groups)
 
 - **Mapping level** : A mapping level defines the extent at which a role-group mapping can be done. Choreo has two defined resource levels.
-  - **Organization** : You can assign a role to a group or associate a group with a role within the organization. This ensures that  
+  - **Organization** : You can assign a role to a group or associate a group with a role within the organization. This ensures that
      all users in a group inherit the permissions granted by that role across all organizational resources.
     For example, if a user has edit_project permission at the organization mapping level, that user can edit all the projects in the organization.
   - **Project** : You can assign a role to a group or associate a group with a role within a specific project resource. This ensures
@@ -39,7 +39,7 @@ Assume you are overseeing the Engineering Project within your organization and y
 
 Follow the steps given below to create a project:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
 3. Enter a display name, unique name, and description for the project. You can enter the values given below:
 

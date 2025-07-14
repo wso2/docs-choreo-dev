@@ -27,7 +27,7 @@ This guide walks you through the following steps:
 1. GitHub account: Fork the [Choreo sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app), which contains the sample for this guide.
 
 2. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your Google, GitHub, or Microsoft account.
+    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your Google, GitHub, or Microsoft account.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -36,7 +36,7 @@ This guide walks you through the following steps:
 
 ## Step 1: Create a project
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
 3. Enter the following details:
 
@@ -84,7 +84,7 @@ This guide walks you through the following steps:
     | **Path**                  | reading-list-service                          |
     | **Component Type**        | Service                                       |
     | **Buildpack**             | NodeJS                                        |
-    | **Language Version**      | 20.x.x                                        |     
+    | **Language Version**      | 20.x.x                                        |
 
 7. Click **Save**. This adds the `Reading List Service` component to the **Configured Components** pane.
 8. Click **Finish**. This initializes the service with the implementation from your GitHub repository and takes you to the project home page.

@@ -1,6 +1,6 @@
 # Expose a Ballerina GraphQL Endpoint via a Service
 
-Choreo offers the flexibility to develop and deploy applications in a language of your preference. This guide shows you how to deploy a service component that exposes a GraphQL API using the Ballerina language in Choreo. No prior knowledge of the Ballerina language is required to follow this guide. 
+Choreo offers the flexibility to develop and deploy applications in a language of your preference. This guide shows you how to deploy a service component that exposes a GraphQL API using the Ballerina language in Choreo. No prior knowledge of the Ballerina language is required to follow this guide.
 
 GraphQL API is a query language and runtime that provides a single endpoint for retrieving flexible and efficient data in a strongly-typed and self-documenting way. By following this guide, you will build a service component in Ballerina and deploy it on Choreo for any GraphQL client application to utilize it.
 
@@ -35,7 +35,7 @@ $ {
 
 **Retrieve a book item from the reading list**
 
-This resource accepts a filter, `id`, which will select the book item from the reading list by book id.  The id is an Integer value. 
+This resource accepts a filter, `id`, which will select the book item from the reading list by book id.  The id is an Integer value.
 
 **Sample request**
 ```
@@ -139,7 +139,7 @@ Our next step is to set up the resources that you will require to follow the gui
 
 - If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -163,11 +163,11 @@ It is important to understand the purpose of the key files in the sample service
 | `Ballerina.toml`        | The Ballerina configuration file.                               |
 | `.choreo/component.yaml`| The configuration file with endpoint details.                   |
 
-## Step 1: Create a service component 
+## Step 1: Create a service component
 
 To create a Ballerina service component, follow these steps:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
 4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -179,7 +179,7 @@ To create a Ballerina service component, follow these steps:
 
            - Read and write access to code and pull requests.
            - Read access to issues and metadata.
-             
+
            You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 5. Under **Connect a Git Repository**, enter the following information:
@@ -194,7 +194,7 @@ To create a Ballerina service component, follow these steps:
 6. Select **Ballerina** as the buildpack.
 
 7. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
-    
+
     !!! info
          In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
@@ -224,7 +224,7 @@ To build the service, follow these steps:
 
 ### Step 2.2: Deploy
 
-To deploy the service, follow these steps: 
+To deploy the service, follow these steps:
 
 1. In the left navigation menu, click **Deploy**.
 2. On the **Set Up** card, click **Configure &  Deploy**.

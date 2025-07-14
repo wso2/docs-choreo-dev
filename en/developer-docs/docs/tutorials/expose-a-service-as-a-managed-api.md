@@ -7,7 +7,7 @@ In this tutorial, you will use Choreo to expose a service as an API proxy and pu
 ## Prerequisites
 
 - If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -18,7 +18,7 @@ In this tutorial, you will use Choreo to expose a service as an API proxy and pu
 
 To create an API proxy, you can either upload an OpenAPI specification or provide an OpenAPI specification URL. In this tutorial, you will use a sample OpenAPI specification URL.
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create** under **Component Listing**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card.
 4. In the **Create an API Proxy** pane, click **Try with sample URL**.

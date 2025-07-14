@@ -2,7 +2,7 @@
 
 Choreo supports deploying [Prism-based](https://docs.stoplight.io/docs/prism/674b27b261c3c-prism-overview) mock servers using OpenAPI specifications. With the Choreo Prism mock service component, you can serve multiple mock servers, each based on a different OpenAPI specification, as separate endpoints.
 
-By default, these mock servers serve static content generated from the examples in the configured OpenAPI Specification (OAS). 
+By default, these mock servers serve static content generated from the examples in the configured OpenAPI Specification (OAS).
 
 ## Prerequisites
 
@@ -10,7 +10,7 @@ Before you try out this guide, complete the following:
 
 - If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -22,8 +22,8 @@ Before you try out this guide, complete the following:
 ## Step 1: Create a Prism mock service component
 
 To create a Prism mock service component, follow these steps:
-    
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
 4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -35,7 +35,7 @@ To create a Prism mock service component, follow these steps:
 
            - Read and write access to code and pull requests.
            - Read access to issues and metadata.
-             
+
            You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 5. Under **Connect a Git Repository**, enter the following information:
@@ -49,7 +49,7 @@ To create a Prism mock service component, follow these steps:
 
 6. Select **Prism Mock** as the buildpack.
 7. Enter a display name, a unique name, and a description for the service component.
-    
+
     !!! info
          In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
@@ -71,7 +71,7 @@ To build the service, follow these steps:
 
 ### Step 2.2: Deploy
 
-To deploy the service, follow these steps: 
+To deploy the service, follow these steps:
 
 1. In the left navigation menu, click **Deploy**.
 2. On the **Set Up** card, click **Configure &  Deploy**.
