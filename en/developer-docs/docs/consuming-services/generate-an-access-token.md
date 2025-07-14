@@ -1,4 +1,4 @@
-# Generate a1. An application in the [Choreo Developer Portal](https://devportal.choreo.dev). If you don't have one, [create a new application](https://wso2.com/choreo/docs/consuming-services/manage-application/#step-1-create-an-application). Access Token
+# Generate an Access Token.
 
 Using access tokens for request authorization enhances security by preventing certain types of denial-of-service (DoS) attacks on published APIs. API consumers generate access tokens to access APIs, including them as string values in HTTP header requests.
 
