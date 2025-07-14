@@ -6,7 +6,7 @@ This page walks you through the steps to configure self-sign-up for your Develop
 
 ## Prerequisites
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using your Google, GitHub, or Microsoft account.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/) using your Google, GitHub, or Microsoft account.
 
 ## Configure Developer Portal self-sign-up
 
@@ -111,7 +111,7 @@ To manage users who want to access your Developer Portal via self-sign-up, you h
 
 To automatically approve each new user account registered on your Developer Portal, follow the steps given below:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev).
+1. Sign in to the [Choreo Console](https://console.choreo.dev).
 2. In the Choreo Console header, go to the **Organization** list and select your organization.
 3. In the left navigation menu, click **API Management** and then click on **Self Signups**.
 4. To enable auto-approval, turn on the toggle.
@@ -122,7 +122,7 @@ Once you enable auto-approval, users can sign in to your Developer Portal and vi
 
 If you have not enabled auto-approval, you can manually approve or reject new user registrations. Once a user creates an account, Choreo sends an email to ask the user to confirm the account. To manually approve or reject user accounts, follow the steps given below:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev).
+1. Sign in to the [Choreo Console](https://console.choreo.dev).
 2. In the Choreo Console header, go to the **Organization** list and select your organization.
 3. In the left navigation menu, click **API Management** and then click on **Self Signups**.
 4. You will see the user accounts listed for approval.

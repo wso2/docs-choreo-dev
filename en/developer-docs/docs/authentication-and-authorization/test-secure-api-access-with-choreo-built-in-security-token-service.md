@@ -26,7 +26,7 @@ Before you try out this guide, ensure you have set up the following:
 
 You can provide fine-grained access control to your API resources with permissions. Follow the steps below to assign permissions to the resources in the API:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in.
 2. In the Choreo Console top navigation menu, click the **Project** list and select the project that contains your component.
 3. In the **Component Listing** pane, click on the component for which you want to attach permissions.
 4. In the left navigation menu, click **Deploy**.
@@ -45,16 +45,16 @@ You can provide fine-grained access control to your API resources with permissio
 
 The permissions assigned to your API need to be associated with roles. Follow the steps below to create roles and assign permissions to the roles.
 
-1. In the Choreo Console, go to the top navigation menu, click the **Project** list, and select the project that contains your component. 
+1. In the Choreo Console, go to the top navigation menu, click the **Project** list, and select the project that contains your component.
 2. In the left navigation menu, click **Settings**.
 3. Click the **Application Security** tab.
 4. Click **+ Role**.
-5. Specify an appropriate **Role Name** and **Role description**. 
+5. Specify an appropriate **Role Name** and **Role description**.
 6. Select the permissions you want to assign to the role, and then click **Create**.
-  
+
     !!!tip
 
-            The permissions(scopes) defined for APIs exposed via components in the project and the permissions(scopes) required by connections created for components in the project are listed here. 
+            The permissions(scopes) defined for APIs exposed via components in the project and the permissions(scopes) required by connections created for components in the project are listed here.
 
 ## Step 3: Assign roles to user groups
 
@@ -62,7 +62,7 @@ You must assign roles to the user groups defined in your Choreo built-in IdP to 
 
 1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your component.
 2. Click the **Application Security** tab and then click **Role Management**.
-  
+
     !!!tip
 
             The roles defined within different projects in the organization are listed here.
@@ -80,15 +80,15 @@ To create a connection to the web application, follow the steps given below:
 1. In the Choreo Console, go to the top navigation menu, click the **Project** list, and select the project where you created the web application.
 2. On the project home page, click the web application listed under **Component Listing**.
 3. In the left navigation menu, click **Connections**.
-4. Create a connection to the API you deployed in [Step 1](#step-1-assign-permissions-to-an-api-in-choreo). 
-   
+4. Create a connection to the API you deployed in [Step 1](#step-1-assign-permissions-to-an-api-in-choreo).
+
 Now you can proceed to deploy the web application.
 
 When deploying, if your web application is a single-page application (SPA), you have the option to allow Choreo to handle authentication on behalf of the application. This approach eliminates the need to incorporate OAuth protocol-specific logic into your application.
 
 ### Test the invocation when Choreo-managed authentication is enabled
 
-If managed authentication is enabled for your web application, Choreo automatically handles obtaining the necessary permission for API invocation. This occurs during the request for access tokens, allowing you to seamlessly invoke the subscribed APIs through your web application without additional intervention. 
+If managed authentication is enabled for your web application, Choreo automatically handles obtaining the necessary permission for API invocation. This occurs during the request for access tokens, allowing you to seamlessly invoke the subscribed APIs through your web application without additional intervention.
 
 !!! note
     If you change the permissions of an existing connection or create a new connection with permissions, you must redeploy your web application to ensure proper API invocation with managed authentication.

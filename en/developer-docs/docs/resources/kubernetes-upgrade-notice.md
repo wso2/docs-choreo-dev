@@ -1,6 +1,6 @@
 # Choreo Kubernetes Infrastructure Upgrade Notice
 
-**Upgrade Date: September 4, 2023, from 3:00 a.m. to 6:00 a.m. UTC** 
+**Upgrade Date: September 4, 2023, from 3:00 a.m. to 6:00 a.m. UTC**
 
 An upcoming upgrade to the Choreo Kubernetes infrastructure is scheduled to take place on September 4, 2023.
 
@@ -20,7 +20,7 @@ The following Choreo component types could be affected:
 
 ## Action Required
 
-**Recommended action date: Before September 4, 2023, 3:00 a.m. UTC** 
+**Recommended action date: Before September 4, 2023, 3:00 a.m. UTC**
 
 To ensure a smooth transition and compatibility with the updated Java Runtime version, follow the steps below:
 
@@ -34,13 +34,13 @@ To ensure a smooth transition and compatibility with the updated Java Runtime ve
     2. Rebuild your containerized application.
     3. [Redeploy your containerized component](#redeploy-a-component-in-choreo).
 
-### Redeploy a component in Choreo 
+### Redeploy a component in Choreo
 
 To redeploy your component, follow the steps given below:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred login method.
+1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your preferred login method.
 2. Select your component from **Components Listing**. This will open the overview page of your component.
 3. In the left navigation menu, click **Deploy**.
-4. Deploy your component via the **Build Area** card. 
+4. Deploy your component via the **Build Area** card.
 
-For more information, refer to [this](https://kubernetes.io/blog/2022/08/31/cgroupv2-ga-1-25/#migrate-to-cgroup-v2) document. 
+For more information, refer to [this](https://kubernetes.io/blog/2022/08/31/cgroupv2-ga-1-25/#migrate-to-cgroup-v2) document.

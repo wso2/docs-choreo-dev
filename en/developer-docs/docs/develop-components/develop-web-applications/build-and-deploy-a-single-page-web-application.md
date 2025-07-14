@@ -40,7 +40,7 @@ This approach is recommended if you are deploying a web server and not just a si
 
 Follow the steps below to create a sample Web Application component and deploy it in Choreo:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/login/](https://console.choreo.dev/login/). This opens the **Project Home** page.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/login/). This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Web Application** card.
 6. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).

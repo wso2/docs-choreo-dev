@@ -15,7 +15,7 @@ A project is a logical grouping of related components to help you organize your 
 A component is a workload designed to run on Choreo. Examples of components include integrations, APIs, microservices, manual/scheduled jobs, web apps, triggers and API proxies.
 
 ### Q: What is the difference between an internal and external API?
-In Choreo, you can publish an API as an internal or an external API. A user or an application can access an external API publicly over the internet, whereas an internal API is only accessible through other components within the same organization. 
+In Choreo, you can publish an API as an internal or an external API. A user or an application can access an external API publicly over the internet, whereas an internal API is only accessible through other components within the same organization.
 
 ### Q: What is a connector in Choreo Marketplace?
 A connector is a reusable Ballerina package that simplifies connecting to external or internal systems and APIs, such as Salesforce, SAP, GitHub, and Twilio. You can use the connectors available in the Choreo marketplace to implement your integration use cases.  Connectors can be created and published by both WSO2 and Choreo users.
@@ -36,7 +36,7 @@ If you have a log monitoring product or service, such as Azure Monitor, you can 
 Choreo allows a maximum request payload size of 50 MB.
 
 ### Q: What source control software does Choreo support?
-Choreo now supports GitHub, Bitbucket and GitLab. 
+Choreo now supports GitHub, Bitbucket and GitLab.
 
 ### Q: Why don't I see the undeployed builds for my component in Choreo?
 You are allowed to build your component any number of times. However, Choreo has a limit on retaining undeployed builds. For users on the free-tier, Choreo will retain **only one** undeployed build. For those on any other tier, Choreo will retain the **latest five** undeployed builds.
@@ -75,14 +75,14 @@ WSO2 uses a range of security controls and design patterns to protect against se
 To connect a Choreo component with a third-party application, it is necessary to establish seamless communication between the component and the protected third-party application, especially when connecting to external databases like MySQL, MSSQL, PGSQL, Oracle DB, etc.
 To ensure this, the requests coming from the Choreo data plane must be allowed by adding the specific data plane IP ranges to your allowlist.
 
-- If your component is deployed in the Choreo US data plane, add the following IP range to your allowlist:
-    - 20.22.170.144/28
+**If your primary region is US:**
 
-- If your component is deployed in the Choreo EU data plane, add the following IP range to your allowlist:
-    - 20.166.183.112/28
+- Choreo US data plane: `20.22.170.144/28`
+- Choreo EU data plane: `20.166.183.112/28`
 
-- If you are working on the [Cybertruck Challenge](https://wso2.com/cybertruck/), add the following IP range to your allowlist:
-    - 20.190.30.48/28
+**If your primary region is EU:**
+
+- Choreo EU data plane: `54.170.135.118, 52.215.28.29`
 
 ## Data planes
 
@@ -99,7 +99,7 @@ The Choreo data plane is currently supported in the US East 2 and North Europe. 
 Private data planes can be deployed in any region where Azure and AWS are available and meet the requirements for PDPs.
 
 ### Q: If I want to use my Azure AKS instances as the private data plane, what are the minimum requirements I should meet?
-We recommend using a minimum of two (2) workload nodes to ensure high availability. 
+We recommend using a minimum of two (2) workload nodes to ensure high availability.
 
 ### Q: Are the Choreo control plane and data planes highly available? Are they running on multiple clusters?
 The Choreo control plane and data plane are designed for high availability using Azure components like AKS, MSSQL, ACR, KV, Service Bus, and so on, with a high availability of 99.99%, which allows at least three workload nodes. In the event of a node failure or upgrade, this setup provides reliable failover. WSO2 also has a backup and recovery strategy in place, including continuous restore drills. If you require AKS cluster-level redundancy, we can consider multiple zones. In this case, the cost will include an additional infrastructure cost.
@@ -123,7 +123,7 @@ Initially, you will receive the requested number of environments when establishi
 
 ## Billing and support
 
-### Q: Whom do I reach out to if I have a billing question?  
+### Q: Whom do I reach out to if I have a billing question?
 You can reach out to cloud-billing-support@wso2.com or create a support ticket via our support portal.
 
 ### Q: What's a Developer plan?
@@ -137,16 +137,16 @@ Calculating infrastructure costs depends on the type of workload you want to man
 - **Example 3**: Creating, deploying, and managing a new API or integration within Choreo; pay for 1 x component + infrastructure cost. Each container deployed will be approximately US$57.25 per month on the default configuration provided by Choreo. Additional resources will be charged based on the type of resource required.
 - **Example 4**: Creating, deploying, and managing a microservice; the same approach as example 3.
 
-### Q: What are the component limitations? 
+### Q: What are the component limitations?
 
 - **Developer plan**: Allows up to a maximum of five free components and unlimited paid components.
 - **PAYG plan**: Allows unlimited paid components.
 - **Enterprise plan**: Allows unlimited paid components.
 
 ### Q: How do I read the bill?
-Your bill will detail the number of components used, infrastructure consumed, support plans used, and any additional services you may have purchased. If you are unsure about any charges on your bill, reach out to choreo-support@wso2.com for clarification. 
+Your bill will detail the number of components used, infrastructure consumed, support plans used, and any additional services you may have purchased. If you are unsure about any charges on your bill, reach out to choreo-support@wso2.com for clarification.
 
-### Q: Is support included in the Choreo Enterprise plan?   
+### Q: Is support included in the Choreo Enterprise plan?
 The Choreo Enterprise plan does not automatically include support; however, you can purchase support plans in addition to the Enterprise plan at any time. Find out more at https://wso2.com/choreo/customer-support/.
 
 ### Q: I am an Enterprise subscription customer who wants to use the Choreo private data plane. What costs will I incur in addition to the subscription and support plan?
@@ -158,7 +158,7 @@ No, there are no outages when upgrading a plan.
 ## Choreo CLI
 
 ### Q: How do I uninstall the CLI?
-If you didn't download the binary directly, you can uninstall the CLI by deleting the `.choreo` directory in the 
+If you didn't download the binary directly, you can uninstall the CLI by deleting the `.choreo` directory in the
 home directory of your operating system.
 
 ### Q: How do I update the CLI?
@@ -264,7 +264,7 @@ The build configurations required for existing buildpacks are as follows:
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -272,7 +272,7 @@ The build configurations required for existing buildpacks are as follows:
                   <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -352,7 +352,7 @@ The build configurations required for existing buildpacks are as follows:
                   <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -447,7 +447,7 @@ The build configurations required for existing buildpacks are as follows:
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -455,7 +455,7 @@ The build configurations required for existing buildpacks are as follows:
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -528,7 +528,7 @@ The build configurations required for existing buildpacks are as follows:
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -536,7 +536,7 @@ The build configurations required for existing buildpacks are as follows:
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -609,7 +609,7 @@ The build configurations required for existing buildpacks are as follows:
          <td>
             <ul >
                <li style="list-style-type:none">Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -617,7 +617,7 @@ The build configurations required for existing buildpacks are as follows:
          <td>
             <ul >
                <li style="list-style-type:none; padding: 0;">Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
    </tbody>

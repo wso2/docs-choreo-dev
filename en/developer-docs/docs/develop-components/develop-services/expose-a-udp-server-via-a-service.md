@@ -8,11 +8,11 @@ By following this guide, you will:
 
 - Setup a UDP server
     - Create a simple UDP server using a Service component.
-    - Link the containerized UDP service to the Choreo component using the Dockerfile. 
-    - Deploy the UDP server component in Choreo. 
+    - Link the containerized UDP service to the Choreo component using the Dockerfile.
+    - Deploy the UDP server component in Choreo.
 - Setup a UDP client
-    - Create a UDP client using a manual task component. 
-    - Link the containerized UDP client to the Choreo component using the Dockerfile. 
+    - Create a UDP client using a manual task component.
+    - Link the containerized UDP client to the Choreo component using the Dockerfile.
     - Deploy the UDP client component in Choreo.
 - Invoke the UDP server using a UDP client and check the response through the Choreo log view.
 
@@ -22,7 +22,7 @@ Before you try out this guide, complete the following:
 
 - If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -37,7 +37,7 @@ Let's get started!
 
 It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the sample service.
 
-!!! note 
+!!! note
     The following file paths are relative to the path `<sample-repository-dir>/docker-udp-service`.
 
 |File Path                |Description                                                                                   |
@@ -62,7 +62,7 @@ In our gRPC server sample, the `component.yaml` file is at `docker-udp-service/.
 
 To create a containerized service component, follow these steps:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -74,7 +74,7 @@ To create a containerized service component, follow these steps:
 
            - Read and write access to code and pull requests.
            - Read access to issues and metadata.
-             
+
            You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 7. Under **Connect a Git Repository**, enter the following information:
@@ -84,11 +84,11 @@ To create a containerized service component, follow these steps:
     | **Organization**        | Your GitHub account     |
     | **GitHub Repository**   | **`choreo-samples`**    |
     | **Branch**              | **`main`**              |
-    | **Component Directory**   | `docker-udp-service`    |    
+    | **Component Directory**   | `docker-udp-service`    |
 
 8. Select **Docker** as the buildpack.
 9. Enter the following information:
-    
+
     | **Field**                | **Value**                             |
     |--------------------------|---------------------------------------|
     | **Dockerfile**           | `docker-udp-service/Dockerfile.server`|
@@ -102,7 +102,7 @@ To create a containerized service component, follow these steps:
         2. The Dockerfile utilized in this guide is a multi-stage Dockerfile, which is designed to keep the final image size small and provides the ability to build the application with a specific version of tools and libraries.
 
 4. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
-    
+
     !!! info
          In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
@@ -130,18 +130,18 @@ To build the service, follow these steps:
     !!! note
         Building the service component may take a while. You can track the progress via the logs in the **Build Details** pane. Once the build process is complete, the build status changes to **Success**.
 
-    You can access the following scans under **Build**. 
+    You can access the following scans under **Build**.
 
       - **The Dockerfile scan**: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
-      - **Container (Trivy) vulnerability scan**: This detects vulnerabilities in the final docker image. 
+      - **Container (Trivy) vulnerability scan**: This detects vulnerabilities in the final docker image.
       - **Container (Trivy) vulnerability scan**: The details of the vulnerabilities open in a separate pane. If this scan detects critical vulnerabilities, the build will fail.
-     
+
         !!! info
             If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
 
 ### Step 2.2: Deploy
 
-To deploy the service, follow these steps: 
+To deploy the service, follow these steps:
 
 1. In the left navigation menu, click **Deploy**.
 2. On the **Set Up** card, click **Configure &  Deploy**.
@@ -176,7 +176,7 @@ To create a manual task component, follow these steps:
 
            - Read and write access to code and pull requests.
            - Read access to issues and metadata.
-             
+
            You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 5. Under **Connect a Git Repository**, enter the following information:
@@ -190,13 +190,13 @@ To create a manual task component, follow these steps:
 
 6. Select **Docker** as the buildpack.
 7. Enter the following information:
-    
+
     | **Field**                | **Value**                             |
     |--------------------------|---------------------------------------|
     | **Dockerfile**           | `docker-udp-service/Dockerfile.client`|
 
 8. Enter a display name, a unique name, and a description for the component. You can enter the values given below:
-    
+
     !!! info
          In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 

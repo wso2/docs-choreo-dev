@@ -18,7 +18,7 @@ For a video tutorial, see [Deploy a Static Web App on Choreo](https://www.youtub
 1. GitHub account: Fork the [choreo-sample-todo-list-app repository](https://github.com/wso2/choreo-sample-todo-list-app), which contains the sample for this guide.
 
 2. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your Google, GitHub, or Microsoft account.
+    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your Google, GitHub, or Microsoft account.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -27,7 +27,7 @@ For a video tutorial, see [Deploy a Static Web App on Choreo](https://www.youtub
 
 ## Step 1: Create a project
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
 3. Enter the following details:
 

@@ -17,7 +17,7 @@ For a video tutorial, check out [Deploy Your First Service with Choreo](https://
 1. GitHub account: Fork the [Choreo sample book list service repository](https://github.com/wso2/choreo-sample-book-list-service/), which contains the sample for this guide.
 
 2. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your Google, GitHub, or Microsoft account.
+    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your Google, GitHub, or Microsoft account.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -28,7 +28,7 @@ For a video tutorial, check out [Deploy Your First Service with Choreo](https://
 
 Let's review the key files in the sample application:
 
-!!! note 
+!!! note
     The file paths are relative to `<choreo-sample-book-list-service>/`.
 | Filepath               | Description                                                                   |
 |------------------------|-------------------------------------------------------------------------------|
@@ -40,7 +40,7 @@ Let's get started!
 
 ## Step 1: Create a project
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
 3. Enter the following details:
 
@@ -82,7 +82,7 @@ Let's get started!
 5. Enter the following details:
 
     | **Field**                    | **Description**   |
-    |------------------------------|-------------------|    
+    |------------------------------|-------------------|
     | **Language Version**         | 20.x.x            |
 
 6. Enter the following details for Display name and Description:

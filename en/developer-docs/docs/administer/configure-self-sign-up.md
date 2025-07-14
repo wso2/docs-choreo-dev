@@ -6,7 +6,7 @@ This page walks you through the steps to configure self-sign-up for your Develop
 
 ## Prerequisites
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev/) using your Google, GitHub, or Microsoft account.
+1. Sign in to the [Choreo Console](https://console.choreo.dev/) using your Google, GitHub, or Microsoft account.
 2. If you are a new user, create an organization with a unique organization name. For example, "Stark Industries".
 
 
@@ -14,7 +14,7 @@ This page walks you through the steps to configure self-sign-up for your Develop
 
 To configure self-sign-up, follow the steps given below:
 
-1. Send an email to <choreo-help@wso2.com> requesting to configure enterprise IdP for the Developer Portal of your organization. 
+1. Send an email to <choreo-help@wso2.com> requesting to configure enterprise IdP for the Developer Portal of your organization.
 
     !!! tip
         Ensure you include the organization name or handle in the request.
@@ -22,12 +22,12 @@ To configure self-sign-up, follow the steps given below:
 
     !!! note "Sample email"
         Subject : [Stark Industries] Configure enterprise IdP for Developer Portal
-        
+
         Hi CS team,
 
         I need to configure enterprise IdP for my organization’s Developer Portal to enable self-sign-up. Can you please do the necessary configurations to proceed?
 
-        My organization details are as follows: 
+        My organization details are as follows:
 
           - Organization name: Stark Industries
           - Organization handle:  starkindustries
@@ -41,7 +41,7 @@ To configure self-sign-up, follow the steps given below:
 
     ![View all applications](../assets/img/administer/self-sign-up/view-all-applications.png)
 
-    You will see an application named **WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL**. 
+    You will see an application named **WSO2_LOGIN_FOR_CHOREO_DEV_PORTAL**.
 
     ![Applications](../assets/img/administer/self-sign-up/application.png)
 
@@ -88,17 +88,17 @@ To configure self-sign-up, follow the steps given below:
     1. In the Asgardeo Console left navigation menu, click **Self Registration**.
     2. In the **Self Registration** pane, click **Configure**.
     3. To enable self-registration, turn on the toggle.
-    4. Select **Account verification**. This displays a confirmation message to enable account verification. 
+    4. Select **Account verification**. This displays a confirmation message to enable account verification.
     5. Click **Continue**.
     6. Specify an appropriate value in the **Account verification link expiry time** field.
-    7. Click **Update**. 
-     
+    7. Click **Update**.
+
         ![Configure self-registration](../assets/img/administer/self-sign-up/configure-self-registration.png)
 
 Once you complete these steps, you will see a sign up link similar to the following in your Developer Portal:
 
 ![Sign-up](../assets/img/administer/self-sign-up/sign-up.png){.cInlineImage-half}
- 
+
 Users can click **LOGIN/SIGN UP** and then click **Create an account** to sign up to access your Developer Portal.
 
 ![Create an account](../assets/img/administer/self-sign-up/create-an-account.png)
@@ -131,7 +131,7 @@ If you have not enabled auto-approval, you can manually approve or reject new us
 4. To approve a user account, click **Approve**. To reject an account, click **Reject**.
 
     - If you approve an account, the user will receive an email confirming the approval.
-    - If you reject an account, the user will receive an email mentioning that their account is rejected. 
+    - If you reject an account, the user will receive an email mentioning that their account is rejected.
 
         !!! info "Note"
                A rejected user cannot sign up to your Developer Portal using the same account again.

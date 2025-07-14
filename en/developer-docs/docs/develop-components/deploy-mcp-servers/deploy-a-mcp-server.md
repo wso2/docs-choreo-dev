@@ -1,15 +1,15 @@
 # Deploy a MCP Server
 
-Choreo allows you to create and deploy MCP Server applications in Python and Node.js. 
+Choreo allows you to create and deploy MCP Server applications in Python and Node.js.
 
 In this guide, you will:
 
-- Deploy an stdio-based [github-mcp-server](https://github.com/github/github-mcp-server) in Choreo  over SSE (Server-Sent Events) using a `NodeJs` buildpack. 
+- Deploy an stdio-based [github-mcp-server](https://github.com/github/github-mcp-server) in Choreo  over SSE (Server-Sent Events) using a `NodeJs` buildpack.
 
 ## Prerequisites
 
 1. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -22,7 +22,7 @@ In this guide, you will:
 
 To create a mcp server component, follow these steps:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click **View All Component Types** link button.
 4. Click the **MCP Server** card.
@@ -123,7 +123,7 @@ Install [Inspector](https://github.com/modelcontextprotocol/inspector) in your m
 
 ### Test the MCP Server with Vscode
 1. Create mcp.json files in .vscode directory to add an MCP server to your directory. Refer [Use MCP servers in VS Code](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) for more details.
-2. Add the MCP server URL details in **servers** section in the mcp.json file. 
+2. Add the MCP server URL details in **servers** section in the mcp.json file.
 3. Paste the generated token as a header. For example,
 
 ```

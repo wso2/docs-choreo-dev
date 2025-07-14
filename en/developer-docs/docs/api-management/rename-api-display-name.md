@@ -6,7 +6,7 @@ Choreo provides you with the flexibility to personalize the display name of the 
 
 Follow the steps below to rename the API display name:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
 2. In the **Component Listing** pane, click on the component for which you want to rename the API display name. This opens the **Overview** page of the component.
 3. In the left navigation menu, click **Manage** and then click **API Info**.
 4. On the **API Info** page that opens, click the **Developer Portal** tab.

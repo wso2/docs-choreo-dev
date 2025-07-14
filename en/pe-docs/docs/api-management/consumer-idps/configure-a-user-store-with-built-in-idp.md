@@ -13,9 +13,9 @@ Before you try out the steps in this guide, be sure you have administrator right
 
 Follow the steps given below to configure a Choreo built-in IdP user store for an environment:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in.
 2. In the Choreo Console top navigation menu, click the **Organization** list and then click on your organization.
-3. In the left navigation menu, click **API Management**. 
+3. In the left navigation menu, click **API Management**.
 4. Click the **Consumer IdPs**  and then click the **Identity Providers** tab.
 5. On the **Identity Providers** tab, click **Manage** in the **Choreo Built-in Identity Provider** pane.
 6. In the Manage IdP pane, click on a specific environment tab depending on where you want to configure the built-in IdP user store.

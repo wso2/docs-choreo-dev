@@ -7,14 +7,14 @@ In this guide, you will:
  - Create an external consumer component.
  - Manage authentication for the external consumer.
  - Connect the external consumer to a service deployed in Choreo.
- 
+
 ## Prerequisites
 
 Before you try out this guide, complete the following steps:
 
 - If you are signing in to the Choreo Console for the first time, create an organization as follows:
 
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -22,20 +22,20 @@ Before you try out this guide, complete the following steps:
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
 ## Step 1: Create an external consumer component
- 
+
 To create an external consumer component, follow the steps given below:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
-3. Click the **External Consumer** card. 
+3. Click the **External Consumer** card.
 4. In the **Create an External Consumer** pane that opens, enter a display name, a unique name, and a description for the component.
 5. Click **Create**. This creates the component and takes you to its **Overview** page.
-   
+
 ## Step 2: Manage authentication for the external consumer
 
 You can configure the external consumer to work with the Choreo built-in identity provider or any external identity provider that supports OIDC/OAuth 2.0.
 
-Click the respective tab for details depending on the identity provider you want to configure: 
+Click the respective tab for details depending on the identity provider you want to configure:
 
 === "Choreo built-in identity provider"
 
@@ -46,7 +46,7 @@ Click the respective tab for details depending on the identity provider you want
 
      1. In the **Overview** page of the component, under **Authentication Configurations**, click **Configure** corresponding to the environment for which you want to configure an identity provider.
      2. In the **Identity Provider** list, select **Choreo Built-In Identity Provider**.
-     3. Click **Generate Keys**. 
+     3. Click **Generate Keys**.
 
         !!! Note
              If you see **Regenerate Secret** instead of **Generate Keys**, it indicates that OAuth keys are already generated for the component in the selected environment.
@@ -65,6 +65,6 @@ Click the respective tab for details depending on the identity provider you want
      5. Paste the **Client ID** of the OIDC/OAuth 2.0 application you created in your external identity provider.
      6. Click **Add Keys**.
 
-## Step 3: Connect the external consumer to a service deployed in Choreo 
+## Step 3: Connect the external consumer to a service deployed in Choreo
 
 To establish connections from the external consumer to services deployed in Choreo, you can create connections. For step-by-step instructions on creating a connection, see [Create a Connection](./sharing-and-reusing/create-a-connection.md).

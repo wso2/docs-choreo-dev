@@ -8,7 +8,7 @@ Choreo-Managed Cache provides fully-managed in-memory NoSQL databases on AWS, Az
 
 Follow the steps below to create a Choreo-Managed Cache:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev).
+1. Sign in to the [Choreo Console](https://console.choreo.dev).
 2. In the header, click the **Organization** list. This opens the organization home page.
 3. In the left navigation menu, click **DB & Services** and then click **Databases**.
 4. Click **+ Create** and select **Choreo-Managed Cache** as the data store type. Provide a display name for this server and follow the instructions.
@@ -22,7 +22,7 @@ Follow the steps below to create a Choreo-Managed Cache:
 8. Click **Create**.
 
 !!! Note -
-      Once the Choreo-Managed Cache is created, you can add it to the marketplace so developers can discover these and use them in their applications. For more details, see [Add Choreo-Managed Databases and Caches to the Marketplace.](../add-choreo-managed-databases-and-caches-to-the-marketplace) 
+      Once the Choreo-Managed Cache is created, you can add it to the marketplace so developers can discover these and use them in their applications. For more details, see [Add Choreo-Managed Databases and Caches to the Marketplace.](../add-choreo-managed-databases-and-caches-to-the-marketplace)
 
 ## Connect to your Choreo-Managed Cache
 
@@ -34,7 +34,7 @@ To connect to your Choreo-Managed Cache, follow these guidelines:
 
 ## High availability and automatic backups
 
-The high availability and the automatic backup retention periods for a Choreo-Managed Cache can vary as follows depending on the service plan you select. 
+The high availability and the automatic backup retention periods for a Choreo-Managed Cache can vary as follows depending on the service plan you select.
 
 | Service plan | High availability                                                                                                  | Backup features                          | Backup history |
 | ------------ | -------------------------------------------------------------------------------------------------------------------| ---------------------------------------- | -------------- |

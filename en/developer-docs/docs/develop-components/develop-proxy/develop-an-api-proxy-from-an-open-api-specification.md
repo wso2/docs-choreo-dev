@@ -13,7 +13,7 @@ In this guide, you will:
 ## Prerequisites
 
 - If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -24,12 +24,12 @@ In this guide, you will:
 
 To create an API proxy, you can either upload an OpenAPI document or provide a hosted OpenAPI document's URL. In this guide, you will specify a URL to an OpenAPI definition of a sample API.
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card. This opens the **Create an API Proxy** pane.
-4. Select **Upload API Specification** option. 
+4. Select **Upload API Specification** option.
 5. Click on **Try with sample URL** to go ahead with the sample Open API Document.
-        
+
 
 6. Specify the following values as Proxy Metadata:
 
@@ -77,7 +77,7 @@ Choreo allows you to test your API proxy using either the [integrated OpenAPI Co
         2. Go to the **Build Area** card and click **Security Settings**.
         3. In the **Security Settings** pane:
             - To disable security for the entire API, clear the **OAuth2** checkbox.
-            - To disable security for a specific resource, expand the relevant resource and turn off the **Security** toggle.    
+            - To disable security for a specific resource, expand the relevant resource and turn off the **Security** toggle.
         4. Click **Apply**.
         5. Then click **Deploy**.
 

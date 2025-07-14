@@ -9,7 +9,7 @@ You can create tests using popular programming languages like Go, Java, JavaScri
 Before you try out the steps in this guide, complete the following:
 
  - If you are signing in to the Choreo Console for the first time, create an organization as follows:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/), and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -20,8 +20,8 @@ You can develop tests in a language of your choice and execute them within the C
 
 ## Create a test runner component using a buildpack
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
-2. Click **+Create** in the **Component Listing** section. 
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
+2. Click **+Create** in the **Component Listing** section.
 3. Click the **Test Runner** card.
 6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
 
@@ -32,7 +32,7 @@ You can develop tests in a language of your choice and execute them within the C
 
            - Read and write access to code and pull requests.
            - Read access to issues and metadata.
-             
+
            You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
 
 7. Under **Connect a Git Repository**, enter the following information:
@@ -53,7 +53,7 @@ You can develop tests in a language of your choice and execute them within the C
         | -------------------- | --------------- |
         | Component Directory | /test-runner-go |
         | Language Version     | 1.x             |
-    
+
     === "JavaScript"
 
         | Field             | Value                   |
@@ -90,7 +90,7 @@ You can develop tests in a language of your choice and execute them within the C
 7. Based on the buildpack you chose, go to the relevant tab above and enter the respective values for the **Language version** field
 
 4. Enter a display name, unique name, and description for the test runner component. For this guide, enter the following values:
-    
+
     !!! info
          In the **Component Name** field, you must specify a name to uniquely identify the component in various contexts. The value is editable only at the time you create the component. You cannot change the name after you create the component.
 
@@ -100,14 +100,14 @@ You can develop tests in a language of your choice and execute them within the C
     | Component Name           | `go-test-runner`                |
     | Description              | `Test Runner implemented in Go` |
 
-8. Click **Create**. 
+8. Click **Create**.
 
 You have successfully created a Test Runner component using a buildpack of your choice. Now let's build and run the tests.
 
 ## Build and deploy the test runner component to execute the tests
 
 1. In the left navigation menu, click **Build**.
-2. In the **Builds** pane, click **Build Latest**. 
+2. In the **Builds** pane, click **Build Latest**.
 3. On the left navigation, click **Deploy**.
 4. In the **Set Up** card, click **Deploy** to deploy the test runner component. If you want to provide additional configuration or secrets, use the **Configure and Deploy** option from the list.
 5. Once the deployment is successful, click **Execute** in the left navigation menu.
@@ -117,10 +117,10 @@ You have successfully created a Test Runner component using a buildpack of your 
     !!! info "Inject dynamic values into your application as command-line arguments"
          If you want to inject dynamic values into your application as command-line arguments when you run a test runner component, follow the steps given below:
 
-           1. Click the drop-down icon next to **Run Now** and then click **Run with Arguments**. 
-           2. In the **Runtime Arguments** pane that opens, enter the arguments you want to pass to your application. 
+           1. Click the drop-down icon next to **Run Now** and then click **Run with Arguments**.
+           2. In the **Runtime Arguments** pane that opens, enter the arguments you want to pass to your application.
            3. Click **Execute**. This triggers the test runner with the specified arguments.
-    
+
         !!! tip
             For `Postman Collections`:
 

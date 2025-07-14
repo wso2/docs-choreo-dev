@@ -13,7 +13,7 @@ In this guide, you will:
 ## Prerequisites
 
 1. If you're signing in to the Choreo Console for the first time, create an organization:
-    - Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in.
+    - Go to the [Choreo Console](https://console.choreo.dev/) and sign in.
     - Enter a unique organization name. For example, `Stark Industries`.
     - Read and accept the privacy policy and terms of use.
     - Click **Create**. This creates the organization and opens the **Project Home** page.
@@ -39,7 +39,7 @@ Let’s get started!
 
 To create a Ballerina service component, follow these steps:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the **Project Home** page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
 4. Click **Authorize with GitHub** to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
@@ -48,7 +48,7 @@ To create a Ballerina service component, follow these steps:
         The **Choreo GitHub App** requires the following permissions:
         - Read and write access to code and pull requests.
         - Read access to issues and metadata.
-        
+
         You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
 
 5. Provide the following repository details:

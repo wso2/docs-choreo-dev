@@ -13,14 +13,14 @@ In this guide, you will:
 ## Prerequisites
 
 1. If you're signing in to the Choreo Console for the first time, create an organization:
-    - Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in.
+    - Go to the [Choreo Console](https://console.choreo.dev/) and sign in.
     - Enter a unique organization name. For example, `Stark Industries`.
     - Read and accept the privacy policy and terms of use.
     - Click **Create**. This creates the organization and opens the **Project Home** page.
 
 ## Step 1: Create the integration component
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the **Project Home** page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
 4. Click **Use Public GitHub Repository**.
@@ -52,7 +52,7 @@ In this guide, you will:
 4. Click **Try it out**, then click **Execute**. This sends a request to your deployed integration.
 5. Check the response:
     - In the **Response body** section, observe the response. If the integration works as expected, you should see:
-     
+
      ```json
      {"Hello" : "Integration"}
      ```

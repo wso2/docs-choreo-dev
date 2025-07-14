@@ -10,7 +10,7 @@ Kafka on Choreo offers fully managed, distributed message broker services across
 
 Follow the steps below to create a Choreo-managed Kafka service:
 
-1. Sign in to the Choreo Console at [https://console.choreo.dev/](https://console.choreo.dev).
+1. Sign in to the [Choreo Console](https://console.choreo.dev).
 2. In the header, click the **Organization** list. This opens the organization home page.
 3. In the left navigation menu, click **DB & Services** and then click **Message Brokers**.
 4. Click **+ Create**.
@@ -30,4 +30,4 @@ Follow the steps below to create a Choreo-managed Kafka service:
 
 - Choreo secures Kafka connections via client certificate authentication.
 
-- To connect to your Choreo-managed Kafka service, use the connection parameters from the **Overview** tab on the service details page. 
+- To connect to your Choreo-managed Kafka service, use the connection parameters from the **Overview** tab on the service details page.

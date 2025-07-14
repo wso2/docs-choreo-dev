@@ -1,6 +1,6 @@
 # Develop a Service
 
-Choreo allows you to create and deploy applications in your preferred programming language. 
+Choreo allows you to create and deploy applications in your preferred programming language.
 
 In this guide, you will:
 
@@ -11,7 +11,7 @@ In this guide, you will:
 ## Prerequisites
 
 1. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in using your preferred method.
+    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -24,7 +24,7 @@ In this guide, you will:
 
 It is important to understand the purpose of the key files in the sample service. The following table provides a brief overview of each file in the greeter service:
 
-!!! note 
+!!! note
     The specified file paths are relative to `<sample-repository-dir>/greeting-service-go`.
 
 | **Filepath**             | **Description**                                                               |
@@ -43,7 +43,7 @@ In the greeter sample, the `component.yaml` file is located in the `greeting-ser
 
 To create a containerized service component, follow these steps:
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
 4. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
