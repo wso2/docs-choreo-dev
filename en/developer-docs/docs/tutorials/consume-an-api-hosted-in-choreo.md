@@ -145,8 +145,8 @@ To configure the front-end application:
     | **asgardeoBaseUrl**   | The IdP API URL with your organization name (e.g., `https://api.asgardeo.io/t/<ORG_NAME>`). |
     | **choreoApiUrl**      | The **Reading List Service** URL from the endpoint table in the overview page. |
         
-    !!! tip
-        You can refer to the mounted configuration file as `./public/config.js` within your web application.
+    !!! note
+        You must refer to the mounted configuration file as `./public/config.js` within your web application.
     
 5. Click **Deploy**.
 6. Once deployed, copy the **Web App URL** from the development environment card.

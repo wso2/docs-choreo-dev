@@ -158,7 +158,7 @@ For SPAs that run completely on the browser, Choreo does not support *baking-in*
     </head>
     <body>
         <div id="root"></div>
-        <script src="%PUBLIC_URL%/config.js"></script>
+        <script src="./public/config.js"></script>
     </body>
     </html>
     ```

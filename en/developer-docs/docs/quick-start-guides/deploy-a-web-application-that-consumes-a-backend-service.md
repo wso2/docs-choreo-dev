@@ -230,8 +230,8 @@ A connection allows you to integrate the service with other services or external
     };
     ```
 
-    !!! tip
-        You can refer to the configuration file mounted at `/app/public` as `./public/config.js` within your web application.
+    !!! note
+        You must refer to the configuration file mounted at `/app/public` as `./public/config.js` within your web application.
 
 4. Click **Next** to open the **Authentication** pane.
 5. Under **Authentication Settings**, ensure that **Managed authentication with Choreo** is enabled.
