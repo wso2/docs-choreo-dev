@@ -1,7 +1,7 @@
 /**
  * Choreo Region Selector
  *
- * This script intercepts clicks on console.choreo.dev links and shows a popup
+ * This script intercepts clicks on console.choreo.dev and devportal.choreo.dev links and shows a popup
  * that asks users to choose between US and EU regions with a "remember me" option.
  */
 document.addEventListener('DOMContentLoaded', function() {
@@ -236,7 +236,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (selectedRegion === 'us') {
             targetUrl = clickedUrl;
         } else if (selectedRegion === 'eu') {
-            targetUrl = clickedUrl.replace('console.choreo.dev', 'console.eu.choreo.dev');
+            // Handle both console and devportal URLs
+            if (clickedUrl.includes('console.choreo.dev')) {
+                targetUrl = clickedUrl.replace('console.choreo.dev', 'console.eu.choreo.dev');
+            } else if (clickedUrl.includes('devportal.choreo.dev')) {
+                targetUrl = clickedUrl.replace('devportal.choreo.dev', 'devportal.eu.choreo.dev');
+            } else {
+                targetUrl = clickedUrl;
+            }
         }
 
         // Open the target URL in a new tab
@@ -276,8 +283,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (element && element.tagName === 'A') {
             const href = element.getAttribute('href');
 
-            // Check if the link is a Choreo console link
-            if (href && href.includes('console.choreo.dev')) {
+            // Check if the link is a Choreo console or devportal link
+            if (href && (href.includes('console.choreo.dev') || href.includes('devportal.choreo.dev'))) {
                 // Prevent the default action
                 event.preventDefault();
 
@@ -289,7 +296,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (savedPreference === 'us') {
                         window.open(href, '_blank');
                     } else if (savedPreference === 'eu') {
-                        window.open(href.replace('console.choreo.dev', 'console.eu.choreo.dev'), '_blank');
+                        let targetUrl = href;
+                        if (href.includes('console.choreo.dev')) {
+                            targetUrl = href.replace('console.choreo.dev', 'console.eu.choreo.dev');
+                        } else if (href.includes('devportal.choreo.dev')) {
+                            targetUrl = href.replace('devportal.choreo.dev', 'devportal.eu.choreo.dev');
+                        }
+                        window.open(targetUrl, '_blank');
                     }
                 } else {
                     // Show the modal

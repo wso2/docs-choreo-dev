@@ -2977,13 +2977,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="add-azure-active-directory-as-an-external-idp-in-choreo">Add Azure Active Directory as an external IdP in Choreo<a class="headerlink" href="#add-azure-active-directory-as-an-external-idp-in-choreo" title="Permanent link">&para;</a></h2>
 <p>Follow the steps below to add Azure AD as an IdP in Choreo:</p>
 <ol>
-<li>Sign in to the Choreo Console at <a href="https://console.choreo.dev">https://console.choreo.dev/</a>.</li>
+<li>Sign in to the <a href="https://console.choreo.dev">Choreo Console</a>.</li>
 <li>In the Choreo Console header, go to the <strong>Organization</strong> list and select your organization.</li>
 <li>In the left navigation menu, click <strong>API Management</strong> and then click on <strong>Consumer IdPs</strong>.</li>
 <li>Click the <strong>Identity Providers</strong> tab.</li>
-<li>To add an identity provider, click <strong>+ Identity Provider</strong> </li>
-<li>Select  <strong>Microsoft Entra ID (Azure AD)</strong> as the Identity Provider. </li>
-<li>Provide a name and a description for the IdP. </li>
+<li>To add an identity provider, click <strong>+ Identity Provider</strong></li>
+<li>Select  <strong>Microsoft Entra ID (Azure AD)</strong> as the Identity Provider.</li>
+<li>Provide a name and a description for the IdP.</li>
 <li>
 <p>To obtain the <code>Well-Known URL</code> of your Azure AD instance, on your Azure account, under <strong>Azure Active Directory</strong> go to <strong>App registrations</strong>, and then <strong>Endpoints</strong>. Copy the URI under<code>OpenID Connect metadata document</code>.</p>
 <div class="admonition info">
@@ -2991,7 +2991,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <ul>
 <li>In azure, there are two versions of access tokens available. By default, the IDP applications you create use the v1 access token. Therefore, if you intend to use the v1 access token, when providing the <code>Well-Known URL</code>, omit the v2.0 path segment from the URL. <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/access-tokens#token-formats">Learn more</a>
 For example, convert <code>https://login.microsoftonline.com/&lt;tenant-id&gt;/v2.0/.well-known/openid-configuration</code>-&gt; <code>https://login.microsoftonline.com/&lt;tenant-id&gt;/.well-known/openid-configuration</code></li>
-<li>If you intend to work with v2.0, then the IDP application's manifest should be changed as explained in the <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/access-tokens#token-formats">access token documentation</a>. </li>
+<li>If you intend to work with v2.0, then the IDP application's manifest should be changed as explained in the <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/access-tokens#token-formats">access token documentation</a>.</li>
 </ul>
 </div>
 </li>
