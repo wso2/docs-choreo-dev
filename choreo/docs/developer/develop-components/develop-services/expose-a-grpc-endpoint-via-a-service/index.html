@@ -4184,7 +4184,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <ul>
 <li>Create a simple gRPC server using a Service component.</li>
 <li>
-<p>Link the containerized gRPC service to the Choreo component using the Dockerfile. 
+<p>Link the containerized gRPC service to the Choreo component using the Dockerfile.
     The greeter service has a single RPC method named <code>sayHello</code>. Following is the proto file the server and the client application are using:</p>
 <div class="language-proto highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">syntax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;proto3&quot;</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">option</span><span class="w"> </span><span class="na">go_package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;github.com/wso2/choreo-samples/go-grpc/pkg&quot;</span><span class="p">;</span>
@@ -4204,9 +4204,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </li>
 <li>
-<p>Deploy the gRPC server component in Choreo. </p>
+<p>Deploy the gRPC server component in Choreo.</p>
 </li>
-<li>Create a gRPC client using a Manual Trigger component. </li>
+<li>Create a gRPC client using a Manual Trigger component.</li>
 <li>Deploy the gRPC client.</li>
 <li>Invoke the gRPC server using a gRPC client and check the response through the Choreo log view.</li>
 </ul>
@@ -4216,7 +4216,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>
 <p>If you are signing in to the Choreo Console for the first time, create an organization as follows:</p>
 <ol>
-<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a>, and sign in using your preferred method.</li>
+<li>Go to the <a href="https://console.choreo.dev/">Choreo Console</a>, and sign in using your preferred method.</li>
 <li>Enter a unique organization name. For example, <code>Stark Industries</code>.</li>
 <li>Read and accept the privacy policy and terms of use.</li>
 <li>Click <strong>Create</strong>.</li>
@@ -4276,7 +4276,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="step-1-create-a-service-component-with-a-grpc-endpoint">Step 1: Create a service component with a gRPC endpoint<a class="headerlink" href="#step-1-create-a-service-component-with-a-grpc-endpoint" title="Permanent link">&para;</a></h2>
 <p>To create a containerized service component, follow these steps:</p>
 <ol>
-<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in. This opens the project home page.</li>
+<li>Go to the <a href="https://console.choreo.dev/">Choreo Console</a> and sign in. This opens the project home page.</li>
 <li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
 <li>Click the <strong>Service</strong> card.</li>
 <li>
@@ -4403,10 +4403,10 @@ To ensure that the defined USER instruction is valid, it must conform to the fol
 <p class="admonition-title">Note</p>
 <p>Building the service component may take a while. You can track the progress via the logs in the <strong>Build Details</strong> pane. Once the build process is complete, the build status changes to <strong>Success</strong>.</p>
 </div>
-<p>You can access the following scans under <strong>Build</strong>. </p>
+<p>You can access the following scans under <strong>Build</strong>.</p>
 <ul>
 <li><strong>The Dockerfile scan</strong>: Choreo performs a scan to check if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.</li>
-<li><strong>Container (Trivy) vulnerability scan</strong>: This detects vulnerabilities in the final docker image. </li>
+<li><strong>Container (Trivy) vulnerability scan</strong>: This detects vulnerabilities in the final docker image.</li>
 <li>
 <p><strong>Container (Trivy) vulnerability scan</strong>: The details of the vulnerabilities open in a separate pane. If this scan detects critical vulnerabilities, the build will fail.</p>
 <div class="admonition info">
@@ -4418,7 +4418,7 @@ To ensure that the defined USER instruction is valid, it must conform to the fol
 </li>
 </ol>
 <h3 id="step-22-deploy">Step 2.2: Deploy<a class="headerlink" href="#step-22-deploy" title="Permanent link">&para;</a></h3>
-<p>To deploy the service, follow these steps: </p>
+<p>To deploy the service, follow these steps:</p>
 <ol>
 <li>In the left navigation menu, click <strong>Deploy</strong>.</li>
 <li>On the <strong>Set Up</strong> card, click <strong>Configure &amp;  Deploy</strong>.</li>
@@ -4437,7 +4437,7 @@ To ensure that the defined USER instruction is valid, it must conform to the fol
 </ol>
 <p>You have successfully deployed the gRPC server. Currently, the gRPC service is only accessible by the components deployed within the same project.</p>
 <h2 id="step-3-invoke-the-grpc-service">Step 3: Invoke the gRPC service<a class="headerlink" href="#step-3-invoke-the-grpc-service" title="Permanent link">&para;</a></h2>
-<p>Let's invoke the gRPC service that you created above, using a gRPC client. </p>
+<p>Let's invoke the gRPC service that you created above, using a gRPC client.</p>
 <h3 id="step-31-create-a-manual-task-for-the-grpc-client">Step 3.1: Create a manual task for the gRPC client<a class="headerlink" href="#step-31-create-a-manual-task-for-the-grpc-client" title="Permanent link">&para;</a></h3>
 <p>To create a manual task component, follow these steps:</p>
 <ol>
@@ -4590,7 +4590,7 @@ To ensure that the defined USER instruction is valid, it must conform to the fol
 <li>Click <strong>Run Now</strong>. This triggers the gRPC client and generates logs.
    You can trigger multiple runs to generate multiple logs.</li>
 </ol>
-<p>For details on what you can monitor via the execute page, see <a href="../../develop-integrations/develop-a-manual-task/#step-7-monitor-executions">Monitor executions</a>. </p>
+<p>For details on what you can monitor via the execute page, see <a href="../../develop-integrations/develop-a-manual-task/#step-7-monitor-executions">Monitor executions</a>.</p>
 
 
 

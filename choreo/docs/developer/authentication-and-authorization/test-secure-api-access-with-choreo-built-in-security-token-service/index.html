@@ -4108,7 +4108,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="step-1-assign-permissions-to-an-api-in-choreo">Step 1: Assign permissions to an API in Choreo<a class="headerlink" href="#step-1-assign-permissions-to-an-api-in-choreo" title="Permanent link">&para;</a></h2>
 <p>You can provide fine-grained access control to your API resources with permissions. Follow the steps below to assign permissions to the resources in the API:</p>
 <ol>
-<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in.</li>
+<li>Go to the <a href="https://console.choreo.dev/">Choreo Console</a> and sign in.</li>
 <li>In the Choreo Console top navigation menu, click the <strong>Project</strong> list and select the project that contains your component.</li>
 <li>In the <strong>Component Listing</strong> pane, click on the component for which you want to attach permissions.</li>
 <li>In the left navigation menu, click <strong>Deploy</strong>.</li>
@@ -4131,15 +4131,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="step-2-create-roles-and-assign-permissions">Step 2: Create roles and assign permissions<a class="headerlink" href="#step-2-create-roles-and-assign-permissions" title="Permanent link">&para;</a></h2>
 <p>The permissions assigned to your API need to be associated with roles. Follow the steps below to create roles and assign permissions to the roles.</p>
 <ol>
-<li>In the Choreo Console, go to the top navigation menu, click the <strong>Project</strong> list, and select the project that contains your component. </li>
+<li>In the Choreo Console, go to the top navigation menu, click the <strong>Project</strong> list, and select the project that contains your component.</li>
 <li>In the left navigation menu, click <strong>Settings</strong>.</li>
 <li>Click the <strong>Application Security</strong> tab.</li>
 <li>Click <strong>+ Role</strong>.</li>
-<li>Specify an appropriate <strong>Role Name</strong> and <strong>Role description</strong>. </li>
+<li>Specify an appropriate <strong>Role Name</strong> and <strong>Role description</strong>.</li>
 <li>
 <p>Select the permissions you want to assign to the role, and then click <strong>Create</strong>.</p>
 <div class="admonition tip">
-<p class="admonition-title">Tip<p>The permissions(scopes) defined for APIs exposed via components in the project and the permissions(scopes) required by connections created for components in the project are listed here. </p>
+<p class="admonition-title">Tip<p>The permissions(scopes) defined for APIs exposed via components in the project and the permissions(scopes) required by connections created for components in the project are listed here.</p>
 </p>
 </div>
 </li>
@@ -4168,12 +4168,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>In the Choreo Console, go to the top navigation menu, click the <strong>Project</strong> list, and select the project where you created the web application.</li>
 <li>On the project home page, click the web application listed under <strong>Component Listing</strong>.</li>
 <li>In the left navigation menu, click <strong>Connections</strong>.</li>
-<li>Create a connection to the API you deployed in <a href="#step-1-assign-permissions-to-an-api-in-choreo">Step 1</a>. </li>
+<li>Create a connection to the API you deployed in <a href="#step-1-assign-permissions-to-an-api-in-choreo">Step 1</a>.</li>
 </ol>
 <p>Now you can proceed to deploy the web application.</p>
 <p>When deploying, if your web application is a single-page application (SPA), you have the option to allow Choreo to handle authentication on behalf of the application. This approach eliminates the need to incorporate OAuth protocol-specific logic into your application.</p>
 <h3 id="test-the-invocation-when-choreo-managed-authentication-is-enabled">Test the invocation when Choreo-managed authentication is enabled<a class="headerlink" href="#test-the-invocation-when-choreo-managed-authentication-is-enabled" title="Permanent link">&para;</a></h3>
-<p>If managed authentication is enabled for your web application, Choreo automatically handles obtaining the necessary permission for API invocation. This occurs during the request for access tokens, allowing you to seamlessly invoke the subscribed APIs through your web application without additional intervention. </p>
+<p>If managed authentication is enabled for your web application, Choreo automatically handles obtaining the necessary permission for API invocation. This occurs during the request for access tokens, allowing you to seamlessly invoke the subscribed APIs through your web application without additional intervention.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you change the permissions of an existing connection or create a new connection with permissions, you must redeploy your web application to ensure proper API invocation with managed authentication.</p>

@@ -4234,7 +4234,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="configure-vpns-on-the-choreo-cloud-data-plane">Configure VPNs on the Choreo Cloud Data Plane<a class="headerlink" href="#configure-vpns-on-the-choreo-cloud-data-plane" title="Permanent link">&para;</a></h1>
-<p>Secure access to private networks from the Choreo cloud data plane is an essential use case for cloud data plane users. </p>
+<p>Secure access to private networks from the Choreo cloud data plane is an essential use case for cloud data plane users.</p>
 <p>Choreo allows this secure connection using <a href="https://tailscale.com/">Tailscale</a>. For this, Choreo provides a prebuilt Tailscale image component that can act as a forward proxy, which you can deploy in your Choreo project as a service. This service allows you to forward traffic to your external networks via Tailscale’s peer-to-peer <a href="https://tailscale.com/kb/1035/wireguard">WireGuard</a> network.</p>
 <p>The following diagram illustrates the high-level deployment architecture of the Tailscale pre-installed forward proxy:</p>
 <p><a class="glightbox" href="../../assets/img/devops-and-ci-cd/tailscale/deployment-architecture.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Deployment architecture" src="../../assets/img/devops-and-ci-cd/tailscale/deployment-architecture.png" /></a></p>
@@ -4271,7 +4271,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <p>Now that you understand the deployment architecture, let’s explore how you can use Tailscale to secure connections to your private networks.</p>
 <h2 id="configure-and-use-tailscale-to-access-private-network-endpoints">Configure and use Tailscale to access private network endpoints<a class="headerlink" href="#configure-and-use-tailscale-to-access-private-network-endpoints" title="Permanent link">&para;</a></h2>
-<p>This section walks you through the steps to create, configure, deploy, and use the Tailscale proxy component. </p>
+<p>This section walks you through the steps to create, configure, deploy, and use the Tailscale proxy component.</p>
 <p><a class="glightbox" href="../../assets/img/devops-and-ci-cd/tailscale/tailscale-proxy-deployment.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Tailscale proxy deployment" src="../../assets/img/devops-and-ci-cd/tailscale/tailscale-proxy-deployment.png" /></a></p>
 <p>Let's get started.</p>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
@@ -4282,7 +4282,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>
 <p>If you are signing in to the Choreo Console for the first time, create an organization as follows:</p>
 <ol>
-<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a>, and sign in using your Google, GitHub, or Microsoft account.</li>
+<li>Go to the <a href="https://console.choreo.dev/">Choreo Console</a>, and sign in using your Google, GitHub, or Microsoft account.</li>
 <li>Enter a unique organization name. For example, <code>Stark Industries</code>.</li>
 <li>Read and accept the privacy policy and terms of use.</li>
 <li>Click <strong>Create</strong>.</li>
@@ -4294,7 +4294,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h4>Step 1.1: Create a project</h4>
 <p>Follow the steps given below to create a project:</p>
 <ol>
-<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in. This opens the organization home page.</li>
+<li>Go to the <a href="https://console.choreo.dev/">Choreo Console</a> and sign in. This opens the organization home page.</li>
 <li>On the organization home page, click <strong>+ Create Project</strong>.</li>
 <li>
 <p>Enter a display name, unique name, and description for the project. You can enter the values given below:</p>
@@ -4373,7 +4373,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><code>/var/run/tailscale</code></li>
 <li><code>/.local</code></li>
 </ul>
-<p>To create the volume mounts, follow the step-by-step instructions in <a href="../configure-storage/">Configure Storage</a>. </p>
+<p>To create the volume mounts, follow the step-by-step instructions in <a href="../configure-storage/">Configure Storage</a>.</p>
 <h4>Step 2.2: Configure and deploy the component</h4>
 <p>To configure and deploy the component, follow the steps given below:</p>
 <ol>
@@ -4477,7 +4477,7 @@ If you enable Scale-to-Zero, you may experience service downtime.</p>
 <p>Before deploying the Tailscale proxy in production environments, it is recommended to follow the Tailscale <a href="https://tailscale.com/kb/1300/production-best-practices">production best practices</a> and <a href="https://tailscale.com/kb/1196/security-hardening">security best practices</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Choreo blocks incoming connections from other nodes in your Tailnet to the Tailscale proxy to prevent access to your project’s namespace in the Choreo cloud data plane. </p>
+<p>Choreo blocks incoming connections from other nodes in your Tailnet to the Tailscale proxy to prevent access to your project’s namespace in the Choreo cloud data plane.</p>
 </div>
 <h2 id="troubleshoot-issues">Troubleshoot issues<a class="headerlink" href="#troubleshoot-issues" title="Permanent link">&para;</a></h2>
 <p>For assistance in resolving common Tailscale proxy issues, see <a href="../../references/troubleshoot-choreo/#troubleshoot-tailscale-proxy-issues">Troubleshoot Tailscale proxy issues</a>.</p>

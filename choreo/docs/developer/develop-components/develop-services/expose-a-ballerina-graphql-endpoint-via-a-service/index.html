@@ -4098,7 +4098,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="expose-a-ballerina-graphql-endpoint-via-a-service">Expose a Ballerina GraphQL Endpoint via a Service<a class="headerlink" href="#expose-a-ballerina-graphql-endpoint-via-a-service" title="Permanent link">&para;</a></h1>
-<p>Choreo offers the flexibility to develop and deploy applications in a language of your preference. This guide shows you how to deploy a service component that exposes a GraphQL API using the Ballerina language in Choreo. No prior knowledge of the Ballerina language is required to follow this guide. </p>
+<p>Choreo offers the flexibility to develop and deploy applications in a language of your preference. This guide shows you how to deploy a service component that exposes a GraphQL API using the Ballerina language in Choreo. No prior knowledge of the Ballerina language is required to follow this guide.</p>
 <p>GraphQL API is a query language and runtime that provides a single endpoint for retrieving flexible and efficient data in a strongly-typed and self-documenting way. By following this guide, you will build a service component in Ballerina and deploy it on Choreo for any GraphQL client application to utilize it.</p>
 <p>This guide shows how to build a simple reading list service and deploy it in Choreo using Ballerina. The GraphQL endpoint you create in this guide has two operations: <strong>Query</strong> and <strong>Mutation</strong>. The Query type operations read the data in the data source, and the Mutation operations update the data in the data source. The reading list service has two queries and three mutations as follows:</p>
 <h3 id="queries">Queries<a class="headerlink" href="#queries" title="Permanent link">&para;</a></h3>
@@ -4122,7 +4122,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>}
 </code></pre></div></p>
 <p><strong>Retrieve a book item from the reading list</strong></p>
-<p>This resource accepts a filter, <code>id</code>, which will select the book item from the reading list by book id.  The id is an Integer value. </p>
+<p>This resource accepts a filter, <code>id</code>, which will select the book item from the reading list by book id.  The id is an Integer value.</p>
 <p><strong>Sample request</strong>
 <div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ curl -X POST -H &quot;Content-Type: application/json&quot; -d &#39;{&quot;query&quot;: &quot;query {book (id: 1) { id title author status }}&quot;}&#39; http://localhost:8090
 </code></pre></div></p>
@@ -4201,7 +4201,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>
 <p>If you are signing in to the Choreo Console for the first time, create an organization as follows:</p>
 <ol>
-<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a>, and sign in using your preferred method.</li>
+<li>Go to the <a href="https://console.choreo.dev/">Choreo Console</a>, and sign in using your preferred method.</li>
 <li>Enter a unique organization name. For example, <code>Stark Industries</code>.</li>
 <li>Read and accept the privacy policy and terms of use.</li>
 <li>Click <strong>Create</strong>.</li>
@@ -4244,7 +4244,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="step-1-create-a-service-component">Step 1: Create a service component<a class="headerlink" href="#step-1-create-a-service-component" title="Permanent link">&para;</a></h2>
 <p>To create a Ballerina service component, follow these steps:</p>
 <ol>
-<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in. This opens the project home page.</li>
+<li>Go to the <a href="https://console.choreo.dev/">Choreo Console</a> and sign in. This opens the project home page.</li>
 <li>If you already have one or more components in your project, click <strong>+ Create</strong>. Otherwise, proceed to the next step.</li>
 <li>Click the <strong>Service</strong> card.</li>
 <li>
@@ -4341,7 +4341,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 </ol>
 <h3 id="step-22-deploy">Step 2.2: Deploy<a class="headerlink" href="#step-22-deploy" title="Permanent link">&para;</a></h3>
-<p>To deploy the service, follow these steps: </p>
+<p>To deploy the service, follow these steps:</p>
 <ol>
 <li>In the left navigation menu, click <strong>Deploy</strong>.</li>
 <li>On the <strong>Set Up</strong> card, click <strong>Configure &amp;  Deploy</strong>.</li>

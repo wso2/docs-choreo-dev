@@ -4138,11 +4138,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="secure-api-access-with-microsoft-azure-active-directory-azure-ad">Secure API Access with Microsoft Azure Active Directory (Azure AD)<a class="headerlink" href="#secure-api-access-with-microsoft-azure-active-directory-azure-ad" title="Permanent link">&para;</a></h1>
-<p>API security refers to the measures and practices used to protect Application Programming Interfaces (APIs) from potential threats and vulnerabilities. Authentication and authorization are key aspects of API security. Authentication is ensuring that only authorized users or applications can access the API. This can involve using API keys, tokens, or more advanced authentication methods like OAuth 2.0. Authorization is controlling what authenticated users or applications are allowed to do within the API. Authorization mechanisms restrict access to specific resources and actions based on user roles or permissions. </p>
+<p>API security refers to the measures and practices used to protect Application Programming Interfaces (APIs) from potential threats and vulnerabilities. Authentication and authorization are key aspects of API security. Authentication is ensuring that only authorized users or applications can access the API. This can involve using API keys, tokens, or more advanced authentication methods like OAuth 2.0. Authorization is controlling what authenticated users or applications are allowed to do within the API. Authorization mechanisms restrict access to specific resources and actions based on user roles or permissions.</p>
 <p>Organizations using Microsoft Azure AD for identity and access management (IAM) can seamlessly integrate it with Choreo as an external Identity Provider (IdP). This guide will walk you through setting up Choreo to authenticate API invocations through Azure AD which is configured as an external IdP.</p>
 <p>This guide walks you through the following steps:</p>
 <ul>
-<li>Assign scopes to an API in Choreo. </li>
+<li>Assign scopes to an API in Choreo.</li>
 <li>Create an API in Azure AD.</li>
 <li>Create an application in Azure AD and consume the Azure API.</li>
 <li>Create an application in Choreo and enable external IdP authentication.</li>
@@ -4151,7 +4151,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>To follow this guide, you need to satisfy the following prerequisites:</p>
 <ul>
-<li><a href="../../administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp/">Configure Azure AD as an external IdP</a>. </li>
+<li><a href="../../administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp/">Configure Azure AD as an external IdP</a>.</li>
 <li>An API: If you don't already have a service in Choreo, <a href="../../develop-components/develop-services/develop-a-service/">develop a service</a> or an <a href="../../develop-components/develop-an-api-proxy/">API Proxy</a>.</li>
 <li>Deploy and publish your API.</li>
 <li>An Azure Active Directory account:  If you don’t already have one, set up an Azure Active Directory account at <a href="https://azure.microsoft.com/en-gb/">https://azure.microsoft.com/en-gb/</a>.</li>
@@ -4172,50 +4172,50 @@ document.addEventListener('DOMContentLoaded', function() {
 <ol>
 <li>In the <strong>Component Listing</strong> pane, click on the component you want to attach scopes to.</li>
 <li>In the left navigation menu, click <strong>Deploy</strong> and then <strong>Configure &amp; Deploy</strong> in the <strong>Set Up</strong> area. (For Proxy apis, click <strong>Configure &amp; Deploy</strong> in the <strong>Build Area</strong> and skip the Step 3 below)</li>
-<li>Click <strong>Next</strong> to go to the <strong>Endpoint Details</strong> step. Expand the required endpoint if not already expanded. </li>
-<li>In the <strong>Operation Level</strong> security section, click on <strong>Manage Permissions</strong> button. </li>
+<li>Click <strong>Next</strong> to go to the <strong>Endpoint Details</strong> step. Expand the required endpoint if not already expanded.</li>
+<li>In the <strong>Operation Level</strong> security section, click on <strong>Manage Permissions</strong> button.</li>
 <li>In the <strong>Manage Permissions</strong> pane, enter the permission value and click <strong>Add New</strong>.</li>
-<li>Click the copy icon in front of the added scope to copy the fully qualified name of the scope. Save this value for future reference. </li>
+<li>Click the copy icon in front of the added scope to copy the fully qualified name of the scope. Save this value for future reference.</li>
 <li>To attach a scope to a resource, click the <strong>Select Permissions</strong> list under the respective resource, and select the scopes you wish to attach.</li>
 <li>Click <strong>Deploy</strong>.</li>
 <li>In the left navigation menu, click <strong>Manage</strong> and then <strong>Lifecycle</strong>.</li>
-<li>Click <strong>Publish</strong> and continue to publish your API to the Choreo Developer Portal. </li>
+<li>Click <strong>Publish</strong> and continue to publish your API to the Choreo Developer Portal.</li>
 </ol>
 <h2 id="step-2-create-a-web-api-on-azure-ad">Step 2: Create a web API on Azure AD<a class="headerlink" href="#step-2-create-a-web-api-on-azure-ad" title="Permanent link">&para;</a></h2>
-<p>To enable external IdP authentication for APIs,  create an API on Azure AD that represents the API on Choreo. Follow the steps below: </p>
+<p>To enable external IdP authentication for APIs,  create an API on Azure AD that represents the API on Choreo. Follow the steps below:</p>
 <ol>
 <li>Sign in to the Azure console.</li>
 <li>Follow the <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application">Azure guide</a> to create a Web API that represents your API on Choreo.</li>
 <li>In the left navigation menu, under <strong>Manage</strong>, select <strong>Expose an API</strong>.</li>
 <li>Add the default <strong>Application ID URI</strong> and click <strong>Save and Continue</strong>.</li>
 <li>Under <strong>Scopes defined by this API</strong>, select <strong>Add a scope</strong>.</li>
-<li>Enter the fully qualified name as the <strong>scope name</strong>. </li>
+<li>Enter the fully qualified name as the <strong>scope name</strong>.</li>
 <li>Define who can consent. You can alternatively <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-expose-web-apis#add-a-scope-requiring-admin-consent">add a scope requiring admin consent</a>.</li>
 <li>Enter appropriate values and click <strong>Add Scope</strong>.</li>
 </ol>
-<p>For more information, refer to the Azure documentation: </p>
+<p>For more information, refer to the Azure documentation:</p>
 <ul>
 <li><a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app">Quickstart: Register an application with the Microsoft identity platform</a></li>
 <li><a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-expose-web-apis">Quickstart: Configure an application to expose a web API</a></li>
 </ul>
 <h3 id="step-21-assign-users-to-the-web-api">Step 2.1: Assign users to the web API<a class="headerlink" href="#step-21-assign-users-to-the-web-api" title="Permanent link">&para;</a></h3>
-<p>You can restrict users to the API as follows: </p>
+<p>You can restrict users to the API as follows:</p>
 <ol>
-<li>Go to your Azure AD main menu. </li>
+<li>Go to your Azure AD main menu.</li>
 <li>Under <strong>Manage</strong>,  click on <strong>Enterprise Applications</strong>. Alternatively, on Microsoft Entra, under <strong>Applications</strong>, click <strong>Enterprise Applications</strong>.</li>
-<li>Select your API. </li>
+<li>Select your API.</li>
 <li>Under <strong>Manage</strong>, select the <strong>Users and groups</strong> then select <strong>+ Add user/group</strong>.</li>
 <li>Select the users and groups and click <strong>Select</strong>.</li>
 </ol>
 <p>For more information, refer to the Azure documentation: <a href="Assign the app to users and groups to restrict access">Assign the app to users and groups to restrict access</a></p>
 <h2 id="step-3-create-a-client-application-on-azure-ad-and-invoke-the-azure-web-api">Step 3: Create a client application on Azure AD and invoke the Azure web API<a class="headerlink" href="#step-3-create-a-client-application-on-azure-ad-and-invoke-the-azure-web-api" title="Permanent link">&para;</a></h2>
-<p>To expose the API to application developers, create an application in Azure AD. This application provides you with a client-id and client-secret that your application needs to use to invoke the API. </p>
+<p>To expose the API to application developers, create an application in Azure AD. This application provides you with a client-id and client-secret that your application needs to use to invoke the API.</p>
 <h3 id="step-31-create-a-client-application">Step 3.1: Create a client application<a class="headerlink" href="#step-31-create-a-client-application" title="Permanent link">&para;</a></h3>
 <p>Follow the steps below to create the application:</p>
 <ol>
 <li>Follow the steps in <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application">Register an application</a> on Azure to create an application.</li>
 <li>
-<p><a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#configure-platform-settings">Configure the platform settings</a>. Enter your client application's redirect URI in the process. </p>
+<p><a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#configure-platform-settings">Configure the platform settings</a>. Enter your client application's redirect URI in the process.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>OAuth2 Authorization Grant flow applies to Web Applications.</p>
@@ -4238,19 +4238,19 @@ document.addEventListener('DOMContentLoaded', function() {
 <ol>
 <li>In the left navigation menu, click <strong>Certificates &amp; Secrets</strong>.</li>
 <li>Click <strong>+ New client secret</strong>.</li>
-<li>Provide a meaningful description and the required expiration. </li>
+<li>Provide a meaningful description and the required expiration.</li>
 <li>Click <strong>Add</strong>.</li>
-<li>Copy the created <code>Secret ID</code> and <code>Value</code> for future reference. </li>
-<li>In the left navigation menu, click <strong>Overview</strong> and open the overview page of the API. </li>
+<li>Copy the created <code>Secret ID</code> and <code>Value</code> for future reference.</li>
+<li>In the left navigation menu, click <strong>Overview</strong> and open the overview page of the API.</li>
 <li>Copy the <code>Application (client) ID</code> and save it for future reference.</li>
 </ol>
 <p>For more information, refer to the Azure documentation: <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret">Add a Client Secret</a></p>
 <h2 id="step-4-create-an-application-in-choreo-and-enable-external-idp-authentication">Step 4: Create an application in Choreo and enable external IdP authentication.<a class="headerlink" href="#step-4-create-an-application-in-choreo-and-enable-external-idp-authentication" title="Permanent link">&para;</a></h2>
 <p>Follow the steps below to consume the Choreo API and use an external IdP for authentication:</p>
 <ol>
-<li>Sign in to the Choreo Developer Portal at <a href="https://devportal.choreo.dev">https://devportal.choreo.dev</a>.</li>
+<li>Sign in to the <a href="https://devportal.choreo.dev">Choreo Developer Portal</a>.</li>
 <li>Click <strong>Applications</strong>. and then click <strong>+Create</strong>.</li>
-<li>Enter a name and description for the application. </li>
+<li>Enter a name and description for the application.</li>
 <li>Click <strong>Create</strong>.</li>
 <li>In the left navigation menu, under <strong>Credentials</strong> and click <strong>Production</strong>.</li>
 <li>Select your AzureAD (Microsoft) configuration as the <strong>Identity Provider</strong>.</li>
@@ -4261,7 +4261,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="admonition-title">Note</p>
 <ul>
 <li>You can only use the Client ID in one application.</li>
-<li>The Identity Provider dropdown is visible only to organizations where you have configured external IdPs. </li>
+<li>The Identity Provider dropdown is visible only to organizations where you have configured external IdPs.</li>
 </ul>
 </div>
 </li>
@@ -4269,16 +4269,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>In the left navigation menu, click <strong>Subscriptions</strong>.</p>
 </li>
 <li>In the <strong>Subscription Management</strong> pane that opens, click <strong>+ Add APIs</strong>.</li>
-<li>Select the API you assigned scopes to in step 1 and click <strong>Add</strong>. </li>
+<li>Select the API you assigned scopes to in step 1 and click <strong>Add</strong>.</li>
 </ol>
 <h2 id="step-5-invoke-the-api-with-scopes">Step 5: Invoke the API with scopes<a class="headerlink" href="#step-5-invoke-the-api-with-scopes" title="Permanent link">&para;</a></h2>
-<p>You can now invoke the Choreo API using the authorization code grant. Choreo will authenticate the user with Azure AD and provide access to the resource. </p>
+<p>You can now invoke the Choreo API using the authorization code grant. Choreo will authenticate the user with Azure AD and provide access to the resource.</p>
 <ol>
 <li>On the Choreo Developer Portal, go to your application.</li>
 <li>In the left navigation menu, under <strong>Credentials</strong> and click <strong>Production</strong>.</li>
-<li>Under <strong>Endpoints</strong>, copy the <strong>Authorize Endpoint</strong> URL.  </li>
+<li>Under <strong>Endpoints</strong>, copy the <strong>Authorize Endpoint</strong> URL.</li>
 <li>
-<p>Invoke the authorization endpoint as follows: </p>
+<p>Invoke the authorization endpoint as follows:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Format</label><label for="__tabbed_1_2">Example</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -4294,12 +4294,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 <ol>
-<li>Review the consent in the login screens that prompt and continue. </li>
-<li>After you log in, you will receive an authorization code in the URL. Copy the authorization code and use it to get an access token from Azure AD by following the next steps. </li>
+<li>Review the consent in the login screens that prompt and continue.</li>
+<li>After you log in, you will receive an authorization code in the URL. Copy the authorization code and use it to get an access token from Azure AD by following the next steps.</li>
 <li>On the Choreo Developer Portal, go to your application.</li>
 <li>In the left navigation menu, under <strong>Credentials</strong> and click <strong>Production</strong>.</li>
-<li>Under <strong>Endpoints</strong>, copy the <strong>Token Endpoint</strong> URL. </li>
-<li>Invoke the token endpoint as follows: </li>
+<li>Under <strong>Endpoints</strong>, copy the <strong>Token Endpoint</strong> URL.</li>
+<li>Invoke the token endpoint as follows:</li>
 </ol>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Format</label><label for="__tabbed_2_2">Example</label></div>
 <div class="tabbed-content">
@@ -4311,7 +4311,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>-d &#39;code={authorization_code}&#39; \
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>-d &#39;redirect_uri={redirect_url}&#39; \
 <a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>-d &#39;client_secret={The client_secret value you copied from the Azure Application}&#39;
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>-d &#39;grant_type=authorization_code&#39; \    
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>-d &#39;grant_type=authorization_code&#39; \
 </code></pre></div>
 
 </div>
@@ -4332,7 +4332,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </li>
 <li>
-<p>Once you receive the access token, you can <a href="../../testing/test-rest-endpoints-via-the-openapi-console/">test invoking the resource using the OpenAPI console</a> in Choreo by specifying the scope. </p>
+<p>Once you receive the access token, you can <a href="../../testing/test-rest-endpoints-via-the-openapi-console/">test invoking the resource using the OpenAPI console</a> in Choreo by specifying the scope.</p>
 </li>
 </ol>
 

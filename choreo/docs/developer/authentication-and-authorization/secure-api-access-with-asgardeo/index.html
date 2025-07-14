@@ -4044,11 +4044,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="secure-api-access-with-asgardeo">Secure API Access with Asgardeo<a class="headerlink" href="#secure-api-access-with-asgardeo" title="Permanent link">&para;</a></h1>
-<p>API security refers to the measures and practices used to protect Application Programming Interfaces (APIs) from potential threats and vulnerabilities. APIs are essential for enabling communication and data exchange between different software applications and services, making them a critical component in modern software development. However, their openness and accessibility can also make them targets for various security risks. Authentication and authorization are key aspects of API security. Authentication is ensuring that only authorized users or applications can access the API. This can involve using API keys, tokens, or more advanced authentication methods like OAuth 2.0. Authorization is controlling what authenticated users or applications are allowed to do within the API. Authorization mechanisms restrict access to specific resources and actions based on user roles or permissions. </p>
+<p>API security refers to the measures and practices used to protect Application Programming Interfaces (APIs) from potential threats and vulnerabilities. APIs are essential for enabling communication and data exchange between different software applications and services, making them a critical component in modern software development. However, their openness and accessibility can also make them targets for various security risks. Authentication and authorization are key aspects of API security. Authentication is ensuring that only authorized users or applications can access the API. This can involve using API keys, tokens, or more advanced authentication methods like OAuth 2.0. Authorization is controlling what authenticated users or applications are allowed to do within the API. Authorization mechanisms restrict access to specific resources and actions based on user roles or permissions.</p>
 <p>Organizations using Asgardeo for identity and access management (IAM) can seamlessly integrate it with Choreo as an external Identity Provider (IdP). This guide will walk you through setting up Choreo to authenticate API invocations through Asgardeo which is configured as an external IdP.</p>
 <p>This guide walks you through the following steps:</p>
 <ul>
-<li>Assign scopes to an API in Choreo. </li>
+<li>Assign scopes to an API in Choreo.</li>
 <li>Create an API in Asgardeo.</li>
 <li>Create an application in Asgardeo and consume the Asgardeo API.</li>
 <li>Create an application in Choreo and enable external IdP authentication.</li>
@@ -4057,9 +4057,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>To follow this guide, you need to satisfy the following prerequisites:</p>
 <ul>
-<li><a href="../../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/">Configured Asgardeo as an external IdP</a> </li>
+<li><a href="../../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/">Configured Asgardeo as an external IdP</a></li>
 <li>If you don't already have a service in Choreo, <a href="../../develop-components/develop-services/develop-a-service/">develop a service</a> or an <a href="../../develop-components/develop-an-api-proxy/">API Proxy</a>.</li>
-<li>Deploy and publish your API. </li>
+<li>Deploy and publish your API.</li>
 </ul>
 <h2 id="step-1-assign-scopes-to-an-api-in-choreo">Step 1: Assign scopes to an API in Choreo<a class="headerlink" href="#step-1-assign-scopes-to-an-api-in-choreo" title="Permanent link">&para;</a></h2>
 <p>You can provide fine-grained access control to your API resources with scopes. Follow the steps below to assign a scope to the resources in the API:</p>
@@ -4075,21 +4075,21 @@ document.addEventListener('DOMContentLoaded', function() {
 <ol>
 <li>In the <strong>Component Listing</strong> pane, click on the component you want to attach scopes to.</li>
 <li>In the left navigation menu, click <strong>Deploy</strong> and then <strong>Configure &amp; Deploy</strong> in the <strong>Set Up</strong> area. (For Proxy apis, click <strong>Configure &amp; Deploy</strong> in the <strong>Build Area</strong> and skip the Step 3 below)</li>
-<li>Click <strong>Next</strong> to go to the <strong>Endpoint Details</strong> step. Expand the required endpoint if not already expanded. </li>
-<li>In the <strong>Operation Level</strong> security section, click on <strong>Manage Permissions</strong> button. </li>
+<li>Click <strong>Next</strong> to go to the <strong>Endpoint Details</strong> step. Expand the required endpoint if not already expanded.</li>
+<li>In the <strong>Operation Level</strong> security section, click on <strong>Manage Permissions</strong> button.</li>
 <li>In the <strong>Manage Permissions</strong> pane, enter the permission value and click <strong>Add New</strong>.</li>
-<li>Click the copy icon in front of the added scope to copy the fully qualified name of the scope. Save this value for future reference. </li>
+<li>Click the copy icon in front of the added scope to copy the fully qualified name of the scope. Save this value for future reference.</li>
 <li>To attach a scope to a resource, click the <strong>Select Permissions</strong> list under the respective resource, and select the scopes you wish to attach.</li>
 <li>Click <strong>Deploy</strong>.</li>
 <li>In the left navigation, click <strong>Manage</strong> and then <strong>Lifecycle</strong>.</li>
-<li>Click <strong>Publish</strong> and continue to publish your API to the Choreo Developer Portal. </li>
+<li>Click <strong>Publish</strong> and continue to publish your API to the Choreo Developer Portal.</li>
 </ol>
 <h2 id="step-2-create-an-api-and-an-application-in-asgardeo">Step 2: Create an API and an application in Asgardeo<a class="headerlink" href="#step-2-create-an-api-and-an-application-in-asgardeo" title="Permanent link">&para;</a></h2>
 <p>Follow the <a href="https://wso2.com/asgardeo/docs/guides/api-authorization/">Asgardeo API Authorization guide</a> to create an application and an API in Asgardeo and to enable API authorization.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
-<li>Use the fully qualified name of the scope when adding scopes. </li>
+<li>Use the fully qualified name of the scope when adding scopes.</li>
 <li>Do the following under the protocol tab:<ul>
 <li>Select <code>JWT</code> as the <strong>Access Token</strong>.</li>
 <li>Select the appropriate grant types.</li>
@@ -4101,9 +4101,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="step-3-create-an-application-in-choreo-and-enable-external-idp-authentication">Step 3: Create an application in Choreo and enable external IdP authentication<a class="headerlink" href="#step-3-create-an-application-in-choreo-and-enable-external-idp-authentication" title="Permanent link">&para;</a></h2>
 <p>Follow the steps below to consume the Choreo API and use an external IdP for authentication:</p>
 <ol>
-<li>Sign in to the Choreo Developer Portal at <a href="https://devportal.choreo.dev">https://devportal.choreo.dev</a>.</li>
+<li>Sign in to the <a href="https://devportal.choreo.dev">Choreo Developer Portal</a>.</li>
 <li>Click <strong>Applications</strong>. and then click <strong>+Create</strong>.</li>
-<li>Enter a name and description for the application. </li>
+<li>Enter a name and description for the application.</li>
 <li>Click <strong>Create</strong>.</li>
 <li>In the left navigation, under <strong>Credentials</strong> and click <strong>Production</strong>.</li>
 <li>Select the <strong>Identity Provider</strong> as <code>Asgardeo</code>.</li>
@@ -4114,7 +4114,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="admonition-title">Note</p>
 <ul>
 <li>You can only use the Client ID in one application.</li>
-<li>The Identity Provider dropdown is visible only to organizations where you have configured external IdPs. </li>
+<li>The Identity Provider dropdown is visible only to organizations where you have configured external IdPs.</li>
 </ul>
 </div>
 </li>
@@ -4122,13 +4122,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>In the left navigation menu, click <strong>Subscriptions</strong>.</p>
 </li>
 <li>In the <strong>Subscription Management</strong> pane that opens, click <strong>+ Add APIs</strong>.</li>
-<li>Select the API you assigned scopes to in <a href="#step-1-assign-scopes-to-an-api-in-choreo">step 1</a> and click <strong>Add</strong>. </li>
+<li>Select the API you assigned scopes to in <a href="#step-1-assign-scopes-to-an-api-in-choreo">step 1</a> and click <strong>Add</strong>.</li>
 </ol>
 <h2 id="step-4-invoke-the-choreo-api-with-scopes">Step 4: Invoke the Choreo API with scopes<a class="headerlink" href="#step-4-invoke-the-choreo-api-with-scopes" title="Permanent link">&para;</a></h2>
 <ol>
-<li>On the Choreo Developer Portal, go to your application. </li>
+<li>On the Choreo Developer Portal, go to your application.</li>
 <li>In the left navigation menu, under <strong>Credentials</strong> and click <strong>Production</strong>.</li>
-<li>Under <strong>Endpoints</strong>, copy the <strong>Token Endpoint</strong> URL. </li>
+<li>Under <strong>Endpoints</strong>, copy the <strong>Token Endpoint</strong> URL.</li>
 <li>
 <p>Obtain an access token by invoking the token endpoint as follows:</p>
 <div class="admonition note">
@@ -4158,7 +4158,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </li>
 <li>
-<p>Once you receive the access token, you can <a href="../../testing/test-rest-endpoints-via-the-openapi-console/">test invoking the resource using the OpenAPI console</a> in Choreo by specifying the scope. </p>
+<p>Once you receive the access token, you can <a href="../../testing/test-rest-endpoints-via-the-openapi-console/">test invoking the resource using the OpenAPI console</a> in Choreo by specifying the scope.</p>
 </li>
 </ol>
 

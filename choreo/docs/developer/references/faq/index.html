@@ -4770,7 +4770,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 id="q-what-is-a-component-in-choreo">Q: What is a component in Choreo?<a class="headerlink" href="#q-what-is-a-component-in-choreo" title="Permanent link">&para;</a></h3>
 <p>A component is a workload designed to run on Choreo. Examples of components include integrations, APIs, microservices, manual/scheduled jobs, web apps, triggers and API proxies.</p>
 <h3 id="q-what-is-the-difference-between-an-internal-and-external-api">Q: What is the difference between an internal and external API?<a class="headerlink" href="#q-what-is-the-difference-between-an-internal-and-external-api" title="Permanent link">&para;</a></h3>
-<p>In Choreo, you can publish an API as an internal or an external API. A user or an application can access an external API publicly over the internet, whereas an internal API is only accessible through other components within the same organization. </p>
+<p>In Choreo, you can publish an API as an internal or an external API. A user or an application can access an external API publicly over the internet, whereas an internal API is only accessible through other components within the same organization.</p>
 <h3 id="q-what-is-a-connector-in-choreo-marketplace">Q: What is a connector in Choreo Marketplace?<a class="headerlink" href="#q-what-is-a-connector-in-choreo-marketplace" title="Permanent link">&para;</a></h3>
 <p>A connector is a reusable Ballerina package that simplifies connecting to external or internal systems and APIs, such as Salesforce, SAP, GitHub, and Twilio. You can use the connectors available in the Choreo marketplace to implement your integration use cases.  Connectors can be created and published by both WSO2 and Choreo users.</p>
 <h3 id="q-what-is-a-trigger-in-choreo-marketplace">Q: What is a trigger in Choreo Marketplace?<a class="headerlink" href="#q-what-is-a-trigger-in-choreo-marketplace" title="Permanent link">&para;</a></h3>
@@ -4784,7 +4784,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 id="q-what-is-the-maximum-request-payload-size-supported-by-choreo">Q: What is the maximum request payload size supported by Choreo?<a class="headerlink" href="#q-what-is-the-maximum-request-payload-size-supported-by-choreo" title="Permanent link">&para;</a></h3>
 <p>Choreo allows a maximum request payload size of 50 MB.</p>
 <h3 id="q-what-source-control-software-does-choreo-support">Q: What source control software does Choreo support?<a class="headerlink" href="#q-what-source-control-software-does-choreo-support" title="Permanent link">&para;</a></h3>
-<p>Choreo now supports GitHub, Bitbucket and GitLab. </p>
+<p>Choreo now supports GitHub, Bitbucket and GitLab.</p>
 <h3 id="q-why-dont-i-see-the-undeployed-builds-for-my-component-in-choreo">Q: Why don't I see the undeployed builds for my component in Choreo?<a class="headerlink" href="#q-why-dont-i-see-the-undeployed-builds-for-my-component-in-choreo" title="Permanent link">&para;</a></h3>
 <p>You are allowed to build your component any number of times. However, Choreo has a limit on retaining undeployed builds. For users on the free-tier, Choreo will retain <strong>only one</strong> undeployed build. For those on any other tier, Choreo will retain the <strong>latest five</strong> undeployed builds.</p>
 <h3 id="q-what-is-ballerina">Q: What is Ballerina?<a class="headerlink" href="#q-what-is-ballerina" title="Permanent link">&para;</a></h3>
@@ -4812,25 +4812,14 @@ To target a specific region (for example, EU), on a Cloud Data Plane (CDP), you 
 <h3 id="q-how-can-i-connect-a-choreo-component-with-a-protected-third-party-application">Q: How can I connect a Choreo component with a protected third-party application?<a class="headerlink" href="#q-how-can-i-connect-a-choreo-component-with-a-protected-third-party-application" title="Permanent link">&para;</a></h3>
 <p>To connect a Choreo component with a third-party application, it is necessary to establish seamless communication between the component and the protected third-party application, especially when connecting to external databases like MySQL, MSSQL, PGSQL, Oracle DB, etc.
 To ensure this, the requests coming from the Choreo data plane must be allowed by adding the specific data plane IP ranges to your allowlist.</p>
+<p><strong>If your primary region is US:</strong></p>
 <ul>
-<li>
-<p>If your component is deployed in the Choreo US data plane, add the following IP range to your allowlist:</p>
-<ul>
-<li>20.22.170.144/28</li>
+<li>Choreo US data plane: <code>20.22.170.144/28</code></li>
+<li>Choreo EU data plane: <code>20.166.183.112/28</code></li>
 </ul>
-</li>
-<li>
-<p>If your component is deployed in the Choreo EU data plane, add the following IP range to your allowlist:</p>
+<p><strong>If your primary region is EU:</strong></p>
 <ul>
-<li>20.166.183.112/28</li>
-</ul>
-</li>
-<li>
-<p>If you are working on the <a href="https://wso2.com/cybertruck/">Cybertruck Challenge</a>, add the following IP range to your allowlist:</p>
-<ul>
-<li>20.190.30.48/28</li>
-</ul>
-</li>
+<li>Choreo EU data plane: <code>54.170.135.118, 52.215.28.29</code></li>
 </ul>
 <h2 id="data-planes">Data planes<a class="headerlink" href="#data-planes" title="Permanent link">&para;</a></h2>
 <h3 id="q-what-is-a-choreo-control-plane">Q: What is a Choreo control plane?<a class="headerlink" href="#q-what-is-a-choreo-control-plane" title="Permanent link">&para;</a></h3>
@@ -4842,7 +4831,7 @@ To ensure this, the requests coming from the Choreo data plane must be allowed b
 <h3 id="q-which-regions-support-private-data-planespdps">Q: Which regions support private data planes(PDPs)?<a class="headerlink" href="#q-which-regions-support-private-data-planespdps" title="Permanent link">&para;</a></h3>
 <p>Private data planes can be deployed in any region where Azure and AWS are available and meet the requirements for PDPs.</p>
 <h3 id="q-if-i-want-to-use-my-azure-aks-instances-as-the-private-data-plane-what-are-the-minimum-requirements-i-should-meet">Q: If I want to use my Azure AKS instances as the private data plane, what are the minimum requirements I should meet?<a class="headerlink" href="#q-if-i-want-to-use-my-azure-aks-instances-as-the-private-data-plane-what-are-the-minimum-requirements-i-should-meet" title="Permanent link">&para;</a></h3>
-<p>We recommend using a minimum of two (2) workload nodes to ensure high availability. </p>
+<p>We recommend using a minimum of two (2) workload nodes to ensure high availability.</p>
 <h3 id="q-are-the-choreo-control-plane-and-data-planes-highly-available-are-they-running-on-multiple-clusters">Q: Are the Choreo control plane and data planes highly available? Are they running on multiple clusters?<a class="headerlink" href="#q-are-the-choreo-control-plane-and-data-planes-highly-available-are-they-running-on-multiple-clusters" title="Permanent link">&para;</a></h3>
 <p>The Choreo control plane and data plane are designed for high availability using Azure components like AKS, MSSQL, ACR, KV, Service Bus, and so on, with a high availability of 99.99%, which allows at least three workload nodes. In the event of a node failure or upgrade, this setup provides reliable failover. WSO2 also has a backup and recovery strategy in place, including continuous restore drills. If you require AKS cluster-level redundancy, we can consider multiple zones. In this case, the cost will include an additional infrastructure cost.</p>
 <h2 id="environments">Environments<a class="headerlink" href="#environments" title="Permanent link">&para;</a></h2>
@@ -4876,7 +4865,7 @@ To ensure this, the requests coming from the Choreo data plane must be allowed b
 <li><strong>Enterprise plan</strong>: Allows unlimited paid components.</li>
 </ul>
 <h3 id="q-how-do-i-read-the-bill">Q: How do I read the bill?<a class="headerlink" href="#q-how-do-i-read-the-bill" title="Permanent link">&para;</a></h3>
-<p>Your bill will detail the number of components used, infrastructure consumed, support plans used, and any additional services you may have purchased. If you are unsure about any charges on your bill, reach out to choreo-support@wso2.com for clarification. </p>
+<p>Your bill will detail the number of components used, infrastructure consumed, support plans used, and any additional services you may have purchased. If you are unsure about any charges on your bill, reach out to choreo-support@wso2.com for clarification.</p>
 <h3 id="q-is-support-included-in-the-choreo-enterprise-plan">Q: Is support included in the Choreo Enterprise plan?<a class="headerlink" href="#q-is-support-included-in-the-choreo-enterprise-plan" title="Permanent link">&para;</a></h3>
 <p>The Choreo Enterprise plan does not automatically include support; however, you can purchase support plans in addition to the Enterprise plan at any time. Find out more at https://wso2.com/choreo/customer-support/.</p>
 <h3 id="q-i-am-an-enterprise-subscription-customer-who-wants-to-use-the-choreo-private-data-plane-what-costs-will-i-incur-in-addition-to-the-subscription-and-support-plan">Q: I am an Enterprise subscription customer who wants to use the Choreo private data plane. What costs will I incur in addition to the subscription and support plan?<a class="headerlink" href="#q-i-am-an-enterprise-subscription-customer-who-wants-to-use-the-choreo-private-data-plane-what-costs-will-i-incur-in-addition-to-the-subscription-and-support-plan" title="Permanent link">&para;</a></h3>
@@ -4885,7 +4874,7 @@ To ensure this, the requests coming from the Choreo data plane must be allowed b
 <p>No, there are no outages when upgrading a plan.</p>
 <h2 id="choreo-cli">Choreo CLI<a class="headerlink" href="#choreo-cli" title="Permanent link">&para;</a></h2>
 <h3 id="q-how-do-i-uninstall-the-cli">Q: How do I uninstall the CLI?<a class="headerlink" href="#q-how-do-i-uninstall-the-cli" title="Permanent link">&para;</a></h3>
-<p>If you didn't download the binary directly, you can uninstall the CLI by deleting the <code>.choreo</code> directory in the 
+<p>If you didn't download the binary directly, you can uninstall the CLI by deleting the <code>.choreo</code> directory in the
 home directory of your operating system.</p>
 <h3 id="q-how-do-i-update-the-cli">Q: How do I update the CLI?<a class="headerlink" href="#q-how-do-i-update-the-cli" title="Permanent link">&para;</a></h3>
 <p>You can update the CLI by running the following command:
@@ -4983,7 +4972,7 @@ home directory of your operating system.</p>
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -4991,7 +4980,7 @@ home directory of your operating system.</p>
                   <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -5071,7 +5060,7 @@ home directory of your operating system.</p>
                   <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -5166,7 +5155,7 @@ home directory of your operating system.</p>
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -5174,7 +5163,7 @@ home directory of your operating system.</p>
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -5247,7 +5236,7 @@ home directory of your operating system.</p>
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -5255,7 +5244,7 @@ home directory of your operating system.</p>
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -5328,7 +5317,7 @@ home directory of your operating system.</p>
          <td>
             <ul >
                <li style="list-style-type:none">Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
       <tr>
@@ -5336,7 +5325,7 @@ home directory of your operating system.</p>
          <td>
             <ul >
                <li style="list-style-type:none; padding: 0;">Not Applicable</li>
-            <ul> 
+            <ul>
          </td>
       </tr>
    </tbody>

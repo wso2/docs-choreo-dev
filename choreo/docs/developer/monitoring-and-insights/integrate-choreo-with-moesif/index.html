@@ -4056,23 +4056,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="integrate-choreo-with-moesif">Integrate Choreo with Moesif<a class="headerlink" href="#integrate-choreo-with-moesif" title="Permanent link">&para;</a></h1>
-<p>Moesif is an API analytics and monetization service that helps you grow your API products. You can integrate Choreo with Moesif and gain valuable insights into your API's usage.  While Moesif's API analytics capabilities empower you to make informed decision-making on behalf of your organization, its monetization options simplify revenue generation from your APIs, eliminating the need for complex coding. </p>
+<p>Moesif is an API analytics and monetization service that helps you grow your API products. You can integrate Choreo with Moesif and gain valuable insights into your API's usage.  While Moesif's API analytics capabilities empower you to make informed decision-making on behalf of your organization, its monetization options simplify revenue generation from your APIs, eliminating the need for complex coding.</p>
 <p>In this guide, you will:</p>
 <ul>
 <li>Generate a key in Moesif.</li>
 <li>Configure Choreo to connect to Moesif.</li>
-<li>Invoke an API and observe the insights on the Moesif dashboard. </li>
+<li>Invoke an API and observe the insights on the Moesif dashboard.</li>
 </ul>
 <h2 id="step-1-generate-an-api-key-in-moesif">Step 1: Generate an API key in Moesif<a class="headerlink" href="#step-1-generate-an-api-key-in-moesif" title="Permanent link">&para;</a></h2>
-<p>Let's generate an API key in Moesif. 
+<p>Let's generate an API key in Moesif.
 If you're an existing Moesif user with a registered organization, proceed to <a href="#step-12-access-the-api-key-in-moesif-as-an-existing-user">step 1.2</a>.</p>
 <h3 id="step-11-generate-a-key-in-moesif-as-a-new-user">Step 1.1: Generate a key in Moesif as a new user<a class="headerlink" href="#step-11-generate-a-key-in-moesif-as-a-new-user" title="Permanent link">&para;</a></h3>
 <p>If you are a new user, follow the steps below to register an organization and generate a key:</p>
 <ol>
 <li>Go to <a href="https://www.moesif.com/">https://www.moesif.com/</a>.</li>
-<li>Click <strong>Sign Up</strong> and select an authentication option and proceed. </li>
+<li>Click <strong>Sign Up</strong> and select an authentication option and proceed.</li>
 <li>
-<p>On the <strong>Get Started</strong> page, enter meaningful values for the fields and create a new organization. </p>
+<p>On the <strong>Get Started</strong> page, enter meaningful values for the fields and create a new organization.</p>
 <table>
 <thead>
 <tr>
@@ -4097,13 +4097,13 @@ If you're an existing Moesif user with a registered organization, proceed to <a 
 </li>
 <li>
 <p>On the <strong>Overview</strong> page, click <strong>Next</strong>.</p>
-<p>This opens the <strong>Quick Install</strong> page. As there is no data, you cannot proceed. Let's configure Moesif to receive data from Choreo. </p>
+<p>This opens the <strong>Quick Install</strong> page. As there is no data, you cannot proceed. Let's configure Moesif to receive data from Choreo.</p>
 </li>
 <li>
 <p>Select a <strong>WSO2 Choreo</strong> as the <strong>Server Integration</strong></p>
 </li>
 <li>
-<p>Copy the <strong>Application Id</strong>. </p>
+<p>Copy the <strong>Application Id</strong>.</p>
 <p><a class="glightbox" href="../../assets/img/monitoring-and-insights/first_time_key_moesif.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="First Time user API Key" src="../../assets/img/monitoring-and-insights/first_time_key_moesif.png" /></a></p>
 </li>
 </ol>
@@ -4117,18 +4117,18 @@ If you're an existing Moesif user with a registered organization, proceed to <a 
 <h2 id="step-2-integrate-choreo-with-moesif">Step 2: Integrate Choreo with Moesif<a class="headerlink" href="#step-2-integrate-choreo-with-moesif" title="Permanent link">&para;</a></h2>
 <p>Let's configure Choreo to publish events to Moesif.</p>
 <ol>
-<li>Go to <a href="https://console.choreo.dev/cloud-native-app-developer">https://console.choreo.dev/</a> and sign in.</li>
-<li>On the left navigation, click <strong>Settings</strong>. </li>
-<li>In the header, click the <strong>Organization</strong> list. This will open the organization level settings page. </li>
+<li>Go to the <a href="https://console.choreo.dev/cloud-native-app-developer">Choreo Console</a> and sign in.</li>
+<li>On the left navigation, click <strong>Settings</strong>.</li>
+<li>In the header, click the <strong>Organization</strong> list. This will open the organization level settings page.</li>
 <li>Click the <strong>API Management</strong> tab, and click <strong>Moesif Dashboard</strong>.</li>
 <li>Select the environment you want to publish data for.</li>
-<li>Paste the <strong>Application Id</strong> you copied. </li>
+<li>Paste the <strong>Application Id</strong> you copied.</li>
 <li>Click <strong>Add</strong>.</li>
 </ol>
-<p>Once you successfully add the key, you will see a delete option next to it. Currently, you can only configure one API key. If you need to add a new API key, you need to delete the existing key and add the new one. </p>
+<p>Once you successfully add the key, you will see a delete option next to it. Currently, you can only configure one API key. If you need to add a new API key, you need to delete the existing key and add the new one.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Once you configure the Moesif API key on Choreo, <strong>wait for five minutes before you publish any data to the Moesif</strong> API analytics platform. </p>
+<p>Once you configure the Moesif API key on Choreo, <strong>wait for five minutes before you publish any data to the Moesif</strong> API analytics platform.</p>
 </div>
 <h2 id="step-3-invoke-an-api-and-observe-the-data-on-the-moesif-dashboard">Step 3: Invoke an API and observe the data on the Moesif Dashboard<a class="headerlink" href="#step-3-invoke-an-api-and-observe-the-data-on-the-moesif-dashboard" title="Permanent link">&para;</a></h2>
 <p>You have configured Choreo to publish data to Moesif. Let's see how you can view the insights on Moesif.</p>
@@ -4140,18 +4140,18 @@ If you're an existing Moesif user with a registered organization, proceed to <a 
 </div>
 <ol>
 <li>
-<p>Invoke your API by following the <a href="https://wso2.com/choreo/docs/testing/test-rest-endpoints-via-the-openapi-console/">Test REST Endpoints via the OpenAPI Console</a> guide. </p>
+<p>Invoke your API by following the <a href="https://wso2.com/choreo/docs/testing/test-rest-endpoints-via-the-openapi-console/">Test REST Endpoints via the OpenAPI Console</a> guide.</p>
 </li>
 <li>
-<p>Once you publish data, your Moesif dashboard will receive events. Once Moesif receives events, you will see a notification on Moesif confirming that it received data. </p>
+<p>Once you publish data, your Moesif dashboard will receive events. Once Moesif receives events, you will see a notification on Moesif confirming that it received data.</p>
 <p><a class="glightbox" href="../../assets/img/monitoring-and-insights/data_recieved_moesif_notification.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Data Recieved Moesif Notification" class="cInlineImage-small" src="../../assets/img/monitoring-and-insights/data_recieved_moesif_notification.png" /></a></p>
 </li>
 <li>
-<p>Click <strong>Next</strong> on the notification. This will take you to the final step, where you can opt to add team members. In this guide, let's skip this step. </p>
+<p>Click <strong>Next</strong> on the notification. This will take you to the final step, where you can opt to add team members. In this guide, let's skip this step.</p>
 </li>
 <li>Click <strong>Finish</strong>.</li>
 </ol>
-<p>You can now view your API's insights in the Moesif dashboard. </p>
+<p>You can now view your API's insights in the Moesif dashboard.</p>
 
 
 

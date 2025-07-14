@@ -4057,7 +4057,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h1 id="control-access-in-the-choreo-console">Control Access in the Choreo Console<a class="headerlink" href="#control-access-in-the-choreo-console" title="Permanent link">&para;</a></h1>
 <p>In the Choreo Console, you have the ability to manage access to projects and the actions that can be performed within them. Administrators have the capability to restrict project access to specific user groups. This feature is useful when you need certain user groups to have access to particular projects or for a set of projects.</p>
-<p>Choreo uses <strong>Roles</strong>, <strong>Groups</strong>, and a <strong>Mapping level</strong> to control access to the Choreo Console as follows: </p>
+<p>Choreo uses <strong>Roles</strong>, <strong>Groups</strong>, and a <strong>Mapping level</strong> to control access to the Choreo Console as follows:</p>
 <ul>
 <li><strong>Role</strong> : Role is a collection of permissions. Choreo has a predefined set of roles with permissions assigned to them. <a href="../../choreo-concepts/organization/#roles">Learn more</a></li>
 <li>
@@ -4066,10 +4066,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>
 <p><strong>Mapping level</strong> : A mapping level defines the extent at which a role-group mapping can be done. Choreo has two defined resource levels.</p>
 <ul>
-<li><strong>Organization</strong> : You can assign a role to a group or associate a group with a role within the organization. This ensures that  <br />
+<li><strong>Organization</strong> : You can assign a role to a group or associate a group with a role within the organization. This ensures that
                      all users in a group inherit the permissions granted by that role across all organizational resources.
                      For example, if a user has edit_project permission at the organization mapping level, that user can edit all the projects in the organization.</li>
-<li><strong>Project</strong> : You can assign a role to a group or associate a group with a role within a specific project resource. This ensures 
+<li><strong>Project</strong> : You can assign a role to a group or associate a group with a role within a specific project resource. This ensures
                 that users in the group inherit the permissions granted by that role only within the context of the specified project.
                 For example, If a user has edit_project permission at the project mapping level, that user can only edit the specified project.</li>
 </ul>
@@ -4084,16 +4084,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="admonition-title">Info</p>
 <p>In Choreo, organization-level permissions take precedence over project-level permissions.</p>
 </div>
-<p>To elaborate further, refer to the following diagram. </p>
+<p>To elaborate further, refer to the following diagram.</p>
 <p>The following diagram depicts a role-group assignment at a specific resource level. In the diagram, an admin user has assigned the Developer role to all members of the Engineering group within the Engineering Project. This grants users in the Engineering group the ability to perform all actions allowed by the Developer role within the Engineering Project.</p>
 <p><a class="glightbox" href="../../assets/img/administer/access-control-to-console.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Console access control" src="../../assets/img/administer/access-control-to-console.png" /></a></p>
 <h2 id="sample-scenario">Sample scenario<a class="headerlink" href="#sample-scenario" title="Permanent link">&para;</a></h2>
-<p>Now that you understand the basic concepts of access control within the Choreo Console, let’s try out a sample scenario to manage access within a project. </p>
+<p>Now that you understand the basic concepts of access control within the Choreo Console, let’s try out a sample scenario to manage access within a project.</p>
 <p>Assume you are overseeing the Engineering Project within your organization and you need to grant development access to specific users solely within this project. Here's a step-by-step guide on how to achieve this:</p>
 <h3 id="step-1-create-a-project">Step 1: Create a project<a class="headerlink" href="#step-1-create-a-project" title="Permanent link">&para;</a></h3>
 <p>Follow the steps given below to create a project:</p>
 <ol>
-<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in. This opens the organization home page.</li>
+<li>Go to the <a href="https://console.choreo.dev/">Choreo Console</a> and sign in. This opens the organization home page.</li>
 <li>On the organization home page, click <strong>+ Create Project</strong>.</li>
 <li>
 <p>Enter a display name, unique name, and description for the project. You can enter the values given below:</p>
@@ -4167,14 +4167,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>In the left navigation menu, click <strong>Settings</strong>.</li>
 <li>Click the <strong>Access Control</strong> tab and then click the <strong>Groups</strong> tab.</li>
 <li>On the <strong>Groups</strong> tab, search for the <strong>Engineering Project Developer</strong> group and click the corresponding edit icon.</li>
-<li>Click <strong>+Add Roles</strong>. </li>
+<li>Click <strong>+Add Roles</strong>.</li>
 <li>In the <strong>Add Roles to Group in Project</strong> dialog that opens, click the <strong>Roles</strong> list and select <strong>Developer</strong>.</li>
 <li>
 <p>Click <strong>Add</strong>. This assigns the <strong>Developer</strong> role to the group. You should see the mapping level as <strong>Project (Engineering Project)</strong> as follows, indicating the scope of the mapping:</p>
 <p><a class="glightbox" href="../../assets/img/administer/mapping-level.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Mapping level" src="../../assets/img/administer/mapping-level.png" /></a></p>
 </li>
 </ol>
-<p>This means that you have granted developer access to users in the Engineering Project Developer group in the scope of the Engineering Project. </p>
+<p>This means that you have granted developer access to users in the Engineering Project Developer group in the scope of the Engineering Project.</p>
 <p>Now that you have set up access control, you can proceed to add users to the new group.</p>
 <h3 id="step-4-add-users-to-the-group">Step 4: Add users to the group<a class="headerlink" href="#step-4-add-users-to-the-group" title="Permanent link">&para;</a></h3>
 <p>There are two approaches you can follow to add users to the group.</p>
