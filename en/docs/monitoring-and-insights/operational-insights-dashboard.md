@@ -18,17 +18,17 @@ The top section displays key metrics about your environment:
 
 ![Contributors and Projects](../assets/img/monitoring-and-insights/operational-insights/projects-and-contributors.png)
 
-- **Contributors**: Total number of contributors involved in the projects.
-- **Projects**: Total number of projects being tracked. Projects are visible only at the organizational level.
+- **Contributors**: Indicates how many users have contributed in the selected project or organization.
+- **Projects**: Number of projects within the organization. Projects are visible only at the organizational level.
 
 ![components-summary](../assets/img/monitoring-and-insights/operational-insights/components-summary.png)
 
-- **Components**: Total number of components.
-- **Services**: Number of services currently managed.
-- **API Proxies**: Number of API proxies in use.
-- **Web Apps**: Number of web applications deployed.
-- **Tasks**: Number of tasks being tracked.
-- **Other**: Any other tracked items not categorized above.
+- **Components**: Total number of components available in the selected project or organization.
+- **Services**: Total number of services deployed.
+- **API Proxies**: Total number of API proxies deployed.
+- **Web Apps**: Total number of web applications deployed.
+- **Tasks**: Total number of tasks deployed.
+- **Other**: Any other deployed components that do not fall into the above categories.
 
 ---
 
@@ -36,7 +36,7 @@ The top section displays key metrics about your environment:
 
 ![CPU Usage Metrics](../assets/img/monitoring-and-insights/operational-insights/cpu-usage-metrics.png)
 
-- **Description**: This line chart visualizes CPU usage over time.
+- **Description**: This line chart visualizes CPU usage over time. CPU values are aggregated for all the components in the selected project, or for all components if the organization level is selected. Minimum allocation represents the CPU requested resources, while the maximum allocation is the CPU maximum value configured. The usage line shows the actual CPU usage, which can be lower than the minimum allocation if some components are not in a running state.
 - **Legend**:
 
       - **Usage**: Actual CPU usage.
@@ -51,7 +51,7 @@ The top section displays key metrics about your environment:
 
 ![Memory Usage Metrics](../assets/img/monitoring-and-insights/operational-insights/memory-usage-metrics.png)
 
-- **Description**: This line chart shows memory usage over time.
+- **Description**: This line chart shows memory usage over time. Memory values are aggregated for all the components in the selected project, or for all components if the organization level is selected. Minimum allocation represents the memory requested resources, while the maximum allocation is the memory maximum value configured. The usage line shows the actual memory usage, which can be lower than the minimum allocation if some components are not in a running state.
 - **Legend**:
 
       - **Usage**: Actual memory usage.
@@ -66,10 +66,7 @@ The top section displays key metrics about your environment:
 
 ![Deployments](../assets/img/monitoring-and-insights/operational-insights/deployments.png)
 
-- **Description**: This section displays recent deployment activity.
-- **X-Axis**: Shows the time period selected for viewing insights.
-- **Y-Axis**: Represents the number of deployments within the selected time range.
-- **Purpose**: Allows tracking of deployment frequency and status.
+This chart indicates the number of deployments to the selected environments within the time period shown on the X-axis. It helps you track deployment frequency and status for the chosen timeframe.
 
 ---
 
@@ -77,9 +74,6 @@ The top section displays key metrics about your environment:
 
 ![API Response Summary](../assets/img/monitoring-and-insights/operational-insights/api-response-summary.png)
 
-- **Description**: This chart shows the API request count based on the API response codes returned.
-- **X-Axis**: HTTP status codes (e.g., 200, 201, 429).
-- **Y-Axis**: Number of responses for each status code.
-- **Purpose**: Provides insight into API health, success rates, and error occurrences.
+This chart shows the number of API requests associated with the specified response codes in the selected environments. It helps assess how the resources in those environments are functioning, providing insights into overall health and identifying any fault scenarios.
 
 ---
