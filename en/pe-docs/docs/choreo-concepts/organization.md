@@ -42,6 +42,7 @@ Choreo roles are defined as follows:
 - **Developer**: Develops, deploys, and manages cloud-native applications at scale.
 - **External API Subscriber**: Consumes APIs with Developer Portal access and can join an organization exclusively for API usage.
 - **Environment Manager (Deprecated):** Previously responsible for managing deployment environments.
+- **Viewer**: Views and monitors applications, APIs, and environments without making changes.
 
 _Note: The **Choreo DevOps** role has been replaced with the **Choreo Platform Engineer** role. However, organizations that previously had Choreo DevOps role will continue to see and use both roles with their existing functionality._
 
