@@ -16,12 +16,12 @@ You can view the Operational Insights dashboard at either the organization level
 
 The top section displays key metrics about your environment:
 
-![Contributors and Projects](../assets/img/monitoring-and-insights/operational-insights/projects-and-contributors.png){.cInlineImage-half}
+![Contributors and Projects](../../assets/img/monitoring-and-insights/operational-insights/projects-and-contributors.png){.cInlineImage-half}
 
 - **Contributors**: Indicates how many users have contributed in the selected project or organization.
 - **Projects**: Number of projects within the organization. Projects are visible only at the organizational level.
 
-![components-summary](../assets/img/monitoring-and-insights/operational-insights/components-summary.png){.cInlineImage-half}
+![components-summary](../../assets/img/monitoring-and-insights/operational-insights/components-summary.png){.cInlineImage-half}
 
 - **Components**: Total number of components available in the selected project or organization.
 - **Services**: Total number of services deployed.
@@ -34,7 +34,7 @@ The top section displays key metrics about your environment:
 
 ## CPU Usage Metrics
 
-![CPU Usage Metrics](../assets/img/monitoring-and-insights/operational-insights/cpu-usage-metrics.png){.cInlineImage-half}
+![CPU Usage Metrics](../../assets/img/monitoring-and-insights/operational-insights/cpu-usage-metrics.png){.cInlineImage-half}
 
 - **Description**: This line chart visualizes CPU usage over time. CPU values are aggregated for all the components in the selected project, or for all components if the organization level is selected. Minimum allocation represents the CPU requested resources, while the maximum allocation is the CPU maximum value configured. The usage line shows the actual CPU usage, which can be lower than the minimum allocation if some components are not in a running state.
 - **Legend**:
@@ -49,7 +49,7 @@ The top section displays key metrics about your environment:
 
 ## Memory Usage Metrics
 
-![Memory Usage Metrics](../assets/img/monitoring-and-insights/operational-insights/memory-usage-metrics.png){.cInlineImage-half}
+![Memory Usage Metrics](../../assets/img/monitoring-and-insights/operational-insights/memory-usage-metrics.png){.cInlineImage-half}
 
 - **Description**: This line chart shows memory usage over time. Memory values are aggregated for all the components in the selected project, or for all components if the organization level is selected. Minimum allocation represents the memory requested resources, while the maximum allocation is the memory maximum value configured. The usage line shows the actual memory usage, which can be lower than the minimum allocation if some components are not in a running state.
 - **Legend**:
@@ -64,7 +64,7 @@ The top section displays key metrics about your environment:
 
 ## Deployments
 
-![Deployments](../assets/img/monitoring-and-insights/operational-insights/deployments.png){.cInlineImage-half}
+![Deployments](../../assets/img/monitoring-and-insights/operational-insights/deployments.png){.cInlineImage-half}
 
 This chart indicates the number of deployments to the selected environments within the time period shown on the X-axis. It helps you track deployment frequency and status for the chosen timeframe.
 
@@ -72,7 +72,7 @@ This chart indicates the number of deployments to the selected environments with
 
 ## API Response Summary
 
-![API Response Summary](../assets/img/monitoring-and-insights/operational-insights/api-response-summary.png){.cInlineImage-half}
+![API Response Summary](../../assets/img/monitoring-and-insights/operational-insights/api-response-summary.png){.cInlineImage-half}
 
 This chart shows the number of API requests associated with the specified response codes in the selected environments. It helps assess how the resources in those environments are functioning, providing insights into overall health and identifying any fault scenarios.
 
