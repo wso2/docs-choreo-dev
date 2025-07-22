@@ -147,6 +147,7 @@ nav:
             - Autoscale Components with Scale-to-Zero: k8s-operations/scaling/autoscale-components-with-scale-to-zero.md
       - Storage: k8s-operations/storage/configure-storage.md
   - Insights:
+      - Operational Insights: insights/operational-insights-dashboard.md
       - Delivery Insights:
           - Configure Delivery Insights: insights/delivery-insights/configure-delivery-insights.md
           - View Delivery Insights: insights/delivery-insights/view-delivery-insights.md
