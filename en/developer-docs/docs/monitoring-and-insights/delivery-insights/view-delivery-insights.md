@@ -1,6 +1,6 @@
-# View DORA metrics
+# View Delivery Insights
 
-DORA metrics comprise four key metrics. Let's explore what each metric represents in Choreo. Choreo displays a summary and graphical representation of each metric.
+The Choreo delivery insights dashboard offers a detailed overview of DevOps team efficiency through DORA metrics, which consist of four core performance indicators. Here’s how Choreo visualizes these metrics: each is presented with a concise summary and illustrated dynamically through charts or graphs to highlight trends and insights.
 
 ### Snapshot view
 

@@ -218,8 +218,8 @@ nav:
       - Alert Overview: monitoring-and-insights/alerts-overview.md
       - Operational Insights: monitoring-and-insights/operational-insights-dashboard.md
       - Delivery Insights:
-          - Configure DORA Metrics: monitoring-and-insights/delivery-insights/configure-dora-metrics.md
-          - View DORA Metrics: monitoring-and-insights/delivery-insights/view-dora-metrics.md
+          - Configure Delivery Insights: monitoring-and-insights/delivery-insights/configure-delivery-insights.md
+          - View Delivery Insights: monitoring-and-insights/delivery-insights/view-delivery-insights.md
       - Usage Insights:
           - Insights Overview: monitoring-and-insights/insights-overview.md
           - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
