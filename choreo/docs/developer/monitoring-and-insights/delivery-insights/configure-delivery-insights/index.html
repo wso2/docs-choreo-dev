@@ -12,20 +12,20 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/configure-dora-metrics/">
+        <link rel="canonical" href="https://wso2.com/choreo/docs/monitoring-and-insights/delivery-insights/configure-delivery-insights/">
       
       
         <link rel="prev" href="../../operational-insights-dashboard/">
       
       
-        <link rel="next" href="../view-dora-metrics/">
+        <link rel="next" href="../view-delivery-insights/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Configure DORA Metrics - Choreo Documentation | AI-Native Internal Developer Platform</title>
+        <title>Configure Delivery Insights - Choreo Documentation | AI-Native Internal Developer Platform</title>
       
     
     
@@ -142,7 +142,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#configure-cio-dashboard" class="md-skip">
+        <a href="#delivery-insights" class="md-skip">
           Skip to content
         </a>
       
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Configure DORA Metrics
+              Configure Delivery Insights
             
           </span>
         </div>
@@ -3198,12 +3198,12 @@ document.addEventListener('DOMContentLoaded', function() {
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Configure DORA Metrics
+          Configure Delivery Insights
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Configure DORA Metrics
+        Configure Delivery Insights
       </a>
       
         
@@ -3222,8 +3222,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#configure-the-cio-dashboard-with-all-metrics" class="md-nav__link">
-    Configure the CIO Dashboard with all metrics
+  <a href="#configure-the-delivery-insights-dashboard-with-all-metrics" class="md-nav__link">
+    Configure the Delivery Insights dashboard with all metrics
   </a>
   
 </li>
@@ -3291,8 +3291,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../view-dora-metrics/" class="md-nav__link">
-        View DORA Metrics
+      <a href="../view-delivery-insights/" class="md-nav__link">
+        View Delivery Insights
       </a>
     </li>
   
@@ -4028,8 +4028,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#configure-the-cio-dashboard-with-all-metrics" class="md-nav__link">
-    Configure the CIO Dashboard with all metrics
+  <a href="#configure-the-delivery-insights-dashboard-with-all-metrics" class="md-nav__link">
+    Configure the Delivery Insights dashboard with all metrics
   </a>
   
 </li>
@@ -4097,22 +4097,23 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
 
-<h1 id="configure-cio-dashboard">Configure CIO Dashboard<a class="headerlink" href="#configure-cio-dashboard" title="Permanent link">&para;</a></h1>
-<p><a class="glightbox" href="../../../assets/img/monitoring-and-insights/engineering-insights/cio-dashboard.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="CIO dashboard" class="cInlineImage-full" src="../../../assets/img/monitoring-and-insights/engineering-insights/cio-dashboard.png" /></a></p>
-<p>You can view DORA metrics in Choreo to use as KPIs to measure your organization's DevOps team's performance. Choreo enables this feature by default for all organizations. DORA includes the following four key metrics that are regarded as the most important metrics to indicate team performance:</p>
+<h1 id="delivery-insights">Delivery Insights<a class="headerlink" href="#delivery-insights" title="Permanent link">&para;</a></h1>
+<p><a class="glightbox" href="../../../assets/img/monitoring-and-insights/engineering-insights/delivery-insights-dashboard.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Delivery insights dashboard" class="cInlineImage-full" src="../../../assets/img/monitoring-and-insights/engineering-insights/delivery-insights-dashboard.png" /></a></p>
+<p>You can view delivery insights in Choreo to use as Key Performer Indicators (KPIs) to measure your organization's DevOps team's performance. Choreo enables this feature by default for all organizations. Delivery insights includes the following four key metrics (DORA metrics) that are regarded as the most important metrics to indicate team performance:</p>
 <ul>
 <li>Deployment Frequency: How often an organization successfully releases to production</li>
 <li>Lead Time for Changes: The amount of time it takes a commit to get into production</li>
 <li>Change Failure Rate: The percentage of deployments causing a failure in production</li>
-<li>Time to Restore Service: How long it takes an organization to recover from a failure in production</li>
+<li>Mean Time to Recovery: How long it takes an organization to recover from a failure in production</li>
 </ul>
-<p>Choreo enables two DORA metrics by default; deployment frequency and lead time for change.</p>
-<h2 id="configure-the-cio-dashboard-with-all-metrics">Configure the CIO Dashboard with all metrics<a class="headerlink" href="#configure-the-cio-dashboard-with-all-metrics" title="Permanent link">&para;</a></h2>
-<p>To configure the CIO dashboard by enabling the other two metrics, follow the steps below:</p>
+<p>Choreo enables two insights by default; deployment frequency and lead time for change.</p>
+<h2 id="configure-the-delivery-insights-dashboard-with-all-metrics">Configure the Delivery Insights dashboard with all metrics<a class="headerlink" href="#configure-the-delivery-insights-dashboard-with-all-metrics" title="Permanent link">&para;</a></h2>
+<p>To configure the dashboard by enabling the other two metrics, follow the steps below:</p>
 <ol>
-<li>Sign in to Choreo using your Google, GitHub, or Microsoft account. </li>
-<li>On the left navigation menu, click <strong>Insights</strong> and then click <strong>Delivery</strong>.</li>
-<li>Scroll to the bottom of the dashboard and click <strong>Configure</strong>. </li>
+<li>Sign in to <a href="https://console.choreo.dev/">Choreo</a>.</li>
+<li>In the Choreo Console, go to the top navigation menu and click <strong>Organization</strong>. Then select your organization. </li>
+<li>On the left navigation menu, click <strong>Insights</strong> and then click on <strong>Delivery</strong>.</li>
+<li>Scroll to the bottom of the dashboard and click <strong>Configure</strong>.</li>
 <li>Select your incident management system. Currently, Choreo only supports GitHub. </li>
 </ol>
 <h2 id="configuring-github-as-the-incident-management-system">Configuring GitHub as the incident management system<a class="headerlink" href="#configuring-github-as-the-incident-management-system" title="Permanent link">&para;</a></h2>
@@ -4164,13 +4165,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 </ul>
 <p>Once you configure the labels, click <strong>Save</strong>.</p>
-<p>Choreo will enable incident data publishing in the background once you save. Once completed, DORA metric charts will appear in the CIO dashboard for <strong>Mean Time To Recover</strong> and <strong>Change Failure Rate</strong>. If there are any issues in the configuration, the configure banner will reappear, and the user can proceed to reconfigure.</p>
+<p>Choreo will enable incident data publishing in the background once you save. Once completed, the metric charts will appear in the delivery insights dashboard for <strong>Mean Time To Recover</strong> and <strong>Change Failure Rate</strong>. If there are any issues in the configuration, the configure banner will reappear, and the user can proceed to reconfigure.</p>
 <h3 id="step-4-enrich-incident-tickets-with-deployment-information">Step 4: Enrich incident tickets with deployment information<a class="headerlink" href="#step-4-enrich-incident-tickets-with-deployment-information" title="Permanent link">&para;</a></h3>
 <p>Choreo extracts deployment information from the relevant incident and generates DORA metrics that help you analyze the deployment statistics related to the incidents. Therefore, you must manually update the GitHub issue with the relevant deployment-related information. Follow the steps below to add the deployment information to the GitHub issue. </p>
 <h4>Get deployment details</h4>
 <ol>
-<li>On the Choreo Console header, select the project and the component for which the incident was reported.</li>
-<li>On the left navigation menu, click <strong>Deploy</strong>.</li>
+<li>In the Choreo Console top navigation menu, select the <strong>Organization</strong>, then the <strong>Project</strong> and finally the relevant <strong>Component</strong> for which the incident was reported.</li>
+<li>On the left navigation menu, click <strong>DevOps</strong> and then click on <strong>CD Pipelines</strong></li>
 <li>On the <strong>Production Environment</strong> card, click <strong>Deployment History</strong>.</li>
 <li>
 <p>On the right-hand side panel, select the relevant deployment, and click <strong>Release details</strong> to copy the deployment details to the clipboard. </p>
@@ -4183,13 +4184,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Paste the deployment information you copied (in step 4 under the section <code>Get deployment details</code>) at the end of the issue body.</li>
 <li>Click <strong>Save</strong>.</li>
 </ol>
-<p>That's it! You have successfully configured your CIO dashboard to include the DORA metrics. </p>
+<p>That's it! You have successfully configured your delivery insights dashboard to include all DORA metrics. </p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The CIO Dashboard is expected to reflect the latest statistics within approximately 30 minutes.</p>
+<p>The delivery insights dashboard is expected to reflect the latest statistics within approximately 30 minutes.</p>
 </div>
 <h2 id="edit-configurations">Edit configurations<a class="headerlink" href="#edit-configurations" title="Permanent link">&para;</a></h2>
-<p><a class="glightbox" href="../../../assets/img/monitoring-and-insights/engineering-insights/edit-configurations.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Edit configurations" class="cInlineImage-small" src="../../../assets/img/monitoring-and-insights/engineering-insights/edit-configurations.png" /></a></p>
+<p><a class="glightbox" href="../../../assets/img/monitoring-and-insights/engineering-insights/edit-configurations.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Edit configurations" src="../../../assets/img/monitoring-and-insights/engineering-insights/edit-configurations.png" /></a></p>
 <p>You can edit or override the configurations you made via the edit option in the dashboard. </p>
 
 
@@ -4233,13 +4234,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         
           
-          <a href="../view-dora-metrics/" class="md-footer__link md-footer__link--next" aria-label="Next: View DORA Metrics" rel="next">
+          <a href="../view-delivery-insights/" class="md-footer__link md-footer__link--next" aria-label="Next: View Delivery Insights" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                View DORA Metrics
+                View Delivery Insights
               </div>
             </div>
             <div class="md-footer__button md-icon">
