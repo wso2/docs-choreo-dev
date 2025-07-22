@@ -12,27 +12,27 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/choreo/docs/db-and-services/message-brokers/monitor-a-kafka-service/">
+        <link rel="canonical" href="https://wso2.com/choreo/docs/insights/operational-insights-dashboard/">
       
       
-        <link rel="prev" href="../configure-a-kafka-service/">
+        <link rel="prev" href="../../k8s-operations/storage/configure-storage/">
       
       
-        <link rel="next" href="../../external-services/integrate-and-manage-gen-ai-services/">
+        <link rel="next" href="../delivery-insights/configure-delivery-insights/">
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Monitor a Kafka Service - Choreo Documentation | AI-Native Internal Developer Platform</title>
+        <title>Operational Insights - Choreo Documentation | AI-Native Internal Developer Platform</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.7bf56d0a.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a0c5b2b5.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
       
       
 
@@ -51,21 +51,21 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/region-selector.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/region-selector.css">
     
-      <link rel="stylesheet" href="../../../assets/lib/highlightjs/styles/vs.min.css">
+      <link rel="stylesheet" href="../../assets/lib/highlightjs/styles/vs.min.css">
     
-      <link rel="stylesheet" href="../../../assets/css/blue-palette-alt2.css">
+      <link rel="stylesheet" href="../../assets/css/blue-palette-alt2.css">
     
-      <link rel="stylesheet" href="../../../assets/css/choreotheme.css">
+      <link rel="stylesheet" href="../../assets/css/choreotheme.css">
     
-      <link rel="stylesheet" href="../../../assets/lib/json-formatter/json-formatter.css">
+      <link rel="stylesheet" href="../../assets/lib/json-formatter/json-formatter.css">
     
-      <link rel="stylesheet" href="../../../assets/css/config-catalog.css">
+      <link rel="stylesheet" href="../../assets/css/config-catalog.css">
     
-      <link rel="stylesheet" href="../../../assets/lib/fontawesome-free-6.3.0-web/css/all.min.css">
+      <link rel="stylesheet" href="../../assets/lib/fontawesome-free-6.3.0-web/css/all.min.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -106,7 +106,7 @@
    <!-- CookiePro cookies consent notice end -->
    
   </script>
-   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
         html.glightbox-open { overflow: initial; height: 100%; }
         .gslide-title { margin-top: 0px; user-select: text; }
         .gslide-desc { color: #666; user-select: text; }
@@ -117,7 +117,7 @@
             body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
             body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
             body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
 
   
   
@@ -142,7 +142,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#monitor-a-kafka-service" class="md-skip">
+        <a href="#operational-insights" class="md-skip">
           Skip to content
         </a>
       
@@ -173,9 +173,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Choreo Documentation | AI-Native Internal Developer Platform" class="md-header__button md-logo" aria-label="Choreo Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
+    <a href="../.." title="Choreo Documentation | AI-Native Internal Developer Platform" class="md-header__button md-logo" aria-label="Choreo Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
       
-  <img src="../../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
+  <img src="../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Monitor a Kafka Service
+              Operational Insights
             
           </span>
         </div>
@@ -481,9 +481,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Choreo Documentation | AI-Native Internal Developer Platform" class="md-nav__button md-logo" aria-label="Choreo Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
+    <a href="../.." title="Choreo Documentation | AI-Native Internal Developer Platform" class="md-nav__button md-logo" aria-label="Choreo Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
       
-  <img src="../../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
+  <img src="../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
 
     </a>
     Choreo Documentation | AI-Native Internal Developer Platform
@@ -541,7 +541,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -585,7 +585,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../what-is-choreo/" class="md-nav__link">
+      <a href="../../what-is-choreo/" class="md-nav__link">
         What is Choreo?
       </a>
     </li>
@@ -636,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
+      <a href="../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
         Resource Hierarchy
       </a>
     </li>
@@ -650,7 +650,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/organization/" class="md-nav__link">
+      <a href="../../choreo-concepts/organization/" class="md-nav__link">
         Organization
       </a>
     </li>
@@ -664,7 +664,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/data-planes/" class="md-nav__link">
+      <a href="../../choreo-concepts/data-planes/" class="md-nav__link">
         Data Planes
       </a>
     </li>
@@ -678,7 +678,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/environments/" class="md-nav__link">
+      <a href="../../choreo-concepts/environments/" class="md-nav__link">
         Environments
       </a>
     </li>
@@ -692,7 +692,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/ci-cd/" class="md-nav__link">
+      <a href="../../choreo-concepts/ci-cd/" class="md-nav__link">
         CI/CD
       </a>
     </li>
@@ -706,7 +706,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
+      <a href="../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
         Choreo Marketplace
       </a>
     </li>
@@ -720,7 +720,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/project/" class="md-nav__link">
+      <a href="../../choreo-concepts/project/" class="md-nav__link">
         Project
       </a>
     </li>
@@ -734,7 +734,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/component/" class="md-nav__link">
+      <a href="../../choreo-concepts/component/" class="md-nav__link">
         Component
       </a>
     </li>
@@ -748,7 +748,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/deployment-tracks/" class="md-nav__link">
+      <a href="../../choreo-concepts/deployment-tracks/" class="md-nav__link">
         Deployment Tracks
       </a>
     </li>
@@ -762,7 +762,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/endpoint/" class="md-nav__link">
+      <a href="../../choreo-concepts/endpoint/" class="md-nav__link">
         Endpoint
       </a>
     </li>
@@ -776,7 +776,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-concepts/connections/" class="md-nav__link">
+      <a href="../../choreo-concepts/connections/" class="md-nav__link">
         Connections
       </a>
     </li>
@@ -827,7 +827,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../infrastructure/dataplanes/data-planes/" class="md-nav__link">
+      <a href="../../infrastructure/dataplanes/data-planes/" class="md-nav__link">
         Data Planes
       </a>
     </li>
@@ -870,7 +870,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../infrastructure/environments/manage-environments/" class="md-nav__link">
+      <a href="../../infrastructure/environments/manage-environments/" class="md-nav__link">
         Manage Environments
       </a>
     </li>
@@ -920,7 +920,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../infrastructure/domains/configure-a-custom-domain-for-your-organization/" class="md-nav__link">
+      <a href="../../infrastructure/domains/configure-a-custom-domain-for-your-organization/" class="md-nav__link">
         Configure a Custom Domain for Your Organization
       </a>
     </li>
@@ -941,7 +941,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../infrastructure/configure-vpns-on-the-choreo-cloud-data-plane/" class="md-nav__link">
+      <a href="../../infrastructure/configure-vpns-on-the-choreo-cloud-data-plane/" class="md-nav__link">
         Configure VPNs on Cloud Data Plane
       </a>
     </li>
@@ -984,7 +984,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments/" class="md-nav__link">
+      <a href="../../infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments/" class="md-nav__link">
         Set Up Git Provider Authentication
       </a>
     </li>
@@ -998,7 +998,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../infrastructure/credentials/use-your-own-container-registry/" class="md-nav__link">
+      <a href="../../infrastructure/credentials/use-your-own-container-registry/" class="md-nav__link">
         Use Your Own Container Registry
       </a>
     </li>
@@ -1085,7 +1085,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../user-management/users/manage-members-of-an-organization/" class="md-nav__link">
+      <a href="../../user-management/users/manage-members-of-an-organization/" class="md-nav__link">
         Manage  Members of an Organization
       </a>
     </li>
@@ -1099,7 +1099,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../user-management/users/configure-enterprise-login/" class="md-nav__link">
+      <a href="../../user-management/users/configure-enterprise-login/" class="md-nav__link">
         Configure Enterprise Login
       </a>
     </li>
@@ -1149,7 +1149,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../user-management/groups-and-roles/control-access-in-the-choreo-console/" class="md-nav__link">
+      <a href="../../user-management/groups-and-roles/control-access-in-the-choreo-console/" class="md-nav__link">
         Control Access in the Choreo Console
       </a>
     </li>
@@ -1236,7 +1236,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/ci-pipelines/configure-ci-pipeline/" class="md-nav__link">
+      <a href="../../devops/ci-pipelines/configure-ci-pipeline/" class="md-nav__link">
         Configure CI Pipeline
       </a>
     </li>
@@ -1250,7 +1250,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
+      <a href="../../devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
         Integrate Unit Tests into the CI Pipeline
       </a>
     </li>
@@ -1264,7 +1264,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/ci-pipelines/ci-pipeline-logs/" class="md-nav__link">
+      <a href="../../devops/ci-pipelines/ci-pipeline-logs/" class="md-nav__link">
         CI Pipeline logs
       </a>
     </li>
@@ -1314,7 +1314,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
+      <a href="../../devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
         Deploy Applications using Choreo CD Pipeline
       </a>
     </li>
@@ -1328,7 +1328,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
+      <a href="../../devops/cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
         Manage CD Pipelines
       </a>
     </li>
@@ -1342,7 +1342,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-nav__link">
+      <a href="../../devops/cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-nav__link">
         Submit Environment Promotion Approval Requests
       </a>
     </li>
@@ -1363,7 +1363,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/manage-configuration-groups/" class="md-nav__link">
+      <a href="../../devops/manage-configuration-groups/" class="md-nav__link">
         Manage Configuration Groups
       </a>
     </li>
@@ -1443,7 +1443,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-nav__link">
+      <a href="../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-nav__link">
         Configure Approvals for Choreo Workflows
       </a>
     </li>
@@ -1493,7 +1493,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../governance/egress-control/control-egress-traffic-for-your-organization/" class="md-nav__link">
+      <a href="../../governance/egress-control/control-egress-traffic-for-your-organization/" class="md-nav__link">
         Control Egress Traffic for Your Choreo Organization
       </a>
     </li>
@@ -1543,7 +1543,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../governance/approvals/review-workflow-approval-requests/" class="md-nav__link">
+      <a href="../../governance/approvals/review-workflow-approval-requests/" class="md-nav__link">
         Review Workflow Approval Requests
       </a>
     </li>
@@ -1570,16 +1570,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
       
       
       
@@ -1588,7 +1588,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           DB & Services
@@ -1630,7 +1630,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../databases/choreo-managed-databases-and-caches/" class="md-nav__link">
+      <a href="../../db-and-services/databases/choreo-managed-databases-and-caches/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -1644,7 +1644,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../databases/choreo-managed-postgresql-databases/" class="md-nav__link">
+      <a href="../../db-and-services/databases/choreo-managed-postgresql-databases/" class="md-nav__link">
         PostgreSQL
       </a>
     </li>
@@ -1658,7 +1658,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../databases/choreo-managed-mysql-databases/" class="md-nav__link">
+      <a href="../../db-and-services/databases/choreo-managed-mysql-databases/" class="md-nav__link">
         MySQL
       </a>
     </li>
@@ -1672,7 +1672,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../databases/choreo-managed-caches/" class="md-nav__link">
+      <a href="../../db-and-services/databases/choreo-managed-caches/" class="md-nav__link">
         Choreo-Managed Cache
       </a>
     </li>
@@ -1686,7 +1686,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../databases/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
+      <a href="../../db-and-services/databases/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
         Add Choreo-Managed Databases and Caches to the Marketplace
       </a>
     </li>
@@ -1707,7 +1707,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
+      <a href="../../db-and-services/external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
         Third-Party Services
       </a>
     </li>
@@ -1719,16 +1719,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_3" >
       
       
       
@@ -1737,7 +1737,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_8_3">
           <span class="md-nav__icon md-icon"></span>
           Message Brokers
@@ -1750,7 +1750,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../choreo-managed-message-brokers/" class="md-nav__link">
+      <a href="../../db-and-services/message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -1764,7 +1764,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../create-choreo-managed-kafka-services/" class="md-nav__link">
+      <a href="../../db-and-services/message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
         Create Choreo-Managed Kafka Services
       </a>
     </li>
@@ -1778,7 +1778,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../configure-a-kafka-service/" class="md-nav__link">
+      <a href="../../db-and-services/message-brokers/configure-a-kafka-service/" class="md-nav__link">
         Configure a Kafka Service
       </a>
     </li>
@@ -1790,59 +1790,11 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Monitor a Kafka Service
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../db-and-services/message-brokers/monitor-a-kafka-service/" class="md-nav__link">
         Monitor a Kafka Service
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#service-metrics" class="md-nav__link">
-    Service metrics
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#service-logs" class="md-nav__link">
-    Service logs
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1861,7 +1813,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../external-services/integrate-and-manage-gen-ai-services/" class="md-nav__link">
+      <a href="../../db-and-services/external-services/integrate-and-manage-gen-ai-services/" class="md-nav__link">
         Gen AI Services
       </a>
     </li>
@@ -1941,7 +1893,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../k8s-operations/runtime/view-runtime-details/" class="md-nav__link">
+      <a href="../../k8s-operations/runtime/view-runtime-details/" class="md-nav__link">
         View Kubernetes Runtime Details
       </a>
     </li>
@@ -1991,7 +1943,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../k8s-operations/containers/configure-container-resources-commands-and-arguments/" class="md-nav__link">
+      <a href="../../k8s-operations/containers/configure-container-resources-commands-and-arguments/" class="md-nav__link">
         Configure Kubernetes Container Resources, Commands, and Arguments
       </a>
     </li>
@@ -2012,7 +1964,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../k8s-operations/manage-configurations-and-secrets/" class="md-nav__link">
+      <a href="../../k8s-operations/manage-configurations-and-secrets/" class="md-nav__link">
         K8s Configurations and Secrets
       </a>
     </li>
@@ -2026,7 +1978,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../k8s-operations/set-up-health-checks/" class="md-nav__link">
+      <a href="../../k8s-operations/set-up-health-checks/" class="md-nav__link">
         Health Checks
       </a>
     </li>
@@ -2069,7 +2021,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../k8s-operations/scaling/autoscale-component-replicas/" class="md-nav__link">
+      <a href="../../k8s-operations/scaling/autoscale-component-replicas/" class="md-nav__link">
         Autoscale Component Replicas
       </a>
     </li>
@@ -2083,7 +2035,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../k8s-operations/scaling/autoscale-components-with-scale-to-zero/" class="md-nav__link">
+      <a href="../../k8s-operations/scaling/autoscale-components-with-scale-to-zero/" class="md-nav__link">
         Autoscale Components with Scale-to-Zero
       </a>
     </li>
@@ -2104,7 +2056,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../k8s-operations/storage/configure-storage/" class="md-nav__link">
+      <a href="../../k8s-operations/storage/configure-storage/" class="md-nav__link">
         Storage
       </a>
     </li>
@@ -2124,16 +2076,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
       
       
       
@@ -2142,7 +2094,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_10">
           <span class="md-nav__icon md-icon"></span>
           Insights
@@ -2153,11 +2105,80 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../../insights/operational-insights-dashboard/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Operational Insights
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Operational Insights
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-usage-metrics" class="md-nav__link">
+    CPU Usage Metrics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-usage-metrics" class="md-nav__link">
+    Memory Usage Metrics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployments" class="md-nav__link">
+    Deployments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-response-summary" class="md-nav__link">
+    API Response Summary
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2198,7 +2219,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../insights/delivery-insights/configure-delivery-insights/" class="md-nav__link">
+      <a href="../delivery-insights/configure-delivery-insights/" class="md-nav__link">
         Configure Delivery Insights
       </a>
     </li>
@@ -2212,7 +2233,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../insights/delivery-insights/view-delivery-insights/" class="md-nav__link">
+      <a href="../delivery-insights/view-delivery-insights/" class="md-nav__link">
         View Delivery Insights
       </a>
     </li>
@@ -2291,7 +2312,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../insights/work-with-choreo-insights-api/access-the-choreo-insights-api/" class="md-nav__link">
+      <a href="../work-with-choreo-insights-api/access-the-choreo-insights-api/" class="md-nav__link">
         Access the Choreo Insights API
       </a>
     </li>
@@ -2305,7 +2326,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../insights/work-with-choreo-insights-api/choreo-insights-api/" class="md-nav__link">
+      <a href="../work-with-choreo-insights-api/choreo-insights-api/" class="md-nav__link">
         Choreo Insights API
       </a>
     </li>
@@ -2333,7 +2354,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../insights/cost-optimization/" class="md-nav__link">
+      <a href="../cost-optimization/" class="md-nav__link">
         Cost Insights
       </a>
     </li>
@@ -2413,7 +2434,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../observability/alerts/configure-alerts/" class="md-nav__link">
+      <a href="../../observability/alerts/configure-alerts/" class="md-nav__link">
         Configure Alerts
       </a>
     </li>
@@ -2434,7 +2455,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../observability/runtime-logs/" class="md-nav__link">
+      <a href="../../observability/runtime-logs/" class="md-nav__link">
         Runtime Logs
       </a>
     </li>
@@ -2448,7 +2469,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../observability/private-data-plane-logs/" class="md-nav__link">
+      <a href="../../observability/private-data-plane-logs/" class="md-nav__link">
         Private Data Plane Logs
       </a>
     </li>
@@ -2462,7 +2483,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../observability/audit-logs/" class="md-nav__link">
+      <a href="../../observability/audit-logs/" class="md-nav__link">
         Audit Logs
       </a>
     </li>
@@ -2542,7 +2563,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../api-management/developer-portal/customize-the-developer-portal/" class="md-nav__link">
+      <a href="../../api-management/developer-portal/customize-the-developer-portal/" class="md-nav__link">
         Customize the Choreo Developer Portal
       </a>
     </li>
@@ -2556,7 +2577,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../api-management/developer-portal/configure-identity-providers-for-developer-portal/" class="md-nav__link">
+      <a href="../../api-management/developer-portal/configure-identity-providers-for-developer-portal/" class="md-nav__link">
         Configure Identity Providers for Developer Portal
       </a>
     </li>
@@ -2570,7 +2591,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../api-management/developer-portal/configure-exposed-environments-to-developer-portal/" class="md-nav__link">
+      <a href="../../api-management/developer-portal/configure-exposed-environments-to-developer-portal/" class="md-nav__link">
         Configure Exposed Environments to Developer Portal
       </a>
     </li>
@@ -2620,7 +2641,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../api-management/api-analytics/integrate-choreo-with-moesif/" class="md-nav__link">
+      <a href="../../api-management/api-analytics/integrate-choreo-with-moesif/" class="md-nav__link">
         Integrate Choreo with Moesif for Analytics
       </a>
     </li>
@@ -2670,7 +2691,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../api-management/consumer-idps/configure-a-user-store-with-built-in-idp/" class="md-nav__link">
+      <a href="../../api-management/consumer-idps/configure-a-user-store-with-built-in-idp/" class="md-nav__link">
         Set Up a User Store with Choreo’s Built-In Identity Provider
       </a>
     </li>
@@ -2684,7 +2705,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../api-management/consumer-idps/configure-asgardeo-as-an-external-idp/" class="md-nav__link">
+      <a href="../../api-management/consumer-idps/configure-asgardeo-as-an-external-idp/" class="md-nav__link">
         Set Up Asgardeo as an External IdP for Choreo APIs
       </a>
     </li>
@@ -2698,7 +2719,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../api-management/consumer-idps/configure-azure-ad-as-an-external-idp/" class="md-nav__link">
+      <a href="../../api-management/consumer-idps/configure-azure-ad-as-an-external-idp/" class="md-nav__link">
         Set Up Azure AD as an External IdP for Choreo APIs
       </a>
     </li>
@@ -2756,7 +2777,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-cli/choreo-cli-overview/" class="md-nav__link">
+      <a href="../../choreo-cli/choreo-cli-overview/" class="md-nav__link">
         Choreo CLI Overview
       </a>
     </li>
@@ -2770,7 +2791,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-cli/get-started-with-the-choreo-cli/" class="md-nav__link">
+      <a href="../../choreo-cli/get-started-with-the-choreo-cli/" class="md-nav__link">
         Get Started with the Choreo CLI
       </a>
     </li>
@@ -2784,7 +2805,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../choreo-cli/manage-authentication-with-personal-access-tokens/" class="md-nav__link">
+      <a href="../../choreo-cli/manage-authentication-with-personal-access-tokens/" class="md-nav__link">
         Manage Authentication with Personal Access Tokens in Choreo CLI
       </a>
     </li>
@@ -2835,7 +2856,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../references/faq/" class="md-nav__link">
+      <a href="../../references/faq/" class="md-nav__link">
         FAQ
       </a>
     </li>
@@ -2849,7 +2870,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../references/choreo-limitations/" class="md-nav__link">
+      <a href="../../references/choreo-limitations/" class="md-nav__link">
         Choreo Limitations
       </a>
     </li>
@@ -2863,7 +2884,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../references/troubleshoot-choreo/" class="md-nav__link">
+      <a href="../../references/troubleshoot-choreo/" class="md-nav__link">
         Troubleshoot Choreo
       </a>
     </li>
@@ -2877,7 +2898,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../references/private-data-plane-security-levels/" class="md-nav__link">
+      <a href="../../references/private-data-plane-security-levels/" class="md-nav__link">
         Private Data Plane Security Levels
       </a>
     </li>
@@ -2891,7 +2912,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../references/private-data-plane-management-models/" class="md-nav__link">
+      <a href="../../references/private-data-plane-management-models/" class="md-nav__link">
         Private Data Plane Management Models
       </a>
     </li>
@@ -2905,7 +2926,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../references/choreo-platform-services-billing-and-upgrades/" class="md-nav__link">
+      <a href="../../references/choreo-platform-services-billing-and-upgrades/" class="md-nav__link">
         Choreo Platform Service Billing and Upgrades
       </a>
     </li>
@@ -2946,15 +2967,36 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#service-metrics" class="md-nav__link">
-    Service metrics
+  <a href="#overview" class="md-nav__link">
+    Overview
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#service-logs" class="md-nav__link">
-    Service logs
+  <a href="#cpu-usage-metrics" class="md-nav__link">
+    CPU Usage Metrics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-usage-metrics" class="md-nav__link">
+    Memory Usage Metrics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployments" class="md-nav__link">
+    Deployments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-response-summary" class="md-nav__link">
+    API Response Summary
   </a>
   
 </li>
@@ -2974,31 +3016,75 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
 
-<h1 id="monitor-a-kafka-service">Monitor a Kafka Service<a class="headerlink" href="#monitor-a-kafka-service" title="Permanent link">&para;</a></h1>
-<p>You can monitor the health and performance of your Kafka services via the service metrics and service logs.  </p>
-<h2 id="service-metrics">Service metrics<a class="headerlink" href="#service-metrics" title="Permanent link">&para;</a></h2>
-<p>Service metrics provide real-time insights into the performance of your Kafka service.</p>
-<p>To view service metrics for a Kafka service, follow the steps given below: </p>
-<ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the Choreo Console header, go to the <strong>Organization</strong> list and select your organization. </li>
-<li>On the left navigation menu, click <strong>DB &amp; Services</strong> and then click on <strong>Message Brokers</strong>.</li>
-<li>Click on the required message broker and go to the <strong>Metrics</strong> tab on the service details page.</li>
-</ol>
-<p>The service metrics include the following:</p>
+<h1 id="operational-insights">Operational Insights<a class="headerlink" href="#operational-insights" title="Permanent link">&para;</a></h1>
+<p>The Operational Insights dashboard provides a centralized view for monitoring and analyzing the health and resource usage of your organization and its projects. It enables users to:</p>
 <ul>
-<li><strong>CPU Usage %</strong>: Displays the percentage of CPU resources consumed by the service.</li>
-<li><strong>Disk Usage %</strong>: Represents the percentage of disk space utilized by the service.</li>
-<li><strong>Disk IO Reads</strong>: Displays the input/output operations per second (IOPS) for disk reads.</li>
-<li><strong>Disk IO Writes</strong>: Displays the input/output operations per second (IOPS) for disk writes.</li>
-<li><strong>Load Average</strong>: Displays the 5-minute average CPU load, indicating the system's computational load.</li>
-<li><strong>Memory Available %</strong>: Represents the percentage of memory resources utilized by the service.</li>
-<li><strong>Network Received</strong>: Indicates the volume of network traffic received by the service in bytes per second.</li>
-<li><strong>Network Sent</strong>: Indicates the amount of network traffic transmitted by the service in bytes per second.</li>
+<li>View the number of components, services, API proxies, web apps, and other resources at both the organization and project levels.</li>
+<li>Track CPU and memory utilization for these resources over time, helping to identify trends, bottlenecks, and potential issues.</li>
+<li>Gain insights into deployment activity and API response patterns, supporting operational decision-making and troubleshooting.</li>
 </ul>
-<h2 id="service-logs">Service logs<a class="headerlink" href="#service-logs" title="Permanent link">&para;</a></h2>
-<p>Service logs provide a detailed record of Kafka service activity, such as producer and consumer operations, connection statuses, and error reports. These logs are essential for troubleshooting issues and analyzing message flow. Logs are retained for up to 4 days.</p>
-<p>To view Choreo-managed Kafka service logs, go to the <strong>Logs</strong> tab on the service details page.</p>
+<p>This dashboard is essential for maintaining visibility into your cloud resources, ensuring optimal performance, and proactively managing your infrastructure.</p>
+<p>You can view the Operational Insights dashboard at either the organization level or the project level. Users can select the desired environment to view insights, and filter the data by time range—choosing from the last day, last week, last two weeks, or last month—to analyze trends and performance over different periods.</p>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The top section displays key metrics about your environment:</p>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/operational-insights/projects-and-contributors.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Contributors and Projects" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/operational-insights/projects-and-contributors.png" /></a></p>
+<ul>
+<li><strong>Contributors</strong>: Indicates how many users have contributed in the selected project or organization.</li>
+<li><strong>Projects</strong>: Number of projects within the organization. Projects are visible only at the organizational level.</li>
+</ul>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/operational-insights/components-summary.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="components-summary" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/operational-insights/components-summary.png" /></a></p>
+<ul>
+<li><strong>Components</strong>: Total number of components available in the selected project or organization.</li>
+<li><strong>Services</strong>: Total number of services deployed.</li>
+<li><strong>API Proxies</strong>: Total number of API proxies deployed.</li>
+<li><strong>Web Apps</strong>: Total number of web applications deployed.</li>
+<li><strong>Tasks</strong>: Total number of tasks deployed.</li>
+<li><strong>Other</strong>: Any other deployed components that do not fall into the above categories.</li>
+</ul>
+<hr />
+<h2 id="cpu-usage-metrics">CPU Usage Metrics<a class="headerlink" href="#cpu-usage-metrics" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/operational-insights/cpu-usage-metrics.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="CPU Usage Metrics" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/operational-insights/cpu-usage-metrics.png" /></a></p>
+<ul>
+<li><strong>Description</strong>: This line chart visualizes CPU usage over time. CPU values are aggregated for all the components in the selected project, or for all components if the organization level is selected. Minimum allocation represents the CPU requested resources, while the maximum allocation is the CPU maximum value configured. The usage line shows the actual CPU usage, which can be lower than the minimum allocation if some components are not in a running state.</li>
+<li>
+<p><strong>Legend</strong>:</p>
+<ul>
+<li><strong>Usage</strong>: Actual CPU usage.</li>
+<li><strong>Min Allocated</strong>: Minimum CPU resources allocated.</li>
+<li><strong>Max Allocated</strong>: Maximum CPU resources allocated.</li>
+</ul>
+</li>
+<li>
+<p><strong>Purpose</strong>: Helps identify trends, spikes, or resource constraints in CPU usage.</p>
+</li>
+</ul>
+<hr />
+<h2 id="memory-usage-metrics">Memory Usage Metrics<a class="headerlink" href="#memory-usage-metrics" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/operational-insights/memory-usage-metrics.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Memory Usage Metrics" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/operational-insights/memory-usage-metrics.png" /></a></p>
+<ul>
+<li><strong>Description</strong>: This line chart shows memory usage over time. Memory values are aggregated for all the components in the selected project, or for all components if the organization level is selected. Minimum allocation represents the memory requested resources, while the maximum allocation is the memory maximum value configured. The usage line shows the actual memory usage, which can be lower than the minimum allocation if some components are not in a running state.</li>
+<li>
+<p><strong>Legend</strong>:</p>
+<ul>
+<li><strong>Usage</strong>: Actual memory usage.</li>
+<li><strong>Min Allocated</strong>: Minimum memory allocated.</li>
+<li><strong>Max Allocated</strong>: Maximum memory allocated.</li>
+</ul>
+</li>
+<li>
+<p><strong>Purpose</strong>: Useful for monitoring memory consumption and ensuring resources are sufficient for workloads.</p>
+</li>
+</ul>
+<hr />
+<h2 id="deployments">Deployments<a class="headerlink" href="#deployments" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/operational-insights/deployments.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Deployments" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/operational-insights/deployments.png" /></a></p>
+<p>This chart indicates the number of deployments to the selected environments within the time period shown on the X-axis. It helps you track deployment frequency and status for the chosen timeframe.</p>
+<hr />
+<h2 id="api-response-summary">API Response Summary<a class="headerlink" href="#api-response-summary" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/operational-insights/api-response-summary.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="API Response Summary" class="cInlineImage-half" src="../../assets/img/monitoring-and-insights/operational-insights/api-response-summary.png" /></a></p>
+<p>This chart shows the number of API requests associated with the specified response codes in the selected environments. It helps assess how the resources in those environments are functioning, providing insights into overall health and identifying any fault scenarios.</p>
+<hr />
 
 
 
@@ -3025,7 +3111,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../configure-a-kafka-service/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configure a Kafka Service" rel="prev">
+          <a href="../../k8s-operations/storage/configure-storage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Storage" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -3034,20 +3120,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                Configure a Kafka Service
+                Storage
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../external-services/integrate-and-manage-gen-ai-services/" class="md-footer__link md-footer__link--next" aria-label="Next: Gen AI Services" rel="next">
+          <a href="../delivery-insights/configure-delivery-insights/" class="md-footer__link md-footer__link--next" aria-label="Next: Configure Delivery Insights" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                Gen AI Services
+                Configure Delivery Insights
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3078,20 +3164,20 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "navigation.path", "navigation.top", "content.code.copy", "content.action.edit", "content.action.view", "version.selector"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.path", "navigation.top", "content.code.copy", "content.action.edit", "content.action.view", "version.selector"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
       
-        <script src="../../../assets/lib/json-formatter/json-formatter.umd.js"></script>
+        <script src="../../assets/lib/json-formatter/json-formatter.umd.js"></script>
       
-        <script src="../../../assets/lib/highlightjs/highlight.min.js"></script>
+        <script src="../../assets/lib/highlightjs/highlight.min.js"></script>
       
-        <script src="../../../assets/js/choreotheme.js"></script>
+        <script src="../../assets/js/choreotheme.js"></script>
       
-        <script src="../../../assets/javascripts/region-selector.js"></script>
+        <script src="../../assets/javascripts/region-selector.js"></script>
       
-        <script src="../../../js/open_in_new_tab.js"></script>
+        <script src="../../js/open_in_new_tab.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
