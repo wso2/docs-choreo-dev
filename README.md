@@ -103,7 +103,7 @@ $ pip install --upgrade pip
 To clone the Choreo documentation GitHub repository and run the site on your local server, follow these steps:
 
 1. Fork `https://github.com/wso2/docs-choreo-dev`.
-2. Navigate to the locatiion where you want to clone the repo and clone the forked repository.
+2. Navigate to the location where you want to clone the repo and clone the forked repository.
 
     ```shell
     $ git clone https://github.com/[git-username]/docs-choreo-dev.git

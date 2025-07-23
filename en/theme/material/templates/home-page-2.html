@@ -19,6 +19,7 @@
     <label class="md-header__button md-icon" for="__drawer">
       {% include ".icons/material/menu" ~ ".svg" %}
     </label>
+    {% include "partials/perspective-selector.html" %}
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
@@ -74,7 +75,7 @@
 {% endif %} 
  <section class="md-section">
     <div class="md-grid md-typeset">
-      <div class="section01" style="display: block;  text-align: center; width: 70%;  flex-shrink: 0;min-width: 40%; max-height: 280px; max-width:100%; margin-left:10px; padding-top: 0.5rem; text-align: -webkit-center; margin:auto; margin-top: 1rem;margin-bottom: 1rem; ">
+       <div class="section01" style="display: block;  text-align: center; width: 70%;  flex-shrink: 0;min-width: 40%; max-height: 280px; max-width:100%; margin-left:10px; padding-top: 0.5rem; text-align: -webkit-center; margin:auto; margin-top: 1rem;margin-bottom: 1rem; ">
         <h1 style="font-weight: 700; font-size: 43px; line-height: 48px; padding-top: 2.5rem;">How can we help?</h1>
        </div> 
        <div class="md-search" data-md-component="search" role="dialog" style="align-items:center; width: 100%; height: 100%;">
@@ -184,6 +185,13 @@
    background-image: url('assets/img/home/background.svg') !important;
    background-position-y: -24rem;
 }
+
+@media screen and (min-width: 1220px) {
+  .md-main__inner {
+    display: none;
+  }
+}
+
 </style>
 </header>
 {% endblock %}
@@ -197,7 +205,11 @@
 {% block palette%}
 {% endblock %}
 <main class="md-main" data-md-component="main">
-
+  <div class="md-main__inner md-grid"> 
+        {% block site_nav %}
+        {{super()}}
+        {% endblock %}
+  </div>
   <div class="md-container-home data-md-component="container">
   <div style="height: 5rem;"></div>
   <div class="row md_home_link_container_row">
@@ -405,8 +417,7 @@
                     </svg>                                                           
                 </div>
                 <div class="cText">
-                  <a href="develop-components/develop-proxy/develop-an-api-proxy-from-scratch/">Develop an API Proxy </a>
-                </div>
+                  <a href="develop-components/develop-proxy/develop-an-api-proxy-from-scratch/">Develop an API Proxy </a>                </div>
                 </div>
                 <div class="iconTextcontainer">
                   <div class="cIcon">
