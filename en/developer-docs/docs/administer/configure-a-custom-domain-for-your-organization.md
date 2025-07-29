@@ -2,6 +2,9 @@
 
 A custom domain is essential for effective branding, discoverability, and credibility of a website. Choreo allows you to easily configure custom domains for your organization, enabling developers to utilize it to configure custom URLs for their components such as API proxies, services, web applications, and webhooks.
 
+!!! info "Note"
+    The Custom Domains feature is provided exclusively to paid subscribers. Free-tier organizations do not have access to custom domain configuration.
+
 This section provides an overview of Choreo’s custom domain configuration model and guides you through configuring a custom domain for your organization. It also walks you through utilizing a custom domain to configure a custom URL for a component.
 
 ## Choreo custom domain configuration model
