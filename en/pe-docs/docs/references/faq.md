@@ -186,13 +186,13 @@ choreo create component <name> --project <name> --build-configs='key1=value1,key
 choreo create component <name> --project <name> --build-configs='key1=value1' --build-configs='key2=value2'
 ```
 
-The build configurations required for existing buildpacks are as follows:
+The build configurations required for existing build presets are as follows:
 
 <table>
    <thead>
       <tr>
          <th>Component Type</th>
-         <th>Buildpack</th>
+         <th>Build presets</th>
          <th>Required Configurations</th>
       </tr>
    </thead>

@@ -9,7 +9,7 @@ Configuration groups can be defined at organization level and link to components
     - All configuration group values are encrypted and stored in environment-specific key vaults.
     - Management of configuration groups is restricted to users with Choreo Admin, DevOps, and Platform Engineer roles.
     - Developers can discover configuration groups available within the organization via the **Choreo Internal Marketplace**.
-    - This feature is currently not supported for Ballerina buildpacks, Web Applications, or Test Runner components.
+    - This feature is currently not supported for Ballerina build presets, Web Applications, or Test Runner components.
 
 ## Create a configuration group
 

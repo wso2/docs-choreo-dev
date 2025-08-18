@@ -26,7 +26,7 @@ Choreo auto-generates build pipelines that may slightly differ depending on the 
 
 With Auto Build on Commit, you can configure the build pipeline to be triggered once a new commit is available in the repository's selected branch without any user intervention.
 
-In addition to these steps, some buildpacks support integrating unit tests into the build pipeline. For more details, see [Integrate Unit Tests into the Choreo CI Pipeline](../devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline.md).
+In addition to these steps, some build presets support integrating unit tests into the build pipeline. For more details, see [Integrate Unit Tests into the Choreo CI Pipeline](../devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline.md).
 
 ## Continuos Deployment
 
