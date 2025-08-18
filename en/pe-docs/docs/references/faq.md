@@ -192,7 +192,7 @@ The build configurations required for existing build presets are as follows:
    <thead>
       <tr>
          <th>Component Type</th>
-         <th>Build presets</th>
+         <th>Build Preset</th>
          <th>Required Configurations</th>
       </tr>
    </thead>
