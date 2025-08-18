@@ -104,7 +104,7 @@ To create a containerized service component, follow these steps:
     | **Branch**              | **`main`**              |
     | **Component Directory** | `go-grpc`                  |
 
-8. Select **Docker** as the buildpack.
+8. Select **Docker** as the build presets.
 9. Enter the following information:
 
     | **Field**                | **Value**                  |
@@ -206,7 +206,7 @@ To create a manual task component, follow these steps:
     | **Branch**              | **`main`**              |
     | **Component Directory**       | `go/grpc`                  |
 
-6. Select **Docker** as the buildpack.
+6. Select **Docker** as the build presets.
 7. Enter the following information:
 
     | **Field**                | **Value**                  |

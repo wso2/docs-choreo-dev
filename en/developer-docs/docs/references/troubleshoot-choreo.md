@@ -52,9 +52,9 @@ To resolve the issue, follow the guidelines given below:
 
       During the build process, output files including the `index.html` are copied to the Nginx root directory. To ensure that the correct files are copied during the build process, you must check the Docker build logs. 
 
-- ### The language I prefer to use is not available as a buildpack.
+- ### The language I prefer to use is not available as a build presets.
 
-      In such scenarios, you can use the Dockerfile buildpack to create the component.
+      In such scenarios, you can use the Dockerfile build presets to create the component.
 
 - ### I mistakenly used an incorrect build command when creating a web application. How can I update it before triggering a build?
 

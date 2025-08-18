@@ -1,8 +1,8 @@
-# Deploy an Application with Buildpacks
+# Deploy an Application with Build Presets
 
 Using Choreo, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, Ruby, PHP, etc.) on shared or private data planes.
 
-Choreo supports deploying applications with buildpacks for the following component types:
+Choreo supports deploying applications with build presets for the following component types:
 
 - Service
 - Web Application
@@ -12,10 +12,10 @@ Choreo supports deploying applications with buildpacks for the following compone
 - Event Handler
 - Test Runner
 
-## Buildpacks
-Buildpacks are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With Choreo, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.
+## Build Presets
+Build Presets are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With Choreo, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.
 
-Choreo uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overview) as default buildpacks for Java, Go, NodeJS, Python, PHP, and Ruby. Choreo uses its own buildpacks for Ballerina and WSO2 MI.
+Choreo uses [Google Build Presets](https://cloud.google.com/docs/build presets/overview) as default build presets for Java, Go, NodeJS, Python, PHP, and Ruby. Choreo uses its own build presets for Ballerina and WSO2 MI.
 
 ## Develop a component
 
@@ -159,7 +159,7 @@ Follow the guidelines below based on your language:
         - 8, 11, 17, 18 (OpenJDK Runtime Environment Temurin)
 
     !!! info
-         You can use this buildpack only with web applications. For other component types, use the **Java** buildpack. Additionally, if the generated artifact is a `WAR` file, you must include the run command in the **Build Configurations** editor on the component's **Build** page. <br> e.g.,
+         You can use this build presets only with web applications. For other component types, use the **Java** build presets. Additionally, if the generated artifact is a `WAR` file, you must include the run command in the **Build Configurations** editor on the component's **Build** page. <br> e.g.,
             `java -jar target/sample.war` <br>
 
 ### Configure build-time environment variables
@@ -167,17 +167,17 @@ Follow the guidelines below based on your language:
 You can configure the environment variables necessary to build the component using the **Build Configurations Editor** on the component **Build** page. 
 
 !!! info
-    The capability to configure build-time environment variables is not available for components created using **Ballerina** or **WSO2 MI** buildpacks.
+    The capability to configure build-time environment variables is not available for components created using **Ballerina** or **WSO2 MI** build presets.
 
-During the build process, the build-time environment variables and their values are passed to the buildpack. Therefore, you can configure both buildpack-specific environment variables and those required for the component build.
+During the build process, the build-time environment variables and their values are passed to the build presets. Therefore, you can configure both build presets-specific environment variables and those required for the component build.
 
-For example, if you want to override the Maven command of the **Java** buildpack, you can use `GOOGLE_MAVEN_BUILD_ARGS` as the environment key and `clean install` as the value. 
+For example, if you want to override the Maven command of the **Java** build presets, you can use `GOOGLE_MAVEN_BUILD_ARGS` as the environment key and `clean install` as the value. 
 
-For more examples, see [Google Cloud's buildpacks documentation](https://cloud.google.com/docs/buildpacks/service-specific-configs).
+For more examples, see [Google Cloud's build presets documentation](https://cloud.google.com/docs/build presets/service-specific-configs).
 
 ### Customize the Default Run Command
 
-You can configure the run command required to start the component via the **Build Configurations** editor on the component's **Build** page. This overrides the default run command provided by the buildpack. After configuring the run command, you must rebuild the component for the changes to take effect.<br>
+You can configure the run command required to start the component via the **Build Configurations** editor on the component's **Build** page. This overrides the default run command provided by the build presets. After configuring the run command, you must rebuild the component for the changes to take effect.<br>
 
 e.g., <br>
 

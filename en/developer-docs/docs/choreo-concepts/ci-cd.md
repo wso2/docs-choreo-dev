@@ -24,7 +24,7 @@ Choreo auto-generates build pipelines that may slightly differ depending on the 
 - Pushes the container image to a container registry. In the cloud data plane, Choreo pushes the image to a Choreo-managed registry. If it is a private data plane organization, Choreo pushes the image to a registry that you own.
 - Updates service endpoints and API specifications from the provided repository if applicable.
 
-In addition to these steps, some buildpacks support integrating unit tests into the build pipeline. For more details, see [Integrate Unit Tests into the Build Pipeline](../develop-components/integrate-unit-tests-into-the-build-pipeline.md).
+In addition to these steps, some build presets support integrating unit tests into the build pipeline. For more details, see [Integrate Unit Tests into the Build Pipeline](../develop-components/integrate-unit-tests-into-the-build-pipeline.md).
 
 ### Repeatable builds
 
