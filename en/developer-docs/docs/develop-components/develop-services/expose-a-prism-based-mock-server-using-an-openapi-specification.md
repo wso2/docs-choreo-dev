@@ -47,7 +47,7 @@ To create a Prism mock service component, follow these steps:
     | **Branch**              | **`main`**              |
     |**Component Directory**  | `prism-mock-service`    |
 
-6. Select **Prism Mock** as the build presets.
+6. Select **Prism Mock** as the build preset.
 7. Enter a display name, a unique name, and a description for the service component.
 
     !!! info

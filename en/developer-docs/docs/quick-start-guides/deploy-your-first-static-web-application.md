@@ -64,7 +64,7 @@ For a video tutorial, see [Deploy a Static Web App on Choreo](https://www.youtub
     | **Repository**               | choreo-sample-todo-list-app |
     | **Branch**                   | main                        |
 
-4. Select **NodeJS** as the **Build presets**.
+4. Select **NodeJS** as the **Build preset**.
 5. Enter the following details:
 
     | **Field**                    | **Value**                   |

@@ -5,7 +5,7 @@ Choreo allows you to create and deploy applications in your preferred programmin
 In this guide, you will:
 
 - Build a simple greeting service using a sample service implementation. The sample implementation will have a single resource named `greet` that accepts a single query parameter as input.
-- Deploy the service in Choreo using a `Go` build presets. The service will run on port 9090.
+- Deploy the service in Choreo using a `Go` build preset. The service will run on port 9090.
 - Test the service.
 
 ## Prerequisites
@@ -66,7 +66,7 @@ To create a containerized service component, follow these steps:
     | **Branch**             | main               |
     | **Component Directory** | `/greeting-service-go` |
 
-6. Select **Go** as the build presets.
+6. Select **Go** as the build preset.
 7. Enter the following details:
 
     | **Field**                | **Value**              |

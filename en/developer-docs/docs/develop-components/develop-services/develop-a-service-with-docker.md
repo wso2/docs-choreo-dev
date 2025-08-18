@@ -65,7 +65,7 @@ To create a containerized service component, follow these steps:
     | **Branch**             | `main`         |
     | **Component Directory** | `/greeting-service-go`         |
 
-6. Select **Docker** as the build presets.
+6. Select **Docker** as the build preset.
 7. Enter the following details:
 
     | **Field**                | **Value**                        |

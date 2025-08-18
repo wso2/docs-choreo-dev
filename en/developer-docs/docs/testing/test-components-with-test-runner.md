@@ -18,7 +18,7 @@ Before you try out the steps in this guide, complete the following:
 
 You can develop tests in a language of your choice and execute them within the Choreo platform.
 
-## Create a test runner component using a build presets
+## Create a test runner component using a build preset
 
 1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. Click **+Create** in the **Component Listing** section.
@@ -86,8 +86,8 @@ You can develop tests in a language of your choice and execute them within the C
         | Component Directory | /postman-collection-dir |
 
 
-6. Under **Build presets**, select a build presets based on the language of your choice.
-7. Based on the build presets you chose, go to the relevant tab above and enter the respective values for the **Language version** field
+6. Under **Build preset**, select a build preset based on the language of your choice.
+7. Based on the build preset you chose, go to the relevant tab above and enter the respective values for the **Language version** field
 
 4. Enter a display name, unique name, and description for the test runner component. For this guide, enter the following values:
 
@@ -102,7 +102,7 @@ You can develop tests in a language of your choice and execute them within the C
 
 8. Click **Create**.
 
-You have successfully created a Test Runner component using a build presets of your choice. Now let's build and run the tests.
+You have successfully created a Test Runner component using a build preset of your choice. Now let's build and run the tests.
 
 ## Build and deploy the test runner component to execute the tests
 

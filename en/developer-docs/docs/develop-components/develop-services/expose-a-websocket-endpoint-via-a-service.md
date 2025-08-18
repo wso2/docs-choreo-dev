@@ -1,6 +1,6 @@
 # Expose a WebSocket Endpoint via a Service
 
-Choreo allows you to create and deploy applications in your preferred programming language, offering a seamless platform for building dynamic and scalable solutions. This guide walks you through the steps to deploy a WebSocket service using the NodeJS build presets.
+Choreo allows you to create and deploy applications in your preferred programming language, offering a seamless platform for building dynamic and scalable solutions. This guide walks you through the steps to deploy a WebSocket service using the NodeJS build preset.
 
 WebSockets provide real-time, two-way communication between a client and server over a persistent TCP connection. This makes WebSocket APIs ideal for applications that require real-time updates.
 
@@ -67,7 +67,7 @@ To create a NodeJS service component, follow these steps:
     | **Branch**              | **`main`**              |
     | **Component Directory**   | `websocket-chat-app/websocket-chat-service-nodejs`  |
 
-6. Select **NodeJS** as the build presets and **18.x.x** as the Language Version
+6. Select **NodeJS** as the build preset and **18.x.x** as the Language Version
 
 8. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
 

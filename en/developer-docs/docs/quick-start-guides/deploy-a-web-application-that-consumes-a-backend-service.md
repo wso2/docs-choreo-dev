@@ -83,7 +83,7 @@ This guide walks you through the following steps:
     | **Component Name**        | reading-list-service                          |
     | **Path**                  | reading-list-service                          |
     | **Component Type**        | Service                                       |
-    | **Build presets**             | NodeJS                                        |
+    | **Build preset**             | NodeJS                                        |
     | **Language Version**      | 20.x.x                                        |
 
 7. Click **Save**. This adds the `Reading List Service` component to the **Configured Components** pane.
@@ -171,7 +171,7 @@ Now that the `Reading List Service` is deployed and available in the Choreo Mark
     | **Branch**            | main                             |
     | **Component Directory** | /choreo-sample-book-list-app/reading-list-front-end-with-managed-auth |
 
-6. Select **React** as the build presets because the sample front-end application is a React application built with Vite.
+6. Select **React** as the build preset because the sample front-end application is a React application built with Vite.
 7. Enter the following details:
 
     | **Field**             | **Value**               |

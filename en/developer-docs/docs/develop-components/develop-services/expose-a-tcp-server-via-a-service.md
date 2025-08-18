@@ -86,7 +86,7 @@ To create a containerized service component, follow these steps:
     | **Branch**              | **`main`**              |
     | **Component Directory** | `docker-tcp-service`                  |
 
-6. Select **Docker** as the build presets.
+6. Select **Docker** as the build preset.
 7. Enter the following information:
 
     | **Field**                | **Value**                             |
@@ -188,7 +188,7 @@ To create a manual task component, follow these steps:
     | **Branch**              | **`main`**              |
     | **Docker Context**      |`docker-tcp-service`     |
 
-6. Select **Docker** as the build presets.
+6. Select **Docker** as the build preset.
 7. Enter the following information:
 
     | **Field**                | **Value**                             |

@@ -17,7 +17,7 @@ You can create a web application in Choreo as follows:
 ### Build and deploy a SPA from source code
 
 1. To create a web application component, connect a repository that includes the web application source code.
-2. Select the relevant build presets: Default build presets include **React**, **Angular**, and **Vue.js**. If you are using a different SPA framework, you can try one of these build presets because the configurations can be overridden to support most JavaScript-based SPAs.
+2. Select the relevant build preset: Default build presets include **React**, **Angular**, and **Vue.js**. If you are using a different SPA framework, you can try one of these build presets because the configurations can be overridden to support most JavaScript-based SPAs.
 3. Enter the build command: Based on your package manager (NPM, yarn, or pnpm). The relevant package manager is run based on the dependency lock file in your repository (defaults to NPM if no lock file is present).
 4. Specify the build output directory.
 5. Specify the NodeJS version: Choreo does not pick the Node.js version from the `package.json` engine property. The required Node version must be explicitly set in the build configuration.
@@ -34,7 +34,7 @@ This approach is recommended if you are deploying a web server and not just a si
 ### Host static websites
 
 1. Create a web application component and connect it to the GitHub repository that contains the required static assets.
-2. Select the **Static Websites** build presets: This build presets does not trigger a build process. It only fetches the files from the path specified in the repository and serves them as-is.
+2. Select the **Static Websites** build preset: This build preset does not trigger a build process. It only fetches the files from the path specified in the repository and serves them as-is.
 
 ## Build and deploy a SPA from source code
 
@@ -63,7 +63,7 @@ Follow the steps below to create a sample Web Application component and deploy i
     | **Branch**                | main                   |
     | **Component Directory**     | /react-single-page-app |
 
-8. Select **React** as the **Build presets**.
+8. Select **React** as the **Build preset**.
 9. Enter the following information:
 
     | **Field**                 | **Description**        |
@@ -191,7 +191,7 @@ The following limitations are specific to the Choreo cloud data plane:
 
 - **Blank page or 502 error after deployment**:
     If you encounter a blank page or a 502 error after deploying your web application, it typically indicates that the wrong directory is being served. To resolve this issue:
-    1. Double-check the build output directory, especially if you are using a Dockerfile-less build presets.
+    1. Double-check the build output directory, especially if you are using a Dockerfile-less build preset.
     2. Ensure that the specified output directory matches the actual output directory generated during the build process. For example, if you have erroneously entered `public/` as the output directory when it should have been `build/`.
 
 By verifying and correcting the output directory alignment, you should be able to address the issue of encountering a blank page or experiencing a 502 error on deploying your web application.

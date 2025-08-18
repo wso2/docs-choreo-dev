@@ -63,7 +63,7 @@ In this guide, you will:
 6. Select **Ballerina** as the build preset.
 
     !!! tip
-        - **Build presets** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build presets. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build presets.
+        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
         - **Component Directory** specifies the location of the project to build the component.
 
 7. Enter a unique name and description for the component. You can use the following values:
@@ -103,7 +103,7 @@ Now you can proceed to build and deploy the scheduled task.
     | **email**     | The email address to receive the formatted weather forecast information |
 
     !!! note
-        If you use **Ballerina** as the build presets and want to set a configurable variable as a secret, click the lock icon corresponding to the configurable variable. This marks it as a secret and conceals the input value.
+        If you use **Ballerina** as the build preset and want to set a configurable variable as a secret, click the lock icon corresponding to the configurable variable. This marks it as a secret and conceals the input value.
 
         For example, if you set the **apiKey** as a secret, its input value will be concealed. To update the input value later, click **Update Secret Content** and specify a new value.
 

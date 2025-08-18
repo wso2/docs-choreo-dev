@@ -229,7 +229,7 @@ For more information, see the following topics in the WSO2 Micro Integrator docu
 
 ## Deploying integrations in Choreo 
 
-WSO2 MI build presets is where you can deploy integrations developed with WSO2 Micro Integrator as an API. In this preset, you have three different ways to define endpoints. Choreo gives priority to the definition of endpoints in the below-mentioned order. 
+WSO2 MI build preset is where you can deploy integrations developed with WSO2 Micro Integrator as an API. In this preset, you have three different ways to define endpoints. Choreo gives priority to the definition of endpoints in the below-mentioned order. 
 
 1. **Using component.yaml file**
 This is the most flexible method to define endpoints. You can configure the endpoint details with the `component.yaml` configuration file. Place this file in the `.choreo` directory in the project path of the component. 
@@ -248,4 +248,4 @@ If `component.yaml` is not provided and if the source Micro Integrator project d
 
 ## Explore Choreo examples on GitHub
 
-For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our [Choreo Samples](../choreo-samples/samples-overview.md). You can filter out the samples based on the build presets `WSO2 MI`.
+For a hands-on experience with MI-based integrations in Choreo, we recommend exploring our [Choreo Samples](../choreo-samples/samples-overview.md). You can filter out the samples based on the build preset `WSO2 MI`.

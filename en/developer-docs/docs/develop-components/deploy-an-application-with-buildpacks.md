@@ -159,7 +159,7 @@ Follow the guidelines below based on your language:
         - 8, 11, 17, 18 (OpenJDK Runtime Environment Temurin)
 
     !!! info
-         You can use this build presets only with web applications. For other component types, use the **Java** build presets. Additionally, if the generated artifact is a `WAR` file, you must include the run command in the **Build Configurations** editor on the component's **Build** page. <br> e.g.,
+         You can use this build preset only with web applications. For other component types, use the **Java** build preset. Additionally, if the generated artifact is a `WAR` file, you must include the run command in the **Build Configurations** editor on the component's **Build** page. <br> e.g.,
             `java -jar target/sample.war` <br>
 
 ### Configure build-time environment variables
@@ -169,15 +169,15 @@ You can configure the environment variables necessary to build the component usi
 !!! info
     The capability to configure build-time environment variables is not available for components created using **Ballerina** or **WSO2 MI** build presets.
 
-During the build process, the build-time environment variables and their values are passed to the build presets. Therefore, you can configure both build presets-specific environment variables and those required for the component build.
+During the build process, the build-time environment variables and their values are passed to the build preset. Therefore, you can configure both build preset-specific environment variables and those required for the component build.
 
 For example, if you want to override the Maven command of the **Java** build presets, you can use `GOOGLE_MAVEN_BUILD_ARGS` as the environment key and `clean install` as the value. 
 
-For more examples, see [Google Cloud's build presets documentation](https://cloud.google.com/docs/build presets/service-specific-configs).
+For more examples, see [Google Cloud's build presets documentation](https://cloud.google.com/docs/buildpacks/service-specific-configs).
 
 ### Customize the Default Run Command
 
-You can configure the run command required to start the component via the **Build Configurations** editor on the component's **Build** page. This overrides the default run command provided by the build presets. After configuring the run command, you must rebuild the component for the changes to take effect.<br>
+You can configure the run command required to start the component via the **Build Configurations** editor on the component's **Build** page. This overrides the default run command provided by the build preset. After configuring the run command, you must rebuild the component for the changes to take effect.<br>
 
 e.g., <br>
 

@@ -70,7 +70,7 @@ For example, when you [work with the Micro Integrator (MI) runtime in Choreo](./
 Choreo lets you automatically pull the latest versions of Git submodules from their respective repositories. To enable this feature, follow these steps:
 
 !!! note 
-    Choreo currently supports this feature only for components where the build presets is **WSO2 MI**.
+    Choreo currently supports this feature only for components where the build preset is **WSO2 MI**.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click the component for which you want to pull the latest versions of Git submodules.
