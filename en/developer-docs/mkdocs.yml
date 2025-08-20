@@ -138,6 +138,7 @@ nav:
       - Integrate Unit Tests into the Build Pipeline: develop-components/integrate-unit-tests-into-the-build-pipeline.md
       - Share and Reuse Components:
           - Create a Connection: develop-components/sharing-and-reusing/create-a-connection.md
+          - Create a connection to a GenAI Service: develop-components/sharing-and-reusing/create-a-connection-to-a-genai-service.md
           - Use a Connection in Your Service: develop-components/sharing-and-reusing/use-a-connection-in-your-service.md
           - Use a Connection in Your Web Application: develop-components/sharing-and-reusing/use-a-connection-in-your-web-application.md
           - Use a Database Connection in Your Component: develop-components/sharing-and-reusing/use-a-database-connection-in-your-component.md
@@ -150,7 +151,6 @@ nav:
       - Connect to Remote Dependencies While Developing: develop-components/connect-to-remote-dependencies-while-developing.md
   - Integrate and Manage External Services:
       - Integrate and Manage Third-Party Services: integrate-and-manage-external-services/integrate-and-manage-third-party-services.md
-      - Integrate and Manage Generative AI Services: integrate-and-manage-external-services/integrate-and-manage-gen-ai-services.md
   - Choreo-Managed Databases and Caches:
       - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
       - PostgreSQL: manage-databases-and-caches/choreo-managed-postgresql-databases.md

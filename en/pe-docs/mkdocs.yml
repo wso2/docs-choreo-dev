@@ -134,7 +134,9 @@ nav:
           - Create Choreo-Managed Kafka Services: db-and-services/message-brokers/create-choreo-managed-kafka-services.md
           - Configure a Kafka Service: db-and-services/message-brokers/configure-a-kafka-service.md
           - Monitor a Kafka Service: db-and-services/message-brokers/monitor-a-kafka-service.md
-      - Gen AI Services: db-and-services/external-services/integrate-and-manage-gen-ai-services.md
+      - Gen AI Services:
+          - Choreo AI Gateway: db-and-services/ai-gateway/choreo-ai-gateway.md
+          - Integrate and Manage Generative AI Services: db-and-services/ai-gateway/integrate-and-manage-gen-ai-services.md
   - K8s Operations:
       - Runtime:
           - View Kubernetes Runtime Details: k8s-operations/runtime/view-runtime-details.md
