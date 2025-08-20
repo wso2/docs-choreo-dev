@@ -2,29 +2,49 @@
 
 ## Overview
 
-Choreo is a powerful platform that enables developers to create, deploy, and consume services efficiently. The Choreo Internal Marketplace simplifies API discovery and usage, allowing developers to integrate APIs seamlessly into their applications.
+Choreo is a cloud-native platform that enables developers to create, deploy, and consume services efficiently. The **Choreo Internal Marketplace** streamlines API discovery and integration, making it easier to incorporate services into your applications.
 
-This guide is intended for application developers who wish to consume Gen AI Services published in the Internal Marketplace to build their applications.
+This guide is for application developers who want to consume GenAI Services published in the Internal Marketplace.
 
 ## Prerequisites
 
-Before proceeding, ensure you have access to a published Gen AI Service to consume. If you do not have one, please follow the PE documentation to create and deploy a sample Gen AI Service.
+Before you begin, ensure that:
 
-## Discover Gen AI Services
+- You have access to a published GenAI Service in the Internal Marketplace.
 
-1. Navigate to the [Choreo Internal Marketplace](https://console.choreo.dev) and sign in.
-2. Select the desired Gen AI Service to view its details.
+- If you don’t yet have one, refer to the [PE documentation](https://docs.choreo.dev/en/pe-docs/docs/db-and-services/ai-gateway/integrate-and-manage-gen-ai-services) to create and deploy a sample GenAI Service.
 
-## Create a connection to a Gen AI Service
+## Discover GenAI Services
 
-Follow these steps to create a connection to a Gen AI Service from your choreo component:
+1. Navigate to the [Choreo Internal Marketplace](https://console.choreo.dev).
 
-1. In the left navigation menu, click **Connections**. This page lists all the existing connections.
-2. Click **+Create**. This opens the Marketplace view where you can browse and search for services.
-3. Click the **Services** tab. You can search and apply filters to efficiently find a service.
-4. Click on the Gen AI service you want to connect to. 
-5. Enter a name and a description for the connection.
-6. Select an **Access Mode** and **Authentication Scheme** for the connection.
-7. Click **Create**.
-   
-This creates the connection and displays its details for each environment, along with an inline guide on how to use the connection in your component. 
+2. Sign in with your credentials.
+3. Browse or search for the desired GenAI Service.
+
+4. Select the service to view its details.
+
+## Create a Connection to a GenAI Service
+
+To use a GenAI Service in your Choreo component, you first need to create a connection.
+
+1. In the left navigation menu, click Connections.
+
+2. This page lists all existing connections.
+
+3. Click **+Create**.
+
+4. The Marketplace view opens, where you can browse and search for services.
+
+4. Click the **Services** tab.
+
+5. Use search or filters to find the required service efficiently.
+
+6. Select the GenAI Service you want to connect to.
+
+7. Provide a name and description for the connection.
+
+8. Choose an Access Mode and Authentication Scheme.
+
+9. Click **Create**.
+
+Once created, the connection details are displayed for each environment. An inline usage guide is also provided, showing how to use the connection in your component.

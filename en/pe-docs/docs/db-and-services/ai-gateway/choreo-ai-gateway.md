@@ -1,15 +1,45 @@
 # Choreo AI Gateway
 
-As AI adoption accelerates, managing AI APIs effectively has become essential for organizations integrating AI into their applications. Choreo's AI Gateway simplifies this process, providing a seamless way to create, manage, and expose AI APIs with robust security and scalability.
+As organizations accelerate AI adoption, managing AI APIs effectively has become essential. The Choreo AI Gateway simplifies this process by providing a unified way to create, manage, and expose AI APIs with enterprise-grade security, observability, and scalability.
 
-![AI Gateway](../../assets/img/ai-gateway/ai-gateway.png)
+![Choreo AI Gateway](../../assets/img/ai-gateway/ai-gateway.png)
 
-Choreo offers built-in support for OpenAI, Azure OpenAI, and Mistral and AWS Bedrock.
+## Supported Providers
 
-With a comprehensive set of capabilities, the AI Gateway ensures secure and efficient AI integration. Key features include:
+The AI Gateway integrates seamlessly with leading AI platforms, including:
 
-- AI Vendor Key Configuration: Securely authenticate AI APIs by configuring API keys obtained from the AI vendor.
-- Rate Limiting: Protect AI backends by enforcing token-based rate limits to manage resource consumption.
-- AI API Observability: Track AI API usage statistics using Analytics solutions. (coming soon)
+- OpenAI
 
-By leveraging these capabilities, organizations can efficiently integrate, monitor, and scale AI APIs, unlocking the full potential of AI-driven applications.
+- Azure OpenAI
+
+- Anthropic Claude
+
+- Mistral
+
+- AWS Bedrock
+
+## Key Features
+
+The AI Gateway offers a robust set of capabilities to ensure secure and efficient AI integration:
+
+- AI Vendor Key Configuration: 
+
+  Securely authenticate with AI providers by configuring API keys obtained from each vendor.
+
+- Token-Based Rate Limiting:
+
+  Protect backend services and manage costs by applying rate limits based on token usage rather than just request counts.
+  
+- AI API Observability (Coming Soon):
+
+  Gain insights into AI API performance and usage with built-in analytics and monitoring.
+
+With these features, organizations can integrate, monitor, and scale AI services efficiently, unlocking the full potential of AI-driven applications.
+
+### Token-Based Rate Limiting
+
+AI services typically charge based on tokens rather than requests, making cost control critical. Choreo AI Gateway enables token-based rate limiting at the API level to:
+
+- Define quotas based on LLM token consumption.
+- Prevent unexpected costs by controlling overuse.
+- Enforce fair usage policies across AI-powered APIs.
