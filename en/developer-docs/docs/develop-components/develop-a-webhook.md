@@ -95,7 +95,7 @@ To allow the webhook to read the labels of issues in a specific GitHub repositor
     | **Secret**       | The last webhook secret you configured in [Step 2](#step-2-deploy).|
 
     !!! tip
-        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build presets. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build presets.
+        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
         - **Project Path** specifies the location of the project to build the component.
 
 7. Under **Which events would you like to trigger this webhook?**, select **Let me select individual events**.

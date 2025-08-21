@@ -13,9 +13,9 @@ Choreo supports deploying applications with build presets for the following comp
 - Test Runner
 
 ## Build Presets
-Build Presets are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With Choreo, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.
+Build presets are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With Choreo, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.
 
-Choreo uses [Google Build Presets](https://cloud.google.com/docs/build presets/overview) as default build presets for Java, Go, NodeJS, Python, PHP, and Ruby. Choreo uses its own build presets for Ballerina and WSO2 MI.
+Choreo uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overview) as default build presets for Java, Go, NodeJS, Python, PHP, and Ruby. Choreo uses its own build presets for Ballerina and WSO2 MI.
 
 ## Develop a component
 
@@ -173,7 +173,7 @@ During the build process, the build-time environment variables and their values 
 
 For example, if you want to override the Maven command of the **Java** build presets, you can use `GOOGLE_MAVEN_BUILD_ARGS` as the environment key and `clean install` as the value. 
 
-For more examples, see [Google Cloud's build presets documentation](https://cloud.google.com/docs/buildpacks/service-specific-configs).
+For more examples, see [Google Cloud's buildpacks documentation](https://cloud.google.com/docs/buildpacks/service-specific-configs).
 
 ### Customize the Default Run Command
 

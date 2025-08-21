@@ -18,7 +18,7 @@ The source configuration file must be committed to your repository within the `.
 ```
 
 !!! note
-    - For components built using **Build Presets**, replace `build-context-path` with the `<project-directory>`. 
+    - For components built using **Build presets**, replace `build-context-path` with the `<project-directory>`. 
     For example, `<project-directory>/.choreo/component.yaml`.
     - For components built using **Docker**, replace `build-context-path` with the `<docker-context-path>`. 
     For example, `<docker-context-path>/.choreo/component.yaml`.
