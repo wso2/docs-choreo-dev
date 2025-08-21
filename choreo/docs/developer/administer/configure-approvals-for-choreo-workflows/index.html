@@ -4018,7 +4018,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h1 id="configure-approvals-for-choreo-workflows">Configure Approvals for Choreo Workflows<a class="headerlink" href="#configure-approvals-for-choreo-workflows" title="Permanent link">&para;</a></h1>
 <p>Choreo allows you to configure approval processes for specific workflows within the platform. An approval process for a workflow ensures that critical or sensitive changes are properly managed and controlled.</p>
 <p>Choreo currently allows you to configure approvals for environment promotion, API subscription and URL customization workflows.</p>
-<p>Configuring approvals for environment promotion allows authorized users to control components being promoted to a critical/production environment. </p>
+<p>Configuring approvals for environment promotion allows authorized users to control components being promoted to a critical/production environment.</p>
 <p>Configuring approvals for the API subscription workflow allows you to create subscription plans that require approval before being activated. This feature allows you to control access to APIs by requiring administrative review and authorization of subscriptions before they become active.</p>
 <p>Configuring approvals for URL customization workflows allows you to control custom URL mappings by requiring review and approval before the customization is applied.</p>
 <h2 id="permissions-to-review-and-respond-to-approval-requests">Permissions to review and respond to approval requests<a class="headerlink" href="#permissions-to-review-and-respond-to-approval-requests" title="Permanent link">&para;</a></h2>
@@ -4028,11 +4028,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="tabbed-block">
 <p>To review and respond to environment promotion approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:</p>
 <ul>
-<li><strong>WORKFLOW-MANAGEMENT</strong>: <ul>
+<li><strong>WORKFLOW-MANAGEMENT</strong>:<ul>
 <li>Approve component promotion requests: Grants access to review and approve the promotion of components to critical environments.</li>
 </ul>
 </li>
-<li><strong>PROJECT-MANAGEMENT</strong>: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.</li>
 </ul>
 </div>
 <div class="tabbed-block">
@@ -4042,8 +4041,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Approve API subscriptions: Grants access to review and approve API subscription workflow requests.</li>
 </ul>
 </li>
-<li><strong>PROJECT-MANAGEMENT</strong>: 
-      Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.</li>
 </ul>
 </div>
 <div class="tabbed-block">
@@ -4053,7 +4050,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Approve custom URL mapping requests: Grants access to review and approve custom URL mapping requests.</li>
 </ul>
 </li>
-<li><strong>URL-MANAGEMENT</strong>: <ul>
+<li><strong>URL-MANAGEMENT</strong>:<ul>
 <li>Manage Custom Domains: Grants access to manage custom domains for the organization.</li>
 </ul>
 </li>
@@ -4061,13 +4058,17 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Approval permissions can be given to users in organization scope or project scope (by assigning user groups to roles at project level). Users having project level permissions can see and review approval requests originated from permitted projects only.</p>
+</div>
 <h2 id="set-up-an-approval-process-for-a-workflow">Set up an approval process for a workflow<a class="headerlink" href="#set-up-an-approval-process-for-a-workflow" title="Permanent link">&para;</a></h2>
 <p>To set up an approval process for a workflow, follow these steps:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
 <li>You must have administrator privileges in Choreo to configure workflow approvals.</li>
-<li>Administrators can designate specific roles and assignees to review and respond to requests associated with each workflow.</li>
+<li>Administrators can designate specific roles and assignees to receive notifications associated with each workflow.</li>
 </ul>
 </div>
 <ol>
@@ -4075,33 +4076,38 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>In the Choreo Console header, go to the <strong>Organization</strong> list and select your organization.</li>
 <li>In the left navigation menu, click <strong>Settings</strong>. This opens the organization-level settings page.</li>
 <li>Click the <strong>Workflows</strong> tab.</li>
-<li>Click the edit icon corresponding to the workflow for which you want to configure an approval.</li>
+<li>Click the Configure icon corresponding to the workflow for which you want to configure an approval.</li>
 <li>
-<p>In the <strong>Configure Workflow</strong> dialog that opens, select roles and assignees to review and respond to workflow approval requests.</p>
+<p>In the <strong>Configure Workflow</strong> dialog that opens, enable the workflow and optionally select roles and assignees to receive notifications on workflow approval requests.</p>
 <ul>
-<li>In the <strong>Roles</strong> field, select one or more roles depending on your preference. Any user assigned to these roles can review and respond to requests.</li>
+<li>In the <strong>Roles</strong> field, select one or more roles depending on your preference. All users assigned to the selected roles will be eligible to receive notifications. Scope of notification delivery depends on the role assignment level when <a href="#permissions-to-review-and-respond-to-approval-requests">configuring permissions</a>:<ol>
+<li>Project level roles-to-group assignment: Users in these groups will receive notifications only for approval requests raised within the specific project where the role is assigned.</li>
+<li>Organization level roles-to-group assignment: Users in these groups will receive notifications for approval requests raised across all projects in the organization.</li>
+</ol>
+</li>
 <li>In the <strong>Assignees</strong> field, select specific users who can review and approve workflow requests. Assignees can be any Choreo user, even if they are not assigned to a selected role.</li>
 </ul>
+<p>Both Roles and Assignees are optional configuration fields. If neither is specified, the system will not dispatch any notifications. However, users with the necessary permissions can still log in to the system and review approval requests through the interface.</p>
 <div class="admonition info">
 <p class="admonition-title">Important</p>
-<p>Currently, there is no validation to ensure that the specified roles and assignees have the necessary permissions to review and respond to requests. If the <a href="#permissions-to-review-and-respond-to-approval-requests">required permissions</a> are not correctly configured, some users may receive email notifications but will be unable to review the requests.</p>
+<p>Only roles having <a href="#permissions-to-review-and-respond-to-approval-requests">relevant approval permission</a> can be selected to receive notifications, so that respective users can always review and respond to requests. However, users in Assignees field are there for notification purpose only, they may not have required priviledges to review and approve requests.</p>
 </div>
 </li>
 <li>
-<p>Click <strong>Save</strong>. This configures and enables the approval process for the workflow.</p>
+<p>Click <strong>Save</strong>. This configures notifications and enables the approval process for the workflow.</p>
 </li>
 </ol>
-<p>Once you enable the approval process for a workflow, see the following details on how to submit a request for approval and the approval process. Click the respective tab depending on the workflow for which you enabled the approval process:  </p>
+<p>Once you enable the approval process for a workflow, see the following details on how to submit a request for approval and the approval process. Click the respective tab depending on the workflow for which you enabled the approval process:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Environment promotion</label><label for="__tabbed_2_2">API subscription</label><label for="__tabbed_2_3">URL customization</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>Once you configure an approval process for environment promotion, developers must <a href="../../develop-components/submit-and-manage-workflow-approval-requests/">submit a request for approval to use the workflow</a>. An authorized assignee must then <a href="../review-workflow-approval-requests/">review and approve the request</a> for a developer to proceed with the task related to the workflow.</p>
+<p>Once you enable an approval process for environment promotion, developers must <a href="../../develop-components/submit-and-manage-workflow-approval-requests/">submit a request for approval to use the workflow</a>. An authorized assignee must then <a href="../review-workflow-approval-requests/">review and approve the request</a> for a developer to proceed with the task related to the workflow.</p>
 </div>
 <div class="tabbed-block">
-<p>Once you configure an approval process for API subscription, administrators can select the <strong>Approval required</strong> checkbox to create or update subscription plans to require approval. For details, see <a href="../create-api-subscription-plans/">Create API Subscription Plans</a>. API consumers using these plans must request approval to proceed. For details, see step 7 in <a href="../../api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan/">Subscribe to an API with a Subscription Plan</a>. An authorized approver must then <a href="../review-workflow-approval-requests/">review and approve the request</a> before the subscription is granted.</p>
+<p>Once you enable an approval process for API subscription, administrators can select the <strong>Approval required</strong> checkbox to create or update subscription plans to require approval. For details, see <a href="../create-api-subscription-plans/">Create API Subscription Plans</a>. API consumers using these plans must request approval to proceed. For details, see step 7 in <a href="../../api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan/">Subscribe to an API with a Subscription Plan</a>. An authorized approver must then <a href="../review-workflow-approval-requests/">review and approve the request</a> before the subscription is granted.</p>
 </div>
 <div class="tabbed-block">
-<p>Once you configure an approval process for URL customization, developers must submit a request for approval to configure a custom URL for a component. Instead of being automatically deployed, the URL mapping will go into a pending state. An authorized approver must then <a href="../review-workflow-approval-requests/">review and approve the request</a> before the custom URL is activated for the respective component. </p>
+<p>Once you enable an approval process for URL customization, developers must submit a request for approval to configure a custom URL for a component. Instead of being automatically deployed, the URL mapping will go into a pending state. An authorized approver must then <a href="../review-workflow-approval-requests/">review and approve the request</a> before the custom URL is activated for the respective component.</p>
 </div>
 </div>
 </div>
