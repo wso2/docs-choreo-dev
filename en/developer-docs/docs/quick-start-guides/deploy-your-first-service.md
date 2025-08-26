@@ -7,7 +7,7 @@ With Choreo, you can deploy services written in your preferred programming langu
 In this guide, you will:
 
 - Use a pre-built service that manages a book list.
-- Build and deploy the service in Choreo using the `Node.js` buildpack. The service runs on port 8080.
+- Build and deploy the service in Choreo using the `Node.js` build preset. The service runs on port 8080.
 - Test the service.
 
 For a video tutorial, check out [Deploy Your First Service with Choreo](https://www.youtube.com/watch?v=-qoweQWCiYM).
@@ -78,7 +78,7 @@ Let's get started!
     | **Branch**            | main                             |
     | **Component Directory** | /                 |
 
-4. Select the **NodeJS** buildpack.
+4. Select the **NodeJS** build preset.
 5. Enter the following details:
 
     | **Field**                    | **Description**   |
@@ -94,7 +94,7 @@ Let's get started!
 
 7. Click **Create**.
 
-You have successfully created a Service component using the NodeJS buildpack. Now, let's build and deploy the service.
+You have successfully created a Service component using the NodeJS build preset. Now, let's build and deploy the service.
 
 ## Step 3: Build and deploy
 

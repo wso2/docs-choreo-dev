@@ -4,7 +4,7 @@ Choreo allows you to create and deploy MCP Server applications in Python and Nod
 
 In this guide, you will:
 
-- Deploy an stdio-based [github-mcp-server](https://github.com/github/github-mcp-server) in Choreo  over SSE (Server-Sent Events) using a `NodeJs` buildpack.
+- Deploy an stdio-based [github-mcp-server](https://github.com/github/github-mcp-server) in Choreo  over SSE (Server-Sent Events) using a `NodeJs` build preset.
 
 ## Prerequisites
 
@@ -33,7 +33,7 @@ To create a mcp server component, follow these steps:
     | **Server Package**       | @modelcontextprotocol/server-github |
     | **Run Command**  | npx -y @modelcontextprotocol/server-github    |
 
-6. Select **NodeJs** as the buildpack.
+6. Select **NodeJs** as the build preset.
 7. Provide component display name, name and description:
 
     !!! info

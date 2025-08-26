@@ -7,7 +7,7 @@ As a developer, you can easily set up Choreo's managed authentication to seamles
 Choreo's managed authentication follows the backend for frontend (BFF) architecture, which is a secure pattern recommended for browser-based applications that utilize OIDC/OAuth2.0 for authentication and authorization. This architecture ensures that OAuth tokens remain secure from browser-side code, making them immune to potential attacks like cross-site scripting (XSS).
 
 !!! note
-     Choreo's managed authentication is currently available only for web applications created with **React**, **Angular**, or **Vue.js** buildpacks.
+     Choreo's managed authentication is currently available only for web applications created with **React**, **Angular**, or **Vue.js** build presets.
 
 !!! warning
      Managed authentication uses the 'SAMESITE' cookie attribute to prevent CSRF attacks. Therefore, it is recommended to use managed authentication with modern browsers that support the 'SAMESITE' attribute.
@@ -172,7 +172,7 @@ To ensure that your web application functions seamlessly with managed authentica
 You can enable managed authentication for your web application component at the time you deploy the component.
 
 !!! tip
-     Managed authentication is enabled by default when you create a web application using **React**, **Angular**, or **Vue.js** buildpacks.
+     Managed authentication is enabled by default when you create a web application using **React**, **Angular**, or **Vue.js** build presets.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/). This opens the project home page.
 2. In the **Component Listing** pane, click on the web application for which you want to enable managed authentication.

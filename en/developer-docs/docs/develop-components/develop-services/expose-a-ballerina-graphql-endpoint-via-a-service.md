@@ -191,7 +191,7 @@ To create a Ballerina service component, follow these steps:
     | **Branch**              | **`main`**              |
     | **Component Directory**| `reading-list-graphql`    |.
 
-6. Select **Ballerina** as the buildpack.
+6. Select **Ballerina** as the build preset.
 
 7. Enter a display name, a unique name, and a description for the service component. You can enter the values given below:
 

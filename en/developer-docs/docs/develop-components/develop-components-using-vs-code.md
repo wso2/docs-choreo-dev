@@ -43,7 +43,7 @@ To use the capabilities of the Choreo extension in the VS Code editor, you need 
     - Use the `Create New Component` command provided by the Choreo extension.
 
 3. If the Choreo extension cannot determine the project context of the opened workspace, it prompts you to select the organization and the project to which the new component belongs.
-4. Specify component details such as the name, type, buildpack, etc.
+4. Specify component details such as the name, type, build preset, etc.
 
     ![Component Form](../assets/img/develop-components/develop-using-vs-code/component-form.png)
             

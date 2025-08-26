@@ -42,7 +42,7 @@ Alternatively, you can connect a public repository without requiring authorizati
      Authorizing the repository with the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application becomes essential if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component. If you own the repository, you can subsequently authorize it with the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application to enable **Auto Deploy**.
 
 After granting access to the required repositories, you can choose a repository and an associated branch to connect to the Choreo component.
-For the containerized application deployments, you should select the [**Component Directory**](https://docs.docker.com/build/building/context/#path-context), **Dockerfile** as the **Buildpack** and provide **Dockerfile Path** for the Docker build.
+For the containerized application deployments, you should select the [**Component Directory**](https://docs.docker.com/build/building/context/#path-context), **Dockerfile** as the **Build preset** and provide **Dockerfile Path** for the Docker build.
 
 ![Connected Dockerfile Repository](../assets/img/develop-components/deploy/create-component-connected-repo.png){.cInlineImage-full}
 
@@ -53,7 +53,7 @@ The following table describes the individual fields in the **Create Component** 
 | **GitHub Account**      | Your GitHub account or organization. If you want to add another GitHub account, you can expand the list and click **+ Add**.                                                            |
 | **GitHub Repository**   | Depending on the repository access you provided, the list will show available repositories to be connected.                                                                                  |
 | **Branch**              | The branch of the repository.                                                                                                                                                         |
-| **Buildpack**        | Determines the implementation of the component: Any language or other language as a Docker container.                                                                                |
+| **Build preset**        | Determines the implementation of the component: Any language or other language as a Docker container.                                                                                |
 | **Dockerfile Path**     | The path to your Dockerfile. This path is defined relative to the repository root.<br/>For example, if the Dockerfile is at the repository root, the value for this field is `/Dockerfile`. |
 | **Component Directory** | The component directory path. To include the repository root, leave the default `/` value.                                                                                          |
 | **Port***               | The port at which your service is running.                                                                                                                                           |

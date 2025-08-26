@@ -81,7 +81,7 @@ To host the front-end application in Choreo, create a web application component:
     | **GitHub Account**    | Your account                            |
     | **GitHub Repository** | **`choreo-samples`**                    |
     | **Branch**            | **`main`**                              |
-    | **Buildpack**         | **React** (since it’s a React app built with Vite) |
+    | **Build preset**         | **React** (since it’s a React app built with Vite) |
     | **Build Context Path**| **`reading-list-app/reading-list-front-end`** |
     | **Build Command**     | **`npm install && npm run build`**      |
     | **Build Output**      | **`dist`**                              |

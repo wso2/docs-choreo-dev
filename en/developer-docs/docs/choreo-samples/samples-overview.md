@@ -29,7 +29,7 @@ To view available samples, follow these steps:
 
 When you view all samples, you can filter and search for samples by the following criteria:
 
-- **Buildpack**: Filters by the technology used. For example, Ballerina, NodeJS, Docker, etc.
+- **Build preset**: Filters by the technology used. For example, Ballerina, NodeJS, Docker, etc.
 - **Component Type**: Filters by the component type. For example, service, web application, scheduled tasks, manual tasks, etc.
 - **Tags**: Use tags like REST, HTTP, or GraphQL to find samples with specific functionalities or integrations.
 

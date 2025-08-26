@@ -1,7 +1,7 @@
 Choreo allows you to inject values for your configurations through a rich user interface.
 
 !!! info
-    - This feature is currently only available for Go, Python, Java, .NET, NodeJs, Ruby and PHP buildpacks (excluding Web Applications).
+    - This feature is currently only available for Go, Python, Java, .NET, NodeJs, Ruby and PHP build presets (excluding Web Applications).
     - The configuration form is supported starting from component.yaml v1.2.
 
 You can configure configurations in the [component.yaml](./manage-component-source-configurations.md). Based on these configurations, a form is displayed in the Choreo console. Users can define environment variables and file keys under the `configurations` section in the component.yaml.

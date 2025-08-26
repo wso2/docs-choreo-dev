@@ -96,7 +96,7 @@ This triggers a wizard prompting you to provide details for your Git repository 
     | Port                        | `8080`                                 |
     
     !!! note
-        The prompts may vary based on the type of component and the chosen build pack. 
+        The prompts may vary based on the type of component and the chosen build preset. 
 
 ## Step 4: List Components inside Project
 

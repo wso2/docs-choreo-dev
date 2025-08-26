@@ -60,7 +60,7 @@ To create a Ballerina service component, follow these steps:
     | **Branch**             | **`main`**         |
     |**Component Directory** | `/greeting-service` |
 
-6. Select **Ballerina** as the buildpack.
+6. Select **Ballerina** as the build preset.
 
 7. Provide a display name, a unique name, and a description for the service component:
 

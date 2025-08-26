@@ -9,7 +9,7 @@ To connect to a selected service, follow the step-by-step instructions given bel
     Choreo-managed authentication allows you to seamlessly handle authentication for your web application. You can configure your web application to work with the built-in identity provider of Choreo or any external identity provider that supports OIDC/OAuth2.0
 
     !!! note 
-         Choreo's managed authentication is currently available only for web applications created with **React**, **Angular**, or **Vue.js** buildpacks.
+         Choreo's managed authentication is currently available only for web applications created with **React**, **Angular**, or **Vue.js** build presets.
 
     Follow the steps below to use an existing connection within your web application: 
 

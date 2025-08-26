@@ -10,8 +10,8 @@ DockerHub
 Quickstart
 Entra
 AzureAD
-buildpack
-buildpacks
+build preset
+build presets
 Temurin
 RabbitMQ
 SalesOrderQueue
