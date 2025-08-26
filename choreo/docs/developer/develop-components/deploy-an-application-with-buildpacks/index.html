@@ -25,7 +25,7 @@
     
     
       
-        <title>Deploy an Application with Buildpacks - Choreo Documentation | AI-Native Internal Developer Platform</title>
+        <title>Deploy an Application with Build Presets - Choreo Documentation | AI-Native Internal Developer Platform</title>
       
     
     
@@ -142,7 +142,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#deploy-an-application-with-buildpacks" class="md-skip">
+        <a href="#deploy-an-application-with-build-presets" class="md-skip">
           Skip to content
         </a>
       
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Deploy an Application with Buildpacks
+              Deploy an Application with Build Presets
             
           </span>
         </div>
@@ -1654,12 +1654,12 @@ document.addEventListener('DOMContentLoaded', function() {
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Deploy an Application with Buildpacks
+          Deploy an Application with Build Presets
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Deploy an Application with Buildpacks
+        Deploy an Application with Build Presets
       </a>
       
         
@@ -1678,8 +1678,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#buildpacks" class="md-nav__link">
-    Buildpacks
+  <a href="#build-presets" class="md-nav__link">
+    Build Presets
   </a>
   
 </li>
@@ -4007,8 +4007,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#buildpacks" class="md-nav__link">
-    Buildpacks
+  <a href="#build-presets" class="md-nav__link">
+    Build Presets
   </a>
   
 </li>
@@ -4055,9 +4055,9 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
 
-<h1 id="deploy-an-application-with-buildpacks">Deploy an Application with Buildpacks<a class="headerlink" href="#deploy-an-application-with-buildpacks" title="Permanent link">&para;</a></h1>
+<h1 id="deploy-an-application-with-build-presets">Deploy an Application with Build Presets<a class="headerlink" href="#deploy-an-application-with-build-presets" title="Permanent link">&para;</a></h1>
 <p>Using Choreo, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, Ruby, PHP, etc.) on shared or private data planes.</p>
-<p>Choreo supports deploying applications with buildpacks for the following component types:</p>
+<p>Choreo supports deploying applications with build presets for the following component types:</p>
 <ul>
 <li>Service</li>
 <li>Web Application</li>
@@ -4067,9 +4067,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Event Handler</li>
 <li>Test Runner</li>
 </ul>
-<h2 id="buildpacks">Buildpacks<a class="headerlink" href="#buildpacks" title="Permanent link">&para;</a></h2>
-<p>Buildpacks are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With Choreo, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.</p>
-<p>Choreo uses <a href="https://cloud.google.com/docs/buildpacks/overview">Google Buildpacks</a> as default buildpacks for Java, Go, NodeJS, Python, PHP, and Ruby. Choreo uses its own buildpacks for Ballerina and WSO2 MI.</p>
+<h2 id="build-presets">Build Presets<a class="headerlink" href="#build-presets" title="Permanent link">&para;</a></h2>
+<p>Build presets are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With Choreo, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.</p>
+<p>Choreo uses <a href="https://cloud.google.com/docs/buildpacks/overview">Google Buildpacks</a> as default build presets for Java, Go, NodeJS, Python, PHP, and Ruby. Choreo uses its own build presets for Ballerina and WSO2 MI.</p>
 <h2 id="develop-a-component">Develop a component<a class="headerlink" href="#develop-a-component" title="Permanent link">&para;</a></h2>
 <p>To develop a service component that exposes a Service in Go, you can follow the <a href="../develop-services/develop-a-service/">Develop a Service </a> guide.</p>
 <p>Follow the guidelines below based on your language:</p>
@@ -4319,7 +4319,7 @@ e.g.,</p>
     - 8, 11, 17, 18 (OpenJDK Runtime Environment Temurin)</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>You can use this buildpack only with web applications. For other component types, use the <strong>Java</strong> buildpack. Additionally, if the generated artifact is a <code>WAR</code> file, you must include the run command in the <strong>Build Configurations</strong> editor on the component's <strong>Build</strong> page. <br> e.g.,
+<p>You can use this build preset only with web applications. For other component types, use the <strong>Java</strong> build preset. Additionally, if the generated artifact is a <code>WAR</code> file, you must include the run command in the <strong>Build Configurations</strong> editor on the component's <strong>Build</strong> page. <br> e.g.,
     <code>java -jar target/sample.war</code> <br></p>
 </div>
 </div>
@@ -4329,13 +4329,13 @@ e.g.,</p>
 <p>You can configure the environment variables necessary to build the component using the <strong>Build Configurations Editor</strong> on the component <strong>Build</strong> page. </p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>The capability to configure build-time environment variables is not available for components created using <strong>Ballerina</strong> or <strong>WSO2 MI</strong> buildpacks.</p>
+<p>The capability to configure build-time environment variables is not available for components created using <strong>Ballerina</strong> or <strong>WSO2 MI</strong> build presets.</p>
 </div>
-<p>During the build process, the build-time environment variables and their values are passed to the buildpack. Therefore, you can configure both buildpack-specific environment variables and those required for the component build.</p>
-<p>For example, if you want to override the Maven command of the <strong>Java</strong> buildpack, you can use <code>GOOGLE_MAVEN_BUILD_ARGS</code> as the environment key and <code>clean install</code> as the value. </p>
+<p>During the build process, the build-time environment variables and their values are passed to the build preset. Therefore, you can configure both build preset-specific environment variables and those required for the component build.</p>
+<p>For example, if you want to override the Maven command of the <strong>Java</strong> build presets, you can use <code>GOOGLE_MAVEN_BUILD_ARGS</code> as the environment key and <code>clean install</code> as the value. </p>
 <p>For more examples, see <a href="https://cloud.google.com/docs/buildpacks/service-specific-configs">Google Cloud's buildpacks documentation</a>.</p>
 <h3 id="customize-the-default-run-command">Customize the Default Run Command<a class="headerlink" href="#customize-the-default-run-command" title="Permanent link">&para;</a></h3>
-<p>You can configure the run command required to start the component via the <strong>Build Configurations</strong> editor on the component's <strong>Build</strong> page. This overrides the default run command provided by the buildpack. After configuring the run command, you must rebuild the component for the changes to take effect.<br></p>
+<p>You can configure the run command required to start the component via the <strong>Build Configurations</strong> editor on the component's <strong>Build</strong> page. This overrides the default run command provided by the build preset. After configuring the run command, you must rebuild the component for the changes to take effect.<br></p>
 <p>e.g., <br></p>
 <ul>
 <li>java -jar target/sample.jar</li>

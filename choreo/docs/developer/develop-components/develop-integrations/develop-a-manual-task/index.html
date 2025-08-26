@@ -1735,7 +1735,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
     <li class="md-nav__item">
       <a href="../../deploy-an-application-with-buildpacks/" class="md-nav__link">
-        Deploy an Application with Buildpacks
+        Deploy an Application with Build Presets
       </a>
     </li>
   
@@ -4212,7 +4212,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <ul>
-<li><strong>Buildpack</strong> specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using <a href="https://wso2.com/integration/integration-studio/">WSO2 Integration Studio</a>, select <strong>Micro Integrator</strong> as the buildpack. If an integration is developed using the <a href="https://ballerina.io">Ballerina language</a>, select <strong>Ballerina</strong> as the buildpack.</li>
+<li><strong>Build preset</strong> specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using <a href="https://wso2.com/integration/integration-studio/">WSO2 Integration Studio</a>, select <strong>Micro Integrator</strong> as the build preset. If an integration is developed using the <a href="https://ballerina.io">Ballerina language</a>, select <strong>Ballerina</strong> as the build preset.</li>
 <li><strong>Component Directory</strong> specifies the location of the project to build the component.</li>
 </ul>
 </div>
@@ -4292,7 +4292,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you use <strong>Ballerina</strong> as the buildpack and want to set a configurable variable as a secret, click the lock icon corresponding to the configurable variable. This marks it as a secret and conceals the input value.</p>
+<p>If you use <strong>Ballerina</strong> as the build preset and want to set a configurable variable as a secret, click the lock icon corresponding to the configurable variable. This marks it as a secret and conceals the input value.</p>
 <p>For example, if you set the <strong>apiKey</strong> as a secret, its input value will be concealed. To update the input value later, click <strong>Update Secret Content</strong> and specify a new value.</p>
 </div>
 </li>
@@ -4311,7 +4311,7 @@ document.addEventListener('DOMContentLoaded', function() {
 1. Click the drop-down icon next to <strong>Run Now</strong> and then click <strong>Run with Arguments</strong>.
 2. In the <strong>Runtime Arguments</strong> pane, enter the arguments you want to pass to your application.
 3. Click <strong>Execute</strong>. This triggers the task with the specified arguments.</p>
-<p>The capability to run a manual task with arguments is supported for the following buildpacks:</p>
+<p>The capability to run a manual task with arguments is supported for the following build presets:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Dockerfile</label><label for="__tabbed_1_2">Go</label><label for="__tabbed_1_3">Java</label><label for="__tabbed_1_4">NodeJS</label><label for="__tabbed_1_5">WSO2 MI</label><label for="__tabbed_1_6">Ballerina</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">

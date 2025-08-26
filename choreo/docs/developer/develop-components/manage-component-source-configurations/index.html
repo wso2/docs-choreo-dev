@@ -1645,7 +1645,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
     <li class="md-nav__item">
       <a href="../deploy-an-application-with-buildpacks/" class="md-nav__link">
-        Deploy an Application with Buildpacks
+        Deploy an Application with Build Presets
       </a>
     </li>
   
@@ -4242,7 +4242,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
-<li>For components built using <strong>Buildpacks</strong>, replace <code>build-context-path</code> with the <code>&lt;project-directory&gt;</code>. 
+<li>For components built using <strong>Build presets</strong>, replace <code>build-context-path</code> with the <code>&lt;project-directory&gt;</code>. 
 For example, <code>&lt;project-directory&gt;/.choreo/component.yaml</code>.</li>
 <li>For components built using <strong>Docker</strong>, replace <code>build-context-path</code> with the <code>&lt;docker-context-path&gt;</code>. 
 For example, <code>&lt;docker-context-path&gt;/.choreo/component.yaml</code>.</li>
@@ -4431,7 +4431,7 @@ For example, <code>&lt;docker-context-path&gt;/.choreo/component.yaml</code>.</l
 <tr>
 <td><strong>schemaFilePath</strong></td>
 <td>Required</td>
-<td>The file path to the swagger definition  or AsyncAPI 2.0 specification file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using <strong>Java</strong>, <strong>Python</strong>, <strong>NodeJS</strong>, <strong>Go</strong>, <strong>PHP</strong>, <strong>Ruby</strong>, or <strong>WSO2 MI</strong> buildpacks. For REST or WebSocket endpoint types, when using the <strong>Ballerina</strong> or <strong>Dockerfile</strong> buildpack, the path should be relative to the component root or Docker context.</td>
+<td>The file path to the swagger definition  or AsyncAPI 2.0 specification file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using <strong>Java</strong>, <strong>Python</strong>, <strong>NodeJS</strong>, <strong>Go</strong>, <strong>PHP</strong>, <strong>Ruby</strong>, or <strong>WSO2 MI</strong> build presets. For REST or WebSocket endpoint types, when using the <strong>Ballerina</strong> or <strong>Dockerfile</strong> build presets, the path should be relative to the component root or Docker context.</td>
 </tr>
 </tbody>
 </table>
@@ -4707,7 +4707,7 @@ For example, <code>&lt;docker-context-path&gt;/.choreo/component.yaml</code>.</l
 <tr>
 <td><strong>schemaFilePath</strong></td>
 <td>Required</td>
-<td>The file path to the swagger definition  or AsyncAPI 2.0 specification file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using <strong>Java</strong>, <strong>Python</strong>, <strong>NodeJS</strong>, <strong>Go</strong>, <strong>PHP</strong>, <strong>Ruby</strong>, or <strong>WSO2 MI</strong> buildpacks. For REST or WebSocket endpoint types, when using the <strong>Ballerina</strong> or <strong>Dockerfile</strong> buildpack, the path should be relative to the component root or Docker context.</td>
+<td>The file path to the swagger definition  or AsyncAPI 2.0 specification file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using <strong>Java</strong>, <strong>Python</strong>, <strong>NodeJS</strong>, <strong>Go</strong>, <strong>PHP</strong>, <strong>Ruby</strong>, or <strong>WSO2 MI</strong> build presets. For REST or WebSocket endpoint types, when using the <strong>Ballerina</strong> or <strong>Dockerfile</strong> build presets, the path should be relative to the component root or Docker context.</td>
 </tr>
 </tbody>
 </table>
@@ -4916,7 +4916,7 @@ In the <code>endpoints</code> section of the <code>component.yaml</code> file, y
 <tr>
 <td><strong>schemaFilePath</strong></td>
 <td>Required</td>
-<td>The file path to the swagger definition or AsyncAPI 2.0 specification file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using <strong>Java</strong>, <strong>Python</strong>, <strong>NodeJS</strong>, <strong>Go</strong>, <strong>PHP</strong>, <strong>Ruby</strong>, or <strong>WSO2 MI</strong> buildpacks. For REST or WebSocket endpoint types, when using the <strong>Ballerina</strong> or <strong>Dockerfile</strong> buildpack, the path should be relative to the component root or Docker context.</td>
+<td>The file path to the swagger definition or AsyncAPI 2.0 specification file. Defaults to the wildcard route if not specified. This field should be a relative path to the project path when using <strong>Java</strong>, <strong>Python</strong>, <strong>NodeJS</strong>, <strong>Go</strong>, <strong>PHP</strong>, <strong>Ruby</strong>, or <strong>WSO2 MI</strong> build presets. For REST or WebSocket endpoint types, when using the <strong>Ballerina</strong> or <strong>Dockerfile</strong> build presets, the path should be relative to the component root or Docker context.</td>
 </tr>
 </tbody>
 </table>
@@ -5160,7 +5160,7 @@ In the <code>endpoints</code> section of the <code>component.yaml</code> file, y
 <tr>
 <td><strong>schemaFilePath</strong></td>
 <td>Required</td>
-<td>The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the <strong>Java</strong>, <strong>Python</strong>, <strong>NodeJS</strong>, <strong>Go</strong>, <strong>PHP</strong>, <strong>Ruby</strong>, and <strong>WSO2 MI</strong> buildpacks. For REST endpoint types, when using the <strong>Ballerina</strong> or <strong>Dockerfile</strong> buildpack, this field should be a relative path to the component root or Docker context.</td>
+<td>The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the <strong>Java</strong>, <strong>Python</strong>, <strong>NodeJS</strong>, <strong>Go</strong>, <strong>PHP</strong>, <strong>Ruby</strong>, and <strong>WSO2 MI</strong> build presets. For REST endpoint types, when using the <strong>Ballerina</strong> or <strong>Dockerfile</strong> build presets, this field should be a relative path to the component root or Docker context.</td>
 </tr>
 </tbody>
 </table>
