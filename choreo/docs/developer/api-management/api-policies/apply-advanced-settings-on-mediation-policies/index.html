@@ -4053,6 +4053,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <td>Set the <code>detailedAccessLog</code> parameter in the <strong>Advanced Settings</strong> field. <br> <a class="glightbox" href="../../../assets/img/api-management/api-policies/advanced-settings/detailed-access-log-setting.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Detailed access log setting" src="../../../assets/img/api-management/api-policies/advanced-settings/detailed-access-log-setting.png" /></a></td>
 <td>Logs related to the mediation application will not be generated.</td>
 </tr>
+<tr>
+<td><strong>Max Header Size</strong></td>
+<td>Determines the maximum header size (in bytes) allowed by the mediation application. The default value is 8192 bytes.</td>
+<td>Set the <code>maxHeaderSize</code> parameter in the <strong>Advanced Settings</strong> field. <br> <a class="glightbox" href="../../../assets/img/api-management/api-policies/advanced-settings/max-header-size-setting.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Detailed access log setting" src="../../../assets/img/api-management/api-policies/advanced-settings/max-header-size-setting.png" /></a></td>
+<td>The mediation service will accept request headers up to the configured size. Requests with headers exceeding this limit will be rejected with an HTTP 431 Request Header Fields Too Large status code.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="configure-advanced-settings-for-a-proxy-component">Configure advanced settings for a proxy component<a class="headerlink" href="#configure-advanced-settings-for-a-proxy-component" title="Permanent link">&para;</a></h2>
