@@ -1,34 +1,34 @@
 {% if config.extra.show_perspective_dropdown %}
 <div class="md-dropdown">
     <!-- Get docs path from config -->
-    {% set pe_path = config.pe_docs_path | d('/choreo/docs/platform-engineer') %}
+    {% set pe_path = config.pe_docs_path | d('/choreo/docs/platform-operations') %}
     <!-- Inline script to set the button text based only on current URL path -->
     <script>
       (function() {
         try {
           var currentPath = window.location.pathname;
-          var selectedRole = "Developer"; // Default role
+          var selectedRole = "Development"; // Default role
           
           // Use the PE path from config
           var pePath = "{{ pe_path }}";
           
-          // If we're on the platform engineer path, select that role
+          // If we're on the platform operations path, select that role
           if (currentPath.includes(pePath)) {
-            selectedRole = "Platform Engineer";
+            selectedRole = "Platform Operations";
           }
           // Set the button text based on the current URL path
           document.write('<button class="md-dropdown__button">' + selectedRole + '</button>');
         } catch (e) {
-          document.write('<button class="md-dropdown__button">Developer</button>');
+          document.write('<button class="md-dropdown__button">Development</button>');
         }
       })();
     </script>
     <noscript>
-      <button class="md-dropdown__button">Developer</button>
+      <button class="md-dropdown__button">Development</button>
     </noscript>
     <div class="md-dropdown__menu">
-        <a href="{{ config.extra.developer_docs_path | d('/choreo/docs/developer') }}" class="md-dropdown__item">Developer</a>
-        <a href="{{ config.extra.pe_docs_path | d('/choreo/docs/platform-engineer') }}" class="md-dropdown__item">Platform Engineer</a>
+        <a href="{{ config.extra.developer_docs_path | d('/choreo/docs/development') }}" class="md-dropdown__item">Development</a>
+        <a href="{{ config.extra.pe_docs_path | d('/choreo/docs/platform-operations') }}" class="md-dropdown__item">Platform Operations</a>
     </div>
 </div>
 {% endif %}
