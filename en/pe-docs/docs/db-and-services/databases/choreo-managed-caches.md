@@ -4,7 +4,7 @@ Choreo-Managed Cache is a fully-managed Valkey™ offering, an in-memory NoSQL d
 
 Developed under the Linux Foundation, Valkey™ is an open-source fork of Redis® designed to provide a seamless and reliable alternative to Redis OSS. Choreo-Managed Caches with Valkey™ ensures full compatibility with Redis OSS v7.2.4.
 
-These services run on infrastructure and automation provided by Aiven, our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-databases-and-caches.md#technology-partnership).
+These services run on infrastructure and automation provided by [Aiven](https://aiven.io), our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-databases-and-caches.md#technology-partnership).
 
 ## Create a Choreo-Managed Cache
 

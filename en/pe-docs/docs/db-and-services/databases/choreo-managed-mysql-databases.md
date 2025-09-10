@@ -2,7 +2,7 @@
 
 MySQL on Choreo offers fully managed, flexible relational databases on AWS, Azure, GCP, and Digital Ocean.
 
-These services run on infrastructure and automation provided by Aiven, our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-databases-and-caches.md#technology-partnership).
+These services run on infrastructure and automation provided by [Aiven](https://aiven.io), our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-databases-and-caches.md#technology-partnership).
 
 ## Create a Choreo-managed MySQL database
 
@@ -71,7 +71,7 @@ Typical outcomes in multi‑node tiers include automatic failover within minutes
 ## Monitoring and Observability
 
 - Runtime metrics (CPU, memory, disk, network) and MySQL logs are available in the Choreo Console
-- Native alerting for resource spikes is not currently available; contact support if you need to export metrics to third‑party monitoring for custom alerting.
+- Native alerting for resource spikes is not currently available; contact Choreo support if you need to export metrics to third‑party monitoring for custom alerting.
 
 ## Connection Limits
 

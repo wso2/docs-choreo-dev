@@ -2,7 +2,7 @@
 
 Kafka on Choreo offers fully managed, distributed message broker services across AWS, Azure, GCP, and DigitalOcean. These services are designed to handle high-throughput, fault-tolerant data streaming use cases such as real-time analytics, event sourcing, and log aggregation.
 
-These services run on infrastructure and automation provided by Aiven, our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-message-brokers.md#technology-partnership).
+These services run on infrastructure and automation provided by [Aiven](https://aiven.io), our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-message-brokers.md#technology-partnership).
 
 !!! info "Note"
      - Kafka service creation is available only for paid Choreo organizations.
@@ -52,6 +52,6 @@ Kafka uses a different backup model than traditional databases:
 ### Monitoring and Observability
 
 - Runtime metrics and service logs are accessible in the Choreo Console
-- Native alerting for resource spikes is not currently available; contact support if you need to export metrics to third‑party monitoring
+- Native alerting for resource spikes is not currently available; contact Choreo support if you need to export metrics to third‑party monitoring
 
 **Security Note**: All Kafka connections require TLS and client certificate authentication.

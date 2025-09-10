@@ -37,7 +37,7 @@ All managed data services include automated, encrypted backups. Manual backup po
 
 ### Monitoring and Observability
 - Runtime metrics (CPU, memory, disk, network) and service/database logs are available in the Choreo Console
-- Native alerting for resource spikes is not currently available; contact support if you need to export metrics to third‑party monitoring
+- Native alerting for resource spikes is not currently available; contact Choreo support if you need to export metrics to third‑party monitoring
 
 ## PostgreSQL on Choreo
 
