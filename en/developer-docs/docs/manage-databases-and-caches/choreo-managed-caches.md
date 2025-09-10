@@ -33,7 +33,7 @@ To connect to your Choreo-Managed Cache, follow these guidelines:
 
 The high availability and the automatic backup retention periods for a Choreo-Managed Cache can vary as follows depending on the service plan you select.
 
-| Service plan | High availability                                                                                                  | Backup features                          | Backup history | Multi-AZ Deployment |
+| Service Plan | High Availability                                                                                                  | Backup Features                          | Backup History | Multi-AZ Deployment |
 | ------------ | -------------------------------------------------------------------------------------------------------------------| ---------------------------------------- | -------------- | ------------------- |
 | Hobbyist     | Single-node with limited availability.                                                                             | Single backup only for disaster recovery | None           | No                  |
 | Startup      | Single-node with limited availability.                                                                             | Single backup only for disaster recovery | 1 day          | No                  |
@@ -53,7 +53,7 @@ In general, service plans are recommended for production scenarios due to the fo
 - Automated snapshots and append‑only logging (where applicable) are used to support recovery
 - Backups are encrypted at rest
 - Backups are managed automatically during recovery; manual backup point selection is not supported
-- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the data store.
+- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the data store
 
 ### Failure recovery
 
