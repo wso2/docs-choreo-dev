@@ -53,7 +53,7 @@ In general, service plans are recommended for production scenarios due to the fo
 - Automated snapshots and append‑only logging (where applicable) are used to support recovery
 - Backups are encrypted at rest
 - Backups are managed automatically during recovery; manual backup point selection is not supported
-- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the data store.
+- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the data store
 
 ### Failure recovery
 
