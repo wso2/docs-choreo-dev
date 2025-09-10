@@ -1,11 +1,11 @@
 # Choreo-Managed Databases, Vector Databases, and Caches
 
-Choreo allows you to create PostgreSQL and MySQL databases as well as Choreo-Managed Cache instances on all major cloud providers (AWS, Azure, GCP, and DigitalOcean) as fully Choreo-managed platform services.
+Choreo allows you to create PostgreSQL and MySQL databases as well as Choreo-Managed Cache instances (Valkey) on all major cloud providers (AWS, Azure, GCP, and DigitalOcean) as fully Choreo-managed platform services.
 These databases and caches can be seamlessly provisioned to offer persistence and caching capabilities for all your Choreo components. Choreo provides various service plans for each type, ranging from smaller instances for development purposes to production-grade databases with automatic backups and high-availability multi-nodes.
 
 ## Technology Partnership
 
-Choreo's managed data services are powered by Aiven, our trusted technology partner and data platform subprocessor. Aiven provides the underlying infrastructure, automated management, and expertise that enables Choreo to offer these fully managed data services within the Choreo ecosystem
+Choreo's managed data services are powered by **Aiven.io**, our trusted technology partner and data platform subprocessor. Aiven provides the underlying infrastructure, automated management, and expertise that enable Choreo to deliver fully managed data services as part of our ecosystem.
 
 ### Service Level Agreement (SLA)
 
@@ -26,9 +26,9 @@ Choreo benefits from Aiven's security program and industry-standard certificatio
 
 Choreo provides support for managed data services directly and, when needed, in coordination with Aiven:
 
-- Basic guidance and operational assistance via Choreo support
+- Guidance and operational assistance via Choreo support
 - Coordination with Aiven experts for complex technical issues
-- Choreo acts as your primary contact and manages escalations as required
+- Choreo acts as your primary contact and manages escalations with the Aiven support team as required
 
 ## Service Limitations and Considerations
 
@@ -53,7 +53,7 @@ MySQL is a user-friendly, flexible, open-source relational database management s
 
 ## Choreo-Managed Cache (Valkey Compatible)
 
-A fully managed cache compatible with legacy Redis® OSS and Valkey. A versatile, in‑memory NoSQL database that serves as a cache, database, streaming engine, and message broker. Choreo-managed Cache allows you to have fully managed instances that can be swiftly provisioned and integrated into your applications within minutes.
+A fully managed cache compatible with Redis® OSS and Valkey. A versatile, in‑memory NoSQL database that serves as a cache, database, streaming engine, and message broker. Choreo-managed Cache allows you to have fully managed instances that can be swiftly provisioned and integrated into your applications within minutes.
 
 - [Create a Choreo-managed Cache](./choreo-managed-caches.md)
 

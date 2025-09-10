@@ -5,7 +5,7 @@ These databases and caches can be seamlessly provisioned to offer persistence an
 
 ## Technology Partnership
 
-Choreo's managed database, vector database, and cache services are powered by Aiven, our technology partner and data platform subprocessor. Aiven provides the underlying infrastructure and automation that enable these fully managed services while integrating with the Choreo ecosystem.
+Choreo's managed data services are powered by **Aiven.io**, our trusted technology partner and data platform subprocessor. Aiven provides the underlying infrastructure, automated management, and expertise that enable Choreo to deliver fully managed data services as part of our ecosystem.
 
 ### Service Level Agreement (SLA)
 
@@ -24,7 +24,11 @@ For the current list of security practices and certifications, see Aiven Securit
 
 ## Support Model
 
-Choreo provides support for managed data services directly and, when needed, in coordination with Aiven. Choreo acts as your primary contact and manages escalations as required.
+Choreo provides support for managed data services directly and, when needed, in coordination with Aiven:
+
+- Guidance and operational assistance via Choreo support
+- Coordination with Aiven experts for complex technical issues
+- Choreo acts as your primary contact and manages escalations with the Aiven support team as required
 
 ## PostgreSQL on Choreo
 
@@ -38,9 +42,9 @@ MySQL is a user-friendly, flexible, open-source relational database management s
 
 - [Create a MySQL database on Choreo](./choreo-managed-mysql-databases.md)
 
-## Choreo-Managed Cache (Valkey Compatible)
+## Choreo-Managed Cache (Valkey - OSS Redis Compatible)
 
-A fully managed cache compatible with legacy Redis® OSS and Valkey. A versatile, in‑memory NoSQL database that serves as a cache, database, streaming engine, and message broker. Choreo-managed Cache allows you to have fully managed instances that can be swiftly provisioned and integrated into your applications within minutes.
+A fully managed cache compatible powered by Valkey that's fully compatible with with Redis® OSS. A versatile, in‑memory NoSQL database that serves as a cache, database, streaming engine, and message broker. Choreo-managed Cache allows you to have fully managed instances that can be swiftly provisioned and integrated into your applications within minutes.
 
 - [Create a Choreo-managed Cache](./choreo-managed-caches.md)
 
