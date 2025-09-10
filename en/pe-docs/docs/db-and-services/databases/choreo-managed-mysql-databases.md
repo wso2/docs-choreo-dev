@@ -2,6 +2,8 @@
 
 MySQL on Choreo offers fully managed, flexible relational databases on AWS, Azure, GCP, and Digital Ocean.
 
+These services run on infrastructure and automation provided by Aiven, our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-databases-and-caches.md#technology-partnership).
+
 ## Create a Choreo-managed MySQL database
 
 Follow the steps below to create a Choreo-managed MySQL database: 
@@ -34,12 +36,14 @@ To connect to your Choreo-managed MySQL database, consider the following guideli
 
 The high availability characteristics and the automatic backup retention periods for Choreo-managed MySQL databases vary based on your service plan as explained below:
 
-| Service Plan | High Availability                                                  | Backup Retention Time |
-|--------------|--------------------------------------------------------------------|-----------------------|
-| Hobbyist     | Single-node with limited availability                              | None                  |
-| Startup      | Single-node with limited availability                              | 2 days                |
-| Business     | Two-node (primary + standby) with higher availability              | 14 days               |
-| Premium      | Three-node (primary + standby + standby) with highest availability | 30 days               |
+| Service Plan | High Availability                                                  | Backup Retention Time | Multi-AZ Deployment |
+|--------------|--------------------------------------------------------------------|-----------------------|---------------------|
+| Hobbyist     | Single-node with limited availability                              | None                  | No                  |
+| Startup      | Single-node with limited availability                              | 2 days                | No                  |
+| Business     | Two-node (primary + standby) with higher availability              | 14 days               | Yes*                |
+| Premium      | Three-node (primary + standby + standby) with highest availability | 30 days               | Yes*                |
+
+*Multi‑AZ availability depends on the cloud provider and region and is enabled where supported.
 
 In general, we recommend service plans for production scenarios for multiple reasons:
 - Provides another physical copy of the data in case of hardware, software, or network failures.
@@ -48,10 +52,26 @@ In general, we recommend service plans for production scenarios for multiple rea
 
 ### Automatic Backups
 
-- Choreo runs full backups daily to automatically back up Choreo-managed MySQL databases and record binary logs continuously.
-Choreo encrypts all backups at rest.
+- Daily full backups of MySQL databases are taken automatically
+- Logs are recorded to support point‑in‑time recovery where applicable
+- All backups are encrypted at rest
+- Backups are managed automatically during recovery; manual backup point selection is not supported
 
 - Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the database.
+
+### Failure Recovery
+
+- Minor failures (e.g., process restarts or transient network issues) are handled automatically without requiring changes to the deployment
+- For severe failures (e.g., node loss), monitoring detects the issue and schedules a replacement node automatically
+- In database failover scenarios, the Service URI remains the same; the IP address changes to point to the new primary node
+- For single‑node tiers, the service is unavailable during restoration and some recent writes may not be recoverable
+
+Typical outcomes in multi‑node tiers include automatic failover within minutes and recovery workflows designed to minimize data loss.
+
+## Monitoring and Observability
+
+- Runtime metrics (CPU, memory, disk, network) and MySQL logs are available in the Choreo Console
+- Native alerting for resource spikes is not currently available; contact support if you need to export metrics to third‑party monitoring for custom alerting.
 
 ## Connection Limits
 

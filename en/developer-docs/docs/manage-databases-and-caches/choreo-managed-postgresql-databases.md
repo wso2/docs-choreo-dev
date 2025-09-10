@@ -2,6 +2,8 @@
 
 PostgreSQL on Choreo offers fully Choreo-managed, efficient object-relational databases on AWS, Azure, GCP, and Digital Ocean. Additionally, Choreo allows you to create fully-managed PostgreSQL vector databases if you want to perform efficient vector similarity search.
 
+These services run on infrastructure and automation provided by Aiven, our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-databases-and-caches.md#technology-partnership).
+
 ## Create a Choreo-managed PostgreSQL database
 
 Follow the steps below to create a Choreo-managed PostgreSQL database:
@@ -40,12 +42,14 @@ To connect to your Choreo-managed PostgreSQL database, consider the following gu
 
 The high availability characteristics and the automatic backup retention periods for Choreo-managed PostgreSQL databases vary based on the selected service plan as shown below.
 
-| Service Plan | High Availability                                                  | Backup Retention Time |
-|--------------|--------------------------------------------------------------------|-----------------------|
-| Hobbyist     | Single-node with limited availability                              | None                  |
-| Startup      | Single-node with limited availability                              | 2 days                |
-| Business     | Two-node (primary + standby) with higher availability              | 14 days               |
-| Premium      | Three-node (primary + standby + standby) with highest availability | 30 days               |
+| Service Plan | High Availability                                                  | Backup Retention Time | Multi-AZ Deployment |
+|--------------|--------------------------------------------------------------------|-----------------------|---------------------|
+| Hobbyist     | Single-node with limited availability                              | None                  | No                  |
+| Startup      | Single-node with limited availability                              | 2 days                | No                  |
+| Business     | Two-node (primary + standby) with higher availability              | 14 days               | Yes*                |
+| Premium      | Three-node (primary + standby + standby) with highest availability | 30 days               | Yes*                |
+
+*Multi‑AZ availability depends on the cloud provider and region and is enabled where supported.
 
 Service plans with standby nodes are generally recommended for production scenarios for multiple reasons:
 - Provides another physical copy of the data in case of hardware, software, or network failures.
@@ -54,20 +58,26 @@ Service plans with standby nodes are generally recommended for production scenar
 
 ### Automatic Backups
 
-
-- Choreo runs full backups daily to automatically back up Choreo-managed PostgreSQL databases and copies the write-ahead logs (WAL)  at 5-minute intervals or for every new file generated.
-Choreo encrypts all backups at rest.
+- Daily full backups of PostgreSQL databases are taken automatically
+- Write‑ahead logs (WAL) are copied periodically to support recovery
+- All backups are encrypted at rest
+- Backups are managed automatically during recovery; manual backup point selection is not supported
 
 - Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the database.
 
 ### Failure Recovery
 
-- **Minor failures**: Choreo automatically handles minor failures such as service process crashes or temporary loss of network access in all plans without requiring significant changes to the service deployment. Choreo automatically restores the service to normal operation once Choreo automatically restarts the crashed process or when Choreo restores the network access.
+- Minor failures (e.g., process restarts or transient network issues) are handled automatically without requiring changes to the deployment
+- For severe failures (e.g., node loss), monitoring detects the issue and schedules a replacement node automatically
+- In database failover scenarios, the Service URI remains the same; the IP address changes to point to the new primary node
+- For single‑node tiers, the service is unavailable during restoration and some recent writes may not be recoverable
 
-- **Severe failures**: To handle severe failures such as losing a node entirely in case of hardware or severe software problems, requires more drastic recovery measures. The monitoring infrastructure automatically detects a failing node, both when the node starts reporting issues in the self-diagnostics or when it stops communicating. In such cases, the monitoring infrastructure automatically schedules a new replacement node to be created.
-> - In the event of database failover, the Service URI of your service remains the same; only the IP address will change to point to the new primary node.
-> - Hobbyist and Startup plan provide a single node, and in case of failure, a new node starts up, restores its state from the latest available backup, and resumes serving traffic.
-In this plan, as there is just a single node providing the service, the service will become unavailable for the duration of the restoration. In addition, any write operations made since the backup of the latest WAL file will be lost. Typically, this time window is limited to either five minutes of time or one WAL file.
+Typical outcomes in multi‑node tiers include automatic failover within minutes and recovery workflows designed to minimize data loss.
+
+## Monitoring and Observability
+
+- Runtime metrics (CPU, memory, disk, network) and PostgreSQL logs are available in the Choreo Console
+- Native alerting for resource spikes is not currently available; contact support if you need to export metrics to third‑party monitoring
 
 ## Connection limits
 
