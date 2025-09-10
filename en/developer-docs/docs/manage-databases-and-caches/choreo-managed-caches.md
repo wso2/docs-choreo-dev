@@ -33,7 +33,7 @@ To connect to your Choreo-Managed Cache, follow these guidelines:
 
 The high availability and the automatic backup retention periods for a Choreo-Managed Cache can vary as follows depending on the service plan you select.
 
-| Service plan | High availability                                                                                                  | Backup features                          | Backup history | Multi-AZ Deployment |
+| Service Plan | High Availability                                                                                                  | Backup Features                          | Backup History | Multi-AZ Deployment |
 | ------------ | -------------------------------------------------------------------------------------------------------------------| ---------------------------------------- | -------------- | ------------------- |
 | Hobbyist     | Single-node with limited availability.                                                                             | Single backup only for disaster recovery | None           | No                  |
 | Startup      | Single-node with limited availability.                                                                             | Single backup only for disaster recovery | 1 day          | No                  |
