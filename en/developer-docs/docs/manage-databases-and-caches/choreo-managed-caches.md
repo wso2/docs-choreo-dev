@@ -1,8 +1,8 @@
-# Choreo-Managed Cache
+# Choreo-Managed Cache (Valkey - Redis OSS Compatible)
 
-Fully compatible with legacy Redis® OSS.
+Choreo-Managed Cache is a fully-managed Valkey™ offering, an in-memory NoSQL database service that offers high performance, scalability, and security.
 
-Choreo-Managed Cache provides fully-managed in-memory NoSQL databases on AWS, Azure, GCP, and Digital Ocean and can be used as a cache, database, streaming engine, or message broker.
+Developed under the Linux Foundation, Valkey™ is an open-source fork of Redis® designed to provide a seamless and reliable alternative to Redis OSS. Choreo-Managed Caches with Valkey™ ensures full compatibility with Redis OSS v7.2.4.
 
 ## Create a Choreo-Managed Cache
 
@@ -25,7 +25,7 @@ Follow the steps below to create a Choreo-Managed Cache:
 
 To connect to your Choreo-Managed Cache, follow these guidelines:
 
-- Use any legacy Redis® OSS compatible driver (in any programming language) to connect to your Choreo-Managed Cache.
+- Use any Redis® OSS compatible driver (in any programming language) to connect to your Choreo-Managed Cache.
 - You can find the connection parameters in the **Overview** section in the Choreo Console under the relevant database. Note that Choreo-Managed Cache enforces TLS.
 - Choreo-Managed Cache instances accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
 
@@ -33,12 +33,14 @@ To connect to your Choreo-Managed Cache, follow these guidelines:
 
 The high availability and the automatic backup retention periods for a Choreo-Managed Cache can vary as follows depending on the service plan you select.
 
-| Service plan | High availability                                                                                                  | Backup features                          | Backup history |
-| ------------ | -------------------------------------------------------------------------------------------------------------------| ---------------------------------------- | -------------- |
-| Hobbyist     | Single-node with limited availability.                                                                             | Single backup only for disaster recovery | None           |
-| Startup      | Single-node with limited availability.                                                                             | Single backup only for disaster recovery | 1 day          |
-| Business     | Two-node (primary + standby) with higher availability (automatic failover if the primary node fails).              | Automatic backups                        | 3 days         |
-| Premium      | Three-node (primary + standby + standby) with highest availability (automatic failover if the primary node fails). | Automatic backups                        | 13 days        |
+| Service Plan | High Availability                                                                                                  | Backup Features                          | Backup History | Multi-AZ Deployment |
+| ------------ | -------------------------------------------------------------------------------------------------------------------| ---------------------------------------- | -------------- | ------------------- |
+| Hobbyist     | Single-node with limited availability.                                                                             | Single backup only for disaster recovery | None           | No                  |
+| Startup      | Single-node with limited availability.                                                                             | Single backup only for disaster recovery | 1 day          | No                  |
+| Business     | Two-node (primary + standby) with higher availability (automatic failover if the primary node fails).              | Automatic backups                        | 3 days         | Yes*                |
+| Premium      | Three-node (primary + standby + standby) with highest availability (automatic failover if the primary node fails). | Automatic backups                        | 13 days        | Yes*                |
+
+*Multi‑AZ availability depends on the cloud provider and region and is enabled where supported.
 
 In general, service plans are recommended for production scenarios due to the following reasons:
 
@@ -48,9 +50,10 @@ In general, service plans are recommended for production scenarios due to the fo
 
 ### Automatic backups
 
-- Choreo runs full backups daily to automatically backup Choreo-Managed Caches and has write-ahead logs (WAL) copied at 5-minute intervals or for every new file generated.
-- Choreo encrypts all backups at rest.
-- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the data store.
+- Automated snapshots and append‑only logging (where applicable) are used to support recovery
+- Backups are encrypted at rest
+- Backups are managed automatically during recovery; manual backup point selection is not supported
+- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the data store
 
 ### Failure recovery
 
