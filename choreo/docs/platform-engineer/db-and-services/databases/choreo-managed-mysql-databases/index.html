@@ -1720,8 +1720,22 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#failure-recovery" class="md-nav__link">
+    Failure Recovery
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-observability" class="md-nav__link">
+    Monitoring and Observability
+  </a>
   
 </li>
       
@@ -3021,8 +3035,22 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#failure-recovery" class="md-nav__link">
+    Failure Recovery
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-observability" class="md-nav__link">
+    Monitoring and Observability
+  </a>
   
 </li>
       
@@ -3070,6 +3098,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h1 id="choreo-managed-mysql-databases">Choreo-managed MySQL Databases<a class="headerlink" href="#choreo-managed-mysql-databases" title="Permanent link">&para;</a></h1>
 <p>MySQL on Choreo offers fully managed, flexible relational databases on AWS, Azure, GCP, and Digital Ocean.</p>
+<p>These services run on infrastructure and automation provided by <a href="https://aiven.io">Aiven</a>, our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-databases-and-caches.md#technology-partnership).</p>
 <h2 id="create-a-choreo-managed-mysql-database">Create a Choreo-managed MySQL database<a class="headerlink" href="#create-a-choreo-managed-mysql-database" title="Permanent link">&para;</a></h2>
 <p>Follow the steps below to create a Choreo-managed MySQL database: </p>
 <ol>
@@ -3108,6 +3137,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <th>Service Plan</th>
 <th>High Availability</th>
 <th>Backup Retention Time</th>
+<th>Multi-AZ Deployment</th>
 </tr>
 </thead>
 <tbody>
@@ -3115,37 +3145,57 @@ document.addEventListener('DOMContentLoaded', function() {
 <td>Hobbyist</td>
 <td>Single-node with limited availability</td>
 <td>None</td>
+<td>No</td>
 </tr>
 <tr>
 <td>Startup</td>
 <td>Single-node with limited availability</td>
 <td>2 days</td>
+<td>No</td>
 </tr>
 <tr>
 <td>Business</td>
 <td>Two-node (primary + standby) with higher availability</td>
 <td>14 days</td>
+<td>Yes*</td>
 </tr>
 <tr>
 <td>Premium</td>
 <td>Three-node (primary + standby + standby) with highest availability</td>
 <td>30 days</td>
+<td>Yes*</td>
 </tr>
 </tbody>
 </table>
+<p>*Multi‑AZ availability depends on the cloud provider and region and is enabled where supported.</p>
 <p>In general, we recommend service plans for production scenarios for multiple reasons:
 - Provides another physical copy of the data in case of hardware, software, or network failures.
 - Typically reduces the data loss window in disaster scenarios.
 - Provides a quicker time to restore with a controlled failover in case of failures, as the standby is already installed and running.</p>
 <h3 id="automatic-backups">Automatic Backups<a class="headerlink" href="#automatic-backups" title="Permanent link">&para;</a></h3>
 <ul>
+<li>Daily full backups of MySQL databases are taken automatically</li>
+<li>Logs are recorded to support point‑in‑time recovery where applicable</li>
+<li>All backups are encrypted at rest</li>
 <li>
-<p>Choreo runs full backups daily to automatically back up Choreo-managed MySQL databases and record binary logs continuously.
-Choreo encrypts all backups at rest.</p>
+<p>Backups are managed automatically during recovery; manual backup point selection is not supported</p>
 </li>
 <li>
 <p>Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the database.</p>
 </li>
+</ul>
+<h3 id="failure-recovery">Failure Recovery<a class="headerlink" href="#failure-recovery" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Minor failures (e.g., process restarts or transient network issues) are handled automatically without requiring changes to the deployment</li>
+<li>For severe failures (e.g., node loss), monitoring detects the issue and schedules a replacement node automatically</li>
+<li>In database failover scenarios, the Service URI remains the same; the IP address changes to point to the new primary node</li>
+<li>For single‑node tiers, the service is unavailable during restoration and some recent writes may not be recoverable</li>
+</ul>
+<p>Typical outcomes in multi‑node tiers include automatic failover within minutes and recovery workflows designed to minimize data loss.</p>
+<h2 id="monitoring-and-observability">Monitoring and Observability<a class="headerlink" href="#monitoring-and-observability" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Runtime metrics (CPU, memory, disk, network) and MySQL logs are available in the Choreo Console</li>
+<li>Native alerting for resource spikes is not currently available; contact Choreo support if you need to export metrics to third‑party monitoring for custom alerting.</li>
 </ul>
 <h2 id="connection-limits">Connection Limits<a class="headerlink" href="#connection-limits" title="Permanent link">&para;</a></h2>
 <p>The maximum number of simultaneous connections to MySQL databases is fixed for each service plan and depends on how much RAM your service plan offers.</p>
