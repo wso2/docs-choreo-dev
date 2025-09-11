@@ -2173,8 +2173,36 @@ document.addEventListener('DOMContentLoaded', function() {
     Connect to your Choreo-managed Kafka service
   </a>
   
-    <nav class="md-nav" aria-label="Connect to your Choreo-managed Kafka service">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disaster-recovery-and-high-availability" class="md-nav__link">
+    Disaster Recovery and High Availability
+  </a>
+  
+    <nav class="md-nav" aria-label="Disaster Recovery and High Availability">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#high-availability-characteristics" class="md-nav__link">
+    High Availability Characteristics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-and-recovery-model" class="md-nav__link">
+    Backup and Recovery Model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-and-observability" class="md-nav__link">
+    Monitoring and Observability
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#set-up-configurations-and-secrets" class="md-nav__link">
@@ -4018,8 +4046,36 @@ document.addEventListener('DOMContentLoaded', function() {
     Connect to your Choreo-managed Kafka service
   </a>
   
-    <nav class="md-nav" aria-label="Connect to your Choreo-managed Kafka service">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disaster-recovery-and-high-availability" class="md-nav__link">
+    Disaster Recovery and High Availability
+  </a>
+  
+    <nav class="md-nav" aria-label="Disaster Recovery and High Availability">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#high-availability-characteristics" class="md-nav__link">
+    High Availability Characteristics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-and-recovery-model" class="md-nav__link">
+    Backup and Recovery Model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-and-observability" class="md-nav__link">
+    Monitoring and Observability
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#set-up-configurations-and-secrets" class="md-nav__link">
@@ -4057,6 +4113,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h1 id="create-choreo-managed-kafka-services">Create Choreo-Managed Kafka Services<a class="headerlink" href="#create-choreo-managed-kafka-services" title="Permanent link">&para;</a></h1>
 <p>Kafka on Choreo offers fully managed, distributed message broker services across AWS, Azure, GCP, and DigitalOcean. These services are designed to handle high-throughput, fault-tolerant data streaming use cases such as real-time analytics, event sourcing, and log aggregation.</p>
+<p>These services run on infrastructure and automation provided by <a href="https://aiven.io">Aiven</a>, our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-message-brokers.md#technology-partnership).</p>
 <div class="admonition info">
 <p class="admonition-title">Note</p>
 <ul>
@@ -4093,6 +4150,21 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>To use the Kafka service with producer and consumer applications, you must configure them with the provided credentials and connection parameters.</p>
 <p>By default, Kafka services accept traffic from the internet. However, if you want to restrict access to specific IP addresses or CIDR blocks, you can configure the necessary advanced settings.</p>
 <p>To use the Kafka service in producer and consumer applications, you must add the required parameters as configurations and secrets in Choreo. You can obtain the parameter values from the <strong>Overview</strong> tab on the service details page and include key configurations such as the access key, access certificate, CA certificate, and service URI. Ensure you <a href="../configure-a-kafka-service/#create-a-kafka-topic">create a topic</a> before producing or consuming Kafka messages. If a topic already exists, you can proceed.</p>
+<h2 id="disaster-recovery-and-high-availability">Disaster Recovery and High Availability<a class="headerlink" href="#disaster-recovery-and-high-availability" title="Permanent link">&para;</a></h2>
+<h3 id="high-availability-characteristics">High Availability Characteristics<a class="headerlink" href="#high-availability-characteristics" title="Permanent link">&para;</a></h3>
+<p>Premium and Business tiers typically run multi‑node clusters and can be deployed across different availability zones where the cloud provider supports it. During node failures, the service is designed to maintain availability and keep the Service URI stable (the IP address may change).</p>
+<p>Hobbyist and Startup tiers are single‑node and may experience downtime during maintenance or failure recovery.</p>
+<h3 id="backup-and-recovery-model">Backup and Recovery Model<a class="headerlink" href="#backup-and-recovery-model" title="Permanent link">&para;</a></h3>
+<p>Kafka uses a different backup model than traditional databases:
+- No backups of message content or topic data
+- Configuration (topics, users/ACLs, Schema Registry, Connect) is backed up periodically and restored automatically when needed
+- Manual selection of older configuration backup points is not supported</p>
+<h3 id="monitoring-and-observability">Monitoring and Observability<a class="headerlink" href="#monitoring-and-observability" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Runtime metrics and service logs are accessible in the Choreo Console</li>
+<li>Native alerting for resource spikes is not currently available; contact Choreo support if you need to export metrics to third‑party monitoring</li>
+</ul>
+<p><strong>Security Note</strong>: All Kafka connections require TLS and client certificate authentication.</p>
 <h3 id="set-up-configurations-and-secrets">Set up configurations and secrets<a class="headerlink" href="#set-up-configurations-and-secrets" title="Permanent link">&para;</a></h3>
 <p>Follow these steps to set up required configurations and secrets:</p>
 <ol>
