@@ -415,7 +415,7 @@ Click the respective tab to view the structure for your current configuration fi
     !!! note
         Choreo automatically generates connection configurations when you create a connection. The properties such as **name**, **connectionConfig**, and **env.from** are automatically generated. However, you must manually set the **env.to** value.
 
-## Overview of the `component-config.yaml` file 
+## Overview of the `component-config.yaml` file(deprecated) 
 
 **File location**:
 
@@ -494,7 +494,7 @@ You must include the following configurations in the `serviceReferences` schema:
 | **env.from**         | Required     | The key name of the connection configuration.                                    |
 | **env.to**           | Required     | The environment variable to inject into the container.                           |
 
-## Overview of the `endpoints.yaml` file
+## Overview of the `endpoints.yaml` file(deprecated)
 
 **File location**:
 
