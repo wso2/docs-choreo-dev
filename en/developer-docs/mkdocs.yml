@@ -435,6 +435,7 @@ plugins:
         "develop-components/develop-services/expose-a-websocket-endpoint-via-a-nodejs-service.md": "https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-websocket-endpoint-via-a-service/"
         "manage-databases-and-caches/billing-for-platform-services.md": "https://wso2.com/choreo/docs/references/choreo-platform-services-billing-and-upgrades/"
         "consuming-services/consuming-a-sevice.md": "https://wso2.com/choreo/docs/consuming-services/consume-an-oauth2-secured-service/"
+        "administer/control-access-in-the-choreo-console.md": "https://wso2.com/choreo/docs/choreo-concepts/access-control/"
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css

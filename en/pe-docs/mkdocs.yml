@@ -224,6 +224,10 @@ plugins:
   - glightbox
   - open-in-new-tab
   - markdownextradata: {}
+  - redirects:
+      redirect_maps:
+        "user-management/groups-and-roles/control-access-in-the-choreo-console.md": "https://wso2.com/choreo/docs/platform-engineer/choreo-concepts/access-control/"
+
 extra_css:
   # - assets/lib/highlightjs/default.min.css
   # - assets/css/theme.css
