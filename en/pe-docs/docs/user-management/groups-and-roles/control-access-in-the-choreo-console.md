@@ -1,6 +1,6 @@
 # Control Access in the Choreo Console
 
-In Choreo, administrators can control user access to different projects and environments within the organization. 
+With Choreo, administrators can control user access to different projects and environments within the organization. 
 At the finest granularity level, an administrator can restrict a user to perform a specific action on a specific project and a specific environment.
 
 ## Access Control (Authorization) Concepts
@@ -9,7 +9,7 @@ To understand how to configure access control in Choreo, it is important to unde
 
 ### Fundamental Question in Access Control
 
-Access control of any system boils down to answering the following question.
+Access control in any system ultimately comes down to answering the following question.
 
 > *Can this **user** perform this **action** on this **resource**?*
 
@@ -25,48 +25,47 @@ Access control of any system boils down to answering the following question.
 In Choreo access control model, a permission is the right to perform a specific action. 
 
 ???+ example
-    A user can configure a custom domain only if the user has `choreo:domain_manage` permission.
+    A user can create a component only if the user has `Create Component` permission.
 
 #### Environment Specific Permissions
 
-In Choreo, a subset of actions such as `deploy component`, `promote component`, `create configuration groups`, and `view logs` are always performed within the context of an environment. The permissions which give the right to perform such actions are categorized as **Environment Specific** permissions.
+In Choreo, actions such as `deploy component`, `promote component`, `create configuration groups`, and `view logs` must be performed within the context of an environment. The permissions which give the right to perform such actions are categorized as **Environment Specific** permissions.
 
 !!! note
-    For the actions which are tied to an environment, in some cases, it makes sense to allow a user to perform the action on some environments but not on other environments. For example, a developer should be allowed to view logs of the develoment environment. But the same developer should not be allowed to view logs of the production environment.
+    For actions tied to an environment, it is sometimes necessary to allow a user to perform the action in certain environments but not in others; for example, a developer may be allowed to view logs in the development environment but not in the production environment.
 
 ### Role
 
-In practice, assigning permissions individually to each user is a time consuming and error prone task. Moreover, 
-users with similar job responsibilities often need the same set of permissions. Roles are collections of such permissions. They are designed to match real-world job responsibilities.   
+Assigning permissions individually to each user is a time-consuming and error prone task. Users with similar job responsibilities often need the same set of permissions, which is why **roles** exist. A role is a collection of permissions designed to reflect real-world job responsibilities.
 
-Roles simplify assigning permissions to users. Instead of assigning 50 developers 20 permissions each (1000 assignments), you just assign the 20 permissions to the `Developer` role and assign the `Developer` role to each developer (20 + 50 assignments).  
+Roles simplify permission management. For example, instead of assigning 20 permissions to each of 50 developers (1000 assignments), you can assign the 20 permissions to a Developer role and then assign that role to each developer (20 + 50 assignments).  
 
 !!! info
-    Each organization in Choreo has a predefined set of roles with permissions assigned to them by default. Organization adminstratrators can further customize the existing roles and and create new roles as required. [Learn more](../../choreo-concepts/organization.md#roles)
+    Each organization in Choreo comes with a predefined set of roles with default permissions. Organization administrators can customize existing roles or create new ones as needed. [Learn more](../../choreo-concepts/organization.md#roles)
 
 ### Group 
 
-A group is a collection of users. Grouping is often done based on teams or departments within the organization. 
+A group is a collection of users, usually organized by team or department.
 
-Instead of assigning a role to a user, the role is assigned to a group. Each user in the group inherits the permissions of the group. This is specially useful when role to user assignments need to be updated. Instead of removing 50 role to user assignments and creating 50 new ones, you just remove 1 role to group assignment and create 1 new assignment. 
+Instead of assigning a role to each user, you assign the role to the group. Every user in the group automatically gets the group’s permissions. This makes updates easier. For example, instead of removing 50 role-to-user assignments and creating 50 new ones, you only need to remove one role-to-group assignment and add one new assignment.
 
 !!! info
-    Each organization in Choreo has a predefined set of groups. By default, a role with the same name is mapped to each group. Organization adminstratrators can further customize the existing groups and and create new groups as required. [Learn more](../../choreo-concepts/organization.md#groups)
+    Each organization in Choreo comes with a predefined set of groups. By default, each group is mapped to a role with the same name. Organization administrators can customize these groups or create new ones as needed. [Learn more](../../choreo-concepts/organization.md#groups)
 
 ### Permission to Role Assignment
 
-All permission to role assignments (mappings) in Choreo are organization wide assignments. Resource specific restrictions **cannot** be imposed on permission to role assignments. For example, you **cannot** configure Choreo to assign `choreo:component_manage` permission to `Developer` role only for Development environment of the Engineering project.
+In Choreo, all permission-to-role assignments apply across the organization. You can’t restrict these assignments to specific resources. For example, you can’t configure Choreo to grant the `View Logs` permission to the `Developer` role only in the Development environment of the Engineering project.
 
 ### Role to Group Assignment
 
-The true power of Choreo Access Control comes from role to group assignments (mappings). Resource specific restrictions **can** be imposed on role to group assignments. For example, you **can** configure Choreo to assign `Developer` role to `Engineering Project Developer` group but only for Development environment of the Engineering project. 
+The real strength of Choreo Access Control comes from role-to-group assignments. These assignments can include resource-specific restrictions. For example, you can assign the `Developer` role to the `Engineering Project Developer` group, but limit it to the Development environment of the Engineering project.
 
-Each role to group assignment has 2 attributes.
+Each role-to-group assignment has two attributes:
 
-1. **Mapping Level** : determines whether the assignment is valid for the entire `Organization` or only for a specific `Project`.
-2. **Applicable Environment** : determines whther the assignment is valid for `All` environments or only for a specific `Environment`.
+1. **Mapping Level** : Defines whether the assignment applies to the entire `Organization` or only to a specific `Project`.
+2. **Applicable Environment** : Defines whether the assignment applies to `All` environments or only to a specific `Environment`.
 
-Based on the combination of the above attributes, there are four possible assignment types.
+By combining these attributes, you can create four types of assignments.
 
 |Assignment Type|Mapping Level|Appicable Environment|
 |-|-|-|
@@ -76,7 +75,7 @@ Based on the combination of the above attributes, there are four possible assign
 |`Project-Environment Scoped`|Project|Environment|
 
 !!! warning "Important"
-    Avoid assigning multiple roles to a single group across different projects or mapping levels (organization and project). Such assignments can grant users unintended permission to some projects, allowing them to perform tasks they shouldn't have access to. Therefore, it is recommended to assign only one role to a group across projects or mapping levels to ensure proper access control.
+    Avoid assigning multiple roles to the same group across different projects or mapping levels (organization and project). Doing so can give users unintended permissions in some projects, allowing access to tasks they shouldn’t perform. To ensure proper access control, assign only one role to a group across projects or mapping levels.
 
 ### Extent of Access granted through different Role to Group assignment types
 
@@ -84,54 +83,54 @@ Recall the [Fundamental Question in Access Control](#fundamental-question-in-acc
 
 > *Can this **user** perform this **action** on this **resource**?*
 
-Based on this question, extent of access has two parts.
+Based on this question, the extent of access has two parts.
 
-1. allowed **actions**
+1. Allowed **actions**
 
-2. allowed **resources** (resources on which the actions are allowed to be performed on)
+2. Allowed **resources** (the resources on which those actions can be performed)
 
-Lets go through each role to group assignment type to understand the extent of access granted by them. We will look at the extent of access in terms of allowed **actions** and allowed **resources**. 
+Next, let’s go through each role-to-group assignment type to see the extent of access it grants. We’ll look at both the allowed **actions** and the allowed **resources**. 
 
 #### Organization Scoped Assignments
 
 - Actions permitted by the role are allowed on resources within the organization. 
-- Other actions are not allowed.
+- All other actions are not allowed.
 
 !!! note
-    Actions permitted by the role are the actions linked to the permissions assigned to the role.
+    Actions permitted by a role are the actions linked to the permissions assigned to the role.
 
 #### Project Scoped Assignments
 
 - Actions permitted by the role are allowed on resources within the specific project. 
-- Other actions are not allowed.
+- All other actions are not allowed.
 
 #### Environement Scoped Assignments
 
 - Environment specific actions permitted by the role are allowed on resources within the specific environment of the organization.
 - Other actions permitted by the role are allowed on resources within the organization.
-- Other actions are not allowed.
+- All other actions are not allowed.
 
 !!! note
-    **Environment specific actions** permitted by the role are the actions linked to the [**environment specific permissions**](#permission) assigned to the role.
+    **Environment specific actions** permitted by a role are the actions linked to the [**environment specific permissions**](#permission) assigned to the role.
 
-For environement scoped assignments, allowing **non environment specific** actions on resources within the organization is a deliberate decision to align with real world Access Control use cases. 
+For environement scoped assignments, allowing **non environment specific** actions on resources across organization is intentional. This design aligns with real world Access Control use cases. 
 
 !!! example
-    Consider assigning the Developer role to Engineering Developer group but only for Development environment of the Engineering project. The usual intention of this assignment is **not** to retrict the Developers from performing actions such as `build component` which do not happen within an environment context. Instead, the intention is to restrict Developers from performing actions such as `promote component` on unauthorized environments (such as Production environment).
+    Suppose you assign the Developer role to the Engineering Developer group, but only for the Development environment of the Engineering project. The purpose of this assignment is not to prevent developers from performing actions like `build component`, which don’t depend on a specific environment. Instead, the goal is to restrict developers from performing actions such as `promote component` on environments they aren’t authorized to access, like Production.
 
 !!! warning "Important"
-    Exercise caution when creating environment scoped role to group assignments. Only the environment specific actions will be restricted to the environment. Other actions will be allowed on resources of the organization.
+    Exercise care when creating environment scoped role-to-group assignments. Only environment specific actions are restricted to that environment; all other actions remain allowed on resources across the organization.
 
 #### Project-Environment Scoped Assignments
 
 - Environment Specific actions permitted by the role are allowed on resources within the specific Environment of the specific Project.
 - Other actions permitted by the role are allowed on resources within the specific Project.
-- Other actions are not allowed.
+- All other actions are not allowed.
 
-Similar to previous case, allowing other permissions on resources within the Project is a deliberate decision to align with real world Access Control use cases.
+Similar to previous case, allowing **non environment specific** actions on resources across project is intentional. This design aligns with real world Access Control use cases.
 
 !!! warning "Important"
-    Exercise caution when creating project-environment scoped role to group assignments. Only the environment specific actions will be restricted to the environment. Other actions will be allowed on resources of the project.
+    Exercise care when creating project-environment scoped role-to-group assignments. Only environment specific actions are restricted to that environment; all other actions remain allowed on resources across the project.
 
 
 ## Configure Access Control in Choreo
