@@ -88,6 +88,7 @@ nav:
       - Deployment Tracks: choreo-concepts/deployment-tracks.md
       - Endpoint: choreo-concepts/endpoint.md
       - Connections: choreo-concepts/connections.md
+      - Access Control: choreo-concepts/access-control.md
   - Infrastructure:
       - Data Planes: 'infrastructure/dataplanes/data-planes.md'
       - Environments:
@@ -103,7 +104,7 @@ nav:
             - Manage  Members of an Organization: user-management/users/manage-members-of-an-organization.md
             - Configure Enterprise Login: user-management/users/configure-enterprise-login.md
       - Groups & Roles:
-            - Control Access in the Choreo Console: user-management/groups-and-roles/control-access-in-the-choreo-console.md
+            - Configure Access Control: user-management/groups-and-roles/configure-access-control.md
   - DevOps:
       - CI Pipelines:
           - Configure CI Pipeline: devops/ci-pipelines/configure-ci-pipeline.md

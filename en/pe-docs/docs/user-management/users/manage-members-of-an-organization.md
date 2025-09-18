@@ -17,4 +17,4 @@ Follow the steps below to invite a new member to your organization:
 
 ## Manage user permission
 
-For details on how Choreo manages user permission, see [Manage user permission](../../choreo-concepts/organization.md#manage-user-permission).
+For details on how Choreo manages user permission, see [Access Control](../../choreo-concepts/access-control.md).
