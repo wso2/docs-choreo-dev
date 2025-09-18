@@ -36,23 +36,8 @@ Assigning permissions individually to each user is a time-consuming and error pr
 
 Roles simplify permission management. For example, instead of assigning 20 permissions to each of 50 developers (1000 assignments), you can assign the 20 permissions to a Developer role and then assign that role to each developer (20 + 50 assignments).  
 
-???+ info
-    Each organization in Choreo comes with the following predefined roles with default permissions. Organization administrators can customize these roles or create new ones as needed.
-
-    - **Admin**: Performs all administrative tasks including user management, Developer Portal customization, project management, analytics configuration, and domain management.
-    - **Project Admin**: Performs all administrative tasks at the project level.
-    - **Developer**: Develops, deploys, and manages cloud-native applications at scale.
-    - **API Subscriber**: Subscribes to APIs, manages subscriptions and applications, and generates and manages API keys.
-    - **External API Subscriber**: Consumes APIs with Developer Portal access and can join an organization exclusively for API usage.
-    - **API Publisher**: Discovers, creates, publishes, deletes, tests, and manages APIs.
-    - **Choreo Platform Engineer**: Performs infrastructure, governance, service mesh, and monitoring tasks.
-    - **Viewer**: Views and monitors applications, APIs, and environments without making changes.
-    - **Billing Admin (Deprecated)**: Handles billing administration including viewing tiers, managing organizations and invoices, and managing subscriptions and payment methods.
-    - **Environment Manager (Deprecated):** Previously responsible for managing deployment environments.
-    - **Choreo DevOps (Deprecated)**: Manages deployment, monitoring, and reliability of components in Choreo.
-
-    !!! note
-        The **Choreo DevOps** role has been replaced with the **Choreo Platform Engineer** role. However, organizations that previously had Choreo DevOps role will continue to see and use both roles with their existing functionality.
+!!! info
+    Each organization in Choreo comes with a set of predefined roles with default permissions. Organization administrators can customize these roles or create new ones as needed.
 
 ## Group 
 
@@ -60,20 +45,8 @@ A group is a collection of users, usually organized by team or department.
 
 Instead of assigning a role to each user, you assign the role to the group. Every user in the group automatically gets the group’s permissions. This makes updates easier. For example, instead of removing 50 role-to-user assignments and creating 50 new ones, you only need to remove one role-to-group assignment and add one new assignment.
 
-???+ info
-    Each organization in Choreo comes with following predefined groups. By default, each group is mapped to a role with the same name. Organization administrators can customize these groups or create new ones as needed.
-    
-    - **Admin**
-    - **Project Admin**
-    - **Developer**
-    - **API Subscriber**
-    - **External API Subscriber**
-    - **API Publisher**
-    - **Choreo Platform Engineer**
-    - **Viewer**
-    - **Billing Admin (Deprecated)**
-    - **Environment Manager (Deprecated)**
-    - **Choreo DevOps (Deprecated)**
+!!! info
+    Each organization in Choreo comes with a set of predefined groups. By default, each group is mapped to a role with the same name. Organization administrators can customize these groups or create new ones as needed.
 
 ## Permission to Role Assignment
 
