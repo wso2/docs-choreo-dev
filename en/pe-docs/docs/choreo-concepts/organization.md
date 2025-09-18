@@ -6,7 +6,12 @@ An organization in Choreo is a logical grouping of users and user resources. A f
 
 If you are a member of more than one organization, you can switch from one organization to another when necessary. To do this, select the required organization from the **Organization** list in the Choreo Console header.
 
-{% include "../user-management/users/inviting-members.md" %}
+## Inviting users
+
+!!! note
+    - You must have **Send Invitations** or **Manage Invitations** permission under **USER-MANAGEMENT** permission group to invite users.
+
+Platform engineers can invite users to the organization by assigning them specific [groups](../choreo-concepts/access-control.md#group). Invited users will receive an invitation via email. An invited user must accept the invitation in order to join the organization and access the resources.
 
 ## Manage user permission
 

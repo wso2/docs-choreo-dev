@@ -2,7 +2,12 @@
 
 An organization in Choreo is a logical grouping of users and user resources. A first-time user must create an organization and be a user of it when signing in to Choreo. Users and resources in an organization cannot access resources in another organization unless an admin of the other organization invites them and adds them as a user of that organization.
 
-{% include "inviting-members.md" %}
+## Inviting users
+
+!!! note
+    - You must have **Send Invitations** or **Manage Invitations** permission under **USER-MANAGEMENT** permission group to invite users.
+
+Platform engineers can invite users to the organization by assigning them specific [groups](../../choreo-concepts/access-control.md#group). Invited users will receive an invitation via email. An invited user must accept the invitation in order to join the organization and access the resources.
 
 Follow the steps below to invite a new member to your organization:
 
