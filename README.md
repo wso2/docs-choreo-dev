@@ -18,6 +18,26 @@ Before you contribute, read the following guidelines to understand how you can s
 
    For an overview of the general voice, tone, content style, and text formatting to follow when contributing to Choreo documentation, see [Choreo Documentation Guidelines and Best Practices](https://github.com/wso2/docs-choreo-dev/wiki/Choreo-Documentation-Guidelines-and-Best-Practices)
 
+### Making changes to the documentation
+
+1. Switch to the `PE` branch.
+```
+git checkout PE
+```
+
+2. The repository has two documentation directories, aligned with the perspectives in the Choreo Console:
+    - `en/developer-docs` - Documentation for the Development View.
+    - `en/pe-docs` - Documentation for the Platform Operations View.
+
+If a change applies only to one perspective, update the documentation in the relevant directory.
+If a change applies to both perspectives, update both directories.
+
+⚠️ ***Note: Console navigation and documentation grouping differ between the perspectives, so ensure content is placed and structured appropriately.***
+
+3. Make the necessary changes to the documentation in the relevant directory.
+4. Commit and push the changes to your forked repository.
+5. Send a pull request to the `PE` branch of this repository.
+
 We look forward to your contributions.
 
 ## Run the project locally with Devcontainers
