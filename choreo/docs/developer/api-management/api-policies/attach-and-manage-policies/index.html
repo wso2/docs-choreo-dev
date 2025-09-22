@@ -4317,7 +4317,14 @@ To deploy the API follow the steps below: </p>
 <p>In this guide, you are not going to make any changes to the <code>Fault</code> flow. Therefore, you can remove the <code>Fault</code> flow stub from the <code>policy.bal</code> file.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+<ul>
+<li>
 <p>The  <strong>@mediation:RequestFlow</strong>, <strong>@mediation:ResponseFlow</strong>, and <strong>@mediation:FaultFlow</strong> annotations are bound with the keywords in the <code>Ballerina.toml</code>. Therefore, the changes you make to the policy stubs should reflect in the <code>Ballerina.toml</code> file. For example, if the policy is applicable only on the request and response paths, you can remove the  <strong>@mediation:FaultFlow</strong> annotation from the policy. Then, you <strong>MUST</strong> also remove the <strong>choreo-apim-mediation-fault-flow</strong> keyword from the generated <code>Ballerina.toml</code> file. If you do not do so, the Ballerina compiler will show an error at compile time.</p>
+</li>
+<li>
+<p>If you choose not to remove the Fault flow, ensure that the parameter order and names are consistent with defined Request and Response flows.</p>
+</li>
+</ul>
 </div>
 <h4>Publish as a private custom policy</h4>
 <p>Choreo supports publishing a policy as a private custom policy. Publishing a policy as a private custom policy makes the policy inaccessible outside of the organization. To publish a policy as a private custom policy, change the visibility to <code>private</code> prior to pushing the package to Ballerina Central as follows:</p>
@@ -4575,7 +4582,7 @@ To deploy the API follow the steps below: </p>
     <div class="md-footer-meta__inner md-grid">
       <div class="footer-copyright-right">
     <div class="footer-copyright-top">
-      Copyright &copy; <a href="https://wso2.com/">WSO2</a> LLC (2023-2024)
+      Copyright &copy; <a href="https://wso2.com/">WSO2</a> LLC (2023-2025)
     </div>
     <div class="footer-copyright-bottom">
       Content licensed under <a href="https://creativecommons.org/licenses/by/4.0">CC By 4.0.</a> | Sample code
