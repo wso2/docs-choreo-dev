@@ -2,6 +2,9 @@
 
 Choreo allows you to create and deploy MCP Server applications in Python and Node.js.
 
+!!! info
+    Choreo currently supports deploying only **stdio-based MCP servers** using **Server-Sent Events (SSE)**.
+
 In this guide, you will:
 
 - Deploy an stdio-based [github-mcp-server](https://github.com/github/github-mcp-server) in Choreo  over SSE (Server-Sent Events) using a `NodeJs` build preset.
