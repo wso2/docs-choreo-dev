@@ -25,7 +25,7 @@ To resolve the issue, follow the guidelines given below:
        1. Add the `config.js` file to the `app/public` directory in your repository.
        2. Reference it from the `index.html` file by adding a script tag as follows:
 
-           `<script src="public/config.js"></script>`
+           `<script src="./config.js"></script>`
 
 ## Troubleshoot component deployment errors
 
@@ -35,7 +35,7 @@ To resolve the issue, follow the guidelines given below:
 
        - Reference the `config.js` file from the `index.html` file of your application by adding a script tag as follows:  
 
-          `<script src="public/config.js"></script>` 
+          `<script src="./config.js"></script>` 
 
        - Verify that the path in the script tag matches the location where the `config.js` file is stored in your repository.
        - Make sure the script tag is placed within the `<body>` tag in your `index.html` file. You must ensure that it is not mistakenly placed within another HTML element.

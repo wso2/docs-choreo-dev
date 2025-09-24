@@ -146,7 +146,7 @@ To configure the front-end application:
     | **choreoApiUrl**      | The **Reading List Service** URL from the endpoint table in the overview page. |
         
     !!! tip
-        You can refer to the mounted configuration file as `./public/config.js` within your web application.
+        You can refer to the mounted configuration file as `./config.js` within your web application.
     
 5. Click **Deploy**.
 6. Once deployed, copy the **Web App URL** from the development environment card.
