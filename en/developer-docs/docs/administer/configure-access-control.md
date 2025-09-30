@@ -56,8 +56,6 @@ Follow the steps given below to assign the **Developer** role to the **Engineeri
 8. Select **Development** environment from the environment selecction dropdown 
 7. Click **Assign**. This assigns the **Developer** role to the group. You should see the mapping level as **Project (Engineering Project)** and Applicable Environment as **Development** indicating the type of the asssignment:
 
-    <!-- ![Mapping level](../assets/img/administer/mapping-level.png) -->
-
    This means that you have granted developer access to users in the Engineering Project Developer group in the scope of the Development environment of the Engineering Project.
 
 Now that you have set up access control, you can proceed to add users to the new group.
