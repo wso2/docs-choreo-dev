@@ -101,6 +101,7 @@ nav:
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
       - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
+      - Access Control: choreo-concepts/access-control.md
   - Develop Components:
       - Develop Services:
           - Service Component Overview: develop-components/develop-services/service-component-overview.md
@@ -234,7 +235,7 @@ nav:
       - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md
       - Manage Authentication with Personal Access Tokens: choreo-cli/manage-authentication-with-personal-access-tokens.md
   - Administer:
-      - Control Access in the Choreo Console: administer/control-access-in-the-choreo-console.md
+      - Configure Access Control: administer/configure-access-control.md
       - Configure a Custom Domain for Your Organization: administer/configure-a-custom-domain-for-your-organization.md
       - Configure Enterprise Login: administer/configure-enterprise-login.md
       - Configure an External IdP:
@@ -434,6 +435,7 @@ plugins:
         "develop-components/develop-services/expose-a-websocket-endpoint-via-a-nodejs-service.md": "https://wso2.com/choreo/docs/develop-components/develop-services/expose-a-websocket-endpoint-via-a-service/"
         "manage-databases-and-caches/billing-for-platform-services.md": "https://wso2.com/choreo/docs/references/choreo-platform-services-billing-and-upgrades/"
         "consuming-services/consuming-a-sevice.md": "https://wso2.com/choreo/docs/consuming-services/consume-an-oauth2-secured-service/"
+        "administer/control-access-in-the-choreo-console.md": "https://wso2.com/choreo/docs/choreo-concepts/access-control/"
 
 extra_css:
   # - assets/lib/highlightjs/default.min.css

@@ -6,44 +6,13 @@ An organization in Choreo is a logical grouping of users and user resources. A f
 
 If you are a member of more than one organization, you can switch from one organization to another when necessary. To do this, select the required organization from the **Organization** list in the Choreo Console header.
 
-{% include "../administer/inviting-members.md" %}
+## Inviting users
+
+An organization administrator can invite users to the organization by assigning them specific [groups](../choreo-concepts/access-control.md#group). Invited users receive an invitation via email. An invited user must accept the invitation to join the organization and access the resources of that organization.
 
 ## Manage user permission
 
-Choreo manages user permissions with groups and roles.
-
-### Groups
-
-A group in Choreo is a collection of users, each with one or more roles assigned to them. Users within a group inherit the permissions associated with the roles assigned to that group. For instance, if a user is added to the `API Publisher` group, they will automatically receive the `API Publisher` role.
-
-Choreo comes with predefined groups already configured with specific roles, as follows:
-
-- **API Publisher**: A collection of users who have the API Publisher role.
-- **API Subscriber**: A collection of users who have the API Subscriber role.
-- **Admin** : A collection of users who have the Admin role.
-- **Billing Admin** : A collection of users who have the Billing Admin role.
-- **Choreo DevOps** : A collection of users who have the Choreo DevOps role.
-- **Developer** : Users who develop, deploy, and manage cloud native applications at scale.
-- **External API Subscriber**: A collection of users who have the External API Subscriber role.
-
-When creating a new group to invite members, be sure to assign a role to the group to ensure users have the required permissions.
-
-### Roles
-
-Choreo roles are defined as follows:
-
-- **Admin**: Performs all administrative tasks including user management, Developer Portal customization, project management, analytics configuration, and domain management.
-- **API Publisher**: Discovers, creates, publishes, deletes, tests, and manages APIs.
-- **API Subscriber**: Subscribes to APIs, manages subscriptions and applications, and generates and manages API keys.
-- **Billing Admin**: Handles billing administration including viewing tiers, managing organizations and invoices, and managing subscriptions and payment methods.
-- **Choreo DevOps**:   Manages deployment, monitoring, and reliability of components in Choreo.
-- **Choreo Platform Engineer**: Performs infrastructure, governance, service mesh, and monitoring tasks.
-- **Developer**: Develops, deploys, and manages cloud-native applications at scale.
-- **External API Subscriber**: Consumes APIs with Developer Portal access and can join an organization exclusively for API usage.
-- **Environment Manager (Deprecated):** Previously responsible for managing deployment environments.
-- **Viewer**: Views and monitors applications, APIs, and environments without making changes.
-
-_Note: The **Choreo DevOps** role has been replaced with the **Choreo Platform Engineer** role. However, organizations that previously had Choreo DevOps role will continue to see and use both roles with their existing functionality._
+For details on how Choreo manages user permission, see [Access Control](access-control.md).
 
 ## Organization ID
 
