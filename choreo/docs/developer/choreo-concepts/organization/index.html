@@ -975,26 +975,6 @@ document.addEventListener('DOMContentLoaded', function() {
     Manage user permission
   </a>
   
-    <nav class="md-nav" aria-label="Manage user permission">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#groups" class="md-nav__link">
-    Groups
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#roles" class="md-nav__link">
-    Roles
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1140,6 +1120,20 @@ document.addEventListener('DOMContentLoaded', function() {
     <li class="md-nav__item">
       <a href="../choreo-marketplace/" class="md-nav__link">
         Choreo Marketplace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../access-control/" class="md-nav__link">
+        Access Control
       </a>
     </li>
   
@@ -3598,8 +3592,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/control-access-in-the-choreo-console/" class="md-nav__link">
-        Control Access in the Choreo Console
+      <a href="../../administer/configure-access-control/" class="md-nav__link">
+        Configure Access Control
       </a>
     </li>
   
@@ -4046,26 +4040,6 @@ document.addEventListener('DOMContentLoaded', function() {
     Manage user permission
   </a>
   
-    <nav class="md-nav" aria-label="Manage user permission">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#groups" class="md-nav__link">
-    Groups
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#roles" class="md-nav__link">
-    Roles
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -4102,37 +4076,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="switch-organizations">Switch organizations<a class="headerlink" href="#switch-organizations" title="Permanent link">&para;</a></h2>
 <p>If you are a member of more than one organization, you can switch from one organization to another when necessary. To do this, select the required organization from the <strong>Organization</strong> list in the Choreo Console header.</p>
 <h2 id="inviting-users">Inviting users<a class="headerlink" href="#inviting-users" title="Permanent link">&para;</a></h2>
-<p>An organization administrator can invite users to the organization by assigning them specific groups. Invited users receive an invitation via email. An invited user must accept the invitation to join the organization and access the resources of that organization.</p>
+<p>An organization administrator can invite users to the organization by assigning them specific <a href="../access-control/#group">groups</a>. Invited users receive an invitation via email. An invited user must accept the invitation to join the organization and access the resources of that organization.</p>
 <h2 id="manage-user-permission">Manage user permission<a class="headerlink" href="#manage-user-permission" title="Permanent link">&para;</a></h2>
-<p>Choreo manages user permissions with groups and roles.</p>
-<h3 id="groups">Groups<a class="headerlink" href="#groups" title="Permanent link">&para;</a></h3>
-<p>A group in Choreo is a collection of users, each with one or more roles assigned to them. Users within a group inherit the permissions associated with the roles assigned to that group. For instance, if a user is added to the <code>API Publisher</code> group, they will automatically receive the <code>API Publisher</code> role.</p>
-<p>Choreo comes with predefined groups already configured with specific roles, as follows:</p>
-<ul>
-<li><strong>API Publisher</strong>: A collection of users who have the API Publisher role.</li>
-<li><strong>API Subscriber</strong>: A collection of users who have the API Subscriber role.</li>
-<li><strong>Admin</strong> : A collection of users who have the Admin role.</li>
-<li><strong>Billing Admin</strong> : A collection of users who have the Billing Admin role.</li>
-<li><strong>Choreo DevOps</strong> : A collection of users who have the Choreo DevOps role.</li>
-<li><strong>Developer</strong> : Users who develop, deploy, and manage cloud native applications at scale.</li>
-<li><strong>External API Subscriber</strong>: A collection of users who have the External API Subscriber role.</li>
-</ul>
-<p>When creating a new group to invite members, be sure to assign a role to the group to ensure users have the required permissions.</p>
-<h3 id="roles">Roles<a class="headerlink" href="#roles" title="Permanent link">&para;</a></h3>
-<p>Choreo roles are defined as follows:</p>
-<ul>
-<li><strong>Admin</strong>: Performs all administrative tasks including user management, Developer Portal customization, project management, analytics configuration, and domain management.</li>
-<li><strong>API Publisher</strong>: Discovers, creates, publishes, deletes, tests, and manages APIs.</li>
-<li><strong>API Subscriber</strong>: Subscribes to APIs, manages subscriptions and applications, and generates and manages API keys.</li>
-<li><strong>Billing Admin</strong>: Handles billing administration including viewing tiers, managing organizations and invoices, and managing subscriptions and payment methods.</li>
-<li><strong>Choreo DevOps</strong>:   Manages deployment, monitoring, and reliability of components in Choreo.</li>
-<li><strong>Choreo Platform Engineer</strong>: Performs infrastructure, governance, service mesh, and monitoring tasks.</li>
-<li><strong>Developer</strong>: Develops, deploys, and manages cloud-native applications at scale.</li>
-<li><strong>External API Subscriber</strong>: Consumes APIs with Developer Portal access and can join an organization exclusively for API usage.</li>
-<li><strong>Environment Manager (Deprecated):</strong> Previously responsible for managing deployment environments.</li>
-<li><strong>Viewer</strong>: Views and monitors applications, APIs, and environments without making changes.</li>
-</ul>
-<p><em>Note: The <strong>Choreo DevOps</strong> role has been replaced with the <strong>Choreo Platform Engineer</strong> role. However, organizations that previously had Choreo DevOps role will continue to see and use both roles with their existing functionality.</em></p>
+<p>For details on how Choreo manages user permission, see <a href="../access-control/">Access Control</a>.</p>
 <h2 id="organization-id">Organization ID<a class="headerlink" href="#organization-id" title="Permanent link">&para;</a></h2>
 <p>The Organization ID serves as a unique identifier for each organization. To get the organization ID, follow the steps below:</p>
 <ol>
