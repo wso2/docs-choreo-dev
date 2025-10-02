@@ -15,17 +15,13 @@
         <link rel="canonical" href="https://wso2.com/choreo/docs/db-and-services/external-services/integrate-and-manage-gen-ai-services/">
       
       
-        <link rel="prev" href="../../message-brokers/monitor-a-kafka-service/">
-      
-      
-        <link rel="next" href="../../../k8s-operations/runtime/view-runtime-details/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Gen AI Services - Choreo Documentation | AI-Native Internal Developer Platform</title>
+        <title>Integrate and Manage Generative AI Services - Choreo Documentation | AI-Native Internal Developer Platform</title>
       
     
     
@@ -342,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Gen AI Services
+              Integrate and Manage Generative AI Services
             
           </span>
         </div>
@@ -1584,16 +1580,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
       
       
       
@@ -1602,7 +1598,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           DB & Services
@@ -1825,120 +1821,61 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+  
     
-  
-  
-    <li class="md-nav__item md-nav__item--active">
+    <li class="md-nav__item md-nav__item--nested">
       
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
       
       
         
       
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_4" >
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
+      
+      
+        <label class="md-nav__link" for="__nav_8_4" id="__nav_8_4_label" tabindex="0">
           Gen AI Services
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="./" class="md-nav__link md-nav__link--active">
-        Gen AI Services
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8_4">
+          <span class="md-nav__icon md-icon"></span>
+          Gen AI Services
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai-gateway/choreo-ai-gateway/" class="md-nav__link">
+        Choreo AI Gateway
       </a>
-      
-        
+    </li>
+  
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+            
+          
+            
+              
   
   
   
-    
+    <li class="md-nav__item">
+      <a href="../../ai-gateway/integrate-and-manage-gen-ai-services/" class="md-nav__link">
+        Integrate and Manage Generative AI Services
+      </a>
+    </li>
   
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#register-a-genai-service" class="md-nav__link">
-    Register a GenAI service
-  </a>
-  
-    <nav class="md-nav" aria-label="Register a GenAI service">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    Prerequisites
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-1-select-a-service-provider" class="md-nav__link">
-    Step 1: Select a service provider
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-provide-service-details" class="md-nav__link">
-    Step 2: Provide service details
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-add-configurations" class="md-nav__link">
-    Step 3: Add configurations
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#manage-genai-services" class="md-nav__link">
-    Manage GenAI services
-  </a>
-  
-    <nav class="md-nav" aria-label="Manage GenAI services">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#view-or-update-genai-service-details" class="md-nav__link">
-    View or update GenAI service details
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add-a-genai-service-to-the-internal-marketplace" class="md-nav__link">
-    Add a GenAI service to the Internal Marketplace
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#remove-a-genai-service-from-the-internal-marketplace" class="md-nav__link">
-    Remove a GenAI service from the Internal Marketplace
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -3225,42 +3162,6 @@ document.addEventListener('DOMContentLoaded', function() {
       
       
         <footer class="md-footer">
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="../../message-brokers/monitor-a-kafka-service/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Monitor a Kafka Service" rel="prev">
-            <div class="md-footer__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <div class="md-ellipsis">
-                <span class="md-footer__direction">
-                  Previous
-                </span>
-                Monitor a Kafka Service
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../../../k8s-operations/runtime/view-runtime-details/" class="md-footer__link md-footer__link--next" aria-label="Next: View Kubernetes Runtime Details" rel="next">
-            <div class="md-footer__title">
-              <div class="md-ellipsis">
-                <span class="md-footer__direction">
-                  Next
-                </span>
-                View Kubernetes Runtime Details
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
     
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

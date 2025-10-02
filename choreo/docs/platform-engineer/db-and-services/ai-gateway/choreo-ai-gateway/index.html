@@ -12,20 +12,20 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/choreo/docs/governance/workflows/configure-approvals-for-choreo-workflows/">
+        <link rel="canonical" href="https://wso2.com/choreo/docs/db-and-services/ai-gateway/choreo-ai-gateway/">
       
       
-        <link rel="prev" href="../../../devops/manage-configuration-groups/">
+        <link rel="prev" href="../../message-brokers/monitor-a-kafka-service/">
       
       
-        <link rel="next" href="../../egress-control/control-egress-traffic-for-your-organization/">
+        <link rel="next" href="../integrate-and-manage-gen-ai-services/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Configure Approvals for Choreo Workflows - Choreo Documentation | AI-Native Internal Developer Platform</title>
+        <title>Choreo AI Gateway - Choreo Documentation | AI-Native Internal Developer Platform</title>
       
     
     
@@ -142,7 +142,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#configure-approvals-for-choreo-workflows" class="md-skip">
+        <a href="#choreo-ai-gateway" class="md-skip">
           Skip to content
         </a>
       
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Configure Approvals for Choreo Workflows
+              Choreo AI Gateway
             
           </span>
         </div>
@@ -1397,16 +1397,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
       
       
       
@@ -1415,7 +1415,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           Governance
@@ -1426,16 +1426,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_1" >
       
       
       
@@ -1444,7 +1444,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_1_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_1_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_7_1">
           <span class="md-nav__icon md-icon"></span>
           Workflows
@@ -1455,59 +1455,11 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Configure Approvals for Choreo Workflows
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-nav__link">
         Configure Approvals for Choreo Workflows
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#permissions-to-review-and-respond-to-approval-requests" class="md-nav__link">
-    Permissions to review and respond to approval requests
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#set-up-an-approval-process-for-a-workflow" class="md-nav__link">
-    Set up an approval process for a workflow
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1555,7 +1507,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../egress-control/control-egress-traffic-for-your-organization/" class="md-nav__link">
+      <a href="../../../governance/egress-control/control-egress-traffic-for-your-organization/" class="md-nav__link">
         Control Egress Traffic for Your Choreo Organization
       </a>
     </li>
@@ -1605,7 +1557,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../approvals/review-workflow-approval-requests/" class="md-nav__link">
+      <a href="../../../governance/approvals/review-workflow-approval-requests/" class="md-nav__link">
         Review Workflow Approval Requests
       </a>
     </li>
@@ -1632,16 +1584,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
       
       
       
@@ -1650,7 +1602,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           DB & Services
@@ -1692,7 +1644,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/databases/choreo-managed-databases-and-caches/" class="md-nav__link">
+      <a href="../../databases/choreo-managed-databases-and-caches/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -1706,7 +1658,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/databases/choreo-managed-postgresql-databases/" class="md-nav__link">
+      <a href="../../databases/choreo-managed-postgresql-databases/" class="md-nav__link">
         PostgreSQL
       </a>
     </li>
@@ -1720,7 +1672,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/databases/choreo-managed-mysql-databases/" class="md-nav__link">
+      <a href="../../databases/choreo-managed-mysql-databases/" class="md-nav__link">
         MySQL
       </a>
     </li>
@@ -1734,7 +1686,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/databases/choreo-managed-caches/" class="md-nav__link">
+      <a href="../../databases/choreo-managed-caches/" class="md-nav__link">
         Choreo-Managed Cache
       </a>
     </li>
@@ -1748,7 +1700,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/databases/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
+      <a href="../../databases/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
         Add Choreo-Managed Databases and Caches to the Marketplace
       </a>
     </li>
@@ -1769,7 +1721,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
+      <a href="../../external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
         Third-Party Services
       </a>
     </li>
@@ -1812,7 +1764,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
+      <a href="../../message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -1826,7 +1778,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
+      <a href="../../message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
         Create Choreo-Managed Kafka Services
       </a>
     </li>
@@ -1840,7 +1792,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/message-brokers/configure-a-kafka-service/" class="md-nav__link">
+      <a href="../../message-brokers/configure-a-kafka-service/" class="md-nav__link">
         Configure a Kafka Service
       </a>
     </li>
@@ -1854,7 +1806,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/message-brokers/monitor-a-kafka-service/" class="md-nav__link">
+      <a href="../../message-brokers/monitor-a-kafka-service/" class="md-nav__link">
         Monitor a Kafka Service
       </a>
     </li>
@@ -1873,16 +1825,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_4" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_4" checked>
       
       
       
@@ -1891,7 +1843,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_4_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_4_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_8_4">
           <span class="md-nav__icon md-icon"></span>
           Gen AI Services
@@ -1902,11 +1854,72 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../../db-and-services/ai-gateway/choreo-ai-gateway/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Choreo AI Gateway
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Choreo AI Gateway
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#supported-providers" class="md-nav__link">
+    Supported Providers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    Key Features
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#token-based-rate-limiting" class="md-nav__link">
+    Token-Based Rate Limiting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1918,7 +1931,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../db-and-services/ai-gateway/integrate-and-manage-gen-ai-services/" class="md-nav__link">
+      <a href="../integrate-and-manage-gen-ai-services/" class="md-nav__link">
         Integrate and Manage Generative AI Services
       </a>
     </li>
@@ -3010,16 +3023,29 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#permissions-to-review-and-respond-to-approval-requests" class="md-nav__link">
-    Permissions to review and respond to approval requests
+  <a href="#supported-providers" class="md-nav__link">
+    Supported Providers
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#set-up-an-approval-process-for-a-workflow" class="md-nav__link">
-    Set up an approval process for a workflow
+  <a href="#key-features" class="md-nav__link">
+    Key Features
   </a>
+  
+    <nav class="md-nav" aria-label="Key Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#token-based-rate-limiting" class="md-nav__link">
+    Token-Based Rate Limiting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3038,94 +3064,50 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
 
-<h1 id="configure-approvals-for-choreo-workflows">Configure Approvals for Choreo Workflows<a class="headerlink" href="#configure-approvals-for-choreo-workflows" title="Permanent link">&para;</a></h1>
-<p>Choreo allows you to configure approval processes for specific workflows within the platform. An approval process for a workflow ensures that critical or sensitive changes are properly managed and controlled.</p>
-<p>Choreo currently allows you to configure approvals for environment promotion, API subscription and URL customization workflows.</p>
-<p>Configuring approvals for environment promotion allows authorized users to control components being promoted to a critical/production environment. </p>
-<p>Configuring approvals for the API subscription workflow allows you to create subscription plans that require approval before being activated. This feature allows you to control access to APIs by requiring administrative review and authorization of subscriptions before they become active.</p>
-<p>Configuring approvals for URL customization workflows allows you to control custom URL mappings by requiring review and approval before the customization is applied.</p>
-<h2 id="permissions-to-review-and-respond-to-approval-requests">Permissions to review and respond to approval requests<a class="headerlink" href="#permissions-to-review-and-respond-to-approval-requests" title="Permanent link">&para;</a></h2>
-<p>Click the respective tab for details on permissions depending on the workflow for which you want to configure approvals:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Environment promotion</label><label for="__tabbed_1_2">API subscription</label><label for="__tabbed_1_3">URL customization</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>To review and respond to environment promotion approval requests, a user must have the following permissions. Platform engineers must ensure that users designated to review and respond to approval requests have these permissions:</p>
+<h1 id="choreo-ai-gateway">Choreo AI Gateway<a class="headerlink" href="#choreo-ai-gateway" title="Permanent link">&para;</a></h1>
+<p>As organizations accelerate AI adoption, managing AI APIs effectively has become essential. The Choreo AI Gateway simplifies this process by providing a unified way to create, manage, and expose AI APIs with enterprise-grade security, observability, and scalability.</p>
+<p><a class="glightbox" href="../../../assets/img/ai-gateway/ai-gateway.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Choreo AI Gateway" src="../../../assets/img/ai-gateway/ai-gateway.png" /></a></p>
+<h2 id="supported-providers">Supported Providers<a class="headerlink" href="#supported-providers" title="Permanent link">&para;</a></h2>
+<p>The AI Gateway integrates seamlessly with leading AI platforms, including:</p>
 <ul>
-<li><strong>WORKFLOW-MANAGEMENT</strong>: <ul>
-<li>Approve component promotion requests: Grants access to review and approve the promotion of components to critical environments.</li>
-</ul>
-</li>
-<li><strong>PROJECT-MANAGEMENT</strong>: Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<p>To review and respond to API subscription approval requests, a user must have the following permissions. Platform engineers must ensure that users designated to review and respond to approval requests have these permissions:</p>
-<ul>
-<li><strong>WORKFLOW-MANAGEMENT</strong>:<ul>
-<li>Approve API subscriptions: Grants access to review and approve API subscription workflow requests.</li>
-</ul>
-</li>
-<li><strong>PROJECT-MANAGEMENT</strong>: 
-      Grants access to view and approve workflow requests. This is the same permission used to update or delete projects.</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<p>To review and respond to URL customization approval requests, a user must have the following permissions. Administrators must ensure that users designated to review and respond to approval requests have these permissions:</p>
-<ul>
-<li><strong>WORKFLOW-MANAGEMENT</strong>:<ul>
-<li>Approve custom URL mapping requests: Grants access to review and approve custom URL mapping requests.</li>
-</ul>
-</li>
-<li><strong>URL-MANAGEMENT</strong>: <ul>
-<li>Manage Custom Domains: Grants access to manage custom domains for the organization.</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<h2 id="set-up-an-approval-process-for-a-workflow">Set up an approval process for a workflow<a class="headerlink" href="#set-up-an-approval-process-for-a-workflow" title="Permanent link">&para;</a></h2>
-<p>To set up an approval process for a workflow, follow these steps:</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul>
-<li>Platform engineers can designate specific roles and assignees to review and respond to requests associated with each workflow.</li>
-</ul>
-</div>
-<ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the Choreo Console header, go to the <strong>Organization</strong> list and select your organization.</li>
-<li>In the left navigation menu, click <strong>Governance</strong> and then click <strong>Workflows</strong>.</li>
-<li>Click the edit icon corresponding to the workflow for which you want to configure an approval.</li>
 <li>
-<p>In the <strong>Configure Workflow</strong> dialog that opens, select roles and assignees to review and respond to workflow approval requests.</p>
-<ul>
-<li>In the <strong>Roles</strong> field, select one or more roles depending on your preference. Any user assigned to these roles can review and respond to requests.</li>
-<li>In the <strong>Assignees</strong> field, select specific users who can review and approve workflow requests. Assignees can be any Choreo user, even if they are not assigned to a selected role.</li>
-</ul>
-<div class="admonition info">
-<p class="admonition-title">Important</p>
-<p>Currently, there is no validation to ensure that the specified roles and assignees have the necessary permissions to review and respond to requests. If the <a href="#permissions-to-review-and-respond-to-approval-requests">required permissions</a> are not correctly configured, some users may receive email notifications but will be unable to review the requests.</p>
-</div>
+<p>OpenAI</p>
 </li>
 <li>
-<p>Click <strong>Save</strong>. This configures and enables the approval process for the workflow.</p>
+<p>Azure OpenAI</p>
 </li>
-</ol>
-<p>Once you enable the approval process for a workflow, see the following details on how to submit a request for approval and the approval process. Click the respective tab depending on the workflow for which you enabled the approval process:  </p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Environment promotion</label><label for="__tabbed_2_2">API subscription</label><label for="__tabbed_2_3">URL customization</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>Once you configure an approval process for environment promotion, developers must submit a request for approval to use the workflow. An authorized assignee must then <a href="../../approvals/review-workflow-approval-requests/">review and approve the request</a> for a developer to proceed with the task related to the workflow.</p>
-</div>
-<div class="tabbed-block">
-<p>Once you configure an approval process for API subscription, platform engineers can select the <strong>Approval required</strong> checkbox to create or update subscription plans to require approval. API consumers using these plans must request approval to proceed. An authorized approver must then <a href="../../approvals/review-workflow-approval-requests/">review and approve the request</a> before the subscription is granted.</p>
-</div>
-<div class="tabbed-block">
-<p>Once you configure an approval process for URL customization, developers must submit a request for approval to configure a custom URL for a component. Instead of being automatically deployed, the URL mapping will go into a pending state. An authorized approver must then <a href="../../approvals/review-workflow-approval-requests/">review and approve the request</a> before the custom URL is activated for the respective component. </p>
-</div>
-</div>
-</div>
+<li>
+<p>Anthropic Claude</p>
+</li>
+<li>
+<p>Mistral</p>
+</li>
+<li>
+<p>AWS Bedrock</p>
+</li>
+</ul>
+<h2 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
+<p>The AI Gateway offers a robust set of capabilities to ensure secure and efficient AI integration:</p>
+<ul>
+<li>AI Vendor Key Configuration: </li>
+</ul>
+<p>Securely authenticate with AI providers by configuring API keys obtained from each vendor.</p>
+<ul>
+<li>Token-Based Rate Limiting:</li>
+</ul>
+<p>Protect backend services and manage costs by applying rate limits based on token usage rather than just request counts.</p>
+<ul>
+<li>AI API Observability (Coming Soon):</li>
+</ul>
+<p>Gain insights into AI API performance and usage with built-in analytics and monitoring.</p>
+<p>With these features, organizations can integrate, monitor, and scale AI services efficiently, unlocking the full potential of AI-driven applications.</p>
+<h3 id="token-based-rate-limiting">Token-Based Rate Limiting<a class="headerlink" href="#token-based-rate-limiting" title="Permanent link">&para;</a></h3>
+<p>AI services typically charge based on tokens rather than requests, making cost control critical. Choreo AI Gateway enables token-based rate limiting at the API level to:</p>
+<ul>
+<li>Define quotas based on LLM token consumption.</li>
+<li>Prevent unexpected costs by controlling overuse.</li>
+<li>Enforce fair usage policies across AI-powered APIs.</li>
+</ul>
 
 
 
@@ -3152,7 +3134,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../../devops/manage-configuration-groups/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Manage Configuration Groups" rel="prev">
+          <a href="../../message-brokers/monitor-a-kafka-service/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Monitor a Kafka Service" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -3161,20 +3143,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                Manage Configuration Groups
+                Monitor a Kafka Service
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../egress-control/control-egress-traffic-for-your-organization/" class="md-footer__link md-footer__link--next" aria-label="Next: Control Egress Traffic for Your Choreo Organization" rel="next">
+          <a href="../integrate-and-manage-gen-ai-services/" class="md-footer__link md-footer__link--next" aria-label="Next: Integrate and Manage Generative AI Services" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                Control Egress Traffic for Your Choreo Organization
+                Integrate and Manage Generative AI Services
               </div>
             </div>
             <div class="md-footer__button md-icon">
