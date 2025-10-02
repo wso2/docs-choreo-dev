@@ -12,27 +12,27 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/choreo/docs/integrate-and-manage-external-services/integrate-and-manage-gen-ai-services/">
+        <link rel="canonical" href="https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/create-a-connection-to-a-genai-service/">
       
       
-        <link rel="prev" href="../integrate-and-manage-third-party-services/">
+        <link rel="prev" href="../create-a-connection/">
       
       
-        <link rel="next" href="../../manage-databases-and-caches/choreo-managed-databases-and-caches/">
+        <link rel="next" href="../use-a-connection-in-your-service/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Integrate and Manage Generative AI Services - Choreo Documentation | AI-Native Internal Developer Platform</title>
+        <title>Create a connection to a GenAI Service - Choreo Documentation | AI-Native Internal Developer Platform</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7bf56d0a.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a0c5b2b5.min.css">
       
       
 
@@ -51,21 +51,21 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/lib/highlightjs/styles/vs.min.css">
+      <link rel="stylesheet" href="../../../assets/lib/highlightjs/styles/vs.min.css">
     
-      <link rel="stylesheet" href="../../assets/css/blue-palette-alt2.css">
+      <link rel="stylesheet" href="../../../assets/css/blue-palette-alt2.css">
     
-      <link rel="stylesheet" href="../../assets/css/choreotheme.css">
+      <link rel="stylesheet" href="../../../assets/css/choreotheme.css">
     
-      <link rel="stylesheet" href="../../assets/lib/json-formatter/json-formatter.css">
+      <link rel="stylesheet" href="../../../assets/lib/json-formatter/json-formatter.css">
     
-      <link rel="stylesheet" href="../../assets/css/config-catalog.css">
+      <link rel="stylesheet" href="../../../assets/css/config-catalog.css">
     
-      <link rel="stylesheet" href="../../assets/lib/fontawesome-free-6.3.0-web/css/all.min.css">
+      <link rel="stylesheet" href="../../../assets/lib/fontawesome-free-6.3.0-web/css/all.min.css">
     
-      <link rel="stylesheet" href="../../assets/stylesheets/region-selector.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/region-selector.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -106,7 +106,7 @@
    <!-- CookiePro cookies consent notice end -->
    
   </script>
-   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
         html.glightbox-open { overflow: initial; height: 100%; }
         .gslide-title { margin-top: 0px; user-select: text; }
         .gslide-desc { color: #666; user-select: text; }
@@ -117,7 +117,7 @@
             body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
             body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
             body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+            </style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
 
   
   
@@ -142,7 +142,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#integrate-and-manage-generative-ai-services" class="md-skip">
+        <a href="#consume-a-genai-service" class="md-skip">
           Skip to content
         </a>
       
@@ -173,9 +173,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Choreo Documentation | AI-Native Internal Developer Platform" class="md-header__button md-logo" aria-label="Choreo Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
+    <a href="../../.." title="Choreo Documentation | AI-Native Internal Developer Platform" class="md-header__button md-logo" aria-label="Choreo Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
       
-  <img src="../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
+  <img src="../../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Integrate and Manage Generative AI Services
+              Create a connection to a GenAI Service
             
           </span>
         </div>
@@ -481,9 +481,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Choreo Documentation | AI-Native Internal Developer Platform" class="md-nav__button md-logo" aria-label="Choreo Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
+    <a href="../../.." title="Choreo Documentation | AI-Native Internal Developer Platform" class="md-nav__button md-logo" aria-label="Choreo Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
       
-  <img src="../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
+  <img src="../../../assets/images/logo.png" alt="logo" style="vertical-align: middle;">
 
     </a>
     Choreo Documentation | AI-Native Internal Developer Platform
@@ -541,7 +541,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -585,7 +585,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../what-is-choreo/" class="md-nav__link">
+      <a href="../../../what-is-choreo/" class="md-nav__link">
         What is Choreo?
       </a>
     </li>
@@ -636,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../quick-start-guides/deploy-your-first-service/" class="md-nav__link">
+      <a href="../../../quick-start-guides/deploy-your-first-service/" class="md-nav__link">
         Deploy Your First Service
       </a>
     </li>
@@ -650,7 +650,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../quick-start-guides/deploy-your-first-static-web-application/" class="md-nav__link">
+      <a href="../../../quick-start-guides/deploy-your-first-static-web-application/" class="md-nav__link">
         Deploy Your First Static Web Application
       </a>
     </li>
@@ -664,7 +664,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/" class="md-nav__link">
+      <a href="../../../quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service/" class="md-nav__link">
         Deploy a Web Application that Consumes a Backend Service
       </a>
     </li>
@@ -744,7 +744,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-samples/samples-overview/" class="md-nav__link">
+      <a href="../../../choreo-samples/samples-overview/" class="md-nav__link">
         Samples Overview
       </a>
     </li>
@@ -758,7 +758,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-samples/quick-deploy-a-sample/" class="md-nav__link">
+      <a href="../../../choreo-samples/quick-deploy-a-sample/" class="md-nav__link">
         Quick Deploy a Sample
       </a>
     </li>
@@ -779,7 +779,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-samples/explore-the-demo-organization/" class="md-nav__link">
+      <a href="../../../choreo-samples/explore-the-demo-organization/" class="md-nav__link">
         Explore the Demo Organization
       </a>
     </li>
@@ -830,7 +830,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/expose-a-service-as-a-managed-api/" class="md-nav__link">
+      <a href="../../../tutorials/expose-a-service-as-a-managed-api/" class="md-nav__link">
         Expose a Service as a Managed API
       </a>
     </li>
@@ -844,7 +844,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/secure-an-api-with-role-based-access-control/" class="md-nav__link">
+      <a href="../../../tutorials/secure-an-api-with-role-based-access-control/" class="md-nav__link">
         Secure an API with Role-Based Access Control
       </a>
     </li>
@@ -858,7 +858,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/consume-an-api-hosted-in-choreo/" class="md-nav__link">
+      <a href="../../../tutorials/consume-an-api-hosted-in-choreo/" class="md-nav__link">
         Consume an API hosted in Choreo
       </a>
     </li>
@@ -909,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
+      <a href="../../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
         Resource Hierarchy
       </a>
     </li>
@@ -923,7 +923,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/organization/" class="md-nav__link">
+      <a href="../../../choreo-concepts/organization/" class="md-nav__link">
         Organization
       </a>
     </li>
@@ -937,7 +937,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/project/" class="md-nav__link">
+      <a href="../../../choreo-concepts/project/" class="md-nav__link">
         Project
       </a>
     </li>
@@ -951,7 +951,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/component/" class="md-nav__link">
+      <a href="../../../choreo-concepts/component/" class="md-nav__link">
         Component
       </a>
     </li>
@@ -965,7 +965,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/endpoint/" class="md-nav__link">
+      <a href="../../../choreo-concepts/endpoint/" class="md-nav__link">
         Endpoint
       </a>
     </li>
@@ -979,7 +979,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/ci-cd/" class="md-nav__link">
+      <a href="../../../choreo-concepts/ci-cd/" class="md-nav__link">
         CI/CD
       </a>
     </li>
@@ -993,7 +993,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/deployment-tracks/" class="md-nav__link">
+      <a href="../../../choreo-concepts/deployment-tracks/" class="md-nav__link">
         Deployment Tracks
       </a>
     </li>
@@ -1007,7 +1007,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/connections/" class="md-nav__link">
+      <a href="../../../choreo-concepts/connections/" class="md-nav__link">
         Connections
       </a>
     </li>
@@ -1021,7 +1021,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/data-planes/" class="md-nav__link">
+      <a href="../../../choreo-concepts/data-planes/" class="md-nav__link">
         Data Planes
       </a>
     </li>
@@ -1035,7 +1035,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/environments/" class="md-nav__link">
+      <a href="../../../choreo-concepts/environments/" class="md-nav__link">
         Environments
       </a>
     </li>
@@ -1049,7 +1049,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
+      <a href="../../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
         Choreo Marketplace
       </a>
     </li>
@@ -1063,7 +1063,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/access-control/" class="md-nav__link">
+      <a href="../../../choreo-concepts/access-control/" class="md-nav__link">
         Access Control
       </a>
     </li>
@@ -1083,16 +1083,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
       
       
       
@@ -1101,7 +1101,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           Develop Components
@@ -1143,7 +1143,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-services/service-component-overview/" class="md-nav__link">
+      <a href="../../develop-services/service-component-overview/" class="md-nav__link">
         Service Component Overview
       </a>
     </li>
@@ -1157,7 +1157,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-services/develop-a-service/" class="md-nav__link">
+      <a href="../../develop-services/develop-a-service/" class="md-nav__link">
         Develop a Service
       </a>
     </li>
@@ -1171,7 +1171,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-services/develop-a-service-with-docker/" class="md-nav__link">
+      <a href="../../develop-services/develop-a-service-with-docker/" class="md-nav__link">
         Develop a service with Docker
       </a>
     </li>
@@ -1185,7 +1185,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-services/develop-a-ballerina-service/" class="md-nav__link">
+      <a href="../../develop-services/develop-a-ballerina-service/" class="md-nav__link">
         Develop a Ballerina Service
       </a>
     </li>
@@ -1199,7 +1199,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-services/expose-a-grpc-endpoint-via-a-service/" class="md-nav__link">
+      <a href="../../develop-services/expose-a-grpc-endpoint-via-a-service/" class="md-nav__link">
         Expose a gRPC Endpoint via a Service
       </a>
     </li>
@@ -1213,7 +1213,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-services/expose-a-tcp-server-via-a-service/" class="md-nav__link">
+      <a href="../../develop-services/expose-a-tcp-server-via-a-service/" class="md-nav__link">
         Expose a TCP Server via a Service
       </a>
     </li>
@@ -1227,7 +1227,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-services/expose-a-udp-server-via-a-service/" class="md-nav__link">
+      <a href="../../develop-services/expose-a-udp-server-via-a-service/" class="md-nav__link">
         Expose a UDP Server via a Service
       </a>
     </li>
@@ -1241,7 +1241,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-services/expose-a-ballerina-graphql-endpoint-via-a-service/" class="md-nav__link">
+      <a href="../../develop-services/expose-a-ballerina-graphql-endpoint-via-a-service/" class="md-nav__link">
         Expose a Ballerina GraphQL Endpoint via a Service
       </a>
     </li>
@@ -1255,7 +1255,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification/" class="md-nav__link">
+      <a href="../../develop-services/expose-a-prism-based-mock-server-using-an-openapi-specification/" class="md-nav__link">
         Expose a Prism-Based Mock Server Using an OpenAPI Specification
       </a>
     </li>
@@ -1269,7 +1269,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-services/expose-a-websocket-endpoint-via-a-service/" class="md-nav__link">
+      <a href="../../develop-services/expose-a-websocket-endpoint-via-a-service/" class="md-nav__link">
         Expose a WebSocket Endpoint via a Service
       </a>
     </li>
@@ -1319,7 +1319,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-proxy/develop-an-api-proxy-from-scratch/" class="md-nav__link">
+      <a href="../../develop-proxy/develop-an-api-proxy-from-scratch/" class="md-nav__link">
         Develop an API Proxy from Scratch
       </a>
     </li>
@@ -1333,7 +1333,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-proxy/develop-an-api-proxy-from-an-open-api-specification/" class="md-nav__link">
+      <a href="../../develop-proxy/develop-an-api-proxy-from-an-open-api-specification/" class="md-nav__link">
         Develop an API Proxy from Open API Specification
       </a>
     </li>
@@ -1347,7 +1347,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-proxy/develop-an-api-proxy-from-a-github-repository-source/" class="md-nav__link">
+      <a href="../../develop-proxy/develop-an-api-proxy-from-a-github-repository-source/" class="md-nav__link">
         Develop an API Proxy from Git Repository Source
       </a>
     </li>
@@ -1397,7 +1397,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application/" class="md-nav__link">
+      <a href="../../develop-web-applications/build-and-deploy-a-single-page-web-application/" class="md-nav__link">
         Build and Deploy a Single-Page Web Application
       </a>
     </li>
@@ -1411,7 +1411,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication/" class="md-nav__link">
+      <a href="../../develop-web-applications/develop-web-applications-locally-with-managed-authentication/" class="md-nav__link">
         Develop Web Applications Locally with Choreo’s Managed Authentication
       </a>
     </li>
@@ -1432,7 +1432,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-a-webhook/" class="md-nav__link">
+      <a href="../../develop-a-webhook/" class="md-nav__link">
         Develop a Webhook
       </a>
     </li>
@@ -1446,7 +1446,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-an-external-consumer/" class="md-nav__link">
+      <a href="../../develop-an-external-consumer/" class="md-nav__link">
         Develop an External Consumer
       </a>
     </li>
@@ -1489,7 +1489,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-integrations/develop-an-integration-as-an-api-service/" class="md-nav__link">
+      <a href="../../develop-integrations/develop-an-integration-as-an-api-service/" class="md-nav__link">
         Develop an WSO2 MI integration as an API Service
       </a>
     </li>
@@ -1503,7 +1503,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-integrations/develop-an-event-handler/" class="md-nav__link">
+      <a href="../../develop-integrations/develop-an-event-handler/" class="md-nav__link">
         Develop an Event Handler
       </a>
     </li>
@@ -1517,7 +1517,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-integrations/develop-a-scheduled-task/" class="md-nav__link">
+      <a href="../../develop-integrations/develop-a-scheduled-task/" class="md-nav__link">
         Develop a Scheduled Task
       </a>
     </li>
@@ -1531,7 +1531,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-integrations/develop-a-manual-task/" class="md-nav__link">
+      <a href="../../develop-integrations/develop-a-manual-task/" class="md-nav__link">
         Develop a Manual Task
       </a>
     </li>
@@ -1552,7 +1552,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/deploy-mcp-servers/deploy-a-mcp-server/" class="md-nav__link">
+      <a href="../../deploy-mcp-servers/deploy-a-mcp-server/" class="md-nav__link">
         Deploy a MCP Server
       </a>
     </li>
@@ -1595,7 +1595,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/work-with-the-micro-integrator-runtime-in-choreo/" class="md-nav__link">
+      <a href="../../work-with-the-micro-integrator-runtime-in-choreo/" class="md-nav__link">
         Get Started with the Micro Integrator Runtime
       </a>
     </li>
@@ -1609,7 +1609,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/manage-the-micro-integrator-runtime-version-in-your-integration-project/" class="md-nav__link">
+      <a href="../../manage-the-micro-integrator-runtime-version-in-your-integration-project/" class="md-nav__link">
         Manage the Micro Integrator Runtime Version in Your Integration Project
       </a>
     </li>
@@ -1630,7 +1630,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/develop-components-with-git/" class="md-nav__link">
+      <a href="../../develop-components-with-git/" class="md-nav__link">
         Develop Components With Git
       </a>
     </li>
@@ -1644,7 +1644,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/bring-your-own-image/" class="md-nav__link">
+      <a href="../../bring-your-own-image/" class="md-nav__link">
         Bring Your Own Image
       </a>
     </li>
@@ -1658,7 +1658,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/deploy-an-application-with-buildpacks/" class="md-nav__link">
+      <a href="../../deploy-an-application-with-buildpacks/" class="md-nav__link">
         Deploy an Application with Build Presets
       </a>
     </li>
@@ -1672,7 +1672,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/deploy-a-containerized-application/" class="md-nav__link">
+      <a href="../../deploy-a-containerized-application/" class="md-nav__link">
         Deploy a Containerized Application
       </a>
     </li>
@@ -1686,7 +1686,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
+      <a href="../../integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
         Integrate Unit Tests into the Build Pipeline
       </a>
     </li>
@@ -1698,16 +1698,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_14" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_14" checked>
       
       
       
@@ -1716,7 +1716,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_14_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_14_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_7_14">
           <span class="md-nav__icon md-icon"></span>
           Share and Reuse Components
@@ -1729,206 +1729,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../develop-components/sharing-and-reusing/create-a-connection/" class="md-nav__link">
+      <a href="../create-a-connection/" class="md-nav__link">
         Create a Connection
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../develop-components/sharing-and-reusing/use-a-connection-in-your-service/" class="md-nav__link">
-        Use a Connection in Your Service
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../develop-components/sharing-and-reusing/use-a-connection-in-your-web-application/" class="md-nav__link">
-        Use a Connection in Your Web Application
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../develop-components/sharing-and-reusing/use-a-database-connection-in-your-component/" class="md-nav__link">
-        Use a Database Connection in Your Component
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../develop-components/manage-deployment-tracks-for-choreo-components/" class="md-nav__link">
-        Manage Deployment Tracks for Choreo Components
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../develop-components/configure-endpoints/" class="md-nav__link">
-        Configure Endpoints
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../develop-components/manage-component-source-configurations/" class="md-nav__link">
-        Manage Component Source Configurations
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../develop-components/submit-and-manage-workflow-approval-requests/" class="md-nav__link">
-        Submit and Manage Workflow Approval Requests
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../develop-components/develop-components-using-vs-code/" class="md-nav__link">
-        Develop Components Using VS Code
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../develop-components/use-configuration-form/" class="md-nav__link">
-        Use Configuration Form for Managing Configurations
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../develop-components/connect-to-remote-dependencies-while-developing/" class="md-nav__link">
-        Connect to Remote Dependencies While Developing
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
-      
-      
-      
-        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
-          Integrate and Manage External Services
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_8">
-          <span class="md-nav__icon md-icon"></span>
-          Integrate and Manage External Services
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../integrate-and-manage-third-party-services/" class="md-nav__link">
-        Integrate and Manage Third-Party Services
       </a>
     </li>
   
@@ -1951,12 +1753,12 @@ document.addEventListener('DOMContentLoaded', function() {
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Integrate and Manage Generative AI Services
+          Create a connection to a GenAI Service
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Integrate and Manage Generative AI Services
+        Create a connection to a GenAI Service
       </a>
       
         
@@ -1975,84 +1777,30 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#register-a-genai-service" class="md-nav__link">
-    Register a GenAI service
+  <a href="#overview" class="md-nav__link">
+    Overview
   </a>
   
-    <nav class="md-nav" aria-label="Register a GenAI service">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     Prerequisites
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#step-1-select-a-service-provider" class="md-nav__link">
-    Step 1: Select a service provider
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-provide-service-details" class="md-nav__link">
-    Step 2: Provide service details
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-add-configurations" class="md-nav__link">
-    Step 3: Add configurations
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#discover-genai-services" class="md-nav__link">
-    Discover GenAI services
+    Discover GenAI Services
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#manage-genai-services" class="md-nav__link">
-    Manage GenAI services
+  <a href="#create-a-connection-to-a-genai-service" class="md-nav__link">
+    Create a Connection to a GenAI Service
   </a>
-  
-    <nav class="md-nav" aria-label="Manage GenAI services">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#view-or-update-genai-service-details" class="md-nav__link">
-    View or update GenAI service details
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add-a-genai-service-to-the-internal-marketplace" class="md-nav__link">
-    Add a GenAI service to the Internal Marketplace
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#remove-a-genai-service-from-the-internal-marketplace" class="md-nav__link">
-    Remove a GenAI service from the Internal Marketplace
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2060,6 +1808,204 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../use-a-connection-in-your-service/" class="md-nav__link">
+        Use a Connection in Your Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../use-a-connection-in-your-web-application/" class="md-nav__link">
+        Use a Connection in Your Web Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../use-a-database-connection-in-your-component/" class="md-nav__link">
+        Use a Database Connection in Your Component
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-deployment-tracks-for-choreo-components/" class="md-nav__link">
+        Manage Deployment Tracks for Choreo Components
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configure-endpoints/" class="md-nav__link">
+        Configure Endpoints
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manage-component-source-configurations/" class="md-nav__link">
+        Manage Component Source Configurations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../submit-and-manage-workflow-approval-requests/" class="md-nav__link">
+        Submit and Manage Workflow Approval Requests
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../develop-components-using-vs-code/" class="md-nav__link">
+        Develop Components Using VS Code
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../use-configuration-form/" class="md-nav__link">
+        Use Configuration Form for Managing Configurations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../connect-to-remote-dependencies-while-developing/" class="md-nav__link">
+        Connect to Remote Dependencies While Developing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          Integrate and Manage External Services
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Integrate and Manage External Services
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../integrate-and-manage-external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
+        Integrate and Manage Third-Party Services
+      </a>
     </li>
   
 
@@ -2108,7 +2054,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../manage-databases-and-caches/choreo-managed-databases-and-caches/" class="md-nav__link">
+      <a href="../../../manage-databases-and-caches/choreo-managed-databases-and-caches/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -2122,7 +2068,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../manage-databases-and-caches/choreo-managed-postgresql-databases/" class="md-nav__link">
+      <a href="../../../manage-databases-and-caches/choreo-managed-postgresql-databases/" class="md-nav__link">
         PostgreSQL
       </a>
     </li>
@@ -2136,7 +2082,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../manage-databases-and-caches/choreo-managed-mysql-databases/" class="md-nav__link">
+      <a href="../../../manage-databases-and-caches/choreo-managed-mysql-databases/" class="md-nav__link">
         MySQL
       </a>
     </li>
@@ -2150,7 +2096,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../manage-databases-and-caches/choreo-managed-caches/" class="md-nav__link">
+      <a href="../../../manage-databases-and-caches/choreo-managed-caches/" class="md-nav__link">
         Choreo-Managed Cache
       </a>
     </li>
@@ -2164,7 +2110,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
+      <a href="../../../manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
         Add Choreo-Managed Databases and Caches to the Marketplace
       </a>
     </li>
@@ -2215,7 +2161,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../manage-message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
+      <a href="../../../manage-message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -2258,7 +2204,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../manage-message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
+      <a href="../../../manage-message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
         Create Choreo-Managed Kafka Services
       </a>
     </li>
@@ -2272,7 +2218,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../manage-message-brokers/configure-a-kafka-service/" class="md-nav__link">
+      <a href="../../../manage-message-brokers/configure-a-kafka-service/" class="md-nav__link">
         Configure a Kafka Service
       </a>
     </li>
@@ -2286,7 +2232,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../manage-message-brokers/monitor-a-kafka-service/" class="md-nav__link">
+      <a href="../../../manage-message-brokers/monitor-a-kafka-service/" class="md-nav__link">
         Monitor a Kafka Service
       </a>
     </li>
@@ -2344,7 +2290,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../authentication-and-authorization/secure-api-access-with-asgardeo/" class="md-nav__link">
+      <a href="../../../authentication-and-authorization/secure-api-access-with-asgardeo/" class="md-nav__link">
         Secure API Access with Asgardeo
       </a>
     </li>
@@ -2358,7 +2304,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../authentication-and-authorization/secure-api-access-with-azure-ad/" class="md-nav__link">
+      <a href="../../../authentication-and-authorization/secure-api-access-with-azure-ad/" class="md-nav__link">
         Secure API Access with Azure
       </a>
     </li>
@@ -2372,7 +2318,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../authentication-and-authorization/secure-web-applications-with-managed-authentication/" class="md-nav__link">
+      <a href="../../../authentication-and-authorization/secure-web-applications-with-managed-authentication/" class="md-nav__link">
         Secure Web Applications with Managed Authentication
       </a>
     </li>
@@ -2386,7 +2332,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service/" class="md-nav__link">
+      <a href="../../../authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service/" class="md-nav__link">
         Test Secure API Access with Choreo Built-In Security Token Service
       </a>
     </li>
@@ -2400,7 +2346,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../authentication-and-authorization/pass-end-user-attributes-to-upstream-services/" class="md-nav__link">
+      <a href="../../../authentication-and-authorization/pass-end-user-attributes-to-upstream-services/" class="md-nav__link">
         Pass End-User Attributes to Upstream Services
       </a>
     </li>
@@ -2414,7 +2360,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../authentication-and-authorization/configure-mutual-tls-between-components/" class="md-nav__link">
+      <a href="../../../authentication-and-authorization/configure-mutual-tls-between-components/" class="md-nav__link">
         Configure Mutual TLS Between Components
       </a>
     </li>
@@ -2428,7 +2374,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls/" class="md-nav__link">
+      <a href="../../../authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls/" class="md-nav__link">
         Secure Communication Between the Choreo Gateway and Your Backend with Mutual TLS
       </a>
     </li>
@@ -2442,7 +2388,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../authentication-and-authorization/secure-communication-between-choreo-gateway-and-backend-with-oauth2/" class="md-nav__link">
+      <a href="../../../authentication-and-authorization/secure-communication-between-choreo-gateway-and-backend-with-oauth2/" class="md-nav__link">
         Secure Communication Between the Choreo Gateway and Your Backend with OAuth2
       </a>
     </li>
@@ -2493,7 +2439,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/manage-configurations-and-secrets/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/manage-configurations-and-secrets/" class="md-nav__link">
         Manage Configurations and Secrets
       </a>
     </li>
@@ -2507,7 +2453,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/view-runtime-details/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/view-runtime-details/" class="md-nav__link">
         View Runtime Details
       </a>
     </li>
@@ -2521,7 +2467,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/configure-container-resources-commands-and-arguments/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/configure-container-resources-commands-and-arguments/" class="md-nav__link">
         Configure Container Resources, Commands, and Arguments
       </a>
     </li>
@@ -2535,7 +2481,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/set-up-health-checks/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/set-up-health-checks/" class="md-nav__link">
         Set Up Health Checks
       </a>
     </li>
@@ -2578,7 +2524,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/autoscale/autoscale-component-replicas/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/autoscale/autoscale-component-replicas/" class="md-nav__link">
         Autoscale Component Replicas
       </a>
     </li>
@@ -2592,7 +2538,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/autoscale/autoscale-components-with-scale-to-zero/" class="md-nav__link">
         Autoscale Components with Scale-to-Zero
       </a>
     </li>
@@ -2613,7 +2559,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/configure-storage/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/configure-storage/" class="md-nav__link">
         Configure Storage
       </a>
     </li>
@@ -2627,7 +2573,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/manage-environments/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/manage-environments/" class="md-nav__link">
         Manage Environments
       </a>
     </li>
@@ -2641,7 +2587,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/manage-configuration-groups/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/manage-configuration-groups/" class="md-nav__link">
         Manage Configuration Groups
       </a>
     </li>
@@ -2655,7 +2601,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/manage-continuous-deployment-pipelines/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/manage-continuous-deployment-pipelines/" class="md-nav__link">
         Manage Continuous Deployment Pipelines
       </a>
     </li>
@@ -2669,7 +2615,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane/" class="md-nav__link">
+      <a href="../../../devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane/" class="md-nav__link">
         Configure VPNs on the Choreo Cloud Data Plane
       </a>
     </li>
@@ -2720,7 +2666,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../testing/test-rest-endpoints-via-the-openapi-console/" class="md-nav__link">
+      <a href="../../../testing/test-rest-endpoints-via-the-openapi-console/" class="md-nav__link">
         Test REST Endpoints via the OpenAPI Console
       </a>
     </li>
@@ -2734,7 +2680,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../testing/test-graphql-endpoints-via-the-graphql-console/" class="md-nav__link">
+      <a href="../../../testing/test-graphql-endpoints-via-the-graphql-console/" class="md-nav__link">
         Test GraphQL Endpoints via the GraphQL Console
       </a>
     </li>
@@ -2748,7 +2694,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../testing/test-websocket-endpoints-via-the-websocket-console/" class="md-nav__link">
+      <a href="../../../testing/test-websocket-endpoints-via-the-websocket-console/" class="md-nav__link">
         Test WebSocket Endpoints via the WebSocket Console
       </a>
     </li>
@@ -2762,7 +2708,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../testing/test-apis-with-curl/" class="md-nav__link">
+      <a href="../../../testing/test-apis-with-curl/" class="md-nav__link">
         Test APIs with cURL
       </a>
     </li>
@@ -2776,7 +2722,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../testing/test-apis-with-choreo-apichat/" class="md-nav__link">
+      <a href="../../../testing/test-apis-with-choreo-apichat/" class="md-nav__link">
         Test APIs with Choreo API Chat
       </a>
     </li>
@@ -2790,7 +2736,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../testing/test-components-with-test-runner/" class="md-nav__link">
+      <a href="../../../testing/test-components-with-test-runner/" class="md-nav__link">
         Test Components with Test Runner
       </a>
     </li>
@@ -2870,7 +2816,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../consuming-services/consume-an-api-key-secured-service/" class="md-nav__link">
+      <a href="../../../consuming-services/consume-an-api-key-secured-service/" class="md-nav__link">
         Consume a service secured with API key
       </a>
     </li>
@@ -2884,7 +2830,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../consuming-services/consume-an-oauth2-secured-service/" class="md-nav__link">
+      <a href="../../../consuming-services/consume-an-oauth2-secured-service/" class="md-nav__link">
         Consume a service secured with OAuth2
       </a>
     </li>
@@ -2905,7 +2851,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../consuming-services/manage-application/" class="md-nav__link">
+      <a href="../../../consuming-services/manage-application/" class="md-nav__link">
         Manage Application
       </a>
     </li>
@@ -2919,7 +2865,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../consuming-services/share-applications/" class="md-nav__link">
+      <a href="../../../consuming-services/share-applications/" class="md-nav__link">
         Share Applications
       </a>
     </li>
@@ -2933,7 +2879,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../consuming-services/manage-subscription/" class="md-nav__link">
+      <a href="../../../consuming-services/manage-subscription/" class="md-nav__link">
         Manage Subscription
       </a>
     </li>
@@ -2947,7 +2893,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../consuming-services/generate-an-access-token/" class="md-nav__link">
+      <a href="../../../consuming-services/generate-an-access-token/" class="md-nav__link">
         Generate an Access Token
       </a>
     </li>
@@ -2998,7 +2944,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/lifecycle-management/" class="md-nav__link">
+      <a href="../../../api-management/lifecycle-management/" class="md-nav__link">
         Lifecycle Management
       </a>
     </li>
@@ -3012,7 +2958,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/documents/" class="md-nav__link">
+      <a href="../../../api-management/documents/" class="md-nav__link">
         Documents
       </a>
     </li>
@@ -3026,7 +2972,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/api-rate-limiting/" class="md-nav__link">
+      <a href="../../../api-management/api-rate-limiting/" class="md-nav__link">
         API Rate Limiting
       </a>
     </li>
@@ -3069,7 +3015,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/api-policies/about-api-policies/" class="md-nav__link">
+      <a href="../../../api-management/api-policies/about-api-policies/" class="md-nav__link">
         About API Policies
       </a>
     </li>
@@ -3083,7 +3029,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/api-policies/attach-and-manage-policies/" class="md-nav__link">
+      <a href="../../../api-management/api-policies/attach-and-manage-policies/" class="md-nav__link">
         Attach and Manage Policies
       </a>
     </li>
@@ -3097,7 +3043,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/api-policies/apply-advanced-settings-on-mediation-policies/" class="md-nav__link">
+      <a href="../../../api-management/api-policies/apply-advanced-settings-on-mediation-policies/" class="md-nav__link">
         Apply Advanced Settings on Mediation Policies
       </a>
     </li>
@@ -3118,7 +3064,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/control-api-visibility/" class="md-nav__link">
+      <a href="../../../api-management/control-api-visibility/" class="md-nav__link">
         Control API Visibility
       </a>
     </li>
@@ -3161,7 +3107,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/manage-api-traffic/assign-subscription-plans-to-apis/" class="md-nav__link">
+      <a href="../../../api-management/manage-api-traffic/assign-subscription-plans-to-apis/" class="md-nav__link">
         Assign Subscription Plans to APIs
       </a>
     </li>
@@ -3175,7 +3121,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan/" class="md-nav__link">
+      <a href="../../../api-management/manage-api-traffic/subscribe-to-an-api-with-a-subscription-plan/" class="md-nav__link">
         Subscribe to an API with a Subscription Plan
       </a>
     </li>
@@ -3196,7 +3142,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/rename-api-display-name/" class="md-nav__link">
+      <a href="../../../api-management/rename-api-display-name/" class="md-nav__link">
         Rename API Display Name
       </a>
     </li>
@@ -3247,7 +3193,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/observability-overview/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/observability-overview/" class="md-nav__link">
         Observability Overview
       </a>
     </li>
@@ -3261,7 +3207,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/alerts-overview/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/alerts-overview/" class="md-nav__link">
         Alert Overview
       </a>
     </li>
@@ -3275,7 +3221,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/operational-insights-dashboard/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/operational-insights-dashboard/" class="md-nav__link">
         Operational Insights
       </a>
     </li>
@@ -3318,7 +3264,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/delivery-insights/configure-delivery-insights/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/delivery-insights/configure-delivery-insights/" class="md-nav__link">
         Configure Delivery Insights
       </a>
     </li>
@@ -3332,7 +3278,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/delivery-insights/view-delivery-insights/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/delivery-insights/view-delivery-insights/" class="md-nav__link">
         View Delivery Insights
       </a>
     </li>
@@ -3382,7 +3328,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/insights-overview/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/insights-overview/" class="md-nav__link">
         Insights Overview
       </a>
     </li>
@@ -3396,7 +3342,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/generate-custom-reports/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/generate-custom-reports/" class="md-nav__link">
         Generate Custom Reports
       </a>
     </li>
@@ -3417,7 +3363,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/cost-optimization/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/cost-optimization/" class="md-nav__link">
         Cost Insights
       </a>
     </li>
@@ -3431,7 +3377,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/view-logs/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/view-logs/" class="md-nav__link">
         View Logs
       </a>
     </li>
@@ -3474,7 +3420,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api/" class="md-nav__link">
         Access the Choreo Insights API
       </a>
     </li>
@@ -3488,7 +3434,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api/" class="md-nav__link">
         Choreo Insights API
       </a>
     </li>
@@ -3509,7 +3455,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring-and-insights/integrate-choreo-with-moesif/" class="md-nav__link">
+      <a href="../../../monitoring-and-insights/integrate-choreo-with-moesif/" class="md-nav__link">
         Integrate Choreo with Moesif
       </a>
     </li>
@@ -3560,7 +3506,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-cli/choreo-cli-overview/" class="md-nav__link">
+      <a href="../../../choreo-cli/choreo-cli-overview/" class="md-nav__link">
         Choreo CLI Overview
       </a>
     </li>
@@ -3574,7 +3520,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-cli/get-started-with-the-choreo-cli/" class="md-nav__link">
+      <a href="../../../choreo-cli/get-started-with-the-choreo-cli/" class="md-nav__link">
         Get Started with the Choreo CLI
       </a>
     </li>
@@ -3588,7 +3534,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-cli/manage-authentication-with-personal-access-tokens/" class="md-nav__link">
+      <a href="../../../choreo-cli/manage-authentication-with-personal-access-tokens/" class="md-nav__link">
         Manage Authentication with Personal Access Tokens
       </a>
     </li>
@@ -3639,7 +3585,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/configure-access-control/" class="md-nav__link">
+      <a href="../../../administer/configure-access-control/" class="md-nav__link">
         Configure Access Control
       </a>
     </li>
@@ -3653,7 +3599,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/configure-a-custom-domain-for-your-organization/" class="md-nav__link">
+      <a href="../../../administer/configure-a-custom-domain-for-your-organization/" class="md-nav__link">
         Configure a Custom Domain for Your Organization
       </a>
     </li>
@@ -3667,7 +3613,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/configure-enterprise-login/" class="md-nav__link">
+      <a href="../../../administer/configure-enterprise-login/" class="md-nav__link">
         Configure Enterprise Login
       </a>
     </li>
@@ -3710,7 +3656,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/" class="md-nav__link">
+      <a href="../../../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp/" class="md-nav__link">
         Configure Asgardeo as an External IdP
       </a>
     </li>
@@ -3724,7 +3670,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp/" class="md-nav__link">
+      <a href="../../../administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp/" class="md-nav__link">
         Configure Azure as an External IdP
       </a>
     </li>
@@ -3745,7 +3691,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/create-api-subscription-plans/" class="md-nav__link">
+      <a href="../../../administer/create-api-subscription-plans/" class="md-nav__link">
         Create API Subscription Plans
       </a>
     </li>
@@ -3759,7 +3705,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/configure-approvals-for-choreo-workflows/" class="md-nav__link">
+      <a href="../../../administer/configure-approvals-for-choreo-workflows/" class="md-nav__link">
         Configure Approvals for Choreo Workflows
       </a>
     </li>
@@ -3773,7 +3719,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/review-workflow-approval-requests/" class="md-nav__link">
+      <a href="../../../administer/review-workflow-approval-requests/" class="md-nav__link">
         Review Workflow Approval Requests
       </a>
     </li>
@@ -3787,7 +3733,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/configure-a-user-store-with-built-in-idp/" class="md-nav__link">
+      <a href="../../../administer/configure-a-user-store-with-built-in-idp/" class="md-nav__link">
         Configure a User Store with the Built-In Identity Provider
       </a>
     </li>
@@ -3830,7 +3776,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/customize-the-developer-portal/" class="md-nav__link">
+      <a href="../../../administer/customize-the-developer-portal/" class="md-nav__link">
         Customize the Developer Portal
       </a>
     </li>
@@ -3844,7 +3790,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/configure-self-sign-up/" class="md-nav__link">
+      <a href="../../../administer/configure-self-sign-up/" class="md-nav__link">
         Configure Self-Sign-Up
       </a>
     </li>
@@ -3858,7 +3804,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/configure-identity-providers-for-developer-portal/" class="md-nav__link">
+      <a href="../../../administer/configure-identity-providers-for-developer-portal/" class="md-nav__link">
         Configure Identity Providers for Developer Portal
       </a>
     </li>
@@ -3872,7 +3818,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/configure-exposed-environments-to-developer-portal/" class="md-nav__link">
+      <a href="../../../administer/configure-exposed-environments-to-developer-portal/" class="md-nav__link">
         Configure Exposed Environments to Developer Portal
       </a>
     </li>
@@ -3893,7 +3839,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/manage-members-of-an-organization/" class="md-nav__link">
+      <a href="../../../administer/manage-members-of-an-organization/" class="md-nav__link">
         Manage Members of an Organization
       </a>
     </li>
@@ -3907,7 +3853,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../administer/control-egress-traffic-for-your-organization/" class="md-nav__link">
+      <a href="../../../administer/control-egress-traffic-for-your-organization/" class="md-nav__link">
         Control Egress Traffic for Your Organization
       </a>
     </li>
@@ -3958,7 +3904,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/faq/" class="md-nav__link">
+      <a href="../../../references/faq/" class="md-nav__link">
         FAQ
       </a>
     </li>
@@ -3972,7 +3918,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/choreo-limitations/" class="md-nav__link">
+      <a href="../../../references/choreo-limitations/" class="md-nav__link">
         Choreo Limitations
       </a>
     </li>
@@ -3986,7 +3932,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/troubleshoot-choreo/" class="md-nav__link">
+      <a href="../../../references/troubleshoot-choreo/" class="md-nav__link">
         Troubleshoot Choreo
       </a>
     </li>
@@ -4000,7 +3946,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/private-data-plane-security-levels/" class="md-nav__link">
+      <a href="../../../references/private-data-plane-security-levels/" class="md-nav__link">
         Private Data Plane Security Levels
       </a>
     </li>
@@ -4014,7 +3960,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/private-data-plane-management-models/" class="md-nav__link">
+      <a href="../../../references/private-data-plane-management-models/" class="md-nav__link">
         Private Data Plane Management Models
       </a>
     </li>
@@ -4028,7 +3974,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/choreo-platform-services-billing-and-upgrades/" class="md-nav__link">
+      <a href="../../../references/choreo-platform-services-billing-and-upgrades/" class="md-nav__link">
         Choreo Platform Service Billing and Upgrades
       </a>
     </li>
@@ -4069,84 +4015,30 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#register-a-genai-service" class="md-nav__link">
-    Register a GenAI service
+  <a href="#overview" class="md-nav__link">
+    Overview
   </a>
   
-    <nav class="md-nav" aria-label="Register a GenAI service">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     Prerequisites
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#step-1-select-a-service-provider" class="md-nav__link">
-    Step 1: Select a service provider
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-provide-service-details" class="md-nav__link">
-    Step 2: Provide service details
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-add-configurations" class="md-nav__link">
-    Step 3: Add configurations
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#discover-genai-services" class="md-nav__link">
-    Discover GenAI services
+    Discover GenAI Services
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#manage-genai-services" class="md-nav__link">
-    Manage GenAI services
+  <a href="#create-a-connection-to-a-genai-service" class="md-nav__link">
+    Create a Connection to a GenAI Service
   </a>
-  
-    <nav class="md-nav" aria-label="Manage GenAI services">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#view-or-update-genai-service-details" class="md-nav__link">
-    View or update GenAI service details
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add-a-genai-service-to-the-internal-marketplace" class="md-nav__link">
-    Add a GenAI service to the Internal Marketplace
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#remove-a-genai-service-from-the-internal-marketplace" class="md-nav__link">
-    Remove a GenAI service from the Internal Marketplace
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4165,99 +4057,70 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
 
-<h1 id="integrate-and-manage-generative-ai-services">Integrate and Manage Generative AI Services<a class="headerlink" href="#integrate-and-manage-generative-ai-services" title="Permanent link">&para;</a></h1>
-<p>Generative AI (GenAI) services leverage advanced machine learning models to create original content such as text, images, music, or code, by identifying and learning patterns from existing data. Powered by deep neural networks and other machine learning models, these services can generate human-like outputs in various formats. This versatility makes GenAI ideal for tasks such as content creation, image generation, conversation automation, etc. </p>
-<p>Choreo enables seamless integration with GenAI services, allowing you to incorporate these capabilities within your applications.</p>
-<h2 id="register-a-genai-service">Register a GenAI service<a class="headerlink" href="#register-a-genai-service" title="Permanent link">&para;</a></h2>
-<p>To use a GenAI service in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing you to consume it via a Connection.</p>
-<p>You can register a GenAI service at two levels:</p>
+<h1 id="consume-a-genai-service">Consume a GenAI Service<a class="headerlink" href="#consume-a-genai-service" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>Choreo is a cloud-native platform that enables developers to create, deploy, and consume services efficiently. The <strong>Choreo Internal Marketplace</strong> streamlines API discovery and integration, making it easier to incorporate services into your applications.</p>
+<p>This guide is for application developers who want to consume GenAI Services published in the Internal Marketplace.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Before you begin, ensure that:</p>
 <ul>
-<li>Organization level: This makes the service accessible from any project within the organization.</li>
-<li>Project level: This restricts the service to a specific project.</li>
-</ul>
-<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
-<p>Before registering a GenAI service, obtain the following details from the service provider:
- - API key.
- - Service URL.
- - Other necessary parameters. For example, client credentials.</p>
-<p>To register a GenAI service, follow these steps:</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Ensure that you register the service at the appropriate level depending on the usage. If the service must be shared among multiple projects, register it at the organization level. Otherwise, register it at the project level.</p>
-</div>
-<h3 id="step-1-select-a-service-provider">Step 1: Select a service provider<a class="headerlink" href="#step-1-select-a-service-provider" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>Follow one of these steps depending on your requirements:<ul>
-<li>To register a GenAI service at the organization level, go to the Choreo Console header and select your organization from the <strong>Organization</strong> list. </li>
-<li>To register a GenAI service at the project level, go to the Choreo Console header and select your project from the <strong>Project</strong> list. </li>
-</ul>
-</li>
-<li>In the left navigation menu, click <strong>Resources</strong> and then click <strong>GenAI Services</strong>.</li>
-<li>Click <strong>+ Register</strong>.</li>
-<li>Select a service provider.</li>
-<li>Click <strong>Next</strong>.</li>
-</ol>
-<h3 id="step-2-provide-service-details">Step 2: Provide service details<a class="headerlink" href="#step-2-provide-service-details" title="Permanent link">&para;</a></h3>
-<ol>
 <li>
-<p>Under <strong>Register Service</strong>, enter the following details for the service:</p>
-<ul>
-<li>A <strong>Name</strong> and <strong>Version</strong>.</li>
-<li>The <strong>Service URL</strong>.</li>
-</ul>
+<p>You have access to a published GenAI Service in the Internal Marketplace.</p>
 </li>
 <li>
-<p>Click <strong>Next</strong>.</p>
+<p>If you don’t yet have one, refer to the <a href="https://docs.choreo.dev/en/pe-docs/docs/db-and-services/ai-gateway/integrate-and-manage-gen-ai-services">PE documentation</a> to create and deploy a sample GenAI Service.</p>
 </li>
-</ol>
-<h3 id="step-3-add-configurations">Step 3: Add configurations<a class="headerlink" href="#step-3-add-configurations" title="Permanent link">&para;</a></h3>
-<ol>
-<li>
-<p>Under <strong>Add Configurations</strong>, enter details for the service.
-    !!! note 
-         - The configuration details to enter vary depending on the selected service provider.
-         - To successfully register a service, ensure you provide all the required configurations.</p>
-</li>
-<li>
-<p>Click <strong>Register</strong>.</p>
-</li>
-</ol>
-<p>Once registered, the GenAI service is automatically listed in the Internal Marketplace.</p>
-<p>If you want to remove the service from the Internal Marketplace, see <a href="#remove-a-genai-service-from-the-internal-marketplace">Remove a GenAI service from the Internal Marketplace</a>.</p>
-<h2 id="discover-genai-services">Discover GenAI services<a class="headerlink" href="#discover-genai-services" title="Permanent link">&para;</a></h2>
-<p>The GenAI services you register are discoverable via the Internal Marketplace for you to consume via a Connection.</p>
-<p>For details on consuming a GenAI service via a connection, see <a href="../../develop-components/sharing-and-reusing/create-a-connection/">Create a Connection</a>.</p>
-<h2 id="manage-genai-services">Manage GenAI services<a class="headerlink" href="#manage-genai-services" title="Permanent link">&para;</a></h2>
-<p>When you create a GenAI service, it gets listed in the <strong>GenAI Services</strong> list. </p>
-<h3 id="view-or-update-genai-service-details">View or update GenAI service details<a class="headerlink" href="#view-or-update-genai-service-details" title="Permanent link">&para;</a></h3>
-<p>To view or update a GenAI service, follow these steps.</p>
-<ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the left navigation menu, click <strong>Resources</strong> and then click <strong>GenAI Services</strong>. This lists all the GenAI services you have created.</li>
-<li>Click on a service to view or update its details.<ul>
-<li><strong>General Details</strong>: Displays service metadata. For example, the service name, overview, labels, etc. </li>
-<li><strong>Service Definition</strong>: Displays the service definition. To update the definition, click <strong>Upload</strong> and select the new definition file.</li>
 </ul>
+<h2 id="discover-genai-services">Discover GenAI Services<a class="headerlink" href="#discover-genai-services" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Navigate to the <a href="https://console.choreo.dev">Choreo Internal Marketplace</a>.</p>
+</li>
+<li>
+<p>Sign in with your credentials.</p>
+</li>
+<li>
+<p>Browse or search for the desired GenAI Service.</p>
+</li>
+<li>
+<p>Select the service to view its details.</p>
 </li>
 </ol>
-<h3 id="add-a-genai-service-to-the-internal-marketplace">Add a GenAI service to the Internal Marketplace<a class="headerlink" href="#add-a-genai-service-to-the-internal-marketplace" title="Permanent link">&para;</a></h3>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>To add a GenAI service to the Internal Marketplace, you must provide all the required configurations.</p>
-</div>
+<h2 id="create-a-connection-to-a-genai-service">Create a Connection to a GenAI Service<a class="headerlink" href="#create-a-connection-to-a-genai-service" title="Permanent link">&para;</a></h2>
+<p>To use a GenAI Service in your Choreo component, you first need to create a connection.</p>
 <ol>
-<li>In the Choreo Console left navigation menu, click <strong>Resources</strong> and then click <strong>GenAI Services</strong>.</li>
-<li>Click on the service you want to add to the Internal Marketplace.</li>
-<li>Click <strong>Add to Marketplace</strong>.</li>
+<li>
+<p>In the left navigation menu, click Connections.</p>
+</li>
+<li>
+<p>This page lists all existing connections.</p>
+</li>
+<li>
+<p>Click <strong>+Create</strong>.</p>
+</li>
+<li>
+<p>The Marketplace view opens, where you can browse and search for services.</p>
+</li>
+<li>
+<p>Click the <strong>Services</strong> tab.</p>
+</li>
+<li>
+<p>Use search or filters to find the required service efficiently.</p>
+</li>
+<li>
+<p>Select the GenAI Service you want to connect to.</p>
+</li>
+<li>
+<p>Provide a name and description for the connection.</p>
+</li>
+<li>
+<p>Choose an Access Mode and Authentication Scheme.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
 </ol>
-<h3 id="remove-a-genai-service-from-the-internal-marketplace">Remove a GenAI service from the Internal Marketplace<a class="headerlink" href="#remove-a-genai-service-from-the-internal-marketplace" title="Permanent link">&para;</a></h3>
-<ol>
-<li>In the Choreo Console left navigation menu, click <strong>Resources</strong> and then click <strong>GenAI Services</strong>.</li>
-<li>Click on the service you want to remove from the Internal Marketplace.</li>
-<li>Click <strong>Remove from Marketplace</strong>.</li>
-</ol>
-<p>This removes the service from the Internal Marketplace. Therefore, the service will not be available to consume via a Connection. However, the connections created before removal will continue to work as expected.</p>
+<p>Once created, the connection details are displayed for each environment. An inline usage guide is also provided, showing how to use the connection in your component.</p>
 
 
 
@@ -4284,7 +4147,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../integrate-and-manage-third-party-services/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Integrate and Manage Third-Party Services" rel="prev">
+          <a href="../create-a-connection/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Create a Connection" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -4293,20 +4156,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                Integrate and Manage Third-Party Services
+                Create a Connection
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../manage-databases-and-caches/choreo-managed-databases-and-caches/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
+          <a href="../use-a-connection-in-your-service/" class="md-footer__link md-footer__link--next" aria-label="Next: Use a Connection in Your Service" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                Overview
+                Use a Connection in Your Service
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -4337,20 +4200,20 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.path", "navigation.top", "content.code.copy", "content.action.edit", "content.action.view", "version.selector"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "navigation.path", "navigation.top", "content.code.copy", "content.action.edit", "content.action.view", "version.selector"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.fc8c2696.min.js"></script>
       
-        <script src="../../assets/lib/json-formatter/json-formatter.umd.js"></script>
+        <script src="../../../assets/lib/json-formatter/json-formatter.umd.js"></script>
       
-        <script src="../../assets/lib/highlightjs/highlight.min.js"></script>
+        <script src="../../../assets/lib/highlightjs/highlight.min.js"></script>
       
-        <script src="../../assets/js/choreotheme.js"></script>
+        <script src="../../../assets/js/choreotheme.js"></script>
       
-        <script src="../../assets/javascripts/region-selector.js"></script>
+        <script src="../../../assets/javascripts/region-selector.js"></script>
       
-        <script src="../../js/open_in_new_tab.js"></script>
+        <script src="../../../js/open_in_new_tab.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
