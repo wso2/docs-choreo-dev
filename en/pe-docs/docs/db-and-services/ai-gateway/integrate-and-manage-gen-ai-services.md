@@ -57,6 +57,11 @@ Before registering a GenAI service, obtain the following from your provider:
 
 1. Sign in to the Choreo Console.
 
+!!! info 
+    **AI Gateway is only available in the US region.**
+
+    - 🇺🇸 **US Region**: [console.choreo.dev](https://console.choreo.dev)
+
 2. Select your Organization or Project, depending on the required scope.
 
 3. In the left navigation menu, go to DB & Services → GenAI Services.
