@@ -68,15 +68,15 @@ Before registering a GenAI service, obtain the following from your provider:
 
 4. Choose a provider from the list:
 
-- OpenAI
+    1. OpenAI
 
-- Azure OpenAI
+    2. Azure OpenAI
 
-- Anthropic Claude
+    3. Anthropic Claude
 
-- Mistral
+    4. Mistral
 
-- AWS Bedrock
+    5. AWS Bedrock
 
 5. Click Next.
 
@@ -142,11 +142,11 @@ See the [Developer Docs](https://wso2.com/choreo/docs/develop-components/sharing
 
 3. Select a service to view or edit details:
 
-- General Details – Name, description, and labels.
+    1. General Details – Name, description, and labels.
 
-- Environment Configurations – Backend security and rate limiting.
+    2. Environment Configurations – Backend security and rate limiting.
 
-- Deployment Status – View deployment state for each environment.
+    3. Deployment Status – View deployment state for each environment.
 
 ![Deployment Status](../../assets/img/ai-gateway/view-configs.png)
 
