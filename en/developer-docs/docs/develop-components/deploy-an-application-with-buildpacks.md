@@ -166,9 +166,6 @@ Follow the guidelines below based on your language:
 
 You can configure the environment variables necessary to build the component using the **Build Configurations Editor** on the component **Build** page. 
 
-!!! info
-    The capability to configure build-time environment variables is not available for components created using **Ballerina** or **WSO2 MI** build presets.
-
 During the build process, the build-time environment variables and their values are passed to the build preset. Therefore, you can configure both build preset-specific environment variables and those required for the component build.
 
 For example, if you want to override the Maven command of the **Java** build presets, you can use `GOOGLE_MAVEN_BUILD_ARGS` as the environment key and `clean install` as the value. 
