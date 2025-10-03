@@ -1720,36 +1720,23 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    How it works
-  </a>
-  
-    <nav class="md-nav" aria-label="How it works">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-write-tests" class="md-nav__link">
-    Step 1: Write tests
+  <a href="#write-tests" class="md-nav__link">
+    Write tests
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-enable-unit-tests" class="md-nav__link">
-    Step 2: Enable unit tests
+      
+        <li class="md-nav__item">
+  <a href="#enable-unit-tests" class="md-nav__link">
+    Enable unit tests
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-trigger-a-new-build" class="md-nav__link">
-    Step 3: Trigger a new build
+      
+        <li class="md-nav__item">
+  <a href="#trigger-a-new-build" class="md-nav__link">
+    Trigger a new build
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4035,36 +4022,23 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    How it works
-  </a>
-  
-    <nav class="md-nav" aria-label="How it works">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-write-tests" class="md-nav__link">
-    Step 1: Write tests
+  <a href="#write-tests" class="md-nav__link">
+    Write tests
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-enable-unit-tests" class="md-nav__link">
-    Step 2: Enable unit tests
+      
+        <li class="md-nav__item">
+  <a href="#enable-unit-tests" class="md-nav__link">
+    Enable unit tests
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-trigger-a-new-build" class="md-nav__link">
-    Step 3: Trigger a new build
+      
+        <li class="md-nav__item">
+  <a href="#trigger-a-new-build" class="md-nav__link">
+    Trigger a new build
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4099,31 +4073,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h1 id="integrate-unit-tests-into-the-build-pipeline">Integrate Unit Tests into the Build Pipeline<a class="headerlink" href="#integrate-unit-tests-into-the-build-pipeline" title="Permanent link">&para;</a></h1>
 <p>Choreo allows you to integrate unit tests into the build pipeline, enabling code validation before deployment. This ensures early testing of code changes, reducing the risk of defects in production.</p>
-<div class="admonition note">
-<p class="admonition-title">Note<p>Currently, Choreo supports unit tests only for the <code>WSO2 MI</code> build preset.</p>
-</p>
-</div>
-<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
-<h3 id="step-1-write-tests">Step 1: Write tests<a class="headerlink" href="#step-1-write-tests" title="Permanent link">&para;</a></h3>
-<p>You can create unit tests in your source code using standard testing libraries. For step-by-step instructions on creating unit tests for WSO2 Micro Integrator projects, see <a href="https://mi.docs.wso2.com/en/latest/develop/creating-unit-test-suite/">Creating a Unit Test Suite</a>.</p>
-<h3 id="step-2-enable-unit-tests">Step 2: Enable unit tests<a class="headerlink" href="#step-2-enable-unit-tests" title="Permanent link">&para;</a></h3>
+<p>Currently, Choreo supports unit tests only for the <code>WSO2 MI</code> and <code>Ballerina</code> build presets.</p>
+<h2 id="write-tests">Write tests<a class="headerlink" href="#write-tests" title="Permanent link">&para;</a></h2>
+<p>You can create unit tests in your source code using standard testing libraries. For step-by-step instructions on creating unit tests for WSO2 Micro Integrator projects, see <a href="https://mi.docs.wso2.com/en/latest/develop/creating-unit-test-suite/">Creating a Unit Test Suite</a>. For step-by-step instructions on writing unit tests for Ballerina projects, see <a href="https://ballerina.io/learn/test-ballerina-code/structure-tests/">Test Ballerina Code</a>. </p>
+<p>Once you have written your unit tests, commit them to your source code repository.</p>
+<h2 id="enable-unit-tests">Enable unit tests<a class="headerlink" href="#enable-unit-tests" title="Permanent link">&para;</a></h2>
+<p>To enable unit tests in the build pipeline for a component with unit tests in its source code, follow these steps:</p>
 <ol>
 <li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the <strong>Component Listing</strong> pane, click the component for which you want to enable unit tests.</li>
+<li>In the <strong>Component Listing</strong> pane, click the component for which you want to enable unit tests.</li>
 <li>In the left navigation menu, click <strong>Build</strong>.</li>
 <li>On the <strong>Build</strong> page, click to edit <strong>Build Configurations</strong>.</li>
 <li>Turn on the <strong>Unit Test</strong> toggle.</li>
 <li>Click <strong>Save</strong>.</li>
 </ol>
-<h3 id="step-3-trigger-a-new-build">Step 3: Trigger a new build<a class="headerlink" href="#step-3-trigger-a-new-build" title="Permanent link">&para;</a></h3>
-<ul>
-<li>On the <strong>Build</strong> page, click <strong>Build Latest</strong>.</li>
-</ul>
-<p>This starts a new build with unit tests enabled. You can monitor its progress in the <strong>Build Details</strong> pane.</p>
+<h2 id="trigger-a-new-build">Trigger a new build<a class="headerlink" href="#trigger-a-new-build" title="Permanent link">&para;</a></h2>
+<p>Once you have enabled unit tests, trigger a new build to run them by clicking <strong>Build Latest</strong>. This starts a new build with unit tests enabled. You can monitor its progress in the <strong>Build Details</strong> pane.</p>
 <h2 id="view-failed-unit-tests">View failed unit tests<a class="headerlink" href="#view-failed-unit-tests" title="Permanent link">&para;</a></h2>
-<p>If a unit test fails during the build, you can view its detailed logs for troubleshooting. Click <strong>View Details</strong> corresponding to the failed build, then expand the failed unit test step to view the logs.</p>
+<p>If a unit test fails during the build, Choreo will stop the build to prevent faulty code from being deployed. To troubleshoot, click <strong>View Details</strong> for the failed build and expand the failed unit test step to review the test output logs.</p>
 <h2 id="explore-a-sample">Explore a sample<a class="headerlink" href="#explore-a-sample" title="Permanent link">&para;</a></h2>
-<p>To see unit tests in action within the build pipeline, try out the <a href="https://github.com/wso2/choreo-samples/tree/main/hello-world-mi">WSO2 MI helloworld</a> sample. </p>
+<p>To see unit tests in action within the build pipeline, try out the <a href="https://github.com/wso2/choreo-samples/tree/main/hello-world-mi">WSO2 MI helloworld</a> sample or the <a href="https://github.com/wso2/choreo-samples/tree/main/greeting-service">Ballerina helloworld</a> sample.</p>
 
 
 

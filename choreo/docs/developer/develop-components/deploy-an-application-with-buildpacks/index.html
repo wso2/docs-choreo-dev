@@ -4341,10 +4341,6 @@ e.g.,</p>
 </div>
 <h3 id="configure-build-time-environment-variables">Configure build-time environment variables<a class="headerlink" href="#configure-build-time-environment-variables" title="Permanent link">&para;</a></h3>
 <p>You can configure the environment variables necessary to build the component using the <strong>Build Configurations Editor</strong> on the component <strong>Build</strong> page. </p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>The capability to configure build-time environment variables is not available for components created using <strong>Ballerina</strong> or <strong>WSO2 MI</strong> build presets.</p>
-</div>
 <p>During the build process, the build-time environment variables and their values are passed to the build preset. Therefore, you can configure both build preset-specific environment variables and those required for the component build.</p>
 <p>For example, if you want to override the Maven command of the <strong>Java</strong> build presets, you can use <code>GOOGLE_MAVEN_BUILD_ARGS</code> as the environment key and <code>clean install</code> as the value. </p>
 <p>For more examples, see <a href="https://cloud.google.com/docs/buildpacks/service-specific-configs">Google Cloud's buildpacks documentation</a>.</p>
