@@ -12,7 +12,7 @@ Once you have written your unit tests, commit them to your source code repositor
 
 ## Enable unit tests
 
-To enable unit tests in the build pipeline for a component that you have created with source code containing unit tests, follow these steps:
+To enable unit tests in the build pipeline for a component with unit tests in its source code, follow these steps:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click the component for which you want to enable unit tests.
@@ -27,10 +27,10 @@ Once you have enabled unit tests, trigger a new build to run them by clicking **
 
 ## View failed unit tests
 
-If a unit test fails during the build, Choreo will fail and stop the build to prevent deploying faulty code. You can view the detailed logs for troubleshooting by clicking **View Details** corresponding to the failed build, then expanding the failed unit test step to view the logs.
+If a unit test fails during the build, Choreo will stop the build to prevent faulty code from being deployed. To troubleshoot, click **View Details** for the failed build and expand the failed unit test step to review the test output logs.
 
 ## Explore a sample
 
-To see unit tests in action within the build pipeline, try out the [WSO2 MI helloworld](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi) sample or the [Ballerina hello world](https://github.com/wso2/choreo-samples/tree/main/greeting-service) sample.
+To see unit tests in action within the build pipeline, try out the [WSO2 MI helloworld](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi) sample or the [Ballerina helloworld](https://github.com/wso2/choreo-samples/tree/main/greeting-service) sample.
 
 
