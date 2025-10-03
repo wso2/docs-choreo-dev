@@ -22,17 +22,11 @@ The AI Gateway integrates seamlessly with leading AI platforms, including:
 
 The AI Gateway offers a robust set of capabilities to ensure secure and efficient AI integration:
 
-- AI Vendor Key Configuration: 
+- **AI Vendor Key Configuration:**  Securely authenticate with AI providers by configuring API keys obtained from each vendor.
 
-  Securely authenticate with AI providers by configuring API keys obtained from each vendor.
-
-- Token-Based Rate Limiting:
-
-  Protect backend services and manage costs by applying rate limits based on token usage rather than just request counts.
+- **Token-Based Rate Limiting:** Protect backend services and manage costs by applying rate limits based on token usage rather than just request counts.
   
-- AI API Observability (Coming Soon):
-
-  Gain insights into AI API performance and usage with built-in analytics and monitoring.
+- **AI API Observability (Coming Soon):** Gain insights into AI API performance and usage with built-in analytics and monitoring.
 
 With these features, organizations can integrate, monitor, and scale AI services efficiently, unlocking the full potential of AI-driven applications.
 
