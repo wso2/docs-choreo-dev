@@ -4140,25 +4140,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="secure-web-applications-with-managed-authentication">Secure Web Applications with Managed Authentication<a class="headerlink" href="#secure-web-applications-with-managed-authentication" title="Permanent link">&para;</a></h1>
-<p>The managed authentication capability of Choreo simplifies adding authentication and authorization to a single-page web application.</p>
-<p>As a developer, you can easily set up Choreo's managed authentication to seamlessly integrate authentication into your web application. You just need to enable Choreo’s managed authentication, configure the built-in identity provider, and connect to Choreo without having to deal with the complexities of underlying OIDC/OAuth2.0 protocols.</p>
-<p>Choreo's managed authentication follows the backend for frontend (BFF) architecture, which is a secure pattern recommended for browser-based applications that utilize OIDC/OAuth2.0 for authentication and authorization. This architecture ensures that OAuth tokens remain secure from browser-side code, making them immune to potential attacks like cross-site scripting (XSS).</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Choreo's managed authentication is currently available only for web applications created with <strong>React</strong>, <strong>Angular</strong>, or <strong>Vue.js</strong> build presets.</p>
-</div>
+<p>The managed authentication capability of Choreo simplifies adding authentication and authorization to a web application.</p>
+<p>As a developer, you can easily set up Choreo's managed authentication to seamlessly integrate authentication into your web application. You just need to enable Choreo’s managed authentication, configure the built-in identity provider, and connect to Choreo without dealing with the complexities of underlying OIDC/OAuth2.0 protocols.</p>
+<p>For Single Page Applications (SPAs), Choreo's managed authentication follows the backend for frontend (BFF) architecture, which is a secure pattern recommended for browser-based applications that utilize OIDC/OAuth2.0 for authentication and authorization. This architecture ensures that OAuth tokens remain secure from browser-side code, making them immune to potential attacks like cross-site scripting (XSS).</p>
+<p>For Server-Side Rendered (SSR) applications, Choreo's managed authentication provides a separate service for authentication and authorization, which is decoupled from the application server. This allows you to focus on building your application without worrying about the security aspects of authentication and authorization.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Managed authentication uses the 'SAMESITE' cookie attribute to prevent CSRF attacks. Therefore, it is recommended to use managed authentication with modern browsers that support the 'SAMESITE' attribute.</p>
 </div>
 <h2 id="step-1-set-up-managed-authentication-for-your-web-application">Step 1: Set up managed authentication for your web application<a class="headerlink" href="#step-1-set-up-managed-authentication-for-your-web-application" title="Permanent link">&para;</a></h2>
 <p>To secure your web application, you must implement authentication and authorization for it. </p>
-<p>To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below. Before you move on to the next section, see <a href="../../develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication/">Develop Web Applications Locally with Choreo’s Managed Authentication</a> to ensure a seamless authentication experience when developing your web application on your local machine. You can also refer to the <a href="https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end-with-managed-auth">sample React app with managed authentication</a>.</p>
+<p>To easily set up authentication for your web application with Choreo's managed authentication, follow the steps given below. Before you move on to the next section, see <a href="../../develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication/">Develop Web Applications Locally with Choreo’s Managed Authentication</a> to ensure a seamless authentication experience when developing your web application on your local machine. You can also refer to <a href="https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end-with-managed-auth">sample React app with managed authentication</a> or <a href="https://github.com/wso2/choreo-samples/tree/main/go-reading-list-web-app">sample Java app with managed authentication</a>.</p>
 <h3 id="step-11-implement-the-sign-in-functionality">Step 1.1: Implement the sign-in functionality<a class="headerlink" href="#step-11-implement-the-sign-in-functionality" title="Permanent link">&para;</a></h3>
-<p>To allow Choreo to manage the sign-in functionality for your web application, you must implement a sign-in button that redirects users to the <code>/auth/login</code> path on click. You can use the following code snippet or any custom button component from a preferred UI component library:</p>
+<p>To allow Choreo to manage the sign-in functionality for your web application, you must implement a sign-in button that redirects users to the <code>/auth/login</code> path on click. </p>
+<p>You can use the following code snippet or any custom button component from a preferred UI component library:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Single Page Applications (SPAs)</label><label for="__tabbed_1_2">Server-Side Rendered (SSR) Applications</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;/auth/login&quot;</span><span class="p">}}</span><span class="o">&gt;</span><span class="nx">Login</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
 </code></pre></div>
 
+</div>
+<div class="tabbed-block">
+<div class="language-html highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.location.href=&#39;/auth/login&#39;&quot;</span><span class="p">&gt;</span>Login<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</code></pre></div>
+
+</div>
+</div>
+</div>
 <p>This code snippet works as follows:</p>
 <p>When a user clicks sign in on your web application, Choreo will redirect the user to the configured identity provider and handle the authentication process, conforming to the OICD/OAuth2.0 protocols. On successful sign-in, Choreo will set the relevant session cookies and redirect the user to the post-sign-in path (default is <code>/</code>). The user can then invoke any Choreo-deployed APIs depending on the permission granted.</p>
 <div class="admonition note">
@@ -4168,12 +4177,26 @@ document.addEventListener('DOMContentLoaded', function() {
 <h4>Optional: Pass additional query parameters to the identity provider</h4>
 <p>If you want to pass additional query parameters to the identity provider, include them in the <code>/auth/login</code> request. Choreo appends these parameters to the <code>authorize</code> request sent to the identity provider.</p>
 <p>For example,</p>
-<div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;/auth/login?fidp=myfederatedidp&quot;</span><span class="p">}}</span><span class="o">&gt;</span><span class="nx">Login</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Single Page Applications (SPAs)</label><label for="__tabbed_2_2">Server-Side Rendered (SSR) Applications</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;/auth/login?fidp=myfederatedidp&quot;</span><span class="p">}}</span><span class="o">&gt;</span><span class="nx">Login</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
 </code></pre></div>
 
+</div>
+<div class="tabbed-block">
+<div class="language-html highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.location.href=&#39;/auth/login?fidp=myfederatedidp&#39;&quot;</span><span class="p">&gt;</span>Login<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</code></pre></div>
+
+</div>
+</div>
+</div>
 <h3 id="step-12-obtain-user-information-claims">Step 1.2: Obtain user information claims<a class="headerlink" href="#step-12-obtain-user-information-claims" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Single Page Applications (SPAs)</label><label for="__tabbed_3_2">Server-Side Rendered (SSR) Applications</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>Choreo's managed authentication allows you to access user information claims that the identity provider returns post-sign-in, either via a cookie or by invoking a GET resource.</p>
-<h4>Obtain user information via the <code>userinfo</code> cookie</h4>
+<p><strong>Obtain user information via the <code>userinfo</code> cookie</strong></p>
 <p>Upon successful sign-in, Choreo's managed authentication establishes a <code>userinfo</code> cookie that is accessible from the post-sign-in path you configured (by default, set to /). This <code>userinfo</code> cookie, provided by the identity provider, contains encoded user information claims.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -4184,28 +4207,59 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul>
 </div>
 <p>The recommended approach is to retrieve user information from the cookie and subsequently clear the cookie. The following is a sample code snippet that you can include in your post-sign-in path to retrieve user information from the cookie and subsequently clear the cookie:</p>
-<div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w">    </span><span class="k">import</span><span class="w"> </span><span class="nx">Cookies</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;js-cookie&#39;</span><span class="p">;</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="c1">// Read userinfo cookie value.</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">encodedUserInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Cookies</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;userinfo&#39;</span><span class="p">)</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="c1">// Decode the value. </span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">userInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">atob</span><span class="p">(</span><span class="nx">encodedUserInfo</span><span class="p">))</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="c1">// Store the value in a preferred browser-based storage if needed.</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="c1">// Clear the cookie.</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="nx">Cookies</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">&#39;userinfo&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">post</span><span class="o">-</span><span class="nx">login</span><span class="o">-</span><span class="nx">path</span><span class="o">&gt;</span><span class="w"> </span><span class="p">})</span>
+<p><div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w">    </span><span class="k">import</span><span class="w"> </span><span class="nx">Cookies</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;js-cookie&#39;</span><span class="p">;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="c1">// Read userinfo cookie value</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">encodedUserInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Cookies</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;userinfo&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="c1">// Decode the value</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">userInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">atob</span><span class="p">(</span><span class="nx">encodedUserInfo</span><span class="p">))</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="c1">// Store the value in a preferred browser-based storage if needed</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="c1">// Clear the cookie.</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="nx">Cookies</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">&#39;userinfo&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">post</span><span class="o">-</span><span class="nx">login</span><span class="o">-</span><span class="nx">path</span><span class="o">&gt;</span><span class="w"> </span><span class="p">})</span>
 </code></pre></div>
-
-<h4>Obtain user information via a GET endpoint</h4>
+<strong>Obtain user information via a GET endpoint</strong></p>
 <p>Choreo's managed authentication provides the GET endpoint <code>/auth/userinfo</code> in addition to the <code>userinfo</code> cookie that it sets after successful sign-in. You can use this endpoint to query information about users who have signed in. It also serves as a mechanism to check the state of a user who has signed in.</p>
 <p>The following is an example of a request to this endpoint:</p>
-<div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/auth/userinfo&#39;</span><span class="p">)</span>
+<div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/auth/userinfo&#39;</span><span class="p">)</span>
 </code></pre></div>
 
 <p>If a user has signed in, the server sends a <code>200 OK</code> response with the user information in JSON format in the response body. However, if the user is not signed in, the server sends a <code>401 Unauthorized</code> response.</p>
+</div>
+<div class="tabbed-block">
+<p>Choreo's managed authentication allows you to access user information claims from the backend server that the identity provider returns post-sign-in, via a request header.</p>
+<p>Upon successful sign-in, Choreo's managed authentication attaches a <code>Choreo-User-Claims</code> header to every request sent to the backend server. This header contains the user information claims provided by the identity provider.</p>
+<p>The following is a sample Java code snippet that you can include in your post-sign-in paths to retrieve user information from the <code>Choreo-User-Claims</code> header:</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.servlet.*</span><span class="p">;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.servlet.http.*</span><span class="p">;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.json.JSONObject</span><span class="p">;</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyServlet</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">HttpServlet</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">        </span><span class="c1">// Read userinfo cookie value</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">userClaimsString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getHeader</span><span class="p">(</span><span class="s">&quot;Choreo-User-Claims&quot;</span><span class="p">);</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">        </span><span class="c1">// Parse the user claims</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">        </span><span class="n">JSONObject</span><span class="w"> </span><span class="n">userClaims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JSONObject</span><span class="p">(</span><span class="n">userClaimsString</span><span class="p">);</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="p">}</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Alternatively, Choreo's managed authentication provides the GET endpoint <code>/auth/userinfo</code> to retrieve user information claims. Invoke this endpoint with cookies attached to the request that is coming from the user's browser. The server sends a <code>200 OK</code> response with the user information in JSON format in the response body if the user has signed in. If the user is not signed in, the server sends a <code>401 Unauthorized</code> response.</p>
+</div>
+</div>
+</div>
+</div>
 <h3 id="step-13-implement-the-sign-out-functionality">Step 1.3: Implement the sign-out functionality<a class="headerlink" href="#step-13-implement-the-sign-out-functionality" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Single Page Applications (SPAs)</label><label for="__tabbed_4_2">Server-Side Rendered (SSR) Applications</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>To allow Choreo to manage the sign-out functionality of your web application, you can implement a sign-out button to redirect users to the <code>/auth/logout</code> path along with the <code>session_hint</code> cookie value on click. You can use the following code snippet or any custom button component from a preferred UI component library:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -4214,13 +4268,46 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>The following example uses the <code>js-cookie</code> library for cookie parsing. You can use any cookie-parsing library of your choice.   </li>
 </ul>
 </div>
-<div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`/auth/logout?session_hint=</span><span class="si">${</span><span class="nx">Cookies</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;session_hint&#39;</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">}}</span><span class="o">&gt;</span><span class="nx">Logout</span><span class="o">&lt;</span><span class="err">/button&gt;`</span>
+<div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`/auth/logout?session_hint=</span><span class="si">${</span><span class="nx">Cookies</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;session_hint&#39;</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">}}</span><span class="o">&gt;</span><span class="nx">Logout</span><span class="o">&lt;</span><span class="err">/button&gt;`</span>
 </code></pre></div>
 
 <p>When a user clicks the sign-out button, Choreo will clear the session cookies and redirect the users to the OIDC logout endpoint of the configured identity provider (if available).  </p>
+</div>
+<div class="tabbed-block">
+<p>To allow Choreo to manage the sign-out functionality of your web application, you can implement a sign-out button to redirect users to the <code>/auth/logout</code> path along with the <code>session_hint</code> query parameter. Upon a successful sign-in, Choreo attaches a <code>Choreo-Session-Hint</code> header to every request sent to the backend server. This header contains the session hint that you can use to sign out the user.</p>
+<p>You can use the following sample Java code snippet or any other redirect mechanism to implement the sign-out functionality:</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.servlet.*</span><span class="p">;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.servlet.http.*</span><span class="p">;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LogoutServlet</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">HttpServlet</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">sessionHint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getHeader</span><span class="p">(</span><span class="s">&quot;Choreo-Session-Hint&quot;</span><span class="p">);</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="s">&quot;/auth/logout?session_hint=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sessionHint</span><span class="p">);</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">}</span>
+</code></pre></div>
+
+<p>Alternatively, Choreo stores the session hint in the <code>session_hint</code> cookie in the client browser. You can retrieve the session hint from the cookie and use it to sign out the user from the frontend as shown below:</p>
+<div class="language-html highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">logout</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">hint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;session_hint&#39;</span><span class="p">)).</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mf">1</span><span class="p">];</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">        </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/auth/logout?session_hint=&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">hint</span><span class="p">;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;logout()&quot;</span><span class="p">&gt;</span>Logout<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</code></pre></div>
+
+</div>
+</div>
+</div>
 <h3 id="step-14-invoke-apis">Step 1.4: Invoke APIs<a class="headerlink" href="#step-14-invoke-apis" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Single Page Applications (SPAs)</label><label for="__tabbed_5_2">Server-Side Rendered (SSR) Applications</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>To invoke Choreo APIs within the same organization as your web application, you can use the relative path <code>/choreo-apis/&lt;api-suffix&gt;</code>, regardless of whether managed authentication is enabled for the web application or not.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -4230,38 +4317,93 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>To copy the exact service URL of a Connection, you can follow the steps given below:
-  1. In the Choreo Console, go to the appropriate web application component.
-  2. In the left navigation menu, click <strong>Connections</strong>.
-  3. Click on the required Connection and copy the service URL.</p>
+ 1. In the Choreo Console, go to the appropriate web application component.
+ 2. In the left navigation menu, click <strong>Connections</strong> under <strong>Dependencies</strong>.
+ 3. Click on the required Connection and copy the service URL.</p>
 </div>
 <p>If you enable Choreo's managed authentication, you don't have to manually add any logic to attach an access token to the API call because Choreo APIs accept the cookies set by Choreo's managed authentication. You can directly invoke the API as follows:</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>    const response = await fetch(&#39;/choreo-apis/&lt;api-suffix&gt;&#39;)
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>    const response = await fetch(&#39;/choreo-apis/&lt;api-suffix&gt;&#39;)
 </code></pre></div>
 
 <p>If Choreo's managed authentication is disabled, you must ensure that your web application attaches a valid access token to the API call.</p>
-<h3 id="step-15-handle-session-expiry">Step 1.5: Handle session expiry<a class="headerlink" href="#step-15-handle-session-expiry" title="Permanent link">&para;</a></h3>
-<p>When a user session exceeds the configured session expiry time, it automatically expires. A <code>401 Unauthorized</code> response status code for a Choreo API request from a logged-in user indicates that the session may have expired, requiring the user to re-login.</p>
-<p>To programmatically handle session expiry and automatically re-login upon receiving a <code>401 Unauthorized</code> response from a Choreo API, you can encapsulate the request with re-login logic. The following sample code snippet shows how to wrap GET requests:</p>
-<div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="w">    </span><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">performGet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">url</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">            </span><span class="c1">// API call</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/choreo-apis/&lt;api-suffix&gt;&#39;</span><span class="p">);</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="nx">HttpError</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">401</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">                </span><span class="c1">// Re-login</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">                </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/auth/login&quot;</span><span class="p">;</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="p">};</span>
+</div>
+<div class="tabbed-block">
+<p>Choreo's managed authentication attaches an access token as a header to every request after a successful sign-in, namely the <code>Choreo-Access-Token</code> header. You can use this access token to invoke Choreo-deployed APIs within the same organization as your web application.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To invoke a Choreo API from a web application, you need to <a href="../../develop-components/sharing-and-reusing/create-a-connection/">create a Connection</a> from the web application to the Choreo API. </p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>To copy the exact service URL of a Connection, you can follow the steps given below:
+ 1. In the Choreo Console, go to the appropriate web application component.
+ 2. In the left navigation menu, click <strong>Connections</strong> under <strong>Dependencies</strong>.
+ 3. Click on the required Connection and copy the service URL.</p>
+</div>
+<p>The following is a sample Java code snippet that you can include in your web application to invoke a Choreo API:</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.servlet.*</span><span class="p">;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.servlet.http.*</span><span class="p">;</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.net.HttpURLConnection</span><span class="p">;</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.net.URL</span><span class="p">;</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyServlet</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">HttpServlet</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">apiUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;your-api-url&gt;&quot;</span><span class="p">;</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">        </span><span class="c1">// Get the access token.</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">accessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getHeader</span><span class="p">(</span><span class="s">&quot;Choreo-Access-Token&quot;</span><span class="p">);</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">        </span><span class="c1">// Create and send the HTTP request.</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">        </span><span class="n">URL</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">URL</span><span class="p">(</span><span class="n">apiUrl</span><span class="p">);</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">        </span><span class="n">HttpURLConnection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">HttpURLConnection</span><span class="p">)</span><span class="w"> </span><span class="n">url</span><span class="p">.</span><span class="na">openConnection</span><span class="p">();</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">        </span><span class="n">con</span><span class="p">.</span><span class="na">setRequestMethod</span><span class="p">(</span><span class="s">&quot;GET&quot;</span><span class="p">);</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">        </span><span class="n">con</span><span class="p">.</span><span class="na">setRequestProperty</span><span class="p">(</span><span class="s">&quot;Authorization&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Bearer &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">accessToken</span><span class="p">);</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">responseCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">getResponseCode</span><span class="p">();</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="p">}</span>
 </code></pre></div>
 
+</div>
+</div>
+</div>
+<h3 id="step-15-handle-session-expiry">Step 1.5: Handle session expiry<a class="headerlink" href="#step-15-handle-session-expiry" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">Single Page Applications (SPAs)</label><label for="__tabbed_6_2">Server-Side Rendered (SSR) Applications</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>When a user session exceeds the configured session expiry time, it automatically expires. A <code>401 Unauthorized</code> response status code for a Choreo API request from a logged-in user indicates that the session may have expired, requiring the user to re-login.</p>
+<p>To programmatically handle session expiry and automatically re-login upon receiving a <code>401 Unauthorized</code> response from a Choreo API, you can encapsulate the request with re-login logic. The following sample code snippet shows how to wrap GET requests:</p>
+<div class="language-javascript highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="w">    </span><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">performGet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">url</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">            </span><span class="c1">// API call</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/choreo-apis/&lt;api-suffix&gt;&#39;</span><span class="p">);</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="nx">HttpError</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">401</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">                </span><span class="c1">// Re-login</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">                </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/auth/login&quot;</span><span class="p">;</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">    </span><span class="p">};</span>
+</code></pre></div>
+
+</div>
+<div class="tabbed-block">
+<p>If the access token is expired or about to expire, Choreo will automatically refresh the access token using the refresh token. If the refresh token is also expired, Choreo will redirect the user to the custom error page that you have set up with the error code <code>unauthorized_request</code>. Refer to <a href="#step-16-set-up-a-custom-error-page">Set up a custom error page</a> for more information.</p>
+</div>
+</div>
+</div>
 <h3 id="step-16-set-up-a-custom-error-page">Step 1.6: Set up a custom error page<a class="headerlink" href="#step-16-set-up-a-custom-error-page" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Single Page Applications (SPAs)</label><label for="__tabbed_7_2">Server-Side Rendered (SSR) Applications</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>You can set up Choreo's managed authentication to redirect to a customized error page within your web application by defining the error path in the configuration. In the event of an error during a redirection-based process, such as sign in or sign out, Choreo will automatically redirect the user to the designated custom error page.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you have not configured an error path, Choreo's managed authentication will use its default error page whenever an error occurs.</p>
+<p>If you have not configured an error path, Choreo’s managed authentication will redirect the user to the login page when an authentication error occurs while accessing a protected path. For all other errors, Choreo will display its default error page.</p>
 </div>
 <p>Choreo's managed authentication will include the following query parameters in the URL when redirecting to the custom error page:</p>
 <table>
@@ -4282,13 +4424,46 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 </tbody>
 </table>
-<p>Now have successfully implemented Choreo's managed authentication for your web application. The next step is to enable managed authentication for the component, and subsequently deploy it.</p>
+</div>
+<div class="tabbed-block">
+<p>You can set up Choreo's managed authentication to redirect to a customized error page within your web application by defining the error path in the configuration. In the event of an error during a redirection-based process, such as sign in, sign out or trying to access a protected path, Choreo will automatically redirect the user to the designated custom error page.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have not configured an error path, Choreo’s managed authentication will redirect the user to the login page when an authentication error occurs while accessing a protected path. For all other errors, Choreo will display its default error page.</p>
+</div>
+<p>Choreo's managed authentication will include the following query parameters in the URL when redirecting to the custom error page:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>A short textual error code indicating the error</td>
+</tr>
+<tr>
+<td>message</td>
+<td>The description of the error</td>
+</tr>
+<tr>
+<td>path</td>
+<td>The path that the user was trying to access (only for protected path errors)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Now you have successfully implemented Choreo's managed authentication for your web application. The next step is to enable managed authentication for the component, and subsequently deploy it.</p>
 <h2 id="step-2-enable-managed-authentication-and-configure-the-paths">Step 2: Enable managed authentication and configure the paths<a class="headerlink" href="#step-2-enable-managed-authentication-and-configure-the-paths" title="Permanent link">&para;</a></h2>
 <p>To ensure that your web application functions seamlessly with managed authentication, it is essential to enable managed authentication for your web application component within Choreo.</p>
 <p>You can enable managed authentication for your web application component at the time you deploy the component.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Managed authentication is enabled by default when you create a web application using <strong>React</strong>, <strong>Angular</strong>, or <strong>Vue.js</strong> build presets.</p>
+<p>Managed authentication is enabled by default when you create a web application using <strong>React</strong>, <strong>Angular</strong>, or <strong>Vue.js</strong> buildpacks.</p>
 </div>
 <ol>
 <li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>. This opens the project home page.</li>
@@ -4310,7 +4485,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <tbody>
 <tr>
 <td>Post Login Path</td>
-<td>The relative path that the application will be redirected to on successful sign-in. In your code, you must implement the necessary logic to obtain signed-in user's information from the <code>userinfo</code> cookie set by managed authentication. See <strong>Obtain user information via the <code>userinfo</code> cookie</strong> section in <a href="#step-12-obtain-user-information-claims">Obtain user information claims</a>.</td>
+<td>The relative path that the application will be redirected to on successful sign-in.</td>
 <td>/</td>
 </tr>
 <tr>
@@ -4320,7 +4495,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 <tr>
 <td>Error Path</td>
-<td>The relative path to which Choreo redirects you when an error occurs during a redirection-based flow (i.e., sign in or sign out). See <a href="#step-16-set-up-a-custom-error-page">Set up a custom error page</a>.</td>
+<td>The relative path to which Choreo redirects you when an error occurs during the authentication process. See <a href="#step-16-set-up-a-custom-error-page">Set up a custom error page</a>.</td>
 <td>Built-in error page</td>
 </tr>
 <tr>
@@ -4333,6 +4508,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <td>All additional scopes required by the web application. The <code>openid</code>, <code>profile</code>, and <code>email</code> scopes are added by default together with the scopes required to invoke subscribed APIs.</td>
 <td>none</td>
 </tr>
+<tr>
+<td>Protected Paths</td>
+<td>Paths that require authentication to access. You can specify multiple paths here. (Only for SSR applications)</td>
+<td>none</td>
+</tr>
 </tbody>
 </table>
 <div class="admonition note">
@@ -4342,13 +4522,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 </ol>
 <h2 id="step-3-configure-the-identity-provider-for-the-web-application">Step 3: Configure the identity provider for the web application<a class="headerlink" href="#step-3-configure-the-identity-provider-for-the-web-application" title="Permanent link">&para;</a></h2>
-<p>You can configure your web application to work with the Choreo built-in identity provider, Asgardeo, or any external identity provider which supports OIDC/OAuth2.0 . </p>
+<p>You can configure your web application to work with the Choreo built-in identity provider, Asgardeo, or any external identity provider that supports OIDC/OAuth2.0 . </p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The identity provider configured in this step should contain the users for the web application.</p>
 </div>
 <p>Click the respective tab for details depending on which identity provider you need to configure: </p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Configure Choreo built-in identity provider</label><label for="__tabbed_1_2">Configure Asgardeo</label><label for="__tabbed_1_3">Configure an external identity provider</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:3"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><input id="__tabbed_8_3" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">Configure Choreo built-in identity provider</label><label for="__tabbed_8_2">Configure Asgardeo</label><label for="__tabbed_8_3">Configure an external identity provider</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Follow the steps given below to configure the built-in identity provider by generating authentication keys:</p>
