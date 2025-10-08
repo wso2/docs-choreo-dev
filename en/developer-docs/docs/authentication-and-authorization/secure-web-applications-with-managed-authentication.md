@@ -286,7 +286,7 @@ For example,
      You can set up Choreo's managed authentication to redirect to a customized error page within your web application by defining the error path in the configuration. In the event of an error during a redirection-based process, such as sign in or sign out, Choreo will automatically redirect the user to the designated custom error page.
 
     !!! note
-         If you have not configured an error path, Choreo's managed authentication will use its default error page whenever an error occurs.
+         If you have not configured an error path, Choreo’s managed authentication will redirect the user to the login page when an authentication error occurs while accessing a protected path. For all other errors, Choreo will display its default error page.
 
      Choreo's managed authentication will include the following query parameters in the URL when redirecting to the custom error page:
 
@@ -300,7 +300,7 @@ For example,
      You can set up Choreo's managed authentication to redirect to a customized error page within your web application by defining the error path in the configuration. In the event of an error during a redirection-based process, such as sign in, sign out or trying to access a protected path, Choreo will automatically redirect the user to the designated custom error page.
 
     !!! note
-         If you have not configured an error path, Choreo's managed authentication will redirect the user to the login page if an error occurs when trying to access a protected path. For any other error, Choreo will use its default error page.
+         If you have not configured an error path, Choreo’s managed authentication will redirect the user to the login page when an authentication error occurs while accessing a protected path. For all other errors, Choreo will display its default error page.
 
      Choreo's managed authentication will include the following query parameters in the URL when redirecting to the custom error page:
 
