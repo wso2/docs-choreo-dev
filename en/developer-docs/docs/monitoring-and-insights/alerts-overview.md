@@ -11,7 +11,7 @@ Choreo supports the following types of alerts to help you monitor and manage you
 
 - [Latency alerts](#latency-alerts)
 - [Traffic alerts](#traffic-alerts)
-- [Resource alerts](#resource-alerts)
+- [Usage alerts](#usage-alerts)
 - [Log alerts](#log-alerts)
 - [Build failure alerts](#build-failure-alerts)
 - [Status code alerts](#status-code-alerts)
@@ -40,16 +40,16 @@ Configurable parameters
 | Threshold     | Requests per minute (e.g.: 200).                                                |
 | Period        | Monitoring window (e.g.: 5 minutes).                                            |
 
-### Resource Alerts
+### Usage Alerts
 
-Resource alerts notify you when your component’s CPU or memory usage exceeds the defined thresholds. This ensures you can fix the resources allocations early to avoid performance issues or downtimes.
+Usage alerts notify you when your component’s CPU, memory or log volume exceeds the defined thresholds. This ensures you can fix the resources allocations early to avoid performance issues or downtimes.
 
 Configurable parameters
 
 | **Parameter** | **Description**                                                                 |
 |---------------|---------------------------------------------------------------------------------|
-| Metric        | CPU or Memory.                                                                  |
-| Threshold     | **mCPU** for CPU and **MiB** for Memory(e.g.: 1000).                            |
+| Metric        | CPU, Memory or Log Volume.                                                             |
+| Threshold     | **mCPU** for CPU, **MiB** for Memory and **MB** for Log Volume.            |
 | Period        | Duration the threshold must be exceeded (e.g.: 5 minutes).                      |
 
 !!! Tip
