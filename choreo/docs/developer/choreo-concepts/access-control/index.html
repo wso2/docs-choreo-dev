@@ -4275,6 +4275,10 @@ At the finest granularity level, an administrator can restrict a user to perform
 </table>
 <div class="admonition warning">
 <p class="admonition-title">Important</p>
+<p>Configuring the Applicable Environment for a Role to Group assignment is currently available only for selected organizations.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
 <p>Avoid assigning multiple roles to the same group across different projects or mapping levels (organization and project). Doing so can give users unintended permissions in some projects, allowing access to tasks they shouldn’t perform. To ensure proper access control, assign only one role to a group across projects or mapping levels.</p>
 </div>
 <h2 id="extent-of-access-granted-through-different-role-to-group-assignment-types">Extent of Access granted through different Role to Group assignment types<a class="headerlink" href="#extent-of-access-granted-through-different-role-to-group-assignment-types" title="Permanent link">&para;</a></h2>
@@ -4323,6 +4327,10 @@ At the finest granularity level, an administrator can restrict a user to perform
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Important</p>
+<p>Environment Scoped Assignments are currently available only for selected organizations.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
 <p>Exercise care when creating environment scoped role-to-group assignments. Only environment specific actions are restricted to that environment; all other actions remain allowed on resources across the organization.</p>
 </div>
 <h3 id="project-environment-scoped-assignments">Project-Environment Scoped Assignments<a class="headerlink" href="#project-environment-scoped-assignments" title="Permanent link">&para;</a></h3>
@@ -4332,6 +4340,10 @@ At the finest granularity level, an administrator can restrict a user to perform
 <li>All other actions are not allowed.</li>
 </ul>
 <p>Similar to previous case, allowing <strong>non environment specific</strong> actions on resources across project is intentional. This design aligns with real world Access Control use cases.</p>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>Project-Environment Scoped Assignments are currently available only for selected organizations.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Important</p>
 <p>Exercise care when creating project-environment scoped role-to-group assignments. Only environment specific actions are restricted to that environment; all other actions remain allowed on resources across the project.</p>
