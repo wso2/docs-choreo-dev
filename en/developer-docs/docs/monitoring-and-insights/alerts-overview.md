@@ -11,10 +11,11 @@ Choreo supports the following types of alerts to help you monitor and manage you
 
 - [Latency alerts](#latency-alerts)
 - [Traffic alerts](#traffic-alerts)
-- [Resource alerts](#resource-alerts)
+- [Usage alerts](#usage-alerts)
 - [Log alerts](#log-alerts)
 - [Build failure alerts](#build-failure-alerts)
 - [Status code alerts](#status-code-alerts)
+- [System alerts](#system-alerts)
 
 ### Latency Alerts
 
@@ -39,16 +40,16 @@ Configurable parameters
 | Threshold     | Requests per minute (e.g.: 200).                                                |
 | Period        | Monitoring window (e.g.: 5 minutes).                                            |
 
-### Resource Alerts
+### Usage Alerts
 
-Resource alerts notify you when your component’s CPU or memory usage exceeds the defined thresholds. This ensures you can fix the resources allocations early to avoid performance issues or downtimes.
+Usage alerts notify you when your component’s CPU, memory or log volume exceeds the defined thresholds. This ensures you can fix the resources allocations early to avoid performance issues or downtimes.
 
 Configurable parameters
 
 | **Parameter** | **Description**                                                                 |
 |---------------|---------------------------------------------------------------------------------|
-| Metric        | CPU or Memory.                                                                  |
-| Threshold     | **mCPU** for CPU and **MiB** for Memory(e.g.: 1000).                            |
+| Metric        | CPU, Memory or Log Volume.                                                             |
+| Threshold     | **mCPU** for CPU, **MiB** for Memory and **MB** for Log Volume.            |
 | Period        | Duration the threshold must be exceeded (e.g.: 5 minutes).                      |
 
 !!! Tip
@@ -85,6 +86,16 @@ Configurable parameters
 
 !!! note
     Status code alerts are only supported for API proxy component types.
+
+### System Alerts
+
+System alerts notify you when a system event which needs attention occurs. This is useful for monitoring the health of the system and taking corrective measures when necessary.
+
+Configurable parameters
+
+| **Parameter** | **Description**                                                                 |
+|---------------|---------------------------------------------------------------------------------|
+| Event         | System event to monitor (e.g.: Container Crash, Out of Memory).                 |
 
 ## Configure Alert
 

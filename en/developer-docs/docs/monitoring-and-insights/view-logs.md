@@ -64,6 +64,17 @@ Each gateway log entry displays the following details:
   - `componentVersion`: The version of the invoked component.
   - `envName`: The environment of the inbound request. For example, Development, Production, etc.
 
+#### System logs
+
+Each system log entry displays the following details:
+  - `timestamp`: The time of the system event.
+  - `componentVersion`: The version of the component.
+  - `componentVersionId`: The identifier of the component’s version.
+  - `reason`: The system event reason.
+  - `logEntry`: The system event details.
+  - `kind`: The kind of the k8s object related to the event.
+
+
 ## Audit logs
 
 Audit logs, also called audit trails, enhance security, ensure compliance, provide operational insights, and help manage risks. 
