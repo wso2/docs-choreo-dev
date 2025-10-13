@@ -2,11 +2,13 @@
 
 Choreo allows you to integrate unit tests into the build pipeline, enabling code validation before deployment. This ensures early testing of code changes, reducing the risk of defects in production.
 
-Currently, Choreo supports unit tests only for the `WSO2 MI` and `Ballerina` build presets.
+Choreo supports unit testing for the `JAVA`, `Python`, `NodeJS`, `Go`, `.Net`, `WSO2 MI` and `Ballerina` build presets.
 
 ## Write tests
 
-You can create unit tests in your source code using standard testing libraries. For step-by-step instructions on creating unit tests for WSO2 Micro Integrator projects, see [Creating a Unit Test Suite](https://mi.docs.wso2.com/en/latest/develop/creating-unit-test-suite/). For step-by-step instructions on writing unit tests for Ballerina projects, see [Test Ballerina Code](https://ballerina.io/learn/test-ballerina-code/structure-tests/). 
+You can create unit tests in your source code using standard testing libraries for your respective programming language or framework. Below are examples for WSO2 MI and Ballerina projects.
+
+For step-by-step instructions on creating unit tests for WSO2 Micro Integrator projects, see [Creating a Unit Test Suite](https://mi.docs.wso2.com/en/latest/develop/creating-unit-test-suite/). For step-by-step instructions on writing unit tests for Ballerina projects, see [Test Ballerina Code](https://ballerina.io/learn/test-ballerina-code/structure-tests/). 
 
 Once you have written your unit tests, commit them to your source code repository.
 
@@ -29,8 +31,28 @@ Once you have enabled unit tests, trigger a new build to run them by clicking **
 
 If a unit test fails during the build, Choreo will stop the build to prevent faulty code from being deployed. To troubleshoot, click **View Details** for the failed build and expand the failed unit test step to review the test output logs.
 
-## Explore a sample
+## Explore samples
 
-To see unit tests in action within the build pipeline, try out the [WSO2 MI helloworld](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi) sample or the [Ballerina helloworld](https://github.com/wso2/choreo-samples/tree/main/greeting-service) sample.
+To see unit tests in action within the build pipeline, try out these samples:
 
+| Build Preset | Repository Link |
+|--------------|-----------------|
+| WSO2 MI | [Helloworld MI Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi) |
+| Ballerina | [Ballerina Greeting Service](https://github.com/wso2/choreo-samples/tree/main/greeting-service) |
+| Python | [Hello World Python Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-python-task) |
+| NodeJS | [Hello World NodeJS Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-nodejs-task) |
+| Java | [Hello World JAVA Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-java-task) |
+| .Net | [Hello World .NET Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-dotnet-task) |
+| Go | [Go Greeting Service](https://github.com/wso2/choreo-samples/tree/main/greeting-service-go) |
 
+## Supported Test Frameworks
+
+| Build Preset | Supported Test Frameworks |
+|--------------|--------------------------|
+| WSO2 MI | • Built-in test framework |
+| Ballerina | • Built-in test framework |
+| Python | • pytest<br>• unittest (default) |
+| Java | • JUnit (via Maven)<br>• JUnit (via Gradle)<br>• TestNG (via Maven/Gradle) |
+| Node.js | • Jest<br>• Mocha<br>• Any framework with `npm test` or `yarn test` script |
+| Go | • Go's built-in testing package |
+| .NET | • MSTest<br>• NUnit<br>• xUnit |
