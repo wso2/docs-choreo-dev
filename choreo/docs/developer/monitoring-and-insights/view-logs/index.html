@@ -4116,7 +4116,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 </ol>
 <h3 id="understand-runtime-logs">Understand runtime logs<a class="headerlink" href="#understand-runtime-logs" title="Permanent link">&para;</a></h3>
-<p>When you view component-level logs on the <strong>Runtime Logs</strong> page, you will see both application and gateway logs.</p>
+<p>When you view component-level logs on the <strong>Runtime Logs</strong> page, you will see application, gateway and system logs.</p>
 <h4>Application logs</h4>
 <p>Each application log entry displays the following details:</p>
 <ul>
@@ -4156,13 +4156,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><code>envName</code>: The environment of the inbound request. For example, Development, Production, etc.</li>
 </ul>
 <h4>System logs</h4>
-<p>Each system log entry displays the following details:
-  - <code>timestamp</code>: The time of the system event.
-  - <code>componentVersion</code>: The version of the component.
-  - <code>componentVersionId</code>: The identifier of the component’s version.
-  - <code>reason</code>: The system event reason.
-  - <code>logEntry</code>: The system event details.
-  - <code>kind</code>: The kind of the k8s object related to the event.</p>
+<p>Each system log entry displays the following details:</p>
+<ul>
+<li><code>timestamp</code>: The time of the system event.</li>
+<li><code>componentVersion</code>: The version of the component.</li>
+<li><code>componentVersionId</code>: The identifier of the component’s version.</li>
+<li><code>reason</code>: The system event reason.</li>
+<li><code>logEntry</code>: The system event details.</li>
+<li><code>kind</code>: The kind of the k8s object related to the event.</li>
+</ul>
 <h2 id="audit-logs">Audit logs<a class="headerlink" href="#audit-logs" title="Permanent link">&para;</a></h2>
 <p>Audit logs, also called audit trails, enhance security, ensure compliance, provide operational insights, and help manage risks. </p>
 <p>In Choreo, an audit log records organization-level user-specific operations performed via the Choreo Console. It also captures the timestamp and the outcome of the action. </p>
