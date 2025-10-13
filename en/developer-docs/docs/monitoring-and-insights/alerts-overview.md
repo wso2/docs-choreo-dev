@@ -15,6 +15,7 @@ Choreo supports the following types of alerts to help you monitor and manage you
 - [Log alerts](#log-alerts)
 - [Build failure alerts](#build-failure-alerts)
 - [Status code alerts](#status-code-alerts)
+- [System alerts](#system-alerts)
 
 ### Latency Alerts
 
@@ -85,6 +86,16 @@ Configurable parameters
 
 !!! note
     Status code alerts are only supported for API proxy component types.
+
+### System Alerts
+
+System alerts notify you when a system event which needs attention occurs. This is useful for monitoring the health of the system and taking corrective measures when necessary.
+
+Configurable parameters
+
+| **Parameter** | **Description**                                                                 |
+|---------------|---------------------------------------------------------------------------------|
+| Event         | System event to monitor (e.g.: Container Crash, Out of Memory).                 |
 
 ## Configure Alert
 
