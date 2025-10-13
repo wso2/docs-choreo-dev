@@ -70,7 +70,7 @@ By combining these attributes, you can create four types of assignments.
 |`Environement Scoped`|Organization|Environment|
 |`Project-Environment Scoped`|Project|Environment|
 
-!!! tip
+!!! warning "Important"
     Configuring the Applicable Environment for a Role to Group assignment is currently available only for selected organizations.
 
 !!! warning "Important"
@@ -117,7 +117,7 @@ For environement scoped assignments, allowing **non environment specific** actio
 !!! example
     Suppose you assign the Developer role to the Engineering Developer group, but only for the Development environment of the Engineering project. The purpose of this assignment is not to prevent developers from performing actions like `build component`, which don’t depend on a specific environment. Instead, the goal is to restrict developers from performing actions such as `promote component` on environments they aren’t authorized to access, like Production.
 
-!!! tip
+!!! warning "Important"
     Environment Scoped Assignments are currently available only for selected organizations.
 
 !!! warning "Important"
@@ -131,7 +131,7 @@ For environement scoped assignments, allowing **non environment specific** actio
 
 Similar to previous case, allowing **non environment specific** actions on resources across project is intentional. This design aligns with real world Access Control use cases.
 
-!!! tip
+!!! warning "Important"
     Project-Environment Scoped Assignments are currently available only for selected organizations.
 
 !!! warning "Important"

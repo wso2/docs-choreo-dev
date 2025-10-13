@@ -54,7 +54,7 @@ Follow the steps given below to assign the **Developer** role to the **Engineeri
 6. In the **Assign Roles to Group in Project** dialog that opens, click the **Roles** list and select **Developer**.
 7. Click **Selected Environments** radio button under **Applicable Environments**
 
-!!! tip
+!!! warning "Important"
     Configuring the Applicable Environment for a Role to Group assignment is currently available only for selected organizations.
 
 8. Select **Development** environment from the environment selecction dropdown 
