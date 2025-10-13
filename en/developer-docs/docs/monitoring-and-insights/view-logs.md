@@ -26,7 +26,7 @@ To access runtime logs, follow the steps below:
 
 ### Understand runtime logs
 
-When you view component-level logs on the **Runtime Logs** page, you will see both application and gateway logs.
+When you view component-level logs on the **Runtime Logs** page, you will see application, gateway and system logs.
 
 #### Application logs
 
@@ -67,6 +67,7 @@ Each gateway log entry displays the following details:
 #### System logs
 
 Each system log entry displays the following details:
+
   - `timestamp`: The time of the system event.
   - `componentVersion`: The version of the component.
   - `componentVersionId`: The identifier of the component’s version.
