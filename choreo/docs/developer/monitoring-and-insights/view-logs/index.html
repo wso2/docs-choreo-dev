@@ -4155,6 +4155,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><code>componentVersion</code>: The version of the invoked component.</li>
 <li><code>envName</code>: The environment of the inbound request. For example, Development, Production, etc.</li>
 </ul>
+<h4>System logs</h4>
+<p>Each system log entry displays the following details:
+  - <code>timestamp</code>: The time of the system event.
+  - <code>componentVersion</code>: The version of the component.
+  - <code>componentVersionId</code>: The identifier of the component’s version.
+  - <code>reason</code>: The system event reason.
+  - <code>logEntry</code>: The system event details.
+  - <code>kind</code>: The kind of the k8s object related to the event.</p>
 <h2 id="audit-logs">Audit logs<a class="headerlink" href="#audit-logs" title="Permanent link">&para;</a></h2>
 <p>Audit logs, also called audit trails, enhance security, ensure compliance, provide operational insights, and help manage risks. </p>
 <p>In Choreo, an audit log records organization-level user-specific operations performed via the Choreo Console. It also captures the timestamp and the outcome of the action. </p>

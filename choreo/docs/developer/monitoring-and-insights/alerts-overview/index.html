@@ -3201,8 +3201,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
         
           <li class="md-nav__item">
-  <a href="#resource-alerts" class="md-nav__link">
-    Resource Alerts
+  <a href="#usage-alerts" class="md-nav__link">
+    Usage Alerts
   </a>
   
 </li>
@@ -3224,6 +3224,13 @@ document.addEventListener('DOMContentLoaded', function() {
           <li class="md-nav__item">
   <a href="#status-code-alerts" class="md-nav__link">
     Status Code Alerts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-alerts" class="md-nav__link">
+    System Alerts
   </a>
   
 </li>
@@ -4098,8 +4105,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
         
           <li class="md-nav__item">
-  <a href="#resource-alerts" class="md-nav__link">
-    Resource Alerts
+  <a href="#usage-alerts" class="md-nav__link">
+    Usage Alerts
   </a>
   
 </li>
@@ -4121,6 +4128,13 @@ document.addEventListener('DOMContentLoaded', function() {
           <li class="md-nav__item">
   <a href="#status-code-alerts" class="md-nav__link">
     Status Code Alerts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-alerts" class="md-nav__link">
+    System Alerts
   </a>
   
 </li>
@@ -4190,10 +4204,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <ul>
 <li><a href="#latency-alerts">Latency alerts</a></li>
 <li><a href="#traffic-alerts">Traffic alerts</a></li>
-<li><a href="#resource-alerts">Resource alerts</a></li>
+<li><a href="#usage-alerts">Usage alerts</a></li>
 <li><a href="#log-alerts">Log alerts</a></li>
 <li><a href="#build-failure-alerts">Build failure alerts</a></li>
 <li><a href="#status-code-alerts">Status code alerts</a></li>
+<li><a href="#system-alerts">System alerts</a></li>
 </ul>
 <h3 id="latency-alerts">Latency Alerts<a class="headerlink" href="#latency-alerts" title="Permanent link">&para;</a></h3>
 <p>Latency alerts notify you if the response latency of a component exceeds a predefined threshold in a given time period. This is useful for components that need to meet specific SLAs and for proactively identifying slow components.</p>
@@ -4241,8 +4256,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 </tbody>
 </table>
-<h3 id="resource-alerts">Resource Alerts<a class="headerlink" href="#resource-alerts" title="Permanent link">&para;</a></h3>
-<p>Resource alerts notify you when your component’s CPU or memory usage exceeds the defined thresholds. This ensures you can fix the resources allocations early to avoid performance issues or downtimes.</p>
+<h3 id="usage-alerts">Usage Alerts<a class="headerlink" href="#usage-alerts" title="Permanent link">&para;</a></h3>
+<p>Usage alerts notify you when your component’s CPU, memory or log volume exceeds the defined thresholds. This ensures you can fix the resources allocations early to avoid performance issues or downtimes.</p>
 <p>Configurable parameters</p>
 <table>
 <thead>
@@ -4254,11 +4269,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <tbody>
 <tr>
 <td>Metric</td>
-<td>CPU or Memory.</td>
+<td>CPU, Memory or Log Volume.</td>
 </tr>
 <tr>
 <td>Threshold</td>
-<td><strong>mCPU</strong> for CPU and <strong>MiB</strong> for Memory(e.g.: 1000).</td>
+<td><strong>mCPU</strong> for CPU, <strong>MiB</strong> for Memory and <strong>MB</strong> for Log Volume.</td>
 </tr>
 <tr>
 <td>Period</td>
@@ -4329,6 +4344,23 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="admonition-title">Note</p>
 <p>Status code alerts are only supported for API proxy component types.</p>
 </div>
+<h3 id="system-alerts">System Alerts<a class="headerlink" href="#system-alerts" title="Permanent link">&para;</a></h3>
+<p>System alerts notify you when a system event which needs attention occurs. This is useful for monitoring the health of the system and taking corrective measures when necessary.</p>
+<p>Configurable parameters</p>
+<table>
+<thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event</td>
+<td>System event to monitor (e.g.: Container Crash, Out of Memory).</td>
+</tr>
+</tbody>
+</table>
 <h2 id="configure-alert">Configure Alert<a class="headerlink" href="#configure-alert" title="Permanent link">&para;</a></h2>
 <p>Follow these steps to configure an alert:</p>
 <ol>
