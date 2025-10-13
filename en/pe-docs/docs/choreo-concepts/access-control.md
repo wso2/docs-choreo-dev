@@ -70,6 +70,9 @@ By combining these attributes, you can create four types of assignments.
 |`Environement Scoped`|Organization|Environment|
 |`Project-Environment Scoped`|Project|Environment|
 
+!!! tip
+    Configuring the Applicable Environment for a Role to Group assignment is currently available only for selected organizations.
+
 !!! warning "Important"
     Avoid assigning multiple roles to the same group across different projects or mapping levels (organization and project). Doing so can give users unintended permissions in some projects, allowing access to tasks they shouldn’t perform. To ensure proper access control, assign only one role to a group across projects or mapping levels.
 
@@ -114,6 +117,9 @@ For environement scoped assignments, allowing **non environment specific** actio
 !!! example
     Suppose you assign the Developer role to the Engineering Developer group, but only for the Development environment of the Engineering project. The purpose of this assignment is not to prevent developers from performing actions like `build component`, which don’t depend on a specific environment. Instead, the goal is to restrict developers from performing actions such as `promote component` on environments they aren’t authorized to access, like Production.
 
+!!! tip
+    Environment Scoped Assignments are currently available only for selected organizations.
+
 !!! warning "Important"
     Exercise care when creating environment scoped role-to-group assignments. Only environment specific actions are restricted to that environment; all other actions remain allowed on resources across the organization.
 
@@ -124,6 +130,9 @@ For environement scoped assignments, allowing **non environment specific** actio
 - All other actions are not allowed.
 
 Similar to previous case, allowing **non environment specific** actions on resources across project is intentional. This design aligns with real world Access Control use cases.
+
+!!! tip
+    Project-Environment Scoped Assignments are currently available only for selected organizations.
 
 !!! warning "Important"
     Exercise care when creating project-environment scoped role-to-group assignments. Only environment specific actions are restricted to that environment; all other actions remain allowed on resources across the project.
