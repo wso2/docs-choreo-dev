@@ -2,7 +2,7 @@
 
 Choreo allows you to integrate unit tests into the build pipeline, enabling code validation before deployment. This ensures early testing of code changes, reducing the risk of defects in production.
 
-Choreo supports unit testing for the `JAVA`, `Python`, `NodeJS`, `Go`, `.Net`, `WSO2 MI` and `Ballerina` build presets.
+Choreo supports unit testing for the `Java`, `Python`, `Node.js`, `Go`, `.Net`, `WSO2 Micro Integrator (MI)` and `Ballerina` build presets.
 
 ## Write tests
 
