@@ -1748,8 +1748,15 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
-  <a href="#explore-a-sample" class="md-nav__link">
-    Explore a sample
+  <a href="#explore-samples" class="md-nav__link">
+    Explore samples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-test-frameworks" class="md-nav__link">
+    Supported Test Frameworks
   </a>
   
 </li>
@@ -4050,8 +4057,15 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
-  <a href="#explore-a-sample" class="md-nav__link">
-    Explore a sample
+  <a href="#explore-samples" class="md-nav__link">
+    Explore samples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-test-frameworks" class="md-nav__link">
+    Supported Test Frameworks
   </a>
   
 </li>
@@ -4073,9 +4087,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h1 id="integrate-unit-tests-into-the-build-pipeline">Integrate Unit Tests into the Build Pipeline<a class="headerlink" href="#integrate-unit-tests-into-the-build-pipeline" title="Permanent link">&para;</a></h1>
 <p>Choreo allows you to integrate unit tests into the build pipeline, enabling code validation before deployment. This ensures early testing of code changes, reducing the risk of defects in production.</p>
-<p>Currently, Choreo supports unit tests only for the <code>WSO2 MI</code> and <code>Ballerina</code> build presets.</p>
+<p>Choreo supports unit testing for the <code>Java</code>, <code>Python</code>, <code>Node.js</code>, <code>Go</code>, <code>.Net</code>, <code>WSO2 Micro Integrator (MI)</code> and <code>Ballerina</code> build presets.</p>
 <h2 id="write-tests">Write tests<a class="headerlink" href="#write-tests" title="Permanent link">&para;</a></h2>
-<p>You can create unit tests in your source code using standard testing libraries. For step-by-step instructions on creating unit tests for WSO2 Micro Integrator projects, see <a href="https://mi.docs.wso2.com/en/latest/develop/creating-unit-test-suite/">Creating a Unit Test Suite</a>. For step-by-step instructions on writing unit tests for Ballerina projects, see <a href="https://ballerina.io/learn/test-ballerina-code/structure-tests/">Test Ballerina Code</a>. </p>
+<p>You can create unit tests in your source code using standard testing libraries for your respective programming language or framework. Below are examples for WSO2 MI and Ballerina projects.</p>
+<p>For step-by-step instructions on creating unit tests for WSO2 Micro Integrator projects, see <a href="https://mi.docs.wso2.com/en/latest/develop/creating-unit-test-suite/">Creating a Unit Test Suite</a>. For step-by-step instructions on writing unit tests for Ballerina projects, see <a href="https://ballerina.io/learn/test-ballerina-code/structure-tests/">Test Ballerina Code</a>. </p>
 <p>Once you have written your unit tests, commit them to your source code repository.</p>
 <h2 id="enable-unit-tests">Enable unit tests<a class="headerlink" href="#enable-unit-tests" title="Permanent link">&para;</a></h2>
 <p>To enable unit tests in the build pipeline for a component with unit tests in its source code, follow these steps:</p>
@@ -4091,8 +4106,85 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>Once you have enabled unit tests, trigger a new build to run them by clicking <strong>Build Latest</strong>. This starts a new build with unit tests enabled. You can monitor its progress in the <strong>Build Details</strong> pane.</p>
 <h2 id="view-failed-unit-tests">View failed unit tests<a class="headerlink" href="#view-failed-unit-tests" title="Permanent link">&para;</a></h2>
 <p>If a unit test fails during the build, Choreo will stop the build to prevent faulty code from being deployed. To troubleshoot, click <strong>View Details</strong> for the failed build and expand the failed unit test step to review the test output logs.</p>
-<h2 id="explore-a-sample">Explore a sample<a class="headerlink" href="#explore-a-sample" title="Permanent link">&para;</a></h2>
-<p>To see unit tests in action within the build pipeline, try out the <a href="https://github.com/wso2/choreo-samples/tree/main/hello-world-mi">WSO2 MI helloworld</a> sample or the <a href="https://github.com/wso2/choreo-samples/tree/main/greeting-service">Ballerina helloworld</a> sample.</p>
+<h2 id="explore-samples">Explore samples<a class="headerlink" href="#explore-samples" title="Permanent link">&para;</a></h2>
+<p>To see unit tests in action within the build pipeline, try out these samples:</p>
+<table>
+<thead>
+<tr>
+<th>Build Preset</th>
+<th>Repository Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WSO2 MI</td>
+<td><a href="https://github.com/wso2/choreo-samples/tree/main/hello-world-mi">Helloworld MI Service</a></td>
+</tr>
+<tr>
+<td>Ballerina</td>
+<td><a href="https://github.com/wso2/choreo-samples/tree/main/greeting-service">Ballerina Greeting Service</a></td>
+</tr>
+<tr>
+<td>Python</td>
+<td><a href="https://github.com/wso2/choreo-samples/tree/main/hello-world-python-task">Hello World Python Task</a></td>
+</tr>
+<tr>
+<td>NodeJS</td>
+<td><a href="https://github.com/wso2/choreo-samples/tree/main/hello-world-nodejs-task">Hello World NodeJS Task</a></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><a href="https://github.com/wso2/choreo-samples/tree/main/hello-world-java-task">Hello World JAVA Task</a></td>
+</tr>
+<tr>
+<td>.Net</td>
+<td><a href="https://github.com/wso2/choreo-samples/tree/main/hello-world-dotnet-task">Hello World .NET Task</a></td>
+</tr>
+<tr>
+<td>Go</td>
+<td><a href="https://github.com/wso2/choreo-samples/tree/main/greeting-service-go">Go Greeting Service</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="supported-test-frameworks">Supported Test Frameworks<a class="headerlink" href="#supported-test-frameworks" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Build Preset</th>
+<th>Supported Test Frameworks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WSO2 MI</td>
+<td>• Built-in test framework</td>
+</tr>
+<tr>
+<td>Ballerina</td>
+<td>• Built-in test framework</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>• pytest<br>• unittest (default)</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>• JUnit (via Maven)<br>• JUnit (via Gradle)<br>• TestNG (via Maven/Gradle)</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>• Jest<br>• Mocha<br>• Any framework with <code>npm test</code> or <code>yarn test</code> script</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>• Go's built-in testing package</td>
+</tr>
+<tr>
+<td>.NET</td>
+<td>• MSTest<br>• NUnit<br>• xUnit</td>
+</tr>
+</tbody>
+</table>
 
 
 
