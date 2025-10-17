@@ -13,7 +13,7 @@ The log view also provides advanced filtering capabilities that allow you to eff
 
 Choreo runtime logs provide insights into both project and component-level logs, covering application and gateway logs. These logs streamline the debugging process by centralizing diverse log sources.
 
-In Choreo, any organization member can view runtime logs via the runtime logs page. Choreo allows you to apply filters based on parameters such as log level (error, warn, info, debug), log type (application, gateway), and environment (development, staging, production) to simplify the debugging process. 
+In Choreo, any organization member can view runtime logs via the runtime logs page. Choreo allows you to apply filters based on parameters such as log level (error, warn, info, debug), log type (application, gateway, system), and environment (development, staging, production) to simplify the debugging process.
 
 To access runtime logs, follow the steps below:
 
@@ -23,6 +23,25 @@ To access runtime logs, follow the steps below:
     To view logs based on a specific time range and other requirements, you can apply the necessary filter criteria.
 
     ![Runtime logs](../assets/img/monitoring-and-insights/view-logs/runtime-logs.png)
+
+### Searching through runtime logs
+
+The runtime logs interface provides powerful search capabilities to help you quickly locate specific log entries.
+
+#### Text search
+Type any text into the search box to locate log entries that contain the exact phrase. Searches are case-sensitive and will match partial strings within the log messages of Application, Gateway, and System logs.
+
+#### Advanced search with regex
+Use Lucene-compatible regex patterns to perform advanced search queries. Refer to the [OpenSearch regex syntax](https://docs.opensearch.org/latest/query-dsl/regex-syntax/#standard-regex-operators) for more details.
+
+Pattern examples:
+
+  - `error.*timeout` : Find logs containing the phrase "error" followed by "timeout"
+  - `.*(GET|POST).*&.*500.*` : Find logs of GET or POST request methods with HTTP 500 status code
+  - `\"userId\":\"12345\"` : Find logs containing the userId "12345"
+  - `outOfMemory|OOM` : Find logs containing either "outOfMemory" or "OOM"
+
+![Search and filter interface](../assets/img/monitoring-and-insights/view-logs/search-regex.png)
 
 ### Understand runtime logs
 
@@ -70,9 +89,9 @@ Each system log entry displays the following details:
 
   - `timestamp`: The time of the system event.
   - `componentVersion`: The version of the component.
-  - `componentVersionId`: The identifier of the component’s version.
+  - `componentVersionId`: The identifier of the component version.
   - `reason`: The system event reason.
-  - `logEntry`: The system event details.
+  - `logEntry`: System event details.
   - `kind`: The kind of the k8s object related to the event.
 
 
