@@ -2484,6 +2484,13 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#searching-through-runtime-logs" class="md-nav__link">
+    Searching through runtime logs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#understand-runtime-logs" class="md-nav__link">
     Understand runtime logs
   </a>
@@ -3003,6 +3010,13 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#searching-through-runtime-logs" class="md-nav__link">
+    Searching through runtime logs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#understand-runtime-logs" class="md-nav__link">
     Understand runtime logs
   </a>
@@ -3026,7 +3040,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h1 id="runtime-logs-in-choreo">Runtime Logs in Choreo<a class="headerlink" href="#runtime-logs-in-choreo" title="Permanent link">&para;</a></h1>
 <p>Choreo runtime logs provide insights into both project and component-level logs, covering application and gateway logs. These logs streamline the debugging process by centralizing diverse log sources.</p>
-<p>In Choreo, any organization member can view runtime logs via the runtime logs page. Choreo allows you to apply filters based on parameters such as log level (error, warn, info, debug), log type (application, gateway), and environment (development, staging, production) to simplify the debugging process. </p>
+<p>In Choreo, any organization member can view runtime logs via the runtime logs page. Choreo allows you to apply filters based on parameters such as log level (error, warn, info, debug), log type (application, gateway, system), and environment (development, staging, production) to simplify the debugging process.</p>
 <p>To access runtime logs, follow the steps below:</p>
 <ol>
 <li>Sign in to <a href="https://console.choreo.dev/">Choreo</a>.</li>
@@ -3036,6 +3050,20 @@ document.addEventListener('DOMContentLoaded', function() {
 <p><a class="glightbox" href="../../assets/img/monitoring-and-insights/view-logs/runtime-logs.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Runtime logs" src="../../assets/img/monitoring-and-insights/view-logs/runtime-logs.png" /></a></p>
 </li>
 </ol>
+<h3 id="searching-through-runtime-logs">Searching through runtime logs<a class="headerlink" href="#searching-through-runtime-logs" title="Permanent link">&para;</a></h3>
+<p>The runtime logs interface provides powerful search capabilities to help you quickly locate specific log entries.</p>
+<h4>Text search</h4>
+<p>Type any text into the search box to locate log entries that contain the exact phrase. Searches are case-sensitive and will match partial strings within the log messages of Application, Gateway, and System logs.</p>
+<h4>Advanced search with regex</h4>
+<p>Use Lucene-compatible regex patterns to perform advanced search queries. Refer to the <a href="https://docs.opensearch.org/latest/query-dsl/regex-syntax/#standard-regex-operators">OpenSearch regex syntax</a> for more details.</p>
+<p>Pattern examples:</p>
+<ul>
+<li><code>error.*timeout</code> : Find logs containing the phrase "error" followed by "timeout"</li>
+<li><code>.*(GET|POST).*&amp;.*500.*</code> : Find logs of GET or POST request methods with HTTP 500 status code</li>
+<li><code>\"userId\":\"12345\"</code> : Find logs containing the userId "12345"</li>
+<li><code>outOfMemory|OOM</code> : Find logs containing either "outOfMemory" or "OOM"</li>
+</ul>
+<p><a class="glightbox" href="../../assets/img/monitoring-and-insights/view-logs/search-regex.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Search and filter interface" src="../../assets/img/monitoring-and-insights/view-logs/search-regex.png" /></a></p>
 <h3 id="understand-runtime-logs">Understand runtime logs<a class="headerlink" href="#understand-runtime-logs" title="Permanent link">&para;</a></h3>
 <p>When you view component-level logs on the <strong>Runtime Logs</strong> page, you will see both application and gateway logs.</p>
 <h4>Application logs</h4>
@@ -3075,6 +3103,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><code>statusCode</code>: The HTTP status code returned to the client.</li>
 <li><code>componentVersion</code>: The version of the invoked component.</li>
 <li><code>envName</code>: The environment of the inbound request. For example, Development, Production, etc.</li>
+</ul>
+<h4>System logs</h4>
+<p>Each system log entry displays the following details:</p>
+<ul>
+<li><code>timestamp</code>: The time of the system event.</li>
+<li><code>componentVersion</code>: The version of the component.</li>
+<li><code>componentVersionId</code>: The identifier of the component version.</li>
+<li><code>reason</code>: The system event reason.</li>
+<li><code>logEntry</code>: System event details.</li>
+<li><code>kind</code>: The kind of the k8s object related to the event.</li>
 </ul>
 
 
