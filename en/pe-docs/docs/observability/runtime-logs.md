@@ -13,20 +13,20 @@ To access runtime logs, follow the steps below:
 
     ![Runtime logs](../assets/img/monitoring-and-insights/view-logs/runtime-logs.png)
 
-### Searching on runtime logs
+### Searching through runtime logs
 
 The runtime logs interface provides powerful search capabilities to help you quickly locate specific log entries.
 
 #### Text search
-Enter any text in the search box to find log entries containing that exact phrase. Searches are case-sensitive and the search will match partial strings within log messages of Application, Gateway and System logs.
+Type any text into the search box to locate log entries that contain the exact phrase. Searches are case-sensitive and will match partial strings within the log messages of Application, Gateway, and System logs.
 
 #### Advanced search with regex
-Use Lucene compatible regex patterns for complex search queries. Refer to the [OpenSearch regex syntax](https://docs.opensearch.org/latest/query-dsl/regex-syntax/#standard-regex-operators) for more details.
+Use Lucene-compatible regex patterns to perform advanced search queries. Refer to the [OpenSearch regex syntax](https://docs.opensearch.org/latest/query-dsl/regex-syntax/#standard-regex-operators) for more details.
 
 Pattern examples:
 
-  - `error.*timeout` : Find logs containing "error" followed by "timeout"
-  - `.*(GET|POST).*&.*500.*` : Find logs of GET or POST requests with HTTP 500 status code
+  - `error.*timeout` : Find logs containing the phrase "error" followed by "timeout"
+  - `.*(GET|POST).*&.*500.*` : Find logs of GET or POST request methods with HTTP 500 status code
   - `\"userId\":\"12345\"` : Find logs containing the userId "12345"
   - `outOfMemory|OOM` : Find logs containing either "outOfMemory" or "OOM"
 
@@ -78,7 +78,7 @@ Each system log entry displays the following details:
 
   - `timestamp`: The time of the system event.
   - `componentVersion`: The version of the component.
-  - `componentVersionId`: The identifier of the component’s version.
+  - `componentVersionId`: The identifier of the component version.
   - `reason`: The system event reason.
-  - `logEntry`: The system event details.
+  - `logEntry`: System event details.
   - `kind`: The kind of the k8s object related to the event.
