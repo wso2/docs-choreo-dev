@@ -203,7 +203,7 @@ If there are no errors, proceed to the next step.
 
 > **NOTE:**
 >
-> If you are using the `mkdocs serve --dirtyreload` command to run the MkDocs server, be sure to change the configuration in the `mkdocs.yml` file as follows before sending a pull request.
+> If you are using the `mkdocs serve --dirtyreload` command to run the MkDocs server, be sure to change the configuration in the `mkdocs.yml` file as follows before sending a pull request..
 >
 > `strict: true`
 
