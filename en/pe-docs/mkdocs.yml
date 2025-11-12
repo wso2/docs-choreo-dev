@@ -122,6 +122,7 @@ nav:
           - Control Egress Traffic for Your Choreo Organization: governance/egress-control/control-egress-traffic-for-your-organization.md
       - Approvals:
           - Review Workflow Approval Requests: governance/approvals/review-workflow-approval-requests.md
+      - Guideline Documents: governance/guideline-documents/architect-agent-guideline-documents.md
   - DB & Services:
       - Database & Vector Databases:
           - Overview: db-and-services/databases/choreo-managed-databases-and-caches.md
