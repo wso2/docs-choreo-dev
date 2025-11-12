@@ -225,6 +225,7 @@ nav:
           - Insights Overview: monitoring-and-insights/insights-overview.md
           - Generate Custom Reports: monitoring-and-insights/generate-custom-reports.md
       - Cost Insights: monitoring-and-insights/cost-optimization.md
+      - Compliance: monitoring-and-insights/compliance.md
       - View Logs: monitoring-and-insights/view-logs.md
       - Work with the Choreo Insights API:
           - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
