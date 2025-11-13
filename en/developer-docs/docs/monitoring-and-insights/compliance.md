@@ -8,10 +8,11 @@ When triggered, the Architect Agent automatically analyzes all published API spe
 
 It helps ensure **consistency, security, and quality** in every API that your teams build on Choreo.
 
-> **Note:**  
-> This feature has been verified to work optimally with the **GPT-4.1** model, which delivers the most accurate and detailed API design analyses.  
-> To run unlimited analyses and achieve the highest-quality results, configure your LLM credentials under  
-> **Settings → Credentials → AI Configuration**.
+> **Note:**
+> This feature has been verified to work optimally with the **GPT-4.1** model, which delivers the most accurate and detailed API design analyses.
+> The Architect Agent has a limit of **3 successful analyses per organization, per month**.
+> Please note that AI can make mistakes. Always review the recommendations carefully before implementing changes.
+> To run unlimited analyses and achieve the highest-quality results, configure your LLM credentials under
 
 ---
 
@@ -41,8 +42,6 @@ If you want to run more analyses without monthly limits, connect your own LLM cr
 4. Enter your API key and save.
 
 ![Bring your LLM](../assets/img/architect-agent/Bring_your_own_llm.png)
-
-Adding your API key removes analysis limits and ensures the agent uses **GPT-4.1**, which provides the most reliable and semantically accurate compliance evaluations.
 
 ---
 ## Project Level
