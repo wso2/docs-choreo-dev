@@ -53,7 +53,7 @@ At the **project level**, the Architect Agent generates a summarized compliance 
 
 The project-level report includes:
 
-- **Overall Project Compliance Rating** – The compliance rating from all APIs in the project, representing their adherence to the defined guidelines.
+- **Overall Project Compliance Rating** – The compliance rating from all APIs in the project, representing their adherence to the defined guidelines. Ratings range from Excellent, Good, Fair, Poor, to Very Poor.
 - **Project Analysis Summary** - A summary of the key findings from the project-level analysis.
 - **Area Analysis** – A breakdown of the most common areas, including guideline categories with both compliant and violated rules (e.g., Status codes, Pagination, Error responses).
 - **Individual API Scores** – A list of APIs and their respective analysis, allowing you to identify which APIs require the most attention.
