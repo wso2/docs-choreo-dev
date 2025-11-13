@@ -66,7 +66,7 @@ At the **component level**, the Architect Agent provides a detailed compliance r
 
 The component-level report includes:
 
-- **Overall API Compliance Rating** – Indicates how well the API adheres to the defined design and security guidelines.
+- **Overall API Compliance Rating** – Indicates how well the API adheres to the defined design and security guidelines. Ratings range from Excellent, Good, Fair, Poor, to Very Poor.
 - **Guideline Category Breakdown** – Compliance categories such as *Security*, *Conventions*, *Best Practices*, and *Warnings*.
   - **Detailed Violations** - Descriptions of violated guidelines, the nature of each issue, and AI-generated suggestions or practical examples for improvement.
   - **Compliant categories** – Sections where the API meets the expected standards, demonstrating adherence to best practices and design conventions.
