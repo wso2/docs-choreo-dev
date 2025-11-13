@@ -1,8 +1,5 @@
 # Guideline Documents
 
-
-# Guideline Documents
-
 Guideline documents are essential resources that inform the architect agent's analysis and recommendations. They help ensure consistency, compliance, and best practices across your organization's software architecture decisions.
 
 ## Overview
