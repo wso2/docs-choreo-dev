@@ -9,13 +9,13 @@ In Choreo, you can connect a Git repository that contains some source code or a 
 
 ## Connect a Git repository to Choreo
 
-You can connect Bitbucket, Gitlab repositories to choreo organization using credential tokens (API tokens for Bitbucket, Personal access tokens for GitLab). For github, the developers can install  [WSO2 Cloud App](https://github.com/marketplace/choreo-apps) during component creation and get necessary permissions via Github itself.
+You can connect Bitbucket, Gitlab repositories to choreo organization using access tokens (API tokens for Bitbucket, Personal access tokens for GitLab). For github, the developers can install  [WSO2 Cloud App](https://github.com/marketplace/choreo-apps) during component creation and get necessary permissions via Github itself.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console header, go to the **Organization** list and select your organization. 
 3. In the left navigation menu, click **Infrastructure** and then click **Credentials**. 
 5. Under **Git Credentials** tab, click **+Add Credentials** to configure the Git repository connection.
-6. Enter a **Credential Name**, select the Git provider, and enter the **Credential Token** you obtained from the Git provider.
+6. Enter a **Credential Name**, select the Git provider, and enter the **Credential** you obtained from the Git provider.
 7. Click **Save**.  
 
 ## Authorize GitHub with Choreo 
