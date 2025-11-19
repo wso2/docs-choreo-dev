@@ -9,13 +9,13 @@ In Choreo, you can connect a Git repository that contains some source code or a 
 
 ## Connect a Git repository to Choreo
 
-You can connect Bitbucket, Gitlab repositories to choreo organization using a Personal Access Token(PAT). For github, the developers can install  [WSO2 Cloud App](https://github.com/marketplace/choreo-apps) during component creation and get necessary permissions via Github itself.
+You can connect Bitbucket, Gitlab repositories to choreo organization using credential tokens (API tokens for Bitbucket, Personal access tokens for GitLab). For github, the developers can install  [WSO2 Cloud App](https://github.com/marketplace/choreo-apps) during component creation and get necessary permissions via Github itself.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console header, go to the **Organization** list and select your organization. 
 3. In the left navigation menu, click **Infrastructure** and then click **Credentials**. 
-5. Under **Git Credentials** tab, click **+Import Credentials** to configure the Git repository connection.
-6. Enter a **Credential Name**, select the Git provider, and enter the **Personal Access Token** you obtained from the Git provider.
+5. Under **Git Credentials** tab, click **+Add Credentials** to configure the Git repository connection.
+6. Enter a **Credential Name**, select the Git provider, and enter the **Credential Token** you obtained from the Git provider.
 7. Click **Save**.  
 
 ## Authorize GitHub with Choreo 
@@ -33,14 +33,15 @@ Authorizing Choreo as a GitHub application grants Choreo the following permissio
 
 ## Authorize Bitbucket with Choreo
 
-Authorizing using a personal access token (PAT) from Bitbucket grants Choreo the following permissions to perform the respective actions on your behalf within the repository.
+Authorizing using an API token from Bitbucket grants Choreo the following permissions to perform the respective actions on your behalf within the repository.
 
-|Permission    | Read| Write| Description                                                        |
-|--------------|-----|------|--------------------------------------------------------------------|
-|Account       | Y   | N    | Get user information and workspace details                         |
-|Repositories  | Y   | Y    | List branches and create a branch to commit sample code            |
-|Pull Requests | Y   | Y    | Create a pull request if you start with a Choreo sample            |
-|Webhooks      | Y   | Y    | Trigger automatic deployment and configuration generation          |
+|Permission    | Read| Write| Delete| Description                                                        |
+|--------------|-----|------|-------|--------------------------------------------------------------------|
+|Workspace     | Y   | N    | N     | Get workspace details                                              |
+|User          | Y   | N    | N     | Get user information                                               |
+|Repositories  | Y   | Y    | N     | List branches and create a branch to commit sample code            |
+|Pull Requests | Y   | Y    | N     | Create a pull request if you start with a Choreo sample            |
+|Webhooks      | Y   | Y    | Y     | Trigger automatic deployment and configuration generation          |
 
 ## Authorize self-managed GitLab with Choreo
 
