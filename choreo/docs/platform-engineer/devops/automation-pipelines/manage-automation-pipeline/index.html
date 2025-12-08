@@ -12,20 +12,20 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/choreo/docs/governance/egress-control/control-egress-traffic-for-your-organization/">
+        <link rel="canonical" href="https://wso2.com/choreo/docs/devops/automation-pipelines/manage-automation-pipeline/">
       
       
-        <link rel="prev" href="../../workflows/configure-approvals-for-choreo-workflows/">
+        <link rel="prev" href="../introduction/">
       
       
-        <link rel="next" href="../../approvals/review-workflow-approval-requests/">
+        <link rel="next" href="../run-automation-pipeline/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Control Egress Traffic for Your Choreo Organization - Choreo Documentation | AI-Native Internal Developer Platform</title>
+        <title>Manage Automation Pipelines - Choreo Documentation | AI-Native Internal Developer Platform</title>
       
     
     
@@ -142,7 +142,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#control-egress-traffic-for-your-organization" class="md-skip">
+        <a href="#create-automation-pipelines" class="md-skip">
           Skip to content
         </a>
       
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Control Egress Traffic for Your Choreo Organization
+              Manage Automation Pipelines
             
           </span>
         </div>
@@ -1190,16 +1190,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
       
       
       
@@ -1208,7 +1208,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           DevOps
@@ -1219,16 +1219,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
       
       
       
@@ -1237,7 +1237,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6_1">
           <span class="md-nav__icon md-icon"></span>
           Automation Pipelines
@@ -1250,7 +1250,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/automation-pipelines/introduction/" class="md-nav__link">
+      <a href="../introduction/" class="md-nav__link">
         What are Automation Pipelines
       </a>
     </li>
@@ -1264,7 +1264,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/automation-pipelines/specification.md" class="md-nav__link">
+      <a href="../specification.md" class="md-nav__link">
         Choreo Pipelines Specification
       </a>
     </li>
@@ -1276,11 +1276,59 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../../devops/automation-pipelines/manage-automation-pipeline/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Manage Automation Pipelines
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Manage Automation Pipelines
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#define-pipeline-within-choreo" class="md-nav__link">
+    Define Pipeline within Choreo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-pipeline-from-git" class="md-nav__link">
+    Import Pipeline from Git
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1292,7 +1340,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/automation-pipelines/run-automation-pipeline/" class="md-nav__link">
+      <a href="../run-automation-pipeline/" class="md-nav__link">
         Run Automation Pipelines
       </a>
     </li>
@@ -1306,7 +1354,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/automation-pipelines/inbuilt-templates/" class="md-nav__link">
+      <a href="../inbuilt-templates/" class="md-nav__link">
         Inbuilt Pipeline Templates
       </a>
     </li>
@@ -1356,7 +1404,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/ci-pipelines/configure-ci-pipeline/" class="md-nav__link">
+      <a href="../../ci-pipelines/configure-ci-pipeline/" class="md-nav__link">
         Configure CI Pipeline
       </a>
     </li>
@@ -1370,7 +1418,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
+      <a href="../../ci-pipelines/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
         Integrate Unit Tests into the CI Pipeline
       </a>
     </li>
@@ -1384,7 +1432,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/ci-pipelines/ci-pipeline-logs/" class="md-nav__link">
+      <a href="../../ci-pipelines/ci-pipeline-logs/" class="md-nav__link">
         CI Pipeline logs
       </a>
     </li>
@@ -1434,7 +1482,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
+      <a href="../../cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
         Deploy Applications using Choreo CD Pipeline
       </a>
     </li>
@@ -1448,7 +1496,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
+      <a href="../../cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
         Manage CD Pipelines
       </a>
     </li>
@@ -1462,7 +1510,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-nav__link">
+      <a href="../../cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-nav__link">
         Submit Environment Promotion Approval Requests
       </a>
     </li>
@@ -1483,7 +1531,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/manage-configuration-groups/" class="md-nav__link">
+      <a href="../../manage-configuration-groups/" class="md-nav__link">
         Manage Configuration Groups
       </a>
     </li>
@@ -1503,16 +1551,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
       
       
       
@@ -1521,7 +1569,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           Governance
@@ -1563,7 +1611,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/configure-approvals-for-choreo-workflows/" class="md-nav__link">
+      <a href="../../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-nav__link">
         Configure Approvals for Choreo Workflows
       </a>
     </li>
@@ -1582,16 +1630,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2" >
       
       
       
@@ -1600,7 +1648,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_7_2">
           <span class="md-nav__icon md-icon"></span>
           Egress Control
@@ -1611,59 +1659,11 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Control Egress Traffic for Your Choreo Organization
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../governance/egress-control/control-egress-traffic-for-your-organization/" class="md-nav__link">
         Control Egress Traffic for Your Choreo Organization
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#configure-an-egress-policy-at-the-organization-level" class="md-nav__link">
-    Configure an egress policy at the organization level
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#override-the-organization-level-egress-policy-at-the-project-level" class="md-nav__link">
-    Override the organization-level egress policy at the project level
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1711,7 +1711,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../approvals/review-workflow-approval-requests/" class="md-nav__link">
+      <a href="../../../governance/approvals/review-workflow-approval-requests/" class="md-nav__link">
         Review Workflow Approval Requests
       </a>
     </li>
@@ -1732,7 +1732,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../guideline-documents/architect-agent-guideline-documents/" class="md-nav__link">
+      <a href="../../../governance/guideline-documents/architect-agent-guideline-documents/" class="md-nav__link">
         Guideline Documents
       </a>
     </li>
@@ -3130,15 +3130,15 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#configure-an-egress-policy-at-the-organization-level" class="md-nav__link">
-    Configure an egress policy at the organization level
+  <a href="#define-pipeline-within-choreo" class="md-nav__link">
+    Define Pipeline within Choreo
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#override-the-organization-level-egress-policy-at-the-project-level" class="md-nav__link">
-    Override the organization-level egress policy at the project level
+  <a href="#import-pipeline-from-git" class="md-nav__link">
+    Import Pipeline from Git
   </a>
   
 </li>
@@ -3158,49 +3158,44 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
 
-<h1 id="control-egress-traffic-for-your-organization">Control Egress Traffic for Your Organization<a class="headerlink" href="#control-egress-traffic-for-your-organization" title="Permanent link">&para;</a></h1>
-<p>In Choreo, you can manage egress traffic originating from your applications by setting up an allow list or deny list. By default, egress traffic is allowed to any destination unless specifically restricted.</p>
-<h2 id="configure-an-egress-policy-at-the-organization-level">Configure an egress policy at the organization level<a class="headerlink" href="#configure-an-egress-policy-at-the-organization-level" title="Permanent link">&para;</a></h2>
-<p>To configure an egress policy at the organization level, follow these steps:</p>
+<h1 id="create-automation-pipelines">Create Automation Pipelines<a class="headerlink" href="#create-automation-pipelines" title="Permanent link">&para;</a></h1>
+<p>Choreo allows to define automation pipelines at organization level. Follow these steps to create an automation pipeline.</p>
 <ol>
 <li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the Choreo Console header, go to the <strong>Organization</strong> list and select your organization.</li>
-<li>In the left navigation menu, click <strong>Governance</strong>, then click <strong>Egress Control</strong>.</li>
-<li>Click <strong>+ Create</strong> to add a new egress policy</li>
-<li>
-<p>Select the type of egress control to apply and add the required rules:</p>
-<ul>
-<li><strong>Allow All</strong>: Allows all egress traffic by default. You can selectively block traffic to specific IP ranges.</li>
-<li><strong>Deny All</strong>: Blocks all egress traffic by default. You can selectively allow traffic to specific IP ranges or domains.</li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note<ul>
-<li>Once you select an egress control type and create a rule, you cannot change the type. To change the type, you must delete existing rules.</li>
-<li>Egress rules you add can disrupt your application if they block traffic to required destinations. Ensure you add rules appropriately to prevent such disruptions.</li>
-<li>If you use the <strong>Deny All</strong> type, be sure to add Choreo-managed database hosts to the allowed list.</li>
-<li>Egress policies apply across all environments in an organization.</li>
-<li>Egress policies do not apply to API proxies.</li>
-</ul>
-</p>
+<li>Open <strong>Platform Operations</strong> perspective.</li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Automation Pipelines</strong>.</li>
+<li>Click <strong>+ Create</strong>.</li>
+<li>You can define an inline yaml or import from GitHub</li>
+</ol>
+<h2 id="define-pipeline-within-choreo">Define Pipeline within Choreo<a class="headerlink" href="#define-pipeline-within-choreo" title="Permanent link">&para;</a></h2>
+<p>This option is useful when you are testing a pipeline or if you like to let Choreo to keep your pipeline definitions.</p>
+<ol>
+<li>Under <code>Define your Pipeline YAML</code>, click <strong>Use YAML Editor</strong></li>
+<li>Provide a name by which you can identify the pipeline.</li>
+<li>Optionally provide a description</li>
+<li>Click <strong>Create</strong></li>
+</ol>
+<p>This pipeline definition is managed within Choreo. You can update it after defining as well.</p>
+<h2 id="import-pipeline-from-git">Import Pipeline from Git<a class="headerlink" href="#import-pipeline-from-git" title="Permanent link">&para;</a></h2>
+<p>If your organization manages pipelines in Git (GitHub, Bitbucket or GitLab), you can authorize and let Choreo to refer it. It could be a monolithic repository having multiple pipelines.</p>
+<ol>
+<li>Under <code>Import Pipeline from Git</code> Click on the Git provider to authorize, and proceed with steps to grant access.</li>
+<li>You can select <strong>Repository</strong>, <strong>Branch</strong> and Specific <strong>Pipeline YAML</strong> file within a directory in the repository.</li>
+<li>Provide a name by which you can identify the pipeline.</li>
+<li>Optionally provide a description</li>
+<li>Click <strong>Create</strong></li>
+</ol>
+<p>Created pipelines will be listed in a tabular view.</p>
+<h1 id="edit-automation-pipelines">Edit Automation Pipelines<a class="headerlink" href="#edit-automation-pipelines" title="Permanent link">&para;</a></h1>
+<p>Editing is only possible for pipelines defined within Choreo. Click <strong>Edit Pipeline YAML</strong> and in the right side panel that opens up you can edit the pipeline definition. You can view the pipeline definition in full-screen view as well by maximizing the panel.</p>
+<div class="admonition info">
+<p class="admonition-title">Note</p>
+<p>Once a pipeline is edited, you cannot roll back to a previous version.</p>
 </div>
-</li>
-</ol>
-<h2 id="override-the-organization-level-egress-policy-at-the-project-level">Override the organization-level egress policy at the project level<a class="headerlink" href="#override-the-organization-level-egress-policy-at-the-project-level" title="Permanent link">&para;</a></h2>
-<p>An egress policy set at the project level can override the organization-level policy, depending on the egress control type you select.</p>
-<p>To override the organization-level egress policy at the project level, follow these steps:</p>
-<ol>
-<li>Sign in to the <a href="https://console.choreo.dev/">Choreo Console</a>.</li>
-<li>In the Choreo Console header, go to the <strong>Project</strong> list and select your project.</li>
-<li>In the left navigation menu, click <strong>Governance</strong>, then click <strong>Egress Control</strong>.</li>
-<li>You will see that the organization-level egress policy is enforced by default.</li>
-<li>
-<p>Add required project-level rules to further restrict egress traffic.</p>
-</li>
-<li>
-<p>If the <strong>Allow All</strong> egress control type is selected at the organization level, you can add project-level deny rules to further restrict traffic.</p>
-</li>
-<li>If the <strong>Deny All</strong> egress control type is selected at the organization level, you can remove allow rules inherited from the organization level to further restrict traffic.</li>
-</ol>
+<p>When a pipeline is defined in Git, it always uses the latest version from the repository at runtime.
+To update the pipeline, modify it in Git and trigger a new run.</p>
+<h1 id="delete-automation-pipelines">Delete Automation Pipelines<a class="headerlink" href="#delete-automation-pipelines" title="Permanent link">&para;</a></h1>
+<p>In the pipeline listing, under the <strong>Actions</strong> column, click the <strong>Delete</strong> icon. A confirmation pop-up will appear. Upon confirmation, the pipeline and all its associated runs will be permanently removed from Choreo.</p>
 
 
 
@@ -3227,7 +3222,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../workflows/configure-approvals-for-choreo-workflows/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configure Approvals for Choreo Workflows" rel="prev">
+          <a href="../introduction/" class="md-footer__link md-footer__link--prev" aria-label="Previous: What are Automation Pipelines" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -3236,20 +3231,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                Configure Approvals for Choreo Workflows
+                What are Automation Pipelines
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../approvals/review-workflow-approval-requests/" class="md-footer__link md-footer__link--next" aria-label="Next: Review Workflow Approval Requests" rel="next">
+          <a href="../run-automation-pipeline/" class="md-footer__link md-footer__link--next" aria-label="Next: Run Automation Pipelines" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                Review Workflow Approval Requests
+                Run Automation Pipelines
               </div>
             </div>
             <div class="md-footer__button md-icon">
