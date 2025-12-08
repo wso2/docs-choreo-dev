@@ -106,6 +106,12 @@ nav:
       - Groups & Roles:
             - Configure Access Control: user-management/groups-and-roles/configure-access-control.md
   - DevOps:
+      - Automation Pipelines:
+        - What are Automation Pipelines: devops/automation-pipelines/introduction.md
+        - Choreo Pipelines Specification: devops/automation-pipelines/specification.md
+        - Manage Automation Pipelines: devops/automation-pipelines/manage-automation-pipeline.md
+        - Run Automation Pipelines: devops/automation-pipelines/run-automation-pipeline.md
+        - Inbuilt Pipeline Templates: devops/automation-pipelines/inbuilt-templates.md
       - CI Pipelines:
           - Configure CI Pipeline: devops/ci-pipelines/configure-ci-pipeline.md
           - Integrate Unit Tests into the CI Pipeline: devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline.md
@@ -263,4 +269,3 @@ extra:
   pe_docs_path: /choreo/docs/platform-engineer/
 #site_version: 1.0.0
 #base_path: http://localhost:8000
-
