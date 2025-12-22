@@ -1,6 +1,6 @@
 # Set Up Git Provider Authentication for Choreo Deployments
 
-Choreo enables you to develop components by connecting your GitHub, Bitbucket, or GitLab repository. You have the flexibility to either connect an existing repository or start with an empty repository and commit the source code later. By integrating your repositories with Choreo, you can automate tasks and optimize workflows across multiple systems, all within the Choreo platform.  Choreo currently supports GitHub, Bitbucket, and GitLab as Git providers. 
+Choreo enables you to develop components by connecting your GitHub, Bitbucket, GitLab or Azure DevOps repository. You have the flexibility to either connect an existing repository or start with an empty repository and commit the source code later. By integrating your repositories with Choreo, you can automate tasks and optimize workflows across multiple systems, all within the Choreo platform.  Choreo currently supports GitHub, Bitbucket, GitLab and Azure DevOps as Git providers. 
 
 !!! tip
     Choreo supports both Bitbucket Server and Bitbucket Cloud. The currently supported Bitbucket Server version is 8.9.2.
@@ -9,7 +9,7 @@ In Choreo, you can connect a Git repository that contains some source code or a 
 
 ## Connect a Git repository to Choreo
 
-You can connect Bitbucket, Gitlab repositories to choreo organization using a Personal Access Token(PAT). For github, the developers can install  [WSO2 Cloud App](https://github.com/marketplace/choreo-apps) during component creation and get necessary permissions via Github itself.
+You can connect Bitbucket, GitLab, Azure DevOps repositories to choreo organization using a Personal Access Token (PAT). For GitHub, the developers can install  [WSO2 Cloud App](https://github.com/marketplace/choreo-apps) during component creation and get necessary permissions via GitHub itself.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
 2. In the Choreo Console header, go to the **Organization** list and select your organization. 
@@ -49,3 +49,13 @@ Authorizing using a personal access token (PAT) obtained from your GitLab self-m
 |Permission    | Description                                                                         |
 |--------------|-------------------------------------------------------------------------------------|
 |API           | Grants full read/write access to the API, covering all groups and projects, as well as read/write access to the repository.|
+
+## Authorize Azure DevOps with Choreo
+
+Authorizing Choreo using a Personal Access Token (PAT) from Azure DevOps grants Choreo the following permissions to perform actions on your behalf within the selected organization and project.
+
+| Permission   | Read | Write | Description                                                                                           | 
+|--------------|------|-------|------------------------------------------------------------------------------------------------------ |
+| Project      | Y    | N     | Read project metadata to identify and validate the selected Azure DevOps project                      |
+| Team         | Y    | N     | Read team and organization-level information required for repository access                           |
+| Code         | Y    | Y     | Read repository content and branches, and create branches or commits when initializing components     |

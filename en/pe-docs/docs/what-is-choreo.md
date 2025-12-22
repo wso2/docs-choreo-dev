@@ -20,7 +20,7 @@ Choreo is designed to reduce the cognitive and operational load for developers w
 - **Flexible Deployments**: Run Choreo on your existing infrastructure with no vendor lock-in.
 
 ### Application Delivery
-- **Seamless Git Integration**: Native integration with GitHub, BitBucket, and GitLab to support GitOps-based workflows.
+- **Seamless Git Integration**: Native integration with GitHub, BitBucket, GitLab and Azure DevOps to support GitOps-based workflows.
 - **Automated CI/CD Pipelines**: Automates build and deployment pipelines with support for extensions using Argo Workflows.
 - **Secrets & Config Management**: Securely manage secrets, configurations, and configurations for API gateways natively within the platform.
 
@@ -37,7 +37,7 @@ Choreo is designed to reduce the cognitive and operational load for developers w
 
 ### Developer Self-Service Portal
 - **Internal Marketplace**: Provide a centralized hub for developers to discover and reuse existing services and resources  across the organization, fostering collaboration and reuse.
-- **Instant Onboarding**: Connect apps from Git repos (GitHub, GitLab, Bitbucket) or container registries for easy onboarding and CI/CD-driven deployments to any environment.
+- **Instant Onboarding**: Connect apps from Git repos (GitHub, GitLab, Bitbucket, Azure DevOps) or container registries for easy onboarding and CI/CD-driven deployments to any environment.
 - **Self-Service Observability**: Enable teams to access logs, metrics, and insights with built-in access controls, allowing real-time monitoring and issue diagnosis.
 
 ### Unified Portal for Platform Engineers
