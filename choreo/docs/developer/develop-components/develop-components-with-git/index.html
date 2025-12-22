@@ -1704,6 +1704,13 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#authorize-azure-devops-with-choreo" class="md-nav__link">
+    Authorize Azure DevOps with Choreo
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4082,6 +4089,13 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#authorize-azure-devops-with-choreo" class="md-nav__link">
+    Authorize Azure DevOps with Choreo
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4098,7 +4112,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="develop-components-with-git">Develop Components With Git<a class="headerlink" href="#develop-components-with-git" title="Permanent link">&para;</a></h1>
-<p>Choreo enables you to develop components by connecting your GitHub, Bitbucket, or GitLab repository. You have the flexibility to either connect an existing repository or start with an empty repository and commit the source code later. By integrating your repositories with Choreo, you can automate tasks and optimize workflows across multiple systems, all within the Choreo platform.  Choreo currently supports GitHub, Bitbucket, and GitLab as Git providers. </p>
+<p>Choreo enables you to develop components by connecting your GitHub, Bitbucket, GitLab or Azure DevOps repository. You have the flexibility to either connect an existing repository or start with an empty repository and commit the source code later. By integrating your repositories with Choreo, you can automate tasks and optimize workflows across multiple systems, all within the Choreo platform.  Choreo currently supports GitHub, Bitbucket, GitLab and Azure DevOps as Git providers. </p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Choreo supports both Bitbucket Server and Bitbucket Cloud. The currently supported Bitbucket Server version is 8.9.2.</p>
@@ -4278,6 +4292,38 @@ document.addEventListener('DOMContentLoaded', function() {
 <tr>
 <td>API</td>
 <td>Grants full read/write access to the API, covering all groups and projects, as well as read/write access to the repository.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="authorize-azure-devops-with-choreo">Authorize Azure DevOps with Choreo<a class="headerlink" href="#authorize-azure-devops-with-choreo" title="Permanent link">&para;</a></h2>
+<p>Authorizing Choreo using a Personal Access Token (PAT) from Azure DevOps grants Choreo the following permissions to perform actions on your behalf within the selected organization and project.</p>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Read</th>
+<th>Write</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project</td>
+<td>Y</td>
+<td>N</td>
+<td>Read project metadata to identify and validate the selected Azure DevOps project</td>
+</tr>
+<tr>
+<td>Team</td>
+<td>Y</td>
+<td>N</td>
+<td>Read team and organization-level information required for repository access</td>
+</tr>
+<tr>
+<td>Code</td>
+<td>Y</td>
+<td>Y</td>
+<td>Read repository content and branches, and create branches or commits when initializing components</td>
 </tr>
 </tbody>
 </table>
