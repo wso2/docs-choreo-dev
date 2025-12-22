@@ -21,7 +21,7 @@
 ### Development
 - **Language Flexibility**: Use your preferred programming languages to build services, APIs, tasks, and event handlers without changing tools or workflows.
 - **VS Code Integration**: Collaborate and manage code using Visual Studio Code, with support for a familiar, feature-rich development environment.
-- **Git Integration**: Connect to Git-based platforms such as GitHub, Bitbucket, or GitLab by linking an existing repository to develop components.
+- **Git Integration**: Connect to Git-based platforms such as GitHub, Bitbucket, GitLab or Azure DevOps by linking an existing repository to develop components.
 
 ### Deployment
 - **CI/CD**: Automate builds and deployments using Choreo’s integrated CI/CD pipelines. Supports customizable workflows and deployment tracks.
