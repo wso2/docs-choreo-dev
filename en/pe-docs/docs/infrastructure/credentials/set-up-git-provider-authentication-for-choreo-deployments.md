@@ -3,7 +3,7 @@
 Choreo enables you to develop components by connecting your GitHub, Bitbucket, GitLab or Azure DevOps repository. You have the flexibility to either connect an existing repository or start with an empty repository and commit the source code later. By integrating your repositories with Choreo, you can automate tasks and optimize workflows across multiple systems, all within the Choreo platform. Choreo currently supports GitHub, Bitbucket, GitLab and Azure DevOps as Git providers.
 
 !!! tip
-Choreo supports both Bitbucket Server and Bitbucket Cloud. The currently supported Bitbucket Server version is 8.9.2.
+    Choreo supports both Bitbucket Server and Bitbucket Cloud. The currently supported Bitbucket Server version is 8.9.2.
 
 In Choreo, you can connect a Git repository that contains some source code or a Docker project. Once you connect your Git repository to Choreo, you can build, deploy, and manage your application easily with choreo-console.
 
