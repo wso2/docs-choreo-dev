@@ -22,13 +22,13 @@ You can connect Bitbucket, GitLab, Azure DevOps repositories to Choreo organizat
 
 Authorizing Choreo as a GitHub application grants Choreo the following permissions to perform the respective actions on your behalf within the repository:
 
-| Permission   | Read | Write | Description                                               |
-| ------------ | ---- | ----- | --------------------------------------------------------- |
-| Issues       | Y    | N     | Read component ID label to filter the pull requests       |
-| Metadata     | Y    | N     | List repositories                                         |
-| Contents     | Y    | Y     | List branches and create a branch to commit sample code   |
-| Pull Request | Y    | Y     | Create a pull request if you start with a Choreo sample   |
-| Webhooks     | Y    | Y     | Trigger automatic deployment and configuration generation |
+|Permission   | Read| Write| Description                                                           |
+|-------------|-----|------|-----------------------------------------------------------------------|
+|Issues       | Y   | N    | Read component ID label to filter the pull requests                   |
+|Metadata     | Y   | N    | List repositories                                                     |
+|Contents     | Y   | Y    | List branches and create a branch to commit sample code               |
+|Pull Request | Y   | Y    | Create a pull request if you start with a Choreo sample               |
+|Webhooks     | Y   | Y    | Trigger automatic deployment and configuration generation             |
 
 ## Authorize Bitbucket with Choreo
 
@@ -46,16 +46,16 @@ Authorizing using an API token from Bitbucket grants Choreo the following permis
 
 Authorizing using a personal access token (PAT) obtained from your GitLab self-managed server grants Choreo the following permissions to perform the respective actions on your behalf within the repository.
 
-| Permission | Description                                                                                                                 |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------- |
-| API        | Grants full read/write access to the API, covering all groups and projects, as well as read/write access to the repository. |
+|Permission    | Description                                                                         |
+|--------------|-------------------------------------------------------------------------------------|
+|API           | Grants full read/write access to the API, covering all groups and projects, as well as read/write access to the repository.|
 
 ## Authorize Azure DevOps with Choreo
 
 Authorizing Choreo using a Personal Access Token (PAT) from Azure DevOps grants Choreo the following permissions to perform actions on your behalf within the selected organization and project.
 
-| Permission | Read | Write | Description                                                                                       |
-| ---------- | ---- | ----- | ------------------------------------------------------------------------------------------------- |
-| Project    | Y    | N     | Read project metadata to identify and validate the selected Azure DevOps project                  |
-| Team       | Y    | N     | Read team and organization-level information required for repository access                       |
-| Code       | Y    | Y     | Read repository content and branches, and create branches or commits when initializing components |
+| Permission   | Read | Write | Description                                                                                           | 
+|--------------|------|-------|------------------------------------------------------------------------------------------------------ |
+| Project      | Y    | N     | Read project metadata to identify and validate the selected Azure DevOps project                      |
+| Team         | Y    | N     | Read team and organization-level information required for repository access                           |
+| Code         | Y    | Y     | Read repository content and branches, and create branches or commits when initializing components     |
