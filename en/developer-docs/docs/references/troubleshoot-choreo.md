@@ -9,7 +9,7 @@ This page walks you through common problems you may encounter when building and 
       This occurs due to specifying an incorrect build output directory when you set up your Angular application in Choreo.
 To resolve the issue, follow the guidelines given below:
 
-       - Ensure that the build output directory correctly points to where your Angular build script outputs the files. The deafult output directory is `dist/<project-name>`.
+       - Ensure that the build output directory correctly points to where your Angular build script outputs the files. The default output directory is `dist/<project-name>`.
        - Make sure to reconfigure the build settings if the current configuration is incorrect.
 
 - ### An error occurs in the container Trivy scan when building a BYOC component.
