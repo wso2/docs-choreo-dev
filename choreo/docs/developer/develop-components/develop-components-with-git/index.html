@@ -4130,7 +4130,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>In the left navigation menu, click <strong>Settings</strong>. This opens the organization-level settings page. </li>
 <li>Click the <strong>Credentials</strong> tab. </li>
 <li>Click <strong>+Add Credentials</strong> to configure the Git repository connection.</li>
-<li>Enter a <strong>Credential Name</strong>, select the Git provider, and enter the <strong>Personal Access Token</strong> you obtained from the Git provider.</li>
+<li>Enter a <strong>Credential Name</strong>, select the Git provider, and enter the <strong>Credential</strong> you obtained from the Git provider.</li>
 <li>Click <strong>Save</strong>.  </li>
 </ol>
 <h2 id="authorize-github-with-choreo">Authorize GitHub with Choreo<a class="headerlink" href="#authorize-github-with-choreo" title="Permanent link">&para;</a></h2>
@@ -4242,37 +4242,49 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 </ol>
 <h2 id="authorize-bitbucket-with-choreo">Authorize Bitbucket with Choreo<a class="headerlink" href="#authorize-bitbucket-with-choreo" title="Permanent link">&para;</a></h2>
-<p>Authorizing using a personal access token (PAT) from Bitbucket grants Choreo the following permissions to perform the respective actions on your behalf within the repository.</p>
+<p>Authorizing using an API token from Bitbucket grants Choreo the following permissions to perform the respective actions on your behalf within the repository.</p>
 <table>
 <thead>
 <tr>
 <th>Permission</th>
 <th>Read</th>
 <th>Write</th>
+<th>Delete</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Account</td>
+<td>Workspace</td>
 <td>Y</td>
 <td>N</td>
-<td>Get user information and workspace details</td>
+<td>N</td>
+<td>Get workspace details</td>
+</tr>
+<tr>
+<td>User</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>Get user information</td>
 </tr>
 <tr>
 <td>Repositories</td>
 <td>Y</td>
 <td>Y</td>
+<td>N</td>
 <td>List branches and create a branch to commit sample code</td>
 </tr>
 <tr>
 <td>Pull Requests</td>
 <td>Y</td>
 <td>Y</td>
+<td>N</td>
 <td>Create a pull request if you start with a Choreo sample</td>
 </tr>
 <tr>
 <td>Webhooks</td>
+<td>Y</td>
 <td>Y</td>
 <td>Y</td>
 <td>Trigger automatic deployment and configuration generation</td>
