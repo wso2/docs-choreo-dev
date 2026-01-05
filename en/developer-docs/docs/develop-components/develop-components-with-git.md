@@ -19,7 +19,7 @@ Once you connect your Git repository to Choreo, you can build, deploy, and manag
 3. In the left navigation menu, click **Settings**. This opens the organization-level settings page. 
 4. Click the **Credentials** tab. 
 5. Click **+Add Credentials** to configure the Git repository connection.
-6. Enter a **Credential Name**, select the Git provider, and enter the **Personal Access Token** you obtained from the Git provider.
+6. Enter a **Credential Name**, select the Git provider, and enter the **Credential** you obtained from the Git provider.
 7. Click **Save**.  
 
 ## Authorize GitHub with Choreo 
@@ -88,14 +88,15 @@ Choreo lets you automatically pull the latest versions of Git submodules from th
 
 ## Authorize Bitbucket with Choreo
 
-Authorizing using a personal access token (PAT) from Bitbucket grants Choreo the following permissions to perform the respective actions on your behalf within the repository.
+Authorizing using an API token from Bitbucket grants Choreo the following permissions to perform the respective actions on your behalf within the repository.
 
-|Permission    | Read| Write| Description                                                        |
-|--------------|-----|------|--------------------------------------------------------------------|
-|Account       | Y   | N    | Get user information and workspace details                         |
-|Repositories  | Y   | Y    | List branches and create a branch to commit sample code            |
-|Pull Requests | Y   | Y    | Create a pull request if you start with a Choreo sample            |
-|Webhooks      | Y   | Y    | Trigger automatic deployment and configuration generation          |
+|Permission    | Read| Write| Delete| Description                                                        |
+|--------------|-----|------|-------|--------------------------------------------------------------------|
+|Workspace     | Y   | N    | N     | Get workspace details                                              |
+|User          | Y   | N    | N     | Get user information                                               |
+|Repositories  | Y   | Y    | N     | List branches and create a branch to commit sample code            |
+|Pull Requests | Y   | Y    | N     | Create a pull request if you start with a Choreo sample            |
+|Webhooks      | Y   | Y    | Y     | Trigger automatic deployment and configuration generation          |
 
 ## Authorize self-managed GitLab with Choreo
 
