@@ -2587,6 +2587,13 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#view-configuration-group-usage" class="md-nav__link">
+    View configuration group usage
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4070,6 +4077,13 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#view-configuration-group-usage" class="md-nav__link">
+    View configuration group usage
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4132,7 +4146,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul>
 </li>
 <li>
-<p><strong>Create</strong>: Click <strong>Create</strong> to create the configuration group. </p>
+<p><strong>Create</strong>: Click <strong>Create</strong> to create the configuration group.</p>
 </li>
 </ul>
 </li>
@@ -4143,7 +4157,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
-<li>Configuration groups created will be listed in the <strong>Choreo Internal Marketplace</strong>, improving visibility and discoverability for developers.</li>
 <li>All configuration groups will also be listed in the component deployment drawers, allowing developers to easily link them during deployment.</li>
 </ul>
 </div>
@@ -4190,7 +4203,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>To view &amp; edit a configuration group, follow the steps given below:</p>
 <ol>
 <li>In the <a href="https://console.choreo.dev/">Choreo Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>. </li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>.</li>
 <li>
 <p>In the <strong>Configuration Groups</strong> list, select the desired configuration group to view.</p>
 <div class="admonition note">
@@ -4204,7 +4217,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </ol>
 <h3 id="edit-the-configuration-group">Edit the configuration group<a class="headerlink" href="#edit-the-configuration-group" title="Permanent link">&para;</a></h3>
 <p>Configuration keys and values within a configuration group can be modified, and these changes will take effect when the components using the configuration group are redeployed.</p>
-<p>To edit the configuration group definition, click <strong>Edit the Configuration Group</strong> and make the necessary updates:</p>
+<p>To edit the configuration group definition, click <strong>Edit the Configuration Group</strong>, navigate to the <strong>Configurations</strong> tab and make the necessary updates:</p>
 <ul>
 <li>Add or remove configuration keys.</li>
 <li>Update the configuration group's display name and description.</li>
@@ -4222,6 +4235,23 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><strong>Removing an environment:</strong> All configuration values for the removed environment will be deleted.</li>
 </ul>
 </div>
+<h3 id="view-configuration-group-usage">View configuration group usage<a class="headerlink" href="#view-configuration-group-usage" title="Permanent link">&para;</a></h3>
+<p>A configuration group can be linked to multiple components across different projects within your organization. The <strong>Usage</strong> tab provides visibility into all components that reference the selected configuration group, organized by project in a tree view.</p>
+<p>This view is useful when you need to identify which components require redeployment after updating a configuration group.</p>
+<p>To view configuration group usage:</p>
+<ol>
+<li>Select a configuration group from the list.</li>
+<li>Click the <strong>Usage</strong> tab.</li>
+<li>Use the search bar to filter by project or component name.</li>
+<li>Click on a component to navigate directly to its deploy page.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>A component is considered to be using a configuration group once it is deployed to a specific environment.</li>
+<li>The same configuration group can be linked when deploying to multiple environments. The environments in which each component uses the configuration group are displayed in square brackets next to the component name.</li>
+</ul>
+</div>
 <h2 id="delete-a-configuration-group">Delete a configuration group<a class="headerlink" href="#delete-a-configuration-group" title="Permanent link">&para;</a></h2>
 <p>To delete a configuration group, follow the steps given below:</p>
 <div class="admonition warning">
@@ -4230,7 +4260,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <ol>
 <li>In the <a href="https://console.choreo.dev/">Choreo Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>. </li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>.</li>
 <li>In the <strong>Configuration Groups</strong> list, click the delete icon next to the configuration group you want to delete. This will display a confirmation dialog with details about the impact of the deletion.</li>
 <li>Review the details, then type the configuration group name to confirm the deletion.</li>
 <li>Click <strong>Delete</strong>.</li>
