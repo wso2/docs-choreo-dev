@@ -18,7 +18,7 @@ To create a new configuration group, follow the steps given below:
 1. In the [Choreo Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
 2. In the left navigation menu, click **DevOps** and then click **Configuration Groups**.
 3. On the **Configuration Groups** page, click **Create** and specify the following details to create a new configuration group:
-   
+
     - **Name**: A name for the configuration group (Unique within the organization).
     - **Description**: A description for the configuration group (Optional).
     - **Define Keys**: Define the keys for the configuration group.
@@ -29,8 +29,8 @@ To create a new configuration group, follow the steps given below:
 
         - By default, all the environments are grouped together allowing you to manage configuration smoothly. You can separate and manage configuration values for each environment as needed.
 
-    - **Create**: Click **Create** to create the configuration group. 
-    
+    - **Create**: Click **Create** to create the configuration group.
+
 4. Now you can link this configuration group to any component within the organization.
 
 !!!note
@@ -46,9 +46,9 @@ Linking a configuration group will inject the values defined in the group during
 To link a configuration group to a component, follow the steps given below:
 
 1. Navigate to the component you want to link the configuration group using top navigation menu.
-2. On the left navigation menu, click **DevOps** and click **CD Pipelines**. 
+2. On the left navigation menu, click **DevOps** and click **CD Pipelines**.
 3. Click **Configure & Deploy**, this will open the configuration and deployment wizard.
-3. In the wizard, link the configuration groups as **Environment Variables** or **File Mounts**, based on your requirements.
+4. In the wizard, link the configuration groups as **Environment Variables** or **File Mounts**, based on your requirements.
 
     === "Environment Variables"
 
@@ -59,20 +59,20 @@ To link a configuration group to a component, follow the steps given below:
 
         - Choose the configuration group you want to link to the component.
         - Specify the **Mount Path** to mount the configuration files.
-            
+
             !!!note
                 All configurations within the selected configuration group will be mounted as individual files to the specified mount path/directory.
 
         - Click **Link** to link the configuration group to the component.
 
-4. Complete the deployment wizard by providing the required details and click **Deploy** to deploy the component with the updated configurations.
+5. Complete the deployment wizard by providing the required details and click **Deploy** to deploy the component with the updated configurations.
 
 ## View & edit a configuration group
 
 To view & edit a configuration group, follow the steps given below:
 
 1. In the [Choreo Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
-2. In the left navigation menu, click **DevOps** and then click **Configuration Groups**. 
+2. In the left navigation menu, click **DevOps** and then click **Configuration Groups**.
 3. In the **Configuration Groups** list, select the desired configuration group to view.
 
     !!!note
@@ -83,7 +83,7 @@ To view & edit a configuration group, follow the steps given below:
 
 Configuration keys and values within a configuration group can be modified, and these changes will take effect when the components using the configuration group are redeployed.
 
-To edit the configuration group definition, click **Edit the Configuration Group** and make the necessary updates:
+To edit the configuration group definition, click **Edit the Configuration Group**, navigate to the **Configurations** tab and make the necessary updates:
 
 - Add or remove configuration keys.
 - Update the configuration group's display name and description.
@@ -98,6 +98,23 @@ To edit the configuration values, click the edit icon in the corresponding set o
     - **Adding a new environment:** Non-sensitive configuration values will be copied to the new environment, but sensitive values will not be. As a result, sensitive values will be cleared across all environments in the set. **New values must be provided for sensitive configurations.**
     - **Removing an environment:** All configuration values for the removed environment will be deleted.
 
+### View configuration group usage
+
+A configuration group can be linked to multiple components across different projects within your organization. The **Usage** tab provides visibility into all components that reference the selected configuration group, organized by project in a tree view.
+
+This view is useful when you need to identify which components require redeployment after updating a configuration group.
+
+To view configuration group usage:
+
+1. Select a configuration group from the list.
+2. Click the **Usage** tab.
+3. Use the search bar to filter by project or component name.
+4. Click on a component to navigate directly to its deploy page.
+
+!!! note
+    - A component is considered to be using a configuration group once it is deployed to a specific environment.
+    - The same configuration group can be linked when deploying to multiple environments. The environments in which each component uses the configuration group are displayed in square brackets next to the component name.
+
 ## Delete a configuration group
 
 To delete a configuration group, follow the steps given below:
@@ -106,7 +123,7 @@ To delete a configuration group, follow the steps given below:
     Deleting a configuration group is a permanent, non-reversible action. Ensure that the configuration group is not linked to any component before deleting it.
 
 1. In the [Choreo Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
-2. In the left navigation menu, click **DevOps** and then click **Configuration Groups**. 
+2. In the left navigation menu, click **DevOps** and then click **Configuration Groups**.
 3. In the **Configuration Groups** list, click the delete icon next to the configuration group you want to delete. This will display a confirmation dialog with details about the impact of the deletion.
 4. Review the details, then type the configuration group name to confirm the deletion.
 5. Click **Delete**.
