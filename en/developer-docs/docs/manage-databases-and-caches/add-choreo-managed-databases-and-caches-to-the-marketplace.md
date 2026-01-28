@@ -13,7 +13,7 @@ You can use the imported credentials to create a connection. During connection s
 
 To import credentials for a database, follow these steps:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. Go to the {{ product_name }} Console header and select your organization from the **Organization** list.
 3. In the left navigation menu, click **Resources** and then click **Databases**.
 4. Click on a required database to view its details.

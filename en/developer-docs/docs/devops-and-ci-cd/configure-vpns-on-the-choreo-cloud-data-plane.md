@@ -32,7 +32,7 @@ Let's take a look at the specifics of each part to understand the deployment arc
 
 - **User applications and the {{ product_name }} API gateway**
 
-    User applications within the same namespace (project) can use the Kubernetes service created to front the Tailscale proxy, for connecting to the corresponding private endpoints. You can either expose this service within the organization via the internal API gateway or expose it to the public via the external API gateway. For more details, see the documentation on [Choreo endpoints](../develop-components/configure-endpoints.md).
+    User applications within the same namespace (project) can use the Kubernetes service created to front the Tailscale proxy, for connecting to the corresponding private endpoints. You can either expose this service within the organization via the internal API gateway or expose it to the public via the external API gateway. For more details, see the documentation on [{{ product_name }} endpoints](../develop-components/configure-endpoints.md).
 
 <hr>
 
@@ -53,7 +53,7 @@ Let's get started.
 - Install Tailscale and connect your private data center or server to it, so that your private services are accessible via your Tailscale network. To quickly get started with Tailscale, see the [Tailscale quickstart](https://tailscale.com/kb/1017/install).
 - If you are signing in to the {{ product_name }} Console for the first time, create an organization as follows:
 
-    1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -66,7 +66,7 @@ Let's get started.
 
 Follow the steps given below to create a project:
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the organization home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
 3. Enter a display name, unique name, and description for the project. You can enter the values given below:
 

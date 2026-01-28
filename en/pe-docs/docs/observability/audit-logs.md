@@ -1,10 +1,10 @@
-# Audit Logs in Choreo
+# Audit Logs in {{ product_name }}
 
 Audit logs, also called audit trails, enhance security, ensure compliance, provide operational insights, and help manage risks. 
 
-In Choreo, an audit log records organization-level user-specific operations performed via the Choreo Console. It also captures the timestamp and the outcome of the action. 
+In {{ product_name }}, an audit log records organization-level user-specific operations performed via the {{ product_name }} Console. It also captures the timestamp and the outcome of the action. 
 
-As of now, Choreo captures the following user-specific operations as audit logs:
+As of now, {{ product_name }} captures the following user-specific operations as audit logs:
 
 - Project creation, update, and deletion.
 - Component creation, update, and deletion.
@@ -19,11 +19,11 @@ As of now, Choreo captures the following user-specific operations as audit logs:
 - On-premises key management.
 - Project-level configuration management.
 
-In Choreo, organization administrators and platform engineers are allowed to view audit logs by default. If other members need to access organization-specific audit logs, the administrator or the platform engineer can create a role with the relevant permission and assign it to members. For step-by-step instructions on how to create and assign a role with relevant permission, see [Manage audit log access](#manage-audit-log-access).
+In {{ product_name }}, organization administrators and platform engineers are allowed to view audit logs by default. If other members need to access organization-specific audit logs, the administrator or the platform engineer can create a role with the relevant permission and assign it to members. For step-by-step instructions on how to create and assign a role with relevant permission, see [Manage audit log access](#manage-audit-log-access).
 
 To view audit logs, follow these steps:
 
-1. Sign in to [Choreo](https://console.choreo.dev/).
+1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
 2. In the top navigation menu, click the **Organization** list and select your organization.
    
     !!! tip
@@ -37,7 +37,7 @@ To view audit logs, follow these steps:
 
 ### Audit log retention
 
-Choreo retains audit logs for one year and archives them for an additional year. Therefore, the total retention period for audit logs is two years.
+{{ product_name }} retains audit logs for one year and archives them for an additional year. Therefore, the total retention period for audit logs is two years.
 
 ### Manage audit log access
 

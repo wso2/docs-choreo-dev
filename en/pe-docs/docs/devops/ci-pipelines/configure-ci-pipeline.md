@@ -1,6 +1,6 @@
 # Configure CI Pipeline
 
-Choreo has built in CI pipeline so that the developers and platform engineers do not need to worry about creating docker images and saving in a container registry on their own. The developers could visit the build page from their component view and then build the component so that it would be ready for the deployment. As a platform engineer you may need to enforce configurations on this build pipeline. Each component would have its own build page, and you configure them separately.
+{{ product_name }} has built in CI pipeline so that the developers and platform engineers do not need to worry about creating docker images and saving in a container registry on their own. The developers could visit the build page from their component view and then build the component so that it would be ready for the deployment. As a platform engineer you may need to enforce configurations on this build pipeline. Each component would have its own build page, and you configure them separately.
 
 More Information can be found in [CI-CD concept](../../choreo-concepts/ci-cd.md) document. 
 
@@ -8,7 +8,7 @@ More Information can be found in [CI-CD concept](../../choreo-concepts/ci-cd.md)
 
 You can trigger a build from past commit or the latest commit.
 
-1. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**. 
+1. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**. 
 2. In the left navigation menu, click **DevOps** and then click **CI Pipelines**. 
 3. On the **CI Pipelines** page, click **Build Latest**.
 
@@ -28,13 +28,13 @@ To configure build pipeline, click **Build Configurations**. The configurations 
 
 ### Repeatable builds
 
-Choreo can replicate builds from an identical code version (Git commit). This means that multiple builds initiated from the same Git commit will generate Docker images with the same behavior.
+{{ product_name }} can replicate builds from an identical code version (Git commit). This means that multiple builds initiated from the same Git commit will generate Docker images with the same behavior.
 
 ## Build logs
 
 To view Build Logs for a component,
 
-1. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 2. In the left navigation menu, click **DevOps** and then click **CI Pipelines**. 
 3. You can view build logs for specific builds on the **CI Pipelines** page.
 4. To view details of a specific build, click **View Details** corresponding to the build.
@@ -44,7 +44,7 @@ To view Build Logs for a component,
 
 With Auto Build on Commit, you can configure the build pipeline to be triggered once a new commit is available in the repository's selected branch. 
 
-1. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** list and finally the relevant **Component**. 
+1. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** list and finally the relevant **Component**. 
 2. In the left navigation menu, click **DevOps** and then click **CI Pipelines**. 
 3. On the **CI Pipelines** page, toggle **Auto Build on Commit** radio button.
 
@@ -56,9 +56,9 @@ With Auto Build on Commit, you can configure the build pipeline to be triggered 
 
 ## Configure CI Pipeline Variables and Secrets.
 
-Choreo supports adding and updating configurations like environment variables and secrets related to your CI Pipeline. To apply such configurations to the CI pipeline of a component,
+{{ product_name }} supports adding and updating configurations like environment variables and secrets related to your CI Pipeline. To apply such configurations to the CI pipeline of a component,
 
-1. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 2. In the left navigation menu, click **DevOps** and then click **CI Pipelines**. 
 3. On the **CI Pipelines** page, click **Build Variables and Secrets**.
 4. In the slide-in window appears in right, you can add or edit environment variables. 

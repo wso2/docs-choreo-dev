@@ -13,7 +13,7 @@
 
 Follow the steps below to create a deployment track for a component:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component you want to create a deployment track for.
 3. On the header of the component overview page, click the **Deployment Track** drop-down list.
 4. Click **+ Create New** to open the **Create Deployment Track** dialog.
@@ -32,7 +32,7 @@ If you want to detach a branch reference from a deployment track, you must unlin
 
 Follow the steps below to unlink a deployment track of a component:
   
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to unlink a deployment track.
 3. On the header of the component overview page, click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
 4. Click the edit icon corresponding to the deployment track you want to unlink.
@@ -52,7 +52,7 @@ To associate a branch reference to an unlinked deployment track, you must link a
 
 Follow the steps below to link a branch to an unlinked deployment track:
   
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component you want to associate a branch reference for.
 3. On the header of the component overview page, click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
 4. Click **+ Link Branch** corresponding to the unlinked deployment track for which you want to associate a branch.
@@ -72,7 +72,7 @@ To switch the branch reference of a linked deployment track, you must relink to 
 
 Follow the steps below to switch the branch reference of a linked deployment track:
   
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component you want to relink a deployment track for.
 3. On the header of the component overview page,  click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
 4. Click the **Edit Branch** icon corresponding to the deployment track you want to relink.
@@ -118,7 +118,7 @@ If you no longer need a deployment track, you can delete it.
 
 Follow the steps below to delete a deployment track:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to delete a deployment track.
 3. On the header of the component overview page, click the **Deployment Track** drop-down list.
 4. Click **+ View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.

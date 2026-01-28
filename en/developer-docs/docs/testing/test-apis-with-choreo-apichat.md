@@ -29,7 +29,7 @@ Before you try out this guide, be sure that you have the following:
 
 Follow the steps below to test an API with API Chat: 
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component you want to test.
 3. On the left navigation, click **Test** and then click **API Chat**. This opens the **API Chat** pane.
 4. You can enter your query in natural language and execute it. For example, if you have a resource like "/pet/findByStatus," you can input the query, such as "Get the pets that are available," and execute it to obtain results. The resources are executed sequentially based on your query. Alternatively, you can use the sample queries available to try out API Chat. 

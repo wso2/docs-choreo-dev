@@ -6,7 +6,7 @@ The **Usage Insights** page in the {{ product_name }} Console displays data retr
 
 ## Become a member of the {{ product_name }} System organization
 
-1. Access the Developer Portal of the `{{ product_name }} System` organization via the [Choreo Developer Portal](https://devportal.choreo.dev/choreosystem/applications) and sign in using your preferred method.
+1. Access the Developer Portal of the `{{ product_name }} System` organization via the [{{ product_name }} Developer Portal](https://devportal.choreo.dev/choreosystem/applications) and sign in using your preferred method.
 
 2. To obtain access to the `{{ product_name }} System` organization, click **Request Access**.
 
@@ -49,7 +49,7 @@ To create an application and generate keys, follow the steps below:
     !!! info
         To obtain your organization handle, follow the steps given below:
 
-         1. Go to the [Choreo Console](https://console.choreo.dev) and sign in using your preferred method.
+         1. Go to the [{{ product_name }} Console](https://console.choreo.dev) and sign in using your preferred method.
          2. In the {{ product_name }} Console, click your username in the top right corner.
          3. In the drop-down menu, click **Settings**.
          4. In the **Organization** pane, click **Copy Handle**.

@@ -26,7 +26,7 @@ Before you try out this guide, ensure you have set up the following:
 
 You can provide fine-grained access control to your API resources with permissions. Follow the steps below to assign permissions to the resources in the API:
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in.
 2. In the {{ product_name }} Console top navigation menu, click the **Project** list and select the project that contains your component.
 3. In the **Component Listing** pane, click on the component for which you want to attach permissions.
 4. In the left navigation menu, click **Deploy**.
@@ -80,7 +80,7 @@ To create a connection to the web application, follow the steps given below:
 1. In the {{ product_name }} Console, go to the top navigation menu, click the **Project** list, and select the project where you created the web application.
 2. On the project home page, click the web application listed under **Component Listing**.
 3. In the left navigation menu, click **Connections**.
-4. Create a connection to the API you deployed in [Step 1](#step-1-assign-permissions-to-an-api-in-choreo).
+4. Create a connection to the API you deployed in [Step 1](#step-1-assign-permissions-to-an-api-in-{{ product_name }}).
 
 Now you can proceed to deploy the web application.
 

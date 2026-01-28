@@ -8,8 +8,8 @@ Service metrics provide real-time insights into the performance of your Kafka se
 
 To view service metrics for a Kafka service, follow the steps given below: 
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console header, go to the **Organization** list and select your organization. 
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console header, go to the **Organization** list and select your organization. 
 3. On the left navigation menu, click **DB & Services** and then click on **Message Brokers**.
 4. Click on the required message broker and go to the **Metrics** tab on the service details page.
 
@@ -28,4 +28,4 @@ The service metrics include the following:
 
 Service logs provide a detailed record of Kafka service activity, such as producer and consumer operations, connection statuses, and error reports. These logs are essential for troubleshooting issues and analyzing message flow. Logs are retained for up to 4 days.
 
-To view Choreo-managed Kafka service logs, go to the **Logs** tab on the service details page.
+To view {{ product_name }}-managed Kafka service logs, go to the **Logs** tab on the service details page.

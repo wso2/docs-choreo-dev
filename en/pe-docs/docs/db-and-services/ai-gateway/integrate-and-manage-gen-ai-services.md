@@ -4,9 +4,9 @@
 
 Generative AI (GenAI) services leverage advanced machine learning models to produce original content—such as text, images, music, or code—by learning patterns from existing data. Powered by deep neural networks, these services can generate human-like outputs across multiple formats, making them well-suited for tasks like content creation, image generation, and conversational automation.
 
-Choreo provides native support for integrating GenAI services into applications. Using the Choreo AI Gateway, Platform Engineers and Admins can:
+{{ product_name }} provides native support for integrating GenAI services into applications. Using the {{ product_name }} AI Gateway, Platform Engineers and Admins can:
 
-- Register GenAI services in the Choreo AI Gateway.
+- Register GenAI services in the {{ product_name }} AI Gateway.
 
 - Manage access and authentication for GenAI services.
 
@@ -14,7 +14,7 @@ Choreo provides native support for integrating GenAI services into applications.
 
 ## Register a GenAI Service
 
-When you register a GenAI service in Choreo, all requests are routed through the AI Gateway, which enforces:
+When you register a GenAI service in {{ product_name }}, all requests are routed through the AI Gateway, which enforces:
 
 - Security – Authentication, authorization, and encrypted transport.
 
@@ -55,7 +55,7 @@ Before registering a GenAI service, obtain the following from your provider:
 
 ### Step 1: Select a Service Provider
 
-1. Sign in to the Choreo Console.
+1. Sign in to the {{ product_name }} Console.
 
 !!! info 
     **AI Gateway is only available in the US region.**
@@ -136,7 +136,7 @@ See the [Developer Docs](https://wso2.com/choreo/docs/develop-components/sharing
 
 ### View or Update Service Details
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev).
 
 2. Navigate to DB & Services → GenAI Services.
 
@@ -152,7 +152,7 @@ See the [Developer Docs](https://wso2.com/choreo/docs/develop-components/sharing
 
 ### Remove a GenAI Service
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev).
 
 2. Navigate to DB & Services → GenAI Services.
 

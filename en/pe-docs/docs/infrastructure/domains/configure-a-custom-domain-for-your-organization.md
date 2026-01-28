@@ -1,16 +1,16 @@
 
 # Configure a Custom Domain for Your Organization
 
-A custom domain is essential for effective branding, discoverability, and credibility of a website. Choreo allows you to easily configure custom domains for your organization, enabling developers to utilize it to configure custom URLs for their components such as API proxies, services, web applications, and webhooks.
+A custom domain is essential for effective branding, discoverability, and credibility of a website. {{ product_name }} allows you to easily configure custom domains for your organization, enabling developers to utilize it to configure custom URLs for their components such as API proxies, services, web applications, and webhooks.
 
 !!! info "Note"
     The Custom Domains feature is provided exclusively to paid subscribers. Free-tier organizations do not have access to custom domain configuration.
 
-This section provides an overview of Choreo’s custom domain configuration model and guides you through configuring a custom domain for your organization.
+This section provides an overview of {{ product_name }}’s custom domain configuration model and guides you through configuring a custom domain for your organization.
 
-## Choreo custom domain configuration model
+## {{ product_name }} custom domain configuration model
 
-Choreo allows platform engineers to add custom domains for their organizations. When an platform engineer adds custom domains to an organization, component developers can utilize the custom domains for their respective components.
+{{ product_name }} allows platform engineers to add custom domains for their organizations. When an platform engineer adds custom domains to an organization, component developers can utilize the custom domains for their respective components.
 
 ## Configure a custom domain for an organization
 
@@ -19,7 +19,7 @@ To add a custom domain for your organization, follow the steps given below:
 !!! info "Note"
      To add a custom domain, you must have **Manage Custom Domains** permission under **URL Management** permission group.
 
-1.  Sign in to the [Choreo Console](https://console.choreo.dev/).
+1.  Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2.  In the top navigation menu, click the **Organization** list and select your organization.
 3.  In the left navigation menu, click **Infrastructure** and then click **Domains**.
 4.  Click the **Active Domains** tab.
@@ -33,7 +33,7 @@ To add a custom domain for your organization, follow the steps given below:
         !!! tip
             In this context:
 
-            - The **API** entity type represents Choreo components exposed via an endpoint, including API Proxy, Service, and Webhook components.
+            - The **API** entity type represents {{ product_name }} components exposed via an endpoint, including API Proxy, Service, and Webhook components.
             - The **Web App** entity type represents the Web Application component.
 
     4. (Optional) Select the **Enable auto-apply** checkbox to automatically apply this domain to all APIs in the selected environment.
@@ -58,7 +58,7 @@ To add a custom domain for your organization, follow the steps given below:
             If the CNAME mapping is correct, the verification completes successfully. It can take some time for the configured CNAME mapping to be globally available.
 
 9.  On successful verification of the custom domain, click **Next**.
-10. Select a TLS certificate provider depending on your preference. You can either import the TLS certificates you created for the custom domain or click **Let's Encrypt** to allow Choreo to generate and manage the certificates for you.
+10. Select a TLS certificate provider depending on your preference. You can either import the TLS certificates you created for the custom domain or click **Let's Encrypt** to allow {{ product_name }} to generate and manage the certificates for you.
 
 
     !!! note "If you want to import your own certificate, it should adhere to specific guidelines"
@@ -107,7 +107,7 @@ To add a custom domain for your organization, follow the steps given below:
                     openssl verify -CAfile <root_or_bundle_cert>.pem certificate_chain.pem
                     ```
                     Replace `<root_or_bundle_cert>.pem` with the path to your root certificate or a bundle containing both the root and intermediate certificates.
-                    5. Once the certificate chain is verified, upload it via the Choreo Console:
+                    5. Once the certificate chain is verified, upload it via the {{ product_name }} Console:
                         ![Upload certificate chain](../../assets/img/administer/configure-domain/upload-certificate-chain.png)
                         - If the constructed chain includes the leaf certificate, follow these steps:
                             - Upload the constructed certificate chain in the **TLS Certificate** field.
@@ -139,4 +139,4 @@ If you want to view the entity types that use a particular custom domain, click 
 
 When a platform engineer adds custom domains for specific environments, developers can use any available custom domain to configure a custom URL for a component in a specific environment.
 
-For better governance, you can configure an approval process for URL mappings using [Choreo Workflows](../governance/workflows.configure-approvals-for-choreo-workflows.md).
+For better governance, you can configure an approval process for URL mappings using [{{ product_name }} Workflows](../governance/workflows.configure-approvals-for-choreo-workflows.md).

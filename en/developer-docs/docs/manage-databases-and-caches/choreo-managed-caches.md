@@ -8,7 +8,7 @@ Developed under the Linux Foundation, Valkeyâ„¢ is an open-source fork of RedisÂ
 
 Follow the steps below to create a {{ product_name }}-Managed Cache:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev).
 2. In the header, click the **Organization** list. This opens the organization home page.
 3. In the left navigation menu, click **Resources** and then click **Databases**.
 4. Click **+ Create** and select **{{ product_name }}-Managed Cache** as the data store type. Provide a display name for this server and follow the instructions.

@@ -248,4 +248,4 @@ If `component.yaml` is not provided and if the source Micro Integrator project d
 
 ## Explore {{ product_name }} examples on GitHub
 
-For a hands-on experience with MI-based integrations in {{ product_name }}, we recommend exploring our [Choreo Samples](../choreo-samples/samples-overview.md). You can filter out the samples based on the build preset `WSO2 MI`.
+For a hands-on experience with MI-based integrations in {{ product_name }}, we recommend exploring our [{{ product_name }} Samples](../choreo-samples/samples-overview.md). You can filter out the samples based on the build preset `WSO2 MI`.

@@ -16,7 +16,7 @@ For the current list of security practices and certifications, see Aiven Securit
 
 !!! info "Note"
      - Kafka service creation is available only for paid {{ product_name }} users.
-     - Kafka service billing will be included in your {{ product_name }} subscription, with pricing varying based on the service plan of the resources you create. For more details, see [Choreo Platform Services Billing](../references/choreo-platform-services-billing-and-upgrades.md#platform-service-billing-information).
+     - Kafka service billing will be included in your {{ product_name }} subscription, with pricing varying based on the service plan of the resources you create. For more details, see [{{ product_name }} Platform Services Billing](../references/choreo-platform-services-billing-and-upgrades.md#platform-service-billing-information).
 
 ## Service Limitations and Considerations
 
@@ -34,7 +34,7 @@ Kafka services use a configuration‑backup model rather than traditional messag
 
 Apache Kafka is an open-source platform for real-time event streaming and handling large-scale, event-driven data. You can create Kafka services on {{ product_name }} as fully-managed, scalable, message brokers, ideal for handling large volumes of event-driven data.
 
-- [Create a Choreo-managed Kafka service](./create-choreo-managed-kafka-services.md)
+- [Create a {{ product_name }}-managed Kafka service](./create-choreo-managed-kafka-services.md)
 
 ## Is a {{ product_name }}-Managed Kafka Service Right for You?
 

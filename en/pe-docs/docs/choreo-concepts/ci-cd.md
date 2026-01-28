@@ -1,14 +1,14 @@
 # CI/CD
 
-Choreo provides a streamlined continuous integration and continuous deployment (CI/CD) experience to deploy applications and services efficiently across multiple environments.
+{{ product_name }} provides a streamlined continuous integration and continuous deployment (CI/CD) experience to deploy applications and services efficiently across multiple environments.
 
-Choreo creates environments for each project, where all components within the project share the environments. An environment is an isolated deployment area with restricted network and resource access. Services deployed in one environment cannot communicate with services deployed in another.
+{{ product_name }} creates environments for each project, where all components within the project share the environments. An environment is an isolated deployment area with restricted network and resource access. Services deployed in one environment cannot communicate with services deployed in another.
 
-The Choreo cloud data plane provides two default environments (i.e., development and production). However, if you are in a private data plane organization, you can customize and create multiple environments based on your requirements.
+The {{ product_name }} cloud data plane provides two default environments (i.e., development and production). However, if you are in a private data plane organization, you can customize and create multiple environments based on your requirements.
 
-Choreo adopts a *build once, deploy many* strategy to manage components across multiple environments. An application is built only once (i.e., per commit if automatic build on commit is enabled or based on the selected commit during a manual build). Then it is promoted to subsequent environments. This allows testing changes in lower, non-production environments like development before promoting the build to production.
+{{ product_name }} adopts a *build once, deploy many* strategy to manage components across multiple environments. An application is built only once (i.e., per commit if automatic build on commit is enabled or based on the selected commit during a manual build). Then it is promoted to subsequent environments. This allows testing changes in lower, non-production environments like development before promoting the build to production.
 
-Choreo injects configurations and secrets that you maintain at the environment level into components at runtime. This ensures a strict separation of environment-specific configurations from source code. Although configurations can vary across environments, the code and the built container remain unchanged. Configurations and secrets include:
+{{ product_name }} injects configurations and secrets that you maintain at the environment level into components at runtime. This ensures a strict separation of environment-specific configurations from source code. Although configurations can vary across environments, the code and the built container remain unchanged. Configurations and secrets include:
 
 - Resource credentials to a database, cache, or other backing services.
 - Credentials to external cloud services such as Amazon S3 or external APIs.
@@ -17,20 +17,20 @@ All configurations and secrets are encrypted at rest and in transit and stored i
 
 ## Continuous Integration
 
-Choreo auto-generates build pipelines that may slightly differ depending on the component type you create. Generally, all build pipelines work as follows:
+{{ product_name }} auto-generates build pipelines that may slightly differ depending on the component type you create. Generally, all build pipelines work as follows:
 
 - Builds a container image either from the provided source code or from a given Dockerfile for a specific commit.
 - Runs security and vulnerability scans if applicable, depending on the component type.
-- Pushes the container image to a container registry. In the cloud data plane, Choreo pushes the image to a Choreo-managed registry. If it is a private data plane organization, Choreo pushes the image to a registry that you own.
+- Pushes the container image to a container registry. In the cloud data plane, {{ product_name }} pushes the image to a {{ product_name }}-managed registry. If it is a private data plane organization, {{ product_name }} pushes the image to a registry that you own.
 - Updates service endpoints and API specifications from the provided repository if applicable.
 
 With Auto Build on Commit, you can configure the build pipeline to be triggered once a new commit is available in the repository's selected branch without any user intervention.
 
-In addition to these steps, some build presets support integrating unit tests into the build pipeline. For more details, see [Integrate Unit Tests into the Choreo CI Pipeline](../devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline.md).
+In addition to these steps, some build presets support integrating unit tests into the build pipeline. For more details, see [Integrate Unit Tests into the {{ product_name }} CI Pipeline](../devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline.md).
 
 ## Continuos Deployment
 
-Once you build an image in Choreo, you can deploy it via the **CD Pipelines** page. To deploy an image, you can follow one of the approaches given below:
+Once you build an image in {{ product_name }}, you can deploy it via the **CD Pipelines** page. To deploy an image, you can follow one of the approaches given below:
 
 - **Manually deploy**: In the **CD Pipelines** page, go to the **Set Up** card and click **Deploy**.
 - **Automatically deploy on build**: In the **CD Pipelines** page, go to the **Set Up** card and enable **Auto Deploy on Build**. This automatically initiates deployment upon the completion of an automatic build.
@@ -39,17 +39,17 @@ Once you build an image in Choreo, you can deploy it via the **CD Pipelines** pa
     To enable **Auto Deploy on Build**, you must enable **Auto Build on Commit**. This is because automatic deployment is not necessary or useful in scenarios where automatic build is not enabled.
 
 !!! note
-    - You must trigger the first build in a Ballerina component manually to ensure that Choreo applies the required configurations to the development environment. You can enable automatic builds subsequently.
-    - Choreo automatically checks the configurable defined in your source code against the configurable values applied in an environment. Choreo requests the configurable values on deployment and promotion. If you have changed the configurables in your Ballerina component, auto-build pipelines can fail as a precaution to avoid a component crash at runtime due to missing configurables.
+    - You must trigger the first build in a Ballerina component manually to ensure that {{ product_name }} applies the required configurations to the development environment. You can enable automatic builds subsequently.
+    - {{ product_name }} automatically checks the configurable defined in your source code against the configurable values applied in an environment. {{ product_name }} requests the configurable values on deployment and promotion. If you have changed the configurables in your Ballerina component, auto-build pipelines can fail as a precaution to avoid a component crash at runtime due to missing configurables.
     - The configurable verifying capability is only available for Ballerina components. For Dockerfile-based components, ensure to manage and update the configurations and secrets in environments ahead of time. You must also ensure backward compatibility between at least one release if you change the configurations.
 
 ### Set up area and initial deployment
 
-In the deploy phase, Choreo uses a setup area to merge the Docker image with its environment-independent configurations. Choreo then deploys this composite to the environment. This is known as the initial deployment.
+In the deploy phase, {{ product_name }} uses a setup area to merge the Docker image with its environment-independent configurations. {{ product_name }} then deploys this composite to the environment. This is known as the initial deployment.
 
 ### Immutable deployments
 
-Once Choreo deploys a component with configurations, the configurations become immutable. Any subsequent change results in a new deployment.
+Once {{ product_name }} deploys a component with configurations, the configurations become immutable. Any subsequent change results in a new deployment.
 
 ### Promote a component to a higher environment
 
@@ -57,7 +57,7 @@ You can go to the **CD Pipelines** page of a component and promote it manually a
 
 ## Configurations
 
-Choreo allows you to define both environment-independent configurations and environment-specific configurations.
+{{ product_name }} allows you to define both environment-independent configurations and environment-specific configurations.
 
 ### Environment-independent configurations
 
@@ -83,7 +83,7 @@ You can view current and historic execution details along with a quick snapshot 
 
 ## Zero-downtime deployments
 
-Choreo performs rolling updates to ensure zero downtime between deployments and promotions.
+{{ product_name }} performs rolling updates to ensure zero downtime between deployments and promotions.
 
 A new build undergoes a health check before traffic is switched to it from the current build.
 

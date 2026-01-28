@@ -29,4 +29,4 @@ The {{ product_name }} command-line interface (CLI) is a command-line tool that 
 
 - **Develop with Remote Dependencies** : Use the {{ product_name }} CLI or VS Code extension to securely connect your local setup to {{ product_name }} environment for integrated testing and validation — see the [guide](../../develop-components/connect-to-remote-dependencies-while-developing/#using-cli) for details.
 
-For troubleshooting tips and answers to frequently asked questions, see the [Choreo CLI FAQ](../references/faq.md#choreo-cli).
+For troubleshooting tips and answers to frequently asked questions, see the [{{ product_name }} CLI FAQ](../references/faq.md#{{ product_name }}-cli).

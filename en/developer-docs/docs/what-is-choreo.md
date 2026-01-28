@@ -2,7 +2,7 @@
 
 **{{ product_name }}** is an AI-native Internal Developer Platform (IDP) that helps teams design, develop, deploy, and manage cloud-native applications. It simplifies infrastructure management by abstracting platform complexity, allowing developers to focus on writing code, while enabling platform engineers to maintain governance and operational control. {{ product_name }} supports the full application lifecycle, from code to production, within a unified environment.
 
-![Diagram of Choreo capabilities](../assets/img/what-is-choreo.png){.cInlineImage-full}
+![Diagram of {{ product_name }} capabilities](../assets/img/what-is-choreo.png){.cInlineImage-full}
 
 !!! info "Global Availability"
     **{{ product_name }} is now available in two regions worldwide:**

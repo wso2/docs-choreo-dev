@@ -1,6 +1,6 @@
 # Configure Access Control
 
-Before configuring access control in Choreo, review the [Access Control Concepts](../../choreo-concepts/access-control.md).
+Before configuring access control in {{ product_name }}, review the [Access Control Concepts](../../choreo-concepts/access-control.md).
 
 Now, let’s walk through a sample scenario for granting access to a specific environment within a project.
 
@@ -29,7 +29,7 @@ Follow the steps given below to create a project:
 
 Follow the steps given below to create a group with the name `Engineering Project Developer`:
 
-1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your project.
+1. In the {{ product_name }} Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your project.
 2. In the left navigation menu, click **Settings**.
 3. Click the **Access Control** tab and then click the **Groups** tab.
 4. Click **+ Create Group**.
@@ -46,7 +46,7 @@ Follow the steps given below to create a group with the name `Engineering Projec
 
 Follow the steps given below to assign the **Developer** role to the **Engineering Project Developer** group that you created:
 
-1. In the Choreo Console, go to the top navigation menu, click the **Project** list, and select the **Engineering Project** that you created.
+1. In the {{ product_name }} Console, go to the top navigation menu, click the **Project** list, and select the **Engineering Project** that you created.
 2. In the left navigation menu, click **Settings**.
 3. Click the **Access Control** tab and then click the **Groups** tab.
 4. On the **Groups** tab, search for the **Engineering Project Developer** group and click the corresponding edit icon.
@@ -72,7 +72,7 @@ There are two approaches you can follow to add users to the group.
 
 Follow the steps given below to add a new user as a project developer:
 
-1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your project.
+1. In the {{ product_name }} Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your project.
 2. In the left navigation menu, click **Settings**.
 3. Click the **Access Control** tab and then click the **Users** tab.
 4. Click **+Invite Users**.
@@ -85,7 +85,7 @@ Follow the steps given below to add a new user as a project developer:
 
 Follow the steps given below to add an existing user as a project developer:
 
-1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your project.
+1. In the {{ product_name }} Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your project.
 2. In the left navigation menu, click **Settings**.
 3. Click the **Access Control** tab and then click the **Users** tab.
 4. Search for the existing user you want to add to the **Engineering Project Developer** group.

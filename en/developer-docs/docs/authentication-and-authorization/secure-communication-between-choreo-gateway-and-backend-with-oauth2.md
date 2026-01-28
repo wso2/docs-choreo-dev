@@ -19,7 +19,7 @@ When you need the {{ product_name }} Gateway to call your backend over OAuth2, u
 
 To configure the OAuth2 policy, follow the steps given below:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the API proxy for which you want to configure OAuth2. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
 3. In the left navigation menu, click **Develop** and then click **Policies**.
 4. Choose the resource you want to secure, then click **Attach Mediation Policy**.

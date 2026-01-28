@@ -19,7 +19,7 @@ To establish secure connectivity between the {{ product_name }} Gateway and your
 
 To configure the backend certificate, follow the steps given below:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the API proxy for which you want to configure TLS. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
 3. In the left navigation menu, click **Develop** and then click **Endpoints**.
 4. On the **Endpoints** page, click **Configure** corresponding to the endpoint.
@@ -37,7 +37,7 @@ Follow the step-by-step instructions below depending on how you want to establis
 === "Generate a key pair through {{ product_name }}"
     When you follow these steps, {{ product_name }} generates a key pair with a self-signed certificate. You can attach this key pair to any API proxy created within the same project.
 
-    1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+    1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
     2. In the **Component Listing** pane, click on the API proxy for which you want to generate a key pair. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
     3. In the left navigation menu, click **Develop** and then click **Endpoints**.
     4. On the **Endpoints** page, click **Configure** corresponding to the endpoint.    
@@ -65,7 +65,7 @@ Follow the step-by-step instructions below depending on how you want to establis
 === "Use your own certificate pair"
     Here, you can use your own public certificate and private certificate as client certificates.
 
-    1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+    1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
     2. In the **Component Listing** pane, click on the API proxy for which you want to generate a key pair. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
     3. In the left navigation menu, click **Develop** and then click **Endpoints**.
     4. On the **Endpoints** page, click **Configure** corresponding to the endpoint.

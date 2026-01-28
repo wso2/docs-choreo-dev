@@ -53,12 +53,12 @@ To securely invoke the API/service, you need to use your Identity Provider (IdP)
 
 For this guide, you’ll use:
 - **WSO2 Asgardeo** as the IdP.
-- **[choreo-samples/reading-list-app/reading-list-front-end](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end)** as the web application. This is a React SPA that uses Axios to invoke the service. It is configured to work with the **[choreo-samples/reading-list-app/reading-list-service](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-service)**. You can modify this web application to work with your service or deploy the sample service in {{ product_name }}.
+- **[{{ product_name }}-samples/reading-list-app/reading-list-front-end](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end)** as the web application. This is a React SPA that uses Axios to invoke the service. It is configured to work with the **[{{ product_name }}-samples/reading-list-app/reading-list-service](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-service)**. You can modify this web application to work with your service or deploy the sample service in {{ product_name }}.
 
 ### Step 1: Create a web application component
 
 !!! info
-    You can use your own web application instead of the sample. For this guide, you’ll use the [choreo-samples/reading-list-app/reading-list-front-end](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end).
+    You can use your own web application instead of the sample. For this guide, you’ll use the [{{ product_name }}-samples/reading-list-app/reading-list-front-end](https://github.com/wso2/choreo-samples/tree/main/reading-list-app/reading-list-front-end).
 
 To host the front-end application in {{ product_name }}, create a web application component:
 

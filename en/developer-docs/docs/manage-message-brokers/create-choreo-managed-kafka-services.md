@@ -6,13 +6,13 @@ These services run on infrastructure and automation provided by [Aiven](https://
 
 !!! info "Note"
      - Kafka service creation is available only for paid {{ product_name }} users.
-     - Kafka service billing will be included in your {{ product_name }} subscription, with pricing varying based on the service plan of the resources you create. For more details, see [Choreo Platform Services Billing](../references/choreo-platform-services-billing-and-upgrades.md#platform-service-billing-information).
+     - Kafka service billing will be included in your {{ product_name }} subscription, with pricing varying based on the service plan of the resources you create. For more details, see [{{ product_name }} Platform Services Billing](../references/choreo-platform-services-billing-and-upgrades.md#platform-service-billing-information).
 
 ## Create a {{ product_name }}-managed Kafka service
 
 Follow the steps below to create a {{ product_name }}-managed Kafka service:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev).
 2. In the header, click the **Organization** list. This opens the organization home page.
 3. In the left navigation menu, click **Resources** and then click **Message Brokers**.
 4. Click **+ Create**.

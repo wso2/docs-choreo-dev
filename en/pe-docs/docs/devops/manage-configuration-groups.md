@@ -1,21 +1,21 @@
 
 # Manage Configuration Groups
 
-Choreo allows you to create Configuration Groups to efficiently manage reusable configurations across components within your organization. A Configuration Group is a collection of key-value pairs, where values can be defined for multiple environments. This feature ensures consistency and simplifies the management of configurations across environments.
+{{ product_name }} allows you to create Configuration Groups to efficiently manage reusable configurations across components within your organization. A Configuration Group is a collection of key-value pairs, where values can be defined for multiple environments. This feature ensures consistency and simplifies the management of configurations across environments.
 
-Configuration groups can be defined at organization level and link to components at deployment time. Once linked, Choreo automatically resolves and mounts the configurations to the respective environments on deployment. You can either link a configuration group to inject the configurations as environment variables or file mounts.
+Configuration groups can be defined at organization level and link to components at deployment time. Once linked, {{ product_name }} automatically resolves and mounts the configurations to the respective environments on deployment. You can either link a configuration group to inject the configurations as environment variables or file mounts.
 
 !!!important
     - All configuration group values are encrypted and stored in environment-specific key vaults.
-    - Management of configuration groups is restricted to users with Choreo Admin, DevOps, and Platform Engineer roles.
-    - Developers can discover configuration groups available within the organization via the **Choreo Internal Marketplace**.
+    - Management of configuration groups is restricted to users with {{ product_name }} Admin, DevOps, and Platform Engineer roles.
+    - Developers can discover configuration groups available within the organization via the **{{ product_name }} Internal Marketplace**.
     - This feature is currently not supported for Ballerina build presets, Web Applications, or Test Runner components.
 
 ## Create a configuration group
 
 To create a new configuration group, follow the steps given below:
 
-1. In the [Choreo Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
+1. In the [{{ product_name }} Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
 2. In the left navigation menu, click **DevOps** and then click **Configuration Groups**.
 3. On the **Configuration Groups** page, click **Create** and specify the following details to create a new configuration group:
 
@@ -34,7 +34,7 @@ To create a new configuration group, follow the steps given below:
 4. Now you can link this configuration group to any component within the organization.
 
 !!!note
-    - Configuration groups created will be listed in the **Choreo Internal Marketplace**, improving visibility and discoverability for developers.
+    - Configuration groups created will be listed in the **{{ product_name }} Internal Marketplace**, improving visibility and discoverability for developers.
     - All configuration groups will also be listed in the component deployment drawers, allowing developers to easily link them during deployment.
 
 ## Link and use configuration groups
@@ -71,7 +71,7 @@ To link a configuration group to a component, follow the steps given below:
 
 To view & edit a configuration group, follow the steps given below:
 
-1. In the [Choreo Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
+1. In the [{{ product_name }} Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
 2. In the left navigation menu, click **DevOps** and then click **Configuration Groups**.
 3. In the **Configuration Groups** list, select the desired configuration group to view.
 
@@ -122,7 +122,7 @@ To delete a configuration group, follow the steps given below:
 !!! warning
     Deleting a configuration group is a permanent, non-reversible action. Ensure that the configuration group is not linked to any component before deleting it.
 
-1. In the [Choreo Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
+1. In the [{{ product_name }} Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
 2. In the left navigation menu, click **DevOps** and then click **Configuration Groups**.
 3. In the **Configuration Groups** list, click the delete icon next to the configuration group you want to delete. This will display a confirmation dialog with details about the impact of the deletion.
 4. Review the details, then type the configuration group name to confirm the deletion.

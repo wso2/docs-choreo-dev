@@ -1,4 +1,4 @@
-# Get Started with the Choreo CLI 
+# Get Started with the {{ product_name }} CLI 
 
 This guide walks you through the following sample use case:
 
@@ -14,7 +14,7 @@ This guide utilized a simple to-do app built with Next.js and two basic environm
 
 Follow the steps below to install the CLI:  
 
-1. Install the Choreo CLI by running the command specific to your operating system:
+1. Install the {{ product_name }} CLI by running the command specific to your operating system:
 
     - For Linux and Mac OS
         ``` sh
@@ -29,30 +29,30 @@ Follow the steps below to install the CLI:
 2. Verify the installation by running the following command:
 
     ``` sh
-    choreo --version
+    {{ product_name }} --version
     ```
 
-## Step 1: Login to Choreo 
+## Step 1: Login to {{ product_name }} 
 
-Run the following command to login to Choreo:  
+Run the following command to login to {{ product_name }}:  
 
 ``` bash
-choreo login
+{{ product_name }} login
 ```
 
 !!! note
     You can generate a [Personal Access Token (PAT)](./manage-authentication-with-personal-access-tokens.md) and use it instead of interactive login. 
 
-Follow the instructions on the console to open the link in the browser and login to Choreo.
+Follow the instructions on the console to open the link in the browser and login to {{ product_name }}.
 
 ## Step 2: Create a project 
 
-A project in Choreo is a logical group of related components that typically represent a single cloud-native application. A project consists of one or more components.
+A project in {{ product_name }} is a logical group of related components that typically represent a single cloud-native application. A project consists of one or more components.
 
 Create a multi-repository project named ‘web-app-project’ by running the following command:
 
 ``` sh
-choreo create project web-app-project --type=multi-repository
+{{ product_name }} create project web-app-project --type=multi-repository
 ```
 ## Step 3: Create a Web Application component
 
@@ -60,11 +60,11 @@ choreo create project web-app-project --type=multi-repository
 
     To perform this action, you should have **Create Component** permission under **COMPONENT-MANAGEMENT** permission group. By default, platform engineer role does not have this permission. If you are not supposed to have this permission, you can ask a user who has developer role to create one for you. 
 
-In Choreo, a component within your project represents a singular unit of work in a cloud-native application. It can be a microservice, API, web application, or job/task. Each component is associated with a directory path in a Git repository containing the source code for the program.
+In {{ product_name }}, a component within your project represents a singular unit of work in a cloud-native application. It can be a microservice, API, web application, or job/task. Each component is associated with a directory path in a Git repository containing the source code for the program.
 
 !!! info "Note"
 
-          The Choreo CLI currently supports the following component types:
+          The {{ product_name }} CLI currently supports the following component types:
 
           - Service
           - Web Application
@@ -79,7 +79,7 @@ In Choreo, a component within your project represents a singular unit of work in
 This triggers a wizard prompting you to provide details for your Git repository and other configurations for your component.
 
     ``` sh
-    choreo create component my-web-app --project=web-app-project --type=webApp
+    {{ product_name }} create component my-web-app --project=web-app-project --type=webApp
     ```
 
 3. Select the option `Enter remote repository URL manually`.
@@ -103,7 +103,7 @@ This triggers a wizard prompting you to provide details for your Git repository 
 To list down the components in the project, you can use the following command:
 
 ``` sh
-choreo list components --project="web-app-project"
+{{ product_name }} list components --project="web-app-project"
 ```
 
 ## Step 5: View component details
@@ -111,7 +111,7 @@ choreo list components --project="web-app-project"
 To view comprehensive information about the component, including basic details and service endpoint URLs once the services are deployed, you can use the following command:
 
 ``` sh
-choreo describe component "my-web-app" --project="web-app-project"
+{{ product_name }} describe component "my-web-app" --project="web-app-project"
 ```
 
 ## Step 6: Build the component
@@ -119,13 +119,13 @@ choreo describe component "my-web-app" --project="web-app-project"
 You must build the components before deploying them to a specific environment. Execute the following command to trigger the build:
 
 ``` sh
-choreo create build "my-web-app" --project="web-app-project"
+{{ product_name }} create build "my-web-app" --project="web-app-project"
 ```
 
 To view the builds in Progres:
 
 ```sh
-choreo list builds  --project="web-app-project" --component="my-web-app"
+{{ product_name }} list builds  --project="web-app-project" --component="my-web-app"
 ```
 
 ### Step 6.1: View build status
@@ -136,7 +136,7 @@ To check the status of a specific build, run the following command, replacing <b
     Typically, a build takes approximately 2 to 5 minutes to complete.
 
 ``` sh
-choreo describe build <build-id> --project="web-app-project" --component="my-web-app"
+{{ product_name }} describe build <build-id> --project="web-app-project" --component="my-web-app"
 ```
 
 ### Step 6.2: View build logs
@@ -144,7 +144,7 @@ choreo describe build <build-id> --project="web-app-project" --component="my-web
 Once the build is complete, you can view the build logs for verification or debugging purposes. In the unlikely case, the build encounters any issues, the logs will help you troubleshoot.
 
 ``` sh
-choreo logs --type=build --project="web-app-project" --component="my-web-app" --deployment-track="main" --build-id=<build_id>
+{{ product_name }} logs --type=build --project="web-app-project" --component="my-web-app" --deployment-track="main" --build-id=<build_id>
 ```
 
 ## Step 7: Deploy to the Development environment
@@ -152,7 +152,7 @@ choreo logs --type=build --project="web-app-project" --component="my-web-app" --
 Once the build status indicates `successful` you can deploy the component in the Development environment by running the following command:
 
 ``` sh
-choreo create deployment "my-web-app" --env=Development --project="web-app-project" --build-id=<build-id>
+{{ product_name }} create deployment "my-web-app" --env=Development --project="web-app-project" --build-id=<build-id>
 ```
 
 ### Step 7.1: Verify the deployment in the Development environment
@@ -160,7 +160,7 @@ choreo create deployment "my-web-app" --env=Development --project="web-app-proje
 After deploying the component, you can retrieve the URL of the deployed web application and open the publicly available web page to verify its behavior. Use the following command to retrieve the URL:
 
 ``` bash
-choreo describe component "my-web-app" --project="web-app-project"
+{{ product_name }} describe component "my-web-app" --project="web-app-project"
 ```
 
 ### Step 7.2: View runtime logs
@@ -168,7 +168,7 @@ choreo describe component "my-web-app" --project="web-app-project"
 To observe runtime application logs of the web application in the Development environment, execute the following command:
 
 ``` sh
-choreo logs --type component-application --component my-web-app --project web-app-project --env Development --follow
+{{ product_name }} logs --type component-application --component my-web-app --project web-app-project --env Development --follow
 ```
 
 ## Step 8: Deploy to the Production environment
@@ -178,7 +178,7 @@ Once you verify your application in the Development environment, you can proceed
 - Be sure to substitute <build-id> with the id obtained after triggering the build.
 
 ``` sh
-choreo create deployment "my-web-app" --env=Production --project="web-app-project" --build-id=<build-id>
+{{ product_name }} create deployment "my-web-app" --env=Production --project="web-app-project" --build-id=<build-id>
 ```
 
 ### Step 8.1: Verify the deployment in the Production environment
@@ -186,15 +186,15 @@ choreo create deployment "my-web-app" --env=Production --project="web-app-projec
 To ensure a successful deployment to the Production environment, retrieve the URL of the deployed web application using the following command:
 
 ``` sh
-choreo describe component "my-web-app" --project="web-app-project"
+{{ product_name }} describe component "my-web-app" --project="web-app-project"
 ``` 
 
-Congratulations! You successfully deployed your web application in Choreo using the Choreo CLI. 
+Congratulations! You successfully deployed your web application in {{ product_name }} using the {{ product_name }} CLI. 
 
 ## View all CLI functions
 
-Discover other functionalities of Choreo by running the following command.
+Discover other functionalities of {{ product_name }} by running the following command.
 
 ``` sh
-choreo --help
+{{ product_name }} --help
 ```

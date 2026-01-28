@@ -1,13 +1,13 @@
 # Configure Alerts
 
-This section explains how you can configure alerts for your Choreo components. Setting up alerts allows you to proactively monitor your components ecosystem and take corrective measures when necessary.
+This section explains how you can configure alerts for your {{ product_name }} components. Setting up alerts allows you to proactively monitor your components ecosystem and take corrective measures when necessary.
 
 !!! tip
     Setting up alerts in only available in the component level.
 
 ## Alert Types
 
-Choreo supports the following types of alerts to help you monitor and manage your components effectively:
+{{ product_name }} supports the following types of alerts to help you monitor and manage your components effectively:
 
 - [Latency alerts](#latency-alerts)
 - [Traffic alerts](#traffic-alerts)
@@ -93,9 +93,9 @@ Follow these steps to configure an alert:
 1. Navigate to the component you wish to configure alerts for.
 
     !!! info
-        You need to have a scope of **Choreo DevOps** or **Choreo Platform Engineer** inorder to create Alerts.  
+        You need to have a scope of **{{ product_name }} DevOps** or **{{ product_name }} Platform Engineer** inorder to create Alerts.  
 
-2. In the Choreo left menu, click **Observability** and then click **Alerts**.
+2. In the {{ product_name }} left menu, click **Observability** and then click **Alerts**.
 3. Click **Create Alert Rule** to create a new alert rule.
 
     ![Create Alert Rule](../../assets/img/monitoring-and-insights/alerts/alert-creation.png){.cInlineImage-full}
@@ -127,7 +127,7 @@ Follow these steps to configure an alert:
 
 ### View Alert History
 
-You can check the past alerts that have triggered for your component when you click the  **Alerts History** pane in Choreo Alerts. You can filter the alert history by **Alert Type**, **Environment**, **Deployment Track** or **Version** and **Time Range**.
+You can check the past alerts that have triggered for your component when you click the  **Alerts History** pane in {{ product_name }} Alerts. You can filter the alert history by **Alert Type**, **Environment**, **Deployment Track** or **Version** and **Time Range**.
 
 !!! note  
     When filtering, **API Proxy components** show a **Version** filter and other components display a **Deployment Track** filter, based on their monitoring context.  
@@ -136,6 +136,6 @@ You can click on an alert to expand it and see more details of the triggered ale
 
 ### Email Notifications
 
-When an alert is triggered, **recipients** added to the alert rule receive an email with **alert details** including a direct **Alert View link** to Choreo console.
+When an alert is triggered, **recipients** added to the alert rule receive an email with **alert details** including a direct **Alert View link** to {{ product_name }} console.
 
 ![Email Notification](../../assets/img/monitoring-and-insights/alerts/email-notification.png){.cInlineImage-full}

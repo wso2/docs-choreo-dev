@@ -1,23 +1,23 @@
-# What is Choreo?
+# What is {{ product_name }}?
 
-Choreo is an Internal Developer Platform (IDP) built to help platform engineering teams build and scale high-performing developer platforms. It provides a unified control plane and self-service portal for managing infrastructure, CI/CD, security, governance, and observability across all stages of the software delivery lifecycle.
-Choreo is designed to reduce the cognitive and operational load for developers while giving platform teams full control and visibility. Built with extensibility and multi-cloud support, it accelerates how organizations ship secure, compliant, and reliable applications.
+{{ product_name }} is an Internal Developer Platform (IDP) built to help platform engineering teams build and scale high-performing developer platforms. It provides a unified control plane and self-service portal for managing infrastructure, CI/CD, security, governance, and observability across all stages of the software delivery lifecycle.
+{{ product_name }} is designed to reduce the cognitive and operational load for developers while giving platform teams full control and visibility. Built with extensibility and multi-cloud support, it accelerates how organizations ship secure, compliant, and reliable applications.
 
-![Diagram of Choreo platform capabilities](../assets/img/what-is-choreo.png){.cInlineImage-full}
+![Diagram of {{ product_name }} platform capabilities](../assets/img/what-is-choreo.png){.cInlineImage-full}
 
 !!! info "Global Availability"
-    **Choreo is now available in two regions worldwide:**
+    **{{ product_name }} is now available in two regions worldwide:**
 
     - 🇺🇸 **US Region**: [console.choreo.dev](https://console.choreo.dev)
     - 🇪🇺 **EU Region**: [console.eu.choreo.dev](https://console.eu.choreo.dev)
 
     **Important**: No data is shared between regions. Resources created in one region are not available in the other region. This includes projects, components, APIs, services, configurations, secrets, user data, and monitoring data. Choose the region that meets your data residency and compliance requirements.
 
-## Key capabilities of Choreo
+## Key capabilities of {{ product_name }}
 
 ### Infrastructure Automation
 - **Workload Management**: Deploy and manage workloads across environments and clusters with centralized visibility.
-- **Flexible Deployments**: Run Choreo on your existing infrastructure with no vendor lock-in.
+- **Flexible Deployments**: Run {{ product_name }} on your existing infrastructure with no vendor lock-in.
 
 ### Application Delivery
 - **Seamless Git Integration**: Native integration with GitHub, BitBucket, GitLab and Azure DevOps to support GitOps-based workflows.
@@ -32,7 +32,7 @@ Choreo is designed to reduce the cognitive and operational load for developers w
 ### Security
 - **Network Security**: Use eBPF, Cilium, and WireGuard for end-to-end encryption, fine-grained L3/L4 ingress and egress policies, and microsegmented architecture to minimize attack surfaces and prevent lateral movement.
 - **API & Access Control**: Enforce authentication, authorization, and rate-limiting through API gateways, while Role-Based Access Control (RBAC) ensures secure, granular access to projects, environments, and resources.
-- **Container & Application Security**: Choreo automatically scans container images for vulnerabilities in all CI/CD pipelines and ensures runtime protection with robust security measures, reducing risks in production environments.
+- **Container & Application Security**: {{ product_name }} automatically scans container images for vulnerabilities in all CI/CD pipelines and ensures runtime protection with robust security measures, reducing risks in production environments.
 - **Granular Console Access Control**: Implement role-based permissions and identity management for granular user access control for the console facilitating multiple user roles and personas.
 
 ### Developer Self-Service Portal
@@ -43,5 +43,5 @@ Choreo is designed to reduce the cognitive and operational load for developers w
 ### Unified Portal for Platform Engineers
 - **Integrated Ecosystem**: Combines commonly used CNCF projects like Kubernetes, Cilium, Prometheus, and Argo Workflows in a single interface.
 - **Unified Management**: A single portal to manage CI/CD pipelines, API gateways, monitoring, and infrastructure provisioning.
-- **Flexible Hosting**: Deploy Choreo on public clouds (GCP, AWS, Azure, Vultr) or on upstream-compatible Kubernetes clusters in private environments.
+- **Flexible Hosting**: Deploy {{ product_name }} on public clouds (GCP, AWS, Azure, Vultr) or on upstream-compatible Kubernetes clusters in private environments.
 

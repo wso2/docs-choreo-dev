@@ -50,7 +50,7 @@ If you are an existing user with a registered organization, or you do not have a
 
 Let's configure {{ product_name }} to publish events to Moesif.
 
-1. Go to the [Choreo Console](https://console.choreo.dev/cloud-native-app-developer) and sign in.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/cloud-native-app-developer) and sign in.
 2. On the left navigation, click **Settings**.
 3. In the header, click the **Organization** list. This will open the organization level settings page.
 4. Click the **API Management** tab, and click **Moesif Dashboard**.

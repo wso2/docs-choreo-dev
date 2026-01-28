@@ -48,7 +48,7 @@ To set up an approval process for a workflow, follow these steps:
      - You must have administrator privileges in {{ product_name }} to configure workflow approvals.
      - Administrators can designate specific roles and assignees to receive notifications associated with each workflow.
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the {{ product_name }} Console header, go to the **Organization** list and select your organization.
 3. In the left navigation menu, click **Settings**. This opens the organization-level settings page.
 4. Click the **Workflows** tab.

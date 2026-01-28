@@ -8,7 +8,7 @@ These services run on infrastructure and automation provided by [Aiven](https://
 
 Follow the steps below to create a {{ product_name }}-managed PostgreSQL database:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the header, click the **Organization** list. This opens the organization home page.
 3. In the left navigation menu, click **Resources** and then **Databases**.
 4. Click **Create** and select **PostgreSQL** as the database type. Provide a display name for this server and follow the instructions.
@@ -24,10 +24,10 @@ Follow the steps below to create a {{ product_name }}-managed PostgreSQL databas
 
 Follow the steps below to create a {{ product_name }}-managed PostgreSQL vector database:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the header, click the **Organization** list. This opens the organization home page.
 3. In the left navigation menu, click **Resources** and then **Vector Databases**.
-4. Follow steps 4 onwards in the [Create a Choreo-managed PostgreSQL database](#create-a-choreo-managed-postgresql-database) section.
+4. Follow steps 4 onwards in the [Create a {{ product_name }}-managed PostgreSQL database](#create-a-{{ product_name }}-managed-postgresql-database) section.
 
 ## Connecting to your {{ product_name }}-managed PostgreSQL database
 

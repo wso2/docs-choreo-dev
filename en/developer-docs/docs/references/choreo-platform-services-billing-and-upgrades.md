@@ -9,4 +9,4 @@
 
 ## Upgrade a service plan
 
-If you want to upgrade the service plan of a platform service you have created, contact [Choreo support](mailto:choreo-support@wso2.com).
+If you want to upgrade the service plan of a platform service you have created, contact [{{ product_name }} support](mailto:{{ product_name }}-support@wso2.com).

@@ -17,7 +17,7 @@ These databases and caches can be seamlessly provisioned to offer persistence an
 
 !!! info "Note"
      - The capability to create {{ product_name }}-managed databases, vector databases, and cache services is available only for paid {{ product_name }} users.
-     - Billing for these services will be included in your {{ product_name }} subscription, with pricing varying based on the service plan of the resources you create. For more details, see [Choreo Platform Services Billing](../references/choreo-platform-services-billing-and-upgrades.md#platform-service-billing-information).
+     - Billing for these services will be included in your {{ product_name }} subscription, with pricing varying based on the service plan of the resources you create. For more details, see [{{ product_name }} Platform Services Billing](../references/choreo-platform-services-billing-and-upgrades.md#platform-service-billing-information).
 
 !!!Tip "Explore the free trial"
     {{ product_name }} provides a 7-day free trial for all database types on the 'Hobbyist' service plan, available to free-tier users.
@@ -43,19 +43,19 @@ All managed data services include automated, encrypted backups. Manual backup po
 
 PostgreSQL (also known as Postgres), is an open-source object-relational database management system. You can create PostgreSQL databases on {{ product_name }} as fully {{ product_name }}-managed, flexible SQL databases that are ideal for both structured and unstructured data. If you want to perform an efficient vector similarity search, you can create a PostgreSQL vector database.
 
-- [Create a PostgreSQL database on Choreo](./choreo-managed-postgresql-databases.md)
+- [Create a PostgreSQL database on {{ product_name }}](./choreo-managed-postgresql-databases.md)
 
 ## MySQL on {{ product_name }}
 
 MySQL is a user-friendly, flexible, open-source relational database management system with a well-established history in the SQL database realm. {{ product_name }} allows you to swiftly create fully {{ product_name }}-managed MySQL databases, enabling rapid setup and utilization.
 
-- [Create a MySQL database on Choreo](./choreo-managed-mysql-databases.md)
+- [Create a MySQL database on {{ product_name }}](./choreo-managed-mysql-databases.md)
 
 ## {{ product_name }}-Managed Cache (Valkey Compatible)
 
 A fully managed cache compatible with Redis® OSS and Valkey. A versatile, in‑memory NoSQL database that serves as a cache, database, streaming engine, and message broker. {{ product_name }}-managed Cache allows you to have fully managed instances that can be swiftly provisioned and integrated into your applications within minutes.
 
-- [Create a Choreo-managed Cache](./choreo-managed-caches.md)
+- [Create a {{ product_name }}-managed Cache](./choreo-managed-caches.md)
 
 ## Is a {{ product_name }}-Managed Database Right for You?
 

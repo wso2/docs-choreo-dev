@@ -2,11 +2,11 @@
 
 Generative AI (GenAI) services leverage advanced machine learning models to create original content such as text, images, music, or code, by identifying and learning patterns from existing data. Powered by deep neural networks and other machine learning models, these services can generate human-like outputs in various formats. This versatility makes GenAI ideal for tasks such as content creation, image generation, conversation automation, etc. 
 
-Choreo enables seamless integration with GenAI services, allowing the developers to incorporate these capabilities within their applications.
+{{ product_name }} enables seamless integration with GenAI services, allowing the developers to incorporate these capabilities within their applications.
 
 ## Register a GenAI service
 
-To seamlessly integrate a GenAI service into an application deployed in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing developers to consume it via a Connection.
+To seamlessly integrate a GenAI service into an application deployed in {{ product_name }}, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing developers to consume it via a Connection.
 
 You can register a GenAI service at two levels:
 
@@ -27,10 +27,10 @@ To register a GenAI service, follow these steps:
 
 ### Step 1: Select a service provider
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. Follow one of these steps depending on your requirements:
-    - To register a GenAI service at the organization level, go to the Choreo Console header and select your organization from the **Organization** list. 
-    - To register a GenAI service at the project level, go to the Choreo Console header and select your project from the **Project** list. 
+    - To register a GenAI service at the organization level, go to the {{ product_name }} Console header and select your organization from the **Organization** list. 
+    - To register a GenAI service at the project level, go to the {{ product_name }} Console header and select your project from the **Project** list. 
 3. In the left navigation menu, click **DB & Services** and then click **GenAI Services**.
 4. Click **+ Register**.
 5. Select a service provider.
@@ -67,7 +67,7 @@ When you create a GenAI service, it gets listed in the **GenAI Services** list.
 
 To view or update a GenAI service, follow these steps.
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the left navigation menu, click **DB & Services** and then click **GenAI Services**. This lists all the GenAI services you have created.
 3. Click on a service to view or update its details.
     - **General Details**: Displays service metadata. For example, the service name, overview, labels, etc. 
@@ -78,13 +78,13 @@ To view or update a GenAI service, follow these steps.
 !!! info
     To add a GenAI service to the Internal Marketplace, you must provide all the required configurations.
 
-1. In the Choreo Console left navigation menu, click **DB & Services** and then click **GenAI Services**.
+1. In the {{ product_name }} Console left navigation menu, click **DB & Services** and then click **GenAI Services**.
 2. Click on the service you want to add to the Internal Marketplace.
 3. Click **Add to Marketplace**.
 
 ### Remove a GenAI service from the Internal Marketplace
 
-1. In the Choreo Console left navigation menu, click **DB & Services** and then click **GenAI Services**.
+1. In the {{ product_name }} Console left navigation menu, click **DB & Services** and then click **GenAI Services**.
 2. Click on the service you want to remove from the Internal Marketplace.
 3. Click **Remove from Marketplace**.
 

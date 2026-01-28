@@ -2,7 +2,7 @@ After a pipeline is defined, you can execute it. The pipeline may need some inpu
 
 # Add Pipeline Variables and Secrets
 
-The pipelines are defined at the organization level. Thus the variables defined for them are injected at the same level. Learn more on how to define a input variable in your pipeline at [Variables and Secrets - Choreo Pipelines Specification](https://github.com/wso2/choreo-pipeline-specification/blob/36f292dcb34bdcf2292f5c8537efc57ef5f5e5a4/docs/specification/environment-variables.md). Follow these steps to define inputs and their values for a given pipeline.
+The pipelines are defined at the organization level. Thus the variables defined for them are injected at the same level. Learn more on how to define a input variable in your pipeline at [Variables and Secrets - {{ product_name }} Pipelines Specification](https://github.com/wso2/choreo-pipeline-specification/blob/36f292dcb34bdcf2292f5c8537efc57ef5f5e5a4/docs/specification/environment-variables.md). Follow these steps to define inputs and their values for a given pipeline.
 
 1. Click on **Pipeline Variables & Secrets** at upper right corner of the pipeline page.
 2. A panel will appear on the right side. To add a variable, under **Variables** section, add a new one by providing the Name and Value. The variable name must exactly match the name expected by the pipeline.
@@ -13,7 +13,7 @@ The pipelines are defined at the organization level. Thus the variables defined 
 
 ## Manage Existing Pipeline Variables and Secrets
 
-To update or remove a secret, click the three vertical dots in the upper-right corner of the variable box in the Choreo UI. From the menu, choose the appropriate action.
+To update or remove a secret, click the three vertical dots in the upper-right corner of the variable box in the {{ product_name }} UI. From the menu, choose the appropriate action.
 
 ## Pipeline Parameters
 
@@ -41,7 +41,7 @@ Under the Runs table, a new row will appear displaying a unique **Run ID** for t
     - **Failed**: One or more steps in the pipeline failed.
     - **Stopped**: The pipeline was manually stopped.
 3. **Start Time** – The timestamp when the pipeline run was triggered.
-4. **Duration** – The total time taken to execute the pipeline. If the pipeline runs for more than a predefined threshold (default 60 minutes), it will be automatically force-stopped by Choreo.
+4. **Duration** – The total time taken to execute the pipeline. If the pipeline runs for more than a predefined threshold (default 60 minutes), it will be automatically force-stopped by {{ product_name }}.
 
 
 ## View Pipeline Logs
@@ -49,7 +49,7 @@ Under the Runs table, a new row will appear displaying a unique **Run ID** for t
 Click **View Logs** for a selected pipeline run in the Runs table. This opens a panel on the right, displaying logs for each step of the pipeline. You can close or maximize the log panel using the icons in the upper-right corner of the panel.
 
 !!! info "Note"
-    Choreo keeps pipeline logs maximum for 30 days.
+    {{ product_name }} keeps pipeline logs maximum for 30 days.
 
 ## Stop a Pipeline Run
 

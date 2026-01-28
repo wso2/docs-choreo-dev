@@ -1,9 +1,9 @@
-# Integrate Unit Tests into the Choreo CI Pipeline
+# Integrate Unit Tests into the {{ product_name }} CI Pipeline
 
-Choreo allows you to integrate unit tests into the  CI pipeline, enabling code validation before deployment. This ensures early testing of code changes, reducing the risk of defects in production.
+{{ product_name }} allows you to integrate unit tests into the  CI pipeline, enabling code validation before deployment. This ensures early testing of code changes, reducing the risk of defects in production.
 
 !!! note
-        Currently, Choreo supports unit tests only for the `WSO2 MI` build preset.
+        Currently, {{ product_name }} supports unit tests only for the `WSO2 MI` build preset.
 
 ## How it works
 
@@ -13,8 +13,8 @@ You can create unit tests in your source code using standard testing libraries. 
 
 ### Step 2: Enable unit tests
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3. In the left navigation menu, click **DevOps** and then click **CI Pipelines**.
 4. Click on **Build Configurations** to edit the build configurations.
 5. Turn on the **Unit Test** toggle.

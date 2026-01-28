@@ -1,6 +1,6 @@
 # Autoscale Component Replicas
 
-Choreo allows you to automatically scale your component replicas up or down in number based on resource consumption to ensure high availability.
+{{ product_name }} allows you to automatically scale your component replicas up or down in number based on resource consumption to ensure high availability.
 
 !!! info "Note"
     Autoscaling capabilities are only available in paid plans for private data plane organizations.
@@ -10,8 +10,8 @@ Choreo allows you to automatically scale your component replicas up or down in n
 
 Follow these steps to configure autoscaling for a component:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component** for which you want to configure autoscaling.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component** for which you want to configure autoscaling.
 3. In the left navigation menu, click **K8s Operations** and then click **Scaling**.
 4. On the **Scaling** page, you can change the scaling parameters.
 
@@ -23,7 +23,7 @@ The following parameters allow you to scale component replicas:
 - **Memory Threshold**: The average memory usage across all running replicas. Like the **CPU Threshold**, if all active instances reach the memory threshold, the number of active replicas automatically scales up until the average memory usage falls below the threshold.
 
 !!! tip
-    If you update a scaling parameter, it may not immediately reflect in the Choreo Console because the change can take some time to propagate.
+    If you update a scaling parameter, it may not immediately reflect in the {{ product_name }} Console because the change can take some time to propagate.
 
 !!! info "Run a fixed number of replicas"
     If you want to run exactly `3` replicas for a component, you must set the minimum and maximum replicas to `3`.

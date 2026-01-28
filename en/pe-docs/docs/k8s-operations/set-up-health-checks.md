@@ -44,8 +44,8 @@ In such scenarios, the application is responsible for writing and maintaining th
 
 Follow these steps to configure liveness and readiness probes on a container:
 
-1.  Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and the relevant **Component**.
+1.  Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and the relevant **Component**.
 3.  In the left navigation menu, click **K8s Configurations** and then click **Health Checks**.
 4.  On the **Health Checks** page, click **+ Create**.
 5.  Configure the liveness probe depending on your requirement.
