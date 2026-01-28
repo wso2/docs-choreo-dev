@@ -2,7 +2,7 @@
 
 Mutual transport layer security (mutual TLS) is a protocol that ensures privacy, integrity, and authentication of the data transmitted between two endpoints. In mutual TLS, the client and the server authenticate each other using digital certificates, establishing trust and verifying identities. Upon successful authentication, mutual TLS encrypts the data exchanged between the client and the server, preventing unauthorized access.
 
-In Choreo, you can use mutual TLS to establish secure connections between components within a project.
+In {{ product_name }}, you can use mutual TLS to establish secure connections between components within a project.
 
 !!! note
      If mutual TLS is not required, you can configure TLS instead. TLS provides a secure communication channel between a client and server but does not require the client to present a certificate to the server. This results in the absence of mutual authentication between the client and the server. While TLS ensures the confidentiality of data transmitted between the client and server, preventing unauthorized tampering, mutual TLS enhances TLS by introducing client-side authentication and facilitating mutual verification of identities between the client and server. 

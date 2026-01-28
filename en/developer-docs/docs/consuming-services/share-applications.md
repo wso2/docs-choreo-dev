@@ -1,10 +1,10 @@
 # Share Applications
 
-Choreo's application-sharing feature allows you to share your applications with members within your organization. This promotes collaboration when multiple members need to work on the same application.
+{{ product_name }}'s application-sharing feature allows you to share your applications with members within your organization. This promotes collaboration when multiple members need to work on the same application.
 
 Follow these steps to share an application with members of your organization:
 
-1. Go to the [Choreo Developer Portal](https://devportal.choreo.dev/) and click the **Applications** tab.
+1. Go to the [{{ product_name }} Developer Portal](https://devportal.choreo.dev/) and click the **Applications** tab.
 
 2. On the **Applications** page, click on the application you want to share.
 

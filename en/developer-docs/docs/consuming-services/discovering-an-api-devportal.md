@@ -1,4 +1,4 @@
-Choreo is a powerful platform that enables developers to create, deploy, and consume services efficiently. The Choreo Developer Portal simplifies API discovery and usage, allowing developers to integrate APIs seamlessly into their applications.
+{{ product_name }} is a powerful platform that enables developers to create, deploy, and consume services efficiently. The {{ product_name }} Developer Portal simplifies API discovery and usage, allowing developers to integrate APIs seamlessly into their applications.
 
 This guide is intended for application developers (both internal and external) who wish to consume APIs published in the Developer Portal to build their applications. You will learn how to:
 
@@ -17,7 +17,7 @@ Before proceeding, ensure you have access to a published service to consume. If 
 
 ## Discover APIs
 
-In the Choreo Developer Portal, developers can search for APIs by name. APIs and services created and published through the Choreo Console are visible in the Developer Portal based on their visibility settings:
+In the {{ product_name }} Developer Portal, developers can search for APIs by name. APIs and services created and published through the {{ product_name }} Console are visible in the Developer Portal based on their visibility settings:
 
 - **Public**: Visible to all users in the Developer Portal.
 - **Private**: Accessible only to signed-in users.

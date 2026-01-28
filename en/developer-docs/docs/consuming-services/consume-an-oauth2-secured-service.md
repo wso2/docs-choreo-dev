@@ -14,7 +14,7 @@
 
 Follow these steps to generate an access token for your application using cURL:
 
-1. In the [Choreo Developer Portal](https://devportal.choreo.dev) header, click **Applications**.
+1. In the [{{ product_name }} Developer Portal](https://devportal.choreo.dev) header, click **Applications**.
 
 2. On the **My Applications** page, click on the application for which you want to generate the token.
 
@@ -35,7 +35,7 @@ Follow these steps to generate an access token for your application using cURL:
 
 To generate an access token for **testing purposes**, follow these steps:
 
-1. In the [Choreo Developer Portal](https://devportal.choreo.dev) header, click **Applications**.
+1. In the [{{ product_name }} Developer Portal](https://devportal.choreo.dev) header, click **Applications**.
 
 2. On the **My Applications** page, click on the application for which you want to generate keys and tokens.
 

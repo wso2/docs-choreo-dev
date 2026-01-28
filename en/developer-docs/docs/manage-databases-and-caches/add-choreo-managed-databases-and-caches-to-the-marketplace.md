@@ -1,9 +1,9 @@
-# Add Choreo-Managed Databases and Caches to the Marketplace
+# Add {{ product_name }}-Managed Databases and Caches to the Marketplace
 
-When you create a Choreo-managed database or cache, you can add it to the Marketplace, making it available for consumption through a connection.
+When you create a {{ product_name }}-managed database or cache, you can add it to the Marketplace, making it available for consumption through a connection.
 
 !!! note 
-     To add a Choreo-managed database or cache to the Marketplace, you must import at least one credential for it.
+     To add a {{ product_name }}-managed database or cache to the Marketplace, you must import at least one credential for it.
 
 ## Step 1: Import credentials
 
@@ -14,7 +14,7 @@ You can use the imported credentials to create a connection. During connection s
 To import credentials for a database, follow these steps:
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. Go to the Choreo Console header and select your organization from the **Organization** list.
+2. Go to the {{ product_name }} Console header and select your organization from the **Organization** list.
 3. In the left navigation menu, click **Resources** and then click **Databases**.
 4. Click on a required database to view its details.
 5. Click the **Databases** tab.
@@ -23,7 +23,7 @@ To import credentials for a database, follow these steps:
 
     - Select **Use Created Credentials** and specify the following:
          - A display name for the credentials.
-         - The database credentials you created to use when setting up database connections in Choreo. 
+         - The database credentials you created to use when setting up database connections in {{ product_name }}. 
          - The environment where you want to use the credentials. 
          
          The steps to create new user credentials depend on the type of database or cache you are using. In general, you must log in to your database server as the super admin using a command-line interface or a database management tool. Then, create new database users with the required permission levels.
@@ -35,13 +35,13 @@ To import credentials for a database, follow these steps:
 8. Click **Save**.
 
 !!! tip 
-     Choreo allows you to delete imported credentials to prevent their use when establishing new connections. However, deleting credentials will not affect any existing database connections that are already using them.
+     {{ product_name }} allows you to delete imported credentials to prevent their use when establishing new connections. However, deleting credentials will not affect any existing database connections that are already using them.
 
 ## Step 2: Add the database or cache to the Marketplace
 
 - On the **Databases** tab, click **+Add to Marketplace** corresponding to the database you want to add. 
 
-Once the database is added to the Marketplace, it can be consumed via a connection. For details on creating a connection to a Choreo-managed database, see [Create a connection to a database](../develop-components/sharing-and-reusing/create-a-connection.md).
+Once the database is added to the Marketplace, it can be consumed via a connection. For details on creating a connection to a {{ product_name }}-managed database, see [Create a connection to a database](../develop-components/sharing-and-reusing/create-a-connection.md).
 
 !!! note 
      To remove a database or cache that you added to the Marketplace, click the corresponding **Remove from Marketplace**. This action prevents new connections to the removed database, but existing connections remain unaffected.

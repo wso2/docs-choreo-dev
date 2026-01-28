@@ -2,7 +2,7 @@
 
 ## Overview
 
-Choreo is a cloud-native platform that enables developers to create, deploy, and consume services efficiently. The **Choreo Internal Marketplace** streamlines API discovery and integration, making it easier to incorporate services into your applications.
+{{ product_name }} is a cloud-native platform that enables developers to create, deploy, and consume services efficiently. The **{{ product_name }} Internal Marketplace** streamlines API discovery and integration, making it easier to incorporate services into your applications.
 
 This guide is for application developers who want to consume GenAI Services published in the Internal Marketplace.
 
@@ -16,7 +16,7 @@ Before you begin, ensure that:
 
 ## Discover GenAI Services
 
-1. Navigate to the [Choreo Internal Marketplace](https://console.choreo.dev).
+1. Navigate to the [{{ product_name }} Internal Marketplace](https://console.choreo.dev).
 
 2. Sign in with your credentials.
 3. Browse or search for the desired GenAI Service.
@@ -25,7 +25,7 @@ Before you begin, ensure that:
 
 ## Create a Connection to a GenAI Service
 
-To use a GenAI Service in your Choreo component, you first need to create a connection.
+To use a GenAI Service in your {{ product_name }} component, you first need to create a connection.
 
 1. In the left navigation menu, click Connections.
 

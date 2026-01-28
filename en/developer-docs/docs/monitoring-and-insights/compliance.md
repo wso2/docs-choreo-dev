@@ -1,12 +1,12 @@
-# Choreo Architect Agent (API Compliance)
+# {{ product_name }} Architect Agent (API Compliance)
 
 ## Overview
 
-The **Choreo Architect Agent** is an AI-powered assistant that evaluates your APIs against industry standards and guidelines provided by the user. It acts as an **AI consultant for API design and compliance**, providing deep insights into API structure, design conventions, and security best practices.
+The **{{ product_name }} Architect Agent** is an AI-powered assistant that evaluates your APIs against industry standards and guidelines provided by the user. It acts as an **AI consultant for API design and compliance**, providing deep insights into API structure, design conventions, and security best practices.
 
 When triggered, the Architect Agent automatically analyzes all published API specifications in your project and generates structured output with compliance scores, rule violations, and improvement suggestions.  
 
-It helps ensure **consistency, security, and quality** in every API that your teams build on Choreo.
+It helps ensure **consistency, security, and quality** in every API that your teams build on {{ product_name }}.
 
 > **Note:**
 > This feature has been verified to work optimally with the **GPT-4.1** model, which delivers the most accurate and detailed API design analyses.
@@ -20,7 +20,7 @@ It helps ensure **consistency, security, and quality** in every API that your te
 
 ### Step 1: Access the Architect Agent
 
-You can access the Architect Agent under your project’s **Insights → Compliance** section in the Choreo Console.
+You can access the Architect Agent under your project’s **Insights → Compliance** section in the {{ product_name }} Console.
 
 ### Step 2: Trigger an Analysis
 
@@ -77,7 +77,7 @@ The Architect Agent always displays the **most recent report**, ensuring that te
 
 ## Conclusion
 
-The **Choreo Architect Agent** empowers your teams to deliver **consistent, secure, and well-designed APIs** across your organization.  
+The **{{ product_name }} Architect Agent** empowers your teams to deliver **consistent, secure, and well-designed APIs** across your organization.  
 With real-time AI-driven compliance checks, semantic recommendations, and multi-level dashboards, you can:
 
 - Detect design and security violations.  

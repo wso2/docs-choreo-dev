@@ -1,18 +1,18 @@
 # Create a Connection
 
-Connections in Choreo provide a simple and uniform approach to seamlessly integrate components with services or resources.
+Connections in {{ product_name }} provide a simple and uniform approach to seamlessly integrate components with services or resources.
 
-Choreo allows you to create connections to services deployed in Choreo or registered as external services. It also allows you to create connections to any Choreo-managed database.
+{{ product_name }} allows you to create connections to services deployed in {{ product_name }} or registered as external services. It also allows you to create connections to any {{ product_name }}-managed database.
 
 To create a connection to a service or a database, follow the step-by-step instructions in the respective tab:
 
 === "Create a connection to a service"
 
-    <h2>Create a connection to a Choreo service</h2>
+    <h2>Create a connection to a {{ product_name }} service</h2>
 
-    Follow these steps to create a connection to a service deployed in Choreo:
+    Follow these steps to create a connection to a service deployed in {{ product_name }}:
 
-    1. In the Choreo Console, go to the top navigation menu and set the visibility level as [project](../../choreo-concepts/connections.md#project-connections) or [component](../../choreo-concepts/connections.md#component-connections) as follows: 
+    1. In the {{ product_name }} Console, go to the top navigation menu and set the visibility level as [project](../../choreo-concepts/connections.md#project-connections) or [component](../../choreo-concepts/connections.md#component-connections) as follows: 
 
         - **Project Connection**: Select an organization and a project in that organization. 
         - **Component Connection**: Select an organization, a project in that organization, and a component in the selected project. 
@@ -35,7 +35,7 @@ To create a connection to a service or a database, follow the step-by-step instr
     Follow these steps to create a connection to an external service:
 
     1. Follow steps 1–5 from the previous section.
-    2. Expand the **Environment to Endpoint** section and verify the service endpoints assigned to the Choreo environments.
+    2. Expand the **Environment to Endpoint** section and verify the service endpoints assigned to the {{ product_name }} environments.
     3. Click **Create**.
 
       For step-by-step instructions on using a connection in your service, see [Use a Connection in Your Service](./use-a-connection-in-your-service.md).
@@ -47,12 +47,12 @@ To create a connection to a service or a database, follow the step-by-step instr
 
     Prerequisites:
 
-     - Create a Choreo-managed database. For details, see [Choreo-Managed Databases and Caches](../../manage-databases-and-caches/choreo-managed-databases-and-caches.md).
-     - Add the database to the Marketplace. For details, see [Add Choreo-Managed Databases and Caches to the Marketplace](../../manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md).
+     - Create a {{ product_name }}-managed database. For details, see [{{ product_name }}-Managed Databases and Caches](../../manage-databases-and-caches/choreo-managed-databases-and-caches.md).
+     - Add the database to the Marketplace. For details, see [Add {{ product_name }}-Managed Databases and Caches to the Marketplace](../../manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md).
 
-    Follow these steps to create a connection to a Choreo-managed database:
+    Follow these steps to create a connection to a {{ product_name }}-managed database:
 
-    1. In the Choreo Console, go to the top navigation menu and set the visibility level as [project](../../choreo-concepts/connections.md#project-connections) or [component](../../choreo-concepts/connections.md#component-connections) as follows: 
+    1. In the {{ product_name }} Console, go to the top navigation menu and set the visibility level as [project](../../choreo-concepts/connections.md#project-connections) or [component](../../choreo-concepts/connections.md#component-connections) as follows: 
 
         - **Project Connection**: Select an organization and a project in that organization. 
         - **Component Connection**: Select an organization, a project in that organization, and a component in the selected project. 
@@ -79,4 +79,4 @@ To create a connection to a service or a database, follow the step-by-step instr
     For step-by-step instructions on using a database in your component, see [Use a Database Connection in Your Component](./use-a-database-connection-in-your-component.md).
 
 !!! tip
-    You can refer to [this guide](../../connect-to-remote-dependencies-while-developing/) to learn how to test connections during creation and afterward. This helps you develop applications that depend on Choreo connections more easily in your local environment.
+    You can refer to [this guide](../../connect-to-remote-dependencies-while-developing/) to learn how to test connections during creation and afterward. This helps you develop applications that depend on {{ product_name }} connections more easily in your local environment.

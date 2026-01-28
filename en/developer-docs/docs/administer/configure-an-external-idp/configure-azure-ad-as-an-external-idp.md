@@ -1,19 +1,19 @@
 # Configure Azure Active Directory (Azure AD) as an External Identity Provider (IdP)
 
-In organizations leveraging Microsoft Azure Active Directory (Azure AD) for identity and access management (IAM), integrating it with Choreo offers powerful API access control. This control hinges on the use of API scopes. That is, it enables the restriction of access to a designated group of users. This document guide you step-by-step to configure Azure AD as your external IdP.
+In organizations leveraging Microsoft Azure Active Directory (Azure AD) for identity and access management (IAM), integrating it with {{ product_name }} offers powerful API access control. This control hinges on the use of API scopes. That is, it enables the restriction of access to a designated group of users. This document guide you step-by-step to configure Azure AD as your external IdP.
 
 ## Prerequisites
 
 Before you try out this guide, be sure you have the following:
 
 - An Azure Active Directory account:  If you don’t already have one,  setup an Azure Active Directory account at [https://azure.microsoft.com/en-gb/](https://azure.microsoft.com/en-gb/).
-- Administrator rights to your Choreo organization: You need this to configure the Azure AD account in your organization.
+- Administrator rights to your {{ product_name }} organization: You need this to configure the Azure AD account in your organization.
 
-## Add Azure Active Directory as an external IdP in Choreo
+## Add Azure Active Directory as an external IdP in {{ product_name }}
 
-Follow the steps below to add Azure AD as an IdP in Choreo:
+Follow the steps below to add Azure AD as an IdP in {{ product_name }}:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev).
 2. In the left navigation menu, click **Settings**.
 3. In the header, click the **Organization** list. This will open the organization level settings page.
 4. On the **Application Security** tab, click **Identity Providers** and then click **+ Identity Provider**.

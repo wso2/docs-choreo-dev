@@ -1,8 +1,8 @@
 # Insights Overview
 
-Choreo provides comprehensive insights into APIs created within both the on-premises API Manager and the Choreo platform. Choreo insights provide a range of metrics, including API traffic, error rates, and latency, allowing you to monitor and optimize API performance effectively.
+{{ product_name }} provides comprehensive insights into APIs created within both the on-premises API Manager and the {{ product_name }} platform. {{ product_name }} insights provide a range of metrics, including API traffic, error rates, and latency, allowing you to monitor and optimize API performance effectively.
 
-With Choreo insights, you can:
+With {{ product_name }} insights, you can:
 
 - **Analyze API traffic**: Monitor the volume of requests and responses to understand usage patterns.
 - **Track errors**: Identify and analyze errors to improve API reliability.
@@ -16,15 +16,15 @@ By leveraging these insights, businesses can make informed decisions to enhance 
 
 ## View insights
 
-To view usage insights, go to the [Choreo Console](https://console.choreo.dev/) and click **Insights** and then click **Usage** in the left navigation menu.
+To view usage insights, go to the [{{ product_name }} Console](https://console.choreo.dev/) and click **Insights** and then click **Usage** in the left navigation menu.
 
-If you are viewing insights on the Choreo platform at the organization level, note the following:
+If you are viewing insights on the {{ product_name }} platform at the organization level, note the following:
 
 - **Permission-based access**: Signed-in users can only view insights for components or projects that they have permission to access.
 - **Data exclusion**: Insights exclude data from components you cannot access and the data related to deleted components.
 - **Comprehensive view permission**: To view insights for all components, including deleted ones, across the organization regardless of project visibility, you must have the `View Organization Insights` permission under `OBSERVABILITY-MANAGEMENT` with the mapping level defined at the `Organization` level.
 - **Admin role**: Users with the admin role have the `View Organization Insights` permission by default and can view organization-wide insights.
-- **Configuring permissions**: For detailed steps on configuring permissions, see [Control Access in the Choreo Console](/choreo/docs/administer/control-access-in-the-choreo-console/).
+- **Configuring permissions**: For detailed steps on configuring permissions, see [Control Access in the {{ product_name }} Console](/{{ product_name }}/docs/administer/control-access-in-the-{{ product_name }}-console/).
 
 By ensuring proper permissions are set, organizations can manage access to insights effectively while maintaining data security and relevance.
 
@@ -240,7 +240,7 @@ The information displayed is as follows:
 
 ### Alerts
 
-The **Alerts** page shows information related to business alerts issued by Choreo for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies in your published APIs. See the topics given below to get details of the available widgets and understand how to use them effectively.
+The **Alerts** page shows information related to business alerts issued by {{ product_name }} for your currently selected environment and organization. You can use this page as a health monitoring dashboard and make it visible to your project team. Using this page you can drill down on each alert and discover possible anomalies in your published APIs. See the topics given below to get details of the available widgets and understand how to use them effectively.
 
 ![Alerts statistics](../assets/img/monitoring-and-insights/api-insights/alerts-page-full.png){.cInlineImage-full}
 

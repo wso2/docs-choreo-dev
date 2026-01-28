@@ -5,8 +5,8 @@ prevent system overload and enhances API performance. When you limit the number 
 specific time frame, you can ensure that your API is available and responsive to all users while protecting it from 
 malicious attacks.
 
-This page walks you through the steps to enable rate limiting for your APIs via Choreo and also provides information on 
-the rate-limiting options supported by Choreo.
+This page walks you through the steps to enable rate limiting for your APIs via {{ product_name }} and also provides information on 
+the rate-limiting options supported by {{ product_name }}.
 
 ## Enable rate limiting for an API
 
@@ -15,7 +15,7 @@ To enable rate limiting for an API, follow the steps given below:
 !!! note
      You can apply rate-limiting settings separately for each environment.
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/). 
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/). 
 2. In the **Component Listing** pane, click on the component for which you want to apply rate limiting.
 3. In the left navigation menu, click **Deploy**.
 4. Go to the required environment card and click the view icon corresponding to the endpoint for which you want to apply rate limiting. 

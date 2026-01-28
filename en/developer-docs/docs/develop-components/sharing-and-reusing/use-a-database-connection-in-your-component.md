@@ -1,14 +1,14 @@
 # Use a Database Connection in Your Component
 
-Choreo allows you to share and reuse Choreo-managed databases, accelerating development and enhancing efficiency in building integrated applications through connections.
+{{ product_name }} allows you to share and reuse {{ product_name }}-managed databases, accelerating development and enhancing efficiency in building integrated applications through connections.
 
 For step-by-step instructions on creating a database connection, see [Create a Connection](create-a-connection.md).
 
-To learn more about Choreo Connections, see the documentation on [Connections](../../choreo-concepts/connections.md).
+To learn more about {{ product_name }} Connections, see the documentation on [Connections](../../choreo-concepts/connections.md).
 
 ## Consume a database through a connection
 
-To consume a Choreo-managed database via a connection, follow these steps:
+To consume a {{ product_name }}-managed database via a connection, follow these steps:
 
 ### Step 1: Add connection configurations
 
@@ -35,11 +35,11 @@ To integrate a database into your application, click the appropriate tab below b
           | resourceRef      | A unique, readable identifier of the database being connected to.    |
 
 
-    2. If you've previously added a `connectionReferences` section under `dependencies`, append this as another item under `connectionReferences`. Upon deploying the component, the necessary configurations to establish the connection will be injected into Choreo-defined environment variables.
+    2. If you've previously added a `connectionReferences` section under `dependencies`, append this as another item under `connectionReferences`. Upon deploying the component, the necessary configurations to establish the connection will be injected into {{ product_name }}-defined environment variables.
 
-          The following table details the Choreo-defined environment variables:
+          The following table details the {{ product_name }}-defined environment variables:
 
-          | Configuration Key       | Choreo-Defined Environment Variable Name                       |
+          | Configuration Key       | {{ product_name }}-Defined Environment Variable Name                       |
           |-------------------------|----------------------------------------------------------------|
           | HostName                | CHOREO_<CONNECTION_NAME\>_HOSTNAME                             |
           | Port                    | CHOREO_<CONNECTION_NAME\>_PORT                                 |
@@ -48,7 +48,7 @@ To integrate a database into your application, click the appropriate tab below b
           | DatabaseName            | CHOREO_<CONNECTION_NAME\>DATABASENAME                          |
 
 
-          If you'd like to use custom environment variable names instead of the Choreo-defined ones, add the dependency as a service reference under `dependencies` in the same file. For more details, refer to the instructions under the `component.yaml file (v1.0)` tab.
+          If you'd like to use custom environment variable names instead of the {{ product_name }}-defined ones, add the dependency as a service reference under `dependencies` in the same file. For more details, refer to the instructions under the `component.yaml file (v1.0)` tab.
 
 
           The following table provides details on the configuration keys associated with the connection:
@@ -106,12 +106,12 @@ To integrate a database into your application, click the appropriate tab below b
           | connectionConfig | The unique connection identifier for the connection.        |
           | env              | The environment variable mapping.                           |
           | from             | The key of the configuration entry.                         |
-          | to               | The environment variable name to which Choreo will inject the value of the key.|
+          | to               | The environment variable name to which {{ product_name }} will inject the value of the key.|
 
 
     2. Replace `<YOUR_ENV_VARIABLE_NAME_HERE>` with an appropriate environment variable name of your choice. If you have previously added a service reference section under `dependencies`, append this as another item under `serviceReferences`.
 
-          Upon deploying the component, Choreo automatically populates the specified environment variables with actual values.
+          Upon deploying the component, {{ product_name }} automatically populates the specified environment variables with actual values.
 
           The following table provides details on the configuration keys associated with the connection:
 
@@ -168,12 +168,12 @@ To integrate a database into your application, click the appropriate tab below b
           | connectionConfig | The unique connection identifier for the connection.        |
           | env              | The environment variable mapping.                           |
           | from             | The key of the configuration entry.                         |
-          | to               | The environment variable name to which Choreo will inject the value of the key.|
+          | to               | The environment variable name to which {{ product_name }} will inject the value of the key.|
 
 
     2. Replace `<YOUR_ENV_VARIABLE_NAME_HERE>` with an appropriate environment variable name of your choice. If you have previously added an outbound service reference, append this as another item under `serviceReferences`.
 
-          Upon deploying the component, Choreo automatically populates the specified environment variables with actual values.
+          Upon deploying the component, {{ product_name }} automatically populates the specified environment variables with actual values.
 
 
           The following table provides details on the configuration keys associated with the connection:
@@ -243,4 +243,4 @@ connection.connect((err) => {
 
 ```
 
-By following these steps, your component can interact with the Choreo-managed database seamlessly.
+By following these steps, your component can interact with the {{ product_name }}-managed database seamlessly.

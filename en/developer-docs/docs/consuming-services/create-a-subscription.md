@@ -5,7 +5,7 @@ The subscription process ensures secure authentication of API requests using app
 
 To subscribe to an API via an application, follow these steps:
 
-1. Go to the [Choreo Developer Portal](https://devportal.choreo.dev) and sign in.
+1. Go to the [{{ product_name }} Developer Portal](https://devportal.choreo.dev) and sign in.
 
 2. To navigate to applications, in the Developer Portal header, click **Applications**.
 

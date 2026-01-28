@@ -1,18 +1,18 @@
-# Develop Web Applications Locally with Choreo’s Managed Authentication
+# Develop Web Applications Locally with {{ product_name }}’s Managed Authentication
 
-Choreo’s managed authentication capability provides a set of backend for frontend (BFF) endpoints to facilitate authentication and authorization for web applications. These endpoints are readily available for single-page web applications deployed on Choreo.
+{{ product_name }}’s managed authentication capability provides a set of backend for frontend (BFF) endpoints to facilitate authentication and authorization for web applications. These endpoints are readily available for single-page web applications deployed on {{ product_name }}.
 
-As a web application developer, you may need to run the application on your local workstation. Choreo’s local development capability ensures that authentication and authorization during local development work the same way as they do when the application is deployed to Choreo, eliminating the need for code changes.
+As a web application developer, you may need to run the application on your local workstation. {{ product_name }}’s local development capability ensures that authentication and authorization during local development work the same way as they do when the application is deployed to {{ product_name }}, eliminating the need for code changes.
 
-This guide explains how to configure and use Choreo’s local development capability to streamline your workflow.
+This guide explains how to configure and use {{ product_name }}’s local development capability to streamline your workflow.
 
-## How local development works in Choreo
+## How local development works in {{ product_name }}
 
 Local development uses a proxy that sits in front of the locally running web application. This proxy intercepts all incoming requests:
-- Requests to `/choreo-apis/*` and `/auth/*` are forwarded to Choreo.
+- Requests to `/{{ product_name }}-apis/*` and `/auth/*` are forwarded to {{ product_name }}.
 - All other requests are forwarded to the locally running web application.
 
-The proxy runs on HTTPS using a self-signed certificate, which is essential for secure, HTTP-only cookie-based managed authentication. Once the proxy is running, you can access the web application using the proxy's URL and start developing locally. The behavior of the web application, in terms of managed authentication, will mirror its behavior when deployed to Choreo.
+The proxy runs on HTTPS using a self-signed certificate, which is essential for secure, HTTP-only cookie-based managed authentication. Once the proxy is running, you can access the web application using the proxy's URL and start developing locally. The behavior of the web application, in terms of managed authentication, will mirror its behavior when deployed to {{ product_name }}.
 
 ## Configure local development
 
@@ -27,7 +27,7 @@ The proxy runs on HTTPS using a self-signed certificate, which is essential for 
 
 ### Apply configurations
 
-1. Sign in to the Choreo Console.
+1. Sign in to the {{ product_name }} Console.
 2. In the **Component Listing** pane, click on the component you created and deployed.
 3. In the left navigation menu, click **Deploy**.
 4. Go to the respective environment card and click **Local Development**.
@@ -46,11 +46,11 @@ You have now configured local development. The next section explains how to acce
 
 ### Access your web application locally
 
-You can use either the Choreo built-in identity provider or an external identity provider to access your web application locally.
+You can use either the {{ product_name }} built-in identity provider or an external identity provider to access your web application locally.
 
-=== "Use the Choreo built-in identity provider"
+=== "Use the {{ product_name }} built-in identity provider"
 
-    1. Sign in to the Choreo Console.
+    1. Sign in to the {{ product_name }} Console.
     2. In the **Component Listing** pane, click on the component you created and deployed.
     3. In the left navigation menu, click **Deploy**.
     4. Go to the respective environment card and click **Local Development**.
@@ -63,7 +63,7 @@ You can use either the Choreo built-in identity provider or an external identity
 
 === "Use an external identity provider"
 
-    1. Sign in to the Choreo Console.
+    1. Sign in to the {{ product_name }} Console.
     2. In the **Component Listing** pane, click on the component you created and deployed.
     3. In the left navigation menu, click **Deploy**.
     4. Go to the respective environment card and click **Local Development**.

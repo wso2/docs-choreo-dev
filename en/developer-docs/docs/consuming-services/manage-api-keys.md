@@ -2,7 +2,7 @@
 
 To access a published API secured with an API Key, you need to generate a dedicated API Key for that specific API. This key acts as a unique identifier, enabling authorized usage while maintaining security and control over how the API is consumed.  
 
-Once created, API Keys can be managed through two locations within the Choreo Developer Portal:
+Once created, API Keys can be managed through two locations within the {{ product_name }} Developer Portal:
 
 - **Credentials section of the API**: This section provides an overview of all API Keys associated with the specific API, enabling API owners to monitor and manage access.
 - **Credentials section of the Application**: This section allows application owners to view and manage all API Keys linked to their application, ensuring they have control over API subscriptions and access.

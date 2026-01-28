@@ -1,8 +1,8 @@
 # Deploy a Containerized Application 
 
-Using Choreo, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, etc.) on shared or private data planes using containers.
+Using {{ product_name }}, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, etc.) on shared or private data planes using containers.
 
-Choreo supports deploying containerized applications for the following component types:
+{{ product_name }} supports deploying containerized applications for the following component types:
 
 - Service
 - Web Application
@@ -11,9 +11,9 @@ Choreo supports deploying containerized applications for the following component
 - Event Handler
 - Test Runner
 
-## Connect your repository to Choreo
+## Connect your repository to {{ product_name }}
 
-To connect your GitHub repository to Choreo, you should authorize the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application to access your account or organization. When you attempt to connect your GitHub repository via the Component creation page, the Choreo Apps authorization prompt will appear.
+To connect your GitHub repository to {{ product_name }}, you should authorize the [{{ product_name }} Apps](https://github.com/marketplace/choreo-apps) GitHub application to access your account or organization. When you attempt to connect your GitHub repository via the Component creation page, the {{ product_name }} Apps authorization prompt will appear.
 
 * Connect GitHub Repository
     
@@ -28,20 +28,20 @@ To connect your GitHub repository to Choreo, you should authorize the [Choreo Ap
     ![Grant Repository Access](../assets/img/develop-components/deploy/github-repo-access.png){.cInlineImage-full}
 
 
-    The **Choreo Apps** requires the following permission:
+    The **{{ product_name }} Apps** requires the following permission:
     
     - Read access to issues and metadata
     - Read and write access to code, pull requests, and repository hooks
 
 !!! note
-    You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. Choreo needs write access only to send pull requests to a user repository. Choreo does not directly push any changes to a repository.
+    You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want {{ product_name }} to have access to your GitHub account. {{ product_name }} needs write access only to send pull requests to a user repository. {{ product_name }} does not directly push any changes to a repository.
 
-Alternatively, you can connect a public repository without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. Select the **Third-Party GitHub Repository** and paste a public repository URL in the **Public Repository URL** field at the time of component creation.
+Alternatively, you can connect a public repository without requiring authorization from the [{{ product_name }} Apps](https://github.com/marketplace/choreo-apps) GitHub application. Select the **Third-Party GitHub Repository** and paste a public repository URL in the **Public Repository URL** field at the time of component creation.
 
 !!! tip
-     Authorizing the repository with the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application becomes essential if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component. If you own the repository, you can subsequently authorize it with the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application to enable **Auto Deploy**.
+     Authorizing the repository with the [{{ product_name }} Apps](https://github.com/marketplace/choreo-apps) GitHub application becomes essential if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component. If you own the repository, you can subsequently authorize it with the [{{ product_name }} Apps](https://github.com/marketplace/choreo-apps) GitHub application to enable **Auto Deploy**.
 
-After granting access to the required repositories, you can choose a repository and an associated branch to connect to the Choreo component.
+After granting access to the required repositories, you can choose a repository and an associated branch to connect to the {{ product_name }} component.
 For the containerized application deployments, you should select the [**Component Directory**](https://docs.docker.com/build/building/context/#path-context), **Dockerfile** as the **Build preset** and provide **Dockerfile Path** for the Docker build.
 
 ![Connected Dockerfile Repository](../assets/img/develop-components/deploy/create-component-connected-repo.png){.cInlineImage-full}
@@ -64,7 +64,7 @@ The following table describes the individual fields in the **Create Component** 
  
     - Fields marked with **\*** are not visible for all component types.
 
-    - To successfully build your container with Choreo, it is essential to explicitly define a User ID (`UID`) under the `USER` instruction in your Dockerfile. You can refer to the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/rest-api/Dockerfile) for guidance.
+    - To successfully build your container with {{ product_name }}, it is essential to explicitly define a User ID (`UID`) under the `USER` instruction in your Dockerfile. You can refer to the [sample Dockerfile](https://github.com/wso2/choreo-sample-apps/blob/main/go/rest-api/Dockerfile) for guidance.
 
     - To ensure that the defined USER instruction is valid, it must conform to the following conditions:
         
@@ -73,8 +73,8 @@ The following table describes the individual fields in the **Create Component** 
 
 ## Deploy the containerized component
 
-Choreo will automatically apply deployment configurations and settings based on the component type you select during creation.
-For example, if you select the **Service** component type, Choreo will deploy it as a Kubernetes deployment with appropriate scaling configurations.
+{{ product_name }} will automatically apply deployment configurations and settings based on the component type you select during creation.
+For example, if you select the **Service** component type, {{ product_name }} will deploy it as a Kubernetes deployment with appropriate scaling configurations.
 
 You can run unit tests in the build pipeline by adding the relevant command to the Dockerfile.  For example: 
 
@@ -110,28 +110,28 @@ The following image shows adding a **ConfigMap** with **File Mount** mount type 
 
 ### Deployment configurations
 
-Choreo lets you configure deployment settings such as scaling, resource limits, and health checks based on your selected component type.
+{{ product_name }} lets you configure deployment settings such as scaling, resource limits, and health checks based on your selected component type.
 
-For more information about these configurations, see Choreo's [DevOps capabilities](../devops-and-ci-cd/view-runtime-details.md).
+For more information about these configurations, see {{ product_name }}'s [DevOps capabilities](../devops-and-ci-cd/view-runtime-details.md).
 
-You can configure the **Endpoints** to expose your service using the **Service** Component in Choreo. See [Service Component Overview](../develop-components/develop-services/service-component-overview.md) for more information. 
+You can configure the **Endpoints** to expose your service using the **Service** Component in {{ product_name }}. See [Service Component Overview](../develop-components/develop-services/service-component-overview.md) for more information. 
 
 ### Build, deploy, and promote
 
-After adding the application configuration, you can build and deploy it by clicking the **Deploy Manually** button. Choreo will start the build process with the selected commit in the **Build Area**. 
+After adding the application configuration, you can build and deploy it by clicking the **Deploy Manually** button. {{ product_name }} will start the build process with the selected commit in the **Build Area**. 
 
 !!! note
     The **Auto Deploy on Commit** feature, which automatically builds and deploys the application upon pushing a code change to the repository, is enabled by default. To turn off this feature, navigate to the **Build Area** of the **Deploy** page.
 
-Choreo scans your Dockerfile for security vulnerabilities during the build phase, and if there are no issues found, it proceeds with the build process. After building the image, it scans it again for vulnerabilities before deployment to the environment. You can view the build logs from the right-side panel, as shown in the image below.
+{{ product_name }} scans your Dockerfile for security vulnerabilities during the build phase, and if there are no issues found, it proceeds with the build process. After building the image, it scans it again for vulnerabilities before deployment to the environment. You can view the build logs from the right-side panel, as shown in the image below.
 
 ![Build Logs Panel](../assets/img/develop-components/deploy/build-deploy-page-logs.png){.cInlineImage-full}
 
-Once the build process is complete, Choreo will deploy the application automatically to the Development environment. To promote the build to higher environments, you can click the **Promote** button. The number of environment cards visible on the page may vary depending on your environment configurations.
+Once the build process is complete, {{ product_name }} will deploy the application automatically to the Development environment. To promote the build to higher environments, you can click the **Promote** button. The number of environment cards visible on the page may vary depending on your environment configurations.
 
 ### Troubleshoot security vulnerability scan failures (Trivy)
 
-By default, Choreo utilizes the Aqua Trivy (OSS) image vulnerability scanner to detect security vulnerabilities in all Dockerfile-based build pipelines. The scanner will fail the pipeline if any **CRITICAL** CVEs (Common Vulnerabilities and Exposures) are detected. CVEs of other severity levels are recorded but does not fail the pipeline.
+By default, {{ product_name }} utilizes the Aqua Trivy (OSS) image vulnerability scanner to detect security vulnerabilities in all Dockerfile-based build pipelines. The scanner will fail the pipeline if any **CRITICAL** CVEs (Common Vulnerabilities and Exposures) are detected. CVEs of other severity levels are recorded but does not fail the pipeline.
 
 If you cannot fix a critical CVE immediately, you can opt to ignore it. To ignore a critical CVE, add a `trivyignore` (`<docker-build-context-path>/.trivyignore`) file to your build context path. In the file, add the CVEs you need the pipeline to ignore, one entry per line as follows:
 

@@ -1,8 +1,8 @@
 # Integrate Unit Tests into the Build Pipeline
 
-Choreo allows you to integrate unit tests into the build pipeline, enabling code validation before deployment. This ensures early testing of code changes, reducing the risk of defects in production.
+{{ product_name }} allows you to integrate unit tests into the build pipeline, enabling code validation before deployment. This ensures early testing of code changes, reducing the risk of defects in production.
 
-Choreo supports unit testing for the `Java`, `Python`, `Node.js`, `Go`, `.Net`, `WSO2 Micro Integrator (MI)` and `Ballerina` build presets.
+{{ product_name }} supports unit testing for the `Java`, `Python`, `Node.js`, `Go`, `.Net`, `WSO2 Micro Integrator (MI)` and `Ballerina` build presets.
 
 ## Write tests
 
@@ -16,7 +16,7 @@ Once you have written your unit tests, commit them to your source code repositor
 
 To enable unit tests in the build pipeline for a component with unit tests in its source code, follow these steps:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click the component for which you want to enable unit tests.
 3. In the left navigation menu, click **Build**.
 4. On the **Build** page, click to edit **Build Configurations**.
@@ -29,7 +29,7 @@ Once you have enabled unit tests, trigger a new build to run them by clicking **
 
 ## View failed unit tests
 
-If a unit test fails during the build, Choreo will stop the build to prevent faulty code from being deployed. To troubleshoot, click **View Details** for the failed build and expand the failed unit test step to review the test output logs.
+If a unit test fails during the build, {{ product_name }} will stop the build to prevent faulty code from being deployed. To troubleshoot, click **View Details** for the failed build and expand the failed unit test step to review the test output logs.
 
 ## Explore samples
 

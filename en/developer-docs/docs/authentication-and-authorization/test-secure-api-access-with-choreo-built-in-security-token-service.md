@@ -1,33 +1,33 @@
-# Test Secure API Access with Choreo Built-In Security Token Service
+# Test Secure API Access with {{ product_name }} Built-In Security Token Service
 
 API security can protect APIs from potential threats and vulnerabilities, with authentication and authorization playing key roles. Authentication ensures that only authorized users or applications can access the API. This involves using API keys, tokens, or more advanced authentication methods like OAuth 2.0. Authorization governs the actions permitted for authenticated users or applications within the API. Authorization mechanisms restrict access to specific resources and actions based on user roles or permissions.
 
-Choreo simplifies security testing for developers, allowing them to easily test APIs with permissions in non-critical environments. With its integrated security token service, Choreo provides authorization features that generate scopes based on the correlation between scopes, roles, and user groups. Developers can create roles, assign permissions, and set up user-group mappings using Choreo's built-in identity provider (IdP).
+{{ product_name }} simplifies security testing for developers, allowing them to easily test APIs with permissions in non-critical environments. With its integrated security token service, {{ product_name }} provides authorization features that generate scopes based on the correlation between scopes, roles, and user groups. Developers can create roles, assign permissions, and set up user-group mappings using {{ product_name }}'s built-in identity provider (IdP).
 
-This guide walks you through the following steps to test the invocation of secured APIs with permissions using Choreo's built-in authorization capability:
+This guide walks you through the following steps to test the invocation of secured APIs with permissions using {{ product_name }}'s built-in authorization capability:
 
-- Assign scopes to an API in Choreo.
-- Create roles and assign permissions in Choreo.
+- Assign scopes to an API in {{ product_name }}.
+- Create roles and assign permissions in {{ product_name }}.
 - Assign roles to user groups.
 - Test the API invocation.
-    - When Choreo manages the authentication (i.e., managed authentication enabled).
+    - When {{ product_name }} manages the authentication (i.e., managed authentication enabled).
     - When the application independently handles the authentication (i.e., managed authentication disabled).
 
 ## Prerequisites
 
 Before you try out this guide, ensure you have set up the following:
 
-- Configure the Choreo built-in identity provider with users. For step-by-step instructions, see [Configure a User Store with the Built-In Identity Provider](../administer/configure-a-user-store-with-built-in-idp.md).
-- Deploy and publish an API via Choreo. If you don't have an existing service in Choreo, you can either [develop a service](../develop-components/develop-services/develop-a-service.md) or an [API Proxy](../develop-components/develop-an-api-proxy.md).
-- A web application for API subscription. If you don't have an application in Choreo, you must [create a web application](../develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md)
-- Administrator rights in your Choreo organization. You need this access to configure role-group and role-permission mappings.
+- Configure the {{ product_name }} built-in identity provider with users. For step-by-step instructions, see [Configure a User Store with the Built-In Identity Provider](../administer/configure-a-user-store-with-built-in-idp.md).
+- Deploy and publish an API via {{ product_name }}. If you don't have an existing service in {{ product_name }}, you can either [develop a service](../develop-components/develop-services/develop-a-service.md) or an [API Proxy](../develop-components/develop-an-api-proxy.md).
+- A web application for API subscription. If you don't have an application in {{ product_name }}, you must [create a web application](../develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md)
+- Administrator rights in your {{ product_name }} organization. You need this access to configure role-group and role-permission mappings.
 
-## Step 1: Assign permissions to an API in Choreo
+## Step 1: Assign permissions to an API in {{ product_name }}
 
 You can provide fine-grained access control to your API resources with permissions. Follow the steps below to assign permissions to the resources in the API:
 
 1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in.
-2. In the Choreo Console top navigation menu, click the **Project** list and select the project that contains your component.
+2. In the {{ product_name }} Console top navigation menu, click the **Project** list and select the project that contains your component.
 3. In the **Component Listing** pane, click on the component for which you want to attach permissions.
 4. In the left navigation menu, click **Deploy**.
 5. On the **Deploy** page, go to the **Set Up** card and click **Configure and Deploy**. Click Next and go to the **Endpoint Details** step.
@@ -37,7 +37,7 @@ You can provide fine-grained access control to your API resources with permissio
 9. To attach permissions to a resource, click the **Select Permissions** list under the respective resource and select the permissions you want to attach.
 10. To apply the permissions to the deployed component, click on **Deploy** button:
 
-12. To publish your API to the Choreo Developer Portal, follow the steps given below:
+12. To publish your API to the {{ product_name }} Developer Portal, follow the steps given below:
     1.  In the left navigation menu, click **Manage** and then click **Lifecycle**.
     2.  Click **Publish**.
 
@@ -45,7 +45,7 @@ You can provide fine-grained access control to your API resources with permissio
 
 The permissions assigned to your API need to be associated with roles. Follow the steps below to create roles and assign permissions to the roles.
 
-1. In the Choreo Console, go to the top navigation menu, click the **Project** list, and select the project that contains your component.
+1. In the {{ product_name }} Console, go to the top navigation menu, click the **Project** list, and select the project that contains your component.
 2. In the left navigation menu, click **Settings**.
 3. Click the **Application Security** tab.
 4. Click **+ Role**.
@@ -58,9 +58,9 @@ The permissions assigned to your API need to be associated with roles. Follow th
 
 ## Step 3: Assign roles to user groups
 
-You must assign roles to the user groups defined in your Choreo built-in IdP to ensure that authenticated users can obtain access tokens with the required permissions.
+You must assign roles to the user groups defined in your {{ product_name }} built-in IdP to ensure that authenticated users can obtain access tokens with the required permissions.
 
-1. In the Choreo Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your component.
+1. In the {{ product_name }} Console, go to the top navigation menu, click the **Organization** list, and select the organization where you created your component.
 2. Click the **Application Security** tab and then click **Role Management**.
 
     !!!tip
@@ -77,18 +77,18 @@ To test an API invocation, you must first create a connection to your API. To do
 
 To create a connection to the web application, follow the steps given below:
 
-1. In the Choreo Console, go to the top navigation menu, click the **Project** list, and select the project where you created the web application.
+1. In the {{ product_name }} Console, go to the top navigation menu, click the **Project** list, and select the project where you created the web application.
 2. On the project home page, click the web application listed under **Component Listing**.
 3. In the left navigation menu, click **Connections**.
 4. Create a connection to the API you deployed in [Step 1](#step-1-assign-permissions-to-an-api-in-choreo).
 
 Now you can proceed to deploy the web application.
 
-When deploying, if your web application is a single-page application (SPA), you have the option to allow Choreo to handle authentication on behalf of the application. This approach eliminates the need to incorporate OAuth protocol-specific logic into your application.
+When deploying, if your web application is a single-page application (SPA), you have the option to allow {{ product_name }} to handle authentication on behalf of the application. This approach eliminates the need to incorporate OAuth protocol-specific logic into your application.
 
-### Test the invocation when Choreo-managed authentication is enabled
+### Test the invocation when {{ product_name }}-managed authentication is enabled
 
-If managed authentication is enabled for your web application, Choreo automatically handles obtaining the necessary permission for API invocation. This occurs during the request for access tokens, allowing you to seamlessly invoke the subscribed APIs through your web application without additional intervention.
+If managed authentication is enabled for your web application, {{ product_name }} automatically handles obtaining the necessary permission for API invocation. This occurs during the request for access tokens, allowing you to seamlessly invoke the subscribed APIs through your web application without additional intervention.
 
 !!! note
     If you change the permissions of an existing connection or create a new connection with permissions, you must redeploy your web application to ensure proper API invocation with managed authentication.
@@ -100,7 +100,7 @@ If your application manages authentication independently, follow the steps below
 1. In the left navigation menu, click **Settings**. This opens the settings of the web application component.
 2. Click the **Authentication Keys** tab.
 3. Click on an environment tab depending on the environment for which you want to generate credentials.
-4. Select **Choreo Built-In Identity Provider** as the identity provider.
+4. Select **{{ product_name }} Built-In Identity Provider** as the identity provider.
 5. Click to expand **Advanced Configurations** and make sure the `code` and `refresh` grant types are selected. This is required to obtain access tokens with an authorization code grant.
 6. Configure the callback URL of the web application to receive the authorization code.
 7. Click **Update Configurations**.

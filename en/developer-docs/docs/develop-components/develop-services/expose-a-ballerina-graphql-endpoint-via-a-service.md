@@ -1,10 +1,10 @@
 # Expose a Ballerina GraphQL Endpoint via a Service
 
-Choreo offers the flexibility to develop and deploy applications in a language of your preference. This guide shows you how to deploy a service component that exposes a GraphQL API using the Ballerina language in Choreo. No prior knowledge of the Ballerina language is required to follow this guide.
+{{ product_name }} offers the flexibility to develop and deploy applications in a language of your preference. This guide shows you how to deploy a service component that exposes a GraphQL API using the Ballerina language in {{ product_name }}. No prior knowledge of the Ballerina language is required to follow this guide.
 
-GraphQL API is a query language and runtime that provides a single endpoint for retrieving flexible and efficient data in a strongly-typed and self-documenting way. By following this guide, you will build a service component in Ballerina and deploy it on Choreo for any GraphQL client application to utilize it.
+GraphQL API is a query language and runtime that provides a single endpoint for retrieving flexible and efficient data in a strongly-typed and self-documenting way. By following this guide, you will build a service component in Ballerina and deploy it on {{ product_name }} for any GraphQL client application to utilize it.
 
-This guide shows how to build a simple reading list service and deploy it in Choreo using Ballerina. The GraphQL endpoint you create in this guide has two operations: **Query** and **Mutation**. The Query type operations read the data in the data source, and the Mutation operations update the data in the data source. The reading list service has two queries and three mutations as follows:
+This guide shows how to build a simple reading list service and deploy it in {{ product_name }} using Ballerina. The GraphQL endpoint you create in this guide has two operations: **Query** and **Mutation**. The Query type operations read the data in the data source, and the Mutation operations update the data in the data source. The reading list service has two queries and three mutations as follows:
 
 ### Queries
 
@@ -133,20 +133,20 @@ $ {
 }
 ```
 
-Our next step is to set up the resources that you will require to follow the guide, including the sample reading list application and the Choreo GitHub app.
+Our next step is to set up the resources that you will require to follow the guide, including the sample reading list application and the {{ product_name }} GitHub app.
 
 ## Prerequisites
 
-- If you are signing in to the Choreo Console for the first time, create an organization as follows:
+- If you are signing in to the {{ product_name }} Console for the first time, create an organization as follows:
 
-    1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your preferred method.
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample GraphQL service](https://github.com/wso2/choreo-samples/tree/main/reading-list-graphql) implementation for this guide.
+- Fork the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample GraphQL service](https://github.com/wso2/choreo-samples/tree/main/reading-list-graphql) implementation for this guide.
 
 Let's get started!
 
@@ -167,27 +167,27 @@ It is important to understand the purpose of the key files in the sample service
 
 To create a Ballerina service component, follow these steps:
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+4. To allow {{ product_name }} to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to {{ product_name }}, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [{{ product_name }} Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
 
     !!! note
-           The **Choreo GitHub App** requires the following permissions:
+           The **{{ product_name }} GitHub App** requires the following permissions:
 
            - Read and write access to code and pull requests.
            - Read access to issues and metadata.
 
-           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want {{ product_name }} to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. {{ product_name }} will not directly push any changes to a repository.
 
 5. Under **Connect a Git Repository**, enter the following information:
 
     | **Field**               | **Value**               |
     |-------------------------|-------------------------|
     | **Organization**        | Your GitHub account     |
-    | **GitHub Repository**   | **`choreo-samples`**    |
+    | **GitHub Repository**   | **`{{ product_name }}-samples`**    |
     | **Branch**              | **`main`**              |
     | **Component Directory**| `reading-list-graphql`    |.
 
@@ -235,7 +235,7 @@ To deploy the service, follow these steps:
         Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
 To build and deploy the service, follow the steps below:
 
-Once you have successfully deployed your service, you can test, manage, and observe it like any other component type in Choreo.
+Once you have successfully deployed your service, you can test, manage, and observe it like any other component type in {{ product_name }}.
 
 For detailed instructions, see the following sections:
 

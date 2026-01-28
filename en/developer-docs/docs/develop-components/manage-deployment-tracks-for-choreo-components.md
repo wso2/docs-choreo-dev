@@ -1,6 +1,6 @@
-# Manage Deployment Tracks for Choreo Components
+# Manage Deployment Tracks for {{ product_name }} Components
 
-Choreo allows you to create and manage dedicated [deployment tracks](../choreo-concepts/deployment-tracks.md) for components, facilitating independent version control and deployment. This capability also allows you to unlink deployment tracks from associated branches or relink them to different branches so that you can align with your preferred Git workflows, such as the feature branch workflow or GitFlow workflow.
+{{ product_name }} allows you to create and manage dedicated [deployment tracks](../choreo-concepts/deployment-tracks.md) for components, facilitating independent version control and deployment. This capability also allows you to unlink deployment tracks from associated branches or relink them to different branches so that you can align with your preferred Git workflows, such as the feature branch workflow or GitFlow workflow.
 
 !!! info
      Deployment track creation and management does not apply to API Proxy and [BYOI components](../develop-components/bring-your-own-image.md).
@@ -9,7 +9,7 @@ Choreo allows you to create and manage dedicated [deployment tracks](../choreo-c
 
 **Prerequisites**:
 
- - Create a component in Choreo.
+ - Create a component in {{ product_name }}.
 
 Follow the steps below to create a deployment track for a component:
 
@@ -79,7 +79,7 @@ Follow the steps below to switch the branch reference of a linked deployment tra
 5. In the **Edit Branch** dialog that opens, click the **Branch Name** list and select the branch you want to relink.
 6. Click **Save**.
 
-Now that you understand how to create and manage deployment tracks for components, let’s explore a sample scenario to see how a developer can use deployment tracks to manage version releases in Choreo.
+Now that you understand how to create and manage deployment tracks for components, let’s explore a sample scenario to see how a developer can use deployment tracks to manage version releases in {{ product_name }}.
 
 ## Sample Scenario: Manage version releases with deployment tracks
 
@@ -98,7 +98,7 @@ Following are the actions you need to take from a deployment track perspective t
 5. To facilitate ongoing development and testing, create another deployment track (let’s consider this as deployment track 3) and link it to the `dev` branch.
 
 !!! tip
-     - As a developer, you can strategically unlink and relink deployment tracks to effectively manage different versions of your services within Choreo.
+     - As a developer, you can strategically unlink and relink deployment tracks to effectively manage different versions of your services within {{ product_name }}.
      - You can create new deployment tracks for ongoing development branches like `dev` to ensure a continuous development and release cycle.
 
 ## Delete a deployment track

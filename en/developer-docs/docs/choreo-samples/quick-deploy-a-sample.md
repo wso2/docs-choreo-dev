@@ -1,13 +1,13 @@
 # Quick Deploy a Sample
 
-Choreo provides a **Quick Deploy** option for samples, allowing you to deploy a sample with a single click. This feature enables you to quickly explore and experiment with the sample.
+{{ product_name }} provides a **Quick Deploy** option for samples, allowing you to deploy a sample with a single click. This feature enables you to quickly explore and experiment with the sample.
 
 ## Prerequisites
 
 Before you start using the samples, complete the following steps:
 
-- If you're signing in to Choreo for the first time, follow these steps to create an organization and project:
-    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
+- If you're signing in to {{ product_name }} for the first time, follow these steps to create an organization and project:
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**. This creates the organization and takes you to its **Overview** page.
@@ -19,8 +19,8 @@ Before you start using the samples, complete the following steps:
 
 To quickly deploy a sample, follow these steps:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. On the Choreo Console header, go to the **Project** list and select your project. This opens the project **Overview** page.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. On the {{ product_name }} Console header, go to the **Project** list and select your project. This opens the project **Overview** page.
 3. On the project **Overview** page, go to the **Create from a Sample** section. You will see a selection of samples.
 4. To view the complete collection of samples, click **View All Samples**.
 5. Hover over a sample of your choice and click **Quick Deploy**. This creates the component and deploys it automatically.
@@ -33,4 +33,4 @@ Once you quick deploy a sample, follow one of the post-deployment actions below 
 - **For web applications**: Open the deployed web application using the provided URL.
 - **For manual tasks and scheduled tasks**: Go to the **Execute** page and run the task. For scheduled tasks, you can also find the cron schedule on the **Overview** page.
 
-This feature allows you to quickly explore and understand how Choreo works with minimal setup.
+This feature allows you to quickly explore and understand how {{ product_name }} works with minimal setup.

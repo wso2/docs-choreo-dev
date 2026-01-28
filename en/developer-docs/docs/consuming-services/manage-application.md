@@ -4,7 +4,7 @@
 
 ## Grant types
 
-Choreo uses OAuth 2.0 for authentication. In OAuth 2.0, grant types are methods that allow client applications to obtain an access token. The type of grant used depends on the resource owner, the application type, and the trust relationship between the authorization server and the resource owner.
+{{ product_name }} uses OAuth 2.0 for authentication. In OAuth 2.0, grant types are methods that allow client applications to obtain an access token. The type of grant used depends on the resource owner, the application type, and the trust relationship between the authorization server and the resource owner.
 
 ### Authorization code grant
 
@@ -14,7 +14,7 @@ This method protects user credentials and prevents them from being compromised b
 
 ### Refresh token grant
 
-A refresh token allows you to obtain a new access token when the current one expires or when a new token is needed. The refresh token grant type is used for this purpose. Refresh tokens are optional and, if issued, are included in the response along with the access token. You can use the refresh token to request a new access token from the authorization server. Choreo's default authorization server, Asgardeo, issues refresh tokens for all grant types except the **Client Credentials** grant type, as recommended by the OAuth 2.0 specification.
+A refresh token allows you to obtain a new access token when the current one expires or when a new token is needed. The refresh token grant type is used for this purpose. Refresh tokens are optional and, if issued, are included in the response along with the access token. You can use the refresh token to request a new access token from the authorization server. {{ product_name }}'s default authorization server, Asgardeo, issues refresh tokens for all grant types except the **Client Credentials** grant type, as recommended by the OAuth 2.0 specification.
 
 !!! note
     - Treat refresh tokens as securely as access tokens.
@@ -46,4 +46,4 @@ In traditional session-based authentication, the server can revoke a session by 
 
 To address these challenges, use short-lived JWT access tokens and refresh them regularly. This reduces the risk of unauthorized access if a token is stolen or leaked. Additionally, implementing strong encryption and secure token storage can further enhance JWT-based authentication security.
 
-By default, the Choreo Developer Portal sets the token lifespan to 15 minutes (900 seconds). Application developers can increase this time if necessary, but it is recommended to keep it as short as possible.
+By default, the {{ product_name }} Developer Portal sets the token lifespan to 15 minutes (900 seconds). Application developers can increase this time if necessary, but it is recommended to keep it as short as possible.

@@ -1,10 +1,10 @@
 # Test GraphQL Endpoints via the GraphQL Console
 
-Choreo provides an integrated GraphQL Console to test publicly exposed GraphQL endpoints of Service components you create and deploy. The GraphQL Console allows you to write queries and mutations interactively. As Choreo uses OAuth2.0 authentication by default to secure GraphQL APIs, the GraphQL Console generates test keys to test APIs.
+{{ product_name }} provides an integrated GraphQL Console to test publicly exposed GraphQL endpoints of Service components you create and deploy. The GraphQL Console allows you to write queries and mutations interactively. As {{ product_name }} uses OAuth2.0 authentication by default to secure GraphQL APIs, the GraphQL Console generates test keys to test APIs.
 
 Follow the steps below to test a GraphQL endpoint via the GraphQL Console:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 
 2. In the **Component Listing** pane, click on the component you want to test.
 
@@ -17,7 +17,7 @@ Follow the steps below to test a GraphQL endpoint via the GraphQL Console:
     !!! note
         - The **Network Visibilities** of an endpoint are set in the **component.yaml**. You can set any combination of **Public**, **Organization**, or **Project**.
         - If you have set the **Network Visibilities** of the endpoint in the **component.yaml** to **Public**, continue with step 7. 
-        - If you have set the **Network Visibilities** of the endpoint in the **component.yaml** to **Organization**, the GraphQL endpoint will not be invokable from outside the organization. In this instance, for testing purposes, Choreo allows you to generate a temporay test URL that will be active for 15 minutes. Execute step 6 to generate the temporary URL. 
+        - If you have set the **Network Visibilities** of the endpoint in the **component.yaml** to **Organization**, the GraphQL endpoint will not be invokable from outside the organization. In this instance, for testing purposes, {{ product_name }} allows you to generate a temporay test URL that will be active for 15 minutes. Execute step 6 to generate the temporary URL. 
         
 6. If the **Network Visibilities** of the endpoint contains **Organization**, click on **Generate URL** to generate a temporary test URL that will be active for 15 minutes. Else, skip this step. 
 

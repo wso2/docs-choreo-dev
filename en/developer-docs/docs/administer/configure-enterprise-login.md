@@ -1,8 +1,8 @@
 # Configure Enterprise Login
 
-With Choreo, you can configure enterprise login to allow users from an external identity provider (IdP) to sign in to Choreo seamlessly without changing their credentials.
+With {{ product_name }}, you can configure enterprise login to allow users from an external identity provider (IdP) to sign in to {{ product_name }} seamlessly without changing their credentials.
 
-This guide walks you through the steps to configure enterprise login for your organization in Choreo. 
+This guide walks you through the steps to configure enterprise login for your organization in {{ product_name }}. 
 
 
 ## Prerequisites 
@@ -10,15 +10,15 @@ This guide walks you through the steps to configure enterprise login for your or
 Before you proceed with the configuration, set up the following:
 
 - A valid email domain for your organization.
-- Access the Choreo Console at https://console.choreo.dev/ via your Google, GitHub, or Microsoft account. If you are a new user, create an organization with a unique organization name. For example, "Stark Industries". 
+- Access the {{ product_name }} Console at https://console.choreo.dev/ via your Google, GitHub, or Microsoft account. If you are a new user, create an organization with a unique organization name. For example, "Stark Industries". 
 
-## Configure enterprise login for your Choreo organization
+## Configure enterprise login for your {{ product_name }} organization
 
-To configure enterprise login for your Choreo organization, follow the steps given below:
+To configure enterprise login for your {{ product_name }} organization, follow the steps given below:
 
  - **If you already have a support account with us**, send us your organization name/handle and the email domains specific to your organization through our support portal. 
 
- - **If you do not have a support account with us yet**, send an email to `choreo-help@wso2.com` requesting to enable enterprise login for your organization. 
+ - **If you do not have a support account with us yet**, send an email to `{{ product_name }}-help@wso2.com` requesting to enable enterprise login for your organization. 
       
     !!! tip
         Ensure you include the following information in the request:
@@ -42,7 +42,7 @@ To configure enterprise login for your Choreo organization, follow the steps giv
 
         Thank you.
 
-    The Choreo support team will perform the necessary configurations and respond to you with a verification code. You must sign in to your domain host account and configure the DNS record for your email domain with the following values:
+    The {{ product_name }} support team will perform the necessary configurations and respond to you with a verification code. You must sign in to your domain host account and configure the DNS record for your email domain with the following values:
 
     | **Field**                          | **Value**                                      |
     |------------------------------------|------------------------------------------------|
@@ -51,11 +51,11 @@ To configure enterprise login for your Choreo organization, follow the steps giv
     | **Value/Answer/Destination**       | wso2-domain-verification:<`verification_code`> |
 
 
-Now, you are ready to bring your own identity to Choreo.
+Now, you are ready to bring your own identity to {{ product_name }}.
 
-## Bring your own identity to Choreo
+## Bring your own identity to {{ product_name }}
 
-When you create an organization in Choreo, an organization with the same name is provisioned for you in Asgardeo. To bring your own identity to Choreo, you must configure a federated enterprise IdP on Asgardeo in the organization that is provisioned for you.
+When you create an organization in {{ product_name }}, an organization with the same name is provisioned for you in Asgardeo. To bring your own identity to {{ product_name }}, you must configure a federated enterprise IdP on Asgardeo in the organization that is provisioned for you.
 
 Follow the steps given below to configure the federated IdP:
 
@@ -65,21 +65,21 @@ Follow the steps given below to configure the federated IdP:
 4. Click on the application to edit it.
 5. Click the **Sign-in Method** tab. You can observe the configured connection.
 
-Now, users in your enterprise IdP can sign in to the Choreo Console using their enterprise IDs.
+Now, users in your enterprise IdP can sign in to the {{ product_name }} Console using their enterprise IDs.
 
 ## Configure role-based access control for enterprise login
 
-To streamline the enterprise login process and grant appropriate permission, Choreo provides the flexibility to configure role-based access control for users who reside in an external IdP. 
+To streamline the enterprise login process and grant appropriate permission, {{ product_name }} provides the flexibility to configure role-based access control for users who reside in an external IdP. 
 
-To set up role-based access control for enterprise login within Choreo, follow the steps given below:
+To set up role-based access control for enterprise login within {{ product_name }}, follow the steps given below:
 
 ### Prerequisites
 
 Before you proceed with the configuration, make sure you complete the following:
 
-1. Configure enterprise login for your organization. For instructions, see [Configure enterprise login for your Choreo organization](#configure-enterprise-login-for-your-choreo-organization). 
+1. Configure enterprise login for your organization. For instructions, see [Configure enterprise login for your {{ product_name }} organization](#configure-enterprise-login-for-your-{{ product_name }}-organization). 
 2. Ensure your enterprise identity provider includes the group/role attributes in tokens it sends to Asgardeo via the respective protocol.
-3. Be sure you have administrator privileges in Choreo.
+3. Be sure you have administrator privileges in {{ product_name }}.
 
 ### Step 1: Configure Asgardeo
 
@@ -107,23 +107,23 @@ Before you proceed with the configuration, make sure you complete the following:
     3. Click **New Attribute** and select the **Groups** attribute.
     4. Click **Save** and then click **Save Changes**.
 
-### Step 2: Map Choreo groups to enterprise IdP groups via the Choreo Console 
+### Step 2: Map {{ product_name }} groups to enterprise IdP groups via the {{ product_name }} Console 
 
 !!! note
     
-    Before you map Choreo groups to enterprise IdP groups, ensure you meet the following criteria:
+    Before you map {{ product_name }} groups to enterprise IdP groups, ensure you meet the following criteria:
 
     - Asgardeo is your key manager.
     - You have permission to perform actions of the organization administrator role.
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console, go to the top navigation menu and click **Organization**. This takes you to the organization's home page.
 3. In the left navigation menu, click **Settings**. This opens the organization-level settings page. 
 4. In the **Access Control** tab, click **Groups**. 
 5. Click **Manage IdP Group Mapping**.
     ![Group mapping](../assets/img/administer/enterprise-login/group-mapping.png)
 
-6. Click the edit icon corresponding to the Choreo group you want to map to the enterprise IdP group.
+6. Click the edit icon corresponding to the {{ product_name }} group you want to map to the enterprise IdP group.
 7. In the **IdP Group Name** field, specify the exact name you configured in the enterprise IdP and enter to add it.
    
     !!! tip
@@ -131,4 +131,4 @@ Before you proceed with the configuration, make sure you complete the following:
 
 8. Click **Save**. 
 
-By following these steps, you have successfully configured role-based access control for enterprise login in Choreo, allowing users from the external IdP to have the appropriate permission.
+By following these steps, you have successfully configured role-based access control for enterprise login in {{ product_name }}, allowing users from the external IdP to have the appropriate permission.

@@ -1,18 +1,18 @@
-# What is Choreo?
+# What is {{ product_name }}?
 
-**Choreo** is an AI-native Internal Developer Platform (IDP) that helps teams design, develop, deploy, and manage cloud-native applications. It simplifies infrastructure management by abstracting platform complexity, allowing developers to focus on writing code, while enabling platform engineers to maintain governance and operational control. Choreo supports the full application lifecycle, from code to production, within a unified environment.
+**{{ product_name }}** is an AI-native Internal Developer Platform (IDP) that helps teams design, develop, deploy, and manage cloud-native applications. It simplifies infrastructure management by abstracting platform complexity, allowing developers to focus on writing code, while enabling platform engineers to maintain governance and operational control. {{ product_name }} supports the full application lifecycle, from code to production, within a unified environment.
 
 ![Diagram of Choreo capabilities](../assets/img/what-is-choreo.png){.cInlineImage-full}
 
 !!! info "Global Availability"
-    **Choreo is now available in two regions worldwide:**
+    **{{ product_name }} is now available in two regions worldwide:**
 
     - 🇺🇸 **US Region**: [console.choreo.dev](https://console.choreo.dev)
     - 🇪🇺 **EU Region**: [console.eu.choreo.dev](https://console.eu.choreo.dev)
 
     **Important**: No data is shared between regions. Resources created in one region are not available in the other region. This includes projects, components, APIs, services, configurations, secrets, user data, and monitoring data. Choose the region that meets your data residency and compliance requirements.
 
-## Key capabilities of Choreo
+## Key capabilities of {{ product_name }}
 
 ### Architecture and Design
 - **Domain-Driven Design**: Group related components such as services, APIs, scheduled tasks, event handlers into Projects based on business domains.
@@ -24,7 +24,7 @@
 - **Git Integration**: Connect to Git-based platforms such as GitHub, Bitbucket, GitLab or Azure DevOps by linking an existing repository to develop components.
 
 ### Deployment
-- **CI/CD**: Automate builds and deployments using Choreo’s integrated CI/CD pipelines. Supports customizable workflows and deployment tracks.
+- **CI/CD**: Automate builds and deployments using {{ product_name }}’s integrated CI/CD pipelines. Supports customizable workflows and deployment tracks.
 - **Multi-Cloud Kubernetes**: Easily deploy cloud-native applications across Azure, AWS, GCP, or your Kubernetes clusters.
 - **Configuration Management**: Centralize configuration parameters, sensitive credentials, and secrets across deployment environments via an intuitive interface.
 
@@ -35,7 +35,7 @@
 
 ### Reusability
 - **Visibility and Sharing**: Publish your digital assets to a shared marketplace for consumption by internal or external stakeholders, managed by role-based access control.
-- **Internal Marketplace**: Choreo's internal marketplace provides controlled access to shared resources, allowing publishers and consumers to manage visibility and usage through fine-grained permissions.
+- **Internal Marketplace**: {{ product_name }}'s internal marketplace provides controlled access to shared resources, allowing publishers and consumers to manage visibility and usage through fine-grained permissions.
 
 ### Observability
 - **Anomaly Detection**: Get notified of unexpected behavior to help identify issues early and respond as needed.
@@ -47,4 +47,4 @@
 - **API Analytics**: Track API usage, latency, and error rates to identify bottlenecks or usage patterns.
 
 
-Choreo is your all-in-one platform for building, deploying, and managing cloud-native applications with ease, security, and efficiency.
+{{ product_name }} is your all-in-one platform for building, deploying, and managing cloud-native applications with ease, security, and efficiency.

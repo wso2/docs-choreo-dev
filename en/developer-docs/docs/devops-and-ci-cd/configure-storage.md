@@ -1,6 +1,6 @@
 # Configure Storage
 
-All components you create in Choreo have a default **read-only file system**, which you cannot access or write to from your applications.
+All components you create in {{ product_name }} have a default **read-only file system**, which you cannot access or write to from your applications.
 
 Volume mounts allow you to create either temporary or persisted writable file system storage locations for your applications.
 
@@ -24,7 +24,7 @@ However, it is important to note that these volumes destroy when you restart or 
 
 Follow these steps to create a temporary storage space for your container:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to create a temporary storage.
 3. In the left navigation menu, click **DevOps** and then click **Storage**.
 4. Click **+ Create**.
@@ -58,7 +58,7 @@ Follow these steps to create a persistent storage space for your container:
        Persistent volume options are only available in private data plane organizations.
 
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to create a persistent storage.
 3. In the left navigation menu, click **DevOps** and then click **Storage**.
 4. Click **+ Create**.
@@ -68,7 +68,7 @@ Follow these steps to create a persistent storage space for your container:
 8. Select an appropriate **Access Mode**. 
 
     !!! tip "Check and specify an access mode supported by the storage class"
-        - You must check the cloud provider documentation to select an appropriate access mode that the storage class supports. Choreo does not verify whether the storage class supports the access mode you select.
+        - You must check the cloud provider documentation to select an appropriate access mode that the storage class supports. {{ product_name }} does not verify whether the storage class supports the access mode you select.
         - If the storage class does not support the access mode you select, it can result in a runtime mount error.
 
     ![Create persistent storage](../assets/img/devops-and-ci-cd/storage/create-pv.png){.cInlineImage-full}

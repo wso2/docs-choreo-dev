@@ -1,8 +1,8 @@
-# Configure Approvals for Choreo Workflows
+# Configure Approvals for {{ product_name }} Workflows
 
-Choreo allows you to configure approval processes for specific workflows within the platform. An approval process for a workflow ensures that critical or sensitive changes are properly managed and controlled.
+{{ product_name }} allows you to configure approval processes for specific workflows within the platform. An approval process for a workflow ensures that critical or sensitive changes are properly managed and controlled.
 
-Choreo currently allows you to configure approvals for environment promotion, API subscription and URL customization workflows.
+{{ product_name }} currently allows you to configure approvals for environment promotion, API subscription and URL customization workflows.
 
 Configuring approvals for environment promotion allows authorized users to control components being promoted to a critical/production environment.
 
@@ -45,11 +45,11 @@ Click the respective tab for details on permissions depending on the workflow fo
 To set up an approval process for a workflow, follow these steps:
 
 !!! note
-     - You must have administrator privileges in Choreo to configure workflow approvals.
+     - You must have administrator privileges in {{ product_name }} to configure workflow approvals.
      - Administrators can designate specific roles and assignees to receive notifications associated with each workflow.
 
 1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console header, go to the **Organization** list and select your organization.
+2. In the {{ product_name }} Console header, go to the **Organization** list and select your organization.
 3. In the left navigation menu, click **Settings**. This opens the organization-level settings page.
 4. Click the **Workflows** tab.
 5. Click the Configure icon corresponding to the workflow for which you want to configure an approval.
@@ -58,7 +58,7 @@ To set up an approval process for a workflow, follow these steps:
     - In the **Roles** field, select one or more roles depending on your preference. All users assigned to the selected roles will be eligible to receive notifications. Scope of notification delivery depends on the role assignment level when [configuring permissions](#permissions-to-review-and-respond-to-approval-requests):
          1. Project level roles-to-group assignment: Users in these groups will receive notifications only for approval requests raised within the specific project where the role is assigned.
          2. Organization level roles-to-group assignment: Users in these groups will receive notifications for approval requests raised across all projects in the organization.
-    - In the **Assignees** field, select specific users who can review and approve workflow requests. Assignees can be any Choreo user, even if they are not assigned to a selected role.
+    - In the **Assignees** field, select specific users who can review and approve workflow requests. Assignees can be any {{ product_name }} user, even if they are not assigned to a selected role.
 
     Both Roles and Assignees are optional configuration fields. If neither is specified, the system will not dispatch any notifications. However, users with the necessary permissions can still log in to the system and review approval requests through the interface.
 

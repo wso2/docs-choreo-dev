@@ -1,6 +1,6 @@
 # Test Components with Test Runner
 
-Test Runner is a component type in Choreo that simplifies the process of running automated tests against your components deployed in Choreo. This capability helps developers evaluate applications in different setups and environments, leading to more confidence and improved visibility into the application's status.
+Test Runner is a component type in {{ product_name }} that simplifies the process of running automated tests against your components deployed in {{ product_name }}. This capability helps developers evaluate applications in different setups and environments, leading to more confidence and improved visibility into the application's status.
 
 You can create tests using popular programming languages like Go, Java, JavaScript, Python, and more. Additionally, you have the option to build a test runner component by supplying a Dockerfile containing a series of test scripts or by offering a set of Postman Collections.
 
@@ -8,39 +8,39 @@ You can create tests using popular programming languages like Go, Java, JavaScri
 
 Before you try out the steps in this guide, complete the following:
 
- - If you are signing in to the Choreo Console for the first time, create an organization as follows:
-    1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your preferred method.
+ - If you are signing in to the {{ product_name }} Console for the first time, create an organization as follows:
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
        This creates the organization and opens the **Project Home** page of the default project created for you.
- - Fork the [Choreo examples repository](https://github.com/wso2/choreo-samples), which contains the [test runner sample](https://github.com/wso2/choreo-samples/tree/main/test-runner-go) for this guide.
+ - Fork the [{{ product_name }} examples repository](https://github.com/wso2/choreo-samples), which contains the [test runner sample](https://github.com/wso2/choreo-samples/tree/main/test-runner-go) for this guide.
 
-You can develop tests in a language of your choice and execute them within the Choreo platform.
+You can develop tests in a language of your choice and execute them within the {{ product_name }} platform.
 
 ## Create a test runner component using a build preset
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. Click **+Create** in the **Component Listing** section.
 3. Click the **Test Runner** card.
-6. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+6. To allow {{ product_name }} to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to {{ product_name }}, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [{{ product_name }} Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
 
     !!! note
-           The **Choreo GitHub App** requires the following permissions:
+           The **{{ product_name }} GitHub App** requires the following permissions:
 
            - Read and write access to code and pull requests.
            - Read access to issues and metadata.
 
-           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want {{ product_name }} to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. {{ product_name }} will not directly push any changes to a repository.
 
 7. Under **Connect a Git Repository**, enter the following information:
 
     | **Field**              | **Value**          |
     |------------------------|--------------------|
     | **Organization**       | Your GitHub account|
-    | **GitHub Repository**  | choreo-samples     |
+    | **GitHub Repository**  | {{ product_name }}-samples     |
     | **Branch**             | **`main`**         |
     | **Component Directory**| `/test-runner-go`  |
 
@@ -126,4 +126,4 @@ You have successfully created a Test Runner component using a build preset of yo
 
             -  The default behavior is to run all the collections in the specified directory.
             -  To run specific collections in the directory, use `-f` or `--files` as the first argument, followed by a comma-separated list of collections.
-            -  Since Choreo uses [Newman](https://www.npmjs.com/package/newman) internally to run Postman Collections, you can pass any valid Newman arguments.
+            -  Since {{ product_name }} uses [Newman](https://www.npmjs.com/package/newman) internally to run Postman Collections, you can pass any valid Newman arguments.

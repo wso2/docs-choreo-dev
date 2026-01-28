@@ -1,8 +1,8 @@
-# Configure VPNs on the Choreo Cloud Data Plane
+# Configure VPNs on the {{ product_name }} Cloud Data Plane
 
-Secure access to private networks from the Choreo cloud data plane is an essential use case for cloud data plane users.
+Secure access to private networks from the {{ product_name }} cloud data plane is an essential use case for cloud data plane users.
 
-Choreo allows this secure connection using [Tailscale](https://tailscale.com/). For this, Choreo provides a prebuilt Tailscale image component that can act as a forward proxy, which you can deploy in your Choreo project as a service. This service allows you to forward traffic to your external networks via Tailscale’s peer-to-peer [WireGuard](https://tailscale.com/kb/1035/wireguard) network.
+{{ product_name }} allows this secure connection using [Tailscale](https://tailscale.com/). For this, {{ product_name }} provides a prebuilt Tailscale image component that can act as a forward proxy, which you can deploy in your {{ product_name }} project as a service. This service allows you to forward traffic to your external networks via Tailscale’s peer-to-peer [WireGuard](https://tailscale.com/kb/1035/wireguard) network.
 
 The following diagram illustrates the high-level deployment architecture of the Tailscale pre-installed forward proxy:
 
@@ -10,13 +10,13 @@ The following diagram illustrates the high-level deployment architecture of the 
 
 Let's take a look at the specifics of each part to understand the deployment architecture.
 
-- **Choreo project**
+- **{{ product_name }} project**
 
-    In Choreo, a project groups various components. For more information on what a project in Choreo is, see the documentation on [Project](../choreo-concepts/project.md).
+    In {{ product_name }}, a project groups various components. For more information on what a project in {{ product_name }} is, see the documentation on [Project](../choreo-concepts/project.md).
 
 - **Tailscale proxy**
 
-    This acts as the Tailscale pre-installed forward proxy, facilitating secure peer-to-peer WireGuard connections from the Choreo cloud data plane to private networks. It includes a [Tailscale Daemon](https://tailscale.com/kb/1278/tailscaled), [SOCKS5 proxy](https://tailscale.com/kb/1112/userspace-networking#socks5-vs-http), and a configurable TCP forwarder.
+    This acts as the Tailscale pre-installed forward proxy, facilitating secure peer-to-peer WireGuard connections from the {{ product_name }} cloud data plane to private networks. It includes a [Tailscale Daemon](https://tailscale.com/kb/1278/tailscaled), [SOCKS5 proxy](https://tailscale.com/kb/1112/userspace-networking#socks5-vs-http), and a configurable TCP forwarder.
 
     - **Tailscale daemon**
 
@@ -30,7 +30,7 @@ Let's take a look at the specifics of each part to understand the deployment arc
 
         Forwards inbound TCP (transmission control protocol) traffic from the Tailscale proxy container’s network interface to the SOCKS5 proxy, ensuring it reaches its destination via the secured WireGuard tunnel.
 
-- **User applications and the Choreo API gateway**
+- **User applications and the {{ product_name }} API gateway**
 
     User applications within the same namespace (project) can use the Kubernetes service created to front the Tailscale proxy, for connecting to the corresponding private endpoints. You can either expose this service within the organization via the internal API gateway or expose it to the public via the external API gateway. For more details, see the documentation on [Choreo endpoints](../develop-components/configure-endpoints.md).
 
@@ -51,7 +51,7 @@ Let's get started.
 - Understand the basics of [how Tailscale works](https://tailscale.com/blog/how-tailscale-works).
 - Have a Tailscale account (Tailnet). There are multiple plans available for you to set up your Tailscale network. For details, see [Tailscale plans](https://tailscale.com/pricing).
 - Install Tailscale and connect your private data center or server to it, so that your private services are accessible via your Tailscale network. To quickly get started with Tailscale, see the [Tailscale quickstart](https://tailscale.com/kb/1017/install).
-- If you are signing in to the Choreo Console for the first time, create an organization as follows:
+- If you are signing in to the {{ product_name }} Console for the first time, create an organization as follows:
 
     1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your Google, GitHub, or Microsoft account.
     2. Enter a unique organization name. For example, `Stark Industries`.
@@ -85,7 +85,7 @@ Follow the steps given below to create a project:
 
 1. On the project home page, click **+ Create**, and select the **Service** card to create a service component.
 2. Click the **Container Registry** from the **Connect a Docker Image** section
-3. In the **Container Registry** list, select **Choreo Samples Registry**.
+3. In the **Container Registry** list, select **{{ product_name }} Samples Registry**.
 4. Click the **Tailscale Proxy** card.
 5. Enter a display name, component name, and a description for the service. For this guide, let's enter the following values:
 
@@ -125,8 +125,8 @@ To configure and deploy the component, follow the steps given below:
 
         Follow these steps if you want to add an OAuth client secret to the Tailscale proxy component instead of the `TS_AUTH_KEY` environment variable as a secret:
 
-         1. Define a tag named `choreo-vpn` in your Tailscale ACLs. For details, see [Define a tag](https://tailscale.com/kb/1068/tags#define-a-tag) in the Tailscale documentation.
-         2. Create an [OAuth client](https://tailscale.com/kb/1215/oauth-clients) with the following scope, ensuring it is assigned to the `choreo-vpn` tag:
+         1. Define a tag named `{{ product_name }}-vpn` in your Tailscale ACLs. For details, see [Define a tag](https://tailscale.com/kb/1068/tags#define-a-tag) in the Tailscale documentation.
+         2. Create an [OAuth client](https://tailscale.com/kb/1215/oauth-clients) with the following scope, ensuring it is assigned to the `{{ product_name }}-vpn` tag:
              - Keys → Auth Keys → write
          3. Generate the OAuth client and copy the client secret.
          4. Set the client secret as an environment variable named `OAUTH_CLIENT_SECRET`.
@@ -149,7 +149,7 @@ To configure and deploy the component, follow the steps given below:
 8. In the **Endpoints** pane that opens, click **+ Add** and edit the `endpoints.yaml` configuration to expose your Tailscale proxy as a service. The following is a sample `endpoints.yaml` configuration you can use:
 
     !!! note
-        The sample `endpoints.yaml` file given below defines two project-level endpoints. These endpoints can be used by other components within the same project to access the services. If you want to directly expose your private endpoint via the Choreo gateway either with the **Public** or **Organization** visibility, you can set the `networkVisibility` property of the endpoint to `Public` or `Organization`.
+        The sample `endpoints.yaml` file given below defines two project-level endpoints. These endpoints can be used by other components within the same project to access the services. If you want to directly expose your private endpoint via the {{ product_name }} gateway either with the **Public** or **Organization** visibility, you can set the `networkVisibility` property of the endpoint to `Public` or `Organization`.
 
     ``` yaml
 
@@ -180,7 +180,7 @@ When the component is deployed, you can observe a new node connected to your Tai
 
 Now you have successfully deployed the Tailscale proxy in your project and it is connected to your Tailnet. You can proceed to use the Tailscale proxy to provision access for other components to securely access private network endpoints.
 
-You can [configure endpoints](https://wso2.com/choreo/docs/develop-components/configure-endpoints/#learn-the-endpointsyaml-file) of the Tailscale proxy to use it for various aspects within Choreo.
+You can [configure endpoints](https://wso2.com/choreo/docs/develop-components/configure-endpoints/#learn-the-endpointsyaml-file) of the Tailscale proxy to use it for various aspects within {{ product_name }}.
 
 ## Post-deployment actions
 
@@ -194,13 +194,13 @@ Tailscale nodes have a default [node key](https://tailscale.com/kb/1010/node-key
 
 ### Update port mapping configurations
 
-If you want to add a new private endpoint to your network and access it via the same Tailscale proxy within Choreo, you must add a new port mapping entry in the port mapping configuration of your Tailscale proxy deployment.
+If you want to add a new private endpoint to your network and access it via the same Tailscale proxy within {{ product_name }}, you must add a new port mapping entry in the port mapping configuration of your Tailscale proxy deployment.
 
 ## Best practices
 
 ### Configure health checks
 
-Since the Tailscale proxy acts as a forward proxy, it is important to configure health checks. You can use one of the open ports of the TCP forwarder as a health endpoint. For details on how to set up health probes in Choreo, see [Set up health checks](./set-up-health-checks.md).
+Since the Tailscale proxy acts as a forward proxy, it is important to configure health checks. You can use one of the open ports of the TCP forwarder as a health endpoint. For details on how to set up health probes in {{ product_name }}, see [Set up health checks](./set-up-health-checks.md).
 
 ### Use Tailscale ACLs
 You can use [Tailscale ACLs](https://tailscale.com/kb/1018/acls) to precisely manage permission for users and devices on your Tailnet.
@@ -217,7 +217,7 @@ To achieve high availability and resiliency for the Tailscale proxy, you must ru
 Before deploying the Tailscale proxy in production environments, it is recommended to follow the Tailscale [production best practices](https://tailscale.com/kb/1300/production-best-practices) and [security best practices](https://tailscale.com/kb/1196/security-hardening).
 
 !!! Note
-     Choreo blocks incoming connections from other nodes in your Tailnet to the Tailscale proxy to prevent access to your project’s namespace in the Choreo cloud data plane.
+     {{ product_name }} blocks incoming connections from other nodes in your Tailnet to the Tailscale proxy to prevent access to your project’s namespace in the {{ product_name }} cloud data plane.
 
 ## Troubleshoot issues
 

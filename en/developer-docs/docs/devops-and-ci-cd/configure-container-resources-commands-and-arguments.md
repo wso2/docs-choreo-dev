@@ -1,21 +1,21 @@
 # Configure Container Resources, Commands, and Arguments
 
-In Choreo, you can view detailed information about the container that comprises a component, such as its image tag, the corresponding commit ID, any imposed resource usage limits, and so on. 
+In {{ product_name }}, you can view detailed information about the container that comprises a component, such as its image tag, the corresponding commit ID, any imposed resource usage limits, and so on. 
 
-Each component in Choreo is limited to a single main container.
+Each component in {{ product_name }} is limited to a single main container.
 
 ![Container details](../assets/img/devops-and-ci-cd/containers/containers-view.png){.cInlineImage-full}
 
 !!! info "Resource Limits"
     Resource limits ensure that a single component does not take up more resources than it requires, which can affect other workloads on the data plane. If a process exceeds the allocated memory limit, the corresponding container will be forcefully shut down and restarted. If the process exceeds the allocated CPU limit, it gets throttled and can result in significant latencies in compute and I/O operations.
 
-Choreo allows you to edit the default container configuration depending on your requirement.
+{{ product_name }} allows you to edit the default container configuration depending on your requirement.
 
 ## Update container configurations
 
 Follow these steps to update container configurations:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to edit container configurations.
 3. In the left navigation menu, click **DevOps** and then click **Containers**.
 4. On the **Containers** page, click **Edit** to update the corresponding container configuration.

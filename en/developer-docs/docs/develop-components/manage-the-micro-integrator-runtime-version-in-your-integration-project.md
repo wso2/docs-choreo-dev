@@ -1,18 +1,18 @@
 # Manage the Micro Integrator Runtime Version in Your Integration Project
 
-Choreo lets you pick a specific WSO2 Micro Integrator (MI) runtime version for your integration project. This helps you control how your integrations run, ensuring they work correctly with your Synapse configurations and giving you access to the latest features or security updates.
+{{ product_name }} lets you pick a specific WSO2 Micro Integrator (MI) runtime version for your integration project. This helps you control how your integrations run, ensuring they work correctly with your Synapse configurations and giving you access to the latest features or security updates.
 
-Choreo currently supports MI versions 4.1.0, 4.2.0, 4.3.0, and 4.4.0.
+{{ product_name }} currently supports MI versions 4.1.0, 4.2.0, 4.3.0, and 4.4.0.
 
 ## Understand the version string
 
 ![Version string](../assets/img/develop-components/micro-integrator/version-string.png)
 
-WSO2 MI uses a standard semantic three-digit version such as `4.1.0` or `4.2.0`. In Choreo, the MI runtime version is shown as a four-digit number, for example, `4.1.0.14` or `4.2.0.17`.
+WSO2 MI uses a standard semantic three-digit version such as `4.1.0` or `4.2.0`. In {{ product_name }}, the MI runtime version is shown as a four-digit number, for example, `4.1.0.14` or `4.2.0.17`.
 
 The first three digits are the main product version. The fourth digit shows the specific update level for that version, which includes bug fixes and security updates.
 !!! info "Important"
-    When you specify the MI version, you can either use the full four-digit number (e.g., `4.1.0.14`) or just the first three digits (e.g., `4.1.0`). If you only provide the first three digits, Choreo will automatically use the latest available update for that main product version.
+    When you specify the MI version, you can either use the full four-digit number (e.g., `4.1.0.14`) or just the first three digits (e.g., `4.1.0`). If you only provide the first three digits, {{ product_name }} will automatically use the latest available update for that main product version.
 
 ## Version management in MI extension for VS Code 
 

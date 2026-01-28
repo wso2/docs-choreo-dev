@@ -1,24 +1,24 @@
 # Develop a Ballerina Service
 
-Choreo allows you to develop and deploy applications using your preferred programming language. This guide demonstrates how to deploy a service component that exposes a REST API using the [Ballerina language](https://ballerina.io/). No prior knowledge of Ballerina is required to follow this guide.
+{{ product_name }} allows you to develop and deploy applications using your preferred programming language. This guide demonstrates how to deploy a service component that exposes a REST API using the [Ballerina language](https://ballerina.io/). No prior knowledge of Ballerina is required to follow this guide.
 
-A REST API is a web service that adheres to Representational State Transfer (REST) principles, using HTTP methods to access and manage resources. This guide walks you through building a Ballerina service component, deploying it on Choreo, and testing it with an HTTP client application.
+A REST API is a web service that adheres to Representational State Transfer (REST) principles, using HTTP methods to access and manage resources. This guide walks you through building a Ballerina service component, deploying it on {{ product_name }}, and testing it with an HTTP client application.
 
 In this guide, you will:
 
  - Build a simple greeting service using a sample implementation. The service has a single resource named `greet` that accepts a query parameter as input.
- - Deploy the service in Choreo.
+ - Deploy the service in {{ product_name }}.
  - Test the service.
 
 ## Prerequisites
 
-1. If you're signing in to the Choreo Console for the first time, create an organization:
-    - Go to the [Choreo Console](https://console.choreo.dev/) and sign in.
+1. If you're signing in to the {{ product_name }} Console for the first time, create an organization:
+    - Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in.
     - Enter a unique organization name. For example, `Stark Industries`.
     - Read and accept the privacy policy and terms of use.
     - Click **Create**. This creates the organization and opens the **Project Home** page.
 
-2. Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample greetings service](https://github.com/wso2/choreo-samples/tree/main/greeting-service) implementation in Ballerina.
+2. Fork the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample greetings service](https://github.com/wso2/choreo-samples/tree/main/greeting-service) implementation in Ballerina.
 
 ### Learn the repository file structure
 
@@ -39,24 +39,24 @@ Let’s get started!
 
 To create a Ballerina service component, follow these steps:
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the **Project Home** page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-4. Click **Authorize with GitHub** to connect your GitHub account. If you haven’t connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+4. Click **Authorize with GitHub** to connect your GitHub account. If you haven’t connected your GitHub repository to {{ product_name }}, enter your GitHub credentials and select the repository you forked in the prerequisites section to install the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
-        The **Choreo GitHub App** requires the following permissions:
+        The **{{ product_name }} GitHub App** requires the following permissions:
         - Read and write access to code and pull requests.
         - Read access to issues and metadata.
 
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if needed. Write access is only used for sending pull requests; {{ product_name }} will not push changes directly to your repository.
 
 5. Provide the following repository details:
 
     | **Field**              | **Value**          |
     |------------------------|--------------------|
     | **Organization**       | Your GitHub account|
-    | **Repository**         | choreo-samples     |
+    | **Repository**         | {{ product_name }}-samples     |
     | **Branch**             | **`main`**         |
     |**Component Directory** | `/greeting-service` |
 
@@ -106,7 +106,7 @@ To deploy the service, follow these steps:
     !!! note
         Deploying the service may take a while. Once deployed, the **Development** environment card shows the **Deployment Status** as **Active**.
 
-Once deployed, you can test, manage, and observe the service like any other component in Choreo.
+Once deployed, you can test, manage, and observe the service like any other component in {{ product_name }}.
 
 For detailed instructions, see the following sections:
 - [Step 3: Test](../../testing/test-rest-endpoints-via-the-openapi-console.md)
@@ -114,4 +114,4 @@ For detailed instructions, see the following sections:
 
 ## Manage the deployment
 
-To view Kubernetes-level insights for detailed diagnosis of this Ballerina REST API, see Choreo’s [DevOps capabilities](../../devops-and-ci-cd/view-runtime-details.md).
+To view Kubernetes-level insights for detailed diagnosis of this Ballerina REST API, see {{ product_name }}’s [DevOps capabilities](../../devops-and-ci-cd/view-runtime-details.md).

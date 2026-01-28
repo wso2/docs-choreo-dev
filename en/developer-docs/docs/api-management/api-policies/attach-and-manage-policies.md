@@ -1,8 +1,8 @@
 # Attach and Manage Policies
 
-You can easily attach one or more policies to an API proxy component implementation via the Choreo Console. If necessary, you can also rearrange or swap the policies you attach.
+You can easily attach one or more policies to an API proxy component implementation via the {{ product_name }} Console. If necessary, you can also rearrange or swap the policies you attach.
 
-In Choreo, when you attach a mediation policy to a proxy, the deployment is a two-step process.
+In {{ product_name }}, when you attach a mediation policy to a proxy, the deployment is a two-step process.
 
 1. Deployment initiation: 
 
@@ -10,23 +10,23 @@ In Choreo, when you attach a mediation policy to a proxy, the deployment is a tw
 
 2. Deploying the API:
 
-     Once the deployment initiation is complete, you can specify configuration values if any, and proceed to deploy. Choreo builds the generated mediation application and pushes the Docker image to the Docker registry. Finally, Choreo deploys the mediation application with the API Proxy.
+     Once the deployment initiation is complete, you can specify configuration values if any, and proceed to deploy. {{ product_name }} builds the generated mediation application and pushes the Docker image to the Docker registry. Finally, {{ product_name }} deploys the mediation application with the API Proxy.
 
 When a mediation policy is attached to a specific flow, the API invocation undergoes the following behavioral modification:
  
  ![Request/Response flow](../../assets/img/api-management/api-policies/request-response-flow.png)
 
- - In the request path, the requests that pass through the gateway reach the relevant component, and Choreo executes any attached policies to the resource's request path before sending it to the backend. 
+ - In the request path, the requests that pass through the gateway reach the relevant component, and {{ product_name }} executes any attached policies to the resource's request path before sending it to the backend. 
 
-- In the response path, the mediation component receives response messages from the backend, and Choreo executes any mediation policies attached to the `Response` flow or the `Error` flow. Then the response is forwarded to the client.
+- In the response path, the mediation component receives response messages from the backend, and {{ product_name }} executes any mediation policies attached to the `Response` flow or the `Error` flow. Then the response is forwarded to the client.
 
-- If an error occurs during the execution of policies or due to an internal error, Choreo executes the `Error` flow and sends an error response to the client.
+- If an error occurs during the execution of policies or due to an internal error, {{ product_name }} executes the `Error` flow and sends an error response to the client.
 
 ## Attach a policy
 
 To attach a policy to the `Request`, `Response`, or `Error` flow of a REST API proxy, follow the steps given below:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev).
 2. In the **Component Listing** pane, click on the REST API Proxy component for which you want to attach a policy.
 3. In the left navigation menu, click **Develop** and then click **Policies**.
 4. From the list of resources, expand the resource to which you want to attach the policy. 
@@ -41,7 +41,7 @@ To attach a policy to the `Request`, `Response`, or `Error` flow of a REST API p
 After attaching an API Policy, it is necessary to deploy the API for the policy to become active within its corresponding flow. 
 To deploy the API follow the steps below: 
 
-9. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. Choreo performs the mediation application generation step and opens the **Configure & Deploy** pane.
+9. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. {{ product_name }} performs the mediation application generation step and opens the **Configure & Deploy** pane.
 
 10. In the **Configure & Deploy** pane, if you have any configurable variables that require values, specify appropriate values for them.
 
@@ -51,14 +51,14 @@ To deploy the API follow the steps below:
 
 ## Refresh mediation policies
 
-Choreo selectively generates and builds the mediation application code during component deployment depending on specific changes. These changes include:
+{{ product_name }} selectively generates and builds the mediation application code during component deployment depending on specific changes. These changes include:
 
  - Addition, deletion, or modification of API resources.
  - Attachment, removal, or editing of API mediation policies.
  - Endpoint modifications via the **Develop** page.
  - Initial configuration or removal of backend endpoints or mutual TLS certificates.
 
-If none of the above changes occur during deployment, Choreo skips the code generation and build process of the mediation application.
+If none of the above changes occur during deployment, {{ product_name }} skips the code generation and build process of the mediation application.
 
 !!! info
     - If you want to enforce the code generation and build process of the mediation application in instances where the specified changes do not take place, you must turn on the **Refresh Mediation Policies** toggle when you configure and deploy the component. 
@@ -66,7 +66,7 @@ If none of the above changes occur during deployment, Choreo skips the code gene
 
 ## Implement an API policy
 
-Choreo allows you to implement an API policy as a Ballerina project and attach it to an API proxy component. 
+{{ product_name }} allows you to implement an API policy as a Ballerina project and attach it to an API proxy component. 
 
 !!! info
     Supported Ballerina version: 2201.5.5 
@@ -88,20 +88,20 @@ export BALLERINA_CENTRAL_ACCESS_TOKEN=<access-token>
 
 ### Step 1: Initialize a Ballerina project
 
-Choreo provides a template to initialize a mediation policy project with all the required configurations. The mediation policy project will be created as a Ballerina project.
+{{ product_name }} provides a template to initialize a mediation policy project with all the required configurations. The mediation policy project will be created as a Ballerina project.
 
 To create a Ballerina project for the mediation policy using `mediation.template` as the project template, issue the following command:  
    
 **Format:**
 
 ```
-    bal new -t choreo/mediation.template:1.0.0 <policy-name> 
+    bal new -t {{ product_name }}/mediation.template:1.0.0 <policy-name> 
 ```
     
 **Example:**
 
 ```
-    bal new -t choreo/mediation.template:1.0.0 validateHeader 
+    bal new -t {{ product_name }}/mediation.template:1.0.0 validateHeader 
 ```
  The Ballerina project that is created should have the following content: 
 
@@ -119,7 +119,7 @@ Depending on your requirement, you can modify the `Ballerina.toml` and the `Pack
         version = "1.0.0"
         export = ["validateHeader"]
         distribution = "2201.5.5"
-        keywords = ["choreo-apim-mediation-policy","choreo-apim-mediation-request-flow","choreo-apim-mediation-response-flow","choreo-apim-mediation-fault-flow"]
+        keywords = ["{{ product_name }}-apim-mediation-policy","{{ product_name }}-apim-mediation-request-flow","{{ product_name }}-apim-mediation-response-flow","{{ product_name }}-apim-mediation-fault-flow"]
 ```
 
 ### Step 2: Implement the policy
@@ -194,13 +194,13 @@ public function validateResponseHeader(mediation:Context ctx, http:Request req, 
 In this guide, you are not going to make any changes to the `Fault` flow. Therefore, you can remove the `Fault` flow stub from the `policy.bal` file.
 
 !!! note 
-    - The  **@mediation:RequestFlow**, **@mediation:ResponseFlow**, and **@mediation:FaultFlow** annotations are bound with the keywords in the `Ballerina.toml`. Therefore, the changes you make to the policy stubs should reflect in the `Ballerina.toml` file. For example, if the policy is applicable only on the request and response paths, you can remove the  **@mediation:FaultFlow** annotation from the policy. Then, you **MUST** also remove the **choreo-apim-mediation-fault-flow** keyword from the generated `Ballerina.toml` file. If you do not do so, the Ballerina compiler will show an error at compile time.
+    - The  **@mediation:RequestFlow**, **@mediation:ResponseFlow**, and **@mediation:FaultFlow** annotations are bound with the keywords in the `Ballerina.toml`. Therefore, the changes you make to the policy stubs should reflect in the `Ballerina.toml` file. For example, if the policy is applicable only on the request and response paths, you can remove the  **@mediation:FaultFlow** annotation from the policy. Then, you **MUST** also remove the **{{ product_name }}-apim-mediation-fault-flow** keyword from the generated `Ballerina.toml` file. If you do not do so, the Ballerina compiler will show an error at compile time.
 
     - If you choose not to remove the Fault flow, ensure that the parameter order and names are consistent with defined Request and Response flows.
 
 #### Publish as a private custom policy
  
- Choreo supports publishing a policy as a private custom policy. Publishing a policy as a private custom policy makes the policy inaccessible outside of the organization. To publish a policy as a private custom policy, change the visibility to `private` prior to pushing the package to Ballerina Central as follows:
+ {{ product_name }} supports publishing a policy as a private custom policy. Publishing a policy as a private custom policy makes the policy inaccessible outside of the organization. To publish a policy as a private custom policy, change the visibility to `private` prior to pushing the package to Ballerina Central as follows:
 
  1. Open the `Ballerina.toml` file of your policy. 
  2. Set the visibility to **private** by adding the configuration `visibility="private"`. For example:
@@ -212,7 +212,7 @@ In this guide, you are not going to make any changes to the `Fault` flow. Theref
         version = "1.0.2"
         export = ["packageName"]
         distribution = "2201.5.5"
-        keywords = ["choreo-apim-mediation-policy","choreo-apim-mediation-request-flow","choreo-apim-mediation-response-flow","choreo-apim-mediation-fault-flow"]
+        keywords = ["{{ product_name }}-apim-mediation-policy","{{ product_name }}-apim-mediation-request-flow","{{ product_name }}-apim-mediation-response-flow","{{ product_name }}-apim-mediation-fault-flow"]
         visibility = "private"
      ```
 
@@ -227,7 +227,7 @@ When implementing a policy, it is essential to follow best practices to ensure e
 - The HTTP request/response objects and context record parameters gets passed as references to the policy functions. Therefore, the changes you make to these values persist throughout the policy execution and are propagated to subsequent policies. This behavior allows the request and response objects to accumulate transformations applied by attached policies.
 - Familiarize yourself with the different return types of policy flows. The following return types are unmodifiable:
     - **http:Response** - Returns an HTTP response when you terminate the mediation flow prematurely. For example,  in the in-flow sequence, the mediation sequence terminates before calling the backend. The mediation policy then sends an HTTP response to the client.
-    - **false** - Returns `false` if you want to terminate the mediation sequence with a predefined response (on the Choreo side).
+    - **false** - Returns `false` if you want to terminate the mediation sequence with a predefined response (on the {{ product_name }} side).
     - **error** - Returns an error if you want to terminate the mediation flow and transfer control to the fault flow. The fault flow would then construct an error response and send it to the client.
     - **()** - Returns () to signal the successful completion of the policy. Once the proxy has completed executing the policy, it starts to execute the next policy in the sequence.
 
@@ -235,7 +235,7 @@ When implementing a policy, it is essential to follow best practices to ensure e
 
 Once you implement a policy, you must publish it to Ballerina Central. 
 
-When you attach a policy and deploy an API, Choreo pulls the necessary packages from Ballerina Central and bundles them into the mediation application under the hood. Therefore to use policies in your APIs, you must publish them as public packages. 
+When you attach a policy and deploy an API, {{ product_name }} pulls the necessary packages from Ballerina Central and bundles them into the mediation application under the hood. Therefore to use policies in your APIs, you must publish them as public packages. 
 
 To publish the policy, follow the steps given below:
 
@@ -261,7 +261,7 @@ The following is a sample unit test for the `validateRequestHeader` function:
 
 ```
 import ballerina/http;
-import choreo/mediation;
+import {{ product_name }}/mediation;
 import ballerina/test;
 
 
@@ -294,7 +294,7 @@ The policy function modifies the same request/response/context instance that you
 
 ### Glossary
 
-Here are some of the common terms used when working with policies in Choreo:
+Here are some of the common terms used when working with policies in {{ product_name }}:
 
 #### mediation:Context
 
@@ -378,14 +378,14 @@ public function queryParams() returns map<string[]> & readonly;
 
 The `Ballerina.toml` file needs to include the following keywords for the mediation policies to work:
 
-- **choreo-apim-mediation-policy**: This keyword is a mandatory keyword that is required to identify that the package is a mediation policy type.
-- **choreo-apim-mediation-request-flow**: Specifies whether the policy applies to the request flow.
-- **choreo-apim-mediation-response-flow**: Specifies whether the policy applies to the response flow.
-- **choreo-apim-mediation-fault-flow**: Specifies whether the policy is applicable for the fault flow.
+- **{{ product_name }}-apim-mediation-policy**: This keyword is a mandatory keyword that is required to identify that the package is a mediation policy type.
+- **{{ product_name }}-apim-mediation-request-flow**: Specifies whether the policy applies to the request flow.
+- **{{ product_name }}-apim-mediation-response-flow**: Specifies whether the policy applies to the response flow.
+- **{{ product_name }}-apim-mediation-fault-flow**: Specifies whether the policy is applicable for the fault flow.
 
 #### Policy name and description
 
-The `Package.md` file contains information about the policy. Choreo uses this information to render the policy configuring UI. This file is written in Markdown format and should be structured as follows.
+The `Package.md` file contains information about the policy. {{ product_name }} uses this information to render the policy configuring UI. This file is written in Markdown format and should be structured as follows.
 
 **Format:**
 
@@ -415,6 +415,6 @@ This policy validates the request and response headers with the configured value
 
 #### Policy versioning
 
-When it comes to policy versioning in Choreo or mediation dependencies, it is important to consider the major version changes in the Ballerina language. For example, transitioning from update 1 to update 2 requires a major version increment, which can introduce significant incompatibilities.
+When it comes to policy versioning in {{ product_name }} or mediation dependencies, it is important to consider the major version changes in the Ballerina language. For example, transitioning from update 1 to update 2 requires a major version increment, which can introduce significant incompatibilities.
 
-Therefore, to ensure compatibility, the recommended approach is to version the policy package in a manner that the major version gets upgraded when the Choreo/mediation dependency version is upgraded to a major version.  
+Therefore, to ensure compatibility, the recommended approach is to version the policy package in a manner that the major version gets upgraded when the {{ product_name }}/mediation dependency version is upgraded to a major version.  

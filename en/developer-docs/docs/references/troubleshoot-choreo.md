@@ -1,12 +1,12 @@
-# Troubleshoot Choreo
+# Troubleshoot {{ product_name }}
 
-This page walks you through common problems you may encounter when building and deploying components with Choreo, along with the recommended solutions to resolve each issue.
+This page walks you through common problems you may encounter when building and deploying components with {{ product_name }}, along with the recommended solutions to resolve each issue.
 
 ## Troubleshoot component build errors
 
 - ### Deploying an Angular web application displays the Nginx welcome page instead of the application's homepage.
 
-      This occurs due to specifying an incorrect build output directory when you set up your Angular application in Choreo.
+      This occurs due to specifying an incorrect build output directory when you set up your Angular application in {{ product_name }}.
 To resolve the issue, follow the guidelines given below:
 
        - Ensure that the build output directory correctly points to where your Angular build script outputs the files. The deafult output directory is `dist/<project-name>`.
@@ -40,9 +40,9 @@ To resolve the issue, follow the guidelines given below:
        - Verify that the path in the script tag matches the location where the `config.js` file is stored in your repository.
        - Make sure the script tag is placed within the `<body>` tag in your `index.html` file. You must ensure that it is not mistakenly placed within another HTML element.
  
-- ### I'm not aware of the commits that can trigger an automatic build in Choreo.
+- ### I'm not aware of the commits that can trigger an automatic build in {{ product_name }}.
 
-      Merge commits and commits pushed directly to the branch can trigger a build in Choreo.
+      Merge commits and commits pushed directly to the branch can trigger a build in {{ product_name }}.
 
 ## Troubleshoot web application issues
 
@@ -64,7 +64,7 @@ To resolve the issue, follow the guidelines given below:
 
 - ### After securing a web application with managed authentication,  I’m not able to add users who can sign in to the application.
 
-      For step-by-step instructions on how to manage users with Choreo's built-in identity provider (IdP), see [Configure a User Store with the Built-In IdP](../administer/configure-a-user-store-with-built-in-idp.md).
+      For step-by-step instructions on how to manage users with {{ product_name }}'s built-in identity provider (IdP), see [Configure a User Store with the Built-In IdP](../administer/configure-a-user-store-with-built-in-idp.md).
       
       For details on setting up other OpenID Connect (OIDC) supported IdPs, see [Manage OAuth Keys](../authentication-and-authorization/secure-web-applications-with-managed-authentication.md#step-3-configure-the-identity-provider-for-the-web-application).
 

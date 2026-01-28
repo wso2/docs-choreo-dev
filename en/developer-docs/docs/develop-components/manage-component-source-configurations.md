@@ -1,13 +1,13 @@
 # Manage Component Source Configurations
 
-In Choreo, you can configure service endpoints and connections via the `component.yaml` source configuration file. This file ensures that the configurations required to initialize endpoints and connections are defined, as they cannot be inferred from the source code. This guide provides an overview of how to configure and manage these settings effectively.
+In {{ product_name }}, you can configure service endpoints and connections via the `component.yaml` source configuration file. This file ensures that the configurations required to initialize endpoints and connections are defined, as they cannot be inferred from the source code. This guide provides an overview of how to configure and manage these settings effectively.
 
-The source configuration file must be committed to your repository within the `.choreo` directory at the root of the project directory. This ensures the ability to version the configuration files alongside repository commits, enabling better tracking and management of configurations.
+The source configuration file must be committed to your repository within the `.{{ product_name }}` directory at the root of the project directory. This ensures the ability to version the configuration files alongside repository commits, enabling better tracking and management of configurations.
 
 !!! note
     -  The `component-config.yaml` and `endpoints.yaml` files will eventually be deprecated and replaced by the `component.yaml` file. 
         - For details on how to seamlessly update to the latest `component.yaml` file`, see [Update to the latest source configuration file](#update-to-the-latest-source-configuration-file).
-    - Choreo prioritizes configuration files in the following order: `component.yaml` takes the highest precedence, followed by `component-config.yaml`, and then `endpoints.yaml`.
+    - {{ product_name }} prioritizes configuration files in the following order: `component.yaml` takes the highest precedence, followed by `component-config.yaml`, and then `endpoints.yaml`.
 
 ## Overview of the `component.yaml` file 
 
@@ -77,11 +77,11 @@ Click the respective tab to view the structure for your current configuration fi
           # +required value source
           # Allowed value sources: connectionRef, configForm
           valueFrom:
-            # +required Choreo connection value source
+            # +required {{ product_name }} connection value source
             connectionRef:
-              # +required Choreo connection name to refer the value from
+              # +required {{ product_name }} connection name to refer the value from
               name: hr-connection
-              # +required Choreo connection configuration key to refer the value from
+              # +required {{ product_name }} connection configuration key to refer the value from
               key: ServiceURL
         - name: DB_USER
           # +required value source
@@ -137,7 +137,7 @@ Click the respective tab to view the structure for your current configuration fi
     In the `endpoints` section of the `component.yaml` file, you can define multiple service endpoint configurations. Each endpoint must have a unique name and the required fields specified in the schema overview.
 
     !!! tip "Why have a unique name?"
-          When you define multiple endpoints, the `endpoint.name` is appended to the Choreo-generated URL. A unique name ensures the endpoint is easily recognizable and readable within the URL.
+          When you define multiple endpoints, the `endpoint.name` is appended to the {{ product_name }}-generated URL. A unique name ensures the endpoint is easily recognizable and readable within the URL.
           
     | Configuration        | Required     | Description                                                                                             |
     |----------------------|--------------|---------------------------------------------------------------------------------------------------------|
@@ -163,9 +163,9 @@ Click the respective tab to view the structure for your current configuration fi
 
 
     !!! note
-        Choreo automatically generates connection configurations when you create a connection. The properties such as **name** and **resourceRef** are automatically generated. The configurations required to establish the connection will be injected into Choreo-defined environment variables.
+        {{ product_name }} automatically generates connection configurations when you create a connection. The properties such as **name** and **resourceRef** are automatically generated. The configurations required to establish the connection will be injected into {{ product_name }}-defined environment variables.
 
-        To use custom environment variable names instead of Choreo's default ones, add the dependency as a `serviceReference` in your `component.yaml v1.1` file. You can copy the `serviceReference` section from the `component.yaml v1.0` tab and paste it under `dependencies` in your `component.yaml v1.1` file, which maintains backward compatibility with the v1.0 format.
+        To use custom environment variable names instead of {{ product_name }}'s default ones, add the dependency as a `serviceReference` in your `component.yaml v1.1` file. You can copy the `serviceReference` section from the `component.yaml v1.0` tab and paste it under `dependencies` in your `component.yaml v1.1` file, which maintains backward compatibility with the v1.0 format.
 
     ### Runtime configurations
     In the `configurations` section of the `component.yaml` file, you can define runtime configurations for the component. These configurations currently support defining configurations shown in the configuration form and environment variable injection related to dependencies.
@@ -178,8 +178,8 @@ Click the respective tab to view the structure for your current configuration fi
     | **name**                      | Required     | A unique name for the environment variable, starting with a letter or an underscore, and containing only letters, numbers, or underscores. |
     | **valueFrom**                 | Required     | The source of the environment variable value.                                     |
     | **connectionRef**             | Required     | Connection reference value source definition.                                     |
-    | **name**                      | Required     | The name of the Choreo connection to reference the value from.                    |
-    | **key**                       | Required     | The Choreo connection configuration key to reference the value from. For details on available keys, see [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/) or the inline developer guide. |
+    | **name**                      | Required     | The name of the {{ product_name }} connection to reference the value from.                    |
+    | **key**                       | Required     | The {{ product_name }} connection configuration key to reference the value from. For details on available keys, see [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/) or the inline developer guide. |
 
     !!! note
         Runtime configurations are supported starting from `component.yaml v1.1`.
@@ -253,11 +253,11 @@ Click the respective tab to view the structure for your current configuration fi
             # +required value source
             # Allowed value sources: connectionRef
             valueFrom:
-              # +required Choreo connection value source
+              # +required {{ product_name }} connection value source
               connectionRef:
-                # +required Choreo connection name to refer the value from
+                # +required {{ product_name }} connection name to refer the value from
                 name: hr-connection
-                # +required Choreo connection configuration key to refer the value from
+                # +required {{ product_name }} connection configuration key to refer the value from
                 key: ServiceURL
     ```
 
@@ -276,7 +276,7 @@ Click the respective tab to view the structure for your current configuration fi
     In the `endpoints` section of the `component.yaml` file, you can define multiple service endpoint configurations. Each endpoint must have a unique name and the required fields specified in the schema overview.
 
     !!! tip "Why have a unique name?"
-          When you define multiple endpoints, the `endpoint.name` is appended to the Choreo-generated URL. A unique name ensures the endpoint is easily recognizable and readable within the URL.
+          When you define multiple endpoints, the `endpoint.name` is appended to the {{ product_name }}-generated URL. A unique name ensures the endpoint is easily recognizable and readable within the URL.
           
     | Configuration        | Required     | Description                                                                                             |
     |----------------------|--------------|---------------------------------------------------------------------------------------------------------|
@@ -302,9 +302,9 @@ Click the respective tab to view the structure for your current configuration fi
 
 
     !!! note
-        Choreo automatically generates connection configurations when you create a connection. The properties such as **name** and **resourceRef** are automatically generated. The configurations required to establish the connection will be injected into Choreo-defined environment variables.
+        {{ product_name }} automatically generates connection configurations when you create a connection. The properties such as **name** and **resourceRef** are automatically generated. The configurations required to establish the connection will be injected into {{ product_name }}-defined environment variables.
 
-        If you'd like to use custom environment variable names instead of the default Choreo-defined ones, you can rename them in the `configurations` section of the `component.yaml v1.1` file.
+        If you'd like to use custom environment variable names instead of the default {{ product_name }}-defined ones, you can rename them in the `configurations` section of the `component.yaml v1.1` file.
 
     ### Runtime configurations
     In the `configurations` section of the `component.yaml` file, you can define runtime configurations for the component. These configurations currently support environment variable injection related to dependencies.
@@ -315,8 +315,8 @@ Click the respective tab to view the structure for your current configuration fi
     | **name**                      | Required     | A unique name for the environment variable, starting with a letter or an underscore, and containing only letters, numbers, or underscores. |
     | **valueFrom**                 | Required     | The source of the environment variable value.                                     |
     | **connectionRef**             | Required     | Connection reference value source definition.                                     |
-    | **name**                      | Required     | The name of the Choreo connection to reference the value from.                    |
-    | **key**                       | Required     | The Choreo connection configuration key to reference the value from. For details on available keys, see [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/) or the inline developer guide. |
+    | **name**                      | Required     | The name of the {{ product_name }} connection to reference the value from.                    |
+    | **key**                       | Required     | The {{ product_name }} connection configuration key to reference the value from. For details on available keys, see [connection configurations](https://wso2.com/choreo/docs/develop-components/sharing-and-reusing/use-a-connection-in-your-service/) or the inline developer guide. |
 
     !!! note
         Runtime configurations are supported starting from `component.yaml v1.1`.
@@ -360,7 +360,7 @@ Click the respective tab to view the structure for your current configuration fi
       # +optional Defines the service references from the Internal Marketplace.
       serviceReferences:
         # +required Name of the service reference.
-        - name: choreo:///apifirst/HRProject/UserComponent/ad088/v1/PUBLIC
+        - name: {{ product_name }}:///apifirst/HRProject/UserComponent/ad088/v1/PUBLIC
           # +required Name of the connection instance.
           connectionConfig: 19d2648b-d29c-4452-afdd-1b9311e81412
           # +required Environment variables injected into the component for connection configuration.
@@ -385,7 +385,7 @@ Click the respective tab to view the structure for your current configuration fi
     In the `endpoints` section of the `component.yaml` file, you can define multiple service endpoint configurations. Each endpoint must have a unique name and the required fields specified in the schema overview.
 
     !!! tip "Why have a unique name?"
-          When you define multiple endpoints, the `endpoint.name` is appended to the Choreo-generated URL. A unique name ensures the endpoint is easily recognizable and readable within the URL.
+          When you define multiple endpoints, the `endpoint.name` is appended to the {{ product_name }}-generated URL. A unique name ensures the endpoint is easily recognizable and readable within the URL.
           
     | Configuration           | Required     | Description                                                                                             |
     |-------------------------|--------------|---------------------------------------------------------------------------------------------------------|
@@ -413,7 +413,7 @@ Click the respective tab to view the structure for your current configuration fi
     | **.to**              | Required     | The environment variable to inject into the container.                           |
 
     !!! note
-        Choreo automatically generates connection configurations when you create a connection. The properties such as **name**, **connectionConfig**, and **env.from** are automatically generated. However, you must manually set the **env.to** value.
+        {{ product_name }} automatically generates connection configurations when you create a connection. The properties such as **name**, **connectionConfig**, and **env.from** are automatically generated. However, you must manually set the **env.to** value.
 
 ## Overview of the `component-config.yaml` file(deprecated) 
 
@@ -426,7 +426,7 @@ Click the respective tab to view the structure for your current configuration fi
 **Sample `component-config.yaml` file content**:
 
 ```yaml
-apiVersion: core.choreo.dev/v1beta1
+apiVersion: core.{{ product_name }}.dev/v1beta1
 kind: ComponentConfig
 spec:
   # +optional Incoming connection details for the component (AKA endpoints).
@@ -454,7 +454,7 @@ spec:
     # +optional Defines the service references from the Internal Marketplace.
     serviceReferences:
       # +required Name of the service reference.
-      - name: choreo:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
+      - name: {{ product_name }}:///apifirst/mttm/mmvhxd/ad088/v1.0/PUBLIC
         # +required Name of the connection instance.
         connectionConfig: 19d2648b-d29c-4452-afdd-1b9311e81412
         # +required Environment variables injected to the component for connection configuration.
@@ -471,7 +471,7 @@ You can define the following root-level configurations via the `component-config
 
 | Configuration        | Required     | Description                                                                           |
 |----------------------|--------------|---------------------------------------------------------------------------------------|
-| **apiVersion**       | Required     | The version of the `component-config.yaml` file defaults to `core.choreo.dev/v1beta1`.|
+| **apiVersion**       | Required     | The version of the `component-config.yaml` file defaults to `core.{{ product_name }}.dev/v1beta1`.|
 | **kind**             | Required     | The resource type of the file defaults to `ComponentConfig`.                          |
 | **spec.inbound**     | Optional     | The list of inbound connection configurations.                                        |
 | **spec.outbound**    | Optional     | The list of outbound connection configurations.                                       |
@@ -530,23 +530,23 @@ endpoints:
   schemaFilePath: greeting_openapi.yaml
 ```
 
-The `endpoints.yaml` configuration file allows you to define configurations for multiple endpoints necessary for Choreo service components. This schema is essential to identify the context, port binding, network exposure level, and other attributes required to generate a Choreo endpoint.
+The `endpoints.yaml` configuration file allows you to define configurations for multiple endpoints necessary for {{ product_name }} service components. This schema is essential to identify the context, port binding, network exposure level, and other attributes required to generate a {{ product_name }} endpoint.
 
 You can define the following root-level configurations via the `endpoints.yaml` file:
 
 | Configuration        | Required     | Description                                                                       |
 |----------------------|--------------|-----------------------------------------------------------------------------------|
 | **version**          | Required     | The version of the `endpoints.yaml` file.                                         |
-| **name**             | Required     | A unique name for the endpoint, which Choreo will use to generate the managed API.|
+| **name**             | Required     | A unique name for the endpoint, which {{ product_name }} will use to generate the managed API.|
 | **port**             | Required     | The numeric port value that gets exposed via this endpoint.                       |
 | **type**             | Required     | The type of traffic this endpoint accepts, such as `REST`, `GraphQL`, `gRPC`, `WS`, `UDP`, or `TCP`. Currently, the MI preset supports only the `REST` type.                                         |
 | **networkVisibility**| Required     | The network level visibility of this endpoint, which defaults to `Public` if not specified. Accepted values are `Project`, `Organization`, or `Public`.|
-| **context**          | Required     | The context (base path) of the API that Choreo exposes via this endpoint.         |
+| **context**          | Required     | The context (base path) of the API that {{ product_name }} exposes via this endpoint.         |
 | **schemaFilePath**   | Required     | The swagger definition file path. Defaults to the wildcard route if not provided. This field should be a relative path to the project path when using the **Java**, **Python**, **NodeJS**, **Go**, **PHP**, **Ruby**, and **WSO2 MI** build presets. For REST endpoint types, when using the **Ballerina** or **Dockerfile** build presets, this field should be a relative path to the component root or Docker context.|
 
 ## Update to the latest source configuration file
 
-With the upcoming deprecation of the `component-config.yaml` file and the `endpoints.yaml` file, Choreo provides a seamless process to move to the latest `component.yaml`  version of the `component.yaml` file. Follow these steps to transition seamlessly:
+With the upcoming deprecation of the `component-config.yaml` file and the `endpoints.yaml` file, {{ product_name }} provides a seamless process to move to the latest `component.yaml`  version of the `component.yaml` file. Follow these steps to transition seamlessly:
 
 ### Step 1: Identify whether your current source configuration file is outdated
 
@@ -567,7 +567,7 @@ You can determine whether you’re using an outdated configuration file in the f
 ### Step 3: Add the generated configuration file to your repository
 
 1. Download the generated `component.yaml` file.
-2. Replace the existing source configuration file in the `.choreo` folder within your source repository.
+2. Replace the existing source configuration file in the `.{{ product_name }}` folder within your source repository.
     - Ensure the file name is `component.yaml`.
 
 
