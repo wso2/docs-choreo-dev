@@ -15,8 +15,8 @@
 # under the License.
 
 # Project information
-site_name: "Choreo Documentation | AI-Native Internal Developer Platform"
-site_description: Choreo Explore Choreo documentation to build, deploy, and manage cloud-native apps effortlessly. Whether you're a platform engineer or app developer, Choreo simplifies infrastructure automation and streamlines delivery with an AI-native internal developer platform.
+site_name: "WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform"
+site_description: WSO2 Developer Platform Explore WSO2 Developer Platform documentation to build, deploy, and manage cloud-native apps effortlessly. Whether you're a platform engineer or app developer, WSO2 Developer Platform simplifies infrastructure automation and streamlines delivery with an AI-native internal developer platform.
 site_author: WSO2
 site_url: https://wso2.com/choreo/docs
 site_dir: site/developer
@@ -75,12 +75,12 @@ strict: false
 nav:
   - Home: index.md
   - Introduction:
-      - What is Choreo?: what-is-choreo.md
+      - What is WSO2 Developer Platform?: what-is-choreo.md
   - Quick Start Guides:
       - Deploy Your First Service: quick-start-guides/deploy-your-first-service.md
       - Deploy Your First Static Web Application: quick-start-guides/deploy-your-first-static-web-application.md
       - Deploy a Web Application that Consumes a Backend Service: quick-start-guides/deploy-a-web-application-that-consumes-a-backend-service.md
-  - Choreo Samples:
+  - WSO2 Developer Platform Samples:
       - Explore the Samples Collection:
           - Samples Overview: choreo-samples/samples-overview.md
           - Quick Deploy a Sample: choreo-samples/quick-deploy-a-sample.md
@@ -88,8 +88,8 @@ nav:
   - Tutorials:
       - Expose a Service as a Managed API: tutorials/expose-a-service-as-a-managed-api.md
       - Secure an API with Role-Based Access Control: tutorials/secure-an-api-with-role-based-access-control.md
-      - Consume an API hosted in Choreo: tutorials/consume-an-api-hosted-in-choreo.md
-  - Choreo Concepts:
+      - Consume an API hosted in WSO2 Developer Platform: tutorials/consume-an-api-hosted-in-choreo.md
+  - WSO2 Developer Platform Concepts:
       - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
       - Organization: choreo-concepts/organization.md
       - Project: choreo-concepts/project.md
@@ -100,7 +100,7 @@ nav:
       - Connections: choreo-concepts/connections.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
-      - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
+      - WSO2 Developer Platform Marketplace: choreo-concepts/choreo-marketplace.md
       - Access Control: choreo-concepts/access-control.md
   - Develop Components:
       - Develop Services:
@@ -120,7 +120,7 @@ nav:
           - Develop an API Proxy from Git Repository Source : develop-components/develop-proxy/develop-an-api-proxy-from-a-github-repository-source.md
       - Develop Web Applications:
           - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
-          - Develop Web Applications Locally with Choreo’s Managed Authentication: develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md
+          - Develop Web Applications Locally with WSO2 Developer Platform’s Managed Authentication: develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md
       - Develop a Webhook: develop-components/develop-a-webhook.md
       - Develop an External Consumer: develop-components/develop-an-external-consumer.md
       - Develop Integrations:
@@ -143,7 +143,7 @@ nav:
           - Use a Connection in Your Service: develop-components/sharing-and-reusing/use-a-connection-in-your-service.md
           - Use a Connection in Your Web Application: develop-components/sharing-and-reusing/use-a-connection-in-your-web-application.md
           - Use a Database Connection in Your Component: develop-components/sharing-and-reusing/use-a-database-connection-in-your-component.md
-      - Manage Deployment Tracks for Choreo Components: develop-components/manage-deployment-tracks-for-choreo-components.md
+      - Manage Deployment Tracks for WSO2 Developer Platform Components: develop-components/manage-deployment-tracks-for-choreo-components.md
       - Configure Endpoints: develop-components/configure-endpoints.md
       - Manage Component Source Configurations: develop-components/manage-component-source-configurations.md
       - Submit and Manage Workflow Approval Requests: develop-components/submit-and-manage-workflow-approval-requests.md
@@ -152,27 +152,27 @@ nav:
       - Connect to Remote Dependencies While Developing: develop-components/connect-to-remote-dependencies-while-developing.md
   - Integrate and Manage External Services:
       - Integrate and Manage Third-Party Services: integrate-and-manage-external-services/integrate-and-manage-third-party-services.md
-  - Choreo-Managed Databases and Caches:
+  - WSO2 Developer Platform-Managed Databases and Caches:
       - Overview: manage-databases-and-caches/choreo-managed-databases-and-caches.md
       - PostgreSQL: manage-databases-and-caches/choreo-managed-postgresql-databases.md
       - MySQL: manage-databases-and-caches/choreo-managed-mysql-databases.md
-      - Choreo-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
-      - Add Choreo-Managed Databases and Caches to the Marketplace: manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md
-  - Choreo-Managed Message Brokers:
+      - WSO2 Developer Platform-Managed Cache: manage-databases-and-caches/choreo-managed-caches.md
+      - Add WSO2 Developer Platform-Managed Databases and Caches to the Marketplace: manage-databases-and-caches/add-choreo-managed-databases-and-caches-to-the-marketplace.md
+  - WSO2 Developer Platform-Managed Message Brokers:
       - Overview: manage-message-brokers/choreo-managed-message-brokers.md
       - Kafka:
-          - Create Choreo-Managed Kafka Services: manage-message-brokers/create-choreo-managed-kafka-services.md
+          - Create WSO2 Developer Platform-Managed Kafka Services: manage-message-brokers/create-choreo-managed-kafka-services.md
           - Configure a Kafka Service: manage-message-brokers/configure-a-kafka-service.md
           - Monitor a Kafka Service: manage-message-brokers/monitor-a-kafka-service.md
   - Authentication and Authorization:
       - Secure API Access with Asgardeo: authentication-and-authorization/secure-api-access-with-asgardeo.md
       - Secure API Access with Azure: authentication-and-authorization/secure-api-access-with-azure-ad.md
       - Secure Web Applications with Managed Authentication: authentication-and-authorization/secure-web-applications-with-managed-authentication.md
-      - Test Secure API Access with Choreo Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
+      - Test Secure API Access with WSO2 Developer Platform Built-In Security Token Service: authentication-and-authorization/test-secure-api-access-with-choreo-built-in-security-token-service.md
       - Pass End-User Attributes to Upstream Services: authentication-and-authorization/pass-end-user-attributes-to-upstream-services.md
       - Configure Mutual TLS Between Components: authentication-and-authorization/configure-mutual-tls-between-components.md
-      - Secure Communication Between the Choreo Gateway and Your Backend with Mutual TLS: authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls.md
-      - Secure Communication Between the Choreo Gateway and Your Backend with OAuth2: authentication-and-authorization/secure-communication-between-choreo-gateway-and-backend-with-oauth2.md
+      - Secure Communication Between the WSO2 Developer Platform Gateway and Your Backend with Mutual TLS: authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls.md
+      - Secure Communication Between the WSO2 Developer Platform Gateway and Your Backend with OAuth2: authentication-and-authorization/secure-communication-between-choreo-gateway-and-backend-with-oauth2.md
   - DevOps and CI/CD:
       - Manage Configurations and Secrets: devops-and-ci-cd/manage-configurations-and-secrets.md
       - View Runtime Details: devops-and-ci-cd/view-runtime-details.md
@@ -185,13 +185,13 @@ nav:
       - Manage Environments: devops-and-ci-cd/manage-environments.md
       - Manage Configuration Groups: devops-and-ci-cd/manage-configuration-groups.md
       - Manage Continuous Deployment Pipelines: devops-and-ci-cd/manage-continuous-deployment-pipelines.md
-      - Configure VPNs on the Choreo Cloud Data Plane: devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane.md
+      - Configure VPNs on the WSO2 Developer Platform Cloud Data Plane: devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane.md
   - Testing:
       - Test REST Endpoints via the OpenAPI Console: testing/test-rest-endpoints-via-the-openapi-console.md
       - Test GraphQL Endpoints via the GraphQL Console: testing/test-graphql-endpoints-via-the-graphql-console.md
       - Test WebSocket Endpoints via the WebSocket Console: testing/test-websocket-endpoints-via-the-websocket-console.md
       - Test APIs with cURL: testing/test-apis-with-curl.md
-      - Test APIs with Choreo API Chat: testing/test-apis-with-choreo-apichat.md
+      - Test APIs with WSO2 Developer Platform API Chat: testing/test-apis-with-choreo-apichat.md
       - Test Components with Test Runner: testing/test-components-with-test-runner.md
   - Consuming Services:
       - Consume a Service: 
@@ -227,13 +227,13 @@ nav:
       - Cost Insights: monitoring-and-insights/cost-optimization.md
       - Compliance: monitoring-and-insights/compliance.md
       - View Logs: monitoring-and-insights/view-logs.md
-      - Work with the Choreo Insights API:
-          - Access the Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
-          - Choreo Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md
-      - Integrate Choreo with Moesif: monitoring-and-insights/integrate-choreo-with-moesif.md
-  - Choreo CLI:
-      - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
-      - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md
+      - Work with the WSO2 Developer Platform Insights API:
+          - Access the WSO2 Developer Platform Insights API: monitoring-and-insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
+          - WSO2 Developer Platform Insights API: monitoring-and-insights/work-with-choreo-insights-api/choreo-insights-api.md
+      - Integrate WSO2 Developer Platform with Moesif: monitoring-and-insights/integrate-choreo-with-moesif.md
+  - WSO2 Developer Platform CLI:
+      - WSO2 Developer Platform CLI Overview: choreo-cli/choreo-cli-overview.md
+      - Get Started with the WSO2 Developer Platform CLI: choreo-cli/get-started-with-the-choreo-cli.md
       - Manage Authentication with Personal Access Tokens: choreo-cli/manage-authentication-with-personal-access-tokens.md
   - Administer:
       - Configure Access Control: administer/configure-access-control.md
@@ -243,7 +243,7 @@ nav:
           - Configure Asgardeo as an External IdP: administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md
           - Configure Azure as an External IdP: administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md
       - Create API Subscription Plans: administer/create-api-subscription-plans.md
-      - Configure Approvals for Choreo Workflows: administer/configure-approvals-for-choreo-workflows.md
+      - Configure Approvals for WSO2 Developer Platform Workflows: administer/configure-approvals-for-choreo-workflows.md
       - Review Workflow Approval Requests: administer/review-workflow-approval-requests.md
       - Configure a User Store with the Built-In Identity Provider: administer/configure-a-user-store-with-built-in-idp.md
       - Developer Portal:
@@ -255,11 +255,11 @@ nav:
       - Control Egress Traffic for Your Organization: administer/control-egress-traffic-for-your-organization.md
   - References:
       - FAQ: references/faq.md
-      - Choreo Limitations: references/choreo-limitations.md
-      - Troubleshoot Choreo: references/troubleshoot-choreo.md
+      - WSO2 Developer Platform Limitations: references/choreo-limitations.md
+      - Troubleshoot WSO2 Developer Platform: references/troubleshoot-choreo.md
       - Private Data Plane Security Levels: references/private-data-plane-security-levels.md
       - Private Data Plane Management Models: references/private-data-plane-management-models.md
-      - Choreo Platform Service Billing and Upgrades: references/choreo-platform-services-billing-and-upgrades.md
+      - WSO2 Developer Platform Service Billing and Upgrades: references/choreo-platform-services-billing-and-upgrades.md
 
 # Extensions
 # Extensions
@@ -459,6 +459,7 @@ extra_javascript:
   - assets/js/choreotheme.js
   - assets/javascripts/region-selector.js
 extra:
+  product_name: WSO2 Developer Platform
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/wso2
