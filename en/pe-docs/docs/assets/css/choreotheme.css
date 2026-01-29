@@ -294,7 +294,7 @@ visibility: hidden;
     display: inline-block;
 }
 
-/* Choreo docs doesn't show this title on the navbar */
+/* WSO2 Developer Platform docs doesn't show this title on the navbar */
 .md-header__title {
     display: none; 
 }
