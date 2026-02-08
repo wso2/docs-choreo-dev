@@ -210,6 +210,7 @@ nav:
   - Monitoring and Insights:
       - Observability Overview: monitoring-and-insights/observability-overview.md
       - Alert Overview: monitoring-and-insights/alerts-overview.md
+      - Incident Overview: monitoring-and-insights/incident-overview.md
       - Delivery Insights:
           - Configure DORA Metrics: monitoring-and-insights/delivery-insights/configure-dora-metrics.md
           - View DORA Metrics: monitoring-and-insights/delivery-insights/view-dora-metrics.md
