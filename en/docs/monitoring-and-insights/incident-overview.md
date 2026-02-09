@@ -12,7 +12,6 @@ Incidents are automatically generated alerts that indicate your component has ex
 - Creates an incident record with detailed information
 - Collects relevant logs and metrics from before and during the incident
 - Analyzes recent deployment source code and configuration changes
-- Generates root cause analysis with probable causes and recommendations ### what should I put here ? 
 
 This helps you quickly identify what went wrong and how to fix it.
 
@@ -25,7 +24,7 @@ Choreo automatically detects and tracks the following types of incidents:
 
 ### OOMKilled Incidents
 
-OMMKilled Incidents occur when your component ran out of memory and was terminated by the system.
+OOMKilled Incidents occur when your component ran out of memory and was terminated by the system.
 
 **Common causes:**
 
@@ -37,7 +36,7 @@ OMMKilled Incidents occur when your component ran out of memory and was terminat
 
 ### CrashLoopBackOff Incidents
 
-CrashLoopBackoff Incidents occur when your component keeps crashing and restarting repeatedly.
+CrashLoopBackOff Incidents occur when your component keeps crashing and restarting repeatedly.
 
 **Common causes:**
 
@@ -57,9 +56,12 @@ CrashLoopBackoff Incidents occur when your component keeps crashing and restarti
 
 2. In the left navigation menu, click **Observability** and then click **Incidents**.
 
+    !!! note
+        You can view incidents from **project level** or **component level**.
+
     ![Incidents Navigation](../assets/img/monitoring-and-insights/incidents/incident-view.png){.cInlineImage-full}
 
-3. The incidents page displays all detected incidents for your component.
+3. The incidents page displays all detected incidents for your project or component based on where you view the incidents.
 
     ![Incidents List](../assets/img/monitoring-and-insights/incidents/incidents-list.png){.cInlineImage-full}
 
@@ -68,9 +70,7 @@ CrashLoopBackoff Incidents occur when your component keeps crashing and restarti
 Use the filters at the top of the incidents page to find specific incidents:
 
 - **Time Range**: Select a date range to view incidents from a specific period
-- **Incident Type**: Filter by OOMKilled or CrashLoopBackOff
 - **Environment**: View incidents from specific environments (e.g., Development, Production)
-- **Version**: Filter by component version
 
 ![Incident Filters](../assets/img/monitoring-and-insights/incidents/incident-filters.png){.cInlineImage-full}
 
@@ -78,78 +78,88 @@ Use the filters at the top of the incidents page to find specific incidents:
 
 Click on any incident to view comprehensive diagnostic information.
 
-![Incident Details](../assets/img/monitoring-and-insights/incidents/incident-details.png){.cInlineImage-full}
-
 ### Incident Summary
 
 At the top of the incident details page, you'll see:
 
 - **Incident Type**: What kind of issue occurred (OOMKilled or CrashLoopBackOff)
-- **Occurred At**: Exact date and time of the incident
-- **Status**: Current processing status (see below)
-- **Component Details**: Which component, version, and environment were affected
+- **Incident ID**: Unique identifier for the incident
+- **Time of Failure**: Exact date and time of the incident
 
-### Processing Status
+### Incident Analysis Sections
 
-Each incident shows its current processing status:
+Once you open an incident, you'll find four key sections that provide comprehensive diagnostic information to help you understand and resolve the issue:
 
 | **Status**         | **What it means**                                                               |
 |--------------------|---------------------------------------------------------------------------------|
-| Initialized        | Incident detected, data collection starting                                     |
-| Data Collected     | Logs, metrics, and deployment information collected                             |
+| **Compare Source Code**  | Analyzes code changes between the incident version and the previous stable state. |
+| **Compare Configurations**| Highlights changes in environment variables or resource allocations.              |
+| **Logs**                 | Displays filtered logs and events captured at the time of the incident.           |
+| **Metrics**              | Shows resource usage and performance metrics leading up to the incident.           |
 
-### Root Cause Analysis
+#### 1. Compare Source Code
 
-This section provides:
+Analyzes code changes between the incident version and the previous stable deployment.
 
-- **What Happened**: Clear summary of what caused the incident
-- **Probable Causes**: List of potential root causes ranked by likelihood
-- **Recommendations**: Step-by-step actions to resolve the issue and prevent it from happening again
+**What you'll see:**
+- Side-by-side code diff showing what changed between versions
+- Specific files and lines that were modified along with the commitDiff Link of the provider 
 
-![Root Cause Analysis](../assets/img/monitoring-and-insights/incidents/root-cause-analysis.png){.cInlineImage-full}
+!!! note
+    if the commitDiff contains more than 5000 characters, only the commitDiff link will be showed.
 
-### Observability Data
-
-Expand this section to view collected diagnostic information:
-
-**Logs:**
-- Application logs from around the time of the incident
-- System logs showing container behavior
-- Gateway logs (if applicable)
-
-**Metrics:**
-- Memory and CPU usage trends
-- Request rates and response times
-- Error rates and status codes
-
-![Observability Data](../assets/img/monitoring-and-insights/incidents/observability-data.png){.cInlineImage-full}
-
-### Recent Changes
-
-This section shows what changed before the incident:
-
-- **Previous Deployment**: The last stable deployment details
-- **Current Deployment**: The deployment that was running when the incident occurred
-- **Configuration Changes**: What configuration values were modified
-- **Code Changes**: Summary of code commits since the last deployment
-
-![Recent Changes](../assets/img/monitoring-and-insights/incidents/recent-changes.png){.cInlineImage-full}
+![Compare Source Code](../assets/img/monitoring-and-insights/incidents/compare-source-code.png){.cInlineImage-full}
 
 !!! tip
-    If an incident occurred shortly after a deployment, review the configuration and code changes carefully—they often provide clues to the root cause.
+    If the incident occurred shortly after a deployment, carefully review the code changes—they often reveal the root cause.
 
-## Project-Level Incidents
+#### 2. Compare Configurations
 
-To view incidents across all components in your project:
+Highlights changes in environment variables, secrets, and resource allocations (CPU/Memory).
 
-1. Navigate to your project in Choreo.
-2. Click **Observability** → **Incidents** in the left menu.
-3. The project incidents page shows aggregated incidents from all components.
-4. Use filters to narrow down by environment, time range, or incident type.
+**What you'll see:**
+- Configuration differences between the current and previous deployment
+- Changes in environment variables
+- Resource allocation modifications (CPU and memory limits)
+- Secret and configmap changes
 
-![Project Incidents](../assets/img/monitoring-and-insights/incidents/project-incidents.png){.cInlineImage-full}
+![Compare Configurations](../assets/img/monitoring-and-insights/incidents/compare-configurations.png){.cInlineImage-full}
 
-This gives you a holistic view of incidents across your entire project, helping you identify patterns or widespread issues.
+!!! important
+    For OOMKilled incidents, check if memory limits were reduced. For CrashLoopBackOff, verify that all required environment variables are correctly set.
+
+#### 3. Logs
+
+Displays filtered logs and events captured **5 minutes before** and **20 seconds after** the incident occurred.
+
+**What you'll see:**
+- **Application Logs**: Your application's output and error logs
+- **System Logs**: Container lifecycle events (restarts, crashes, OOMKilled events)
+- **Gateway Logs**: API Gateway access and error logs (if applicable)
+- Up to 200 log entries per log type, helping you pinpoint exactly what happened
+
+![Logs](../assets/img/monitoring-and-insights/incidents/logs.png){.cInlineImage-full}
+
+!!! note
+    Logs are automatically collected from 5 minutes before the incident to 20 seconds after, ensuring you have context before and during the failure.
+
+#### 4. Metrics
+
+Shows resource usage and performance metrics leading up to the incident.
+
+**What you'll see:**
+- **Memory and CPU Usage**: Trends showing resource consumption over time
+- **Request Rates**: Number of requests per minute
+- **Response Times**: API latency and performance metrics
+- **Error Rates**: HTTP error status codes and failure rates
+
+![Metrics](../assets/img/monitoring-and-insights/incidents/metrics.png){.cInlineImage-full}
+
+**Use metrics to:**
+- Identify memory leaks (steadily increasing memory usage)
+- Spot CPU spikes that may have caused issues
+- Correlate traffic spikes with the incident
+- Understand performance degradation patterns
 
 ## Best Practices
 
