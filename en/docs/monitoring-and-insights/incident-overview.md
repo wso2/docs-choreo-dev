@@ -100,6 +100,7 @@ Analyzes code changes between the incident version and the previous stable deplo
 **What you'll see:**
 - Side-by-side code diff showing what changed between versions
 - Specific files and lines that were modified along with the commitDiff Link of the provider 
+- A link to view the commitDiff in the respective git provider. 
 
 !!! note
     if the commitDiff contains more than 5000 characters, only the commitDiff link will be showed.
