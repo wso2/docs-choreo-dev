@@ -63,8 +63,6 @@ CrashLoopBackOff Incidents occur when your component keeps crashing and restarti
 
 3. The incidents page displays all detected incidents for your project or component based on where you view the incidents.
 
-    ![Incidents List](../assets/img/monitoring-and-insights/incidents/incidents-list.png){.cInlineImage-full}
-
 ### Filtering Incidents
 
 Use the filters at the top of the incidents page to find specific incidents:
@@ -72,15 +70,13 @@ Use the filters at the top of the incidents page to find specific incidents:
 - **Time Range**: Select a date range to view incidents from a specific period
 - **Environment**: View incidents from specific environments (e.g., Development, Production)
 
-![Incident Filters](../assets/img/monitoring-and-insights/incidents/incident-filters.png){.cInlineImage-full}
-
 ## Understanding Incident Details
 
 Click on any incident to view comprehensive diagnostic information.
 
 ### Incident Summary
 
-At the top of the incident details page, you'll see:
+At the top of the incident details page, you'll see:comp
 
 - **Incident Type**: What kind of issue occurred (OOMKilled or CrashLoopBackOff)
 - **Incident ID**: Unique identifier for the incident
