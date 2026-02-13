@@ -96,11 +96,11 @@ Analyzes code changes between the incident version and the previous stable deplo
 
 **What you'll see:**
 - Side-by-side code diff showing what changed between versions
-- Specific files and lines that were modified along with the commitDiff Link of the provider 
-- A link to view the commitDiff in the respective git provider. 
+- Specific files and lines that were modified along with the Commit diff Link of the provider 
+- A link to view the Commit diff in the respective git provider. 
 
 !!! note
-    if the commitDiff contains more than 5000 characters, only the commitDiff link will be showed.
+    If the Commit diff contains more than 5000 characters, only the Commit diff link will be shown.
 
 ![Compare Source Code](../assets/img/monitoring-and-insights/incidents/compare-source-code.png){.cInlineImage-full}
 
