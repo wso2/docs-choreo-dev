@@ -51,9 +51,6 @@ CrashLoopBackOff Incidents occur when your component keeps crashing and restarti
 
 1. Navigate to the component you want to monitor.
 
-    !!! info
-        You need to have **Choreo DevOps** or **Choreo Platform Engineer** roles to view incidents.
-
 2. In the left navigation menu, click **Observability** and then click **Incidents**.
 
     !!! note
