@@ -73,7 +73,7 @@ Click on any incident to view comprehensive diagnostic information.
 
 ### Incident Summary
 
-At the top of the incident details page, you'll see:comp
+At the top of the incident details page, you'll see:
 
 - **Incident Type**: What kind of issue occurred (OOMKilled or CrashLoopBackOff)
 - **Incident ID**: Unique identifier for the incident
@@ -83,7 +83,7 @@ At the top of the incident details page, you'll see:comp
 
 Once you open an incident, you'll find four key sections that provide comprehensive diagnostic information to help you understand and resolve the issue:
 
-| **Status**         | **What it means**                                                               |
+| **Section**         | **Description**                                                               |
 |--------------------|---------------------------------------------------------------------------------|
 | **Compare Source Code**  | Analyzes code changes between the incident version and the previous stable state. |
 | **Compare Configurations**| Highlights changes in environment variables or resource allocations.              |
@@ -105,7 +105,7 @@ Analyzes code changes between the incident version and the previous stable deplo
 ![Compare Source Code](../assets/img/monitoring-and-insights/incidents/compare-source-code.png){.cInlineImage-full}
 
 !!! tip
-    If the incident occurred shortly after a deployment, carefully review the code changes—they often reveal the root cause.
+    If the incident occurred shortly after a deployment, carefully review the code changes they often reveal the root cause.
 
 #### 2. Compare Configurations
 
