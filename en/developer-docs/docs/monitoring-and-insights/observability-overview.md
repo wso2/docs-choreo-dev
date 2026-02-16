@@ -40,6 +40,9 @@ Each horizontal section of the graph, termed a *bin*, represents a specific peri
 - **CPU:** CPU usage at the selected time (millicores).
 - **Memory:** Memory usage at the selected time (MiB).
 
+!!! tip
+    To get a more detailed view of any metric, narrow the time range on the graph by clicking and dragging the cursor over the period you want to examine. This increases the granularity of the displayed data points and can help reveal anomalies that are not visible in broader time ranges.
+
 ## Logs
 
 The **Logs** pane serves as a centralized view to observe logs of the components you deploy on {{ product_name }}. This facilitates rigorous troubleshooting and analysis.
