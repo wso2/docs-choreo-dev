@@ -217,6 +217,7 @@ nav:
   - Monitoring and Insights:
       - Observability Overview: monitoring-and-insights/observability-overview.md
       - Alert Overview: monitoring-and-insights/alerts-overview.md
+      - Incident Overview: monitoring-and-insights/incident-overview.md
       - Operational Insights: monitoring-and-insights/operational-insights-dashboard.md
       - Delivery Insights:
           - Configure Delivery Insights: monitoring-and-insights/delivery-insights/configure-delivery-insights.md
