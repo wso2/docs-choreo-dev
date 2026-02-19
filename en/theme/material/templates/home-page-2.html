@@ -16,6 +16,7 @@
     <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
       {% include "partials/logo.html" %}
     </a>
+    <div class="md-header__tabs" style="font-size: 0.875rem; font-weight: normal; white-space: nowrap; padding-right: 1rem; color: black;">{{ config.extra.short_name }} Documentation</div>
     <label class="md-header__button md-icon" for="__drawer">
       {% include ".icons/material/menu" ~ ".svg" %}
     </label>
