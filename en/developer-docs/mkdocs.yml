@@ -460,6 +460,7 @@ extra_javascript:
   - assets/javascripts/region-selector.js
 extra:
   product_name: WSO2 Developer Platform
+  short_name: Developer Platform
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/wso2
