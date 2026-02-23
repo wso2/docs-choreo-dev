@@ -184,6 +184,10 @@ nav:
       - Configure Storage: devops-and-ci-cd/configure-storage.md
       - Manage Environments: devops-and-ci-cd/manage-environments.md
       - Manage Configuration Groups: devops-and-ci-cd/manage-configuration-groups.md
+      - Manage Certificates:
+          - Manage Certificates: devops-and-ci-cd/manage-certificates.md
+          - Configure Certificates for Proxies: devops-and-ci-cd/configure-certificates-for-proxies.md
+          - Configure Certificates for Services: devops-and-ci-cd/configure-certificates-for-services.md
       - Manage Continuous Deployment Pipelines: devops-and-ci-cd/manage-continuous-deployment-pipelines.md
       - Configure VPNs on the WSO2 Developer Platform Cloud Data Plane: devops-and-ci-cd/configure-vpns-on-the-choreo-cloud-data-plane.md
   - Testing:

@@ -10,12 +10,12 @@ Mutual TLS authentication involves both the client and server validating each ot
 
 To establish secure connectivity between the {{ product_name }} Gateway and your backend using mutual TLS, you must add the certificate of the backend (server certificate) to {{ product_name }} and add the certificate of {{ product_name }} (client certificate) as a trusted certificate in the backend.
 
-### Step 1: Configure the backend certificate 
+### Step 1: Configure the backend certificate
 
 #### Prerequisites
 
-- The endpoint must be protected with TLS. 
-- The public certificate of the backend server should be extracted in PEM format and saved on the disk with the `.pem` extension.
+- The endpoint must be protected with TLS.
+- The public certificate of the backend server must be added to {{ product_name }} at the organization level. To add a certificate, see [Manage Certificates](../devops-and-ci-cd/manage-certificates.md).
 
 To configure the backend certificate, follow the steps given below:
 
@@ -23,7 +23,7 @@ To configure the backend certificate, follow the steps given below:
 2. In the **Component Listing** pane, click on the API proxy for which you want to configure TLS. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
 3. In the left navigation menu, click **Develop** and then click **Endpoints**.
 4. On the **Endpoints** page, click **Configure** corresponding to the endpoint.
-5. Click **Upload Endpoint Certificate**, and select the certificate file that you extracted in the prerequisites section to add it. This adds the certificate to all the environments as the default certificate for the endpoint. You can override this certificate if necessary when you deploy or promote the API.
+5. Select the backend certificate from the **Endpoint Certificate** dropdown. This lists all certificates available at the organization level. The selected certificate applies to all environments as the default for the endpoint. You can override this certificate if necessary when you deploy or promote the API.
 
 ### Step 2: Configure mutual TLS with the backend service
 
