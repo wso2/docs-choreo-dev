@@ -15,7 +15,7 @@ To establish secure connectivity between the Choreo Gateway and your backend usi
 #### Prerequisites
 
 - The endpoint must be protected with TLS.
-- The public certificate of the backend server must be added to {{ product_name }} at the organization level. To add a certificate, see [Manage Certificates](../devops-and-ci-cd/manage-certificates.md).
+- The public certificate of the backend server must be added to Choreo at the organization level. To add a certificate, see [Manage Certificates](../devops-and-ci-cd/manage-certificates.md).
 
 To configure the backend certificate, follow the steps given below:
 
