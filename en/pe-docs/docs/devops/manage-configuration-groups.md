@@ -9,7 +9,7 @@ Configuration groups can be defined at organization level and link to components
     - All configuration group values are encrypted and stored in environment-specific key vaults.
     - Management of configuration groups is restricted to users with {{ product_name }} Admin, DevOps, and Platform Engineer roles.
     - Developers can discover configuration groups available within the organization via the **{{ product_name }} Internal Marketplace**.
-    - This feature is currently not supported for Ballerina build presets, Web Applications, or Test Runner components.
+    - This feature is currently not supported for Web Applications or Test Runner components.
 
 ## Create a configuration group
 
@@ -42,6 +42,9 @@ To create a new configuration group, follow the steps given below:
 The configuration groups created at organization level can be linked to any component within the organization. A configuration group can be linked as **Environment Variables** or **File Mounts** at deployment time.
 
 Linking a configuration group will inject the values defined in the group during deployment. The values are mapped to environment variable names or file names based on the keys defined in the configuration group. If needed, you can customize the environment variable name or file name by updating the mapping at deployment.
+
+!!! note
+      To link configuration groups to Ballerina component configurables, click **Allow Linking Configuration Groups** at the top of the configuration form during deployment. This enables a link icon next to each configurable field, allowing you to map configuration group values.
 
 To link a configuration group to a component, follow the steps given below:
 
