@@ -89,6 +89,9 @@ You can modify Ballerina configurables via the **CD Pipelines** page when deploy
       Use configurables instead of environment variables to add file mounts to Ballerina components.
       Environment variables are primarily for components written in other languages.
 
+!!! note
+      To link configuration groups to Ballerina configurables, click **Allow Linking Configuration Groups** at the top of the configuration form during deployment. This enables a link icon next to each configurable field, allowing you to map configuration group values.
+
 ## Alternative configuration management approach
 
 !!! Warning "Warning"
