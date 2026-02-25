@@ -27,6 +27,7 @@ jobs:
       - run: |
           echo "Installing Python dependencies"
           pip install --upgrade pip  # Ensure pip is up-to-date
+          pip install setuptools==82.0.0
           pip install zipp==3.0.0
           pip install pathlib2==2.3.5
           pip install -U --upgrade mkdocs==1.4.2
