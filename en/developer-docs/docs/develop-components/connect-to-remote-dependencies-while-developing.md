@@ -16,7 +16,7 @@ The {{ product_name }} CLI allows you to create a local subshell that is bridged
 2. Login to {{ product_name }} via CLI
 
     ``` sh
-    {{ product_name }} login
+    {{ cli_root_name }} login
     ```
 
 !!! tip
@@ -27,7 +27,7 @@ The {{ product_name }} CLI allows you to create a local subshell that is bridged
 1. The following command will create a subshell that will be connected to your remote project environment.
 
     ``` sh
-    {{ product_name }} connect --project default-project
+    {{ cli_root_name }} connect --project default-project
     ```
 
 2. Execute the command to run your component locally within the {{ product_name }} subshell. For example:
@@ -51,35 +51,35 @@ Your application will now run connected to its remote dependencies for local dev
     By default, all connection configurations within your project are injected into the subshell. If you only want to focus on a particular component's connections, you can pass it as a flag:
 
     ``` sh
-    {{ product_name }} connect --project default-project --component my-component
+    {{ cli_root_name }} connect --project default-project --component my-component
     ```
 
 - **Connecting to Different Environments**
 
-    By default, connection is established with your development environment. To connect to other *non-critical* environments, use the `{{ product_name }} connect` command with the following flag:
+    By default, connection is established with your development environment. To connect to other *non-critical* environments, use the `{{ cli_root_name }} connect` command with the following flag:
 
     ``` sh
-    {{ product_name }} connect --project default-project --env test-env
+    {{ cli_root_name }} connect --project default-project --env test-env
     ```
 
 - **Skipping Remote Dependencies**
 
-    Sometimes, you might run certain dependencies locally. By default, `{{ product_name }} connect` injects all connection configurations. To use your locally running dependencies instead and skip injecting specific configurations, use the {{ product_name }} connect command with the following flags:
+    Sometimes, you might run certain dependencies locally. By default, `{{ cli_root_name }} connect` injects all connection configurations. To use your locally running dependencies instead and skip injecting specific configurations, use the {{ product_name }} connect command with the following flags:
 
     ``` sh
-    {{ product_name }} connect --project default-project --skip-connection test-conn1 --skip-connection test-conn2 
+    {{ cli_root_name }} connect --project default-project --skip-connection test-conn1 --skip-connection test-conn2 
     ```
 
 - **Combining Connect with Application Startup**
 
-    You might want to combine the `{{ product_name }} connect` command and your application's start command into a single command. This automates the creation of the subshell and the launch of your application, reducing manual steps in your development process:
+    You might want to combine the `{{ cli_root_name }} connect` command and your application's start command into a single command. This automates the creation of the subshell and the launch of your application, reducing manual steps in your development process:
 
     ``` sh
-    {{ product_name }} connect --project default-project -- go run main,go
+    {{ cli_root_name }} connect --project default-project -- go run main,go
     ```
 
 !!! tip
-    Execute the command `{{ product_name }} connect --help` to explore all available advanced options and flags.
+    Execute the command `{{ cli_root_name }} connect --help` to explore all available advanced options and flags.
 
              
 ## Debug using VS Code
