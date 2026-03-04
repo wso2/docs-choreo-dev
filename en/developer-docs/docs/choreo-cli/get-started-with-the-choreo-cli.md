@@ -123,7 +123,7 @@ To check the status of a specific build, run the following command, replacing <b
 Once the build is complete, you can view the build logs for verification or debugging purposes. In the unlikely case, the build encounters any issues, the logs will help you troubleshoot.
 
 ``` sh
-{{ cli_root_name }} logs --type=build --project="web-app-project" --component="my-web-app" --deployment-track="main" --build-id=<build_id>
+{{ cli_root_name }} logs build --project="web-app-project" --component="my-web-app" --deployment-track="main" --build-id=<build_id>
 ```
 
 ## Step 6: Deploy to the Development environment
@@ -147,7 +147,7 @@ After deploying the component, you can retrieve the URL of the deployed web appl
 To observe runtime application logs of the web application in the Development environment, execute the following command:
 
 ``` sh
-{{ cli_root_name }} logs --type component-application --component my-web-app --project web-app-project --env Development --follow
+{{ cli_root_name }} logs application --component my-web-app --project web-app-project --env Development --follow
 ```
 
 ## Step 7: Deploy to the Production environment
