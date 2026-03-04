@@ -18,18 +18,18 @@ Follow the steps below to install the CLI:
 
     - For Linux and Mac OS
         ``` sh
-        curl -o- https://cli.choreo.dev/install.sh | bash
+        curl -o- https://raw.githubusercontent.com/wso2/wdp-cli/main/scripts/install.sh | bash
         ```
 
     - For Windows (via PowerShell)
         ``` sh
-        iwr https://cli.choreo.dev/install.ps1 -useb | iex
+        iwr https://raw.githubusercontent.com/wso2/wdp-cli/main/scripts/install.ps1 -useb | iex
         ```
 
 2. Verify the installation by running the following command:
 
     ``` sh
-    {{ product_name }} --version
+    {{ cli_root_name }} --version
     ```
 
 ## Step 1: Login to {{ product_name }} 
@@ -37,7 +37,7 @@ Follow the steps below to install the CLI:
 Run the following command to login to {{ product_name }}:  
 
 ``` bash
-{{ product_name }} login
+{{ cli_root_name }} login
 ```
 
 !!! note
@@ -52,7 +52,7 @@ A project in {{ product_name }} is a logical group of related components that ty
 Create a multi-repository project named ‘web-app-project’ by running the following command:
 
 ``` sh
-{{ product_name }} create project web-app-project --type=multi-repository
+{{ cli_root_name }} create project web-app-project --type=multi-repository
 ```
 ## Step 3: Create a Web Application component
 
@@ -103,7 +103,7 @@ This triggers a wizard prompting you to provide details for your Git repository 
 To list down the components in the project, you can use the following command:
 
 ``` sh
-{{ product_name }} list components --project="web-app-project"
+{{ cli_root_name }} list components --project="web-app-project"
 ```
 
 ## Step 5: View component details
@@ -111,7 +111,7 @@ To list down the components in the project, you can use the following command:
 To view comprehensive information about the component, including basic details and service endpoint URLs once the services are deployed, you can use the following command:
 
 ``` sh
-{{ product_name }} describe component "my-web-app" --project="web-app-project"
+{{ cli_root_name }} describe component "my-web-app" --project="web-app-project"
 ```
 
 ## Step 6: Build the component
@@ -119,13 +119,13 @@ To view comprehensive information about the component, including basic details a
 You must build the components before deploying them to a specific environment. Execute the following command to trigger the build:
 
 ``` sh
-{{ product_name }} create build "my-web-app" --project="web-app-project"
+{{ cli_root_name }} create build "my-web-app" --project="web-app-project"
 ```
 
 To view the builds in Progres:
 
 ```sh
-{{ product_name }} list builds  --project="web-app-project" --component="my-web-app"
+{{ cli_root_name }} list builds  --project="web-app-project" --component="my-web-app"
 ```
 
 ### Step 6.1: View build status
@@ -136,7 +136,7 @@ To check the status of a specific build, run the following command, replacing <b
     Typically, a build takes approximately 2 to 5 minutes to complete.
 
 ``` sh
-{{ product_name }} describe build <build-id> --project="web-app-project" --component="my-web-app"
+{{ cli_root_name }} describe build <build-id> --project="web-app-project" --component="my-web-app"
 ```
 
 ### Step 6.2: View build logs
@@ -144,7 +144,7 @@ To check the status of a specific build, run the following command, replacing <b
 Once the build is complete, you can view the build logs for verification or debugging purposes. In the unlikely case, the build encounters any issues, the logs will help you troubleshoot.
 
 ``` sh
-{{ product_name }} logs --type=build --project="web-app-project" --component="my-web-app" --deployment-track="main" --build-id=<build_id>
+{{ cli_root_name }} logs --type=build --project="web-app-project" --component="my-web-app" --deployment-track="main" --build-id=<build_id>
 ```
 
 ## Step 7: Deploy to the Development environment
@@ -152,7 +152,7 @@ Once the build is complete, you can view the build logs for verification or debu
 Once the build status indicates `successful` you can deploy the component in the Development environment by running the following command:
 
 ``` sh
-{{ product_name }} create deployment "my-web-app" --env=Development --project="web-app-project" --build-id=<build-id>
+{{ cli_root_name }} create deployment "my-web-app" --env=Development --project="web-app-project" --build-id=<build-id>
 ```
 
 ### Step 7.1: Verify the deployment in the Development environment
@@ -160,7 +160,7 @@ Once the build status indicates `successful` you can deploy the component in the
 After deploying the component, you can retrieve the URL of the deployed web application and open the publicly available web page to verify its behavior. Use the following command to retrieve the URL:
 
 ``` bash
-{{ product_name }} describe component "my-web-app" --project="web-app-project"
+{{ cli_root_name }} describe component "my-web-app" --project="web-app-project"
 ```
 
 ### Step 7.2: View runtime logs
@@ -168,7 +168,7 @@ After deploying the component, you can retrieve the URL of the deployed web appl
 To observe runtime application logs of the web application in the Development environment, execute the following command:
 
 ``` sh
-{{ product_name }} logs --type component-application --component my-web-app --project web-app-project --env Development --follow
+{{ cli_root_name }} logs --type component-application --component my-web-app --project web-app-project --env Development --follow
 ```
 
 ## Step 8: Deploy to the Production environment
@@ -178,7 +178,7 @@ Once you verify your application in the Development environment, you can proceed
 - Be sure to substitute <build-id> with the id obtained after triggering the build.
 
 ``` sh
-{{ product_name }} create deployment "my-web-app" --env=Production --project="web-app-project" --build-id=<build-id>
+{{ cli_root_name }} create deployment "my-web-app" --env=Production --project="web-app-project" --build-id=<build-id>
 ```
 
 ### Step 8.1: Verify the deployment in the Production environment
@@ -186,7 +186,7 @@ Once you verify your application in the Development environment, you can proceed
 To ensure a successful deployment to the Production environment, retrieve the URL of the deployed web application using the following command:
 
 ``` sh
-{{ product_name }} describe component "my-web-app" --project="web-app-project"
+{{ cli_root_name }} describe component "my-web-app" --project="web-app-project"
 ``` 
 
 Congratulations! You successfully deployed your web application in {{ product_name }} using the {{ product_name }} CLI. 
@@ -196,5 +196,5 @@ Congratulations! You successfully deployed your web application in {{ product_na
 Discover other functionalities of {{ product_name }} by running the following command.
 
 ``` sh
-{{ product_name }} --help
+{{ cli_root_name }} --help
 ```

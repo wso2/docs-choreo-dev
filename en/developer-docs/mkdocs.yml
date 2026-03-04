@@ -466,6 +466,7 @@ extra_javascript:
 extra:
   product_name: WSO2 Developer Platform
   short_name: Developer Platform
+  cli_root_name: wdp
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/wso2

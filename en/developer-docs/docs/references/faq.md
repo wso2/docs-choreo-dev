@@ -158,13 +158,13 @@ No, there are no outages when upgrading a plan.
 ## {{ product_name }} CLI
 
 ### Q: How do I uninstall the CLI?
-If you didn't download the binary directly, you can uninstall the CLI by deleting the `.{{ product_name }}` directory in the
+If you didn't download the binary directly, you can uninstall the CLI by deleting the `.{{ cli_root_name }}` directory in the
 home directory of your operating system.
 
 ### Q: How do I update the CLI?
 You can update the CLI by running the following command:
 ```sh
-curl -o- https://cli.choreo.dev/install.sh | bash
+curl -o- https://raw.githubusercontent.com/wso2/wdp-cli/main/scripts/install.sh | bash
 ```
 
 ### Q: What are the supported component types in the CLI?
@@ -180,15 +180,15 @@ The {{ product_name }} CLI currently supports the following component types:
 ### Q: How do I get help with a specific command in the CLI?
 You can get help with a specific command by running the following command:
 ```sh
-{{ product_name }} <command> --help
+{{ cli_root_name }} <command> --help
 ```
 
 ### Q: What are the build configurations required when creating components using the CLI?
 You can configure the component build configurations depending on the component type as follows:
 
 ```sh
-{{ product_name }} create component <name> --project <name> --build-configs='key1=value1,key2=value2'
-{{ product_name }} create component <name> --project <name> --build-configs='key1=value1' --build-configs='key2=value2'
+{{ cli_root_name }} create component <name> --project <name> --build-configs='key1=value1,key2=value2'
+{{ cli_root_name }} create component <name> --project <name> --build-configs='key1=value1' --build-configs='key2=value2'
 ```
 
 The build configurations required for existing build presets are as follows:

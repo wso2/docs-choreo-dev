@@ -59,7 +59,7 @@ Once you generate a token, you can use it to authenticate with the {{ product_na
 To log in with the token, use the following command:
 
 ```bash
-{{ product_name }} login --with-token
+{{ cli_root_name }} login --with-token
 ```
 
 This command reads the token from the standard input.
@@ -68,7 +68,7 @@ This command reads the token from the standard input.
 
 ```bash
 export CHOREO_TOKEN= <YOUR_PERSONAL_ACCESS_TOKEN>
-echo "$CHOREO_TOKEN" | {{ product_name }} login --with-token
+echo "$CHOREO_TOKEN" | {{ cli_root_name }} login --with-token
 ```
 
 !!! note 
