@@ -3535,7 +3535,7 @@ This triggers a wizard prompting you to provide details for your Git repository 
 
 <h3 id="step-62-view-build-logs">Step 6.2: View build logs<a class="headerlink" href="#step-62-view-build-logs" title="Permanent link">&para;</a></h3>
 <p>Once the build is complete, you can view the build logs for verification or debugging purposes. In the unlikely case, the build encounters any issues, the logs will help you troubleshoot.</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>choreo<span class="w"> </span>logs<span class="w"> </span>--type<span class="o">=</span>build<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--component<span class="o">=</span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--deployment-track<span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="w"> </span>--build-id<span class="o">=</span>&lt;build_id&gt;
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>choreo<span class="w"> </span>logs<span class="w"> </span>build<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--component<span class="o">=</span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--deployment-track<span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="w"> </span>--build-id<span class="o">=</span>&lt;build_id&gt;
 </code></pre></div>
 
 <h2 id="step-7-deploy-to-the-development-environment">Step 7: Deploy to the Development environment<a class="headerlink" href="#step-7-deploy-to-the-development-environment" title="Permanent link">&para;</a></h2>
@@ -3550,7 +3550,7 @@ This triggers a wizard prompting you to provide details for your Git repository 
 
 <h3 id="step-72-view-runtime-logs">Step 7.2: View runtime logs<a class="headerlink" href="#step-72-view-runtime-logs" title="Permanent link">&para;</a></h3>
 <p>To observe runtime application logs of the web application in the Development environment, execute the following command:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>choreo<span class="w"> </span>logs<span class="w"> </span>--type<span class="w"> </span>component-application<span class="w"> </span>--component<span class="w"> </span>my-web-app<span class="w"> </span>--project<span class="w"> </span>web-app-project<span class="w"> </span>--env<span class="w"> </span>Development<span class="w"> </span>--follow
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>choreo<span class="w"> </span>logs<span class="w"> </span>application<span class="w"> </span>--component<span class="w"> </span>my-web-app<span class="w"> </span>--project<span class="w"> </span>web-app-project<span class="w"> </span>--env<span class="w"> </span>Development<span class="w"> </span>--follow
 </code></pre></div>
 
 <h2 id="step-8-deploy-to-the-production-environment">Step 8: Deploy to the Production environment<a class="headerlink" href="#step-8-deploy-to-the-production-environment" title="Permanent link">&para;</a></h2>
