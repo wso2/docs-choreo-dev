@@ -34,7 +34,7 @@ copyright: ©2023 WSO2 LLC.
 theme:
   name: material
   custom_dir: ../theme/material
-  logo: assets/images/logo.png
+  logo: assets/images/logo.svg
   font:
     text: Montserrat
   favicon: assets/images/favicon.png
