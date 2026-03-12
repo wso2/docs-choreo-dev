@@ -4,20 +4,20 @@
 
 ## Creating an API Key
 
-To consume an API secured with an API Key, an API Key is required. To obtain an API Key, an application must first be created in the Choreo Developer Portal. This application represents a physical entity (such as a mobile app, web app, or device) and serves as the means to subscribe to APIs under a defined usage policy. The API Key is associated with a specific application, and an application can be created during the API Key generation process if needed.
+To consume an API secured with an API Key, an API Key is required. To obtain an API Key, an application must first be created in the {{ product_name }} Developer Portal. This application represents a physical entity (such as a mobile app, web app, or device) and serves as the means to subscribe to APIs under a defined usage policy. The API Key is associated with a specific application, and an application can be created during the API Key generation process if needed.
 
 ---
 
 ### Steps to Create an API Key
 
-1. Navigate to the [Choreo Developer Portal](https://devportal.choreo.dev) and sign in.
+1. Navigate to the [{{ product_name }} Developer Portal](https://devportal.choreo.dev) and sign in.
 2. Click on **APIs** in the Developer Portal header.
 3. Select the desired API that requires an API Key for access.
 4. This will take you to the API overview page, where you can manage credentials.
 
 #### Generating Environment-Specific API Keys.
 
-Choreo allows you to generate API keys for production and sandbox environments.
+{{ product_name }} allows you to generate API keys for production and sandbox environments.
 
 !!! note
     Access to production endpoints may be restricted based on your user role. Ensure you have the required permissions before generating production keys.

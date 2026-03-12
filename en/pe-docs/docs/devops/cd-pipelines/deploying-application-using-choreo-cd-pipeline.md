@@ -1,6 +1,6 @@
-# Deploy Applications using Choreo CD Pipeline
+# Deploy Applications using {{ product_name }} CD Pipeline
 
-Using Choreo, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, etc.) on shared or private data planes.
+Using {{ product_name }}, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, etc.) on shared or private data planes.
 
 After building your application, you can deploy it from the **CD Pipelines** page. On this page, you can access the CD pipeline of the selected component.
 
@@ -8,8 +8,8 @@ After building your application, you can deploy it from the **CD Pipelines** pag
 
 Follow below steps to deploy a component,
 
-1.  Sign in to the [Choreo Console](https://console.choreo.dev/).
-2.  In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1.  Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2.  In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3.  From the left navigation, Click **DevOps** and then click **CD Pipelines**
 4.  The setup card will contain the latest built image
 
@@ -39,8 +39,8 @@ You can go to the CD Pipelines page of a component and manually promote it acros
 
 Follow below steps to promote a component to a higher level environment:
 
-1.  Sign in to the [Choreo Console](https://console.choreo.dev/).
-2.  In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1.  Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2.  In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3.  From the left navigation, Click **DevOps** and then click **CD Pipelines**
 4.  Click the **Promote** button on the required environment card from which the promotion is initiated.
 

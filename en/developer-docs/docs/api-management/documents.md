@@ -1,6 +1,6 @@
 # Documents
 
-When an API consumer signs in to the Choreo Developer Portal to browse APIs, it is not sufficient to just have an API thumbnail along with the name and version of the API. An API consumer would expect to see more details about the API, such as the following:
+When an API consumer signs in to the {{ product_name }} Developer Portal to browse APIs, it is not sufficient to just have an API thumbnail along with the name and version of the API. An API consumer would expect to see more details about the API, such as the following:
 
  - A brief description of the API.
  - How to invoke the API.
@@ -13,7 +13,7 @@ To provide such information that improves the overall visibility of the API, an 
 
 To add documentation for an API, follow the steps given below.
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 
 2. In the **Component Listing** pane, click on the component for which you want to add documents. 
 

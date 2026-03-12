@@ -2,7 +2,7 @@
 
 Role-based access control (RBAC) is a flexible and scalable approach to manage access to API resources. In this approach, each user or group is assigned a specific role that determines the permissions granted to perform operations on an API resource.
 
-This tutorial explains how to implement RBAC using Choreo and Asgardeo. It includes a real-world scenario with instructions to create and publish an API proxy component in Choreo and apply role-based access control.
+This tutorial explains how to implement RBAC using {{ product_name }} and Asgardeo. It includes a real-world scenario with instructions to create and publish an API proxy component in {{ product_name }} and apply role-based access control.
 
 ## Scenario
 
@@ -18,14 +18,14 @@ There are two types of users in the organization:
 - **Human resource manager (HR manager)**: Can perform all operations (list users, list a user, create users, and delete a user).
 - **Human resource officer (HR officer)**: Can only list existing users and list a specific user.
 
-## Implement role-based access control with Choreo and Asgardeo
+## Implement role-based access control with {{ product_name }} and Asgardeo
 
-Let’s take a look at the steps to implement the scenario described above using Choreo and Asgardeo.
+Let’s take a look at the steps to implement the scenario described above using {{ product_name }} and Asgardeo.
 
 ### Prerequisites
 
-- If you're signing in to the Choreo Console for the first time, create an organization:
-   1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
+- If you're signing in to the {{ product_name }} Console for the first time, create an organization:
+   1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in using your preferred method.
    2. Enter a unique organization name. For example, `Stark Industries`.
    3. Read and accept the privacy policy and terms of use.
    4. Click **Create**.
@@ -34,7 +34,7 @@ This creates the organization and opens the home page of the default project cre
 
 ### Step 1: Create an API proxy component and deploy it
 
-1. Go to the [Choreo Console](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/cloud-native-app-developer) and sign in. This opens the project home page.
 2. To create an API proxy component, follow the instructions in [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy). This opens the **Resources** pane, where you can define resources for the API proxy.
 3. In the **Resources** pane, add the following resources:
     - **GET** `/users`
@@ -82,7 +82,7 @@ Now, application developers can discover the API, subscribe to it, and invoke it
 
 ### Step 3: Subscribe to the published API
 
-1. Go to the [Choreo Developer Portal](https://devportal.choreo.dev/) and click **Applications** on the top menu.
+1. Go to the [{{ product_name }} Developer Portal](https://devportal.choreo.dev/) and click **Applications** on the top menu.
 2. Click **+Create**.
 3. Enter `User Management App` as the **Application Name** and click **Create**.
 4. In the Developer Portal left navigation menu, click **Production** under **Credentials**.
@@ -136,7 +136,7 @@ Now, application developers can discover the API, subscribe to it, and invoke it
     - Replace `<base64(clientId:clientSecret)>` with the Base64-encoded value of `clientId:clientSecret`.
 
 4. Extract the access token from the response.
-5. Go to the [Choreo Developer Portal](https://devportal.choreo.dev/) and try out the API using the access token. Observe that `Alex` can only access the following resources:
+5. Go to the [{{ product_name }} Developer Portal](https://devportal.choreo.dev/) and try out the API using the access token. Observe that `Alex` can only access the following resources:
     - **GET /users**
     - **GET /users/{userID}**
 
@@ -144,4 +144,4 @@ Now, application developers can discover the API, subscribe to it, and invoke it
 
     Similarly, if you use `Cameron`'s credentials, you can access all four resources because the token includes all required permissions.
 
-Now you have gained hands-on experience in implementing role-based access control with Choreo and Asgardeo.
+Now you have gained hands-on experience in implementing role-based access control with {{ product_name }} and Asgardeo.

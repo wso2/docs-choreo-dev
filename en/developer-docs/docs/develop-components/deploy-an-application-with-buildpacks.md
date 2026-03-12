@@ -1,8 +1,8 @@
 # Deploy an Application with Build Presets
 
-Using Choreo, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, Ruby, PHP, etc.) on shared or private data planes.
+Using {{ product_name }}, you can easily deploy applications written in different language frameworks (such as Java, Go, NodeJS, Python, Ruby, PHP, etc.) on shared or private data planes.
 
-Choreo supports deploying applications with build presets for the following component types:
+{{ product_name }} supports deploying applications with build presets for the following component types:
 
 - Service
 - Web Application
@@ -13,9 +13,9 @@ Choreo supports deploying applications with build presets for the following comp
 - Test Runner
 
 ## Build Presets
-Build presets are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With Choreo, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.
+Build presets are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With {{ product_name }}, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.
 
-Choreo uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overview) as default build presets for Java, Go, NodeJS, Python, PHP, and Ruby. Choreo uses its own build presets for Ballerina and WSO2 MI.
+{{ product_name }} uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overview) as default build presets for Java, Go, NodeJS, Python, PHP, and Ruby. {{ product_name }} uses its own build presets for Ballerina and WSO2 MI.
 
 ## Develop a component
 
@@ -33,7 +33,7 @@ Follow the guidelines below based on your language:
     | Service| [Reading Books List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-python)|
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-python-task)|
 
-    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+    For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
     
     !!! info 
         In **Python** projects, it is mandatory to provide a `Run Command` when creating a component.
@@ -58,7 +58,7 @@ Follow the guidelines below based on your language:
     | Webhook | [Salesforce New Case To Google Sheet](https://github.com/wso2/choreo-samples/tree/main/sfdc-new-case-to-gsheet)|
     | Scheduled Task | [Shopify New Customers to HubSpot Create/Update Contact](https://github.com/wso2/choreo-samples/tree/main/shopify-new-customers-to-hubspot-contact)|
 
-    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+    For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
 
 === "Go"
 
@@ -72,7 +72,7 @@ Follow the guidelines below based on your language:
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-task)|
     | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-go-webapp)|
 
-    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+    For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
 
 === ".NET"
     Supported Versions - 6.x, 7.x, 8.x
@@ -83,7 +83,7 @@ Follow the guidelines below based on your language:
     |---------------- |--------------------|
     | Service | [Greeting Service](https://github.com/wso2/choreo-samples/tree/main/dotnet-greeter)|
 
-    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+    For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
 
 === "Java"
     Supported Versions
@@ -103,7 +103,7 @@ Follow the guidelines below based on your language:
            - The `Main` class should be defined in the manifest file.
            - If Maven files such as `mvn.cmd` exist in the project without the `.mvn` directory, the build will fail. To ensure a successful build, you must either commit the `.mvn` directory along with any Maven files or not include any Maven files in the project if you choose not to commit the `.mvn` directory.
 
-    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+    For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
 
 === "NodeJS"
     Supported Versions - 12.x.x, 14.x.x, 16.x.x, 18.x.x, 20.x.x
@@ -115,7 +115,7 @@ Follow the guidelines below based on your language:
     | Service| [Reading Books List Service](https://github.com/wso2/choreo-samples/tree/main/reading-books-list-service-nodejs)|
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-nodejs-task)|
 
-    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+    For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
 
 === "PHP"
     Supported Versions - 8.1.x, 8.2.x
@@ -128,7 +128,7 @@ Follow the guidelines below based on your language:
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-task)|
     | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-php-webapp)|
 
-    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+    For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
 
 === "Ruby"
     Supported Versions - 3.1.x, 3.2.x
@@ -141,7 +141,7 @@ Follow the guidelines below based on your language:
     | Manual Task | [Hello World Task](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-task)|
     | Web Application | [Hello World Web Application](https://github.com/wso2/choreo-samples/tree/main/hello-world-ruby-webapp)|
 
-    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+    For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
 
 === "WSO2 MI"
     Supported Versions - 4.1.0.x, 4.2.0.x
@@ -152,7 +152,7 @@ Follow the guidelines below based on your language:
     |---------------- |--------------------|
     | Service |[Hello World Service](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi)|
 
-    For more examples, see [Choreo samples](https://github.com/wso2/choreo-samples).
+    For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
 
 === "Spring Boot"
     Supported Java Versions

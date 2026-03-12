@@ -1,6 +1,6 @@
 # Manage Configurations and Secrets
 
-Choreo allows you to easily manage and version your component's configurations and secrets as **file mounts** or **environment variables**.
+{{ product_name }} allows you to easily manage and version your component's configurations and secrets as **file mounts** or **environment variables**.
 
 !!! info "Note"
     All configurations and secrets are stored in an encrypted secret vault in the cloud data plane managed by WSO2.
@@ -8,10 +8,10 @@ Choreo allows you to easily manage and version your component's configurations a
 
 ## The difference between configurations and secrets
 
-Choreo treats all configurations and secrets as sensitive content, but lets you choose between secret or configuration when creating file mounts or environment variables.
+{{ product_name }} treats all configurations and secrets as sensitive content, but lets you choose between secret or configuration when creating file mounts or environment variables.
 
-- **Secrets** are write-only. Once created, you cannot view or retrieve their content via the Choreo Console, but you can overwrite them anytime.
-- **Configurations** can be read and updated via the Choreo Console after creation.
+- **Secrets** are write-only. Once created, you cannot view or retrieve their content via the {{ product_name }} Console, but you can overwrite them anytime.
+- **Configurations** can be read and updated via the {{ product_name }} Console after creation.
   
     !!!info "Note"
           For sensitive data such as database passwords, cloud credentials, or service accounts, use secrets rather than configurations.
@@ -20,8 +20,8 @@ Choreo treats all configurations and secrets as sensitive content, but lets you 
 
 To add environment variables to your component:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
 4. Click **Manage Configs and Secrets** in the environment card.
 5. Expand **Environment Variables** and click **+ Add a Configuration**.
@@ -38,8 +38,8 @@ To add environment variables to your component:
 
 To add a file mount to your component:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
 4. Click **Manage Configs and Secrets** in the environment card.
 5. Expand **File Mount** and click **+ Add a File Mount**.
@@ -57,8 +57,8 @@ To add a file mount to your component:
 
 To update a configuration or secret:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
 4. Click **Manage Configs and Secrets** in the environment card.
 5. To update an environment variable, expand **Environment Variables** and click the edit icon next to the variable.
@@ -70,8 +70,8 @@ To update a configuration or secret:
 
 To delete a configuration or secret:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
 4. Click **Manage Configs and Secrets** in the environment card.
 5. To delete an environment variable, expand **Environment Variables** and click the delete icon next to the variable.
@@ -81,7 +81,7 @@ To delete a configuration or secret:
 
 ## Manage Ballerina configurables
 
-Choreo manages [Ballerina configurables](https://ballerina.io/learn/by-example/configurable-variables/) for your Ballerina components.
+{{ product_name }} manages [Ballerina configurables](https://ballerina.io/learn/by-example/configurable-variables/) for your Ballerina components.
 
 You can modify Ballerina configurables via the **CD Pipelines** page when deploying or promoting a Ballerina application.
   
@@ -90,19 +90,19 @@ You can modify Ballerina configurables via the **CD Pipelines** page when deploy
       Environment variables are primarily for components written in other languages.
 
 !!! note
-      To link configuration groups to Ballerina component configurables, click **Allow Linking Configuration Groups** at the top of the configuration form during deployment. This enables a link icon next to each configurable field, allowing you to map configuration group values.
+      To link configuration groups to Ballerina configurables, click **Allow Linking Configuration Groups** at the top of the configuration form during deployment. This enables a link icon next to each configurable field, allowing you to map configuration group values.
 
 ## Alternative configuration management approach
 
 !!! Warning "Warning"
-    This alternative method is not recommended for managing configurations and secrets in Choreo.
+    This alternative method is not recommended for managing configurations and secrets in {{ product_name }}.
 
 ### Add an environment variable to your container
 
 To add environment variables:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3. In the left navigation menu, click **K8s Operations** and then click **Configs & Secrets**.
 4. Click **+ Create**.
 5. Select **Environment Variables** in the **Create a Config or Secret** pane.
@@ -125,8 +125,8 @@ To add environment variables:
 
 To add a file mount to your component:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3. In the left navigation menu, click **K8s Operations** and then click **Configs & Secrets**.
 4. Click **+ Create**.
 5. Select **File Mount** in the **Create a Config or Secret** pane.
@@ -160,8 +160,8 @@ To add a file mount to your component:
 
 To update a configuration or secret:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3. In the left navigation menu, click **K8s Operations** and then click **Configs & Secrets**.
 4. Click the edit icon next to the configuration or secret you want to update.
 5. Make your changes and click **Save**.
@@ -170,8 +170,8 @@ To update a configuration or secret:
 
 To delete a configuration or secret:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component**.
 3. In the left navigation menu, click **K8s Operations** and then click **Configs & Secrets**.
 4. Click the delete icon next to the configuration or secret you want to delete.
 5. Type the name to confirm deletion.

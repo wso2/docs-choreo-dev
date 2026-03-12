@@ -1,12 +1,12 @@
 # Configure Self-Sign-Up
 
-With Choreo, you can set up a self-sign-up page for your Developer Portal. The self-sign-up page allows users to easily access your Developer Portal and subscribe to APIs. When you configure self-sign-up, users can create their accounts and access your Developer Portal without any manual intervention from you.
+With {{ product_name }}, you can set up a self-sign-up page for your Developer Portal. The self-sign-up page allows users to easily access your Developer Portal and subscribe to APIs. When you configure self-sign-up, users can create their accounts and access your Developer Portal without any manual intervention from you.
 
 This page walks you through the steps to configure self-sign-up for your Developer Portal.
 
 ## Prerequisites
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/) using your Google, GitHub, or Microsoft account.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/) using your Google, GitHub, or Microsoft account.
 2. If you are a new user, create an organization with a unique organization name. For example, "Stark Industries".
 
 
@@ -14,7 +14,7 @@ This page walks you through the steps to configure self-sign-up for your Develop
 
 To configure self-sign-up, follow the steps given below:
 
-1. Send an email to <choreo-help@wso2.com> requesting to configure enterprise IdP for the Developer Portal of your organization.
+1. Send an email to <{{ product_name }}-help@wso2.com> requesting to configure enterprise IdP for the Developer Portal of your organization.
 
     !!! tip
         Ensure you include the organization name or handle in the request.
@@ -34,9 +34,9 @@ To configure self-sign-up, follow the steps given below:
 
         Thank you
 
-    The Choreo support team will perform the necessary configurations and respond to your request.
+    The {{ product_name }} support team will perform the necessary configurations and respond to your request.
 
-2. When you receive a response, sign in to [Asgardeo](https://console.asgardeo.io/) using the same credentials that you used to sign in to Choreo.
+2. When you receive a response, sign in to [Asgardeo](https://console.asgardeo.io/) using the same credentials that you used to sign in to {{ product_name }}.
 3. In the Asgardeo Console, click **View all applications**.
 
     ![View all applications](../assets/img/administer/self-sign-up/view-all-applications.png)
@@ -114,7 +114,7 @@ To manage users who want to access your Developer Portal via self-sign-up, you h
 
 To automatically approve each new user account registered on your Developer Portal, follow the steps given below:
 
-1. In the [Choreo Console](https://console.choreo.dev/), click your username in the top right corner.
+1. In the [{{ product_name }} Console](https://console.choreo.dev/), click your username in the top right corner.
 2. In the drop-down menu, click **Settings**. This opens the **Organization** pane, where you can make necessary changes to organization settings.
 3. In the **Organization** pane, click **Self Signups**.
 4. To enable auto-approval, turn on the toggle.
@@ -123,9 +123,9 @@ Once you enable auto-approval, users can sign in to your Developer Portal and vi
 
 ### Manually approve or reject user accounts
 
-If you have not enabled auto-approval, you can manually approve or reject new user registrations. Once a user creates an account, Choreo sends an email to ask the user to confirm the account. To manually approve or reject user accounts, follow the steps given below:
+If you have not enabled auto-approval, you can manually approve or reject new user registrations. Once a user creates an account, {{ product_name }} sends an email to ask the user to confirm the account. To manually approve or reject user accounts, follow the steps given below:
 
-1. In the [Choreo Console](https://console.choreo.dev/), click your username in the top right corner.
+1. In the [{{ product_name }} Console](https://console.choreo.dev/), click your username in the top right corner.
 2. In the drop-down menu, click **Settings**. This opens the **Organization** pane, where you can make necessary changes to organization settings.
 3. In the **Organization** pane, click **Self Signups**. You will see the user accounts listed for approval.
 4. To approve a user account, click **Approve**. To reject an account, click **Reject**.

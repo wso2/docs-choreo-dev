@@ -1,8 +1,8 @@
 # Develop a Scheduled Task
 
-Choreo is a versatile integration platform that allows you to create various types of integrations depending on your requirements. If you need to automatically run a specific integration at regular intervals, you can use Choreo to develop a scheduled task. This type of integration can automate the synchronization of data between different systems at specified intervals, reducing errors and improving productivity by eliminating the need for manual intervention.
+{{ product_name }} is a versatile integration platform that allows you to create various types of integrations depending on your requirements. If you need to automatically run a specific integration at regular intervals, you can use {{ product_name }} to develop a scheduled task. This type of integration can automate the synchronization of data between different systems at specified intervals, reducing errors and improving productivity by eliminating the need for manual intervention.
 
-This guide walks you through the steps to develop, deploy, test, and observe a scheduled task using Choreo.
+This guide walks you through the steps to develop, deploy, test, and observe a scheduled task using {{ product_name }}.
 
 In this guide, you will:
 
@@ -12,15 +12,15 @@ In this guide, you will:
 
 ## Prerequisites
 
-1. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
+1. If you're signing in to the {{ product_name }} Console for the first time, create an organization:
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-2. Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples), which contains the sample integration for this guide.
+2. Fork the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples), which contains the sample integration for this guide.
 
     !!! info "Repository File Structure"
         The sample code for this guide is in the `<sample-repository-dir>/weather-to-email-scheduled-task` directory. The following table describes the key files in the repository:
@@ -37,33 +37,33 @@ In this guide, you will:
 
 ## Step 1: Create a scheduled task component
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Scheduled Task** card.
-4. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+4. Click **Authorize with GitHub** to connect {{ product_name }} to your GitHub account. If you haven't connected your GitHub repository to {{ product_name }}, enter your credentials and select the repository you forked earlier to install the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
-        The **Choreo GitHub App** requires:
+        The **{{ product_name }} GitHub App** requires:
         - Read and write access to code and pull requests.
         - Read access to issues and metadata.
 
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; {{ product_name }} will not push changes directly to your repository.
 
 5. Enter the following information:
 
     | **Field**             | **Description**                                |
     | --------------------- | ---------------------------------------------- |
     | **Organization**      | Your GitHub account                            |
-    | **Repository**        | `choreo-samples`                               |
+    | **Repository**        | `{{ product_name }}-samples`                               |
     | **Branch**            | `main`                                         |
     | **Component Directory** | `weather-to-email-scheduled-task`              |
 
 6. Select **Ballerina** as the build preset.
 
     !!! tip
-        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
+        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on {{ product_name }} cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
         - **Component Directory** specifies the location of the project to build the component.
 
 7. Enter a unique name and description for the component. You can use the following values:
@@ -73,7 +73,7 @@ In this guide, you will:
     | **Component Name** | `WeatherToEmail`                 |
     | **Description**    | `My first scheduled task`        |
 
-8. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
+8. Click **Create**. {{ product_name }} initializes the component with the sample implementation and opens the **Overview** page of the component.
 
 Now you can proceed to build and deploy the scheduled task.
 
@@ -126,7 +126,7 @@ You can test the scheduled task when it runs at the configured time.
 
 ## Step 4: Test the scheduled task
 
-When the scheduled task runs at the configured time, an email with the subject `[WSO2 Choreo Demo] Next 24H Weather Forecast` is sent from `choreo.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 3](#step-3-deploy-the-scheduled-task).
+When the scheduled task runs at the configured time, an email with the subject `[WSO2 {{ product_name }} Demo] Next 24H Weather Forecast` is sent from `{{ product_name }}.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 3](#step-3-deploy-the-scheduled-task).
 
 If the scheduled task ran successfully, you should receive an email similar to the following:
 
@@ -134,7 +134,7 @@ If the scheduled task ran successfully, you should receive an email similar to t
 
 ## Step 5: Observe the scheduled task
 
-The observability view in Choreo displays graphs that depict details such as throughput, latency, diagnostic data, and logs to identify and troubleshoot anomalies in components you deploy.
+The observability view in {{ product_name }} displays graphs that depict details such as throughput, latency, diagnostic data, and logs to identify and troubleshoot anomalies in components you deploy.
 
 1. In the left navigation menu, click **Observability**.
 2. Observe the following:
@@ -143,7 +143,7 @@ The observability view in Choreo displays graphs that depict details such as thr
     - The flame graph (Diagnostics View) generated over a given period.
     - The low-code diagram.
 
-To learn more about the observability details you can view via Choreo observability, see [Observability Overview](../../monitoring-and-insights/observability-overview.md).
+To learn more about the observability details you can view via {{ product_name }} observability, see [Observability Overview](../../monitoring-and-insights/observability-overview.md).
 
 ## Step 6: Monitor executions
 

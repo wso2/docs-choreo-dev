@@ -1,8 +1,8 @@
-# Choreo AI Gateway
+# {{ product_name }} AI Gateway
 
-As organizations accelerate AI adoption, managing AI APIs effectively has become essential. The Choreo AI Gateway simplifies this process by providing a unified way to create, manage, and expose AI APIs with enterprise-grade security, observability, and scalability.
+As organizations accelerate AI adoption, managing AI APIs effectively has become essential. The {{ product_name }} AI Gateway simplifies this process by providing a unified way to create, manage, and expose AI APIs with enterprise-grade security, observability, and scalability.
 
-![Choreo AI Gateway](../../assets/img/ai-gateway/ai-gateway.png)
+![{{ product_name }} AI Gateway](../../assets/img/ai-gateway/ai-gateway.png)
 
 ## Supported Providers
 
@@ -32,7 +32,7 @@ With these features, organizations can integrate, monitor, and scale AI services
 
 ### Token-Based Rate Limiting
 
-AI services typically charge based on tokens rather than requests, making cost control critical. Choreo AI Gateway enables token-based rate limiting at the API level to:
+AI services typically charge based on tokens rather than requests, making cost control critical. {{ product_name }} AI Gateway enables token-based rate limiting at the API level to:
 
 - Define quotas based on LLM token consumption.
 - Prevent unexpected costs by controlling overuse.

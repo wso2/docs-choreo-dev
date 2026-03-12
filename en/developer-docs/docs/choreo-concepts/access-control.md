@@ -1,6 +1,6 @@
 # Access Control
 
-With Choreo, administrators can control user access to different projects and environments within the organization. 
+With {{ product_name }}, administrators can control user access to different projects and environments within the organization. 
 At the finest granularity level, an administrator can restrict a user to perform a specific action on a specific project and a specific environment.
 
 ## Fundamental Question in Access Control
@@ -18,14 +18,14 @@ Access control in any system ultimately comes down to answering the following qu
 
 ## Permission
 
-In Choreo access control model, a permission is the right to perform a specific action. 
+In {{ product_name }} access control model, a permission is the right to perform a specific action. 
 
 ???+ example
     A user can create a component only if the user has `Create Component` permission.
 
 ### Environment Specific Permissions
 
-In Choreo, actions such as `deploy component`, `promote component`, `create configuration groups`, and `view logs` must be performed within the context of an environment. The permissions which give the right to perform such actions are categorized as **Environment Specific** permissions.
+In {{ product_name }}, actions such as `deploy component`, `promote component`, `create configuration groups`, and `view logs` must be performed within the context of an environment. The permissions which give the right to perform such actions are categorized as **Environment Specific** permissions.
 
 !!! note
     For actions tied to an environment, it is sometimes necessary to allow a user to perform the action in certain environments but not in others; for example, a developer may be allowed to view logs in the development environment but not in the production environment.
@@ -37,7 +37,7 @@ Assigning permissions individually to each user is a time-consuming and error pr
 Roles simplify permission management. For example, instead of assigning 20 permissions to each of 50 developers (1000 assignments), you can assign the 20 permissions to a Developer role and then assign that role to each developer (20 + 50 assignments).  
 
 !!! info
-    Each organization in Choreo comes with a set of predefined roles with default permissions. Organization administrators can customize these roles or create new ones as needed.
+    Each organization in {{ product_name }} comes with a set of predefined roles with default permissions. Organization administrators can customize these roles or create new ones as needed.
 
 ## Group 
 
@@ -46,15 +46,15 @@ A group is a collection of users, usually organized by team or department.
 Instead of assigning a role to each user, you assign the role to the group. Every user in the group automatically gets the group’s permissions. This makes updates easier. For example, instead of removing 50 role-to-user assignments and creating 50 new ones, you only need to remove one role-to-group assignment and add one new assignment.
 
 !!! info
-    Each organization in Choreo comes with a set of predefined groups. By default, each group is mapped to a role with the same name. Organization administrators can customize these groups or create new ones as needed.
+    Each organization in {{ product_name }} comes with a set of predefined groups. By default, each group is mapped to a role with the same name. Organization administrators can customize these groups or create new ones as needed.
 
 ## Permission to Role Assignment
 
-In Choreo, all permission-to-role assignments apply across the organization. You can’t restrict these assignments to specific resources. For example, you can’t configure Choreo to grant the `View Logs` permission to the `Developer` role only in the Development environment of the Engineering project.
+In {{ product_name }}, all permission-to-role assignments apply across the organization. You can’t restrict these assignments to specific resources. For example, you can’t configure {{ product_name }} to grant the `View Logs` permission to the `Developer` role only in the Development environment of the Engineering project.
 
 ## Role to Group Assignment
 
-The real strength of Choreo Access Control comes from role-to-group assignments. These assignments can include resource-specific restrictions. For example, you can assign the `Developer` role to the `Engineering Project Developer` group, but limit it to the Development environment of the Engineering project.
+The real strength of {{ product_name }} Access Control comes from role-to-group assignments. These assignments can include resource-specific restrictions. For example, you can assign the `Developer` role to the `Engineering Project Developer` group, but limit it to the Development environment of the Engineering project.
 
 Each role-to-group assignment has two attributes:
 
@@ -137,4 +137,4 @@ Similar to previous case, allowing **non environment specific** actions on resou
 !!! warning "Important"
     Exercise care when creating project-environment scoped role-to-group assignments. Only environment specific actions are restricted to that environment; all other actions remain allowed on resources across the project.
 
-Now that you understand the access control concepts in Choreo, see [Configure Access Control](../administer/configure-access-control.md) for a walkthrough on how to set it up.
+Now that you understand the access control concepts in {{ product_name }}, see [Configure Access Control](../administer/configure-access-control.md) for a walkthrough on how to set it up.

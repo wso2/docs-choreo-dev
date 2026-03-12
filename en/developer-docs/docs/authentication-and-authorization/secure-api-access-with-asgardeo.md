@@ -2,14 +2,14 @@
 
 API security refers to the measures and practices used to protect Application Programming Interfaces (APIs) from potential threats and vulnerabilities. APIs are essential for enabling communication and data exchange between different software applications and services, making them a critical component in modern software development. However, their openness and accessibility can also make them targets for various security risks. Authentication and authorization are key aspects of API security. Authentication is ensuring that only authorized users or applications can access the API. This can involve using API keys, tokens, or more advanced authentication methods like OAuth 2.0. Authorization is controlling what authenticated users or applications are allowed to do within the API. Authorization mechanisms restrict access to specific resources and actions based on user roles or permissions.
 
-Organizations using Asgardeo for identity and access management (IAM) can seamlessly integrate it with Choreo as an external Identity Provider (IdP). This guide will walk you through setting up Choreo to authenticate API invocations through Asgardeo which is configured as an external IdP.
+Organizations using Asgardeo for identity and access management (IAM) can seamlessly integrate it with {{ product_name }} as an external Identity Provider (IdP). This guide will walk you through setting up {{ product_name }} to authenticate API invocations through Asgardeo which is configured as an external IdP.
 
 This guide walks you through the following steps:
 
-- Assign scopes to an API in Choreo.
+- Assign scopes to an API in {{ product_name }}.
 - Create an API in Asgardeo.
 - Create an application in Asgardeo and consume the Asgardeo API.
-- Create an application in Choreo and enable external IdP authentication.
+- Create an application in {{ product_name }} and enable external IdP authentication.
 - Invoke the API with scopes.
 
 ## Prerequisites
@@ -17,10 +17,10 @@ This guide walks you through the following steps:
 To follow this guide, you need to satisfy the following prerequisites:
 
 - [Configured Asgardeo as an external IdP](../administer/configure-an-external-idp/configure-asgardeo-as-an-external-idp.md)
-- If you don't already have a service in Choreo, [develop a service](../develop-components/develop-services/develop-a-service.md) or an [API Proxy](../develop-components/develop-an-api-proxy.md).
+- If you don't already have a service in {{ product_name }}, [develop a service](../develop-components/develop-services/develop-a-service.md) or an [API Proxy](../develop-components/develop-an-api-proxy.md).
 - Deploy and publish your API.
 
-## Step 1: Assign scopes to an API in Choreo
+## Step 1: Assign scopes to an API in {{ product_name }}
 
 You can provide fine-grained access control to your API resources with scopes. Follow the steps below to assign a scope to the resources in the API:
 
@@ -40,7 +40,7 @@ You can provide fine-grained access control to your API resources with scopes. F
 7. To attach a scope to a resource, click the **Select Permissions** list under the respective resource, and select the scopes you wish to attach.
 8. Click **Deploy**.
 9. In the left navigation, click **Manage** and then **Lifecycle**.
-10. Click **Publish** and continue to publish your API to the Choreo Developer Portal.
+10. Click **Publish** and continue to publish your API to the {{ product_name }} Developer Portal.
 
 
 ## Step 2: Create an API and an application in Asgardeo
@@ -54,11 +54,11 @@ You can provide fine-grained access control to your API resources with scopes. F
         - Select the appropriate grant types.
         - Copy the client ID and client secret of the application for future reference.
 
-## Step 3: Create an application in Choreo and enable external IdP authentication
+## Step 3: Create an application in {{ product_name }} and enable external IdP authentication
 
-Follow the steps below to consume the Choreo API and use an external IdP for authentication:
+Follow the steps below to consume the {{ product_name }} API and use an external IdP for authentication:
 
-1. Sign in to the [Choreo Developer Portal](https://devportal.choreo.dev).
+1. Sign in to the [{{ product_name }} Developer Portal](https://devportal.choreo.dev).
 2. Click **Applications**. and then click **+Create**.
 3. Enter a name and description for the application.
 4. Click **Create**.
@@ -73,11 +73,11 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 
 9. In the left navigation menu, click **Subscriptions**.
 10. In the **Subscription Management** pane that opens, click **+ Add APIs**.
-11. Select the API you assigned scopes to in [step 1](#step-1-assign-scopes-to-an-api-in-choreo) and click **Add**.
+11. Select the API you assigned scopes to in [step 1](#step-1-assign-scopes-to-an-api-in-{{ product_name }}) and click **Add**.
 
-## Step 4: Invoke the Choreo API with scopes
+## Step 4: Invoke the {{ product_name }} API with scopes
 
-1. On the Choreo Developer Portal, go to your application.
+1. On the {{ product_name }} Developer Portal, go to your application.
 2. In the left navigation menu, under **Credentials** and click **Production**.
 3. Under **Endpoints**, copy the **Token Endpoint** URL.
 4. Obtain an access token by invoking the token endpoint as follows:
@@ -104,5 +104,5 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 
 
 
-5. Once you receive the access token, you can [test invoking the resource using the OpenAPI console](../testing/test-rest-endpoints-via-the-openapi-console.md) in Choreo by specifying the scope.
+5. Once you receive the access token, you can [test invoking the resource using the OpenAPI console](../testing/test-rest-endpoints-via-the-openapi-console.md) in {{ product_name }} by specifying the scope.
 

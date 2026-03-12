@@ -4,7 +4,7 @@ If an API has subscription plans assigned to it, API consumers can select the su
 
 To subscribe to an API with a subscription plan, follow the steps given below:
 
-1. Sign in to the [Choreo Developer Portal](https://devportal.choreo.dev).
+1. Sign in to the [{{ product_name }} Developer Portal](https://devportal.choreo.dev).
 2. In the Developer Portal header, click **Applications**.
 3. On the **My Applications** page, click on the application you want to use to subscribe to an API.
 4. In the left navigation menu, click **Subscriptions**. 

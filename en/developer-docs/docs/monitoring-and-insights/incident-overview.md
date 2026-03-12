@@ -1,13 +1,13 @@
 # Incident Overview
 
-This section explains how Choreo automatically detects, analyzes, and helps you manage component incidents. The incident management feature provides automated root cause analysis to help you quickly understand and resolve issues affecting your components.
+This section explains how {{ product_name }} automatically detects, analyzes, and helps you manage component incidents. The incident management feature provides automated root cause analysis to help you quickly understand and resolve issues affecting your components.
 
 !!! tip
-    Incidents are automatically created when critical system events are detected in your components. You don't need to configure anything. Choreo monitors your components and creates incidents when issues occur.
+    Incidents are automatically created when critical system events are detected in your components. You don't need to configure anything. {{ product_name }} monitors your components and creates incidents when issues occur.
 
 ## What are Incidents?
 
-Incidents are automatically generated alerts that indicate your component has experienced a critical issue affecting its stability or availability. When an incident occurs, Choreo automatically:
+Incidents are automatically generated alerts that indicate your component has experienced a critical issue affecting its stability or availability. When an incident occurs, {{ product_name }} automatically:
 
 - Creates an incident record with detailed information
 - Collects relevant logs and metrics from before and during the incident
@@ -17,7 +17,7 @@ This helps you quickly identify what went wrong and how to fix it.
 
 ## Incident Types
 
-Choreo automatically detects and tracks the following types of incidents:
+{{ product_name }} automatically detects and tracks the following types of incidents:
 
 - [OOMKilled incidents](#oomkilled-incidents)
 - [CrashLoopBackOff incidents](#crashloopbackoff-incidents)

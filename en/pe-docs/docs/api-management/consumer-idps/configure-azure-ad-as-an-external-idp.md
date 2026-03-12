@@ -1,10 +1,10 @@
 # Configure Azure Active Directory (Azure AD) as an External Identity Provider (IdP)
 
-In organizations leveraging Microsoft Azure Active Directory (Azure AD) for identity and access management (IAM), integrating it with Choreo offers powerful API access control. This control hinges on the use of API scopes. That is, it enables the restriction of access to a designated group of users. This document guide you step-by-step to configure Azure AD as your external IdP.
+In organizations leveraging Microsoft Azure Active Directory (Azure AD) for identity and access management (IAM), integrating it with {{ product_name }} offers powerful API access control. This control hinges on the use of API scopes. That is, it enables the restriction of access to a designated group of users. This document guide you step-by-step to configure Azure AD as your external IdP.
 
 !!! note
     - You must have **Manage Admin Operations** permission under **APIM-ADMIN** permission group to approve component promotion requests.
-    - These identity provider settings are used for authentication within components deployed in your organization. They do not apply to authenticating organization members signing into the Choreo Console.
+    - These identity provider settings are used for authentication within components deployed in your organization. They do not apply to authenticating organization members signing into the {{ product_name }} Console.
 
 
 ## Prerequisites
@@ -13,12 +13,12 @@ Before you try out this guide, be sure you have the following:
 
 - An Azure Active Directory account:  If you don’t already have one,  setup an Azure Active Directory account at [https://azure.microsoft.com/en-gb/](https://azure.microsoft.com/en-gb/).
 
-## Add Azure Active Directory as an external IdP in Choreo
+## Add Azure Active Directory as an external IdP in {{ product_name }}
 
-Follow the steps below to add Azure AD as an IdP in Choreo:
+Follow the steps below to add Azure AD as an IdP in {{ product_name }}:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev).
-2. In the Choreo Console header, go to the **Organization** list and select your organization.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev).
+2. In the {{ product_name }} Console header, go to the **Organization** list and select your organization.
 3. In the left navigation menu, click **API Management** and then click on **Consumer IdPs**.
 4. Click the **Identity Providers** tab.
 5. To add an identity provider, click **+ Identity Provider**

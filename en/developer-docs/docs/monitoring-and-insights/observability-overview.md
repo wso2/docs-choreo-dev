@@ -1,6 +1,6 @@
 # Observability Overview
 
-The Choreo observability dashboard provides a comprehensive interface to visualize and monitor the performance of services deployed on Choreo.
+The {{ product_name }} observability dashboard provides a comprehensive interface to visualize and monitor the performance of services deployed on {{ product_name }}.
 
 ![Dashboard overview](../assets/img/monitoring-and-insights/observability/overview-overall.png){.cInlineImage-full}
 
@@ -12,7 +12,7 @@ The Observability dashboard allows you to:
 - View logs generated over a specific timeframe.
 
 !!! tip
-    If you are a Choreo private data plane customer and you want to observe your private data plane using New Relic, see [Observing Choreo Private Data Planes With New Relic](https://wso2.com/blogs/thesource/observing-choreo-private-data-planes-with-new-relic/).
+    If you are a {{ product_name }} private data plane customer and you want to observe your private data plane using New Relic, see [Observing {{ product_name }} Private Data Planes With New Relic](https://wso2.com/blogs/thesource/observing-choreo-private-data-planes-with-new-relic/).
 
 ## Throughput and latency graphs
 
@@ -20,9 +20,9 @@ The throughput graph depicts the throughput of requests per second for a selecte
 
 ![Throughput and latency graph](../assets/img/monitoring-and-insights/observability/throughput-and-latency.png){.cInlineImage-full} 
     
-By default, Choreo renders this graph for the data generated within the past 24 hours. You can change the default time window by selecting the time range and zone from the options bar. To expand the graph, click and drag the cursor over the period you want to drill down. 
+By default, {{ product_name }} renders this graph for the data generated within the past 24 hours. You can change the default time window by selecting the time range and zone from the options bar. To expand the graph, click and drag the cursor over the period you want to drill down. 
 
-You can view the Choreo service logs in the **Logs** pane below the throughput and latency graph. Clicking on a graph updates the **Logs** view to contain the corresponding log entries generated at that time. You can use these logs to identify the reasons for any latency and throughput anomalies you detect using the graph.
+You can view the {{ product_name }} service logs in the **Logs** pane below the throughput and latency graph. Clicking on a graph updates the **Logs** view to contain the corresponding log entries generated at that time. You can use these logs to identify the reasons for any latency and throughput anomalies you detect using the graph.
 
 ## Diagnostics view
 
@@ -45,4 +45,4 @@ Each horizontal section of the graph, termed a *bin*, represents a specific peri
 
 ## Logs
 
-The **Logs** pane serves as a centralized view to observe logs of the components you deploy on Choreo. This facilitates rigorous troubleshooting and analysis.
+The **Logs** pane serves as a centralized view to observe logs of the components you deploy on {{ product_name }}. This facilitates rigorous troubleshooting and analysis.

@@ -23,4 +23,4 @@ The service metrics include the following:
 
 Service logs provide a detailed record of Kafka service activity, such as producer and consumer operations, connection statuses, and error reports. These logs are essential for troubleshooting issues and analyzing message flow. Logs are retained for up to 4 days.
 
-To view Choreo-managed Kafka service logs, go to the **Logs** tab on the service details page.
+To view {{ product_name }}-managed Kafka service logs, go to the **Logs** tab on the service details page.

@@ -1,9 +1,9 @@
 {
-  "short_name": "Choreo Insights API",
-  "name": "Choreo Insights API",
+  "short_name": "WSO2 Developer Platform Insights API",
+  "name": "WSO2 Developer Platform Insights API",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "favicon.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }

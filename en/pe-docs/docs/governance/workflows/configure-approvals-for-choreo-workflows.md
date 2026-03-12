@@ -1,8 +1,8 @@
-# Configure Approvals for Choreo Workflows
+# Configure Approvals for {{ product_name }} Workflows
 
-Choreo allows you to configure approval processes for specific workflows within the platform. An approval process for a workflow ensures that critical or sensitive changes are properly managed and controlled.
+{{ product_name }} allows you to configure approval processes for specific workflows within the platform. An approval process for a workflow ensures that critical or sensitive changes are properly managed and controlled.
 
-Choreo currently allows you to configure approvals for environment promotion, API subscription and URL customization workflows.
+{{ product_name }} currently allows you to configure approvals for environment promotion, API subscription and URL customization workflows.
 
 Configuring approvals for environment promotion allows authorized users to control components being promoted to a critical/production environment. 
 
@@ -47,14 +47,14 @@ To set up an approval process for a workflow, follow these steps:
 !!! note 
      - Platform engineers can designate specific roles and assignees to review and respond to requests associated with each workflow.
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console header, go to the **Organization** list and select your organization.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console header, go to the **Organization** list and select your organization.
 3. In the left navigation menu, click **Governance** and then click **Workflows**.
 4. Click the edit icon corresponding to the workflow for which you want to configure an approval.
 5. In the **Configure Workflow** dialog that opens, select roles and assignees to review and respond to workflow approval requests.
 
     - In the **Roles** field, select one or more roles depending on your preference. Any user assigned to these roles can review and respond to requests.
-    - In the **Assignees** field, select specific users who can review and approve workflow requests. Assignees can be any Choreo user, even if they are not assigned to a selected role.
+    - In the **Assignees** field, select specific users who can review and approve workflow requests. Assignees can be any {{ product_name }} user, even if they are not assigned to a selected role.
 
     !!! info "Important"
          Currently, there is no validation to ensure that the specified roles and assignees have the necessary permissions to review and respond to requests. If the [required permissions](#permissions-to-review-and-respond-to-approval-requests) are not correctly configured, some users may receive email notifications but will be unable to review the requests.

@@ -1,6 +1,6 @@
 # Private Data Plane Security Levels
 
-The following table outlines the private data plane security levels supported in Choreo:
+The following table outlines the private data plane security levels supported in {{ product_name }}:
 
 <table border=1>
 <thead>

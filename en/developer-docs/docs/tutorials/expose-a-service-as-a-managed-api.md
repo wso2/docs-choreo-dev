@@ -1,13 +1,13 @@
 # Expose a Service as a Managed API
 
-Choreo simplifies securely exposing existing services as managed APIs. It also allows you to manage all aspects of an API's lifecycle, security, throttling, and governance, so you can focus on service development.
+{{ product_name }} simplifies securely exposing existing services as managed APIs. It also allows you to manage all aspects of an API's lifecycle, security, throttling, and governance, so you can focus on service development.
 
-In this tutorial, you will use Choreo to expose a service as an API proxy and publish it to the Choreo Developer Portal for application developers to consume.
+In this tutorial, you will use {{ product_name }} to expose a service as an API proxy and publish it to the {{ product_name }} Developer Portal for application developers to consume.
 
 ## Prerequisites
 
-- If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
+- If you're signing in to the {{ product_name }} Console for the first time, create an organization:
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -18,7 +18,7 @@ In this tutorial, you will use Choreo to expose a service as an API proxy and pu
 
 To create an API proxy, you can either upload an OpenAPI specification or provide an OpenAPI specification URL. In this tutorial, you will use a sample OpenAPI specification URL.
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create** under **Component Listing**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card.
 4. In the **Create an API Proxy** pane, click **Try with sample URL**.
@@ -53,7 +53,7 @@ Now you are ready to test the API proxy.
 
 ## Step 3: Test the API proxy
 
-You can test the API proxy in the development environment before promoting it to production. Choreo provides the following options to test your API proxy:
+You can test the API proxy in the development environment before promoting it to production. {{ product_name }} provides the following options to test your API proxy:
 - OpenAPI Console
 - cURL
 
@@ -62,7 +62,7 @@ In this guide, you will use the OpenAPI Console.
 1. In the left navigation menu, click **Test** and then click **OpenAPI Console**.
 
     !!! tip
-        Since the API proxy is secured when deployed, you will need a key to invoke it. Choreo automatically generates a key when you navigate to the **OpenAPI Console** pane.
+        Since the API proxy is secured when deployed, you will need a key to invoke it. {{ product_name }} automatically generates a key when you navigate to the **OpenAPI Console** pane.
 
 2. In the **OpenAPI Console** pane, select **Development** from the environment drop-down list.
 3. Expand the `GET /pet/findByStatus` method and click **Try it Out** to test it.
@@ -91,7 +91,7 @@ Now that your API is deployed in both development and production environments an
 
 ## Step 5: Publish the API proxy
 
-**Publishing** makes your API available in the **Choreo Developer Portal (Devportal)**, enabling application developers to access and use it. In Choreo, the **Production** environment is exposed to the **Devportal**  by default. After completing Step 4, the API is only available to the internal developers within your organization for testing purposes. To make the API accessible for external application developers, go to the **Deploy** page and **Promote** the API to the **Production** environment by following the same steps outlined in Step 4.
+**Publishing** makes your API available in the **{{ product_name }} Developer Portal (Devportal)**, enabling application developers to access and use it. In {{ product_name }}, the **Production** environment is exposed to the **Devportal**  by default. After completing Step 4, the API is only available to the internal developers within your organization for testing purposes. To make the API accessible for external application developers, go to the **Deploy** page and **Promote** the API to the **Production** environment by following the same steps outlined in Step 4.
 
 If you need to change the default environments exposed to the Devportal, refer to the [Configure Exposed Environments to Developer Portal](../administer/configure-exposed-environments-to-developer-portal.md) documentation.
 
@@ -104,20 +104,20 @@ Once the API is successfully promoted, it will become available in the **Product
 2. Click **Publish**.
 3. In the **Publish API** dialog, click **Confirm** to proceed with publishing the API with the specified display name. If you want to change the display name, make the necessary changes and then click **Confirm**. This changes the API lifecycle state to **Published**.
 
-You can observe that the API lifecycle stage has changed to **Published**. Now the API is available for consumption. API consumers can consume the API via the Choreo Developer Portal.
+You can observe that the API lifecycle stage has changed to **Published**. Now the API is available for consumption. API consumers can consume the API via the {{ product_name }} Developer Portal.
 
 ## Step 6: Invoke the API
 
 To generate credentials for the published API and invoke it via the Developer Portal, follow these steps:
 
-1. In the **Lifecycle Management** pane, click **Go to DevPortal**. This takes you to the Petstore API published to the Choreo Developer Portal.
+1. In the **Lifecycle Management** pane, click **Go to DevPortal**. This takes you to the Petstore API published to the {{ product_name }} Developer Portal.
 2. Generate credentials:
     1. In the Developer Portal left navigation menu, click **Production** under **Credentials**.
-    2. Click **Generate Credentials**. Choreo generates new tokens and populates the **Consumer Key** and **Consumer Secret** fields.
+    2. Click **Generate Credentials**. {{ product_name }} generates new tokens and populates the **Consumer Key** and **Consumer Secret** fields.
 3. Invoke the API:
     1. In the Developer Portal left navigation menu, click **Try Out**.
     2. Click **Get Test Key**. This generates an access token.
     3. Expand the `GET /pet/findByStatus` operation and click **Try it out**.
     4. Select **available** as the status and click **Execute**.
 
-Now you have successfully created, deployed, tested, and published an API proxy using Choreo.
+Now you have successfully created, deployed, tested, and published an API proxy using {{ product_name }}.

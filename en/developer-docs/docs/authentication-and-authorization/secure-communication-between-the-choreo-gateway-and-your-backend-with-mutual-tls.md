@@ -1,6 +1,6 @@
-# Secure Communication Between the Choreo Gateway and Your Backend with Mutual TLS
+# Secure Communication Between the {{ product_name }} Gateway and Your Backend with Mutual TLS
 
-To establish secure communication between the Choreo Gateway and your backend, you can configure mutual TLS.
+To establish secure communication between the {{ product_name }} Gateway and your backend, you can configure mutual TLS.
 
 Mutual TLS authentication involves both the client and server validating each other’s certificates before establishing a connection. The following diagram depicts this scenario:
 
@@ -8,18 +8,18 @@ Mutual TLS authentication involves both the client and server validating each ot
 
 ## Configure mutual TLS to establish secure connectivity
 
-To establish secure connectivity between the Choreo Gateway and your backend using mutual TLS, you must add the certificate of the backend (server certificate) to Choreo and add the certificate of Choreo (client certificate) as a trusted certificate in the backend.
+To establish secure connectivity between the {{ product_name }} Gateway and your backend using mutual TLS, you must add the certificate of the backend (server certificate) to {{ product_name }} and add the certificate of {{ product_name }} (client certificate) as a trusted certificate in the backend.
 
 ### Step 1: Configure the backend certificate
 
 #### Prerequisites
 
 - The endpoint must be protected with TLS.
-- The public certificate of the backend server must be added to Choreo at the organization level. To add a certificate, see [Manage Certificates](../devops-and-ci-cd/manage-certificates.md).
+- The public certificate of the backend server must be added to {{ product_name }} at the organization level. To add a certificate, see [Manage Certificates](../devops-and-ci-cd/manage-certificates.md).
 
 To configure the backend certificate, follow the steps given below:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the API proxy for which you want to configure TLS. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
 3. In the left navigation menu, click **Develop** and then click **Endpoints**.
 4. On the **Endpoints** page, click **Configure** corresponding to the endpoint.
@@ -29,15 +29,15 @@ To configure the backend certificate, follow the steps given below:
 
 There are two approaches you can take to configure mutual TLS.
 
- - Generate a key pair with a self-signed certificate from Choreo, download the public certificate, and subsequently add and configure it in the backend.
- - Upload your own public or private certificate pair to Choreo. Subsequently, add and configure the public certificate of this key pair in your backend.
+ - Generate a key pair with a self-signed certificate from {{ product_name }}, download the public certificate, and subsequently add and configure it in the backend.
+ - Upload your own public or private certificate pair to {{ product_name }}. Subsequently, add and configure the public certificate of this key pair in your backend.
 
 Follow the step-by-step instructions below depending on how you want to establish mutual TLS with the backend service:
 
-=== "Generate a key pair through Choreo"
-    When you follow these steps, Choreo generates a key pair with a self-signed certificate. You can attach this key pair to any API proxy created within the same project.
+=== "Generate a key pair through {{ product_name }}"
+    When you follow these steps, {{ product_name }} generates a key pair with a self-signed certificate. You can attach this key pair to any API proxy created within the same project.
 
-    1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+    1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
     2. In the **Component Listing** pane, click on the API proxy for which you want to generate a key pair. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
     3. In the left navigation menu, click **Develop** and then click **Endpoints**.
     4. On the **Endpoints** page, click **Configure** corresponding to the endpoint.    
@@ -65,7 +65,7 @@ Follow the step-by-step instructions below depending on how you want to establis
 === "Use your own certificate pair"
     Here, you can use your own public certificate and private certificate as client certificates.
 
-    1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+    1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
     2. In the **Component Listing** pane, click on the API proxy for which you want to generate a key pair. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
     3. In the left navigation menu, click **Develop** and then click **Endpoints**.
     4. On the **Endpoints** page, click **Configure** corresponding to the endpoint.

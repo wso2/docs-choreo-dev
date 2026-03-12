@@ -15,8 +15,8 @@
 # under the License.
 
 # Project information
-site_name: "Choreo Documentation | AI-Native Internal Developer Platform"
-site_description: Choreo Explore Choreo documentation to build, deploy, and manage cloud-native apps effortlessly. Whether you're a platform engineer or app developer, Choreo simplifies infrastructure automation and streamlines delivery with an AI-native internal developer platform.
+site_name: "WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform"
+site_description: WSO2 Developer Platform Explore WSO2 Developer Platform documentation to build, deploy, and manage cloud-native apps effortlessly. Whether you're a platform engineer or app developer, WSO2 Developer Platform simplifies infrastructure automation and streamlines delivery with an AI-native internal developer platform.
 site_author: WSO2
 site_url: https://wso2.com/choreo/docs
 site_dir: site/platform-engineer
@@ -34,7 +34,7 @@ copyright: ©2023 WSO2 LLC.
 theme:
   name: material
   custom_dir: ../theme/material
-  logo: assets/images/logo.png
+  logo: assets/images/logo.svg
   font:
     text: Montserrat
   favicon: assets/images/favicon.png
@@ -75,14 +75,14 @@ strict: false
 nav:
   - Home: index.md
   - Introduction:
-      - What is Choreo?: what-is-choreo.md
-  - Choreo Concepts:
+      - What is WSO2 Developer Platform?: what-is-choreo.md
+  - WSO2 Developer Platform Concepts:
       - Resource Hierarchy: choreo-concepts/resource-hierarchy.md
       - Organization: choreo-concepts/organization.md
       - Data Planes: choreo-concepts/data-planes.md
       - Environments: choreo-concepts/environments.md
       - CI/CD: choreo-concepts/ci-cd.md
-      - Choreo Marketplace: choreo-concepts/choreo-marketplace.md
+      - WSO2 Developer Platform Marketplace: choreo-concepts/choreo-marketplace.md
       - Project: choreo-concepts/project.md
       - Component: choreo-concepts/component.md
       - Deployment Tracks: choreo-concepts/deployment-tracks.md
@@ -108,7 +108,7 @@ nav:
   - DevOps:
       - Automation Pipelines:
         - What are Automation Pipelines: devops/automation-pipelines/introduction.md
-        - Choreo Pipelines Specification: devops/automation-pipelines/specification.md
+        - WSO2 Developer Platform Pipelines Specification: devops/automation-pipelines/specification.md
         - Manage Automation Pipelines: devops/automation-pipelines/manage-automation-pipeline.md
         - Run Automation Pipelines: devops/automation-pipelines/run-automation-pipeline.md
         - Inbuilt Pipeline Templates: devops/automation-pipelines/inbuilt-templates.md
@@ -117,15 +117,15 @@ nav:
           - Integrate Unit Tests into the CI Pipeline: devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline.md
           - CI Pipeline logs: 'devops/ci-pipelines/ci-pipeline-logs.md'
       - CD Pipelines:
-          - Deploy Applications using Choreo CD Pipeline: devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline.md
+          - Deploy Applications using WSO2 Developer Platform CD Pipeline: devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline.md
           - Manage CD Pipelines: 'devops/cd-pipelines/manage-continuous-deployment-pipelines.md'
           - Submit Environment Promotion Approval Requests: 'devops/cd-pipelines/submit-and-manage-environment-promotion-approval-requests.md'
       - Manage Configuration Groups: devops/manage-configuration-groups.md
   - Governance:
       - Workflows:
-          - Configure Approvals for Choreo Workflows: governance/workflows/configure-approvals-for-choreo-workflows.md
+          - Configure Approvals for WSO2 Developer Platform Workflows: governance/workflows/configure-approvals-for-choreo-workflows.md
       - Egress Control:
-          - Control Egress Traffic for Your Choreo Organization: governance/egress-control/control-egress-traffic-for-your-organization.md
+          - Control Egress Traffic for Your WSO2 Developer Platform Organization: governance/egress-control/control-egress-traffic-for-your-organization.md
       - Approvals:
           - Review Workflow Approval Requests: governance/approvals/review-workflow-approval-requests.md
       - Guideline Documents: governance/guideline-documents/architect-agent-guideline-documents.md
@@ -134,16 +134,16 @@ nav:
           - Overview: db-and-services/databases/choreo-managed-databases-and-caches.md
           - PostgreSQL: db-and-services/databases/choreo-managed-postgresql-databases.md
           - MySQL: db-and-services/databases/choreo-managed-mysql-databases.md
-          - Choreo-Managed Cache: db-and-services/databases/choreo-managed-caches.md
-          - Add Choreo-Managed Databases and Caches to the Marketplace: db-and-services/databases/add-choreo-managed-databases-and-caches-to-the-marketplace.md
+          - WSO2 Developer Platform-Managed Cache: db-and-services/databases/choreo-managed-caches.md
+          - Add WSO2 Developer Platform-Managed Databases and Caches to the Marketplace: db-and-services/databases/add-choreo-managed-databases-and-caches-to-the-marketplace.md
       - Third-Party Services: db-and-services/external-services/integrate-and-manage-third-party-services.md
       - Message Brokers:
           - Overview: db-and-services/message-brokers/choreo-managed-message-brokers.md
-          - Create Choreo-Managed Kafka Services: db-and-services/message-brokers/create-choreo-managed-kafka-services.md
+          - Create WSO2 Developer Platform-Managed Kafka Services: db-and-services/message-brokers/create-choreo-managed-kafka-services.md
           - Configure a Kafka Service: db-and-services/message-brokers/configure-a-kafka-service.md
           - Monitor a Kafka Service: db-and-services/message-brokers/monitor-a-kafka-service.md
       - Gen AI Services:
-          - Choreo AI Gateway: db-and-services/ai-gateway/choreo-ai-gateway.md
+          - WSO2 Developer Platform AI Gateway: db-and-services/ai-gateway/choreo-ai-gateway.md
           - Integrate and Manage Generative AI Services: db-and-services/ai-gateway/integrate-and-manage-gen-ai-services.md
   - K8s Operations:
       - Runtime:
@@ -162,9 +162,9 @@ nav:
           - Configure Delivery Insights: insights/delivery-insights/configure-delivery-insights.md
           - View Delivery Insights: insights/delivery-insights/view-delivery-insights.md
       - Integrate External Insights Platforms:
-          - Work with the Choreo Insights API:
-              - Access the Choreo Insights API: insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
-              - Choreo Insights API: insights/work-with-choreo-insights-api/choreo-insights-api.md
+          - Work with the WSO2 Developer Platform Insights API:
+              - Access the WSO2 Developer Platform Insights API: insights/work-with-choreo-insights-api/access-the-choreo-insights-api.md
+              - WSO2 Developer Platform Insights API: insights/work-with-choreo-insights-api/choreo-insights-api.md
       - Cost Insights: insights/cost-optimization.md
   - Observability:
       - Alerts:
@@ -174,26 +174,26 @@ nav:
       - Audit Logs: observability/audit-logs.md
   - API Management:
       - Developer Portal:
-          - Customize the Choreo Developer Portal: api-management/developer-portal/customize-the-developer-portal.md
+          - Customize the WSO2 Developer Platform Developer Portal: api-management/developer-portal/customize-the-developer-portal.md
           - Configure Identity Providers for Developer Portal: api-management/developer-portal/configure-identity-providers-for-developer-portal.md
           - Configure Exposed Environments to Developer Portal: api-management/developer-portal/configure-exposed-environments-to-developer-portal.md
       - API Analytics:
-          - Integrate Choreo with Moesif for Analytics: api-management/api-analytics/integrate-choreo-with-moesif.md
+          - Integrate WSO2 Developer Platform with Moesif for Analytics: api-management/api-analytics/integrate-choreo-with-moesif.md
       - Consumer IDPs:
-          - Set Up a User Store with Choreo’s Built-In Identity Provider: api-management/consumer-idps/configure-a-user-store-with-built-in-idp.md
-          - Set Up Asgardeo as an External IdP for Choreo APIs: api-management/consumer-idps/configure-asgardeo-as-an-external-idp.md
-          - Set Up Azure AD as an External IdP for Choreo APIs: api-management/consumer-idps/configure-azure-ad-as-an-external-idp.md
-  - Choreo CLI:
-      - Choreo CLI Overview: choreo-cli/choreo-cli-overview.md
-      - Get Started with the Choreo CLI: choreo-cli/get-started-with-the-choreo-cli.md
-      - Manage Authentication with Personal Access Tokens in Choreo CLI: choreo-cli/manage-authentication-with-personal-access-tokens.md
+          - Set Up a User Store with WSO2 Developer Platform’s Built-In Identity Provider: api-management/consumer-idps/configure-a-user-store-with-built-in-idp.md
+          - Set Up Asgardeo as an External IdP for WSO2 Developer Platform APIs: api-management/consumer-idps/configure-asgardeo-as-an-external-idp.md
+          - Set Up Azure AD as an External IdP for WSO2 Developer Platform APIs: api-management/consumer-idps/configure-azure-ad-as-an-external-idp.md
+  - WSO2 Developer Platform CLI:
+      - WSO2 Developer Platform CLI Overview: choreo-cli/choreo-cli-overview.md
+      - Get Started with the WSO2 Developer Platform CLI: choreo-cli/get-started-with-the-choreo-cli.md
+      - Manage Authentication with Personal Access Tokens in WSO2 Developer Platform CLI: choreo-cli/manage-authentication-with-personal-access-tokens.md
   - References:
       - FAQ: references/faq.md
-      - Choreo Limitations: references/choreo-limitations.md
-      - Troubleshoot Choreo: references/troubleshoot-choreo.md
+      - WSO2 Developer Platform Limitations: references/choreo-limitations.md
+      - Troubleshoot WSO2 Developer Platform: references/troubleshoot-choreo.md
       - Private Data Plane Security Levels: references/private-data-plane-security-levels.md
       - Private Data Plane Management Models: references/private-data-plane-management-models.md
-      - Choreo Platform Service Billing and Upgrades: references/choreo-platform-services-billing-and-upgrades.md
+      - WSO2 Developer Platform Service Billing and Upgrades: references/choreo-platform-services-billing-and-upgrades.md
 
 # Extensions
 # Extensions
@@ -258,6 +258,8 @@ extra_javascript:
   - assets/javascripts/region-selector.js
 
 extra:
+  product_name: WSO2 Developer Platform
+  short_name: Developer Platform
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/wso2

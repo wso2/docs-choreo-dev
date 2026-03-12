@@ -1,5 +1,5 @@
 /**
- * Choreo Region Selector
+ * WSO2 Developer Platform Region Selector
  *
  * This script intercepts clicks on console.choreo.dev and devportal.choreo.dev links and shows a popup
  * that asks users to choose between US and EU regions with a "remember me" option.
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add header
     const header = document.createElement('h3');
-    header.textContent = 'Select Choreo Region';
+    header.textContent = 'Select WSO2 Developer Platform Region';
     header.style.marginTop = '0';
     header.style.color = '#2c3e50';
     header.style.fontWeight = '600';
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add description
     const description = document.createElement('p');
-    description.textContent = 'Please select the Choreo region you want to access:';
+    description.textContent = 'Please select the WSO2 Developer Platform region you want to access:';
     description.style.color = '#5f6368';
     description.style.marginBottom = '16px';
     description.style.fontSize = '13px';
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Radio button changed
     });
 
-    // Intercept clicks on Choreo console links
+    // Intercept clicks on WSO2 Developer Platform console links
     document.addEventListener('click', function(event) {
         // Check if the clicked element is a link
         let element = event.target;
@@ -279,11 +279,11 @@ document.addEventListener('DOMContentLoaded', function() {
             element = element.parentElement;
         }
 
-        // If we found an anchor, check if it's a Choreo console link
+        // If we found an anchor, check if it's a WSO2 Developer Platform console link
         if (element && element.tagName === 'A') {
             const href = element.getAttribute('href');
 
-            // Check if the link is a Choreo console or devportal link
+            // Check if the link is a WSO2 Developer Platform console or devportal link
             if (href && (href.includes('console.choreo.dev') || href.includes('devportal.choreo.dev'))) {
                 // Prevent the default action
                 event.preventDefault();

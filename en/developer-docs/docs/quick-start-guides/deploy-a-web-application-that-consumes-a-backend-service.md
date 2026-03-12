@@ -1,12 +1,12 @@
 # Deploy a Web Application that Consumes a Backend Service
 
-Choreo is an Internal Developer Platform (IDevP) that simplifies building, deploying, monitoring, and managing cloud-native applications.
+{{ product_name }} is an Internal Developer Platform (IDevP) that simplifies building, deploying, monitoring, and managing cloud-native applications.
 
 In this guide, you will learn how to:
 
-- Expose a service endpoint via Choreo.
+- Expose a service endpoint via {{ product_name }}.
 - Securely consume the service from a web application.
-- Use Choreo's managed authentication to set up authentication for your web application without dealing with complex security protocols.
+- Use {{ product_name }}'s managed authentication to set up authentication for your web application without dealing with complex security protocols.
 
 The sample web application allows users to:
 - Sign in and view their reading lists.
@@ -24,10 +24,10 @@ This guide walks you through the following steps:
 
 ## Prerequisites
 
-1. GitHub account: Fork the [Choreo sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app), which contains the sample for this guide.
+1. GitHub account: Fork the [{{ product_name }} sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app), which contains the sample for this guide.
 
-2. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your Google, GitHub, or Microsoft account.
+2. If you're signing in to the {{ product_name }} Console for the first time, create an organization:
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in using your Google, GitHub, or Microsoft account.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -36,7 +36,7 @@ This guide walks you through the following steps:
 
 ## Step 1: Create a project
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the organization home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the organization home page.
 2. On the organization home page, click **+ Create Project**.
 3. Enter the following details:
 
@@ -55,23 +55,23 @@ This guide walks you through the following steps:
 
 1. On the project home page, click **Start** under **Create Multiple Components**.
 2. Go to the **GitHub** tab.
-3. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+3. Click **Authorize with GitHub** to connect {{ product_name }} to your GitHub account. If you haven't connected your GitHub repository to {{ product_name }}, enter your credentials and select the repository you forked earlier to install the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, paste the [Choreo sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+    Alternatively, paste the [{{ product_name }} sample book list app repository](https://github.com/wso2/choreo-sample-book-list-app) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
-        The **Choreo GitHub App** requires:
+        The **{{ product_name }} GitHub App** requires:
         - Read and write access to code and pull requests.
         - Read access to issues and metadata.
 
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; {{ product_name }} will not push changes directly to your repository.
 
 4. Enter the following information:
 
     | **Field**                    | **Value**                   |
     |------------------------------|-----------------------------|
     | **Organization**             | Your GitHub account         |
-    | **Repository**               | choreo-sample-book-list-app |
+    | **Repository**               | {{ product_name }}-sample-book-list-app |
     | **Branch**                   | main                        |
 
 5. In the **Add Component Directories** pane under **Configure Components**, click the **+** icon next to `reading-list-service`.
@@ -107,11 +107,11 @@ This guide walks you through the following steps:
 3. In the **Environment Configurations** pane, click **Next** to skip the configuration.
 4. In the **File Mount** pane, click **Next** to skip the configuration.
 5. In the **Endpoint Details** pane, verify that **Network Visibility** is set to **Public**. This securely exposes the endpoint for consumption.
-6. Click **Deploy**. This deploys the service to the development environment and lists it in the [Choreo Marketplace](../choreo-concepts/choreo-marketplace.md).
+6. Click **Deploy**. This deploys the service to the development environment and lists it in the [{{ product_name }} Marketplace](../choreo-concepts/choreo-marketplace.md).
 
 ## Step 5: Test the service
 
-1. In the Choreo Console left navigation menu, click **Test** and then click **Console**.
+1. In the {{ product_name }} Console left navigation menu, click **Test** and then click **Console**.
 2. In the OpenAPI Console, select **Development** from the environment drop-down.
 3. In the **Endpoint** list, select **Books REST Endpoint**.
 4. Expand the **GET/books** method, click **Try it out**, then click **Execute**.
@@ -143,33 +143,33 @@ You can also try out the **GET** and **DELETE** methods.
 
 ## Step 6: Consume the service
 
-Now that the `Reading List Service` is deployed and available in the Choreo Marketplace, you can discover and consume it. In this section, you will deploy a front-end application to interact with the service.
+Now that the `Reading List Service` is deployed and available in the {{ product_name }} Marketplace, you can discover and consume it. In this section, you will deploy a front-end application to interact with the service.
 
 ### Step 6.1: Create a web application to consume the service
 
-1. In the Choreo Console header, click the **Project** list and select the project you created in Step 1.
+1. In the {{ product_name }} Console header, click the **Project** list and select the project you created in Step 1.
 2. On the project home page, click **+ Create** under **Component Listing**.
 3. Click the **Web Application** card.
-4. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+4. Click **Authorize with GitHub** to connect {{ product_name }} to your GitHub account. If you haven't connected your GitHub repository to {{ product_name }}, enter your credentials and select the repository you forked earlier to install the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo sample Book List Service repository](https://github.com/wso2/choreo-sample-book-list-service) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [{{ product_name }} sample Book List Service repository](https://github.com/wso2/choreo-sample-book-list-service) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
-        The **Choreo GitHub App** requires:
+        The **{{ product_name }} GitHub App** requires:
 
         - Read and write access to code and pull requests.
         - Read access to issues and metadata.
 
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; {{ product_name }} will not push changes directly to your repository.
 
 5. Enter the following information:
 
     | **Field**             | **Description**                  |
     |-----------------------|----------------------------------|
     | **Organization**      | Your GitHub account              |
-    | **Repository**        | choreo-sample-book-list-app      |
+    | **Repository**        | {{ product_name }}-sample-book-list-app      |
     | **Branch**            | main                             |
-    | **Component Directory** | /choreo-sample-book-list-app/reading-list-front-end-with-managed-auth |
+    | **Component Directory** | /{{ product_name }}-sample-book-list-app/reading-list-front-end-with-managed-auth |
 
 6. Select **React** as the build preset because the sample front-end application is a React application built with Vite.
 7. Enter the following details:
@@ -234,7 +234,7 @@ A connection allows you to integrate the service with other services or external
         You can refer to the mounted configuration file as `./config.js` within your web application.
 
 4. Click **Next** to open the **Authentication** pane.
-5. Under **Authentication Settings**, ensure that **Managed authentication with Choreo** is enabled.
+5. Under **Authentication Settings**, ensure that **Managed authentication with {{ product_name }}** is enabled.
 
     !!! tip
         Managed authentication is enabled by default for **React**, **Angular**, or **Vue.js** build presets.
@@ -283,6 +283,6 @@ A connection allows you to integrate the service with other services or external
 
 To verify that the reading list is personalized for each user, sign in as a different user. The reading list items you entered will not appear for the other user.
 
-Congratulations! You have successfully exposed a service endpoint via Choreo and securely consumed it from a web application.
+Congratulations! You have successfully exposed a service endpoint via {{ product_name }} and securely consumed it from a web application.
 
-After testing your service and web application, explore other Choreo features like [managing](../api-management/lifecycle-management.md), [observing](../monitoring-and-insights/observability-overview.md), and [DevOps](../devops-and-ci-cd/view-runtime-details.md).
+After testing your service and web application, explore other {{ product_name }} features like [managing](../api-management/lifecycle-management.md), [observing](../monitoring-and-insights/observability-overview.md), and [DevOps](../devops-and-ci-cd/view-runtime-details.md).

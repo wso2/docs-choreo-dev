@@ -2,7 +2,7 @@
 
 ![Delivery insights dashboard](../../assets/img/monitoring-and-insights/engineering-insights/delivery-insights-dashboard.png){.cInlineImage-full}
 
-You can view delivery insights in Choreo to use as Key Performer Indicators (KPIs) to measure your organization's DevOps team's performance. Choreo enables this feature by default for all organizations. Delivery insights includes the following four key metrics (DORA metrics) that are regarded as the most important metrics to indicate team performance:
+You can view delivery insights in {{ product_name }} to use as Key Performer Indicators (KPIs) to measure your organization's DevOps team's performance. {{ product_name }} enables this feature by default for all organizations. Delivery insights includes the following four key metrics (DORA metrics) that are regarded as the most important metrics to indicate team performance:
 
 - Deployment Frequency: How often an organization successfully releases to production
 - Lead Time for Changes: The amount of time it takes a commit to get into production
@@ -10,17 +10,17 @@ You can view delivery insights in Choreo to use as Key Performer Indicators (KPI
 - Mean Time to Recovery: How long it takes an organization to recover from a failure in production
 
 
-Choreo enables two insights by default; deployment frequency and lead time for change.
+{{ product_name }} enables two insights by default; deployment frequency and lead time for change.
 
 ## Configure the Delivery Insights dashboard with all metrics
 
 To configure the dashboard by enabling the other two metrics, follow the steps below:
 
-1. Sign in to [Choreo](https://console.choreo.dev/).
-2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization. 
+1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
+2. In the {{ product_name }} Console, go to the top navigation menu and click **Organization**. Then select your organization. 
 3. On the left navigation menu, click **Insights** and then click on **Delivery**.
 4. Scroll to the bottom of the dashboard and click **Configure**.
-5. Select your incident management system. Currently, Choreo only supports GitHub. 
+5. Select your incident management system. Currently, {{ product_name }} only supports GitHub. 
 
 ## Configuring GitHub as the incident management system
 
@@ -32,7 +32,7 @@ To configure GitHub as the incident management system, follow the steps below:
 
 ![Authorize](../../assets/img/monitoring-and-insights/engineering-insights/add-integration-cio-dashboard.png){.cInlineImage-threeQuarter}
 
-First, let's authorize Choreo to access the repositories used to record incidents. 
+First, let's authorize {{ product_name }} to access the repositories used to record incidents. 
 
 On the **Add Integration** page,  select **GitHub** and click **Authorize with GitHub**.
 
@@ -42,36 +42,36 @@ Once the authorization process is complete, you can start configuring the GitHub
 
 ![Configure](../../assets/img/monitoring-and-insights/engineering-insights/add-integration-configure.png){.cInlineImage-threeQuarter}
 
-By default, Choreo collects incident details(issues) from all repositories containing Choreo components. However, you can configure a GitHub account and a GitHub repository to allow Choreo to read issues from a specific repository, and then click **Next**. 
+By default, {{ product_name }} collects incident details(issues) from all repositories containing {{ product_name }} components. However, you can configure a GitHub account and a GitHub repository to allow {{ product_name }} to read issues from a specific repository, and then click **Next**. 
 
 | **Field**       | **Description**                   |   **Value**   |
 |-----------------|-----------------------------|-----------------------------|
-| **Data Plane**  | Choreo collects incident details by running a scheduled job which invokes the GitHub API periodically. This job runs on the user's data plane.   This configuration allows users to specify a preferred data plane to run the job, especially when they have multiple data planes. | Select a preferred data plane from the **Data Plane** list.        |
+| **Data Plane**  | {{ product_name }} collects incident details by running a scheduled job which invokes the GitHub API periodically. This job runs on the user's data plane.   This configuration allows users to specify a preferred data plane to run the job, especially when they have multiple data planes. | Select a preferred data plane from the **Data Plane** list.        |
 | **GitHub Account** | The GitHub account you have your repositories in.  | Select your GitHub account that includes the repository used for incident collection.|
-| **GitHub Repository**| By default, Choreo will collect incident details(issues) from all repositories that already have Choreo components. |
+| **GitHub Repository**| By default, {{ product_name }} will collect incident details(issues) from all repositories that already have {{ product_name }} components. |
     
 
 ### Step 3: Filter label
 
 ![Filter Label](../../assets/img/monitoring-and-insights/engineering-insights/filter-label.png){.cInlineImage-threeQuarter}
 
-The filter label allows Choreo to scrape issues associated with that label.
+The filter label allows {{ product_name }} to scrape issues associated with that label.
 
-- **Incident Label**:  The label Choreo uses to identify incidents. For example, `Type/Incident`. 
+- **Incident Label**:  The label {{ product_name }} uses to identify incidents. For example, `Type/Incident`. 
 
-- **Invalid incident label**(Optional): Choreo will not scrape issues with this label and will proceed to skip these issues. For example, `Resolution/Invalid`. You can use this label when you want to ignore issues. For example, closing an issue after identifying that it doesn't qualify as an incident issue as it was due to a user error. 
+- **Invalid incident label**(Optional): {{ product_name }} will not scrape issues with this label and will proceed to skip these issues. For example, `Resolution/Invalid`. You can use this label when you want to ignore issues. For example, closing an issue after identifying that it doesn't qualify as an incident issue as it was due to a user error. 
 
 Once you configure the labels, click **Save**.
 
-Choreo will enable incident data publishing in the background once you save. Once completed, the metric charts will appear in the delivery insights dashboard for **Mean Time To Recover** and **Change Failure Rate**. If there are any issues in the configuration, the configure banner will reappear, and the user can proceed to reconfigure.
+{{ product_name }} will enable incident data publishing in the background once you save. Once completed, the metric charts will appear in the delivery insights dashboard for **Mean Time To Recover** and **Change Failure Rate**. If there are any issues in the configuration, the configure banner will reappear, and the user can proceed to reconfigure.
 
 ### Step 4: Enrich incident tickets with deployment information
 
-Choreo extracts deployment information from the relevant incident and generates DORA metrics that help you analyze the deployment statistics related to the incidents. Therefore, you must manually update the GitHub issue with the relevant deployment-related information. Follow the steps below to add the deployment information to the GitHub issue. 
+{{ product_name }} extracts deployment information from the relevant incident and generates DORA metrics that help you analyze the deployment statistics related to the incidents. Therefore, you must manually update the GitHub issue with the relevant deployment-related information. Follow the steps below to add the deployment information to the GitHub issue. 
  
 #### Get deployment details
 
-1. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component** for which the incident was reported.
+1. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component** for which the incident was reported.
 2. On the left navigation menu, click **DevOps** and then click on **CD Pipelines**
 3. On the **Production Environment** card, click **Deployment History**.
 4. On the right-hand side panel, select the relevant deployment, and click **Release details** to copy the deployment details to the clipboard. 

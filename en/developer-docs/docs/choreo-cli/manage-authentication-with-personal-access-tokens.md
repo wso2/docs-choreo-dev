@@ -1,6 +1,6 @@
 # Manage Authentication with Personal Access Tokens
 
-Personal access tokens (PATs) provide a secure method to authenticate with the Choreo CLI, allowing you to manage access without relying on primary credentials.
+Personal access tokens (PATs) provide a secure method to authenticate with the {{ product_name }} CLI, allowing you to manage access without relying on primary credentials.
 
 ## What are personal access tokens?
 
@@ -11,7 +11,7 @@ Personal access tokens are unique strings that provide an alternative to usernam
 
 ## Sample use cases for personal access tokens
 
-PATs are versatile and suitable for various tasks in the Choreo CLI:
+PATs are versatile and suitable for various tasks in the {{ product_name }} CLI:
 
 - **Automated scripting**: To use in scripts for CI/CD pipelines or task automation, avoiding repeated sign-in prompts. This simplifies setting up CI/CD pipelines or other automation that rely on the CLI.
 - **Granular permissions for specific tasks**: To limit access to certain commands or specific features without providing full access, you can configure PATs with restricted permissions.
@@ -24,12 +24,12 @@ use separate PATs for each role for easy context switching.
 
 ## Set up personal access tokens
 
-To create a PAT to use with the Choreo CLI, you must set up and retrieve a token from the Choreo Console.
+To create a PAT to use with the {{ product_name }} CLI, you must set up and retrieve a token from the {{ product_name }} Console.
 
-Follow these steps to create a PAT for Choreo CLI:
+Follow these steps to create a PAT for {{ product_name }} CLI:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. Go to the Choreo Console header right corner, click your profile picture, and then click **Account Settings**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. Go to the {{ product_name }} Console header right corner, click your profile picture, and then click **Account Settings**.
 
     ![Profile](../assets/img/choreo-cli/personal-access-tokens/profile.png)
 
@@ -50,16 +50,16 @@ Follow these steps to create a PAT for Choreo CLI:
      - Treat the token as confidential information. 
      - Avoid storing the token in unprotected files.
 
-## Use a personal access token with the Choreo CLI
+## Use a personal access token with the {{ product_name }} CLI
 
-Once you generate a token, you can use it to authenticate with the Choreo CLI and perform various operations. 
+Once you generate a token, you can use it to authenticate with the {{ product_name }} CLI and perform various operations. 
 
 ### Command syntax
 
 To log in with the token, use the following command:
 
 ```bash
-choreo login --with-token
+{{ cli_root_name }} login --with-token
 ```
 
 This command reads the token from the standard input.
@@ -68,7 +68,7 @@ This command reads the token from the standard input.
 
 ```bash
 export CHOREO_TOKEN= <YOUR_PERSONAL_ACCESS_TOKEN>
-echo "$CHOREO_TOKEN" | choreo login --with-token
+echo "$CHOREO_TOKEN" | {{ cli_root_name }} login --with-token
 ```
 
 !!! note 
@@ -78,8 +78,8 @@ echo "$CHOREO_TOKEN" | choreo login --with-token
 
 To manage or revoke existing tokens, follow these steps:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. Go to the Choreo Console header right corner, click your profile picture, and then click **Account Settings**.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. Go to the {{ product_name }} Console header right corner, click your profile picture, and then click **Account Settings**.
 3. On the **Account settings** page, click the **Personal Access Tokens** tab.
 4. Go to the token you want to revoke and click **Revoke**.
 

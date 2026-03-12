@@ -4,16 +4,16 @@ Third-party services are external applications, platforms, or APIs you can integ
 
 The following topics walk you through the steps to seamlessly register, manage, and consume third-party services, adhering to API-first principles.
 
-## Register a third-party service in Choreo
+## Register a third-party service in {{ product_name }}
 
-To use a third-party service in Choreo, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing you to consume it via a Connection.
+To use a third-party service in {{ product_name }}, you need to register it. Once registered, the service becomes available in the Internal Marketplace, allowing you to consume it via a Connection.
 
 You can register a third-party service at two levels:
 
   - Organization level: This makes the service accessible from any project within the organization.
   - Project level: This restricts the service to a specific project.
 
-Choreo allows you to register the following third-party service types:
+{{ product_name }} allows you to register the following third-party service types:
   
   - REST APIs
   - GraphQL APIs
@@ -36,10 +36,10 @@ To register a third-party service, follow these steps:
 
 ### Step 1: Provide basic details
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. Follow one of these steps depending on your requirement:
-    - To register a third-party service at the organization level, go to the Choreo Console header and select your organization from the **Organization** list. 
-    - To register a third-party service at the project level, go to the Choreo Console header and select your project from the **Project** list. 
+    - To register a third-party service at the organization level, go to the {{ product_name }} Console header and select your organization from the **Organization** list. 
+    - To register a third-party service at the project level, go to the {{ product_name }} Console header and select your project from the **Project** list. 
 3. In the left navigation menu, click **Resources** and then click **Third-Party Services**.
 4. Click **+ Register**.
 5. Provide details for the service:
@@ -99,7 +99,7 @@ When you create a third-party service, it gets listed in the **Third-Party Servi
 
 To view or update a third-party service, follow these steps.
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the left navigation menu, click **Resources** and then click **Third-Party Services**. This lists all the third-party services you have created.
 3. Click on a service to view or update its details.
     - **General Details**: Displays service metadata. For example, the service name, overview, labels, etc. 
@@ -111,13 +111,13 @@ To view or update a third-party service, follow these steps.
 !!! info
     To add a third-party service to the Internal Marketplace, you must provide all required parameters for at least one endpoint.
 
-1. In the Choreo Console left navigation menu, click **Resources** and then click **Third-Party Services**.
+1. In the {{ product_name }} Console left navigation menu, click **Resources** and then click **Third-Party Services**.
 2. Click on the service you want to add to the Internal Marketplace.
 3. Click **Add to Marketplace**.
 
 ### Remove a third-party service from the Internal Marketplace
 
-1. In the Choreo Console left navigation menu, click **Resources** and then click **Third-Party Services**.
+1. In the {{ product_name }} Console left navigation menu, click **Resources** and then click **Third-Party Services**.
 2. Click on the service you want to remove from the Internal Marketplace.
 3. Click **Remove from Marketplace**.
 

@@ -1,6 +1,6 @@
 # Control API Visibility 
 
-By default, the APIs published in Choreo are visible to anyone who visits the Choreo Developer Portal. By default, Choreo sets the visibility of the API to `Public`. However, developers can control the visibility of their APIs by changing the default option to `Private` or `Restricted`. 
+By default, the APIs published in {{ product_name }} are visible to anyone who visits the {{ product_name }} Developer Portal. By default, {{ product_name }} sets the visibility of the API to `Public`. However, developers can control the visibility of their APIs by changing the default option to `Private` or `Restricted`. 
 
 Visibility settings control users from viewing and modifying APIs. API visibility can be one of the following options:
 
@@ -12,7 +12,7 @@ Visibility settings control users from viewing and modifying APIs. API visibilit
 
 ## Change API visibility
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the REST API (Service) for which you want to control API visibility. 
 3. In the left navigation menu, click **Manage** and then click **API Info**.
 4. On the **API Info** page that opens, click the **Developer Portal** tab.

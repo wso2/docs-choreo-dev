@@ -1,35 +1,35 @@
-# Choreo-managed MySQL Databases
+# {{ product_name }}-managed MySQL Databases
 
-MySQL on Choreo offers fully managed, flexible relational databases on AWS, Azure, GCP, and Digital Ocean.
+MySQL on {{ product_name }} offers fully managed, flexible relational databases on AWS, Azure, GCP, and Digital Ocean.
 
 These services run on infrastructure and automation provided by [Aiven](https://aiven.io), our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-databases-and-caches.md#technology-partnership).
 
-## Create a Choreo-managed MySQL database
+## Create a {{ product_name }}-managed MySQL database
 
-Follow the steps below to create a Choreo-managed MySQL database: 
+Follow the steps below to create a {{ product_name }}-managed MySQL database: 
 
 1. From the environment list on the header, located next to the **Deployment Tracks** list, select your **Organization**.
 2. In the left navigation menu, click **Resources** and then **Databases**.
 3. Click **Create** and select **MySQL** as the database type. Provide a display name for this server and follow the instructions.
 4. Select your preferred cloud provider from AWS, Azure, GCP, and Digital Ocean.
-  - Choreo uses the cloud provider to provision the compute and storage infrastructure for your database.
+  - {{ product_name }} uses the cloud provider to provision the compute and storage infrastructure for your database.
   - There is no functional difference between databases created on different cloud providers, apart from changes to service plans (and associated costs). 
 5. Choose the region for your database.
-  - Available regions will depend on the selected cloud provider. Choreo currently supports US and EU regions across all providers.
+  - Available regions will depend on the selected cloud provider. {{ product_name }} currently supports US and EU regions across all providers.
 6. Select the service plan.
   - Service plans vary in the dedicated CPU, memory (RAM), storage space allocated for your database, the backup retention periods, and high-availability configurations for production use cases.
 
-## Connect to your Choreo-managed MySQL database
+## Connect to your {{ product_name }}-managed MySQL database
 
-To connect to your Choreo-managed MySQL database, consider the following guidelines:
+To connect to your {{ product_name }}-managed MySQL database, consider the following guidelines:
 
 - You can use any MySQL driver, ORM, or supported generic SQL library (may depend on the programming language) to connect to the database.
-- You can find the connection parameters in the **Overview** section in the Choreo Console under the relevant database.
+- You can find the connection parameters in the **Overview** section in the {{ product_name }} Console under the relevant database.
 - MySQL databases accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
 
 ## High Availability and Automatic Backups
 
-The high availability characteristics and the automatic backup retention periods for Choreo-managed MySQL databases vary based on your service plan as explained below:
+The high availability characteristics and the automatic backup retention periods for {{ product_name }}-managed MySQL databases vary based on your service plan as explained below:
 
 | Service Plan | High Availability                                                  | Backup Retention Time | Multi-AZ Deployment |
 |--------------|--------------------------------------------------------------------|-----------------------|---------------------|
@@ -52,7 +52,7 @@ In general, we recommend service plans for production scenarios for multiple rea
 - All backups are encrypted at rest
 - Backups are managed automatically during recovery; manual backup point selection is not supported
 
-- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the database.
+- {{ product_name }} automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the database.
 
 ### Failure Recovery
 
@@ -65,8 +65,8 @@ Typical outcomes in multi‑node tiers include automatic failover within minutes
 
 ## Monitoring and Observability
 
-- Runtime metrics (CPU, memory, disk, network) and MySQL logs are available in the Choreo Console
-- Native alerting for resource spikes is not currently available; contact Choreo support if you need to export metrics to third‑party monitoring for custom alerting.
+- Runtime metrics (CPU, memory, disk, network) and MySQL logs are available in the {{ product_name }} Console
+- Native alerting for resource spikes is not currently available; contact {{ product_name }} support if you need to export metrics to third‑party monitoring for custom alerting.
 
 ## Connection Limits
 

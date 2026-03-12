@@ -1,6 +1,6 @@
 # Develop an API Proxy from Open API Document
 
-An API proxy acts as an intermediary between an existing API and Choreo, intercepting all requests made to the API. It also functions as a managed API, allowing you to apply essential API management features such as security policies and rate limiting.
+An API proxy acts as an intermediary between an existing API and {{ product_name }}, intercepting all requests made to the API. It also functions as a managed API, allowing you to apply essential API management features such as security policies and rate limiting.
 
 In this guide, you will:
 
@@ -12,8 +12,8 @@ In this guide, you will:
 
 ## Prerequisites
 
-- If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
+- If you're signing in to the {{ product_name }} Console for the first time, create an organization:
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -24,7 +24,7 @@ In this guide, you will:
 
 To create an API proxy, you can either upload an OpenAPI document or provide a hosted OpenAPI document's URL. In this guide, you will specify a URL to an OpenAPI definition of a sample API.
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **API Proxy** card. This opens the **Create an API Proxy** pane.
 4. Select **Upload API Specification** option.
@@ -66,12 +66,12 @@ Now you are ready to test the API proxy.
 
 ## Step 3: Test the API proxy
 
-Choreo allows you to test your API proxy using either the [integrated OpenAPI Console](../../testing/test-rest-endpoints-via-the-openapi-console.md) or [cURL](../../testing/test-apis-with-curl.md). In this guide, you will use the OpenAPI Console.
+{{ product_name }} allows you to test your API proxy using either the [integrated OpenAPI Console](../../testing/test-rest-endpoints-via-the-openapi-console.md) or [cURL](../../testing/test-apis-with-curl.md). In this guide, you will use the OpenAPI Console.
 
 !!! tip
-    Choreo enables OAuth 2.0 to secure APIs by default. Therefore, you need an access token to invoke an API.
+    {{ product_name }} enables OAuth 2.0 to secure APIs by default. Therefore, you need an access token to invoke an API.
 
-    - Choreo automatically generates a key to test the API via the OpenAPI Console. To view the key, click the show key icon in the **Security Header** field.
+    - {{ product_name }} automatically generates a key to test the API via the OpenAPI Console. To view the key, click the show key icon in the **Security Header** field.
     - To disable security for the entire API or a specific resource:
         1. In the left navigation menu, click **Deploy**.
         2. Go to the **Build Area** card and click **Security Settings**.
@@ -105,7 +105,7 @@ Now that you have a tested API proxy, you can publish it and make it available f
 
 ### Step 4.2: Publish the API proxy
 
-**Publishing** makes your API available in the **Choreo Developer Portal (Devportal)**, enabling application developers to access and use it. In Choreo, the **Production** environment is exposed to the **Devportal**  by default. After completing Step 4.1, the API is only available to the internal developers within your organization for testing purposes. To make the API accessible for external application developers, go to the **Deploy** page and **Promote** the API to the **Production** environment by following the same steps outlined in Step 4.1.
+**Publishing** makes your API available in the **{{ product_name }} Developer Portal (Devportal)**, enabling application developers to access and use it. In {{ product_name }}, the **Production** environment is exposed to the **Devportal**  by default. After completing Step 4.1, the API is only available to the internal developers within your organization for testing purposes. To make the API accessible for external application developers, go to the **Deploy** page and **Promote** the API to the **Production** environment by following the same steps outlined in Step 4.1.
 
 If you need to change the default environments exposed to the Devportal, refer to the [Configure Exposed Environments to Developer Portal](../../administer/configure-exposed-environments-to-developer-portal.md
 ) documentation.
@@ -122,9 +122,9 @@ Once the API is successfully promoted, it will become available in the **Product
 
 ## Step 5: Invoke the API From DevPortal
 
-To generate credentials for the published API and invoke it via the Choreo Developer Portal, follow these steps:
+To generate credentials for the published API and invoke it via the {{ product_name }} Developer Portal, follow these steps:
 
-1. In the **Lifecycle** page, click **Go to Devportal**. This takes you to the `Petstore Service` in the Choreo Developer Portal.
+1. In the **Lifecycle** page, click **Go to Devportal**. This takes you to the `Petstore Service` in the {{ product_name }} Developer Portal.
 
 2. Invoke the API:
     1. In the Developer Portal left navigation menu, click **Try Out**.
@@ -135,4 +135,4 @@ To generate credentials for the published API and invoke it via the Choreo Devel
 
         ![Try out response](../../assets/img/develop-components/develop-a-rest-api-proxy/try-out-pet-store-response.png){.cInlineImage-full}
 
-Now, you have gained hands-on experience creating, deploying, testing, and publishing an API proxy using Choreo.
+Now, you have gained hands-on experience creating, deploying, testing, and publishing an API proxy using {{ product_name }}.

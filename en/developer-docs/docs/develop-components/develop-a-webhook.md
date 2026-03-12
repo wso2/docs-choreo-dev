@@ -1,6 +1,6 @@
 # Develop a Webhook
 
-Choreo allows developers to design high-quality webhooks. To explore this capability, let's consider a scenario where a team of software engineers in an organization should be notified via email whenever someone creates a GitHub issue with the `bug` label in a specific repository.
+{{ product_name }} allows developers to design high-quality webhooks. To explore this capability, let's consider a scenario where a team of software engineers in an organization should be notified via email whenever someone creates a GitHub issue with the `bug` label in a specific repository.
 
 In this tutorial, you will address the requirement by doing the following:
 
@@ -12,40 +12,40 @@ In this tutorial, you will address the requirement by doing the following:
 
 ## Prerequisites
 
-1. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
+1. If you're signing in to the {{ product_name }} Console for the first time, create an organization:
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-2. Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples), which contains the sample integration for this guide.
+2. Fork the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples), which contains the sample integration for this guide.
 
 ## Step 1: Create a webhook component
 
 To create a Webhook component, follow these steps:
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in using your preferred method.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Webhook** card.
-4. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+4. Click **Authorize with GitHub** to connect {{ product_name }} to your GitHub account. If you haven't connected your GitHub repository to {{ product_name }}, enter your credentials and select the repository you forked earlier to install the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
-        The **Choreo GitHub App** requires:
+        The **{{ product_name }} GitHub App** requires:
         - Read and write access to code and pull requests.
         - Read access to issues and metadata.
 
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; {{ product_name }} will not push changes directly to your repository.
 
 5. Enter the following information:
 
     | **Field**                     | **Description**    |
     |-------------------------------|--------------------|
     | **GitHub Account**            | Your account       |
-    | **GitHub Repository**         | choreo-samples     |
+    | **GitHub Repository**         | {{ product_name }}-samples     |
     | **Branch**                    | main               |
     | **Component Path**              | `github-event-to-email-webhook` |
 
@@ -53,13 +53,13 @@ To create a Webhook component, follow these steps:
 7. Provide a display name, a unique name and description for the component.
 8. Click **Create**.
 
-Choreo creates the Webhook component with the sample implementation and opens the component **Overview** page.
+{{ product_name }} creates the Webhook component with the sample implementation and opens the component **Overview** page.
 
 ## Step 2: Deploy
 
 To deploy the webhook to the development environment, follow these steps:
 
-1. In the Choreo Console left navigation menu, click **Deploy**.
+1. In the {{ product_name }} Console left navigation menu, click **Deploy**.
 2. In the **Build Area** card, click **Configure & Deploy**.
 3. In the **Configurations** pane, enter the following information:
     1. In the **webhookSecret** field, enter any value.
@@ -72,7 +72,7 @@ To deploy the webhook to the development environment, follow these steps:
 
     You can monitor the deployment progress in the **Console** pane that opens on the right of the page.
 
-Once Choreo completes the deployment, the **Development** card indicates the **Deployment Status** as **Active**.
+Once {{ product_name }} completes the deployment, the **Development** card indicates the **Deployment Status** as **Active**.
 
 !!! note
     In the deployment card, you can click the icon corresponding to configurables to open the **Configurations** pane and edit configurations.
@@ -81,7 +81,7 @@ Once Choreo completes the deployment, the **Development** card indicates the **D
 
 To allow the webhook to read the labels of issues in a specific GitHub repository, connect the webhook to the GitHub repository:
 
-1. In the Choreo Console left navigation menu, click **Overview**.
+1. In the {{ product_name }} Console left navigation menu, click **Overview**.
 2. On the **Overview** page, copy the invoke URL by clicking the copy icon within the **URL** field.
 3. Go to your GitHub account and open the repository for which you want to generate notification emails.
 4. In the top menu, click the **Settings** tab.
@@ -95,7 +95,7 @@ To allow the webhook to read the labels of issues in a specific GitHub repositor
     | **Secret**       | The last webhook secret you configured in [Step 2](#step-2-deploy).|
 
     !!! tip
-        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on Choreo cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
+        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on {{ product_name }} cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
         - **Project Path** specifies the location of the project to build the component.
 
 7. Under **Which events would you like to trigger this webhook?**, select **Let me select individual events**.
@@ -103,7 +103,7 @@ To allow the webhook to read the labels of issues in a specific GitHub repositor
 9. Clear the **Pushes** checkbox to ensure that GitHub does not trigger your webhook when the team pushes changes to the selected GitHub repository.
 10. Click **Add webhook** to save the configuration.
 
-Now you have integrated Choreo with GitHub via the webhook you created and deployed. You can proceed to test the webhook.
+Now you have integrated {{ product_name }} with GitHub via the webhook you created and deployed. You can proceed to test the webhook.
 
 ## Step 4: Test
 

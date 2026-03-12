@@ -1,6 +1,6 @@
 # CI Pipeline Logs
 
-The CI pipeline logs in Choreo offer detailed insights into the build process of your components. These logs are divided into three main sections:
+The CI pipeline logs in {{ product_name }} offer detailed insights into the build process of your components. These logs are divided into three main sections:
 
 1. **Initialization**
 
@@ -16,8 +16,8 @@ This section includes logs related to the final steps of the build process. It i
 
 To view the build pipeline logs, follow these steps:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
-2. In the Choreo Console, select the appropriate **Organization**, **Project**, and **Component** from the top navigation menu.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
+2. In the {{ product_name }} Console, select the appropriate **Organization**, **Project**, and **Component** from the top navigation menu.
 
 !!! info "Note"
      Build pipeline logs are accessible only at the component level.

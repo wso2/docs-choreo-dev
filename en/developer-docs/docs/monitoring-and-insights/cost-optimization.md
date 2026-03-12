@@ -1,8 +1,8 @@
-# Choreo Cost Optimization
+# {{ product_name }} Cost Optimization
 
 ## Overview
 
-The Choreo cost optimization feature provides detailed cost insights across your organization, enabling you to analyze resource utilization and cost efficiency at the Organization, Project, and Component levels. The dashboards provide comprehensive visualizations and actionable recommendations to optimize cloud infrastructure costs while maintaining performance.
+The {{ product_name }} cost optimization feature provides detailed cost insights across your organization, enabling you to analyze resource utilization and cost efficiency at the Organization, Project, and Component levels. The dashboards provide comprehensive visualizations and actionable recommendations to optimize cloud infrastructure costs while maintaining performance.
 
 **All metrics, visualizations, and analytics displayed across the Organization, Project, and Component levels reflect data for the current month, from the first day up to the current date.** This provides you with up-to-date insights into your resource utilization and cost efficiency.
 Monthly figures show the accumulated data for the current month so far, while comparisons to previous month are also available in some metrics. This approach gives you both immediate visibility into current spending patterns and understanding the trend compared to last month for optimization decisions.
@@ -13,7 +13,7 @@ You can use this information to track ongoing cost optimization efforts and make
 
 ![Organization level dashboard](../assets/img/cost-optimization/OrganizationLevel.png)
 
-At the Organization level, Choreo provides key insights into overall cost savings and resource efficiency across all your projects. You can view the following metrics and visualizations:
+At the Organization level, {{ product_name }} provides key insights into overall cost savings and resource efficiency across all your projects. You can view the following metrics and visualizations:
 
 * **Monthly Savings Summary**
 
@@ -126,7 +126,7 @@ At the Release Level within the Component Level, you can view:
   This card shows configuration data for the deployment, including number of replicas, scale to zero settings, and horizontal pod auto-scaling that can be configured in DevOps.
 
   #### Optimization Configurations
-    Under the Optimization Configurations section, you can configure how Choreo applies cost optimization recommendations:
+    Under the Optimization Configurations section, you can configure how {{ product_name }} applies cost optimization recommendations:
 
     Auto Apply Recommendations: 
     
@@ -187,4 +187,4 @@ At the Release Level within the Component Level, you can view:
 
 ## Conclusion
 
-The Choreo Cost Optimization feature helps you improve cloud resource efficiency by providing insights and recommendations at various levels. With interactive visualizations, automated recommendations, and optimization tracking, you can reduce infrastructure costs while maintaining performance.
+The {{ product_name }} Cost Optimization feature helps you improve cloud resource efficiency by providing insights and recommendations at various levels. With interactive visualizations, automated recommendations, and optimization tracking, you can reduce infrastructure costs while maintaining performance.

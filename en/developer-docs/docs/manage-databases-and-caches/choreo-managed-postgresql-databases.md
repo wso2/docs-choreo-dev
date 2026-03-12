@@ -1,14 +1,14 @@
-# Choreo-Managed PostgreSQL Databases and Vector Databases
+# {{ product_name }}-Managed PostgreSQL Databases and Vector Databases
 
-PostgreSQL on Choreo offers fully Choreo-managed, efficient object-relational databases on AWS, Azure, GCP, and Digital Ocean. Additionally, Choreo allows you to create fully-managed PostgreSQL vector databases if you want to perform efficient vector similarity search.
+PostgreSQL on {{ product_name }} offers fully {{ product_name }}-managed, efficient object-relational databases on AWS, Azure, GCP, and Digital Ocean. Additionally, {{ product_name }} allows you to create fully-managed PostgreSQL vector databases if you want to perform efficient vector similarity search.
 
 These services run on infrastructure and automation provided by [Aiven](https://aiven.io), our technology partner and data platform subprocessor. For details on the partnership, SLA, and security posture, see the overview (./choreo-managed-databases-and-caches.md#technology-partnership).
 
-## Create a Choreo-managed PostgreSQL database
+## Create a {{ product_name }}-managed PostgreSQL database
 
-Follow the steps below to create a Choreo-managed PostgreSQL database:
+Follow the steps below to create a {{ product_name }}-managed PostgreSQL database:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the header, click the **Organization** list. This opens the organization home page.
 3. In the left navigation menu, click **Resources** and then **Databases**.
 4. Click **Create** and select **PostgreSQL** as the database type. Provide a display name for this server and follow the instructions.
@@ -16,31 +16,31 @@ Follow the steps below to create a Choreo-managed PostgreSQL database:
     - The cloud provider is used to provision the compute and storage infrastructure for your database.
     - There is no functional difference between databases created on different cloud providers, apart from changes to service plans (and associated costs).
 6. Choose the region for your database.
-   - Available regions will depend on the selected cloud provider. Choreo currently supports US and EU regions across all providers.
+   - Available regions will depend on the selected cloud provider. {{ product_name }} currently supports US and EU regions across all providers.
 7. Select the service plan.
    - Service plans vary in the dedicated CPU, memory (RAM), storage space allocated for your database, the backup retention periods, and high-availability configurations for production use cases.
 
-## Create a Choreo-managed PostgreSQL vector database
+## Create a {{ product_name }}-managed PostgreSQL vector database
 
-Follow the steps below to create a Choreo-managed PostgreSQL vector database:
+Follow the steps below to create a {{ product_name }}-managed PostgreSQL vector database:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the header, click the **Organization** list. This opens the organization home page.
 3. In the left navigation menu, click **Resources** and then **Vector Databases**.
-4. Follow steps 4 onwards in the [Create a Choreo-managed PostgreSQL database](#create-a-choreo-managed-postgresql-database) section.
+4. Follow steps 4 onwards in the [Create a {{ product_name }}-managed PostgreSQL database](#create-a-{{ product_name }}-managed-postgresql-database) section.
 
-## Connecting to your Choreo-managed PostgreSQL database
+## Connecting to your {{ product_name }}-managed PostgreSQL database
 
-To connect to your Choreo-managed PostgreSQL database, consider the following guidelines:
+To connect to your {{ product_name }}-managed PostgreSQL database, consider the following guidelines:
 
 - You can use any PostgreSQL driver, ORM, or supported generic SQL library (may depend on the programming language) to connect to the database.
-- The connection parameters can be found in the **Overview** section in the Choreo Console under the relevant database.
+- The connection parameters can be found in the **Overview** section in the {{ product_name }} Console under the relevant database.
 - PostgreSQL databases accept traffic from the internet by default. You can restrict access to specific IP addresses and CIDR blocks under **Advanced Settings**.
 
 
 ## High Availability and Automatic Backups
 
-The high availability characteristics and the automatic backup retention periods for Choreo-managed PostgreSQL databases vary based on the selected service plan as shown below.
+The high availability characteristics and the automatic backup retention periods for {{ product_name }}-managed PostgreSQL databases vary based on the selected service plan as shown below.
 
 | Service Plan | High Availability                                                  | Backup Retention Time | Multi-AZ Deployment |
 |--------------|--------------------------------------------------------------------|-----------------------|---------------------|
@@ -63,7 +63,7 @@ Service plans with standby nodes are generally recommended for production scenar
 - All backups are encrypted at rest
 - Backups are managed automatically during recovery; manual backup point selection is not supported
 
-- Choreo automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the database.
+- {{ product_name }} automatically handles outages and software failures by replacing broken nodes with new ones that resume correctly from the point of failure. The impact of a failure will depend on the number of available standby nodes in the database.
 
 ### Failure Recovery
 
@@ -76,12 +76,12 @@ Typical outcomes in multi‑node tiers include automatic failover within minutes
 
 ## Monitoring and Observability
 
-- Runtime metrics (CPU, memory, disk, network) and PostgreSQL logs are available in the Choreo Console
-- Native alerting for resource spikes is not currently available; contact Choreo support if you need to export metrics to third‑party monitoring
+- Runtime metrics (CPU, memory, disk, network) and PostgreSQL logs are available in the {{ product_name }} Console
+- Native alerting for resource spikes is not currently available; contact {{ product_name }} support if you need to export metrics to third‑party monitoring
 
 ## Connection limits
 
-The following connection limits apply to Choreo-managed PostgreSQL databases based on the selected service plan.
+The following connection limits apply to {{ product_name }}-managed PostgreSQL databases based on the selected service plan.
 
 | Service Plan               | Max Connections |
 |----------------------------|-----------------|

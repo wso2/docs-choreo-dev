@@ -1,18 +1,18 @@
 # Deploy a MCP Server
 
-Choreo allows you to create and deploy MCP Server applications in Python and Node.js.
+{{ product_name }} allows you to create and deploy MCP Server applications in Python and Node.js.
 
 !!! info
-    Choreo currently supports deploying only **stdio-based MCP servers** using **Server-Sent Events (SSE)**.
+    {{ product_name }} currently supports deploying only **stdio-based MCP servers** using **Server-Sent Events (SSE)**.
 
 In this guide, you will:
 
-- Deploy an stdio-based [github-mcp-server](https://github.com/github/github-mcp-server) in Choreo  over SSE (Server-Sent Events) using a `NodeJs` build preset.
+- Deploy an stdio-based [github-mcp-server](https://github.com/github/github-mcp-server) in {{ product_name }}  over SSE (Server-Sent Events) using a `NodeJs` build preset.
 
 ## Prerequisites
 
-1. If you're signing in to the Choreo Console for the first time, create an organization:
-    1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in using your preferred method.
+1. If you're signing in to the {{ product_name }} Console for the first time, create an organization:
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
@@ -25,7 +25,7 @@ In this guide, you will:
 
 To create a mcp server component, follow these steps:
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click **View All Component Types** link button.
 4. Click the **MCP Server** card.
@@ -78,7 +78,7 @@ Now that you have built the component, it's time to deploy the mcp server.
 5. Review the **Endpoint Details** and click **Deploy**.
 
     !!! note
-        - In Choreo, by default endpoint authentication is enabled. You can disable endpoint authentication if you don't require it.
+        - In {{ product_name }}, by default endpoint authentication is enabled. You can disable endpoint authentication if you don't require it.
         - Deploying the service component may take some time. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
 
 Once you have successfully deployed the service, you can test your server. You can view the invoke URL details from the **Overview** tab in left navigation menu.

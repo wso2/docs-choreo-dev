@@ -1,26 +1,26 @@
 # Expose a WebSocket Endpoint via a Service
 
-Choreo allows you to create and deploy applications in your preferred programming language, offering a seamless platform for building dynamic and scalable solutions. This guide walks you through the steps to deploy a WebSocket service using the NodeJS build preset.
+{{ product_name }} allows you to create and deploy applications in your preferred programming language, offering a seamless platform for building dynamic and scalable solutions. This guide walks you through the steps to deploy a WebSocket service using the NodeJS build preset.
 
 WebSockets provide real-time, two-way communication between a client and server over a persistent TCP connection. This makes WebSocket APIs ideal for applications that require real-time updates.
 
 In this guide, you will:
 
 - Build a simple WebSocket service using a sample implementation in NodeJS.
-- Deploy the service in Choreo, allowing any WebSocket client application to establish a connection and exchange real-time messages with your service.
+- Deploy the service in {{ product_name }}, allowing any WebSocket client application to establish a connection and exchange real-time messages with your service.
 
 ## Prerequisites
 
-- If you are signing in to the Choreo Console for the first time, create an organization as follows:
+- If you are signing in to the {{ product_name }} Console for the first time, create an organization as follows:
 
-    1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your preferred method.
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample WebSocket service](https://github.com/wso2/choreo-samples/tree/main/websocket-chat-app) implementation for this guide.
+- Fork the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples/), which contains the [sample WebSocket service](https://github.com/wso2/choreo-samples/tree/main/websocket-chat-app) implementation for this guide.
 
 Let's get started!
 
@@ -37,33 +37,33 @@ It is important to understand the purpose of the key files in the sample service
 | `.choreo/component.yaml`       | The configuration file with endpoint details.                   |
 
 !!! note
-    Choreo currently supports defining WebSocket APIs using the AsyncAPI 2.0 specification.
+    {{ product_name }} currently supports defining WebSocket APIs using the AsyncAPI 2.0 specification.
 
 ## Step 1: Create a service component
 
 To create a NodeJS service component, follow these steps:
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+4. To allow {{ product_name }} to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to {{ product_name }}, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [{{ product_name }} Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
 
     !!! note
-           The **Choreo GitHub App** requires the following permissions:
+           The **{{ product_name }} GitHub App** requires the following permissions:
 
            - Read and write access to code and pull requests.
            - Read access to issues and metadata.
 
-           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want {{ product_name }} to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. {{ product_name }} will not directly push any changes to a repository.
 
 5. Under **Connect a Git Repository**, enter the following information:
 
     | **Field**               | **Value**               |
     |-------------------------|-------------------------|
     | **Organization**        | Your GitHub account     |
-    | **GitHub Repository**   | **`choreo-samples`**    |
+    | **GitHub Repository**   | **`{{ product_name }}-samples`**    |
     | **Branch**              | **`main`**              |
     | **Component Directory**   | `websocket-chat-app/websocket-chat-service-nodejs`  |
 
@@ -110,13 +110,13 @@ To deploy the service, follow these steps:
     !!! note
         Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
 
-Once you have successfully deployed your service, you can [test](../../testing/test-websocket-endpoints-via-the-websocket-console.md), [manage](../../api-management/lifecycle-management.md), and observe it like any other component type in Choreo.
+Once you have successfully deployed your service, you can [test](../../testing/test-websocket-endpoints-via-the-websocket-console.md), [manage](../../api-management/lifecycle-management.md), and observe it like any other component type in {{ product_name }}.
 
 During testing, once the WebSocket connection is established, you can send {"type": "Connect", "username": "user1"} to the WebSocket endpoint to connect to the chat service. You can then send chat messages by using {"type": "Data", "message": "Hello, World!"}.
 
 !!! note
      Some clients, such as certain browsers, may not support adding headers to the WebSocket handshake. In these cases, you can include the access token or test key required for WebSocket API invocation within the `sec-websocket-protocol` header, along with any specified subprotocols.
 
-     For example: `sec-websocket-protocol: choreo-oauth2-token, {access token}, subprotocols`
+     For example: `sec-websocket-protocol: {{ product_name }}-oauth2-token, {access token}, subprotocols`
 
-     If you are using a test key, replace `choreo-oauth2-token` with `choreo-test-key`.
+     If you are using a test key, replace `{{ product_name }}-oauth2-token` with `{{ product_name }}-test-key`.

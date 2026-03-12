@@ -1,7 +1,7 @@
 
 # Manage Certificates
 
-Choreo provides centralized certificate management at the organization level, allowing you to manage TLS certificates and apply them to components during deployment. This ensures secure communication between your components and external services by maintaining trusted certificates in a single place.
+{{ product_name }} provides centralized certificate management at the organization level, allowing you to manage TLS certificates and apply them to components during deployment. This ensures secure communication between your components and external services by maintaining trusted certificates in a single place.
 
 ## Create a certificate
 
@@ -10,13 +10,13 @@ Choreo provides centralized certificate management at the organization level, al
 
 To create a new certificate, follow the steps given below:
 
-1. In the [Choreo Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
+1. In the [{{ product_name }} Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
 2. In the left navigation menu, click **DevOps** and then click **Certificates**.
 3. On the **Certificates Management** page, click **+ Create Certificate**.
 4. On the **Add a Certificate** page, choose why you're adding the certificate:
 
     - **Verify External Server**: Use a public certificate to confirm another server's identity for secure TLS connections.
-    - **Secure Website Domain** *(Coming Soon)*: Use SSL/TLS to safely secure your custom domains managed through Choreo.
+    - **Secure Website Domain** *(Coming Soon)*: Use SSL/TLS to safely secure your custom domains managed through {{ product_name }}.
 
 5. Specify the following details:
 
@@ -33,7 +33,7 @@ To create a new certificate, follow the steps given below:
 
 To view the certificates in your organization, follow the steps given below:
 
-1. In the [Choreo Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
+1. In the [{{ product_name }} Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
 2. In the left navigation menu, click **DevOps** and then click **Certificates**.
 3. The **Certificates Management** page lists all certificates in the organization with the following details:
 
@@ -64,7 +64,7 @@ To delete a certificate, follow the steps given below:
 !!! warning
     Deleting a certificate is a permanent action. Ensure that the certificate is not in use by any component before deleting it.
 
-1. In the [Choreo Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
+1. In the [{{ product_name }} Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
 2. In the left navigation menu, click **DevOps** and then click **Certificates**.
 3. In the **Certificates** list, click the delete icon next to the certificate you want to delete. This will display a confirmation dialog with details about the impact of the deletion.
 4. Review the details and confirm the deletion.

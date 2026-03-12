@@ -1,6 +1,6 @@
 # Manage Members of an Organization
 
-An organization in Choreo is a logical grouping of users and user resources. A first-time user must create an organization and be a user of it when signing in to Choreo. Users and resources in an organization cannot access resources in another organization unless an admin of the other organization invites them and adds them as a user of that organization.
+An organization in {{ product_name }} is a logical grouping of users and user resources. A first-time user must create an organization and be a user of it when signing in to {{ product_name }}. Users and resources in an organization cannot access resources in another organization unless an admin of the other organization invites them and adds them as a user of that organization.
 
 ## Inviting users
 
@@ -8,4 +8,4 @@ An organization administrator can invite users to the organization by assigning 
 
 ## Manage user permission
 
-For details on how Choreo manages user permission, see [Access Control](../choreo-concepts/access-control.md).
+For details on how {{ product_name }} manages user permission, see [Access Control](../choreo-concepts/access-control.md).

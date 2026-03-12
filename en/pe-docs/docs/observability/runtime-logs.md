@@ -1,12 +1,12 @@
-# Runtime Logs in Choreo
+# Runtime Logs in {{ product_name }}
 
-Choreo runtime logs provide insights into both project and component-level logs, covering application and gateway logs. These logs streamline the debugging process by centralizing diverse log sources.
+{{ product_name }} runtime logs provide insights into both project and component-level logs, covering application and gateway logs. These logs streamline the debugging process by centralizing diverse log sources.
 
-In Choreo, any organization member can view runtime logs via the runtime logs page. Choreo allows you to apply filters based on parameters such as log level (error, warn, info, debug), log type (application, gateway, system), and environment (development, staging, production) to simplify the debugging process.
+In {{ product_name }}, any organization member can view runtime logs via the runtime logs page. {{ product_name }} allows you to apply filters based on parameters such as log level (error, warn, info, debug), log type (application, gateway, system), and environment (development, staging, production) to simplify the debugging process.
 
 To access runtime logs, follow the steps below:
 
-1. Sign in to [Choreo](https://console.choreo.dev/).
+1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
 2. In the left navigation menu, click **Observability** and then click **Runtime Logs**. This displays runtime logs for the past 24 hours by default.
 
     To view logs based on a specific time range and other requirements, you can apply the necessary filter criteria.

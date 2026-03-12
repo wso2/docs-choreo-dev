@@ -1,7 +1,7 @@
 # Resource Hierarchy
 
 
-The following diagram depicts the high-level resources and their relationships in Choreo.
+The following diagram depicts the high-level resources and their relationships in {{ product_name }}.
 
 ![Resource hierarchy](../assets/img/choreo-concepts/resource-hierarchy.png){.cInlineImage-full}
 
@@ -11,7 +11,7 @@ Data planes are connected to the organization and are available for all projects
 
 ## Environments and data planes
 
-Choreo allows multiple Kubernetes clusters to be associated with an environment. This enables you to build highly resilient and resource-efficient solutions that utilize multiple clusters. Choreo synchronizes your applications and workloads between associated clusters in an environment, allowing you to perform multi-cluster deployment with a single click.
+{{ product_name }} allows multiple Kubernetes clusters to be associated with an environment. This enables you to build highly resilient and resource-efficient solutions that utilize multiple clusters. {{ product_name }} synchronizes your applications and workloads between associated clusters in an environment, allowing you to perform multi-cluster deployment with a single click.
 
 The following diagram illustrates how multiple clusters associate with different environments:
 
@@ -22,4 +22,4 @@ The following diagram illustrates how multiple clusters associate with different
 
 ## Components and environments
 
-Components belong to a project in Choreo, and environments are provisioned per project. When a component is deployed, it is deployed as a container to the specified environment. Once deployed, you can promote the container image across the environments available in the project.
+Components belong to a project in {{ product_name }}, and environments are provisioned per project. When a component is deployed, it is deployed as a container to the specified environment. Once deployed, you can promote the container image across the environments available in the project.

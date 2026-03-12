@@ -1,6 +1,6 @@
-# Manage Deployment Tracks for Choreo Components
+# Manage Deployment Tracks for {{ product_name }} Components
 
-Choreo allows you to create and manage dedicated [deployment tracks](../choreo-concepts/deployment-tracks.md) for components, facilitating independent version control and deployment. This capability also allows you to unlink deployment tracks from associated branches or relink them to different branches so that you can align with your preferred Git workflows, such as the feature branch workflow or GitFlow workflow.
+{{ product_name }} allows you to create and manage dedicated [deployment tracks](../choreo-concepts/deployment-tracks.md) for components, facilitating independent version control and deployment. This capability also allows you to unlink deployment tracks from associated branches or relink them to different branches so that you can align with your preferred Git workflows, such as the feature branch workflow or GitFlow workflow.
 
 !!! info
      Deployment track creation and management does not apply to API Proxy and [BYOI components](../develop-components/bring-your-own-image.md).
@@ -9,11 +9,11 @@ Choreo allows you to create and manage dedicated [deployment tracks](../choreo-c
 
 **Prerequisites**:
 
- - Create a component in Choreo.
+ - Create a component in {{ product_name }}.
 
 Follow the steps below to create a deployment track for a component:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component you want to create a deployment track for.
 3. On the header of the component overview page, click the **Deployment Track** drop-down list.
 4. Click **+ Create New** to open the **Create Deployment Track** dialog.
@@ -32,7 +32,7 @@ If you want to detach a branch reference from a deployment track, you must unlin
 
 Follow the steps below to unlink a deployment track of a component:
   
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to unlink a deployment track.
 3. On the header of the component overview page, click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
 4. Click the edit icon corresponding to the deployment track you want to unlink.
@@ -52,7 +52,7 @@ To associate a branch reference to an unlinked deployment track, you must link a
 
 Follow the steps below to link a branch to an unlinked deployment track:
   
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component you want to associate a branch reference for.
 3. On the header of the component overview page, click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
 4. Click **+ Link Branch** corresponding to the unlinked deployment track for which you want to associate a branch.
@@ -72,14 +72,14 @@ To switch the branch reference of a linked deployment track, you must relink to 
 
 Follow the steps below to switch the branch reference of a linked deployment track:
   
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component you want to relink a deployment track for.
 3. On the header of the component overview page,  click the **Deployment Track** drop-down list and then click **View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.
 4. Click the **Edit Branch** icon corresponding to the deployment track you want to relink.
 5. In the **Edit Branch** dialog that opens, click the **Branch Name** list and select the branch you want to relink.
 6. Click **Save**.
 
-Now that you understand how to create and manage deployment tracks for components, let’s explore a sample scenario to see how a developer can use deployment tracks to manage version releases in Choreo.
+Now that you understand how to create and manage deployment tracks for components, let’s explore a sample scenario to see how a developer can use deployment tracks to manage version releases in {{ product_name }}.
 
 ## Sample Scenario: Manage version releases with deployment tracks
 
@@ -98,7 +98,7 @@ Following are the actions you need to take from a deployment track perspective t
 5. To facilitate ongoing development and testing, create another deployment track (let’s consider this as deployment track 3) and link it to the `dev` branch.
 
 !!! tip
-     - As a developer, you can strategically unlink and relink deployment tracks to effectively manage different versions of your services within Choreo.
+     - As a developer, you can strategically unlink and relink deployment tracks to effectively manage different versions of your services within {{ product_name }}.
      - You can create new deployment tracks for ongoing development branches like `dev` to ensure a continuous development and release cycle.
 
 ## Delete a deployment track
@@ -118,7 +118,7 @@ If you no longer need a deployment track, you can delete it.
 
 Follow the steps below to delete a deployment track:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the component for which you want to delete a deployment track.
 3. On the header of the component overview page, click the **Deployment Track** drop-down list.
 4. Click **+ View All**. This takes you to the component settings page where you can see all the deployment tracks linked to the component.

@@ -1,6 +1,6 @@
 # Build and Deploy a Single-Page Web Application
 
-A web application is an application program hosted on a server and serves ingress traffic through a browser. In Choreo, you can deploy a web application by creating a Web Application component and connecting it to a Git repository that contains the implementation of the web application. Web applications can fall into one of the following categories:
+A web application is an application program hosted on a server and serves ingress traffic through a browser. In {{ product_name }}, you can deploy a web application by creating a Web Application component and connecting it to a Git repository that contains the implementation of the web application. Web applications can fall into one of the following categories:
 
 - **Single page applications (SPAs)**: Examples include React, Angular, Vue, Svelte, etc.
 - **Web servers**: These serve static content or provide server-side rendering/static site generation (SSR/SSG).
@@ -8,11 +8,11 @@ A web application is an application program hosted on a server and serves ingres
 
 ## Prerequisites
 
-- To deploy a web application component, you must have a GitHub account with a repository containing the web application's implementation. For this guide, fork the [Choreo samples repository](https://github.com/wso2/choreo-samples), which contains the sample web application implementation.
+- To deploy a web application component, you must have a GitHub account with a repository containing the web application's implementation. For this guide, fork the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples), which contains the sample web application implementation.
 
 ## Create a web application
 
-You can create a web application in Choreo as follows:
+You can create a web application in {{ product_name }} as follows:
 
 ### Build and deploy a SPA from source code
 
@@ -20,9 +20,9 @@ You can create a web application in Choreo as follows:
 2. Select the relevant build preset: Default build presets include **React**, **Angular**, and **Vue.js**. If you are using a different SPA framework, you can try one of these build presets because the configurations can be overridden to support most JavaScript-based SPAs.
 3. Enter the build command: Based on your package manager (NPM, yarn, or pnpm). The relevant package manager is run based on the dependency lock file in your repository (defaults to NPM if no lock file is present).
 4. Specify the build output directory.
-5. Specify the NodeJS version: Choreo does not pick the Node.js version from the `package.json` engine property. The required Node version must be explicitly set in the build configuration.
+5. Specify the NodeJS version: {{ product_name }} does not pick the Node.js version from the `package.json` engine property. The required Node version must be explicitly set in the build configuration.
 
-Once you create the Web Application component, Choreo automatically generates a build pipeline for your single-page application and deploys it.
+Once you create the Web Application component, {{ product_name }} automatically generates a build pipeline for your single-page application and deploys it.
 
 ### Bring your Dockerfile
 
@@ -38,28 +38,28 @@ This approach is recommended if you are deploying a web server and not just a si
 
 ## Build and deploy a SPA from source code
 
-Follow the steps below to create a sample Web Application component and deploy it in Choreo:
+Follow the steps below to create a sample Web Application component and deploy it in {{ product_name }}:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/login/). This opens the **Project Home** page.
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/login/). This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Web Application** card.
-6. Click **Authorize with GitHub** to connect Choreo to your GitHub account. If you haven't connected your GitHub repository to Choreo, enter your credentials and select the repository you forked earlier to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+6. Click **Authorize with GitHub** to connect {{ product_name }} to your GitHub account. If you haven't connected your GitHub repository to {{ product_name }}, enter your credentials and select the repository you forked earlier to install the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, select the **Use Public GitHub Repository** option and paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+    Alternatively, select the **Use Public GitHub Repository** option and paste the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field. However, enabling [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) requires authorizing the repository with the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
     !!! note
-        The **Choreo GitHub App** requires:
+        The **{{ product_name }} GitHub App** requires:
         - Read and write access to code and pull requests.
         - Read access to issues and metadata.
 
-        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; Choreo will not push changes directly to your repository.
+        You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) at any time. Write access is only used for sending pull requests; {{ product_name }} will not push changes directly to your repository.
 
 7. Enter the following information:
 
     | **Field**                 | **Description**        |
     |---------------------------|------------------------|
     | **GitHub Account**        | Your account           |
-    | **GitHub Repository**     | choreo-samples         |
+    | **GitHub Repository**     | {{ product_name }}-samples         |
     | **Branch**                | main                   |
     | **Component Directory**     | /react-single-page-app |
 
@@ -73,10 +73,10 @@ Follow the steps below to create a sample Web Application component and deploy i
     | **Node Version**          | `18`                   |
 
     !!! tip
-        Managed authentication is enabled by default when you create a web application using **React**, **Angular**, or **Vue.js** build presets. To learn how to set up authentication for your web application with Choreo's managed authentication, see [Secure Web Applications with Managed Authentication](../../authentication-and-authorization/secure-web-applications-with-managed-authentication.md).
+        Managed authentication is enabled by default when you create a web application using **React**, **Angular**, or **Vue.js** build presets. To learn how to set up authentication for your web application with {{ product_name }}'s managed authentication, see [Secure Web Applications with Managed Authentication](../../authentication-and-authorization/secure-web-applications-with-managed-authentication.md).
 
 4. Specify a display name, a unique name and description for the component.
-10. Click **Create**. Choreo initializes the component with the sample implementation and opens the **Overview** page of the component.
+10. Click **Create**. {{ product_name }} initializes the component with the sample implementation and opens the **Overview** page of the component.
 
 You have successfully created a Web Application component from the source code. Now let's build and deploy the web application.
 
@@ -88,11 +88,11 @@ You have successfully created a Web Application component from the source code. 
 
     You can access the following scans in the **Build Logs** pane:
 
-    - **Dockerfile Scan**: Choreo checks if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
+    - **Dockerfile Scan**: {{ product_name }} checks if a non-root user ID is assigned to the Docker container to ensure security. If no non-root user is specified, the build will fail.
     - **Container (Trivy) Vulnerability Scan**: Detects vulnerabilities in the final Docker image. If critical vulnerabilities are detected, the build will fail.
 
     !!! info
-        If you have Choreo environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
+        If you have {{ product_name }} environments on a private data plane, you can ignore these vulnerabilities and proceed with the deployment.
 
     !!! note
         The build process may take some time. Once complete, the build status will be listed in the **Builds** pane. Here, you will see the build status as **Success**.
@@ -112,7 +112,7 @@ You have successfully created a Web Application component from the source code. 
 ## Create a short URL for your web application in production
 
 !!! info
-    This feature is only available on the Choreo cloud data plane.
+    This feature is only available on the {{ product_name }} cloud data plane.
 
 When you promote your component to the Production environment, you can create a personalized short URL for your web application. The URL follows the `https://{your-short-prefix}.choreoapps.dev` structure, where you can select a name of your preference for `{your-short-prefix}`.
 
@@ -125,15 +125,15 @@ When you promote your component to the Production environment, you can create a 
 
 ## Manage runtime configurations for web applications
 
-For web applications with a backend server, Choreo allows you to mount runtime configurations and secrets as environment variables and/or file mounts for a specific environment. Alternatively, you can also inject them into the client application during server-side rendering or when serving static content.
+For web applications with a backend server, {{ product_name }} allows you to mount runtime configurations and secrets as environment variables and/or file mounts for a specific environment. Alternatively, you can also inject them into the client application during server-side rendering or when serving static content.
 
-For SPAs that run completely on the browser, Choreo does not support *baking-in* environment variables or other configurations. Instead, Choreo recommends the following approach (applicable to most SPA frameworks, including React):
+For SPAs that run completely on the browser, {{ product_name }} does not support *baking-in* environment variables or other configurations. Instead, {{ product_name }} recommends the following approach (applicable to most SPA frameworks, including React):
 
 !!! note
     - With SPAs, anything you mount as a runtime config will be available to your users in the browser.
     - **Do not include sensitive secrets that are not browser-safe**.
 
-1. Go to your forked [Choreo samples repository](https://github.com/wso2/choreo-samples).
+1. Go to your forked [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples).
 2. Open the `public` directory.
 3. Create and commit a new file named `config.js` in the `public` directory of your React application. This file should contain the runtime configuration variables you want to expose to your application, such as API endpoints or feature flags. For example:
 
@@ -177,11 +177,11 @@ For SPAs that run completely on the browser, Choreo does not support *baking-in*
     }
     ```
 
-6. When you deploy your component to Choreo, create a config file mount in the specified path for each environment (where your `index.html` expects the `config.js` file). For more details, see [Manage Configurations and Secrets](https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/#apply-a-file-mount-to-your-container).
+6. When you deploy your component to {{ product_name }}, create a config file mount in the specified path for each environment (where your `index.html` expects the `config.js` file). For more details, see [Manage Configurations and Secrets](https://wso2.com/choreo/docs/devops-and-ci-cd/manage-configurations-and-secrets/#apply-a-file-mount-to-your-container).
 
 ## Limitations
 
-The following limitations are specific to the Choreo cloud data plane:
+The following limitations are specific to the {{ product_name }} cloud data plane:
 
 - **Request size limit**: 256KB (including headers, cookies, and payloads).
 - **Response body size limit**: 20MB.

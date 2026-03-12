@@ -1,6 +1,6 @@
 # View Delivery Insights
 
-The Choreo delivery insights dashboard offers a detailed overview of DevOps team efficiency through DORA metrics, which consist of four core performance indicators. Here’s how Choreo visualizes these metrics: each is presented with a concise summary and illustrated dynamically through charts or graphs to highlight trends and insights.
+The {{ product_name }} delivery insights dashboard offers a detailed overview of DevOps team efficiency through DORA metrics, which consist of four core performance indicators. Here’s how {{ product_name }} visualizes these metrics: each is presented with a concise summary and illustrated dynamically through charts or graphs to highlight trends and insights.
 
 ### Snapshot view
 
@@ -21,7 +21,7 @@ The time series view provides a graphical representation of how the statistics h
 
 DORA team definition: The frequency at which an organization successfully releases to production.
 
-In Choreo, this translates to the number of times an organization deploys a component to the production environment. Choreo does not count the deployment done to the development or other lower environments. 
+In {{ product_name }}, this translates to the number of times an organization deploys a component to the production environment. {{ product_name }} does not count the deployment done to the development or other lower environments. 
 
 ### Snapshot view
 
@@ -31,7 +31,7 @@ The snapshot view of the `Deployment Frequency` metric shows the deployment freq
 
 A lower deployment frequency indicates that your organizational efficiency is low and that you need to evaluate and improve the processes to encourage frequent releases.
 
-Choreo also displays the total number of deployments for the selected time range and the percentage increase or decrease compared to the previous time range.
+{{ product_name }} also displays the total number of deployments for the selected time range and the percentage increase or decrease compared to the previous time range.
 
 ### Time series view
 
@@ -45,7 +45,7 @@ This chart displays the pattern before and after a process change so you can use
 
  DORA team definition: The time it takes for a commit to reach production.
 
- In Choreo, this translates into the time between committing and promoting a deployment to production. Although this approach may overlook any commits you push to production between two commits, it effectively assesses the efficiency of the review, approval, and CI/CD processes. Therefore, focusing on the production commits is adequate.  If a team commits locally for extended periods without deploying to production, this gets reflected in the `Deployment Frequency` charts.
+ In {{ product_name }}, this translates into the time between committing and promoting a deployment to production. Although this approach may overlook any commits you push to production between two commits, it effectively assesses the efficiency of the review, approval, and CI/CD processes. Therefore, focusing on the production commits is adequate.  If a team commits locally for extended periods without deploying to production, this gets reflected in the `Deployment Frequency` charts.
 
 ### Snapshot view
 
@@ -53,7 +53,7 @@ This chart displays the pattern before and after a process change so you can use
 
 The snapshot view of this metric displays the 95th percentile of the lead time for the selected time period. 95th percentile serves as a better representation as it filters out large outliers that can taint the average value. Lower lead times for change suggest that your organization has efficient processes for change review, approval, and CI/CD, while longer times suggest that the process needs to improve. Organizations can also use the categorization label to determine their standpoint on global standards.
 
-Additionally, Choreo also displays the percentage increase or decrease compared to the last time period.
+Additionally, {{ product_name }} also displays the percentage increase or decrease compared to the last time period.
 
 ### Time series view
 
@@ -66,7 +66,7 @@ Using this chart, organizations can identify trends in their release process. Fo
 
 The DORA team definition: The percentage of deployments causing a failure in production. 
 
-In Choreo, this translates to the ratio of deployments causing production failures to the total number of deployments. If there is at least one incident reported against a deployment, Choreo considers that deployment as a failed deployment in production. Any deployment-time failures are not counted as production failures because such failures don't impact the end user. For this metric to be accurate, the organization is expected to open incidents adhering to the proper format as it is crucial for Choreo to identify production failures. 
+In {{ product_name }}, this translates to the ratio of deployments causing production failures to the total number of deployments. If there is at least one incident reported against a deployment, {{ product_name }} considers that deployment as a failed deployment in production. Any deployment-time failures are not counted as production failures because such failures don't impact the end user. For this metric to be accurate, the organization is expected to open incidents adhering to the proper format as it is crucial for {{ product_name }} to identify production failures. 
 
 ### Snapshot view
 
@@ -78,7 +78,7 @@ The snapshot view of this metric visualizes the change failure rate as a percent
 
 This view helps leadership assess the quality of deliverables and identify areas for improvement. Higher rates suggest that the organization needs to improve its processes to bring in more quality assurance aspects such as improved code coverage and end-to-end test coverage.
 
-Additionally, Choreo also shows the percentage increase or decrease compared to the previous time period.
+Additionally, {{ product_name }} also shows the percentage increase or decrease compared to the previous time period.
 
 ### Time series view
 
@@ -91,15 +91,15 @@ This chart helps leadership identify timely trends in product quality aspects. F
 
 The DORA team definition: The time it takes for an organization to recover from a production failure.
 
-In Choreo, this measures the time from identifying a production incident to resolving it. This metric reflects the responsiveness and agility of incident management teams.
+In {{ product_name }}, this measures the time from identifying a production incident to resolving it. This metric reflects the responsiveness and agility of incident management teams.
 
-Choreo depends on the open and close times of incidents to gather the relevant information. Therefore, for the dashboards to be accurate, organizations must follow process guidelines to update and close incident tickets efficiently in their incident management system.
+{{ product_name }} depends on the open and close times of incidents to gather the relevant information. Therefore, for the dashboards to be accurate, organizations must follow process guidelines to update and close incident tickets efficiently in their incident management system.
 
 ### Snapshot view
 
 ![Mean Time to Recovery Snapshot](../../assets/img/monitoring-and-insights/engineering-insights/mean-time-to-recovery-summary.png){.cInlineImage-small}
 
-The snapshot view for this metric displays the  mean recovery time for the selected time period. Choreo dynamically adjusts the time unit to measure this metric for better readability.
+The snapshot view for this metric displays the  mean recovery time for the selected time period. {{ product_name }} dynamically adjusts the time unit to measure this metric for better readability.
 This chart helps organizations evaluate the response time and agility of their incident handling teams, which in turn is an indication of stability. Higher MTTR means the leadership should look at new ways of improving the efficiency and agility of the teams handling incidents.
 
 ### Time series view

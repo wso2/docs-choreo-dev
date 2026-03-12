@@ -1,6 +1,6 @@
 # Expose a Prism-Based Mock Server Using an OpenAPI Specification
 
-Choreo supports deploying [Prism-based](https://docs.stoplight.io/docs/prism/674b27b261c3c-prism-overview) mock servers using OpenAPI specifications. With the Choreo Prism mock service component, you can serve multiple mock servers, each based on a different OpenAPI specification, as separate endpoints.
+{{ product_name }} supports deploying [Prism-based](https://docs.stoplight.io/docs/prism/674b27b261c3c-prism-overview) mock servers using OpenAPI specifications. With the {{ product_name }} Prism mock service component, you can serve multiple mock servers, each based on a different OpenAPI specification, as separate endpoints.
 
 By default, these mock servers serve static content generated from the examples in the configured OpenAPI Specification (OAS).
 
@@ -8,42 +8,42 @@ By default, these mock servers serve static content generated from the examples 
 
 Before you try out this guide, complete the following:
 
-- If you are signing in to the Choreo Console for the first time, create an organization as follows:
+- If you are signing in to the {{ product_name }} Console for the first time, create an organization as follows:
 
-    1. Go to the [Choreo Console](https://console.choreo.dev/), and sign in using your preferred method.
+    1. Go to the [{{ product_name }} Console](https://console.choreo.dev/), and sign in using your preferred method.
     2. Enter a unique organization name. For example, `Stark Industries`.
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
     This creates the organization and opens the **Project Home** page of the default project created for you.
 
-- Fork the [Choreo samples repository](https://github.com/wso2/choreo-samples/), which contains the [Prism mock service](https://github.com/wso2/choreo-samples/tree/main/prism-mock-service) artifacts for this guide.
+- Fork the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples/), which contains the [Prism mock service](https://github.com/wso2/choreo-samples/tree/main/prism-mock-service) artifacts for this guide.
 
 ## Step 1: Create a Prism mock service component
 
 To create a Prism mock service component, follow these steps:
 
-1. Go to the [Choreo Console](https://console.choreo.dev/) and sign in. This opens the project home page.
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the project home page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
 3. Click the **Service** card.
-4. To allow Choreo to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to Choreo, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [Choreo GitHub App](https://github.com/marketplace/choreo-apps).
+4. To allow {{ product_name }} to connect to your GitHub account, click **Authorize with GitHub**. If you have not already connected your GitHub repository to {{ product_name }}, enter your GitHub credentials and select the repository you created in the prerequisites section to install the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps).
 
-    Alternatively, you can paste the [Choreo samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [Choreo Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [Choreo GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
+    Alternatively, you can paste the [{{ product_name }} samples repository](https://github.com/wso2/choreo-samples) URL in the **Provide Repository URL** field to connect to it without requiring authorization from the [{{ product_name }} Apps](https://github.com/marketplace/choreo-apps) GitHub application. However, authorizing the repository with the [{{ product_name }} GitHub App](https://github.com/marketplace/choreo-apps) is necessary if you want to enable [**Auto Deploy**](https://wso2.com/choreo/docs/choreo-concepts/ci-cd/#deploy) for the component.
 
     !!! note
-           The **Choreo GitHub App** requires the following permissions:
+           The **{{ product_name }} GitHub App** requires the following permissions:
 
            - Read and write access to code and pull requests.
            - Read access to issues and metadata.
 
-           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want Choreo to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. Choreo will not directly push any changes to a repository.
+           You can [revoke access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-authorized-integrations#reviewing-your-authorized-github-apps) if you do not want {{ product_name }} to have access to your GitHub account. However, write access is exclusively utilized for sending pull requests to a user repository. {{ product_name }} will not directly push any changes to a repository.
 
 5. Under **Connect a Git Repository**, enter the following information:
 
     | **Field**               | **Value**               |
     |-------------------------|-------------------------|
     | **Organization**        | Your GitHub account     |
-    | **GitHub Repository**   | **`choreo-samples`**    |
+    | **GitHub Repository**   | **`{{ product_name }}-samples`**    |
     | **Branch**              | **`main`**              |
     |**Component Directory**  | `prism-mock-service`    |
 
@@ -80,7 +80,7 @@ To deploy the service, follow these steps:
     !!! note
         Deploying the service component may take a while. Once deployed, the **Development** environment card indicates the **Deployment Status** as **Active**.
 
-Once you have successfully deployed the service, you can [test](../../testing/test-rest-endpoints-via-the-openapi-console.md), [manage](../../api-management/lifecycle-management.md), and [observe](../../monitoring-and-insights/observability-overview.md) it like any other component type in Choreo.
+Once you have successfully deployed the service, you can [test](../../testing/test-rest-endpoints-via-the-openapi-console.md), [manage](../../api-management/lifecycle-management.md), and [observe](../../monitoring-and-insights/observability-overview.md) it like any other component type in {{ product_name }}.
 
 ## Serve dynamic content
 

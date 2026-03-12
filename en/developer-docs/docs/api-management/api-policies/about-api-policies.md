@@ -6,7 +6,7 @@ You can apply a policy to alter the  `Request`, `Response`, or `Error` flow of a
 
 ## Inbuilt mediation policies
 
-Choreo supports a set of inbuilt mediation policies that can handle common API transformation and mediation tasks. These policies run within a single mediation service, making it straightforward to implement and manage complex mediation logic. The following inbuilt policies are available in Choreo:
+{{ product_name }} supports a set of inbuilt mediation policies that can handle common API transformation and mediation tasks. These policies run within a single mediation service, making it straightforward to implement and manage complex mediation logic. The following inbuilt policies are available in {{ product_name }}:
 
 - **JSON to XML**: Transforms a JSON payload in a request or response into XML format. This policy is applicable only to JSON payloads in mediation flows. Applying it to a non-JSON payload terminates the flow. This policy cannot be used more than once on the same resource because the payload will already be converted to XML.
 - **XML to JSON**: Converts an XML payload in a request or response into JSON format. This policy is applicable only to XML payloads in mediation flows. Applying it to a non-XML payload terminates the flow. This policy cannot be used more than once on the same resource because the payload will already be converted to JSON.
@@ -20,6 +20,6 @@ Choreo supports a set of inbuilt mediation policies that can handle common API t
 
 These inbuilt mediation policies provide flexibility to manage API requests and responses, allowing for custom transformations and logic without requiring custom code.
 
-For details on attaching and managing one or more policies to an API proxy component implementation via the Choreo Console, see [Attach and Manage Policies](../api-policies/attach-and-manage-policies.md).
+For details on attaching and managing one or more policies to an API proxy component implementation via the {{ product_name }} Console, see [Attach and Manage Policies](../api-policies/attach-and-manage-policies.md).
 
 For details on applying advanced settings on mediation policies, see [Apply Advanced Settings on Mediation Policies](../api-policies/apply-advanced-settings-on-mediation-policies.md).

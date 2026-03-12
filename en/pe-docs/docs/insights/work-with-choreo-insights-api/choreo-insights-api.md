@@ -1,19 +1,19 @@
-# Choreo Insights API
+# {{ product_name }} Insights API
 
-The Choreo Insights API is a GraphQL API that allows you to retrieve data from external systems based on specific criteria. This guide describes the operations and schema-defined types you can use to retrieve data via the Choreo Insights API.
+The {{ product_name }} Insights API is a GraphQL API that allows you to retrieve data from external systems based on specific criteria. This guide describes the operations and schema-defined types you can use to retrieve data via the {{ product_name }} Insights API.
 
  - **Allowed operations:** [Queries](#query)
  - **Schema-defined types:** [Objects](#objects), [Inputs](#inputs), [Enums](#enums), and [Scalars](#scalars)
 
 ##Try out
 
-You can try out the Choreo Insights API with your data via [GraphQL Explorer](graphiql-explorer/index.html).
+You can try out the {{ product_name }} Insights API with your data via [GraphQL Explorer](graphiql-explorer/index.html).
 
 !!! warning
     The GraphQL Explorer is currently not compatible with the Safari web browser due to a [known issue](https://developer.apple.com/forums/thread/658688).
 
 ## Query
-The query root of the Choreo Insights GraphQL API.
+The query root of the {{ product_name }} Insights GraphQL API.
 
 <table>
 <thead>
@@ -2259,7 +2259,7 @@ The environment name.
 <td valign="top"><a href="#environmenttype">EnvironmentType</a>!</td>
 <td>
 
-The environment type. A Choreo environment is labeled as <code>CHOREO</code>, a private Choreo environment is labeled as
+The environment type. A {{ product_name }} environment is labeled as <code>CHOREO</code>, a private {{ product_name }} environment is labeled as
 <code>CHOREO_PRIVATE</code>, and the on-premise environment is labeled as <code>ON_PREM</code>.
 
 </td>
@@ -4566,7 +4566,7 @@ Represents an error type.
 <td valign="top"><strong>CHOREO</strong></td>
 <td>
 
-The Choreo environments.
+The {{ product_name }} environments.
 
 </td>
 </tr>
@@ -4574,7 +4574,7 @@ The Choreo environments.
 <td valign="top"><strong>CHOREO_PRIVATE</strong></td>
 <td>
 
-The private data-plane Choreo environments.
+The private data-plane {{ product_name }} environments.
 
 </td>
 </tr>

@@ -1,6 +1,6 @@
 # Manage Continuous Deployment Pipelines
 
-By default, all the organizations in Choreo are provisioned with a default continuous deployment pipeline.
+By default, all the organizations in {{ product_name }} are provisioned with a default continuous deployment pipeline.
 
 Environments within an organization are applied to projects in the order specified by the continuous deployment pipeline. The organization's default continuous deployment pipeline is applied to all the projects. You can create additional pipelines and customize the sequence in which environments are applied in projects.
 
@@ -8,12 +8,12 @@ Environments within an organization are applied to projects in the order specifi
 
 ### Prerequisites
 
-- To create a new continuous deployment pipeline in an organization, you must have the `ENVIRONMENT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, Choreo Platform Engineer and Choreo DevOps roles.
+- To create a new continuous deployment pipeline in an organization, you must have the `ENVIRONMENT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, {{ product_name }} Platform Engineer and {{ product_name }} DevOps roles.
 
 To create a new pipeline, follow the steps given below:
 
-1. Sign in to [Choreo](https://console.choreo.dev/).
-2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization.
+1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
+2. In the {{ product_name }} Console, go to the top navigation menu and click **Organization**. Then select your organization.
 3. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
 4. On the **CD Pipelines** page, click **+ Create Pipeline** and specify the following details required to create a new pipeline:
    
@@ -26,12 +26,12 @@ To create a new pipeline, follow the steps given below:
 
 ### Prerequisites
 
-- To edit a continuous deployment pipeline in an organization, you must have the `ENVIRONMENT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, Choreo Platform Engineer and Choreo DevOps roles.
+- To edit a continuous deployment pipeline in an organization, you must have the `ENVIRONMENT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, {{ product_name }} Platform Engineer and {{ product_name }} DevOps roles.
 
 To edit a pipeline, follow the steps given below:
 
-1. Sign in to [Choreo](https://console.choreo.dev/).
-2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization.
+1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
+2. In the {{ product_name }} Console, go to the top navigation menu and click **Organization**. Then select your organization.
 3. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
 4. Click the edit icon corresponding to the pipeline you want to edit.
 5. Update the pipeline name, mark the pipeline as default, and change the sequence of environments.
@@ -48,8 +48,8 @@ To delete a pipeline, follow the steps given below:
 !!! info "Note"
         The **default** continuous deployment pipeline of the organization cannot be deleted.
 
-1. Sign in to [Choreo](https://console.choreo.dev/).
-2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization.
+1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
+2. In the {{ product_name }} Console, go to the top navigation menu and click **Organization**. Then select your organization.
 3. In the left navigation menu, click **DevOps** and then click **CD Pipelines**. 
 4. Click the delete icon corresponding to the pipeline you want to delete. This displays a confirmation dialog with details on the impact of deletion.
 
@@ -64,12 +64,12 @@ To delete a pipeline, follow the steps given below:
 
 ### Prerequisites
 
-- To add a continuous deployment pipeline to a project, you must have the `ENVIRONMENT-MANAGEMENT` or `PROJECT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, Choreo Platform Engineer and Choreo DevOps roles and `PROJECT-MANAGEMENT` permission is granted to Admin, Choreo DevOps, and Project Admin roles.
+- To add a continuous deployment pipeline to a project, you must have the `ENVIRONMENT-MANAGEMENT` or `PROJECT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, {{ product_name }} Platform Engineer and {{ product_name }} DevOps roles and `PROJECT-MANAGEMENT` permission is granted to Admin, {{ product_name }} DevOps, and Project Admin roles.
 
 To add a pipeline to a project, follow the steps given below:
 
-1. Sign in to [Choreo](https://console.choreo.dev/).
-2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization.
+1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
+2. In the {{ product_name }} Console, go to the top navigation menu and click **Organization**. Then select your organization.
 3. Click the project you want to add the pipeline.
 4. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
 5. Click **+ Add** and select the pipelines you want to add to the project.
@@ -80,12 +80,12 @@ To add a pipeline to a project, follow the steps given below:
 
 ### Prerequisites
 
-- To remove a continuous deployment pipeline from a project, you must have the `ENVIRONMENT-MANAGEMENT` or `PROJECT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, Choreo Platform Engineer and Choreo DevOps roles and `PROJECT-MANAGEMENT` permission is granted to Admin, Choreo DevOps, and Project Admin roles.
+- To remove a continuous deployment pipeline from a project, you must have the `ENVIRONMENT-MANAGEMENT` or `PROJECT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, {{ product_name }} Platform Engineer and {{ product_name }} DevOps roles and `PROJECT-MANAGEMENT` permission is granted to Admin, {{ product_name }} DevOps, and Project Admin roles.
 
 To remove a pipeline from a project, follow the steps given below:
 
-1. Sign in to [Choreo](https://console.choreo.dev/).
-2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization.
+1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
+2. In the {{ product_name }} Console, go to the top navigation menu and click **Organization**. Then select your organization.
 3. Click the project you want to remove the pipeline.
 4. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
 5. Click **Remove** corresponding to the pipeline you want to remove from the project. This displays a confirmation dialog with details on the impact of deletion.
@@ -96,12 +96,12 @@ To remove a pipeline from a project, follow the steps given below:
 
 ### Prerequisites
 
-- To change the default continuous deployment pipeline of a project, you must have the `ENVIRONMENT-MANAGEMENT` or `PROJECT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, Choreo Platform Engineer and Choreo DevOps roles and `PROJECT-MANAGEMENT` permission is granted to Admin, Choreo DevOps, and Project Admin roles.
+- To change the default continuous deployment pipeline of a project, you must have the `ENVIRONMENT-MANAGEMENT` or `PROJECT-MANAGEMENT` permission. By default, `ENVIRONMENT-MANAGEMENT` permission is granted to Admin, {{ product_name }} Platform Engineer and {{ product_name }} DevOps roles and `PROJECT-MANAGEMENT` permission is granted to Admin, {{ product_name }} DevOps, and Project Admin roles.
 
 To change the default pipeline of a project, follow the steps given below:
 
-1. Sign in to [Choreo](https://console.choreo.dev/).
-2. In the Choreo Console, go to the top navigation menu and click **Organization**. Then select your organization.
+1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
+2. In the {{ product_name }} Console, go to the top navigation menu and click **Organization**. Then select your organization.
 3. Click the project you want to change the default pipeline.
 4. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
 5. Click **Set as Default** corresponding to the pipeline you want to set as the default pipeline for the project. This displays a confirmation dialog that details the impact of setting the new pipeline as the project default.
@@ -118,8 +118,8 @@ To change the default pipeline of a project, follow the steps given below:
 
 To use multiple continuous deployment pipelines in a component, follow the steps given below:
 
-1. Sign in to [Choreo](https://console.choreo.dev/).
-2. In the Choreo Console top navigation menu, select the Organization, then the Project and finally the Component where you want to use multiple continuous deployment pipelines.
+1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
+2. In the {{ product_name }} Console top navigation menu, select the Organization, then the Project and finally the Component where you want to use multiple continuous deployment pipelines.
 3. In the left navigation menu, click **DevOps** and then click **CD Pipelines**.
 6. At the top of the page, click on the dropdown next to the Deployment Track/Version dropdown and choose the continuous deployment pipeline you want to use to deploy the component.
 

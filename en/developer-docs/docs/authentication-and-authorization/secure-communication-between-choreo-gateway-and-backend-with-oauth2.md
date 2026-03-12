@@ -1,16 +1,16 @@
-# Secure Communication Between the Choreo Gateway and Your Backend with OAuth2
+# Secure Communication Between the {{ product_name }} Gateway and Your Backend with OAuth2
 
 OAuth2 is an industry-standard authorization framework that enables secure, delegated access to protected resources without exposing user credentials. By issuing scoped access tokens, OAuth2 ensures that clients can authenticate to backend services in a controlled, auditable manner.
 
 ## Configure OAuth2 to establish secure connectivity
 
-When you need the Choreo Gateway to call your backend over OAuth2, use the Outbound OAuth2 mediation policy. This policy obtains an access token from your Identity Provider (IdP) and injects it into the outbound request.
+When you need the {{ product_name }} Gateway to call your backend over OAuth2, use the Outbound OAuth2 mediation policy. This policy obtains an access token from your Identity Provider (IdP) and injects it into the outbound request.
 
 ### Prerequisites
 
 - **Protected Backend**: The target endpoint must enforce OAuth2 (e.g., bearer-token validation).
 - **IdP Token Endpoint**: The URL of the IdP's token endpoint that protects your backend.
-- **OAuth2 Application Credentials**: A client ID and secret for an OAuth2 application dedicated to the Choreo Gateway's outbound calls.
+- **OAuth2 Application Credentials**: A client ID and secret for an OAuth2 application dedicated to the {{ product_name }} Gateway's outbound calls.
 
 !!! note
     Only the client-credentials grant type is currently supported.
@@ -19,7 +19,7 @@ When you need the Choreo Gateway to call your backend over OAuth2, use the Outbo
 
 To configure the OAuth2 policy, follow the steps given below:
 
-1. Sign in to the [Choreo Console](https://console.choreo.dev/).
+1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the **Component Listing** pane, click on the API proxy for which you want to configure OAuth2. For instructions on how to create an API proxy component, see [Develop an API Proxy: Step 1](../develop-components/develop-an-api-proxy.md#step-1-create-an-api-proxy).
 3. In the left navigation menu, click **Develop** and then click **Policies**.
 4. Choose the resource you want to secure, then click **Attach Mediation Policy**.

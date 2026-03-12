@@ -1,10 +1,10 @@
 # Generate Custom Reports
 
-Choreo insights allow you to generate custom reports to view the information that is important to you to make timely decisions for the betterment of your business. With custom reports, you can generate reports for a set of metrics of your choice and aggregate results by specific fields. Once generated, the metrics can be filtered out using any selected group-by filters. Custom reports support three visualizations: overtime charts, pie charts, and tables.
+{{ product_name }} insights allow you to generate custom reports to view the information that is important to you to make timely decisions for the betterment of your business. With custom reports, you can generate reports for a set of metrics of your choice and aggregate results by specific fields. Once generated, the metrics can be filtered out using any selected group-by filters. Custom reports support three visualizations: overtime charts, pie charts, and tables.
 
 ## Metrics
 
-Choreo Insights allow you to retrieve data for the following metrics:
+{{ product_name }} Insights allow you to retrieve data for the following metrics:
 
  - Successful Hit Count
  - Response Cache Hits
@@ -19,7 +19,7 @@ Choreo Insights allow you to retrieve data for the following metrics:
 
 **Group-by** fields specify how to group the metric data. e.g., You can select **Successful Hit Count** in the **Metrics** field and **API Name** under **Group-by** to retrieve the successful hit count grouped by the API name.
 
-Choreo Insights allow you to group metric data by the following fields:
+{{ product_name }} Insights allow you to group metric data by the following fields:
 
  - API Name
  - API Version
@@ -56,7 +56,7 @@ To generate a custom report, follow the steps below:
 
 ## Download Reports
 
-Choreo Insights allow you to download report data related to each chart as a **PDF** or a **CSV** file.
+{{ product_name }} Insights allow you to download report data related to each chart as a **PDF** or a **CSV** file.
 
 To do this, click the **Download** icon on the top right of the relevant chart and select the required file format.
     ![Download Report](../assets/img/monitoring-and-insights/api-insights/custom-reports-step-7.png){.cInlineImage-full}

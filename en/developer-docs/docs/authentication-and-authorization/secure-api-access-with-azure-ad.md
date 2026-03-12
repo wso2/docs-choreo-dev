@@ -2,14 +2,14 @@
 
 API security refers to the measures and practices used to protect Application Programming Interfaces (APIs) from potential threats and vulnerabilities. Authentication and authorization are key aspects of API security. Authentication is ensuring that only authorized users or applications can access the API. This can involve using API keys, tokens, or more advanced authentication methods like OAuth 2.0. Authorization is controlling what authenticated users or applications are allowed to do within the API. Authorization mechanisms restrict access to specific resources and actions based on user roles or permissions.
 
-Organizations using Microsoft Azure AD for identity and access management (IAM) can seamlessly integrate it with Choreo as an external Identity Provider (IdP). This guide will walk you through setting up Choreo to authenticate API invocations through Azure AD which is configured as an external IdP.
+Organizations using Microsoft Azure AD for identity and access management (IAM) can seamlessly integrate it with {{ product_name }} as an external Identity Provider (IdP). This guide will walk you through setting up {{ product_name }} to authenticate API invocations through Azure AD which is configured as an external IdP.
 
 This guide walks you through the following steps:
 
-- Assign scopes to an API in Choreo.
+- Assign scopes to an API in {{ product_name }}.
 - Create an API in Azure AD.
 - Create an application in Azure AD and consume the Azure API.
-- Create an application in Choreo and enable external IdP authentication.
+- Create an application in {{ product_name }} and enable external IdP authentication.
 - Invoke the API with scopes.
 
 ## Prerequisites
@@ -17,14 +17,14 @@ This guide walks you through the following steps:
 To follow this guide, you need to satisfy the following prerequisites:
 
 -  [Configure Azure AD as an external IdP](../administer/configure-an-external-idp/configure-azure-ad-as-an-external-idp.md).
--  An API: If you don't already have a service in Choreo, [develop a service](../develop-components/develop-services/develop-a-service.md) or an [API Proxy](../develop-components/develop-an-api-proxy.md).
+-  An API: If you don't already have a service in {{ product_name }}, [develop a service](../develop-components/develop-services/develop-a-service.md) or an [API Proxy](../develop-components/develop-an-api-proxy.md).
 - Deploy and publish your API.
 - An Azure Active Directory account:  If you don’t already have one, set up an Azure Active Directory account at [https://azure.microsoft.com/en-gb/](https://azure.microsoft.com/en-gb/).
-- Administrator rights to your Choreo organization: You need this to configure the Azure AD account in your organization.
+- Administrator rights to your {{ product_name }} organization: You need this to configure the Azure AD account in your organization.
 - To create applications, the `Application Developer` role is required. [Learn more](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#application-developer)
 
 
-## Step 1: Assign scopes to an API in Choreo
+## Step 1: Assign scopes to an API in {{ product_name }}
 
 You can provide fine-grained access control to your API resources with Permissions (scopes). Follow the steps below to assign a Permission (scope) to the resources in the API:
 
@@ -44,14 +44,14 @@ You can provide fine-grained access control to your API resources with Permissio
 7. To attach a scope to a resource, click the **Select Permissions** list under the respective resource, and select the scopes you wish to attach.
 8. Click **Deploy**.
 8. In the left navigation menu, click **Manage** and then **Lifecycle**.
-9. Click **Publish** and continue to publish your API to the Choreo Developer Portal.
+9. Click **Publish** and continue to publish your API to the {{ product_name }} Developer Portal.
 
 ## Step 2: Create a web API on Azure AD
 
-To enable external IdP authentication for APIs,  create an API on Azure AD that represents the API on Choreo. Follow the steps below:
+To enable external IdP authentication for APIs,  create an API on Azure AD that represents the API on {{ product_name }}. Follow the steps below:
 
 1. Sign in to the Azure console.
-2. Follow the [Azure guide](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application) to create a Web API that represents your API on Choreo.
+2. Follow the [Azure guide](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application) to create a Web API that represents your API on {{ product_name }}.
 3. In the left navigation menu, under **Manage**, select **Expose an API**.
 4. Add the default **Application ID URI** and click **Save and Continue**.
 5. Under **Scopes defined by this API**, select **Add a scope**.
@@ -118,11 +118,11 @@ To invoke the application, provide client secrets to the consuming application. 
 
 For more information, refer to the Azure documentation: [Add a Client Secret](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
 
-## Step 4: Create an application in Choreo and enable external IdP authentication.
+## Step 4: Create an application in {{ product_name }} and enable external IdP authentication.
 
-Follow the steps below to consume the Choreo API and use an external IdP for authentication:
+Follow the steps below to consume the {{ product_name }} API and use an external IdP for authentication:
 
-1. Sign in to the [Choreo Developer Portal](https://devportal.choreo.dev).
+1. Sign in to the [{{ product_name }} Developer Portal](https://devportal.choreo.dev).
 2. Click **Applications**. and then click **+Create**.
 3. Enter a name and description for the application.
 4. Click **Create**.
@@ -142,9 +142,9 @@ Follow the steps below to consume the Choreo API and use an external IdP for aut
 
 ## Step 5: Invoke the API with scopes
 
-You can now invoke the Choreo API using the authorization code grant. Choreo will authenticate the user with Azure AD and provide access to the resource.
+You can now invoke the {{ product_name }} API using the authorization code grant. {{ product_name }} will authenticate the user with Azure AD and provide access to the resource.
 
-1. On the Choreo Developer Portal, go to your application.
+1. On the {{ product_name }} Developer Portal, go to your application.
 2. In the left navigation menu, under **Credentials** and click **Production**.
 3. Under **Endpoints**, copy the **Authorize Endpoint** URL.
 4. Invoke the authorization endpoint as follows:
@@ -162,7 +162,7 @@ You can now invoke the Choreo API using the authorization code grant. Choreo wil
         ```
 7. Review the consent in the login screens that prompt and continue.
 8. After you log in, you will receive an authorization code in the URL. Copy the authorization code and use it to get an access token from Azure AD by following the next steps.
-9. On the Choreo Developer Portal, go to your application.
+9. On the {{ product_name }} Developer Portal, go to your application.
 10. In the left navigation menu, under **Credentials** and click **Production**.
 11. Under **Endpoints**, copy the **Token Endpoint** URL.
 12. Invoke the token endpoint as follows:
@@ -194,4 +194,4 @@ You can now invoke the Choreo API using the authorization code grant. Choreo wil
         -d 'client_secret=l4Q8Q~4WKiRXYSQZly5E6Ess.fKf__U1yJR3IaMd'
         ```
 
-14. Once you receive the access token, you can [test invoking the resource using the OpenAPI console](../testing/test-rest-endpoints-via-the-openapi-console.md) in Choreo by specifying the scope.
+14. Once you receive the access token, you can [test invoking the resource using the OpenAPI console](../testing/test-rest-endpoints-via-the-openapi-console.md) in {{ product_name }} by specifying the scope.

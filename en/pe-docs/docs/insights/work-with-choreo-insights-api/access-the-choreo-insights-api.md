@@ -1,14 +1,14 @@
-# Access the Choreo Insights API
+# Access the {{ product_name }} Insights API
 
-The **Insights** page in the Choreo Console displays data retrieved from the Insights API exposed over the Internet. However, in some scenarios, you may need to retrieve data from external systems and implement custom dashboards to display the data.
+The **Insights** page in the {{ product_name }} Console displays data retrieved from the Insights API exposed over the Internet. However, in some scenarios, you may need to retrieve data from external systems and implement custom dashboards to display the data.
 
-Choreo provides a secure and user-friendly approach to accomplish this requirement. Follow the steps given below:
+{{ product_name }} provides a secure and user-friendly approach to accomplish this requirement. Follow the steps given below:
 
-## Become a member of the Choreo System organization
+## Become a member of the {{ product_name }} System organization
 
-1. Access the Developer Portal of the `Choreo System` organization via the [Choreo Developer Portal](https://devportal.choreo.dev/choreosystem/applications) and sign in using your preferred method.
+1. Access the Developer Portal of the `{{ product_name }} System` organization via the [{{ product_name }} Developer Portal](https://devportal.choreo.dev/choreosystem/applications) and sign in using your preferred method.
 
-2. To obtain access to the `Choreo System` organization, click **Request Access**.
+2. To obtain access to the `{{ product_name }} System` organization, click **Request Access**.
 
     ![Request access](../../assets/img/monitoring-and-insights/work-with-choreo-insights-api/request-access.png){.cInlineImage-full}
 
@@ -16,7 +16,7 @@ Choreo provides a secure and user-friendly approach to accomplish this requireme
 
 To create an application and generate keys, follow the steps below:
 
-1. To create a new application in the `Choreo System` organization, click **+ Create Application**.
+1. To create a new application in the `{{ product_name }} System` organization, click **+ Create Application**.
 
 2. Enter a name for the application and click **Create**. This creates the application and takes you to the **Overview** page.
 
@@ -27,7 +27,7 @@ To create an application and generate keys, follow the steps below:
 
 4. To generate credentials for the application, follow the steps given below:
     1. In the left navigation menu, click **Production** under **Credentials**.
-    2. Click **Generate Credentials**. Choreo generates tokens and populates the **Consumer Key** and **Consumer Secret** fields in the **Application Keys** pane.
+    2. Click **Generate Credentials**. {{ product_name }} generates tokens and populates the **Consumer Key** and **Consumer Secret** fields in the **Application Keys** pane.
 
 5. To specify an appropriate token expiry time for the application, follow the steps given below:
     1. In the **Application Keys** pane, click to expand **Advanced Configurations**.
@@ -49,7 +49,7 @@ To create an application and generate keys, follow the steps below:
     !!! info
         To obtain your organization handle, follow the steps given below:
 
-         1. Sign in to [Choreo](https://console.choreo.dev/).
+         1. Sign in to [{{ product_name }}](https://console.choreo.dev/).
          2. In the top navigation menu, click the **Organization** list and select your organization.
          3. From the left navigation menu, click on **User Management**, then click **Users**.
          4. Click **Copy Handle**.

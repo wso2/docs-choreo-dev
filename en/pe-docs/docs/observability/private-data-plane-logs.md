@@ -1,12 +1,12 @@
 # Private Data Plane (PDP) Logs 
 
-Choreo offers the capability to access runtime logs through its console. However, in cases where viewing logs for your PDP is not supported by Choreo yet, you can still view the runtime logs of your components via the log analyzing solution provided by your cloud vendor as a workaround.
+{{ product_name }} offers the capability to access runtime logs through its console. However, in cases where viewing logs for your PDP is not supported by {{ product_name }} yet, you can still view the runtime logs of your components via the log analyzing solution provided by your cloud vendor as a workaround.
 
 ## Prerequisites
 
 Before you try out this guide, complete the following:
 
-1. In the Choreo Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component** for which the incident was reported.
+1. In the {{ product_name }} Console top navigation menu, select the **Organization**, then the **Project** and finally the relevant **Component** for which the incident was reported.
 2. On the left navigation menu, click **K8s Operations** and then click on **Runtime**.
 3. Copy the `Release ID` and the `Namespace`. Save it for later.
 
