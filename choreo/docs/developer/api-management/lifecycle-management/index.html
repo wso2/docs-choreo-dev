@@ -2965,6 +2965,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
+  <a href="#versioning-impact-on-api-lifecycle" class="md-nav__link">
+    Versioning impact on API lifecycle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#manage-the-lifecycle-of-an-api" class="md-nav__link">
     Manage the lifecycle of an API
   </a>
@@ -4078,6 +4085,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
+  <a href="#versioning-impact-on-api-lifecycle" class="md-nav__link">
+    Versioning impact on API lifecycle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#manage-the-lifecycle-of-an-api" class="md-nav__link">
     Manage the lifecycle of an API
   </a>
@@ -4100,7 +4114,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="lifecycle-management">Lifecycle Management<a class="headerlink" href="#lifecycle-management" title="Permanent link">&para;</a></h1>
-<p>API lifecycle management is an important aspect of API management. The API lifecycle consists of various states that an API passes through, from creation to retirement. In WSO2 Developer Platform, there are six distinct lifecycle states: created, pre-released, published, deprecated, and retired.</p>
+<p>API lifecycle management is an important aspect of API management. The API lifecycle consists of various states that an API passes through, from creation to retirement. In WSO2 Developer Platform, there are five distinct lifecycle states: created, pre-released, published, deprecated, and retired.</p>
 <p>By leveraging the various lifecycle states, API managers can optimize the development process and ensure that subscribers have access to the latest and most reliable APIs.</p>
 <h2 id="api-lifecycle-states">API lifecycle states<a class="headerlink" href="#api-lifecycle-states" title="Permanent link">&para;</a></h2>
 <p>The following lifecycle states are applicable to APIs in WSO2 Developer Platform:</p>
@@ -4130,8 +4144,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 <tr>
 <td><strong>DEPRECATED</strong></td>
-<td>The old version of an API is moved to this state when a newer version of the API is PUBLISHED.</td>
-<td>The API is deployed and is available to existing subscribers. New subscriptions are disabled. Existing subscribers can continue to use it as usual until the API is retired.</td>
+<td>An API version enters this state when it is explicitly deprecated, or automatically when a newer <strong>minor</strong> version under the same major version is published.</td>
+<td>The API is deployed and is available to existing subscribers. New subscriptions are disabled. Existing subscribers can continue to use it as usual until the API is retired. <strong>Note:</strong> Deprecation is irreversible. A deprecated API cannot be moved back to the Published state (see <a href="#versioning-impact-on-api-lifecycle">Versioning impact on API lifecycle</a>).</td>
 </tr>
 <tr>
 <td><strong>RETIRED</strong></td>
@@ -4140,6 +4154,20 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 </tbody>
 </table>
+<h2 id="versioning-impact-on-api-lifecycle">Versioning impact on API lifecycle<a class="headerlink" href="#versioning-impact-on-api-lifecycle" title="Permanent link">&para;</a></h2>
+<p>When you create a new version of an API, it directly affects the lifecycle state of existing versions:</p>
+<ul>
+<li>
+<p><strong>Minor version upgrades</strong> (e.g., v1.0 → v1.1): Publishing the new minor version automatically <strong>deprecates</strong> the previous minor version under the same major version. The deprecated version is replaced in the Developer Portal. Only the latest minor version is visible. This action is <strong>irreversible</strong> — the previous minor version cannot be restored to the Published state.</p>
+</li>
+<li>
+<p><strong>Major version upgrades</strong> (e.g., v1 → v2): Both major versions appear as <strong>separate entries</strong> in the Developer Portal. The older major version remains in its current lifecycle state and is not automatically deprecated.</p>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>Creating a minor version has an irreversible effect on the previous minor version's lifecycle. Before creating a new minor version, ensure you no longer need the previous minor version to be in the Published state. If you need both versions available simultaneously, use a major version upgrade instead.</p>
+</div>
 <h2 id="manage-the-lifecycle-of-an-api">Manage the lifecycle of an API<a class="headerlink" href="#manage-the-lifecycle-of-an-api" title="Permanent link">&para;</a></h2>
 <p>To change the lifecycle state of an API via the WSO2 Developer Platform Console, follow the instructions given below:</p>
 <div class="admonition tip">
@@ -4150,7 +4178,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Sign in to the WSO2 Developer Platform Console.</li>
 <li>In the <strong>Component Listing</strong> pane, click on the component for which you want to manage the lifecycle.</li>
 <li>In the left navigation menu, click <strong>Manage</strong>, and then click <strong>Lifecycle</strong>.</li>
-<li>In the <strong>Lifecycle Management</strong> pane, you will see the lifecycle state transition diagram indicating the current lifecycle state of the component. Just above the lifecycle state transition diagram, The possible lifecycle states you can apply to the component are displayed just above the lifecycle state transition diagram. Click on a required lifecycle state to apply it to the component. For example, if a component is in the <strong>Created</strong> state, you can click either <strong>Pre-release</strong> or <strong>Publish</strong>.</li>
+<li>In the <strong>Lifecycle Management</strong> pane, you will see the lifecycle state transition diagram indicating the current lifecycle state of the component. The possible lifecycle states you can apply to the component are displayed just above the diagram. Click on a required lifecycle state to apply it to the component. For example, if a component is in the <strong>Created</strong> state, you can click either <strong>Pre-release</strong> or <strong>Publish</strong>.</li>
 </ol>
 
 
