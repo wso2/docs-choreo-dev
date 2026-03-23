@@ -20,12 +20,12 @@ The following lifecycle states are applicable to APIs in {{ product_name }}:
 
 When you create a new version of an API, it directly affects the lifecycle state of existing versions:
 
-- **Minor version upgrades** (e.g., v1.0 → v1.1): Publishing the new minor version automatically **deprecates** the previous minor version under the same major version. The deprecated version is replaced in the Developer Portal. Only the latest minor version is visible. This action is **irreversible** — the previous minor version cannot be restored to the Published state.
+- **Minor version upgrades** (e.g., v1.0 → v1.1): When a new minor version is published, it becomes the default version shown in the Developer Portal under that major version. The previous minor version remains accessible and can be invoked using its version-specific endpoint URL.
 
 - **Major version upgrades** (e.g., v1 → v2): Both major versions appear as **separate entries** in the Developer Portal. The older major version remains in its current lifecycle state and is not automatically deprecated.
 
-!!! warning "Important"
-    Creating a minor version has an irreversible effect on the previous minor version's lifecycle. Before creating a new minor version, ensure you no longer need the previous minor version to be in the Published state. If you need both versions available simultaneously, use a major version upgrade instead.
+!!! note
+    If you need to invoke an older minor version, you can use the endpoint URL with the specific minor version (e.g., `/v1.0` instead of `/v1`).
 
 ## Manage the lifecycle of an API
 
