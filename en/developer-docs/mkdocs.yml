@@ -388,7 +388,7 @@ plugins:
         "consume/manage-subscription.md": "https://wso2.com/choreo/docs/consuming-services/manage-subscription/"
         "consume/test-api.md": "https://wso2.com/choreo/docs/testing/test-rest-endpoints-via-the-openapi-console/"
         "marketplace.md": "https://wso2.com/choreo/docs/choreo-concepts/choreo-marketplace/"
-        "release.md": "https://wso2.com/choreo/docs/choreo-concepts/release/"
+        "release-management.md": "https://wso2.com/choreo/docs/choreo-concepts/release-management/"
         "observe-and-analyze/observe/observability-overview.md": "https://wso2.com/choreo/docs/monitoring-and-insights/observability-overview/"
         "observe-and-analyze/observe/root-cause-analysis.md": "https://wso2.com/choreo/docs"
         "observe-and-analyze/analyze/view-api-insights.md": "https://wso2.com/choreo/docs/monitoring-and-insights/view-api-insights/"

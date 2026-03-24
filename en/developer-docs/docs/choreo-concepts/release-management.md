@@ -4,11 +4,11 @@ Release management is the process of managing, planning, scheduling and controll
 
 ## Release
 
-A **Release** represents a deployable state comprising specific runtime artifacts and associated environment independent configurations bundled together. Each release is uniquely identifiable and not bound to a deployment environment, ensuring traceability across environments. A release is created when a build is first being deployed.
+A Release represents a uniquely identifiable, environment-independent bundle of runtime artifacts and configurations created when a build is first deployed.
 
 ## Release Deployment
 
-A **Release Deployment** represents the state when a release is deployed to an environment with any environment dependent configuration. Each release can be deployed to an environment multiple times, changing environment configuration resulting a new release deployment at each time. 
+A Release Deployment represents a Release deployed to a specific environment with environment-dependent configuration. A given release can be deployed multiple times to the same or different environments, and each deployment produces a distinct release deployment due to differences in environment configuration.
 
 ## Release Naming Convention
 
