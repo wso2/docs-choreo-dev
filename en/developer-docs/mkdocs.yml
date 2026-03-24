@@ -102,6 +102,7 @@ nav:
       - Environments: choreo-concepts/environments.md
       - WSO2 Developer Platform Marketplace: choreo-concepts/choreo-marketplace.md
       - Access Control: choreo-concepts/access-control.md
+      - Release Management: choreo-concepts/release-management.md
   - Develop Components:
       - Develop Services:
           - Service Component Overview: develop-components/develop-services/service-component-overview.md
@@ -387,6 +388,7 @@ plugins:
         "consume/manage-subscription.md": "https://wso2.com/choreo/docs/consuming-services/manage-subscription/"
         "consume/test-api.md": "https://wso2.com/choreo/docs/testing/test-rest-endpoints-via-the-openapi-console/"
         "marketplace.md": "https://wso2.com/choreo/docs/choreo-concepts/choreo-marketplace/"
+        "release.md": "https://wso2.com/choreo/docs/choreo-concepts/release/"
         "observe-and-analyze/observe/observability-overview.md": "https://wso2.com/choreo/docs/monitoring-and-insights/observability-overview/"
         "observe-and-analyze/observe/root-cause-analysis.md": "https://wso2.com/choreo/docs"
         "observe-and-analyze/analyze/view-api-insights.md": "https://wso2.com/choreo/docs/monitoring-and-insights/view-api-insights/"
