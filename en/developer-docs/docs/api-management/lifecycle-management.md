@@ -13,7 +13,7 @@ The following lifecycle states are applicable to APIs in {{ product_name }}:
 | **CREATED** | The API is created but is not ready for consumption.| The API is not visible to subscribers in the Developer Portal.|
 | **PRE-RELEASED** | A prototype is created for early promotion and consumer testing. You can deploy a new API or a new version of an existing API as a prototype to provide subscribers with an early implementation of the API.|The API is published to the Developer Portal as a pre-release.|
 | **PUBLISHED** | The API is ready for subscribers to view and subscribe to via the Developer Portal| The API is visible in the Developer Portal and is available for subscription.|
-| **DEPRECATED** | An API version enters this state when it is explicitly deprecated, or automatically when a newer **minor** version under the same major version is published.| The API is deployed and is available to existing subscribers. New subscriptions are disabled. Existing subscribers can continue to use it as usual until the API is retired. **Note:** Deprecation is irreversible. A deprecated API cannot be moved back to the Published state (see [Versioning impact on API lifecycle](#versioning-impact-on-api-lifecycle)).|
+| **DEPRECATED** | The API is nearing the end of its lifecycle and is being phased out of use.| The API remains accessible to existing subscribers, but new subscriptions are disabled in the Developer Portal. **Note**: Deprecation is irreversible and cannot be reverted to the Published state.|
 | **RETIRED** | The API is no longer in use when it is in this state.| The API is unpublished and deleted from the Developer Portal.|
 
 ## Versioning impact on API lifecycle
