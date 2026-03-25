@@ -19,8 +19,8 @@
 /*
 * Handle opening external links in a new tab
 */
-/* 
- * Initialize highlightjs 
+/*
+ * Initialize highlightjs
  */
 const form = document.getElementById("search");
 const textInput = document.getElementById("query");
@@ -52,17 +52,16 @@ window.addEventListener("DOMContentLoaded", function() {
             var pathname = this.window.location.pathname;
             var origin = this.window.location.origin;
             var searchPage= "search-results.html" + "?search_term=" + searchTerm;
-            if(pathname != null && pathname.startsWith("/choreo/docs/")){
-               
+            if(pathname != null && (pathname.startsWith("/choreo/docs/") || pathname === "/choreo/docs")){
+
                 searchPage = origin + "/choreo/docs/" + searchPage;
+            } else if(pathname != null && (pathname.startsWith("/engineering-platform/developer-platform/docs/") || pathname === "/engineering-platform/developer-platform/docs")){
+
+                searchPage = origin + "/engineering-platform/developer-platform/docs/" + searchPage;
             } else{
                 searchPage = origin + "/"+ searchPage;
             }
 
-         //   const arrayFromCollection = Array.from(document.links);
-         //   localStorage.setItem('searchResults', arrayFromCollection);
             document.location.href=searchPage;
-
-            // You can add more code here to handle the form submission
         }
     });
