@@ -4158,8 +4158,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 <tr>
 <td><strong>DEPRECATED</strong></td>
-<td>An API version enters this state when it is explicitly deprecated, or automatically when a newer <strong>minor</strong> version under the same major version is published.</td>
-<td>The API is deployed and is available to existing subscribers. New subscriptions are disabled. Existing subscribers can continue to use it as usual until the API is retired. <strong>Note:</strong> Deprecation is irreversible. A deprecated API cannot be moved back to the Published state (see <a href="#versioning-impact-on-api-lifecycle">Versioning impact on API lifecycle</a>).</td>
+<td>The API is nearing the end of its lifecycle and is being phased out of use.</td>
+<td>The API remains accessible to existing subscribers, but new subscriptions are disabled in the Developer Portal. <strong>Note</strong>: Deprecation is irreversible and cannot be reverted to the Published state.</td>
 </tr>
 <tr>
 <td><strong>RETIRED</strong></td>
@@ -4172,15 +4172,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>When you create a new version of an API, it directly affects the lifecycle state of existing versions:</p>
 <ul>
 <li>
-<p><strong>Minor version upgrades</strong> (e.g., v1.0 → v1.1): Publishing the new minor version automatically <strong>deprecates</strong> the previous minor version under the same major version. The deprecated version is replaced in the Developer Portal. Only the latest minor version is visible. This action is <strong>irreversible</strong> — the previous minor version cannot be restored to the Published state.</p>
+<p><strong>Minor version upgrades</strong> (e.g., v1.0 → v1.1): when a new minor version is published, it becomes the default version for its corresponding major version. The Developer Portal displays the latest minor version (for example, v1.1) as the primary API under that major version (v1), and the /v1 endpoint resolves to this version.</p>
 </li>
 <li>
 <p><strong>Major version upgrades</strong> (e.g., v1 → v2): Both major versions appear as <strong>separate entries</strong> in the Developer Portal. The older major version remains in its current lifecycle state and is not automatically deprecated.</p>
 </li>
 </ul>
-<div class="admonition warning">
-<p class="admonition-title">Important</p>
-<p>Creating a minor version has an irreversible effect on the previous minor version's lifecycle. Before creating a new minor version, ensure you no longer need the previous minor version to be in the Published state. If you need both versions available simultaneously, use a major version upgrade instead.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Previously published minor versions (for example, v1.0) remain accessible via their version-specific endpoints (for example, /v1.0) and continue to be available until they are explicitly deprecated or retired through the API lifecycle management process.</p>
 </div>
 <h2 id="manage-the-lifecycle-of-an-api">Manage the lifecycle of an API<a class="headerlink" href="#manage-the-lifecycle-of-an-api" title="Permanent link">&para;</a></h2>
 <p>To change the lifecycle state of an API via the WSO2 Developer Platform Console, follow the instructions given below:</p>
