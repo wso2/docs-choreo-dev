@@ -13,19 +13,19 @@ The following lifecycle states are applicable to APIs in {{ product_name }}:
 | **CREATED** | The API is created but is not ready for consumption.| The API is not visible to subscribers in the Developer Portal.|
 | **PRE-RELEASED** | A prototype is created for early promotion and consumer testing. You can deploy a new API or a new version of an existing API as a prototype to provide subscribers with an early implementation of the API.|The API is published to the Developer Portal as a pre-release.|
 | **PUBLISHED** | The API is ready for subscribers to view and subscribe to via the Developer Portal| The API is visible in the Developer Portal and is available for subscription.|
-| **DEPRECATED** | An API version enters this state when it is explicitly deprecated, or automatically when a newer **minor** version under the same major version is published.| The API is deployed and is available to existing subscribers. New subscriptions are disabled. Existing subscribers can continue to use it as usual until the API is retired. **Note:** Deprecation is irreversible. A deprecated API cannot be moved back to the Published state (see [Versioning impact on API lifecycle](#versioning-impact-on-api-lifecycle)).|
+| **DEPRECATED** | The API is nearing the end of its lifecycle and is being phased out of use.| The API remains accessible to existing subscribers, but new subscriptions are disabled in the Developer Portal. **Note**: Deprecation is irreversible and cannot be reverted to the Published state.|
 | **RETIRED** | The API is no longer in use when it is in this state.| The API is unpublished and deleted from the Developer Portal.|
 
 ## Versioning impact on API lifecycle
 
 When you create a new version of an API, it directly affects the lifecycle state of existing versions:
 
-- **Minor version upgrades** (e.g., v1.0 → v1.1): Publishing the new minor version automatically **deprecates** the previous minor version under the same major version. The deprecated version is replaced in the Developer Portal. Only the latest minor version is visible. This action is **irreversible** — the previous minor version cannot be restored to the Published state.
+- **Minor version upgrades** (e.g., v1.0 → v1.1): when a new minor version is published, it becomes the default version for its corresponding major version. The Developer Portal displays the latest minor version (for example, v1.1) as the primary API under that major version (v1), and the /v1 endpoint resolves to this version.
 
 - **Major version upgrades** (e.g., v1 → v2): Both major versions appear as **separate entries** in the Developer Portal. The older major version remains in its current lifecycle state and is not automatically deprecated.
 
-!!! warning "Important"
-    Creating a minor version has an irreversible effect on the previous minor version's lifecycle. Before creating a new minor version, ensure you no longer need the previous minor version to be in the Published state. If you need both versions available simultaneously, use a major version upgrade instead.
+!!! note
+    Previously published minor versions (for example, v1.0) remain accessible via their version-specific endpoints (for example, /v1.0) and continue to be available until they are explicitly deprecated or retired through the API lifecycle management process.
 
 ## Manage the lifecycle of an API
 
