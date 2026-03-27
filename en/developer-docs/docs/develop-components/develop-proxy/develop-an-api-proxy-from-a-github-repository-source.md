@@ -78,7 +78,7 @@ You can create an API proxy either by selecting the source from a GitHub reposit
 8. Click **Create**. This creates the API proxy component and takes you to the **Build** page.
 
     !!! note
-        When you create an API proxy from a GitHub repository source, the GitHub source serves as the single source of truth. Therefore, any modifications, such as adding or deleting resources, must be made through the GitHub repository. 
+        When you create an API proxy from a GitHub repository, the GitHub source serves as the single source of truth. Therefore, any modifications, such as adding or deleting resources, must be made through the GitHub repository. 
         In the above sample, the `component.yaml` file is located in the department-api-proxy-from-github/.choreo/ directory. It is used to define the relative path to the API specification. The workflow reads this path to fetch the Swagger/OpenAPI definition.
         Sample `component.yaml` file : 
 
