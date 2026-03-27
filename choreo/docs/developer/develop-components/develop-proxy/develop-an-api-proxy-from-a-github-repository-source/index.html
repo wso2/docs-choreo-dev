@@ -4364,12 +4364,20 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 <li>
 <p>Click <strong>Create</strong>. This creates the API proxy component and takes you to the <strong>Build</strong> page.</p>
-</li>
-</ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When you create an API proxy from a GitHub repository source, the GitHub source serves as the single source of truth. Therefore, any modifications, such as adding or deleting resources, must be made through the GitHub repository.</p>
+<p>When you create an API proxy from a GitHub repository, the GitHub source serves as the single source of truth. Therefore, any modifications, such as adding or deleting resources, must be made through the GitHub repository. 
+In the above sample, the <code>component.yaml</code> file is located in the department-api-proxy-from-github/.choreo/ directory. It is used to define the relative path to the API specification. The workflow reads this path to fetch the Swagger/OpenAPI definition.
+Sample <code>component.yaml</code> file : </p>
+<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">schemaVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.2</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">proxy</span><span class="p">:</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">REST</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">schemaFilePath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openapi.yaml</span>
+</code></pre></div>
+
 </div>
+</li>
+</ol>
 <h2 id="step-2-build">Step 2: Build<a class="headerlink" href="#step-2-build" title="Permanent link">&para;</a></h2>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
