@@ -73,8 +73,8 @@ To add a custom domain for your organization, follow the steps given below:
              - It should be an X509 certificate.
              - It should be in the PEM format.
              - It should be issued directly or through a wildcard entry for the provided custom URL. For example,
-                - For direct issuance, the SSL file must include the exact domain name. For example, if the domain is `apis.{{ product_name }}.dev`, the SSL file must include `apis.{{ product_name }}.com`.
-                - For wildcard entries, the SSL file should use a wildcard notation to cover all subdomains under the provided URL. For example, if the CNAME is `apis.{{ product_name }}.dev`, the SSL file should use `*.{{ product_name }}.dev`.
+                - For direct issuance, the SSL file must include the exact domain name. For example, if the domain is `apis.hello.dev`, the SSL file must include `apis.hello.com`.
+                - For wildcard entries, the SSL file should use a wildcard notation to cover all subdomains under the provided URL. For example, if the CNAME is `apis.hello.dev`, the SSL file should use `*.hello.dev`.
           - TLS key file guidelines:
              - It should be in the PEM format.
              - It must be encrypted using RSA encryption.

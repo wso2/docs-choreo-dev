@@ -38,7 +38,7 @@ It’s important to understand the purpose of key files in the sample service. T
 
 In {{ product_name }}, you can expose your services via endpoints. The greeter service runs on port 9090. To securely expose the service through {{ product_name }}, you must provide the port and other required information in the `component.yaml` file. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
-In the greeter sample, the `component.yaml` file is located in the `greeting-service-go/.{{ product_name }}/` directory.
+In the greeter sample, the `component.yaml` file is located in the `greeting-service-go/.choreo/` directory.
 
 ## Step 1: Create a service component from a Dockerfile
 

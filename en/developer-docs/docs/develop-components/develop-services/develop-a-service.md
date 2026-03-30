@@ -37,7 +37,7 @@ It is important to understand the purpose of the key files in the sample service
 
 In {{ product_name }}, you can expose your services via endpoints. To run the greeter service on port 9090 and securely expose it through {{ product_name }}, you must provide the port and other required information in the `component.yaml` file. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
-In the greeter sample, the `component.yaml` file is located in the `greeting-service-go/.{{ product_name }}/` directory.
+In the greeter sample, the `component.yaml` file is located in the `greeting-service-go/.choreo/` directory.
 
 ## Step 1: Create a service component
 
@@ -62,7 +62,7 @@ To create a containerized service component, follow these steps:
     | **Field**              | **Value**          |
     |------------------------|--------------------|
     | **Organization**       | Your GitHub account|
-    | **GitHub Repository**  | {{ product_name }}-samples     |
+    | **GitHub Repository**  | choreo-samples     |
     | **Branch**             | main               |
     | **Component Directory** | `/greeting-service-go` |
 

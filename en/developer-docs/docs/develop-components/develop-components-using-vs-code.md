@@ -65,7 +65,7 @@ The component details view allows you to manage your component by performing var
 
 ## Understand the project context
 
-Context files contain metadata related to the project, allowing the extension to establish an association between local directories and {{ product_name }} projects. These files, such as the `context.yaml`file, resides in the `/.{{ product_name }}` directory within the root of the Git repository.
+Context files contain metadata related to the project, allowing the extension to establish an association between local directories and {{ product_name }} projects. These files, such as the `context.yaml`file, resides in the `/.choreo` directory within the root of the Git repository.
 
 The {{ product_name }} extension scans the root of the opened Git repository to find the `context.yaml` file and lists the components of the associated project. This allows you to easily open and manage the components they are developing within the VS Code workspace.
 

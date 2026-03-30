@@ -2,7 +2,7 @@
 
 In {{ product_name }}, you can configure service endpoints and connections via the `component.yaml` source configuration file. This file ensures that the configurations required to initialize endpoints and connections are defined, as they cannot be inferred from the source code. This guide provides an overview of how to configure and manage these settings effectively.
 
-The source configuration file must be committed to your repository within the `.{{ product_name }}` directory at the root of the project directory. This ensures the ability to version the configuration files alongside repository commits, enabling better tracking and management of configurations.
+The source configuration file must be committed to your repository within the `.choreo` directory at the root of the project directory. This ensures the ability to version the configuration files alongside repository commits, enabling better tracking and management of configurations.
 
 !!! note
     -  The `component-config.yaml` and `endpoints.yaml` files will eventually be deprecated and replaced by the `component.yaml` file. 
@@ -426,7 +426,7 @@ Click the respective tab to view the structure for your current configuration fi
 **Sample `component-config.yaml` file content**:
 
 ```yaml
-apiVersion: core.{{ product_name }}.dev/v1beta1
+apiVersion: core.choreo.dev/v1beta1
 kind: ComponentConfig
 spec:
   # +optional Incoming connection details for the component (AKA endpoints).
@@ -471,7 +471,7 @@ You can define the following root-level configurations via the `component-config
 
 | Configuration        | Required     | Description                                                                           |
 |----------------------|--------------|---------------------------------------------------------------------------------------|
-| **apiVersion**       | Required     | The version of the `component-config.yaml` file defaults to `core.{{ product_name }}.dev/v1beta1`.|
+| **apiVersion**       | Required     | The version of the `component-config.yaml` file defaults to `core.choreo.dev/v1beta1`.|
 | **kind**             | Required     | The resource type of the file defaults to `ComponentConfig`.                          |
 | **spec.inbound**     | Optional     | The list of inbound connection configurations.                                        |
 | **spec.outbound**    | Optional     | The list of outbound connection configurations.                                       |
@@ -567,7 +567,7 @@ You can determine whether you’re using an outdated configuration file in the f
 ### Step 3: Add the generated configuration file to your repository
 
 1. Download the generated `component.yaml` file.
-2. Replace the existing source configuration file in the `.{{ product_name }}` folder within your source repository.
+2. Replace the existing source configuration file in the `.choreo` folder within your source repository.
     - Ensure the file name is `component.yaml`.
 
 

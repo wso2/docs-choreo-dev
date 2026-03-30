@@ -19,9 +19,9 @@ The method of defining endpoints depends on the build preset.
 * For all other build presets (Java, Python, NodeJS, Ruby, PHP, Go, Dockerfile, etc.), you can configure endpoints in one of the following ways:
   
     * **Using the {{ product_name }} Console**: If a `component.yaml` file is not present, you can define a basic endpoint configuration during component creation.
-    * **Using the component.yaml file**: You can manually configure endpoint details by defining them in a `component.yaml` file, placing it inside the `.{{ product_name }}` directory at the build context path, and committing it to the source repository.
+    * **Using the component.yaml file**: You can manually configure endpoint details by defining them in a `component.yaml` file, placing it inside the `.choreo` directory at the build context path, and committing it to the source repository.
 
-You can override UI-defined and auto-generated endpoints by providing a `component.yaml` file in the `.{{ product_name }}` directory, which will take priority over other configurations.
+You can override UI-defined and auto-generated endpoints by providing a `component.yaml` file in the `.choreo` directory, which will take priority over other configurations.
 
 To learn about the `component.yaml` file, see [Overview of the component.yaml file](../develop-components/manage-component-source-configurations.md#overview-of-the-componentyaml-file).
 !!! note
