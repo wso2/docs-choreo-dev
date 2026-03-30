@@ -63,7 +63,7 @@ To create a NodeJS service component, follow these steps:
     | **Field**               | **Value**               |
     |-------------------------|-------------------------|
     | **Organization**        | Your GitHub account     |
-    | **GitHub Repository**   | **`{{ product_name }}-samples`**    |
+    | **GitHub Repository**   | **`choreo-samples`**    |
     | **Branch**              | **`main`**              |
     | **Component Directory**   | `websocket-chat-app/websocket-chat-service-nodejs`  |
 

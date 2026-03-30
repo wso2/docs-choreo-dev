@@ -72,7 +72,7 @@ In {{ product_name }}, you can expose your services via endpoints.
 
 Let's run the gRPC server service component on port 8080. To securely expose the service through {{ product_name }}, you must provide the port and other required information to {{ product_name }}. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
-{{ product_name }} looks for an `component.yaml` file inside the `.{{ product_name }}` directory to configure the endpoint details of the containerized component. Ensure the `.{{ product_name }}` directory is at the root of the Docker build context path.
+{{ product_name }} looks for an `component.yaml` file inside the `.choreo` directory to configure the endpoint details of the containerized component. Ensure the `.choreo` directory is at the root of the Docker build context path.
 
 In the gRPC server sample, the `component.yaml` file is at `go-grpc/.choreo/component.yaml`, where the build context path is `go-grpc`.
 
@@ -100,7 +100,7 @@ To create a containerized service component, follow these steps:
     | **Field**               | **Value**               |
     |-------------------------|-------------------------|
     | **Organization**        | Your GitHub account     |
-    | **GitHub Repository**   | **`{{ product_name }}-samples`**    |
+    | **GitHub Repository**   | **`choreo-samples`**    |
     | **Branch**              | **`main`**              |
     | **Component Directory** | `go-grpc`                  |
 
@@ -202,7 +202,7 @@ To create a manual task component, follow these steps:
     | **Field**               | **Value**               |
     |-------------------------|-------------------------|
     | **Organization**        | Your GitHub account     |
-    | **GitHub Repository**   | **`{{ product_name }}-samples`**    |
+    | **GitHub Repository**   | **`choreo-samples`**    |
     | **Branch**              | **`main`**              |
     | **Component Directory**       | `go/grpc`                  |
 

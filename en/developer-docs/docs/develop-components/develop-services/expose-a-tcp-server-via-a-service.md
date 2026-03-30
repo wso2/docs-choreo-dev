@@ -54,7 +54,7 @@ In {{ product_name }}, you can expose your services via endpoints.
 
 Let's run the TCP server service component on port 5050. To securely expose the service through {{ product_name }}, you must provide the port and other required information to {{ product_name }}. For detailed information on each attribute of an endpoint, see [Configure Endpoints](../configure-endpoints.md).
 
-{{ product_name }} looks for an `component.yaml` file inside the `.{{ product_name }}` directory to configure the endpoint details of a containerized component. Place the `.{{ product_name }}` directory at the root of the Docker build context path.
+{{ product_name }} looks for an `component.yaml` file inside the `.choreo` directory to configure the endpoint details of a containerized component. Place the `.choreo` directory at the root of the Docker build context path.
 
 In our TCP server sample, the `component.yaml` file is at `docker-tcp-service/.choreo/component.yaml`, where the build context path is `docker-tcp-service`.
 
