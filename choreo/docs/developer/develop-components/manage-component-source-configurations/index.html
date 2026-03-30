@@ -4321,7 +4321,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h1 id="manage-component-source-configurations">Manage Component Source Configurations<a class="headerlink" href="#manage-component-source-configurations" title="Permanent link">&para;</a></h1>
 <p>In WSO2 Developer Platform, you can configure service endpoints and connections via the <code>component.yaml</code> source configuration file. This file ensures that the configurations required to initialize endpoints and connections are defined, as they cannot be inferred from the source code. This guide provides an overview of how to configure and manage these settings effectively.</p>
-<p>The source configuration file must be committed to your repository within the <code>.WSO2 Developer Platform</code> directory at the root of the project directory. This ensures the ability to version the configuration files alongside repository commits, enabling better tracking and management of configurations.</p>
+<p>The source configuration file must be committed to your repository within the <code>.choreo</code> directory at the root of the project directory. This ensures the ability to version the configuration files alongside repository commits, enabling better tracking and management of configurations.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
@@ -5070,7 +5070,7 @@ In the <code>endpoints</code> section of the <code>component.yaml</code> file, y
 </code></pre></div>
 
 <p><strong>Sample <code>component-config.yaml</code> file content</strong>:</p>
-<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">core.WSO2 Developer Platform.dev/v1beta1</span>
+<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">core.choreo.dev/v1beta1</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ComponentConfig</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nt">spec</span><span class="p">:</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="c1"># +optional Incoming connection details for the component (AKA endpoints).</span>
@@ -5123,7 +5123,7 @@ In the <code>endpoints</code> section of the <code>component.yaml</code> file, y
 <tr>
 <td><strong>apiVersion</strong></td>
 <td>Required</td>
-<td>The version of the <code>component-config.yaml</code> file defaults to <code>core.WSO2 Developer Platform.dev/v1beta1</code>.</td>
+<td>The version of the <code>component-config.yaml</code> file defaults to <code>core.choreo.dev/v1beta1</code>.</td>
 </tr>
 <tr>
 <td><strong>kind</strong></td>
@@ -5287,7 +5287,7 @@ In the <code>endpoints</code> section of the <code>component.yaml</code> file, y
 <h3 id="step-3-add-the-generated-configuration-file-to-your-repository">Step 3: Add the generated configuration file to your repository<a class="headerlink" href="#step-3-add-the-generated-configuration-file-to-your-repository" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Download the generated <code>component.yaml</code> file.</li>
-<li>Replace the existing source configuration file in the <code>.WSO2 Developer Platform</code> folder within your source repository.<ul>
+<li>Replace the existing source configuration file in the <code>.choreo</code> folder within your source repository.<ul>
 <li>Ensure the file name is <code>component.yaml</code>.</li>
 </ul>
 </li>

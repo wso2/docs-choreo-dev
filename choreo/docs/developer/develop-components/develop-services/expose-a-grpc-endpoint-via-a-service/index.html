@@ -4383,7 +4383,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 id="configure-the-service-port-with-endpoints">Configure the service port with endpoints<a class="headerlink" href="#configure-the-service-port-with-endpoints" title="Permanent link">&para;</a></h3>
 <p>In WSO2 Developer Platform, you can expose your services via endpoints.</p>
 <p>Let's run the gRPC server service component on port 8080. To securely expose the service through WSO2 Developer Platform, you must provide the port and other required information to WSO2 Developer Platform. For detailed information on each attribute of an endpoint, see <a href="../../configure-endpoints/">Configure Endpoints</a>.</p>
-<p>WSO2 Developer Platform looks for an <code>component.yaml</code> file inside the <code>.WSO2 Developer Platform</code> directory to configure the endpoint details of the containerized component. Ensure the <code>.WSO2 Developer Platform</code> directory is at the root of the Docker build context path.</p>
+<p>WSO2 Developer Platform looks for an <code>component.yaml</code> file inside the <code>.choreo</code> directory to configure the endpoint details of the containerized component. Ensure the <code>.choreo</code> directory is at the root of the Docker build context path.</p>
 <p>In the gRPC server sample, the <code>component.yaml</code> file is at <code>go-grpc/.choreo/component.yaml</code>, where the build context path is <code>go-grpc</code>.</p>
 <h2 id="step-1-create-a-service-component-with-a-grpc-endpoint">Step 1: Create a service component with a gRPC endpoint<a class="headerlink" href="#step-1-create-a-service-component-with-a-grpc-endpoint" title="Permanent link">&para;</a></h2>
 <p>To create a containerized service component, follow these steps:</p>
@@ -4420,7 +4420,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </tr>
 <tr>
 <td><strong>GitHub Repository</strong></td>
-<td><strong><code>WSO2 Developer Platform-samples</code></strong></td>
+<td><strong><code>choreo-samples</code></strong></td>
 </tr>
 <tr>
 <td><strong>Branch</strong></td>
@@ -4585,7 +4585,7 @@ To ensure that the defined USER instruction is valid, it must conform to the fol
 </tr>
 <tr>
 <td><strong>GitHub Repository</strong></td>
-<td><strong><code>WSO2 Developer Platform-samples</code></strong></td>
+<td><strong><code>choreo-samples</code></strong></td>
 </tr>
 <tr>
 <td><strong>Branch</strong></td>

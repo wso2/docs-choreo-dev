@@ -4365,7 +4365,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 id="configure-the-service-port-with-endpoints">Configure the service port with endpoints<a class="headerlink" href="#configure-the-service-port-with-endpoints" title="Permanent link">&para;</a></h3>
 <p>In WSO2 Developer Platform, you can expose your services via endpoints.</p>
 <p>Let's run the UDP server service component on port 5050. To securely expose the service through WSO2 Developer Platform, you must provide the port and other required information to WSO2 Developer Platform. For detailed information on each attribute of an endpoint, see <a href="../../configure-endpoints/">Configure Endpoints</a>.</p>
-<p>WSO2 Developer Platform looks for an <code>component.yaml</code> file inside the <code>.WSO2 Developer Platform</code> directory to configure the endpoint details of a containerized component. Place the <code>.WSO2 Developer Platform</code> directory at the root of the Docker build context path.</p>
+<p>WSO2 Developer Platform looks for an <code>component.yaml</code> file inside the <code>.choreo</code> directory to configure the endpoint details of a containerized component. Place the <code>.choreo</code> directory at the root of the Docker build context path.</p>
 <p>In our gRPC server sample, the <code>component.yaml</code> file is at <code>docker-udp-service/.choreo/component.yaml</code>, where the build context path is <code>docker-udp-service</code>.</p>
 <h2 id="step-1-create-a-service-component-with-a-udp-endpoint">Step 1: Create a service component with a UDP endpoint<a class="headerlink" href="#step-1-create-a-service-component-with-a-udp-endpoint" title="Permanent link">&para;</a></h2>
 <p>To create a containerized service component, follow these steps:</p>
