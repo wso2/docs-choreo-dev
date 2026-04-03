@@ -2580,8 +2580,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-a-certificate" class="md-nav__link">
-    Create a certificate
+  <a href="#add-a-certificate" class="md-nav__link">
+    Add a certificate
   </a>
   
 </li>
@@ -4105,8 +4105,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-a-certificate" class="md-nav__link">
-    Create a certificate
+  <a href="#add-a-certificate" class="md-nav__link">
+    Add a certificate
   </a>
   
 </li>
@@ -4154,28 +4154,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="manage-certificates">Manage Certificates<a class="headerlink" href="#manage-certificates" title="Permanent link">&para;</a></h1>
-<p>WSO2 Developer Platform provides centralized certificate management at the organization level, allowing you to manage TLS certificates and apply them to components during deployment. This ensures secure communication between your components and external services by maintaining trusted certificates in a single place.</p>
-<h2 id="create-a-certificate">Create a certificate<a class="headerlink" href="#create-a-certificate" title="Permanent link">&para;</a></h2>
+<p>WSO2 Developer Platform provides centralized certificate management at the organization level, allowing you to add certificates and apply them to components during deployment.</p>
+<h2 id="add-a-certificate">Add a certificate<a class="headerlink" href="#add-a-certificate" title="Permanent link">&para;</a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <ul>
-<li>To create certificates, you need <code>Create Global Configs</code> or <code>Manage Global Configs</code> permission.</li>
+<li>To add certificates, you need <code>Create Global Configs</code> or <code>Manage Global Configs</code> permission.</li>
 </ul>
 </div>
-<p>To create a new certificate, follow the steps given below:</p>
+<p>To add a new certificate, follow the steps given below:</p>
 <ol>
 <li>In the <a href="https://console.choreo.dev/">WSO2 Developer Platform Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
 <li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Certificates</strong>.</li>
-<li>On the <strong>Certificates Management</strong> page, click <strong>+ Create Certificate</strong>.</li>
+<li>On the <strong>Certificates Management</strong> page, click <strong>+ Add Certificate</strong>.</li>
 <li>
-<p>On the <strong>Add a Certificate</strong> page, choose why you're adding the certificate:</p>
-<ul>
-<li><strong>Verify External Server</strong>: Use a public certificate to confirm another server's identity for secure TLS connections.</li>
-<li><strong>Secure Website Domain</strong> <em>(Coming Soon)</em>: Use SSL/TLS to safely secure your custom domains managed through WSO2 Developer Platform.</li>
-</ul>
-</li>
-<li>
-<p>Specify the following details:</p>
+<p>On the <strong>Add a Certificate</strong> page, specify the following details:</p>
 <ul>
 <li><strong>Certificate Name</strong>: A name for the certificate.</li>
 <li><strong>Description</strong>: A description for the certificate (optional).</li>

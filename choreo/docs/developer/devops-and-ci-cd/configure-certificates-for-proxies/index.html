@@ -4142,7 +4142,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <h1 id="configure-certificates-for-proxies">Configure Certificates for Proxies<a class="headerlink" href="#configure-certificates-for-proxies" title="Permanent link">&para;</a></h1>
-<p>You can apply organization-level TLS certificates to Proxy components to ensure secure communication with external services. Certificates configured at the organization level are available for selection when configuring Proxy endpoints and during deployment. To learn how to create and manage certificates at the organization level, see <a href="../manage-certificates/">Manage Certificates</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>mTLS certificates follow a different configuration flow. For details, see <a href="../../authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls/">Secure Communication Between the Gateway and Your Backend with Mutual TLS</a>.</p>
+</div>
+<p>You can apply organization-level TLS certificates to Proxy components to ensure secure communication with external services. Certificates configured at the organization level are available for selection when configuring Proxy endpoints and during deployment. To learn how to add and manage certificates at the organization level, see <a href="../manage-certificates/">Manage Certificates</a>.</p>
 <h2 id="configure-endpoint-certificates">Configure endpoint certificates<a class="headerlink" href="#configure-endpoint-certificates" title="Permanent link">&para;</a></h2>
 <p>To configure TLS certificates for a Proxy component's endpoints, follow the steps given below:</p>
 <ol>
@@ -4151,10 +4155,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Select a TLS/endpoint certificate from the dropdown. The dropdown lists certificates available at the organization level.</li>
 <li>Optionally, configure a separate certificate for the sandbox endpoint.</li>
 </ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>mTLS certificates follow a different configuration flow. For details, see <a href="../../authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls/">Secure Communication Between the Gateway and Your Backend with Mutual TLS</a>.</p>
-</div>
 <h2 id="deploy-a-proxy-with-endpoint-certificate">Deploy a proxy with endpoint certificate<a class="headerlink" href="#deploy-a-proxy-with-endpoint-certificate" title="Permanent link">&para;</a></h2>
 <p>To deploy a Proxy component with an endpoint certificate, follow the steps given below:</p>
 <ol>
