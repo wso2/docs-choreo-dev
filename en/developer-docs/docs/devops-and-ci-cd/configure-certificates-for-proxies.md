@@ -1,7 +1,10 @@
 
 # Configure Certificates for Proxies
 
-You can apply organization-level TLS certificates to Proxy components to ensure secure communication with external services. Certificates configured at the organization level are available for selection when configuring Proxy endpoints and during deployment. To learn how to create and manage certificates at the organization level, see [Manage Certificates](./manage-certificates.md).
+!!! note
+    mTLS certificates follow a different configuration flow. For details, see [Secure Communication Between the Gateway and Your Backend with Mutual TLS](../authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls.md).
+
+You can apply organization-level TLS certificates to Proxy components to ensure secure communication with external services. Certificates configured at the organization level are available for selection when configuring Proxy endpoints and during deployment. To learn how to add and manage certificates at the organization level, see [Manage Certificates](./manage-certificates.md).
 
 ## Configure endpoint certificates
 
@@ -11,9 +14,6 @@ To configure TLS certificates for a Proxy component's endpoints, follow the step
 2. On the **Endpoints** page, locate the endpoint you want to secure.
 3. Select a TLS/endpoint certificate from the dropdown. The dropdown lists certificates available at the organization level.
 4. Optionally, configure a separate certificate for the sandbox endpoint.
-
-!!! note
-    mTLS certificates follow a different configuration flow. For details, see [Secure Communication Between the Gateway and Your Backend with Mutual TLS](../authentication-and-authorization/secure-communication-between-the-choreo-gateway-and-your-backend-with-mutual-tls.md).
 
 ## Deploy a proxy with endpoint certificate
 
