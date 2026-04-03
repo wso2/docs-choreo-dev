@@ -1,7 +1,7 @@
 
 # Manage Certificates
 
-{{ product_name }} provides centralized certificate management at the organization level, allowing you add certificates and apply them to components during deployment.
+{{ product_name }} provides centralized certificate management at the organization level, allowing you to add certificates and apply them to components during deployment.
 
 ## Add a certificate
 
