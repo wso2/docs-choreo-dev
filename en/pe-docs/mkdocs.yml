@@ -18,7 +18,7 @@
 site_name: "WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform"
 site_description: WSO2 Developer Platform Explore WSO2 Developer Platform documentation to build, deploy, and manage cloud-native apps effortlessly. Whether you're a platform engineer or app developer, WSO2 Developer Platform simplifies infrastructure automation and streamlines delivery with an AI-native internal developer platform.
 site_author: WSO2
-site_url: https://wso2.com/choreo/docs
+site_url: https://wso2.com/engineering-platform/developer-platform/docs
 site_dir: site/platform-engineer
 
 # Repository
