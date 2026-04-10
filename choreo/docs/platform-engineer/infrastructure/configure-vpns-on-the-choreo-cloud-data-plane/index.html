@@ -3464,8 +3464,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>The authentication keys obtained from your Tailscale network have an expiration date and require periodic rotation. To avoid manual rotation, you can generate non-expiring authentication keys using OAuth clients. For details, see <a href="https://tailscale.com/kb/1215/oauth-clients#generating-long-lived-auth-keys">Generating long-lived auth keys</a> in the Tailscale documentation.</p>
 <p>Follow these steps if you want to add an OAuth client secret to the Tailscale proxy component instead of the <code>TS_AUTH_KEY</code> environment variable as a secret:</p>
 <ol>
-<li>Define a tag named <code>WSO2 Developer Platform-vpn</code> in your Tailscale ACLs. For details, see <a href="https://tailscale.com/kb/1068/tags#define-a-tag">Define a tag</a> in the Tailscale documentation.</li>
-<li>Create an <a href="https://tailscale.com/kb/1215/oauth-clients">OAuth client</a> with the following scope, ensuring it is assigned to the <code>WSO2 Developer Platform-vpn</code> tag:<ul>
+<li>Define a tag named <code>choreo-vpn</code> in your Tailscale ACLs. For details, see <a href="https://tailscale.com/kb/1068/tags#define-a-tag">Define a tag</a> in the Tailscale documentation.</li>
+<li>Create an <a href="https://tailscale.com/kb/1215/oauth-clients">OAuth client</a> with the following scope, ensuring it is assigned to the <code>choreo-vpn</code> tag:<ul>
 <li>Keys → Auth Keys → write</li>
 </ul>
 </li>
