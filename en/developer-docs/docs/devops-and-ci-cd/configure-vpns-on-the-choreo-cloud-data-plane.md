@@ -125,8 +125,8 @@ To configure and deploy the component, follow the steps given below:
 
         Follow these steps if you want to add an OAuth client secret to the Tailscale proxy component instead of the `TS_AUTH_KEY` environment variable as a secret:
 
-         1. Define a tag named `{{ product_name }}-vpn` in your Tailscale ACLs. For details, see [Define a tag](https://tailscale.com/kb/1068/tags#define-a-tag) in the Tailscale documentation.
-         2. Create an [OAuth client](https://tailscale.com/kb/1215/oauth-clients) with the following scope, ensuring it is assigned to the `{{ product_name }}-vpn` tag:
+         1. Define a tag named `choreo-vpn` in your Tailscale ACLs. For details, see [Define a tag](https://tailscale.com/kb/1068/tags#define-a-tag) in the Tailscale documentation.
+         2. Create an [OAuth client](https://tailscale.com/kb/1215/oauth-clients) with the following scope, ensuring it is assigned to the `choreo-vpn` tag:
              - Keys → Auth Keys → write
          3. Generate the OAuth client and copy the client secret.
          4. Set the client secret as an environment variable named `OAUTH_CLIENT_SECRET`.
