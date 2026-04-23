@@ -169,9 +169,9 @@ You can configure the environment variables necessary to build the component usi
 For Buildpack components:
 During the build process, the build-time environment variables and their values are passed to the build preset. Therefore, you can configure both build preset-specific environment variables and those required for the component build.
 
-For example, if you want to override the Maven command of the Java build presets, you can use GOOGLE_MAVEN_BUILD_ARGS as the environment key and clean install as the value.
+For example, if you want to override the Maven command of the  **Java** build presets, you can use `GOOGLE_MAVEN_BUILD_ARGS` as the environment key and `clean install` as the value.
 
-For more examples, see Google Cloud's buildpacks documentation.
+For more examples, see [Google Cloud's buildpacks documentation](https://cloud.google.com/docs/buildpacks/service-specific-configs)..
 
 For BYOC (Bring Your Own Container) components:
 You can configure build-time environment variables that are passed as build arguments (ARG) during the Docker image build process. These variables are available during the build stage of your Dockerfile and can be used to customize the build behavior.
