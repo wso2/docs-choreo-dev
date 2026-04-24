@@ -16,7 +16,7 @@
 !!! tip "Accessible and Inclusive"
     **WSO2 Developer Platform is accessible to everyone.**
 
-    {{ product_name }} conforms to the **Web Content Accessibility Guidelines (WCAG) 2.2 up to Level AA**, with support for keyboard navigation, screen readers, color contrast, focus management, and semantic structure throughout the console. It is built to be usable by everyone, regardless of ability.
+    {{ product_name }} conforms to the **Web Content Accessibility Guidelines (WCAG) 2.2 Level AA**, with support for keyboard navigation, screen readers, color contrast, focus management, and semantic structure throughout the console. It is built to be usable by everyone, regardless of ability.
 
 ## Key capabilities of {{ product_name }}
 
