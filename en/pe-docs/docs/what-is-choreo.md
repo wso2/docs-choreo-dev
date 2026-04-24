@@ -13,6 +13,11 @@
 
     **Important**: No data is shared between regions. Resources created in one region are not available in the other region. This includes projects, components, APIs, services, configurations, secrets, user data, and monitoring data. Choose the region that meets your data residency and compliance requirements.
 
+!!! tip "Accessible and Inclusive"
+    **WSO2 Developer Platform is accessible to everyone.**
+
+    {{ product_name }} conforms to the **Web Content Accessibility Guidelines (WCAG) 2.2 up to Level AA**, with support for keyboard navigation, screen readers, color contrast, focus management, and semantic structure throughout the console. A great developer platform should be usable by everyone, regardless of ability.
+
 ## Key capabilities of {{ product_name }}
 
 ### Infrastructure Automation
