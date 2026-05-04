@@ -4425,9 +4425,13 @@ e.g.,</p>
 </div>
 <h3 id="configure-build-time-environment-variables">Configure build-time environment variables<a class="headerlink" href="#configure-build-time-environment-variables" title="Permanent link">&para;</a></h3>
 <p>You can configure the environment variables necessary to build the component using the <strong>Build Configurations Editor</strong> on the component <strong>Build</strong> page. </p>
-<p>During the build process, the build-time environment variables and their values are passed to the build preset. Therefore, you can configure both build preset-specific environment variables and those required for the component build.</p>
-<p>For example, if you want to override the Maven command of the <strong>Java</strong> build presets, you can use <code>GOOGLE_MAVEN_BUILD_ARGS</code> as the environment key and <code>clean install</code> as the value. </p>
-<p>For more examples, see <a href="https://cloud.google.com/docs/buildpacks/service-specific-configs">Google Cloud's buildpacks documentation</a>.</p>
+<p>For Buildpack components:
+During the build process, the build-time environment variables and their values are passed to the build preset. Therefore, you can configure both build preset-specific environment variables and those required for the component build.</p>
+<p>For example, if you want to override the Maven command of the <strong>Java</strong> build presets, you can use <code>GOOGLE_MAVEN_BUILD_ARGS</code> as the environment key and <code>clean install</code> as the value.</p>
+<p>For more examples, see <a href="https://cloud.google.com/docs/buildpacks/service-specific-configs">Google Cloud's buildpacks documentation</a>..</p>
+<p>For BYOC (Bring Your Own Container) components:
+You can configure build-time environment variables that are passed as build arguments (ARG) during the Docker image build process. These variables are available during the build stage of your Dockerfile and can be used to customize the build behavior.</p>
+<p>For example, you can set environment variables to configure build-specific settings such as build modes, feature flags, or dependency options that your Dockerfile references via ARG directives.</p>
 <h3 id="customize-the-default-run-command">Customize the Default Run Command<a class="headerlink" href="#customize-the-default-run-command" title="Permanent link">&para;</a></h3>
 <p>You can configure the run command required to start the component via the <strong>Build Configurations</strong> editor on the component's <strong>Build</strong> page. This overrides the default run command provided by the build preset. After configuring the run command, you must rebuild the component for the changes to take effect.<br></p>
 <p>e.g., <br></p>
