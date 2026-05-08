@@ -108,7 +108,6 @@ nav:
   - DevOps:
       - Automation Pipelines:
         - What are Automation Pipelines: devops/automation-pipelines/introduction.md
-        - WSO2 Developer Platform Pipelines Specification: devops/automation-pipelines/specification.md
         - Manage Automation Pipelines: devops/automation-pipelines/manage-automation-pipeline.md
         - Run Automation Pipelines: devops/automation-pipelines/run-automation-pipeline.md
         - Inbuilt Pipeline Templates: devops/automation-pipelines/inbuilt-templates.md
