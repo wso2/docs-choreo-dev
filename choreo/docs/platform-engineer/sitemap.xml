@@ -2,437 +2,437 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/overview/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/page-not-found/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/what-is-choreo/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/api-management/api-analytics/integrate-choreo-with-moesif/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/api-management/consumer-idps/configure-a-user-store-with-built-in-idp/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/api-management/consumer-idps/configure-asgardeo-as-an-external-idp/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/api-management/consumer-idps/configure-azure-ad-as-an-external-idp/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/api-management/developer-portal/configure-exposed-environments-to-developer-portal/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/api-management/developer-portal/configure-identity-providers-for-developer-portal/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/api-management/developer-portal/configure-self-sign-up/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/api-management/developer-portal/customize-the-developer-portal/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-cli/choreo-cli-overview/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-cli/get-started-with-the-choreo-cli/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-cli/manage-authentication-with-personal-access-tokens/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/access-control/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/choreo-marketplace/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/ci-cd/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/component/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/connections/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/data-planes/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/deployment-tracks/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/endpoint/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/environments/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/organization/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/project/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/choreo-concepts/resource-hierarchy/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/ai-gateway/choreo-ai-gateway/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/ai-gateway/integrate-and-manage-gen-ai-services/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/databases/add-choreo-managed-databases-and-caches-to-the-marketplace/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/databases/choreo-managed-caches/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/databases/choreo-managed-databases-and-caches/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/databases/choreo-managed-mysql-databases/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/databases/choreo-managed-postgresql-databases/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/external-services/integrate-and-manage-gen-ai-services/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/external-services/integrate-and-manage-third-party-services/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/message-brokers/choreo-managed-message-brokers/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/message-brokers/configure-a-kafka-service/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/message-brokers/create-choreo-managed-kafka-services/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/db-and-services/message-brokers/monitor-a-kafka-service/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/manage-configuration-groups/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/automation-pipelines/inbuilt-templates/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/automation-pipelines/introduction/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/automation-pipelines/manage-automation-pipeline/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/automation-pipelines/run-automation-pipeline/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/cd-pipelines/manage-continuous-deployment-pipelines/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/cd-pipelines/submit-and-manage-environment-promotion-approval-requests/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/ci-pipelines/ci-pipeline-logs/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/ci-pipelines/configure-ci-pipeline/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/governance/approvals/review-workflow-approval-requests/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/governance/egress-control/control-egress-traffic-for-your-organization/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/governance/guideline-documents/architect-agent-guideline-documents/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/governance/workflows/configure-approvals-for-choreo-workflows/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/infrastructure/configure-vpns-on-the-choreo-cloud-data-plane/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/infrastructure/credentials/use-your-own-container-registry/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/infrastructure/dataplanes/data-planes/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/infrastructure/domains/configure-a-custom-domain-for-your-organization/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/infrastructure/environments/manage-environments/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/insights/cost-optimization/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/insights/operational-insights-dashboard/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/insights/delivery-insights/configure-delivery-insights/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/insights/delivery-insights/view-delivery-insights/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/insights/work-with-choreo-insights-api/access-the-choreo-insights-api/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/insights/work-with-choreo-insights-api/choreo-insights-api/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/k8s-operations/manage-configurations-and-secrets/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/k8s-operations/set-up-health-checks/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/k8s-operations/containers/configure-container-resources-commands-and-arguments/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/k8s-operations/runtime/view-runtime-details/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/k8s-operations/scaling/autoscale-component-replicas/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/k8s-operations/scaling/autoscale-components-with-scale-to-zero/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/k8s-operations/storage/configure-storage/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/observability/audit-logs/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/observability/private-data-plane-logs/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/observability/runtime-logs/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/observability/alerts/configure-alerts/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/references/choreo-limitations/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/references/choreo-platform-services-billing-and-upgrades/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/references/faq/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/references/private-data-plane-management-models/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/references/private-data-plane-security-levels/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/references/troubleshoot-choreo/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/user-management/groups-and-roles/configure-access-control/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/user-management/users/configure-enterprise-login/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wso2.com/engineering-platform/developer-platform/docs/user-management/users/manage-members-of-an-organization/</loc>
-         <lastmod>2026-05-04</lastmod>
+         <lastmod>2026-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
