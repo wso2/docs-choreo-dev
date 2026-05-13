@@ -187,3 +187,20 @@ e.g., <br>
 - java -jar target/sample.jar
 - node app.js
 - php -S 0.0.0.0:8000 index.php
+
+
+## Troubleshooting Go build issues
+
+If you encounter errors similar to:
+
+```bash
+package xxx/prisma/db is not found
+```
+
+ensure that:
+
+- all generated Prisma client files are committed to the repository
+- the correct Go module path is configured
+- generated directories are included before deployment
+
+This issue can occur during Buildpack-based deployments in Choreo when generated Prisma files are excluded from the Git repository.
