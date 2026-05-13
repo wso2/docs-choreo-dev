@@ -194,7 +194,7 @@ e.g., <br>
 If you encounter errors similar to:
 
 ```bash
-package xxx/prisma/db is not found
+package meal-planner-backend/prisma/db is not found
 ```
 
 ensure that:
