@@ -1,30 +1,25 @@
 
 # Manage Certificates
 
-{{ product_name }} provides centralized certificate management at the organization level, allowing you to manage TLS certificates and apply them to components during deployment. This ensures secure communication between your components and external services by maintaining trusted certificates in a single place.
+{{ product_name }} provides centralized certificate management at the organization level, allowing you to add certificates and apply them to components during deployment.
 
-## Create a certificate
+## Add a certificate
 
 !!! important
-    - To create certificates, you need `Create Global Configs` or `Manage Global Configs` permission.
+    - To add certificates, you need `Create Global Configs` or `Manage Global Configs` permission.
 
-To create a new certificate, follow the steps given below:
+To add a new certificate, follow the steps given below:
 
 1. In the [{{ product_name }} Console](https://console.choreo.dev/), go to the top navigation menu. Click **Organization** and select your organization.
 2. In the left navigation menu, click **DevOps** and then click **Certificates**.
-3. On the **Certificates Management** page, click **+ Create Certificate**.
-4. On the **Add a Certificate** page, choose why you're adding the certificate:
-
-    - **Verify External Server**: Use a public certificate to confirm another server's identity for secure TLS connections.
-    - **Secure Website Domain** *(Coming Soon)*: Use SSL/TLS to safely secure your custom domains managed through {{ product_name }}.
-
-5. Specify the following details:
+3. On the **Certificates Management** page, click **+ Add Certificate**.
+4. On the **Add a Certificate** page, specify the following details:
 
     - **Certificate Name**: A name for the certificate.
     - **Description**: A description for the certificate (optional).
     - **Certificate File**: Upload the certificate file in `.pem` format.
 
-6. Click **Add**.
+5. Click **Add**.
 
 ## View certificates
 

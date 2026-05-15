@@ -1,7 +1,7 @@
 
 # Configure Certificates for Services
 
-You can mount organization-level TLS certificates to Service components to enable secure communication with external services. Certificates configured at the organization level are available for selection when deploying services. To learn how to create and manage certificates at the organization level, see [Manage Certificates](./manage-certificates.md).
+You can mount organization-level TLS certificates to Service components to enable secure communication with external services. Certificates configured at the organization level are available for selection when deploying services. To learn how to add and manage certificates at the organization level, see [Manage Certificates](./manage-certificates.md).
 
 !!! info
     This feature is currently only available for Ballerina, WSO2 MI, BYOI, Docker, Go, Python, Java, .NET, NodeJS, Ruby, and PHP build presets (excluding Web Applications).
