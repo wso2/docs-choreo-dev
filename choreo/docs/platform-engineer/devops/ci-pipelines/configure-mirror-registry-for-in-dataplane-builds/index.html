@@ -12,20 +12,20 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/engineering-platform/developer-platform/docs/user-management/groups-and-roles/configure-access-control/">
+        <link rel="canonical" href="https://wso2.com/engineering-platform/developer-platform/docs/devops/ci-pipelines/configure-mirror-registry-for-in-dataplane-builds/">
       
       
-        <link rel="prev" href="../../users/configure-enterprise-login/">
+        <link rel="prev" href="../integrate-unit-tests-into-the-build-pipeline/">
       
       
-        <link rel="next" href="../../../devops/automation-pipelines/introduction/">
+        <link rel="next" href="../ci-pipeline-logs/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Configure Access Control - WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform</title>
+        <title>Configure a Mirror Registry for In-Dataplane Builds - WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform</title>
       
     
     
@@ -142,7 +142,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#configure-access-control" class="md-skip">
+        <a href="#configure-a-mirror-registry-for-in-dataplane-builds" class="md-skip">
           Skip to content
         </a>
       
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Configure Access Control
+              Configure a Mirror Registry for In-Dataplane Builds
             
           </span>
         </div>
@@ -1003,16 +1003,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
       
       
       
@@ -1021,7 +1021,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           User Management
@@ -1063,7 +1063,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../users/manage-members-of-an-organization/" class="md-nav__link">
+      <a href="../../../user-management/users/manage-members-of-an-organization/" class="md-nav__link">
         Manage  Members of an Organization
       </a>
     </li>
@@ -1077,7 +1077,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../users/configure-enterprise-login/" class="md-nav__link">
+      <a href="../../../user-management/users/configure-enterprise-login/" class="md-nav__link">
         Configure Enterprise Login
       </a>
     </li>
@@ -1096,16 +1096,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_2" >
       
       
       
@@ -1114,7 +1114,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_5_2">
           <span class="md-nav__icon md-icon"></span>
           Groups & Roles
@@ -1125,73 +1125,11 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Configure Access Control
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../user-management/groups-and-roles/configure-access-control/" class="md-nav__link">
         Configure Access Control
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-create-a-project" class="md-nav__link">
-    Step 1: Create a project
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-create-a-new-group" class="md-nav__link">
-    Step 2: Create a new group
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-assign-roles-to-the-group" class="md-nav__link">
-    Step 3: Assign roles to the group
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-add-users-to-the-group" class="md-nav__link">
-    Step 4: Add users to the group
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1216,16 +1154,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
       
       
       
@@ -1234,7 +1172,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           DevOps
@@ -1276,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/automation-pipelines/introduction/" class="md-nav__link">
+      <a href="../../automation-pipelines/introduction/" class="md-nav__link">
         What are Automation Pipelines
       </a>
     </li>
@@ -1290,7 +1228,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/automation-pipelines/manage-automation-pipeline/" class="md-nav__link">
+      <a href="../../automation-pipelines/manage-automation-pipeline/" class="md-nav__link">
         Manage Automation Pipelines
       </a>
     </li>
@@ -1304,7 +1242,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/automation-pipelines/run-automation-pipeline/" class="md-nav__link">
+      <a href="../../automation-pipelines/run-automation-pipeline/" class="md-nav__link">
         Run Automation Pipelines
       </a>
     </li>
@@ -1318,7 +1256,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/automation-pipelines/inbuilt-templates/" class="md-nav__link">
+      <a href="../../automation-pipelines/inbuilt-templates/" class="md-nav__link">
         Inbuilt Pipeline Templates
       </a>
     </li>
@@ -1337,16 +1275,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
       
       
       
@@ -1355,7 +1293,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6_2">
           <span class="md-nav__icon md-icon"></span>
           CI Pipelines
@@ -1368,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/ci-pipelines/configure-ci-pipeline/" class="md-nav__link">
+      <a href="../configure-ci-pipeline/" class="md-nav__link">
         Configure CI Pipeline
       </a>
     </li>
@@ -1382,7 +1320,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
+      <a href="../integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
         Integrate Unit Tests into the CI Pipeline
       </a>
     </li>
@@ -1394,11 +1332,155 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../../devops/ci-pipelines/configure-mirror-registry-for-in-dataplane-builds/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Configure a Mirror Registry for In-Dataplane Builds
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Configure a Mirror Registry for In-Dataplane Builds
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    How it works
+  </a>
+  
+    <nav class="md-nav" aria-label="How it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-lookup-precedence" class="md-nav__link">
+    Key lookup precedence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-identify-the-values-you-need" class="md-nav__link">
+    Step 1: Identify the values you need
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-create-the-choreo-build-registry-proxy-secret" class="md-nav__link">
+    Step 2: Create the choreo-build-registry-proxy Secret
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-trigger-a-build-and-verify" class="md-nav__link">
+    Step 3: Trigger a build and verify
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-reference" class="md-nav__link">
+    Configuration reference
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oci-container-image-mirrors" class="md-nav__link">
+    OCI container image mirrors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-image-overrides" class="md-nav__link">
+    Full image overrides
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#language-package-proxies" class="md-nav__link">
+    Language package proxies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#support-matrix-per-build-strategy" class="md-nav__link">
+    Support matrix per build strategy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-allowlisting-alternative-to-a-forward-proxy" class="md-nav__link">
+    Domain allowlisting (alternative to a forward proxy)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-links" class="md-nav__link">
+    Related links
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1410,7 +1492,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/ci-pipelines/ci-pipeline-logs/" class="md-nav__link">
+      <a href="../ci-pipeline-logs/" class="md-nav__link">
         CI Pipeline logs
       </a>
     </li>
@@ -1460,7 +1542,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
+      <a href="../../cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
         Deploy Applications using WSO2 Developer Platform CD Pipeline
       </a>
     </li>
@@ -1474,7 +1556,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
+      <a href="../../cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
         Manage CD Pipelines
       </a>
     </li>
@@ -1488,7 +1570,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-nav__link">
+      <a href="../../cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-nav__link">
         Submit Environment Promotion Approval Requests
       </a>
     </li>
@@ -1509,7 +1591,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../../devops/manage-configuration-groups/" class="md-nav__link">
+      <a href="../../manage-configuration-groups/" class="md-nav__link">
         Manage Configuration Groups
       </a>
     </li>
@@ -3108,29 +3190,111 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#step-1-create-a-project" class="md-nav__link">
-    Step 1: Create a project
+  <a href="#how-it-works" class="md-nav__link">
+    How it works
+  </a>
+  
+    <nav class="md-nav" aria-label="How it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-lookup-precedence" class="md-nav__link">
+    Key lookup precedence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-create-a-new-group" class="md-nav__link">
-    Step 2: Create a new group
+  <a href="#step-1-identify-the-values-you-need" class="md-nav__link">
+    Step 1: Identify the values you need
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-assign-roles-to-the-group" class="md-nav__link">
-    Step 3: Assign roles to the group
+  <a href="#step-2-create-the-choreo-build-registry-proxy-secret" class="md-nav__link">
+    Step 2: Create the choreo-build-registry-proxy Secret
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-add-users-to-the-group" class="md-nav__link">
-    Step 4: Add users to the group
+  <a href="#step-3-trigger-a-build-and-verify" class="md-nav__link">
+    Step 3: Trigger a build and verify
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-reference" class="md-nav__link">
+    Configuration reference
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oci-container-image-mirrors" class="md-nav__link">
+    OCI container image mirrors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-image-overrides" class="md-nav__link">
+    Full image overrides
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#language-package-proxies" class="md-nav__link">
+    Language package proxies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#support-matrix-per-build-strategy" class="md-nav__link">
+    Support matrix per build strategy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-allowlisting-alternative-to-a-forward-proxy" class="md-nav__link">
+    Domain allowlisting (alternative to a forward proxy)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-links" class="md-nav__link">
+    Related links
   </a>
   
 </li>
@@ -3150,140 +3314,281 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
 
-<h1 id="configure-access-control">Configure Access Control<a class="headerlink" href="#configure-access-control" title="Permanent link">&para;</a></h1>
-<p>Before configuring access control in WSO2 Developer Platform, review the <a href="../../../choreo-concepts/access-control/">Access Control Concepts</a>.</p>
-<p>Now, let’s walk through a sample scenario for granting access to a specific environment within a project.</p>
-<p>Assume you are overseeing the Engineering Project within your organization and you need to grant development access to specific users solely within this project. As they are developers, you further need to restrict their access to the Development environment of the project. Here's a step-by-step guide on how to achieve this:</p>
-<h3 id="step-1-create-a-project">Step 1: Create a project<a class="headerlink" href="#step-1-create-a-project" title="Permanent link">&para;</a></h3>
-<p>Follow the steps given below to create a project:</p>
-<ol>
-<li>Go to <a href="https://console.choreo.dev/">https://console.choreo.dev/</a> and sign in. This opens the organization home page.</li>
-<li>On the organization home page, click <strong>+ Create Project</strong>.</li>
-<li>
-<p>Enter a display name, unique name, and description for the project. You can enter the values given below:</p>
+<h1 id="configure-a-mirror-registry-for-in-dataplane-builds">Configure a Mirror Registry for In-Dataplane Builds<a class="headerlink" href="#configure-a-mirror-registry-for-in-dataplane-builds" title="Permanent link">&para;</a></h1>
+<p>When WSO2 Developer Platform runs builds inside a <a href="../../../choreo-concepts/data-planes/#private-data-planes">private data plane</a> (PDP) using Argo Workflows, every build step pulls container images and downloads language packages from public sources (Docker Hub, Google Buildpacks registry, npm, Maven Central, PyPI, NuGet, RubyGems, Composer, etc.). On restricted or air-gapped clusters where direct egress to these public sources is blocked, the build will fail at the image pull or dependency resolution step.</p>
+<p>To support these environments, WSO2 Developer Platform lets a platform engineer redirect every outbound build dependency through a mirror registry of your choice — for example, an internal Nexus, Harbor, JFrog Artifactory, or any OCI-compliant proxy — by mounting a single Kubernetes Secret into the build pod. The build then transparently pulls images and packages from your mirror instead of the public source.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>In the <strong>Name</strong> field, you must specify a name to uniquely identify your project in various contexts. The value is editable only at the time you create the project. You cannot change the name after you create the project.</p>
+<p>This feature is available only on private data planes that run the in-dataplane build system on Argo Workflows. It does not apply to WSO2 Developer Platform cloud data plane builds.</p>
 </div>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Project Display Name</strong></td>
-<td><code>Engineering Project</code></td>
-</tr>
-<tr>
-<td><strong>Name</strong></td>
-<td><code>engineering-project</code></td>
-</tr>
-<tr>
-<td><strong>Project Description</strong></td>
-<td><code>My sample project</code></td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Click <strong>Create</strong>. This creates the project and takes you to the project home page.</p>
-</li>
-</ol>
-<h3 id="step-2-create-a-new-group">Step 2: Create a new group<a class="headerlink" href="#step-2-create-a-new-group" title="Permanent link">&para;</a></h3>
-<p>Follow the steps given below to create a group with the name <code>Engineering Project Developer</code>:</p>
+<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<p>During each build, WSO2 Developer Platform mounts a Kubernetes Secret named <code>choreo-build-registry-proxy</code> into the build pod at <code>/mnt/proxy-config</code> (read-only, optional). Build scripts read configuration values from this directory before fetching anything from the network:</p>
+<ul>
+<li><strong>Container images</strong> are rewritten so that pulls go to the configured OCI mirror instead of the public source, or replaced entirely with a customer-supplied image reference.</li>
+<li><strong>Language package managers</strong> (npm, Maven, Gradle, NuGet, PyPI, Go, RubyGems, Composer) are reconfigured at the start of the build to fetch dependencies from the configured proxy URLs.</li>
+</ul>
+<p>If the Secret is not present, the mounted directory is empty and the build proceeds with the default public sources, so the feature is fully opt-in and backwards compatible.</p>
+<h3 id="key-lookup-precedence">Key lookup precedence<a class="headerlink" href="#key-lookup-precedence" title="Permanent link">&para;</a></h3>
+<p>For every configuration key, the build script first looks for a build-strategy-specific override and then falls back to a global value:</p>
 <ol>
-<li>In the WSO2 Developer Platform Console, go to the top navigation menu, click the <strong>Organization</strong> list, and select the organization where you created your project.</li>
-<li>In the left navigation menu, click <strong>Settings</strong>.</li>
-<li>Click the <strong>Access Control</strong> tab and then click the <strong>Groups</strong> tab.</li>
-<li>Click <strong>+ Create Group</strong>.</li>
-<li>
-<p>Enter a group name and group description. You can enter the values given below:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Field</strong></th>
-<th><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Group Name</strong></td>
-<td><code>Engineering Project Developer</code></td>
-</tr>
-<tr>
-<td><strong>Group Description</strong></td>
-<td><code>Users with development access within the engineering project</code></td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>Click <strong>Create</strong>.</p>
-</li>
+<li><code>&lt;strategy&gt;.&lt;key&gt;</code> — applies only to that build strategy (for example, <code>buildpack.pkg-npm-url</code>).</li>
+<li><code>&lt;key&gt;</code> — applies to all build strategies (for example, <code>pkg-npm-url</code>).</li>
 </ol>
-<h3 id="step-3-assign-roles-to-the-group">Step 3: Assign roles to the group<a class="headerlink" href="#step-3-assign-roles-to-the-group" title="Permanent link">&para;</a></h3>
-<p>Follow the steps given below to assign the <strong>Developer</strong> role to the <strong>Engineering Project Developer</strong> group that you created:</p>
-<ol>
-<li>In the WSO2 Developer Platform Console, go to the top navigation menu, click the <strong>Project</strong> list, and select the <strong>Engineering Project</strong> that you created.</li>
-<li>In the left navigation menu, click <strong>Settings</strong>.</li>
-<li>Click the <strong>Access Control</strong> tab and then click the <strong>Groups</strong> tab.</li>
-<li>On the <strong>Groups</strong> tab, search for the <strong>Engineering Project Developer</strong> group and click the corresponding edit icon.</li>
-<li>Click <strong>+Assign Roles</strong>. </li>
-<li>In the <strong>Assign Roles to Group in Project</strong> dialog that opens, click the <strong>Roles</strong> list and select <strong>Developer</strong>.</li>
-<li>Click <strong>Selected Environments</strong> radio button under <strong>Applicable Environments</strong></li>
-</ol>
-<div class="admonition warning">
-<p class="admonition-title">Important</p>
-<p>Configuring the Applicable Environment for a Role to Group assignment is currently available only for selected organizations.</p>
-</div>
-<ol>
-<li>Select <strong>Development</strong> environment from the environment selecction dropdown </li>
-<li>Click <strong>Assign</strong>. This assigns the <strong>Developer</strong> role to the group. You should see the mapping level as <strong>Project (Engineering Project)</strong> and Applicable Environment as <strong>Development</strong> indicating the type of the asssignment:</li>
-</ol>
-<p>This means that you have granted developer access to users in the Engineering Project Developer group in the scope of the Development environment of the Engineering Project.</p>
-<p>Now that you have set up access control, you can proceed to add users to the new group.</p>
-<h3 id="step-4-add-users-to-the-group">Step 4: Add users to the group<a class="headerlink" href="#step-4-add-users-to-the-group" title="Permanent link">&para;</a></h3>
-<p>There are two approaches you can follow to add users to the group.</p>
-<h4>Add a new user as a project developer</h4>
-<p>Follow the steps given below to add a new user as a project developer:</p>
-<ol>
-<li>In the WSO2 Developer Platform Console, go to the top navigation menu, click the <strong>Organization</strong> list, and select the organization where you created your project.</li>
-<li>In the left navigation menu, click <strong>Settings</strong>.</li>
-<li>Click the <strong>Access Control</strong> tab and then click the <strong>Users</strong> tab.</li>
-<li>Click <strong>+Invite Users</strong>.</li>
-<li>In the <strong>Invite Users</strong> dialog,</li>
-<li>Specify the email addresses of the users in the <strong>Emails</strong> field.</li>
-<li>Click the <strong>Groups</strong> list and select <strong>Engineering Project Developer</strong>.</li>
-<li>Click <strong>Invite</strong>.</li>
-</ol>
-<h4>Add an existing user as a project developer</h4>
-<p>Follow the steps given below to add an existing user as a project developer:</p>
-<ol>
-<li>In the WSO2 Developer Platform Console, go to the top navigation menu, click the <strong>Organization</strong> list, and select the organization where you created your project.</li>
-<li>In the left navigation menu, click <strong>Settings</strong>.</li>
-<li>Click the <strong>Access Control</strong> tab and then click the <strong>Users</strong> tab.</li>
-<li>Search for the existing user you want to add to the <strong>Engineering Project Developer</strong> group.</li>
-<li>Click the edit icon corresponding to the user.</li>
-<li>Click <strong>+Assign Groups</strong>.</li>
-<li>In the <strong>Add Groups to User</strong> dialog, click the <strong>Groups</strong> list and select <strong>Engineering Project Developer</strong>.</li>
-<li>Click <strong>Add</strong>.</li>
-</ol>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Make sure to remove the user from any other groups to avoid granting organization-level access unintentionally.</p>
-</div>
+<p>The build strategies recognized by the lookup are <code>buildpack</code>, <code>ballerina</code>, <code>mi</code>, <code>webapp</code>, <code>prism</code>, <code>test-runner</code>, and <code>byoc</code>.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Before you configure the mirror registry, ensure the following:</p>
+<ul>
+<li>The PDP is configured to run in-dataplane builds on Argo Workflows.</li>
+<li>You have <code>kubectl</code> access to the build namespace on the PDP cluster.</li>
+<li>Your mirror registry (Nexus, Harbor, JFrog, or equivalent) is reachable from the build cluster and is configured with proxy repositories for each public source you want to mirror.</li>
+<li>Any credentials required by your mirror (basic auth username/password or token) are available.</li>
+</ul>
+<h2 id="step-1-identify-the-values-you-need">Step 1: Identify the values you need<a class="headerlink" href="#step-1-identify-the-values-you-need" title="Permanent link">&para;</a></h2>
+<p>Decide which sources you want to redirect. Most restricted clusters need entries for the following:</p>
+<ul>
+<li><strong>OCI container image mirrors</strong> — for base images used by the build (Docker Hub, Choreo private registry, Google Cloud Buildpacks registry).</li>
+<li><strong>Language package proxies</strong> — for the package manager(s) used by your component (npm, Maven, Gradle, NuGet, PyPI, Go, RubyGems, Composer).</li>
+<li><strong>(Optional) Full image overrides</strong> — when you cannot mirror a public image and instead want the build to use a different image you have already pushed to your own registry.</li>
+</ul>
+<p>The full key reference is in the <a href="#configuration-reference">Configuration reference</a> section below.</p>
+<h2 id="step-2-create-the-choreo-build-registry-proxy-secret">Step 2: Create the <code>choreo-build-registry-proxy</code> Secret<a class="headerlink" href="#step-2-create-the-choreo-build-registry-proxy-secret" title="Permanent link">&para;</a></h2>
+<p>Create the Secret in the same namespace as the in-dataplane build workloads. Use one file per key, where the file <strong>name</strong> is the key and the file <strong>content</strong> is the value. For example:</p>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>./proxy-config
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;nexus.example.com/dockerhub-proxy&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>./proxy-config/oci-dockerhub-url
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;build-user&quot;</span><span class="w">                         </span>&gt;<span class="w"> </span>./proxy-config/oci-dockerhub-username
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;&lt;password&gt;&quot;</span><span class="w">                         </span>&gt;<span class="w"> </span>./proxy-config/oci-dockerhub-password
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;https://nexus.example.com/repository/npm-proxy/&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>./proxy-config/pkg-npm-url
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;&lt;npm-token&gt;&quot;</span><span class="w">                                    </span>&gt;<span class="w"> </span>./proxy-config/pkg-npm-token
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;https://nexus.example.com/repository/maven-proxy/&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>./proxy-config/pkg-maven-url
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;build-user&quot;</span><span class="w">                                       </span>&gt;<span class="w"> </span>./proxy-config/pkg-maven-username
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;&lt;password&gt;&quot;</span><span class="w">                                       </span>&gt;<span class="w"> </span>./proxy-config/pkg-maven-password
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;build-namespace&gt;<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>choreo-build-registry-proxy<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span>--from-file<span class="o">=</span>./proxy-config
+</code></pre></div>
+
+<p>To restrict a value to a single build strategy, prefix the key with the strategy name and a dot. For example, to point only Ballerina builds at a Ballerina-specific Maven proxy:</p>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;https://nexus.example.com/repository/ballerina-maven/&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>&gt;<span class="w"> </span>./proxy-config/ballerina.pkg-maven-url
+</code></pre></div>
+
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul>
-<li>Existing groups are already mapped to similar roles at the organization level. Therefore, adding users to those groups or keeping users in them, will give organization-level access to the users.</li>
-<li>When users are added to the <strong>Engineering Project Developer</strong> group, they will only have developer access to the <strong>Engineering Project</strong>.</li>
-<li>You can invite new users or add existing users to new groups within the Engineering Project, and based on their requirements, assign roles like Developer, API Publisher, etc.</li>
-</ul>
+<p>Keys are read as plain text. Do not URL-encode credentials or wrap values in quotes — the build script trims trailing newlines, but does not unescape anything else.</p>
 </div>
-<p>Now you have successfully set up access control within your project.</p>
+<h2 id="step-3-trigger-a-build-and-verify">Step 3: Trigger a build and verify<a class="headerlink" href="#step-3-trigger-a-build-and-verify" title="Permanent link">&para;</a></h2>
+<p>After the Secret is in place, trigger a build for a component on the PDP and confirm in the CI pipeline logs that:</p>
+<ul>
+<li>Image pulls reference your mirror host instead of <code>docker.io</code>, <code>gcr.io/buildpacks</code>, or <code>choreocontrolplane.azurecr.io</code>.</li>
+<li>Package manager output (npm, Maven, etc.) shows requests going to your proxy URLs.</li>
+<li>The build completes successfully.</li>
+</ul>
+<p>If the build fails at an image pull or dependency download step, see <a href="#troubleshooting">Troubleshooting</a>.</p>
+<h2 id="configuration-reference">Configuration reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h2>
+<p>All keys are optional. Only define the ones you need. Strategy-scoped overrides (<code>&lt;strategy&gt;.&lt;key&gt;</code>) always take precedence over the corresponding global key.</p>
+<h3 id="oci-container-image-mirrors">OCI container image mirrors<a class="headerlink" href="#oci-container-image-mirrors" title="Permanent link">&para;</a></h3>
+<p>Use these keys when you want to mirror an entire public OCI registry behind a single proxy host. The build rewrites the registry portion of every image reference to the configured mirror URL.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Mirrors</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oci-dockerhub-url</code>, <code>oci-dockerhub-username</code>, <code>oci-dockerhub-password</code></td>
+<td>Docker Hub (<code>index.docker.io</code>)</td>
+<td>When set, the build skips the default Docker Hub login.</td>
+</tr>
+<tr>
+<td><code>oci-choreo-url</code>, <code>oci-choreo-username</code>, <code>oci-choreo-password</code></td>
+<td>The WSO2 Developer Platform private registry that hosts nginx, Prism, and Go base images.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>oci-buildpacks-url</code>, <code>oci-buildpacks-username</code>, <code>oci-buildpacks-password</code></td>
+<td>The Google Cloud Buildpacks registry (builder, lifecycle, run images).</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="full-image-overrides">Full image overrides<a class="headerlink" href="#full-image-overrides" title="Permanent link">&para;</a></h3>
+<p>Use these keys when mirroring is not enough — for example, when your security policy requires a customer-built golden image. The value can be either a complete image reference (<code>registry/repo:tag</code> or <code>registry/repo@sha256:...</code>) or a registry/repo prefix; in the latter case, the original tag or digest is preserved.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Replaces</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>image-node-ref</code></td>
+<td>Node.js base image used by webapp and test-runner builds</td>
+</tr>
+<tr>
+<td><code>image-nginx-ref</code></td>
+<td>Nginx image used to serve webapp builds</td>
+</tr>
+<tr>
+<td><code>image-prism-ref</code></td>
+<td>Prism image used by Prism mock builds</td>
+</tr>
+<tr>
+<td><code>image-golang-ref</code></td>
+<td>Go image used by Prism mock builds</td>
+</tr>
+<tr>
+<td><code>image-buildpacks-run-ref</code></td>
+<td>Buildpacks run image</td>
+</tr>
+<tr>
+<td><code>image-buildpacks-lifecycle-ref</code></td>
+<td>Buildpacks lifecycle image</td>
+</tr>
+<tr>
+<td><code>image-buildpacks-builder-ref</code></td>
+<td>Buildpacks builder image</td>
+</tr>
+</tbody>
+</table>
+<h3 id="language-package-proxies">Language package proxies<a class="headerlink" href="#language-package-proxies" title="Permanent link">&para;</a></h3>
+<p>Use these keys to redirect language package managers to your mirror. Where applicable, supply credentials with the matching <code>-username</code>/<code>-password</code> keys (or <code>-token</code> for npm).</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Package manager</th>
+<th>Credentials</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pkg-npm-url</code>, <code>pkg-npm-token</code></td>
+<td>npm</td>
+<td>Token only</td>
+</tr>
+<tr>
+<td><code>pkg-maven-url</code>, <code>pkg-maven-username</code>, <code>pkg-maven-password</code></td>
+<td>Maven</td>
+<td>Optional basic auth</td>
+</tr>
+<tr>
+<td><code>pkg-gradle-url</code>, <code>pkg-gradle-username</code>, <code>pkg-gradle-password</code></td>
+<td>Gradle</td>
+<td>Optional basic auth</td>
+</tr>
+<tr>
+<td><code>pkg-nuget-url</code>, <code>pkg-nuget-username</code>, <code>pkg-nuget-password</code></td>
+<td>NuGet</td>
+<td>Optional basic auth</td>
+</tr>
+<tr>
+<td><code>pkg-python-url</code>, <code>pkg-python-username</code>, <code>pkg-python-password</code></td>
+<td>PyPI</td>
+<td>Optional basic auth</td>
+</tr>
+<tr>
+<td><code>pkg-go-url</code>, <code>pkg-go-username</code>, <code>pkg-go-password</code></td>
+<td>Go module proxy</td>
+<td>Optional basic auth</td>
+</tr>
+<tr>
+<td><code>pkg-composer-url</code>, <code>pkg-composer-username</code>, <code>pkg-composer-password</code></td>
+<td>PHP Composer</td>
+<td>Optional basic auth</td>
+</tr>
+<tr>
+<td><code>pkg-rubygems-url</code>, <code>pkg-rubygems-username</code>, <code>pkg-rubygems-password</code></td>
+<td>RubyGems</td>
+<td>Optional basic auth</td>
+</tr>
+</tbody>
+</table>
+<h3 id="support-matrix-per-build-strategy">Support matrix per build strategy<a class="headerlink" href="#support-matrix-per-build-strategy" title="Permanent link">&para;</a></h3>
+<p>Not every build strategy consumes every key. The following table summarizes which keys take effect for each strategy:</p>
+<table>
+<thead>
+<tr>
+<th>Build strategy</th>
+<th>OCI mirrors</th>
+<th>Image overrides</th>
+<th>Package proxies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buildpack</td>
+<td><code>oci-dockerhub-url</code>, <code>oci-choreo-url</code>, <code>oci-buildpacks-url</code></td>
+<td><code>image-buildpacks-run-ref</code>, <code>image-buildpacks-lifecycle-ref</code>, <code>image-buildpacks-builder-ref</code></td>
+<td>npm, Maven, Gradle, NuGet, PyPI, Go, Composer, RubyGems</td>
+</tr>
+<tr>
+<td>Ballerina</td>
+<td><code>oci-buildpacks-url</code></td>
+<td><code>image-buildpacks-run-ref</code>, <code>image-buildpacks-lifecycle-ref</code>, <code>image-buildpacks-builder-ref</code></td>
+<td>Maven, Gradle, NuGet, PyPI, Go, Composer, RubyGems</td>
+</tr>
+<tr>
+<td>MI</td>
+<td><code>oci-buildpacks-url</code></td>
+<td><code>image-buildpacks-lifecycle-ref</code>, <code>image-buildpacks-builder-ref</code></td>
+<td>Maven</td>
+</tr>
+<tr>
+<td>Webapp</td>
+<td><code>oci-dockerhub-url</code>, <code>oci-choreo-url</code></td>
+<td><code>image-node-ref</code>, <code>image-nginx-ref</code></td>
+<td>npm</td>
+</tr>
+<tr>
+<td>Prism mock</td>
+<td><code>oci-choreo-url</code></td>
+<td><code>image-prism-ref</code>, <code>image-golang-ref</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Test Runner</td>
+<td><code>oci-dockerhub-url</code></td>
+<td><code>image-node-ref</code></td>
+<td>npm</td>
+</tr>
+<tr>
+<td>BYOC (Dockerfile)</td>
+<td><code>oci-dockerhub-url</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="domain-allowlisting-alternative-to-a-forward-proxy">Domain allowlisting (alternative to a forward proxy)<a class="headerlink" href="#domain-allowlisting-alternative-to-a-forward-proxy" title="Permanent link">&para;</a></h2>
+<p>Some customers prefer not to introduce a mirror registry at all, and instead allow direct egress to the public sources used by the build. In that case the same outbound destinations still apply — only the routing changes. The list of domains that must be reachable depends on the build strategies you use, including:</p>
+<ul>
+<li>Docker Hub (<code>index.docker.io</code>, <code>registry-1.docker.io</code>, <code>auth.docker.io</code>, <code>production.cloudflare.docker.com</code>)</li>
+<li>Google Cloud Buildpacks (<code>us-docker.pkg.dev/gae-runtimes/runtimes-ubuntu2204/*</code>, <code>gcr.io/buildpacks/*</code>)</li>
+<li>The WSO2 Developer Platform private registry (<code>choreocontrolplane.azurecr.io</code> or the PDP-specific ACR)</li>
+<li>Language package managers: <code>registry.npmjs.org</code>, <code>repo.maven.apache.org</code>, <code>services.gradle.org</code>, <code>api.nuget.org</code>, <code>pypi.org</code>/<code>files.pythonhosted.org</code>, <code>proxy.golang.org</code>/<code>sum.golang.org</code>, <code>rubygems.org</code>, <code>repo.packagist.org</code></li>
+<li>Ballerina Central (<code>api.central.ballerina.io</code>, <code>fileserver.central.ballerina.io</code>, <code>dist.ballerina.io</code>)</li>
+<li>GitHub release CDN (<code>release-assets.githubusercontent.com</code>) for SDK and JDK downloads</li>
+</ul>
+<p>Contact WSO2 Developer Platform support for the exact, up-to-date allowlist that applies to the build strategies you have enabled.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Build cannot pull an image from your mirror.</strong> Verify that the mirror URL in the Secret does not include a scheme (<code>https://</code>) — OCI registry hosts are bare hostnames. Confirm that the configured credentials authenticate from inside the build cluster (<code>podman login</code> from a debug pod).</li>
+<li><strong><code>podman login</code> fails for <code>index.docker.io</code> on a restricted cluster.</strong> Make sure <code>oci-dockerhub-url</code> is set. When this key is present the build skips the default Docker Hub login; when it is absent, the build will attempt to log in to Docker Hub and fail on clusters where it is blocked.</li>
+<li><strong>Package manager still hits the public registry.</strong> Confirm the Secret is mounted (<code>kubectl get pod &lt;build-pod&gt; -o yaml | grep proxy-config</code>) and that the key uses the correct name and namespace. Strategy-scoped keys (<code>&lt;strategy&gt;.&lt;key&gt;</code>) only apply to the listed strategy — set the global key as well if you want the same value used everywhere.</li>
+<li><strong>Webapp build pulls Node 18 even though a different version is selected in the console.</strong> Set <code>image-node-ref</code> to your golden Node image. Without an explicit override, an OCI mirror cannot change the Node version that the webapp build pins.</li>
+</ul>
+<h2 id="related-links">Related links<a class="headerlink" href="#related-links" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../../infrastructure/dataplanes/data-planes/">Data planes</a></li>
+<li><a href="../configure-ci-pipeline/">Configure CI Pipeline</a></li>
+<li><a href="../../../infrastructure/credentials/use-your-own-container-registry/">Use Your Own Container Registry</a></li>
+</ul>
 
 
 
@@ -3310,7 +3615,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../users/configure-enterprise-login/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configure Enterprise Login" rel="prev">
+          <a href="../integrate-unit-tests-into-the-build-pipeline/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Integrate Unit Tests into the CI Pipeline" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -3319,20 +3624,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                Configure Enterprise Login
+                Integrate Unit Tests into the CI Pipeline
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../../devops/automation-pipelines/introduction/" class="md-footer__link md-footer__link--next" aria-label="Next: What are Automation Pipelines" rel="next">
+          <a href="../ci-pipeline-logs/" class="md-footer__link md-footer__link--next" aria-label="Next: CI Pipeline logs" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                What are Automation Pipelines
+                CI Pipeline logs
               </div>
             </div>
             <div class="md-footer__button md-icon">
