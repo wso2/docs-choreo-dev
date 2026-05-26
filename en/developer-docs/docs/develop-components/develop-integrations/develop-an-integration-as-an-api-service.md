@@ -44,7 +44,22 @@ In this guide, you will:
 
 8. Click **Create and Deploy**. {{ product_name }} initializes the component, builds it, and deploys it to the development environment.
 
-## Step 2: Test the integration
+## Step 2: Deploy the integration component
+
+To deploy the integration component to the development environment, follow the steps given below:
+
+1. In the {{ product_name }} Console left navigation menu, click **Deploy**.
+2. In the **Build Area** card, click **Configure & Deploy**.
+3. In the **Configurations** pane, click **Next**. This displays details of the endpoint ready to be deployed.
+4. Click **Deploy**. This deploys the integration component to the development environment.
+   The **Development** card indicates the **Deployment Status** as **Active** when the integration is successfully deployed.
+
+!!! tip
+    Automatic deployment is enabled for the component by default. Therefore, you are required to perform only the first deployment manually.
+
+Now you can test the integration.
+
+## Step 3: Test the integration
 
 1. In the {{ product_name }} Console left navigation menu, click **Test** and then click **Console**.
 2. In the OpenAPI Console, select **Development** from the environment drop-down list.
