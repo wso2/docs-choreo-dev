@@ -116,6 +116,11 @@ nav:
           - Integrate Unit Tests into the CI Pipeline: devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline.md
           - Configure a Mirror Registry for In-Dataplane Builds: devops/ci-pipelines/configure-mirror-registry-for-in-dataplane-builds.md
           - CI Pipeline logs: 'devops/ci-pipelines/ci-pipeline-logs.md'
+          - Customize CI Pipeline:
+              - Introduction: devops/ci-pipelines/customizable-ci/introduction.md
+              - Author pipeline.yaml: devops/ci-pipelines/customizable-ci/author-pipeline-yaml.md
+              - Built-in steps: devops/ci-pipelines/customizable-ci/built-in-steps.md
+              - Manage customizable CI pipelines: devops/ci-pipelines/customizable-ci/manage-customizable-ci-pipeline.md
       - CD Pipelines:
           - Deploy Applications using WSO2 Developer Platform CD Pipeline: devops/cd-pipelines/deploying-application-using-choreo-cd-pipeline.md
           - Manage CD Pipelines: 'devops/cd-pipelines/manage-continuous-deployment-pipelines.md'
