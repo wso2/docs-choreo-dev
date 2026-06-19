@@ -12,27 +12,27 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/engineering-platform/developer-platform/docs/devops/manage-configuration-groups/">
+        <link rel="canonical" href="https://wso2.com/engineering-platform/developer-platform/docs/devops/ci-pipelines/customizable-ci/author-pipeline-yaml/">
       
       
-        <link rel="prev" href="../cd-pipelines/submit-and-manage-environment-promotion-approval-requests/">
+        <link rel="prev" href="../introduction/">
       
       
-        <link rel="next" href="../../governance/workflows/configure-approvals-for-choreo-workflows/">
+        <link rel="next" href="../built-in-steps/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Manage Configuration Groups - WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform</title>
+        <title>Author pipeline.yaml - WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.7bf56d0a.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.a0c5b2b5.min.css">
       
       
 
@@ -51,21 +51,21 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/region-selector.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/region-selector.css">
     
-      <link rel="stylesheet" href="../../assets/lib/highlightjs/styles/vs.min.css">
+      <link rel="stylesheet" href="../../../../assets/lib/highlightjs/styles/vs.min.css">
     
-      <link rel="stylesheet" href="../../assets/css/blue-palette-alt2.css">
+      <link rel="stylesheet" href="../../../../assets/css/blue-palette-alt2.css">
     
-      <link rel="stylesheet" href="../../assets/css/choreotheme.css">
+      <link rel="stylesheet" href="../../../../assets/css/choreotheme.css">
     
-      <link rel="stylesheet" href="../../assets/lib/json-formatter/json-formatter.css">
+      <link rel="stylesheet" href="../../../../assets/lib/json-formatter/json-formatter.css">
     
-      <link rel="stylesheet" href="../../assets/css/config-catalog.css">
+      <link rel="stylesheet" href="../../../../assets/css/config-catalog.css">
     
-      <link rel="stylesheet" href="../../assets/lib/fontawesome-free-6.3.0-web/css/all.min.css">
+      <link rel="stylesheet" href="../../../../assets/lib/fontawesome-free-6.3.0-web/css/all.min.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -106,7 +106,7 @@
    <!-- CookiePro cookies consent notice end -->
    
   </script>
-   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+   <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
         html.glightbox-open { overflow: initial; height: 100%; }
         .gslide-title { margin-top: 0px; user-select: text; }
         .gslide-desc { color: #666; user-select: text; }
@@ -117,7 +117,7 @@
             body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
             body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
             body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+            </style> <script src="../../../../assets/javascripts/glightbox.min.js"></script></head>
 
   
   
@@ -142,7 +142,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#manage-configuration-groups" class="md-skip">
+        <a href="#author-pipelineyaml" class="md-skip">
           Skip to content
         </a>
       
@@ -173,9 +173,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" class="md-header__button md-logo" aria-label="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
+    <a href="../../../.." title="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" class="md-header__button md-logo" aria-label="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
       
-  <img src="../../assets/images/logo.svg" alt="logo" style="vertical-align: middle;">
+  <img src="../../../../assets/images/logo.svg" alt="logo" style="vertical-align: middle;">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Manage Configuration Groups
+              Author pipeline.yaml
             
           </span>
         </div>
@@ -463,9 +463,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" class="md-nav__button md-logo" aria-label="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
+    <a href="../../../.." title="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" class="md-nav__button md-logo" aria-label="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
       
-  <img src="../../assets/images/logo.svg" alt="logo" style="vertical-align: middle;">
+  <img src="../../../../assets/images/logo.svg" alt="logo" style="vertical-align: middle;">
 
     </a>
     WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform
@@ -505,7 +505,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../what-is-choreo/" class="md-nav__link">
+      <a href="../../../../what-is-choreo/" class="md-nav__link">
         What is WSO2 Developer Platform?
       </a>
     </li>
@@ -600,7 +600,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
         Resource Hierarchy
       </a>
     </li>
@@ -614,7 +614,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/organization/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/organization/" class="md-nav__link">
         Organization
       </a>
     </li>
@@ -628,7 +628,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/data-planes/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/data-planes/" class="md-nav__link">
         Data Planes
       </a>
     </li>
@@ -642,7 +642,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/environments/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/environments/" class="md-nav__link">
         Environments
       </a>
     </li>
@@ -656,7 +656,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/ci-cd/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/ci-cd/" class="md-nav__link">
         CI/CD
       </a>
     </li>
@@ -670,7 +670,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
         WSO2 Developer Platform Marketplace
       </a>
     </li>
@@ -684,7 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/project/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/project/" class="md-nav__link">
         Project
       </a>
     </li>
@@ -698,7 +698,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/component/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/component/" class="md-nav__link">
         Component
       </a>
     </li>
@@ -712,7 +712,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/deployment-tracks/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/deployment-tracks/" class="md-nav__link">
         Deployment Tracks
       </a>
     </li>
@@ -726,7 +726,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/endpoint/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/endpoint/" class="md-nav__link">
         Endpoint
       </a>
     </li>
@@ -740,7 +740,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/connections/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/connections/" class="md-nav__link">
         Connections
       </a>
     </li>
@@ -754,7 +754,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/access-control/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/access-control/" class="md-nav__link">
         Access Control
       </a>
     </li>
@@ -805,7 +805,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/dataplanes/data-planes/" class="md-nav__link">
+      <a href="../../../../infrastructure/dataplanes/data-planes/" class="md-nav__link">
         Data Planes
       </a>
     </li>
@@ -848,7 +848,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/environments/manage-environments/" class="md-nav__link">
+      <a href="../../../../infrastructure/environments/manage-environments/" class="md-nav__link">
         Manage Environments
       </a>
     </li>
@@ -898,7 +898,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/domains/configure-a-custom-domain-for-your-organization/" class="md-nav__link">
+      <a href="../../../../infrastructure/domains/configure-a-custom-domain-for-your-organization/" class="md-nav__link">
         Configure a Custom Domain for Your Organization
       </a>
     </li>
@@ -919,7 +919,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/configure-vpns-on-the-choreo-cloud-data-plane/" class="md-nav__link">
+      <a href="../../../../infrastructure/configure-vpns-on-the-choreo-cloud-data-plane/" class="md-nav__link">
         Configure VPNs on Cloud Data Plane
       </a>
     </li>
@@ -962,7 +962,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments/" class="md-nav__link">
+      <a href="../../../../infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments/" class="md-nav__link">
         Set Up Git Provider Authentication
       </a>
     </li>
@@ -976,7 +976,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/credentials/use-your-own-container-registry/" class="md-nav__link">
+      <a href="../../../../infrastructure/credentials/use-your-own-container-registry/" class="md-nav__link">
         Use Your Own Container Registry
       </a>
     </li>
@@ -1063,7 +1063,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../user-management/users/manage-members-of-an-organization/" class="md-nav__link">
+      <a href="../../../../user-management/users/manage-members-of-an-organization/" class="md-nav__link">
         Manage  Members of an Organization
       </a>
     </li>
@@ -1077,7 +1077,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../user-management/users/configure-enterprise-login/" class="md-nav__link">
+      <a href="../../../../user-management/users/configure-enterprise-login/" class="md-nav__link">
         Configure Enterprise Login
       </a>
     </li>
@@ -1127,7 +1127,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../user-management/groups-and-roles/configure-access-control/" class="md-nav__link">
+      <a href="../../../../user-management/groups-and-roles/configure-access-control/" class="md-nav__link">
         Configure Access Control
       </a>
     </li>
@@ -1214,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../automation-pipelines/introduction/" class="md-nav__link">
+      <a href="../../../automation-pipelines/introduction/" class="md-nav__link">
         What are Automation Pipelines
       </a>
     </li>
@@ -1228,7 +1228,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../automation-pipelines/manage-automation-pipeline/" class="md-nav__link">
+      <a href="../../../automation-pipelines/manage-automation-pipeline/" class="md-nav__link">
         Manage Automation Pipelines
       </a>
     </li>
@@ -1242,7 +1242,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../automation-pipelines/run-automation-pipeline/" class="md-nav__link">
+      <a href="../../../automation-pipelines/run-automation-pipeline/" class="md-nav__link">
         Run Automation Pipelines
       </a>
     </li>
@@ -1256,7 +1256,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../automation-pipelines/inbuilt-templates/" class="md-nav__link">
+      <a href="../../../automation-pipelines/inbuilt-templates/" class="md-nav__link">
         Inbuilt Pipeline Templates
       </a>
     </li>
@@ -1275,16 +1275,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
       
       
       
@@ -1293,7 +1293,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6_2">
           <span class="md-nav__icon md-icon"></span>
           CI Pipelines
@@ -1306,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/configure-ci-pipeline/" class="md-nav__link">
+      <a href="../../configure-ci-pipeline/" class="md-nav__link">
         Configure CI Pipeline
       </a>
     </li>
@@ -1320,7 +1320,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
+      <a href="../../integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
         Integrate Unit Tests into the CI Pipeline
       </a>
     </li>
@@ -1334,7 +1334,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/configure-mirror-registry-for-in-dataplane-builds/" class="md-nav__link">
+      <a href="../../configure-mirror-registry-for-in-dataplane-builds/" class="md-nav__link">
         Configure a Mirror Registry for In-Dataplane Builds
       </a>
     </li>
@@ -1348,7 +1348,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/ci-pipeline-logs/" class="md-nav__link">
+      <a href="../../ci-pipeline-logs/" class="md-nav__link">
         CI Pipeline logs
       </a>
     </li>
@@ -1360,16 +1360,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2_5" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2_5" checked>
       
       
       
@@ -1378,7 +1378,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_2_5_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_2_5_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6_2_5">
           <span class="md-nav__icon md-icon"></span>
           Customize CI Pipeline
@@ -1391,7 +1391,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/customizable-ci/introduction/" class="md-nav__link">
+      <a href="../introduction/" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -1403,11 +1403,141 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../ci-pipelines/customizable-ci/author-pipeline-yaml/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Author pipeline.yaml
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Author pipeline.yaml
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#top-level-structure" class="md-nav__link">
+    Top-level structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    Steps
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#template-step" class="md-nav__link">
+    Template step
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-set-step" class="md-nav__link">
+    Container-set step
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inline-step" class="md-nav__link">
+    Inline step
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#templates" class="md-nav__link">
+    Templates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-templates" class="md-nav__link">
+    Container templates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variables-and-secrets" class="md-nav__link">
+    Variables and secrets
+  </a>
+  
+    <nav class="md-nav" aria-label="Variables and secrets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scope-precedence" class="md-nav__link">
+    Scope precedence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-variables" class="md-nav__link">
+    System variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mandatory-steps" class="md-nav__link">
+    Mandatory steps
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-complete-example" class="md-nav__link">
+    A complete example
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1419,7 +1549,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/customizable-ci/built-in-steps/" class="md-nav__link">
+      <a href="../built-in-steps/" class="md-nav__link">
         Built-in steps
       </a>
     </li>
@@ -1433,7 +1563,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/customizable-ci/manage-customizable-ci-pipeline/" class="md-nav__link">
+      <a href="../manage-customizable-ci-pipeline/" class="md-nav__link">
         Manage customizable CI pipelines
       </a>
     </li>
@@ -1490,7 +1620,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
+      <a href="../../../cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
         Deploy Applications using WSO2 Developer Platform CD Pipeline
       </a>
     </li>
@@ -1504,7 +1634,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
+      <a href="../../../cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
         Manage CD Pipelines
       </a>
     </li>
@@ -1518,7 +1648,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-nav__link">
+      <a href="../../../cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-nav__link">
         Submit Environment Promotion Approval Requests
       </a>
     </li>
@@ -1537,93 +1667,11 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Manage Configuration Groups
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../manage-configuration-groups/" class="md-nav__link">
         Manage Configuration Groups
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#create-a-configuration-group" class="md-nav__link">
-    Create a configuration group
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#link-and-use-configuration-groups" class="md-nav__link">
-    Link and use configuration groups
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#view-edit-a-configuration-group" class="md-nav__link">
-    View &amp; edit a configuration group
-  </a>
-  
-    <nav class="md-nav" aria-label="View &amp; edit a configuration group">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#edit-the-configuration-group" class="md-nav__link">
-    Edit the configuration group
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#view-configuration-group-usage" class="md-nav__link">
-    View configuration group usage
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#delete-a-configuration-group" class="md-nav__link">
-    Delete a configuration group
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1701,7 +1749,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-nav__link">
+      <a href="../../../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-nav__link">
         Configure Approvals for WSO2 Developer Platform Workflows
       </a>
     </li>
@@ -1751,7 +1799,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../governance/egress-control/control-egress-traffic-for-your-organization/" class="md-nav__link">
+      <a href="../../../../governance/egress-control/control-egress-traffic-for-your-organization/" class="md-nav__link">
         Control Egress Traffic for Your WSO2 Developer Platform Organization
       </a>
     </li>
@@ -1801,7 +1849,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../governance/approvals/review-workflow-approval-requests/" class="md-nav__link">
+      <a href="../../../../governance/approvals/review-workflow-approval-requests/" class="md-nav__link">
         Review Workflow Approval Requests
       </a>
     </li>
@@ -1822,7 +1870,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../governance/guideline-documents/architect-agent-guideline-documents/" class="md-nav__link">
+      <a href="../../../../governance/guideline-documents/architect-agent-guideline-documents/" class="md-nav__link">
         Guideline Documents
       </a>
     </li>
@@ -1902,7 +1950,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/databases/choreo-managed-databases-and-caches/" class="md-nav__link">
+      <a href="../../../../db-and-services/databases/choreo-managed-databases-and-caches/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -1916,7 +1964,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/databases/choreo-managed-postgresql-databases/" class="md-nav__link">
+      <a href="../../../../db-and-services/databases/choreo-managed-postgresql-databases/" class="md-nav__link">
         PostgreSQL
       </a>
     </li>
@@ -1930,7 +1978,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/databases/choreo-managed-mysql-databases/" class="md-nav__link">
+      <a href="../../../../db-and-services/databases/choreo-managed-mysql-databases/" class="md-nav__link">
         MySQL
       </a>
     </li>
@@ -1944,7 +1992,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/databases/choreo-managed-caches/" class="md-nav__link">
+      <a href="../../../../db-and-services/databases/choreo-managed-caches/" class="md-nav__link">
         WSO2 Developer Platform-Managed Cache
       </a>
     </li>
@@ -1958,7 +2006,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/databases/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
+      <a href="../../../../db-and-services/databases/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
         Add WSO2 Developer Platform-Managed Databases and Caches to the Marketplace
       </a>
     </li>
@@ -1979,7 +2027,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
+      <a href="../../../../db-and-services/external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
         Third-Party Services
       </a>
     </li>
@@ -2022,7 +2070,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
+      <a href="../../../../db-and-services/message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -2036,7 +2084,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
+      <a href="../../../../db-and-services/message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
         Create WSO2 Developer Platform-Managed Kafka Services
       </a>
     </li>
@@ -2050,7 +2098,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/message-brokers/configure-a-kafka-service/" class="md-nav__link">
+      <a href="../../../../db-and-services/message-brokers/configure-a-kafka-service/" class="md-nav__link">
         Configure a Kafka Service
       </a>
     </li>
@@ -2064,7 +2112,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/message-brokers/monitor-a-kafka-service/" class="md-nav__link">
+      <a href="../../../../db-and-services/message-brokers/monitor-a-kafka-service/" class="md-nav__link">
         Monitor a Kafka Service
       </a>
     </li>
@@ -2114,7 +2162,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/ai-gateway/choreo-ai-gateway/" class="md-nav__link">
+      <a href="../../../../db-and-services/ai-gateway/choreo-ai-gateway/" class="md-nav__link">
         WSO2 Developer Platform AI Gateway
       </a>
     </li>
@@ -2128,7 +2176,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/ai-gateway/integrate-and-manage-gen-ai-services/" class="md-nav__link">
+      <a href="../../../../db-and-services/ai-gateway/integrate-and-manage-gen-ai-services/" class="md-nav__link">
         Integrate and Manage Generative AI Services
       </a>
     </li>
@@ -2215,7 +2263,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/runtime/view-runtime-details/" class="md-nav__link">
+      <a href="../../../../k8s-operations/runtime/view-runtime-details/" class="md-nav__link">
         View Kubernetes Runtime Details
       </a>
     </li>
@@ -2265,7 +2313,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/containers/configure-container-resources-commands-and-arguments/" class="md-nav__link">
+      <a href="../../../../k8s-operations/containers/configure-container-resources-commands-and-arguments/" class="md-nav__link">
         Configure Kubernetes Container Resources, Commands, and Arguments
       </a>
     </li>
@@ -2286,7 +2334,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/manage-configurations-and-secrets/" class="md-nav__link">
+      <a href="../../../../k8s-operations/manage-configurations-and-secrets/" class="md-nav__link">
         K8s Configurations and Secrets
       </a>
     </li>
@@ -2300,7 +2348,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/set-up-health-checks/" class="md-nav__link">
+      <a href="../../../../k8s-operations/set-up-health-checks/" class="md-nav__link">
         Health Checks
       </a>
     </li>
@@ -2343,7 +2391,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/scaling/autoscale-component-replicas/" class="md-nav__link">
+      <a href="../../../../k8s-operations/scaling/autoscale-component-replicas/" class="md-nav__link">
         Autoscale Component Replicas
       </a>
     </li>
@@ -2357,7 +2405,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/scaling/autoscale-components-with-scale-to-zero/" class="md-nav__link">
+      <a href="../../../../k8s-operations/scaling/autoscale-components-with-scale-to-zero/" class="md-nav__link">
         Autoscale Components with Scale-to-Zero
       </a>
     </li>
@@ -2378,7 +2426,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/storage/configure-storage/" class="md-nav__link">
+      <a href="../../../../k8s-operations/storage/configure-storage/" class="md-nav__link">
         Storage
       </a>
     </li>
@@ -2429,7 +2477,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/operational-insights-dashboard/" class="md-nav__link">
+      <a href="../../../../insights/operational-insights-dashboard/" class="md-nav__link">
         Operational Insights
       </a>
     </li>
@@ -2472,7 +2520,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/delivery-insights/configure-delivery-insights/" class="md-nav__link">
+      <a href="../../../../insights/delivery-insights/configure-delivery-insights/" class="md-nav__link">
         Configure Delivery Insights
       </a>
     </li>
@@ -2486,7 +2534,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/delivery-insights/view-delivery-insights/" class="md-nav__link">
+      <a href="../../../../insights/delivery-insights/view-delivery-insights/" class="md-nav__link">
         View Delivery Insights
       </a>
     </li>
@@ -2565,7 +2613,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/work-with-choreo-insights-api/access-the-choreo-insights-api/" class="md-nav__link">
+      <a href="../../../../insights/work-with-choreo-insights-api/access-the-choreo-insights-api/" class="md-nav__link">
         Access the WSO2 Developer Platform Insights API
       </a>
     </li>
@@ -2579,7 +2627,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/work-with-choreo-insights-api/choreo-insights-api/" class="md-nav__link">
+      <a href="../../../../insights/work-with-choreo-insights-api/choreo-insights-api/" class="md-nav__link">
         WSO2 Developer Platform Insights API
       </a>
     </li>
@@ -2607,7 +2655,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/cost-optimization/" class="md-nav__link">
+      <a href="../../../../insights/cost-optimization/" class="md-nav__link">
         Cost Insights
       </a>
     </li>
@@ -2687,7 +2735,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../observability/alerts/configure-alerts/" class="md-nav__link">
+      <a href="../../../../observability/alerts/configure-alerts/" class="md-nav__link">
         Configure Alerts
       </a>
     </li>
@@ -2708,7 +2756,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../observability/runtime-logs/" class="md-nav__link">
+      <a href="../../../../observability/runtime-logs/" class="md-nav__link">
         Runtime Logs
       </a>
     </li>
@@ -2722,7 +2770,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../observability/private-data-plane-logs/" class="md-nav__link">
+      <a href="../../../../observability/private-data-plane-logs/" class="md-nav__link">
         Private Data Plane Logs
       </a>
     </li>
@@ -2736,7 +2784,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../observability/audit-logs/" class="md-nav__link">
+      <a href="../../../../observability/audit-logs/" class="md-nav__link">
         Audit Logs
       </a>
     </li>
@@ -2816,7 +2864,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/developer-portal/customize-the-developer-portal/" class="md-nav__link">
+      <a href="../../../../api-management/developer-portal/customize-the-developer-portal/" class="md-nav__link">
         Customize the WSO2 Developer Platform Developer Portal
       </a>
     </li>
@@ -2830,7 +2878,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/developer-portal/configure-identity-providers-for-developer-portal/" class="md-nav__link">
+      <a href="../../../../api-management/developer-portal/configure-identity-providers-for-developer-portal/" class="md-nav__link">
         Configure Identity Providers for Developer Portal
       </a>
     </li>
@@ -2844,7 +2892,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/developer-portal/configure-exposed-environments-to-developer-portal/" class="md-nav__link">
+      <a href="../../../../api-management/developer-portal/configure-exposed-environments-to-developer-portal/" class="md-nav__link">
         Configure Exposed Environments to Developer Portal
       </a>
     </li>
@@ -2894,7 +2942,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/api-analytics/integrate-choreo-with-moesif/" class="md-nav__link">
+      <a href="../../../../api-management/api-analytics/integrate-choreo-with-moesif/" class="md-nav__link">
         Integrate WSO2 Developer Platform with Moesif for Analytics
       </a>
     </li>
@@ -2944,7 +2992,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/consumer-idps/configure-a-user-store-with-built-in-idp/" class="md-nav__link">
+      <a href="../../../../api-management/consumer-idps/configure-a-user-store-with-built-in-idp/" class="md-nav__link">
         Set Up a User Store with WSO2 Developer Platform’s Built-In Identity Provider
       </a>
     </li>
@@ -2958,7 +3006,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/consumer-idps/configure-asgardeo-as-an-external-idp/" class="md-nav__link">
+      <a href="../../../../api-management/consumer-idps/configure-asgardeo-as-an-external-idp/" class="md-nav__link">
         Set Up Asgardeo as an External IdP for WSO2 Developer Platform APIs
       </a>
     </li>
@@ -2972,7 +3020,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/consumer-idps/configure-azure-ad-as-an-external-idp/" class="md-nav__link">
+      <a href="../../../../api-management/consumer-idps/configure-azure-ad-as-an-external-idp/" class="md-nav__link">
         Set Up Azure AD as an External IdP for WSO2 Developer Platform APIs
       </a>
     </li>
@@ -3030,7 +3078,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-cli/choreo-cli-overview/" class="md-nav__link">
+      <a href="../../../../choreo-cli/choreo-cli-overview/" class="md-nav__link">
         WSO2 Developer Platform CLI Overview
       </a>
     </li>
@@ -3044,7 +3092,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-cli/get-started-with-the-choreo-cli/" class="md-nav__link">
+      <a href="../../../../choreo-cli/get-started-with-the-choreo-cli/" class="md-nav__link">
         Get Started with the WSO2 Developer Platform CLI
       </a>
     </li>
@@ -3058,7 +3106,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-cli/manage-authentication-with-personal-access-tokens/" class="md-nav__link">
+      <a href="../../../../choreo-cli/manage-authentication-with-personal-access-tokens/" class="md-nav__link">
         Manage Authentication with Personal Access Tokens in WSO2 Developer Platform CLI
       </a>
     </li>
@@ -3109,7 +3157,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/faq/" class="md-nav__link">
+      <a href="../../../../references/faq/" class="md-nav__link">
         FAQ
       </a>
     </li>
@@ -3123,7 +3171,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/choreo-limitations/" class="md-nav__link">
+      <a href="../../../../references/choreo-limitations/" class="md-nav__link">
         WSO2 Developer Platform Limitations
       </a>
     </li>
@@ -3137,7 +3185,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/troubleshoot-choreo/" class="md-nav__link">
+      <a href="../../../../references/troubleshoot-choreo/" class="md-nav__link">
         Troubleshoot WSO2 Developer Platform
       </a>
     </li>
@@ -3151,7 +3199,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/private-data-plane-security-levels/" class="md-nav__link">
+      <a href="../../../../references/private-data-plane-security-levels/" class="md-nav__link">
         Private Data Plane Security Levels
       </a>
     </li>
@@ -3165,7 +3213,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/private-data-plane-management-models/" class="md-nav__link">
+      <a href="../../../../references/private-data-plane-management-models/" class="md-nav__link">
         Private Data Plane Management Models
       </a>
     </li>
@@ -3179,7 +3227,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/choreo-platform-services-billing-and-upgrades/" class="md-nav__link">
+      <a href="../../../../references/choreo-platform-services-billing-and-upgrades/" class="md-nav__link">
         WSO2 Developer Platform Service Billing and Upgrades
       </a>
     </li>
@@ -3220,37 +3268,37 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-a-configuration-group" class="md-nav__link">
-    Create a configuration group
+  <a href="#top-level-structure" class="md-nav__link">
+    Top-level structure
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#link-and-use-configuration-groups" class="md-nav__link">
-    Link and use configuration groups
+  <a href="#steps" class="md-nav__link">
+    Steps
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#view-edit-a-configuration-group" class="md-nav__link">
-    View &amp; edit a configuration group
-  </a>
-  
-    <nav class="md-nav" aria-label="View &amp; edit a configuration group">
+    <nav class="md-nav" aria-label="Steps">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#edit-the-configuration-group" class="md-nav__link">
-    Edit the configuration group
+  <a href="#template-step" class="md-nav__link">
+    Template step
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#view-configuration-group-usage" class="md-nav__link">
-    View configuration group usage
+  <a href="#container-set-step" class="md-nav__link">
+    Container-set step
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inline-step" class="md-nav__link">
+    Inline step
   </a>
   
 </li>
@@ -3261,8 +3309,56 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
-  <a href="#delete-a-configuration-group" class="md-nav__link">
-    Delete a configuration group
+  <a href="#templates" class="md-nav__link">
+    Templates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-templates" class="md-nav__link">
+    Container templates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variables-and-secrets" class="md-nav__link">
+    Variables and secrets
+  </a>
+  
+    <nav class="md-nav" aria-label="Variables and secrets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scope-precedence" class="md-nav__link">
+    Scope precedence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-variables" class="md-nav__link">
+    System variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mandatory-steps" class="md-nav__link">
+    Mandatory steps
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-complete-example" class="md-nav__link">
+    A complete example
   </a>
   
 </li>
@@ -3282,166 +3378,272 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
 
-<h1 id="manage-configuration-groups">Manage Configuration Groups<a class="headerlink" href="#manage-configuration-groups" title="Permanent link">&para;</a></h1>
-<p>WSO2 Developer Platform allows you to create Configuration Groups to efficiently manage reusable configurations across components within your organization. A Configuration Group is a collection of key-value pairs, where values can be defined for multiple environments. This feature ensures consistency and simplifies the management of configurations across environments.</p>
-<p>Configuration groups can be defined at organization level and link to components at deployment time. Once linked, WSO2 Developer Platform automatically resolves and mounts the configurations to the respective environments on deployment. You can either link a configuration group to inject the configurations as environment variables or file mounts.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<ul>
-<li>All configuration group values are encrypted and stored in environment-specific key vaults.</li>
-<li>Management of configuration groups is restricted to users with WSO2 Developer Platform Admin, DevOps, and Platform Engineer roles.</li>
-<li>Developers can discover configuration groups available within the organization via the <strong>WSO2 Developer Platform Internal Marketplace</strong>.</li>
-<li>This feature is currently not supported for Web Applications or Test Runner components.</li>
-</ul>
-</div>
-<h2 id="create-a-configuration-group">Create a configuration group<a class="headerlink" href="#create-a-configuration-group" title="Permanent link">&para;</a></h2>
-<p>To create a new configuration group, follow the steps given below:</p>
-<ol>
-<li>In the <a href="https://console.choreo.dev/">WSO2 Developer Platform Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>.</li>
-<li>
-<p>On the <strong>Configuration Groups</strong> page, click <strong>Create</strong> and specify the following details to create a new configuration group:</p>
-<ul>
-<li><strong>Name</strong>: A name for the configuration group (Unique within the organization).</li>
-<li><strong>Description</strong>: A description for the configuration group (Optional).</li>
-<li>
-<p><strong>Define Keys</strong>: Define the keys for the configuration group.</p>
-<ul>
-<li>Configuration keys uniquely identify values in a configuration group. You can map these keys to environment variables or file mounts during deployment. Each key must be unique within the group.</li>
-</ul>
-</li>
-<li>
-<p><strong>Assign Values</strong>: Define values by environment for the keys defined.</p>
-<ul>
-<li>By default, all the environments are grouped together allowing you to manage configuration smoothly. You can separate and manage configuration values for each environment as needed.</li>
-</ul>
-</li>
-<li>
-<p><strong>Create</strong>: Click <strong>Create</strong> to create the configuration group.</p>
-</li>
-</ul>
-</li>
-<li>
-<p>Now you can link this configuration group to any component within the organization.</p>
-</li>
-</ol>
+<h1 id="author-pipelineyaml">Author pipeline.yaml<a class="headerlink" href="#author-pipelineyaml" title="Permanent link">&para;</a></h1>
+<p>A customizable CI pipeline is defined by a single <code>pipeline.yaml</code> document. This page covers the top-level structure, the step types you can use, the templates that back them, and the variables, secrets, and system variables available to your scripts.</p>
+<h2 id="top-level-structure">Top-level structure<a class="headerlink" href="#top-level-structure" title="Permanent link">&para;</a></h2>
+<p>A pipeline has three top-level sections, all optional except <code>steps</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="c1"># Ordered list of steps that make up the build.</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nt">templates</span><span class="p">:</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="c1"># Reusable scripts referenced by step.template.</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">containerTemplates</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="c1"># Reusable container definitions referenced by containerSet entries.</span>
+</code></pre></div>
+
+<p><code>steps</code> controls execution order. <code>templates</code> and <code>containerTemplates</code> are libraries of reusable definitions you reference by name.</p>
+<h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
+<p>Each step has a <code>name</code> and one of three execution forms.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+<p>The examples in this section focus on the syntax being illustrated. A pipeline you save must also include the <a href="#mandatory-steps">mandatory build step</a> for the Build Preset it will be attached to. See <a href="#a-complete-example">A complete example</a> at the bottom of this page for a full working pipeline.</p>
+</div>
+<h3 id="template-step">Template step<a class="headerlink" href="#template-step" title="Permanent link">&para;</a></h3>
+<p>Runs a single template defined under <code>templates</code>. Use this when a step does one self-contained task.</p>
+<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Slack Notification</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slack-notification</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nt">templates</span><span class="p">:</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slack-notification</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">curlimages/curl:latest</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="nt">inlineScript</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">      </span><span class="no">#!/bin/sh</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">      </span><span class="no">curl -X POST -H &#39;Content-type: application/json&#39; \</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">        </span><span class="no">--data &#39;{&quot;text&quot;:&quot;Build succeeded&quot;}&#39; &quot;$SLACK_WEBHOOK_URL&quot;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SLACK_WEBHOOK_URL</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{ORG.SECRETS.SLACK_WEBHOOK_URL}}&#39;</span>
+</code></pre></div>
+
+<h3 id="container-set-step">Container-set step<a class="headerlink" href="#container-set-step" title="Permanent link">&para;</a></h3>
+<p>Runs several containers in a single pod, sharing the same workspace. Use this when multiple steps need to share files (for example, your tests run against the same source the build will use).</p>
+<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build Steps</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">containerSet</span><span class="p">:</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Test</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">          </span><span class="nt">containerTemplate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">go-test</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build Component</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">          </span><span class="nt">containerTemplate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">choreo/buildpack-build@v1</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Vulnerability Scan</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">          </span><span class="nt">containerTemplate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">choreo/trivy-scan@v1</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="nt">containerTemplates</span><span class="p">:</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">go-test</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">golang:latest</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="nt">inlineScript</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">      </span><span class="no">#!/bin/sh</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">      </span><span class="no">cd &quot;$SOURCE_ROOT&quot;</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">      </span><span class="no">go test ./...</span>
+</code></pre></div>
+
+<p>Containers in a container set share the same workspace under <code>$WORKSPACE</code>. When you reference a built-in <code>choreo/*@v1</code> step from inside a container set, WSO2 Developer Platform wires the order required between built-in steps automatically.</p>
+<h3 id="inline-step">Inline step<a class="headerlink" href="#inline-step" title="Permanent link">&para;</a></h3>
+<p>Runs an inline script directly without referencing a named template. Useful for short one-off steps.</p>
+<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Hello</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alpine:latest</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">inlineScript</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="no">#!/bin/sh</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="no">echo &quot;Hello from {{ORG.VARIABLES.GREETING_NAME}}&quot;</span>
+</code></pre></div>
+
+<h2 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">&para;</a></h2>
+<p>A <code>template</code> is a reusable step definition. Templates run as their own pod when referenced from a step.</p>
+<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">templates</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;template-name&gt;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;container image&gt;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">inlineScript</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="no">#!/bin/bash</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">      </span><span class="no">...</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">VAR_NAME</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;literal-or-variable-reference&#39;</span>
+</code></pre></div>
+
+<p><code>image</code> is optional — if omitted, WSO2 Developer Platform uses a default base image. <code>inlineScript</code> is a bash or sh script that runs inside the container. <code>env</code> is a list of environment variables; see <a href="#variables-and-secrets">Variables and secrets</a> for the reference syntax.</p>
+<h2 id="container-templates">Container templates<a class="headerlink" href="#container-templates" title="Permanent link">&para;</a></h2>
+<p>A <code>containerTemplate</code> is the same shape as a <code>template</code>, but it is referenced from inside a <code>containerSet</code> rather than as a standalone step.</p>
+<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">containerTemplates</span><span class="p">:</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;container-template-name&gt;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;container image&gt;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nt">inlineScript</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">      </span><span class="no">#!/bin/sh</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="no">...</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">VAR_NAME</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;literal-or-variable-reference&#39;</span>
+</code></pre></div>
+
+<p>Inside a <code>containerSet</code>, the <code>containerTemplate</code> field on each container entry references either one of these user-defined container templates by name, or one of WSO2 Developer Platform's <a href="../built-in-steps/">built-in steps</a> by its <code>choreo/&lt;name&gt;@v1</code> identifier — for example, <code>containerTemplate: choreo/buildpack-build@v1</code>.</p>
+<h2 id="variables-and-secrets">Variables and secrets<a class="headerlink" href="#variables-and-secrets" title="Permanent link">&para;</a></h2>
+<p>Inside <code>env.value</code>, reference variables and secrets using the scoped syntax <code>{{SCOPE.TYPE.NAME}}</code>, where:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Allowed values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SCOPE</code></td>
+<td><code>ORG</code> (organization), <code>PROJECT</code> (project), or <code>DT</code> (deployment track)</td>
+</tr>
+<tr>
+<td><code>TYPE</code></td>
+<td><code>VARIABLES</code> or <code>SECRETS</code></td>
+</tr>
+<tr>
+<td><code>NAME</code></td>
+<td>The variable or secret name you defined in the Console</td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SNYK_TOKEN</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{ORG.SECRETS.SNYK_TOKEN}}&#39;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GO_VERSION</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{DT.VARIABLES.GO_VERSION}}&#39;</span>
+</code></pre></div>
+
+<h3 id="scope-precedence">Scope precedence<a class="headerlink" href="#scope-precedence" title="Permanent link">&para;</a></h3>
+<p>An explicit reference such as <code>{{ORG.SECRETS.MY_TOKEN}}</code> or <code>{{DT.VARIABLES.MY_VAR}}</code> resolves at exactly the named scope — no walk.</p>
+<p>The unqualified form <code>{{VARIABLES.X}}</code> and <code>{{SECRETS.X}}</code> is still accepted for backward compatibility and resolves by walking <strong>DT → Project → Org</strong> and using the first match. Prefer the explicit <code>{{SCOPE.TYPE.NAME}}</code> form in new pipelines.</p>
+<p>You add the actual variable and secret values from the WSO2 Developer Platform Console — see <a href="../manage-customizable-ci-pipeline/#add-variables-and-secrets">Manage customizable CI pipelines</a>.</p>
+<h2 id="system-variables">System variables<a class="headerlink" href="#system-variables" title="Permanent link">&para;</a></h2>
+<p>WSO2 Developer Platform injects the following environment variables into every step. They are always available and do not need to be declared under <code>env</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$WORKSPACE</code></td>
+<td>The shared workspace mount (<code>/mnt/vol</code>). Reset for each build.</td>
+</tr>
+<tr>
+<td><code>$REPOSITORY_DIR</code></td>
+<td>The clone root of the component's source repository.</td>
+</tr>
+<tr>
+<td><code>$SOURCE_ROOT</code></td>
+<td>The component's source directory. Equals <code>$REPOSITORY_DIR</code> for a root-level component, or <code>$REPOSITORY_DIR/&lt;subpath&gt;</code> in a monorepo. Use <code>cd "$SOURCE_ROOT"</code> to operate on the component without per-component conditionals.</td>
+</tr>
+<tr>
+<td><code>$COMPONENT_SUBPATH</code></td>
+<td>The component subpath relative to the clone root. Empty when the component sits at the repo root.</td>
+</tr>
+<tr>
+<td><code>$IMAGE_NAME</code></td>
+<td>The container image name WSO2 Developer Platform's built-in build steps produce (<code>choreo/app-image:latest</code>).</td>
+</tr>
+<tr>
+<td><code>$CI_BRANCH</code></td>
+<td>The branch being built.</td>
+</tr>
+<tr>
+<td><code>$CI_PIPELINE_ID</code></td>
+<td>The build run ID.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mandatory-steps">Mandatory steps<a class="headerlink" href="#mandatory-steps" title="Permanent link">&para;</a></h2>
+<p>Every customizable CI pipeline must include the build step that produces the component image, otherwise WSO2 Developer Platform rejects the YAML when you save it. The required step depends on the component's build preset:</p>
+<table>
+<thead>
+<tr>
+<th>Build preset</th>
+<th>Required step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buildpack</td>
+<td><code>choreo/buildpack-build@v1</code></td>
+</tr>
+<tr>
+<td>BYOC (Docker)</td>
+<td><code>choreo/docker-build@v1</code></td>
+</tr>
+<tr>
+<td>Ballerina Buildpack</td>
+<td><code>choreo/ballerina-build@v1</code></td>
+</tr>
+<tr>
+<td>Web App</td>
+<td><code>choreo/webapp-build@v1</code></td>
+</tr>
+<tr>
+<td>WSO2 MI</td>
+<td><code>choreo/build-preparation@v1</code>, <code>choreo/integration-project-build@v1</code></td>
+</tr>
+<tr>
+<td>Prism Mock</td>
+<td><code>choreo/prism-build@v1</code></td>
+</tr>
+<tr>
+<td>Test Runner</td>
+<td><code>choreo/test-runner-build@v1</code></td>
+</tr>
+</tbody>
+</table>
+<p>If a pipeline.yaml is missing the required step for the build preset it is attached to, the WSO2 Developer Platform Console surfaces the missing step in the YAML editor and the build is not allowed to start. See <a href="../built-in-steps/">Built-in steps</a> for the inputs and outputs each step expects.</p>
+<h2 id="a-complete-example">A complete example<a class="headerlink" href="#a-complete-example" title="Permanent link">&para;</a></h2>
+<p>The pipeline below is a working buildpack pipeline that runs unit tests, builds the component image, scans the image, and posts a Slack notification on completion. It uses every concept on this page — system variables, scoped variables and secrets, a user-defined container template, built-in steps inside a container set, and a stand-alone template step.</p>
+<div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build Steps</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">containerSet</span><span class="p">:</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Test</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">          </span><span class="nt">containerTemplate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">go-test</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build Component</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">          </span><span class="nt">containerTemplate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">choreo/buildpack-build@v1</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Vulnerability Scan</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">          </span><span class="nt">containerTemplate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">choreo/trivy-scan@v1</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Notify</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slack-notification</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="nt">containerTemplates</span><span class="p">:</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">go-test</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">golang:latest</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">    </span><span class="nt">inlineScript</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">      </span><span class="no">#!/bin/sh</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">      </span><span class="no">set -e</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">      </span><span class="no">echo &quot;Testing $CI_PIPELINE_ID on branch $CI_BRANCH&quot;</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">      </span><span class="no">cd &quot;$SOURCE_ROOT&quot;</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">      </span><span class="no">go test ./...</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GO_VERSION</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{DT.VARIABLES.GO_VERSION}}&#39;</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="nt">templates</span><span class="p">:</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slack-notification</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">curlimages/curl:latest</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a><span class="w">    </span><span class="nt">inlineScript</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="w">      </span><span class="no">#!/bin/sh</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="w">      </span><span class="no">MESSAGE=&quot;:white_check_mark: Build $CI_PIPELINE_ID for $CI_BRANCH succeeded&quot;</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a><span class="w">      </span><span class="no">curl -X POST -H &#39;Content-type: application/json&#39; \</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a><span class="w">        </span><span class="no">--data &quot;$(printf &#39;{&quot;text&quot;:&quot;%s&quot;}&#39; &quot;$MESSAGE&quot;)&quot; \</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a><span class="w">        </span><span class="no">&quot;$SLACK_WEBHOOK_URL&quot;</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SLACK_WEBHOOK_URL</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a><span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{ORG.SECRETS.SLACK_WEBHOOK_URL}}&#39;</span>
+</code></pre></div>
+
+<p>Before this pipeline can build:</p>
 <ul>
-<li>Configuration groups created will be listed in the <strong>WSO2 Developer Platform Internal Marketplace</strong>, improving visibility and discoverability for developers.</li>
-<li>All configuration groups will also be listed in the component deployment drawers, allowing developers to easily link them during deployment.</li>
+<li>Define <code>SLACK_WEBHOOK_URL</code> as an organization-level <strong>Secret</strong> on the pipeline.</li>
+<li>Define <code>GO_VERSION</code> (for example, <code>1.22.0</code>) as a <strong>Variable</strong> at the deployment-track scope for each component that uses this pipeline.</li>
 </ul>
-</div>
-<h2 id="link-and-use-configuration-groups">Link and use configuration groups<a class="headerlink" href="#link-and-use-configuration-groups" title="Permanent link">&para;</a></h2>
-<p>The configuration groups created at organization level can be linked to any component within the organization. A configuration group can be linked as <strong>Environment Variables</strong> or <strong>File Mounts</strong> at deployment time.</p>
-<p>Linking a configuration group will inject the values defined in the group during deployment. The values are mapped to environment variable names or file names based on the keys defined in the configuration group. If needed, you can customize the environment variable name or file name by updating the mapping at deployment.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>To link configuration groups to Ballerina component configurables, click <strong>Allow Linking Configuration Groups</strong> at the top of the configuration form during deployment. This enables a link icon next to each configurable field, allowing you to map configuration group values.</p>
-</div>
-<p>To link a configuration group to a component, follow the steps given below:</p>
-<ol>
-<li>Navigate to the component you want to link the configuration group using top navigation menu.</li>
-<li>On the left navigation menu, click <strong>DevOps</strong> and click <strong>CD Pipelines</strong>.</li>
-<li>Click <strong>Configure &amp; Deploy</strong>, this will open the configuration and deployment wizard.</li>
-<li>
-<p>In the wizard, link the configuration groups as <strong>Environment Variables</strong> or <strong>File Mounts</strong>, based on your requirements.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Environment Variables</label><label for="__tabbed_1_2">File Mounts</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<ul>
-<li>Choose the configuration group you want to link to the component.</li>
-<li>Click <strong>Link</strong> to link the configuration group to the component.</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<ul>
-<li>Choose the configuration group you want to link to the component.</li>
-<li>
-<p>Specify the <strong>Mount Path</strong> to mount the configuration files.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>All configurations within the selected configuration group will be mounted as individual files to the specified mount path/directory.</p>
-</div>
-</li>
-<li>
-<p>Click <strong>Link</strong> to link the configuration group to the component.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</li>
-<li>
-<p>Complete the deployment wizard by providing the required details and click <strong>Deploy</strong> to deploy the component with the updated configurations.</p>
-</li>
-</ol>
-<h2 id="view-edit-a-configuration-group">View &amp; edit a configuration group<a class="headerlink" href="#view-edit-a-configuration-group" title="Permanent link">&para;</a></h2>
-<p>To view &amp; edit a configuration group, follow the steps given below:</p>
-<ol>
-<li>In the <a href="https://console.choreo.dev/">WSO2 Developer Platform Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>.</li>
-<li>
-<p>In the <strong>Configuration Groups</strong> list, select the desired configuration group to view.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul>
-<li>Only non-sensitive configuration values are displayed in the view mode.</li>
-<li>Updating the configuration group will not affect the current deployment; changes will be applied when the component is redeployed.</li>
-</ul>
-</div>
-</li>
-</ol>
-<h3 id="edit-the-configuration-group">Edit the configuration group<a class="headerlink" href="#edit-the-configuration-group" title="Permanent link">&para;</a></h3>
-<p>Configuration keys and values within a configuration group can be modified, and these changes will take effect when the components using the configuration group are redeployed.</p>
-<p>To edit the configuration group definition, click <strong>Edit the Configuration Group</strong>, navigate to the <strong>Configurations</strong> tab and make the necessary updates:</p>
-<ul>
-<li>Add or remove configuration keys.</li>
-<li>Update the configuration group's display name and description.</li>
-</ul>
-<p>To edit the configuration values, click the edit icon in the corresponding set of environments and modify the required details:</p>
-<ul>
-<li>Update configuration values.</li>
-<li>Add a new set of configuration values.</li>
-<li>Add or remove environments from an existing set.</li>
-</ul>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<ul>
-<li><strong>Adding a new environment:</strong> Non-sensitive configuration values will be copied to the new environment, but sensitive values will not be. As a result, sensitive values will be cleared across all environments in the set. <strong>New values must be provided for sensitive configurations.</strong></li>
-<li><strong>Removing an environment:</strong> All configuration values for the removed environment will be deleted.</li>
-</ul>
-</div>
-<h3 id="view-configuration-group-usage">View configuration group usage<a class="headerlink" href="#view-configuration-group-usage" title="Permanent link">&para;</a></h3>
-<p>A configuration group can be linked to multiple components across different projects within your organization. The <strong>Usage</strong> tab provides visibility into all components that reference the selected configuration group, organized by project in a tree view.</p>
-<p>This view is useful when you need to identify which components require redeployment after updating a configuration group.</p>
-<p>To view configuration group usage:</p>
-<ol>
-<li>Select a configuration group from the list.</li>
-<li>Click the <strong>Usage</strong> tab.</li>
-<li>Use the search bar to filter by project or component name.</li>
-<li>Click on a component to navigate directly to its deploy page.</li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul>
-<li>A component is considered to be using a configuration group once it is deployed to a specific environment.</li>
-<li>The same configuration group can be linked when deploying to multiple environments. The environments in which each component uses the configuration group are displayed in square brackets next to the component name.</li>
-</ul>
-</div>
-<h2 id="delete-a-configuration-group">Delete a configuration group<a class="headerlink" href="#delete-a-configuration-group" title="Permanent link">&para;</a></h2>
-<p>To delete a configuration group, follow the steps given below:</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Deleting a configuration group is a permanent, non-reversible action. Ensure that the configuration group is not linked to any component before deleting it.</p>
-</div>
-<ol>
-<li>In the <a href="https://console.choreo.dev/">WSO2 Developer Platform Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>.</li>
-<li>In the <strong>Configuration Groups</strong> list, click the delete icon next to the configuration group you want to delete. This will display a confirmation dialog with details about the impact of the deletion.</li>
-<li>Review the details, then type the configuration group name to confirm the deletion.</li>
-<li>Click <strong>Delete</strong>.</li>
-</ol>
+<p>See <a href="../manage-customizable-ci-pipeline/#add-variables-and-secrets">Manage customizable CI pipelines</a> for how to add these values from the Console.</p>
 
 
 
@@ -3468,7 +3670,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Submit Environment Promotion Approval Requests" rel="prev">
+          <a href="../introduction/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -3477,20 +3679,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                Submit Environment Promotion Approval Requests
+                Introduction
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-footer__link md-footer__link--next" aria-label="Next: Configure Approvals for WSO2 Developer Platform Workflows" rel="next">
+          <a href="../built-in-steps/" class="md-footer__link md-footer__link--next" aria-label="Next: Built-in steps" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                Configure Approvals for WSO2 Developer Platform Workflows
+                Built-in steps
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3521,20 +3723,20 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.path", "navigation.top", "content.code.copy", "content.action.edit", "content.action.view", "version.selector"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.expand", "navigation.path", "navigation.top", "content.code.copy", "content.action.edit", "content.action.view", "version.selector"], "search": "../../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.fc8c2696.min.js"></script>
       
-        <script src="../../assets/lib/json-formatter/json-formatter.umd.js"></script>
+        <script src="../../../../assets/lib/json-formatter/json-formatter.umd.js"></script>
       
-        <script src="../../assets/lib/highlightjs/highlight.min.js"></script>
+        <script src="../../../../assets/lib/highlightjs/highlight.min.js"></script>
       
-        <script src="../../assets/js/choreotheme.js"></script>
+        <script src="../../../../assets/js/choreotheme.js"></script>
       
-        <script src="../../assets/javascripts/region-selector.js"></script>
+        <script src="../../../../assets/javascripts/region-selector.js"></script>
       
-        <script src="../../js/open_in_new_tab.js"></script>
+        <script src="../../../../js/open_in_new_tab.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

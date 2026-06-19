@@ -12,27 +12,27 @@
         <meta name="author" content="WSO2">
       
       
-        <link rel="canonical" href="https://wso2.com/engineering-platform/developer-platform/docs/devops/manage-configuration-groups/">
+        <link rel="canonical" href="https://wso2.com/engineering-platform/developer-platform/docs/devops/ci-pipelines/customizable-ci/manage-customizable-ci-pipeline/">
       
       
-        <link rel="prev" href="../cd-pipelines/submit-and-manage-environment-promotion-approval-requests/">
+        <link rel="prev" href="../built-in-steps/">
       
       
-        <link rel="next" href="../../governance/workflows/configure-approvals-for-choreo-workflows/">
+        <link rel="next" href="../../../cd-pipelines/deploying-application-using-choreo-cd-pipeline/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Manage Configuration Groups - WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform</title>
+        <title>Manage customizable CI pipelines - WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.7bf56d0a.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.a0c5b2b5.min.css">
       
       
 
@@ -51,21 +51,21 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/region-selector.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/region-selector.css">
     
-      <link rel="stylesheet" href="../../assets/lib/highlightjs/styles/vs.min.css">
+      <link rel="stylesheet" href="../../../../assets/lib/highlightjs/styles/vs.min.css">
     
-      <link rel="stylesheet" href="../../assets/css/blue-palette-alt2.css">
+      <link rel="stylesheet" href="../../../../assets/css/blue-palette-alt2.css">
     
-      <link rel="stylesheet" href="../../assets/css/choreotheme.css">
+      <link rel="stylesheet" href="../../../../assets/css/choreotheme.css">
     
-      <link rel="stylesheet" href="../../assets/lib/json-formatter/json-formatter.css">
+      <link rel="stylesheet" href="../../../../assets/lib/json-formatter/json-formatter.css">
     
-      <link rel="stylesheet" href="../../assets/css/config-catalog.css">
+      <link rel="stylesheet" href="../../../../assets/css/config-catalog.css">
     
-      <link rel="stylesheet" href="../../assets/lib/fontawesome-free-6.3.0-web/css/all.min.css">
+      <link rel="stylesheet" href="../../../../assets/lib/fontawesome-free-6.3.0-web/css/all.min.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -106,7 +106,7 @@
    <!-- CookiePro cookies consent notice end -->
    
   </script>
-   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+   <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
         html.glightbox-open { overflow: initial; height: 100%; }
         .gslide-title { margin-top: 0px; user-select: text; }
         .gslide-desc { color: #666; user-select: text; }
@@ -117,7 +117,7 @@
             body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
             body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
             body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+            </style> <script src="../../../../assets/javascripts/glightbox.min.js"></script></head>
 
   
   
@@ -142,7 +142,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#manage-configuration-groups" class="md-skip">
+        <a href="#manage-customizable-ci-pipelines" class="md-skip">
           Skip to content
         </a>
       
@@ -173,9 +173,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" class="md-header__button md-logo" aria-label="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
+    <a href="../../../.." title="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" class="md-header__button md-logo" aria-label="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
       
-  <img src="../../assets/images/logo.svg" alt="logo" style="vertical-align: middle;">
+  <img src="../../../../assets/images/logo.svg" alt="logo" style="vertical-align: middle;">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Manage Configuration Groups
+              Manage customizable CI pipelines
             
           </span>
         </div>
@@ -463,9 +463,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" class="md-nav__button md-logo" aria-label="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
+    <a href="../../../.." title="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" class="md-nav__button md-logo" aria-label="WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform" data-md-component="logo">
       
-  <img src="../../assets/images/logo.svg" alt="logo" style="vertical-align: middle;">
+  <img src="../../../../assets/images/logo.svg" alt="logo" style="vertical-align: middle;">
 
     </a>
     WSO2 Developer Platform Documentation | AI-Native Internal Developer Platform
@@ -505,7 +505,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../what-is-choreo/" class="md-nav__link">
+      <a href="../../../../what-is-choreo/" class="md-nav__link">
         What is WSO2 Developer Platform?
       </a>
     </li>
@@ -600,7 +600,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/resource-hierarchy/" class="md-nav__link">
         Resource Hierarchy
       </a>
     </li>
@@ -614,7 +614,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/organization/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/organization/" class="md-nav__link">
         Organization
       </a>
     </li>
@@ -628,7 +628,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/data-planes/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/data-planes/" class="md-nav__link">
         Data Planes
       </a>
     </li>
@@ -642,7 +642,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/environments/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/environments/" class="md-nav__link">
         Environments
       </a>
     </li>
@@ -656,7 +656,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/ci-cd/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/ci-cd/" class="md-nav__link">
         CI/CD
       </a>
     </li>
@@ -670,7 +670,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/choreo-marketplace/" class="md-nav__link">
         WSO2 Developer Platform Marketplace
       </a>
     </li>
@@ -684,7 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/project/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/project/" class="md-nav__link">
         Project
       </a>
     </li>
@@ -698,7 +698,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/component/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/component/" class="md-nav__link">
         Component
       </a>
     </li>
@@ -712,7 +712,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/deployment-tracks/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/deployment-tracks/" class="md-nav__link">
         Deployment Tracks
       </a>
     </li>
@@ -726,7 +726,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/endpoint/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/endpoint/" class="md-nav__link">
         Endpoint
       </a>
     </li>
@@ -740,7 +740,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/connections/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/connections/" class="md-nav__link">
         Connections
       </a>
     </li>
@@ -754,7 +754,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-concepts/access-control/" class="md-nav__link">
+      <a href="../../../../choreo-concepts/access-control/" class="md-nav__link">
         Access Control
       </a>
     </li>
@@ -805,7 +805,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/dataplanes/data-planes/" class="md-nav__link">
+      <a href="../../../../infrastructure/dataplanes/data-planes/" class="md-nav__link">
         Data Planes
       </a>
     </li>
@@ -848,7 +848,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/environments/manage-environments/" class="md-nav__link">
+      <a href="../../../../infrastructure/environments/manage-environments/" class="md-nav__link">
         Manage Environments
       </a>
     </li>
@@ -898,7 +898,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/domains/configure-a-custom-domain-for-your-organization/" class="md-nav__link">
+      <a href="../../../../infrastructure/domains/configure-a-custom-domain-for-your-organization/" class="md-nav__link">
         Configure a Custom Domain for Your Organization
       </a>
     </li>
@@ -919,7 +919,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/configure-vpns-on-the-choreo-cloud-data-plane/" class="md-nav__link">
+      <a href="../../../../infrastructure/configure-vpns-on-the-choreo-cloud-data-plane/" class="md-nav__link">
         Configure VPNs on Cloud Data Plane
       </a>
     </li>
@@ -962,7 +962,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments/" class="md-nav__link">
+      <a href="../../../../infrastructure/credentials/set-up-git-provider-authentication-for-choreo-deployments/" class="md-nav__link">
         Set Up Git Provider Authentication
       </a>
     </li>
@@ -976,7 +976,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../infrastructure/credentials/use-your-own-container-registry/" class="md-nav__link">
+      <a href="../../../../infrastructure/credentials/use-your-own-container-registry/" class="md-nav__link">
         Use Your Own Container Registry
       </a>
     </li>
@@ -1063,7 +1063,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../user-management/users/manage-members-of-an-organization/" class="md-nav__link">
+      <a href="../../../../user-management/users/manage-members-of-an-organization/" class="md-nav__link">
         Manage  Members of an Organization
       </a>
     </li>
@@ -1077,7 +1077,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../user-management/users/configure-enterprise-login/" class="md-nav__link">
+      <a href="../../../../user-management/users/configure-enterprise-login/" class="md-nav__link">
         Configure Enterprise Login
       </a>
     </li>
@@ -1127,7 +1127,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../user-management/groups-and-roles/configure-access-control/" class="md-nav__link">
+      <a href="../../../../user-management/groups-and-roles/configure-access-control/" class="md-nav__link">
         Configure Access Control
       </a>
     </li>
@@ -1214,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../automation-pipelines/introduction/" class="md-nav__link">
+      <a href="../../../automation-pipelines/introduction/" class="md-nav__link">
         What are Automation Pipelines
       </a>
     </li>
@@ -1228,7 +1228,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../automation-pipelines/manage-automation-pipeline/" class="md-nav__link">
+      <a href="../../../automation-pipelines/manage-automation-pipeline/" class="md-nav__link">
         Manage Automation Pipelines
       </a>
     </li>
@@ -1242,7 +1242,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../automation-pipelines/run-automation-pipeline/" class="md-nav__link">
+      <a href="../../../automation-pipelines/run-automation-pipeline/" class="md-nav__link">
         Run Automation Pipelines
       </a>
     </li>
@@ -1256,7 +1256,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../automation-pipelines/inbuilt-templates/" class="md-nav__link">
+      <a href="../../../automation-pipelines/inbuilt-templates/" class="md-nav__link">
         Inbuilt Pipeline Templates
       </a>
     </li>
@@ -1275,16 +1275,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
       
       
       
@@ -1293,7 +1293,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6_2">
           <span class="md-nav__icon md-icon"></span>
           CI Pipelines
@@ -1306,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/configure-ci-pipeline/" class="md-nav__link">
+      <a href="../../configure-ci-pipeline/" class="md-nav__link">
         Configure CI Pipeline
       </a>
     </li>
@@ -1320,7 +1320,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
+      <a href="../../integrate-unit-tests-into-the-build-pipeline/" class="md-nav__link">
         Integrate Unit Tests into the CI Pipeline
       </a>
     </li>
@@ -1334,7 +1334,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/configure-mirror-registry-for-in-dataplane-builds/" class="md-nav__link">
+      <a href="../../configure-mirror-registry-for-in-dataplane-builds/" class="md-nav__link">
         Configure a Mirror Registry for In-Dataplane Builds
       </a>
     </li>
@@ -1348,7 +1348,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/ci-pipeline-logs/" class="md-nav__link">
+      <a href="../../ci-pipeline-logs/" class="md-nav__link">
         CI Pipeline logs
       </a>
     </li>
@@ -1360,16 +1360,16 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2_5" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2_5" checked>
       
       
       
@@ -1378,7 +1378,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_2_5_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_2_5_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6_2_5">
           <span class="md-nav__icon md-icon"></span>
           Customize CI Pipeline
@@ -1391,7 +1391,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/customizable-ci/introduction/" class="md-nav__link">
+      <a href="../introduction/" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -1405,7 +1405,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/customizable-ci/author-pipeline-yaml/" class="md-nav__link">
+      <a href="../author-pipeline-yaml/" class="md-nav__link">
         Author pipeline.yaml
       </a>
     </li>
@@ -1419,7 +1419,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../ci-pipelines/customizable-ci/built-in-steps/" class="md-nav__link">
+      <a href="../built-in-steps/" class="md-nav__link">
         Built-in steps
       </a>
     </li>
@@ -1431,11 +1431,127 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../ci-pipelines/customizable-ci/manage-customizable-ci-pipeline/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Manage customizable CI pipelines
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Manage customizable CI pipelines
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-pipeline" class="md-nav__link">
+    Create a pipeline
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attach-a-pipeline" class="md-nav__link">
+    Attach a pipeline
+  </a>
+  
+    <nav class="md-nav" aria-label="Attach a pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-attach-the-pipeline-to-the-project" class="md-nav__link">
+    Step 1: Attach the pipeline to the project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-select-the-pipeline-on-a-deployment-track" class="md-nav__link">
+    Step 2: Select the pipeline on a deployment track
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-variables-and-secrets" class="md-nav__link">
+    Add variables and secrets
+  </a>
+  
+    <nav class="md-nav" aria-label="Add variables and secrets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-organization-level-variables-and-secrets" class="md-nav__link">
+    Add organization-level variables and secrets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-project-or-deployment-track-scope" class="md-nav__link">
+    Add project or deployment-track scope
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edit-the-pipeline-yaml" class="md-nav__link">
+    Edit the pipeline YAML
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#view-pipeline-validation-errors" class="md-nav__link">
+    View pipeline validation errors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    What's next
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1490,7 +1606,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
+      <a href="../../../cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-nav__link">
         Deploy Applications using WSO2 Developer Platform CD Pipeline
       </a>
     </li>
@@ -1504,7 +1620,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
+      <a href="../../../cd-pipelines/manage-continuous-deployment-pipelines/" class="md-nav__link">
         Manage CD Pipelines
       </a>
     </li>
@@ -1518,7 +1634,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-nav__link">
+      <a href="../../../cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-nav__link">
         Submit Environment Promotion Approval Requests
       </a>
     </li>
@@ -1537,93 +1653,11 @@ document.addEventListener('DOMContentLoaded', function() {
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Manage Configuration Groups
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../manage-configuration-groups/" class="md-nav__link">
         Manage Configuration Groups
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#create-a-configuration-group" class="md-nav__link">
-    Create a configuration group
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#link-and-use-configuration-groups" class="md-nav__link">
-    Link and use configuration groups
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#view-edit-a-configuration-group" class="md-nav__link">
-    View &amp; edit a configuration group
-  </a>
-  
-    <nav class="md-nav" aria-label="View &amp; edit a configuration group">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#edit-the-configuration-group" class="md-nav__link">
-    Edit the configuration group
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#view-configuration-group-usage" class="md-nav__link">
-    View configuration group usage
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#delete-a-configuration-group" class="md-nav__link">
-    Delete a configuration group
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1701,7 +1735,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-nav__link">
+      <a href="../../../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-nav__link">
         Configure Approvals for WSO2 Developer Platform Workflows
       </a>
     </li>
@@ -1751,7 +1785,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../governance/egress-control/control-egress-traffic-for-your-organization/" class="md-nav__link">
+      <a href="../../../../governance/egress-control/control-egress-traffic-for-your-organization/" class="md-nav__link">
         Control Egress Traffic for Your WSO2 Developer Platform Organization
       </a>
     </li>
@@ -1801,7 +1835,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../governance/approvals/review-workflow-approval-requests/" class="md-nav__link">
+      <a href="../../../../governance/approvals/review-workflow-approval-requests/" class="md-nav__link">
         Review Workflow Approval Requests
       </a>
     </li>
@@ -1822,7 +1856,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../governance/guideline-documents/architect-agent-guideline-documents/" class="md-nav__link">
+      <a href="../../../../governance/guideline-documents/architect-agent-guideline-documents/" class="md-nav__link">
         Guideline Documents
       </a>
     </li>
@@ -1902,7 +1936,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/databases/choreo-managed-databases-and-caches/" class="md-nav__link">
+      <a href="../../../../db-and-services/databases/choreo-managed-databases-and-caches/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -1916,7 +1950,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/databases/choreo-managed-postgresql-databases/" class="md-nav__link">
+      <a href="../../../../db-and-services/databases/choreo-managed-postgresql-databases/" class="md-nav__link">
         PostgreSQL
       </a>
     </li>
@@ -1930,7 +1964,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/databases/choreo-managed-mysql-databases/" class="md-nav__link">
+      <a href="../../../../db-and-services/databases/choreo-managed-mysql-databases/" class="md-nav__link">
         MySQL
       </a>
     </li>
@@ -1944,7 +1978,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/databases/choreo-managed-caches/" class="md-nav__link">
+      <a href="../../../../db-and-services/databases/choreo-managed-caches/" class="md-nav__link">
         WSO2 Developer Platform-Managed Cache
       </a>
     </li>
@@ -1958,7 +1992,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/databases/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
+      <a href="../../../../db-and-services/databases/add-choreo-managed-databases-and-caches-to-the-marketplace/" class="md-nav__link">
         Add WSO2 Developer Platform-Managed Databases and Caches to the Marketplace
       </a>
     </li>
@@ -1979,7 +2013,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
+      <a href="../../../../db-and-services/external-services/integrate-and-manage-third-party-services/" class="md-nav__link">
         Third-Party Services
       </a>
     </li>
@@ -2022,7 +2056,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
+      <a href="../../../../db-and-services/message-brokers/choreo-managed-message-brokers/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -2036,7 +2070,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
+      <a href="../../../../db-and-services/message-brokers/create-choreo-managed-kafka-services/" class="md-nav__link">
         Create WSO2 Developer Platform-Managed Kafka Services
       </a>
     </li>
@@ -2050,7 +2084,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/message-brokers/configure-a-kafka-service/" class="md-nav__link">
+      <a href="../../../../db-and-services/message-brokers/configure-a-kafka-service/" class="md-nav__link">
         Configure a Kafka Service
       </a>
     </li>
@@ -2064,7 +2098,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/message-brokers/monitor-a-kafka-service/" class="md-nav__link">
+      <a href="../../../../db-and-services/message-brokers/monitor-a-kafka-service/" class="md-nav__link">
         Monitor a Kafka Service
       </a>
     </li>
@@ -2114,7 +2148,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/ai-gateway/choreo-ai-gateway/" class="md-nav__link">
+      <a href="../../../../db-and-services/ai-gateway/choreo-ai-gateway/" class="md-nav__link">
         WSO2 Developer Platform AI Gateway
       </a>
     </li>
@@ -2128,7 +2162,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../db-and-services/ai-gateway/integrate-and-manage-gen-ai-services/" class="md-nav__link">
+      <a href="../../../../db-and-services/ai-gateway/integrate-and-manage-gen-ai-services/" class="md-nav__link">
         Integrate and Manage Generative AI Services
       </a>
     </li>
@@ -2215,7 +2249,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/runtime/view-runtime-details/" class="md-nav__link">
+      <a href="../../../../k8s-operations/runtime/view-runtime-details/" class="md-nav__link">
         View Kubernetes Runtime Details
       </a>
     </li>
@@ -2265,7 +2299,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/containers/configure-container-resources-commands-and-arguments/" class="md-nav__link">
+      <a href="../../../../k8s-operations/containers/configure-container-resources-commands-and-arguments/" class="md-nav__link">
         Configure Kubernetes Container Resources, Commands, and Arguments
       </a>
     </li>
@@ -2286,7 +2320,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/manage-configurations-and-secrets/" class="md-nav__link">
+      <a href="../../../../k8s-operations/manage-configurations-and-secrets/" class="md-nav__link">
         K8s Configurations and Secrets
       </a>
     </li>
@@ -2300,7 +2334,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/set-up-health-checks/" class="md-nav__link">
+      <a href="../../../../k8s-operations/set-up-health-checks/" class="md-nav__link">
         Health Checks
       </a>
     </li>
@@ -2343,7 +2377,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/scaling/autoscale-component-replicas/" class="md-nav__link">
+      <a href="../../../../k8s-operations/scaling/autoscale-component-replicas/" class="md-nav__link">
         Autoscale Component Replicas
       </a>
     </li>
@@ -2357,7 +2391,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/scaling/autoscale-components-with-scale-to-zero/" class="md-nav__link">
+      <a href="../../../../k8s-operations/scaling/autoscale-components-with-scale-to-zero/" class="md-nav__link">
         Autoscale Components with Scale-to-Zero
       </a>
     </li>
@@ -2378,7 +2412,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../k8s-operations/storage/configure-storage/" class="md-nav__link">
+      <a href="../../../../k8s-operations/storage/configure-storage/" class="md-nav__link">
         Storage
       </a>
     </li>
@@ -2429,7 +2463,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/operational-insights-dashboard/" class="md-nav__link">
+      <a href="../../../../insights/operational-insights-dashboard/" class="md-nav__link">
         Operational Insights
       </a>
     </li>
@@ -2472,7 +2506,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/delivery-insights/configure-delivery-insights/" class="md-nav__link">
+      <a href="../../../../insights/delivery-insights/configure-delivery-insights/" class="md-nav__link">
         Configure Delivery Insights
       </a>
     </li>
@@ -2486,7 +2520,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/delivery-insights/view-delivery-insights/" class="md-nav__link">
+      <a href="../../../../insights/delivery-insights/view-delivery-insights/" class="md-nav__link">
         View Delivery Insights
       </a>
     </li>
@@ -2565,7 +2599,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/work-with-choreo-insights-api/access-the-choreo-insights-api/" class="md-nav__link">
+      <a href="../../../../insights/work-with-choreo-insights-api/access-the-choreo-insights-api/" class="md-nav__link">
         Access the WSO2 Developer Platform Insights API
       </a>
     </li>
@@ -2579,7 +2613,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/work-with-choreo-insights-api/choreo-insights-api/" class="md-nav__link">
+      <a href="../../../../insights/work-with-choreo-insights-api/choreo-insights-api/" class="md-nav__link">
         WSO2 Developer Platform Insights API
       </a>
     </li>
@@ -2607,7 +2641,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../insights/cost-optimization/" class="md-nav__link">
+      <a href="../../../../insights/cost-optimization/" class="md-nav__link">
         Cost Insights
       </a>
     </li>
@@ -2687,7 +2721,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../observability/alerts/configure-alerts/" class="md-nav__link">
+      <a href="../../../../observability/alerts/configure-alerts/" class="md-nav__link">
         Configure Alerts
       </a>
     </li>
@@ -2708,7 +2742,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../observability/runtime-logs/" class="md-nav__link">
+      <a href="../../../../observability/runtime-logs/" class="md-nav__link">
         Runtime Logs
       </a>
     </li>
@@ -2722,7 +2756,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../observability/private-data-plane-logs/" class="md-nav__link">
+      <a href="../../../../observability/private-data-plane-logs/" class="md-nav__link">
         Private Data Plane Logs
       </a>
     </li>
@@ -2736,7 +2770,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../observability/audit-logs/" class="md-nav__link">
+      <a href="../../../../observability/audit-logs/" class="md-nav__link">
         Audit Logs
       </a>
     </li>
@@ -2816,7 +2850,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/developer-portal/customize-the-developer-portal/" class="md-nav__link">
+      <a href="../../../../api-management/developer-portal/customize-the-developer-portal/" class="md-nav__link">
         Customize the WSO2 Developer Platform Developer Portal
       </a>
     </li>
@@ -2830,7 +2864,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/developer-portal/configure-identity-providers-for-developer-portal/" class="md-nav__link">
+      <a href="../../../../api-management/developer-portal/configure-identity-providers-for-developer-portal/" class="md-nav__link">
         Configure Identity Providers for Developer Portal
       </a>
     </li>
@@ -2844,7 +2878,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/developer-portal/configure-exposed-environments-to-developer-portal/" class="md-nav__link">
+      <a href="../../../../api-management/developer-portal/configure-exposed-environments-to-developer-portal/" class="md-nav__link">
         Configure Exposed Environments to Developer Portal
       </a>
     </li>
@@ -2894,7 +2928,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/api-analytics/integrate-choreo-with-moesif/" class="md-nav__link">
+      <a href="../../../../api-management/api-analytics/integrate-choreo-with-moesif/" class="md-nav__link">
         Integrate WSO2 Developer Platform with Moesif for Analytics
       </a>
     </li>
@@ -2944,7 +2978,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/consumer-idps/configure-a-user-store-with-built-in-idp/" class="md-nav__link">
+      <a href="../../../../api-management/consumer-idps/configure-a-user-store-with-built-in-idp/" class="md-nav__link">
         Set Up a User Store with WSO2 Developer Platform’s Built-In Identity Provider
       </a>
     </li>
@@ -2958,7 +2992,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/consumer-idps/configure-asgardeo-as-an-external-idp/" class="md-nav__link">
+      <a href="../../../../api-management/consumer-idps/configure-asgardeo-as-an-external-idp/" class="md-nav__link">
         Set Up Asgardeo as an External IdP for WSO2 Developer Platform APIs
       </a>
     </li>
@@ -2972,7 +3006,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../api-management/consumer-idps/configure-azure-ad-as-an-external-idp/" class="md-nav__link">
+      <a href="../../../../api-management/consumer-idps/configure-azure-ad-as-an-external-idp/" class="md-nav__link">
         Set Up Azure AD as an External IdP for WSO2 Developer Platform APIs
       </a>
     </li>
@@ -3030,7 +3064,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-cli/choreo-cli-overview/" class="md-nav__link">
+      <a href="../../../../choreo-cli/choreo-cli-overview/" class="md-nav__link">
         WSO2 Developer Platform CLI Overview
       </a>
     </li>
@@ -3044,7 +3078,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-cli/get-started-with-the-choreo-cli/" class="md-nav__link">
+      <a href="../../../../choreo-cli/get-started-with-the-choreo-cli/" class="md-nav__link">
         Get Started with the WSO2 Developer Platform CLI
       </a>
     </li>
@@ -3058,7 +3092,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../choreo-cli/manage-authentication-with-personal-access-tokens/" class="md-nav__link">
+      <a href="../../../../choreo-cli/manage-authentication-with-personal-access-tokens/" class="md-nav__link">
         Manage Authentication with Personal Access Tokens in WSO2 Developer Platform CLI
       </a>
     </li>
@@ -3109,7 +3143,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/faq/" class="md-nav__link">
+      <a href="../../../../references/faq/" class="md-nav__link">
         FAQ
       </a>
     </li>
@@ -3123,7 +3157,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/choreo-limitations/" class="md-nav__link">
+      <a href="../../../../references/choreo-limitations/" class="md-nav__link">
         WSO2 Developer Platform Limitations
       </a>
     </li>
@@ -3137,7 +3171,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/troubleshoot-choreo/" class="md-nav__link">
+      <a href="../../../../references/troubleshoot-choreo/" class="md-nav__link">
         Troubleshoot WSO2 Developer Platform
       </a>
     </li>
@@ -3151,7 +3185,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/private-data-plane-security-levels/" class="md-nav__link">
+      <a href="../../../../references/private-data-plane-security-levels/" class="md-nav__link">
         Private Data Plane Security Levels
       </a>
     </li>
@@ -3165,7 +3199,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/private-data-plane-management-models/" class="md-nav__link">
+      <a href="../../../../references/private-data-plane-management-models/" class="md-nav__link">
         Private Data Plane Management Models
       </a>
     </li>
@@ -3179,7 +3213,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
     <li class="md-nav__item">
-      <a href="../../references/choreo-platform-services-billing-and-upgrades/" class="md-nav__link">
+      <a href="../../../../references/choreo-platform-services-billing-and-upgrades/" class="md-nav__link">
         WSO2 Developer Platform Service Billing and Upgrades
       </a>
     </li>
@@ -3220,37 +3254,30 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-a-configuration-group" class="md-nav__link">
-    Create a configuration group
+  <a href="#create-a-pipeline" class="md-nav__link">
+    Create a pipeline
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#link-and-use-configuration-groups" class="md-nav__link">
-    Link and use configuration groups
+  <a href="#attach-a-pipeline" class="md-nav__link">
+    Attach a pipeline
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#view-edit-a-configuration-group" class="md-nav__link">
-    View &amp; edit a configuration group
-  </a>
-  
-    <nav class="md-nav" aria-label="View &amp; edit a configuration group">
+    <nav class="md-nav" aria-label="Attach a pipeline">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#edit-the-configuration-group" class="md-nav__link">
-    Edit the configuration group
+  <a href="#step-1-attach-the-pipeline-to-the-project" class="md-nav__link">
+    Step 1: Attach the pipeline to the project
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#view-configuration-group-usage" class="md-nav__link">
-    View configuration group usage
+  <a href="#step-2-select-the-pipeline-on-a-deployment-track" class="md-nav__link">
+    Step 2: Select the pipeline on a deployment track
   </a>
   
 </li>
@@ -3261,8 +3288,49 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
-  <a href="#delete-a-configuration-group" class="md-nav__link">
-    Delete a configuration group
+  <a href="#add-variables-and-secrets" class="md-nav__link">
+    Add variables and secrets
+  </a>
+  
+    <nav class="md-nav" aria-label="Add variables and secrets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-organization-level-variables-and-secrets" class="md-nav__link">
+    Add organization-level variables and secrets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-project-or-deployment-track-scope" class="md-nav__link">
+    Add project or deployment-track scope
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edit-the-pipeline-yaml" class="md-nav__link">
+    Edit the pipeline YAML
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#view-pipeline-validation-errors" class="md-nav__link">
+    View pipeline validation errors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    What's next
   </a>
   
 </li>
@@ -3282,166 +3350,114 @@ document.addEventListener('DOMContentLoaded', function() {
                   
 
 
-<h1 id="manage-configuration-groups">Manage Configuration Groups<a class="headerlink" href="#manage-configuration-groups" title="Permanent link">&para;</a></h1>
-<p>WSO2 Developer Platform allows you to create Configuration Groups to efficiently manage reusable configurations across components within your organization. A Configuration Group is a collection of key-value pairs, where values can be defined for multiple environments. This feature ensures consistency and simplifies the management of configurations across environments.</p>
-<p>Configuration groups can be defined at organization level and link to components at deployment time. Once linked, WSO2 Developer Platform automatically resolves and mounts the configurations to the respective environments on deployment. You can either link a configuration group to inject the configurations as environment variables or file mounts.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<ul>
-<li>All configuration group values are encrypted and stored in environment-specific key vaults.</li>
-<li>Management of configuration groups is restricted to users with WSO2 Developer Platform Admin, DevOps, and Platform Engineer roles.</li>
-<li>Developers can discover configuration groups available within the organization via the <strong>WSO2 Developer Platform Internal Marketplace</strong>.</li>
-<li>This feature is currently not supported for Web Applications or Test Runner components.</li>
-</ul>
+<h1 id="manage-customizable-ci-pipelines">Manage customizable CI pipelines<a class="headerlink" href="#manage-customizable-ci-pipelines" title="Permanent link">&para;</a></h1>
+<p>A customizable CI pipeline lives at the organization level. Authoring and maintaining the pipeline YAML is a platform-engineer-only task. Making a pipeline take effect on a build is a two-step task that can be done by either a platform engineer or a developer: first attach the pipeline to the project (this makes it available in the project), then select it on the specific deployment track of a component that should use it. Defining the variables and secrets the pipeline expects at any scope, and reviewing build validation errors, can also be done by either role.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Customizable CI is available only on private data plane organizations and must be enabled by WSO2 on request.</p>
 </div>
-<h2 id="create-a-configuration-group">Create a configuration group<a class="headerlink" href="#create-a-configuration-group" title="Permanent link">&para;</a></h2>
-<p>To create a new configuration group, follow the steps given below:</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Who</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create a pipeline</td>
+<td>Platform engineer</td>
+</tr>
+<tr>
+<td>Edit the pipeline YAML</td>
+<td>Platform engineer</td>
+</tr>
+<tr>
+<td>Attach a pipeline to a project</td>
+<td>Platform engineer or developer</td>
+</tr>
+<tr>
+<td>Attach a pipeline to a deployment track</td>
+<td>Platform engineer or developer</td>
+</tr>
+<tr>
+<td>Add variables and secrets at any scope (organization, project, or deployment track)</td>
+<td>Platform engineer or developer</td>
+</tr>
+<tr>
+<td>View pipeline validation errors after a build</td>
+<td>Platform engineer or developer</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create-a-pipeline">Create a pipeline<a class="headerlink" href="#create-a-pipeline" title="Permanent link">&para;</a></h2>
+<p>You author a customizable CI pipeline by writing its YAML in the Console editor.</p>
 <ol>
-<li>In the <a href="https://console.choreo.dev/">WSO2 Developer Platform Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>.</li>
-<li>
-<p>On the <strong>Configuration Groups</strong> page, click <strong>Create</strong> and specify the following details to create a new configuration group:</p>
-<ul>
-<li><strong>Name</strong>: A name for the configuration group (Unique within the organization).</li>
-<li><strong>Description</strong>: A description for the configuration group (Optional).</li>
-<li>
-<p><strong>Define Keys</strong>: Define the keys for the configuration group.</p>
-<ul>
-<li>Configuration keys uniquely identify values in a configuration group. You can map these keys to environment variables or file mounts during deployment. Each key must be unique within the group.</li>
-</ul>
-</li>
-<li>
-<p><strong>Assign Values</strong>: Define values by environment for the keys defined.</p>
-<ul>
-<li>By default, all the environments are grouped together allowing you to manage configuration smoothly. You can separate and manage configuration values for each environment as needed.</li>
-</ul>
-</li>
-<li>
-<p><strong>Create</strong>: Click <strong>Create</strong> to create the configuration group.</p>
-</li>
-</ul>
-</li>
-<li>
-<p>Now you can link this configuration group to any component within the organization.</p>
-</li>
+<li>In the WSO2 Developer Platform Console, switch to the <strong>Platform</strong> view.</li>
+<li>In the top navigation menu, select the relevant <strong>Organization</strong>.</li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>CI Pipelines</strong>.</li>
+<li>Click <strong>Create a CI Pipeline</strong>.</li>
+<li>Enter a <strong>Name</strong> and <strong>Description</strong> for the pipeline.</li>
+<li>Select the <strong>Build Preset</strong> that matches the components you will attach this pipeline to.</li>
+<li>Paste your pipeline content into the YAML editor. See <a href="../author-pipeline-yaml/">Author pipeline.yaml</a> for the syntax.</li>
+<li>Click <strong>Create</strong>.</li>
 </ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul>
-<li>Configuration groups created will be listed in the <strong>WSO2 Developer Platform Internal Marketplace</strong>, improving visibility and discoverability for developers.</li>
-<li>All configuration groups will also be listed in the component deployment drawers, allowing developers to easily link them during deployment.</li>
-</ul>
-</div>
-<h2 id="link-and-use-configuration-groups">Link and use configuration groups<a class="headerlink" href="#link-and-use-configuration-groups" title="Permanent link">&para;</a></h2>
-<p>The configuration groups created at organization level can be linked to any component within the organization. A configuration group can be linked as <strong>Environment Variables</strong> or <strong>File Mounts</strong> at deployment time.</p>
-<p>Linking a configuration group will inject the values defined in the group during deployment. The values are mapped to environment variable names or file names based on the keys defined in the configuration group. If needed, you can customize the environment variable name or file name by updating the mapping at deployment.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>To link configuration groups to Ballerina component configurables, click <strong>Allow Linking Configuration Groups</strong> at the top of the configuration form during deployment. This enables a link icon next to each configurable field, allowing you to map configuration group values.</p>
-</div>
-<p>To link a configuration group to a component, follow the steps given below:</p>
+<p>The Console validates the YAML structure and required mandatory steps when you click <strong>Create</strong>. If the pipeline.yaml has structural problems or is missing the build step required for the selected Build Preset, the validation dialog opens with the specific issues. Fix them in the editor and click <strong>Create</strong> again.</p>
+<h2 id="attach-a-pipeline">Attach a pipeline<a class="headerlink" href="#attach-a-pipeline" title="Permanent link">&para;</a></h2>
+<p>For a deployment track to use a customizable CI pipeline, two steps are required, in order:</p>
 <ol>
-<li>Navigate to the component you want to link the configuration group using top navigation menu.</li>
-<li>On the left navigation menu, click <strong>DevOps</strong> and click <strong>CD Pipelines</strong>.</li>
-<li>Click <strong>Configure &amp; Deploy</strong>, this will open the configuration and deployment wizard.</li>
-<li>
-<p>In the wizard, link the configuration groups as <strong>Environment Variables</strong> or <strong>File Mounts</strong>, based on your requirements.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Environment Variables</label><label for="__tabbed_1_2">File Mounts</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<ul>
-<li>Choose the configuration group you want to link to the component.</li>
-<li>Click <strong>Link</strong> to link the configuration group to the component.</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<ul>
-<li>Choose the configuration group you want to link to the component.</li>
-<li>
-<p>Specify the <strong>Mount Path</strong> to mount the configuration files.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>All configurations within the selected configuration group will be mounted as individual files to the specified mount path/directory.</p>
-</div>
-</li>
-<li>
-<p>Click <strong>Link</strong> to link the configuration group to the component.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</li>
-<li>
-<p>Complete the deployment wizard by providing the required details and click <strong>Deploy</strong> to deploy the component with the updated configurations.</p>
-</li>
+<li><strong>Attach the pipeline to the project</strong> that contains the deployment track's component. This makes the pipeline visible in the project so it can be selected on individual deployment tracks. Attaching to the project alone does not activate the pipeline on any build.</li>
+<li><strong>Select the pipeline on each deployment track</strong> that should use it, from the deployment track's Build Configurations page. Each deployment track of a component is configured individually — there is no component-wide attach. Repeat this for every deployment track that should use the customizable pipeline.</li>
 </ol>
-<h2 id="view-edit-a-configuration-group">View &amp; edit a configuration group<a class="headerlink" href="#view-edit-a-configuration-group" title="Permanent link">&para;</a></h2>
-<p>To view &amp; edit a configuration group, follow the steps given below:</p>
+<h3 id="step-1-attach-the-pipeline-to-the-project">Step 1: Attach the pipeline to the project<a class="headerlink" href="#step-1-attach-the-pipeline-to-the-project" title="Permanent link">&para;</a></h3>
 <ol>
-<li>In the <a href="https://console.choreo.dev/">WSO2 Developer Platform Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>.</li>
-<li>
-<p>In the <strong>Configuration Groups</strong> list, select the desired configuration group to view.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul>
-<li>Only non-sensitive configuration values are displayed in the view mode.</li>
-<li>Updating the configuration group will not affect the current deployment; changes will be applied when the component is redeployed.</li>
-</ul>
-</div>
-</li>
+<li>Switch to the <strong>Platform</strong> view in the WSO2 Developer Platform Console.</li>
+<li>In the top navigation menu, select the <strong>Organization</strong> and then the <strong>Project</strong>.</li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>CI Pipelines</strong>.</li>
+<li>Click <strong>Add to Project</strong>, select the organization-level pipeline you created, and confirm. The pipeline is now available to the project's components.</li>
 </ol>
-<h3 id="edit-the-configuration-group">Edit the configuration group<a class="headerlink" href="#edit-the-configuration-group" title="Permanent link">&para;</a></h3>
-<p>Configuration keys and values within a configuration group can be modified, and these changes will take effect when the components using the configuration group are redeployed.</p>
-<p>To edit the configuration group definition, click <strong>Edit the Configuration Group</strong>, navigate to the <strong>Configurations</strong> tab and make the necessary updates:</p>
-<ul>
-<li>Add or remove configuration keys.</li>
-<li>Update the configuration group's display name and description.</li>
-</ul>
-<p>To edit the configuration values, click the edit icon in the corresponding set of environments and modify the required details:</p>
-<ul>
-<li>Update configuration values.</li>
-<li>Add a new set of configuration values.</li>
-<li>Add or remove environments from an existing set.</li>
-</ul>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<ul>
-<li><strong>Adding a new environment:</strong> Non-sensitive configuration values will be copied to the new environment, but sensitive values will not be. As a result, sensitive values will be cleared across all environments in the set. <strong>New values must be provided for sensitive configurations.</strong></li>
-<li><strong>Removing an environment:</strong> All configuration values for the removed environment will be deleted.</li>
-</ul>
-</div>
-<h3 id="view-configuration-group-usage">View configuration group usage<a class="headerlink" href="#view-configuration-group-usage" title="Permanent link">&para;</a></h3>
-<p>A configuration group can be linked to multiple components across different projects within your organization. The <strong>Usage</strong> tab provides visibility into all components that reference the selected configuration group, organized by project in a tree view.</p>
-<p>This view is useful when you need to identify which components require redeployment after updating a configuration group.</p>
-<p>To view configuration group usage:</p>
+<h3 id="step-2-select-the-pipeline-on-a-deployment-track">Step 2: Select the pipeline on a deployment track<a class="headerlink" href="#step-2-select-the-pipeline-on-a-deployment-track" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Select a configuration group from the list.</li>
-<li>Click the <strong>Usage</strong> tab.</li>
-<li>Use the search bar to filter by project or component name.</li>
-<li>Click on a component to navigate directly to its deploy page.</li>
+<li>Switch to the <strong>Development</strong> view.</li>
+<li>Open the <strong>Component</strong> that contains the deployment track you want to configure.</li>
+<li>At the top of the page, switch to the <strong>Deployment Track</strong> you want to configure.</li>
+<li>In the left navigation menu, click <strong>Build</strong> and then click <strong>Build Configurations</strong>.</li>
+<li>Under <strong>CI Pipeline</strong>, select the pipeline from the dropdown.</li>
+<li>Click <strong>Save</strong>.</li>
 </ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul>
-<li>A component is considered to be using a configuration group once it is deployed to a specific environment.</li>
-<li>The same configuration group can be linked when deploying to multiple environments. The environments in which each component uses the configuration group are displayed in square brackets next to the component name.</li>
-</ul>
-</div>
-<h2 id="delete-a-configuration-group">Delete a configuration group<a class="headerlink" href="#delete-a-configuration-group" title="Permanent link">&para;</a></h2>
-<p>To delete a configuration group, follow the steps given below:</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Deleting a configuration group is a permanent, non-reversible action. Ensure that the configuration group is not linked to any component before deleting it.</p>
-</div>
+<p>The next build of that deployment track uses the customizable pipeline.</p>
+<h2 id="add-variables-and-secrets">Add variables and secrets<a class="headerlink" href="#add-variables-and-secrets" title="Permanent link">&para;</a></h2>
+<p>If your pipeline references variables or secrets — for example, <code>{{ORG.SECRETS.SNYK_TOKEN}}</code> or <code>{{DT.VARIABLES.GO_VERSION}}</code> — you need to define the values before the first build runs.</p>
+<p>Define values at the scope that matches the reference in your YAML. An explicit reference such as <code>{{ORG.SECRETS.X}}</code> or <code>{{DT.VARIABLES.X}}</code> resolves at exactly the named scope. The legacy unqualified <code>{{VARIABLES.X}}</code> and <code>{{SECRETS.X}}</code> form resolves by walking <strong>DT → Project → Org</strong> and using the first match.</p>
+<h3 id="add-organization-level-variables-and-secrets">Add organization-level variables and secrets<a class="headerlink" href="#add-organization-level-variables-and-secrets" title="Permanent link">&para;</a></h3>
 <ol>
-<li>In the <a href="https://console.choreo.dev/">WSO2 Developer Platform Console</a>, go to the top navigation menu. Click <strong>Organization</strong> and select your organization.</li>
-<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>Configuration Groups</strong>.</li>
-<li>In the <strong>Configuration Groups</strong> list, click the delete icon next to the configuration group you want to delete. This will display a confirmation dialog with details about the impact of the deletion.</li>
-<li>Review the details, then type the configuration group name to confirm the deletion.</li>
-<li>Click <strong>Delete</strong>.</li>
+<li>Switch to the <strong>Platform</strong> view.</li>
+<li>In the top navigation menu, select the <strong>Organization</strong>.</li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>CI Pipelines</strong>.</li>
+<li>Open the pipeline you created.</li>
+<li>Click the <strong>Variables</strong> tab to add variables, or the <strong>Secrets</strong> tab to add secrets.</li>
+<li>Click <strong>+ Add Variable</strong> (or <strong>+ Add Secret</strong>) and provide the name and value. Add one entry per name your YAML references.</li>
+<li>Click <strong>Save</strong>.</li>
 </ol>
+<h3 id="add-project-or-deployment-track-scope">Add project or deployment-track scope<a class="headerlink" href="#add-project-or-deployment-track-scope" title="Permanent link">&para;</a></h3>
+<p>Variables and secrets at the project and deployment-track scopes are managed from the same Build Configurations page used to attach the pipeline. Open the component, navigate to <strong>Build</strong> &gt; <strong>Build Configurations</strong>, and use the <strong>Variables</strong> and <strong>Secrets</strong> sections to define values at the scope you need.</p>
+<h2 id="edit-the-pipeline-yaml">Edit the pipeline YAML<a class="headerlink" href="#edit-the-pipeline-yaml" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Switch to the <strong>Platform</strong> view.</li>
+<li>In the top navigation menu, select the <strong>Organization</strong>.</li>
+<li>In the left navigation menu, click <strong>DevOps</strong> and then click <strong>CI Pipelines</strong>.</li>
+<li>Open the pipeline.</li>
+<li>Click <strong>Edit Pipeline YAML</strong>, make your changes, and click <strong>Save</strong>.</li>
+</ol>
+<p>The same validation that runs at create time runs again when you save — structural errors and missing mandatory steps are surfaced in the editor before the change is persisted.</p>
+<h2 id="view-pipeline-validation-errors">View pipeline validation errors<a class="headerlink" href="#view-pipeline-validation-errors" title="Permanent link">&para;</a></h2>
+<p>When a build runs against a pipeline that has a problem the validator could not catch at save time (for example, an unresolved variable reference, a missing required parameter, or an incompatible step input), the build fails fast and the <strong>Build Details</strong> panel shows the specific problem — for example, which variables or secrets are missing at which scope, or which mandatory step is missing. Fix the YAML or define the missing values, then trigger a new build.</p>
+<p>For build log details, see <a href="../../ci-pipeline-logs/">CI Pipeline logs</a>.</p>
+<h2 id="whats-next">What's next<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../author-pipeline-yaml/">Author pipeline.yaml</a> — pipeline YAML syntax, steps, templates, variables, secrets, and system variables.</li>
+<li><a href="../built-in-steps/">Built-in steps</a> — the <code>choreo/*</code> steps you can call from your pipeline.</li>
+</ul>
 
 
 
@@ -3468,7 +3484,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../cd-pipelines/submit-and-manage-environment-promotion-approval-requests/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Submit Environment Promotion Approval Requests" rel="prev">
+          <a href="../built-in-steps/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Built-in steps" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -3477,20 +3493,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                Submit Environment Promotion Approval Requests
+                Built-in steps
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../governance/workflows/configure-approvals-for-choreo-workflows/" class="md-footer__link md-footer__link--next" aria-label="Next: Configure Approvals for WSO2 Developer Platform Workflows" rel="next">
+          <a href="../../../cd-pipelines/deploying-application-using-choreo-cd-pipeline/" class="md-footer__link md-footer__link--next" aria-label="Next: Deploy Applications using WSO2 Developer Platform CD Pipeline" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                Configure Approvals for WSO2 Developer Platform Workflows
+                Deploy Applications using WSO2 Developer Platform CD Pipeline
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3521,20 +3537,20 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.path", "navigation.top", "content.code.copy", "content.action.edit", "content.action.view", "version.selector"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.expand", "navigation.path", "navigation.top", "content.code.copy", "content.action.edit", "content.action.view", "version.selector"], "search": "../../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.fc8c2696.min.js"></script>
       
-        <script src="../../assets/lib/json-formatter/json-formatter.umd.js"></script>
+        <script src="../../../../assets/lib/json-formatter/json-formatter.umd.js"></script>
       
-        <script src="../../assets/lib/highlightjs/highlight.min.js"></script>
+        <script src="../../../../assets/lib/highlightjs/highlight.min.js"></script>
       
-        <script src="../../assets/js/choreotheme.js"></script>
+        <script src="../../../../assets/js/choreotheme.js"></script>
       
-        <script src="../../assets/javascripts/region-selector.js"></script>
+        <script src="../../../../assets/javascripts/region-selector.js"></script>
       
-        <script src="../../js/open_in_new_tab.js"></script>
+        <script src="../../../../js/open_in_new_tab.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
