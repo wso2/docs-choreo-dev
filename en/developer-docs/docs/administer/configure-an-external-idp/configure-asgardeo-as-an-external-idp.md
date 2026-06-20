@@ -4,11 +4,11 @@ Asgardeo is an identity-as-a-service (IDaaS) solution designed to create seamles
 
 ## Prerequisites
 
-Before you proceed, be sure to complete the following:
+Before you proceed, make sure to complete the following prerequisites:
 
 - Create an Asgardeo application. You can follow the Asgardeo guide to [register a standard-based application](https://wso2.com/asgardeo/docs/guides/applications/register-standard-based-app/#register-an-application).
 
-- Find the well-known URL:
+- Find the Well-Known URL:
   Go to the **info** tab of the Asgardeo application to view the endpoints and copy the **Discovery** endpoint.
 
 - Find the Client ID:
