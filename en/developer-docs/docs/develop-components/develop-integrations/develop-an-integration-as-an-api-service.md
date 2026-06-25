@@ -18,7 +18,7 @@ In this guide, you will:
     - Read and accept the privacy policy and terms of use.
     - Click **Create**. This creates the organization and opens the **Project Home** page.
 
-## Step 1: Create the integration component
+## Step 01: Create the integration component
 
 1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the **Project Home** page.
 2. If you already have one or more components in your project, click **+ Create**. Otherwise, proceed to the next step.
@@ -45,7 +45,7 @@ In this guide, you will:
 8. Click **Create and Deploy**. {{ product_name }} initializes the component, builds it, and deploys it to the development environment.
 
 
-## Step 2: Test the integration
+## Step 02: Test the integration
 
 1. In the {{ product_name }} Console left navigation menu, click **Test** and then click **Console**.
 2. In the OpenAPI Console, select **Development** from the environment drop-down list.
@@ -58,7 +58,7 @@ In this guide, you will:
      {"Hello" : "Integration"}
      ```
 
-## Step 3: Observe the integration
+## Step 03: Observe the integration
 
 1. In the {{ product_name }} Console left navigation menu, click **Observability** and then select one of the following options to monitor the performance of the integration component:
     - **Alerts**: View and configure alerts based on predefined conditions.
@@ -67,7 +67,7 @@ In this guide, you will:
 
    For more details, see [Observability Overview](../../monitoring-and-insights/observability-overview.md).
 
-## Step 5: Publish the integration component
+## Step 04: Publish the integration component
 
 1. In the {{ product_name }} Console left navigation menu, click **Manage** and then click **Lifecycle**.
 2. The **Lifecycle Management** pane shows the current lifecycle stage as **Created**.
