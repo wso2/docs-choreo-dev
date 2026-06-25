@@ -44,7 +44,7 @@ MySQL is a user-friendly, flexible, open-source relational database management s
 
 ## {{ product_name }}-Managed Cache (Valkey - OSS Redis Compatible)
 
-A fully managed cache compatible powered by Valkey that's fully compatible with with Redis® OSS. A versatile, in‑memory NoSQL database that serves as a cache, database, streaming engine, and message broker. {{ product_name }}-managed Cache allows you to have fully managed instances that can be swiftly provisioned and integrated into your applications within minutes.
+A fully managed cache powered by Valkey that's fully compatible with Redis® OSS. A versatile, in‑memory NoSQL database that serves as a cache, database, streaming engine, and message broker. {{ product_name }}-managed Cache allows you to have fully managed instances that can be swiftly provisioned and integrated into your applications within minutes.
 
 - [Create a {{ product_name }}-managed Cache](./choreo-managed-caches.md)
 

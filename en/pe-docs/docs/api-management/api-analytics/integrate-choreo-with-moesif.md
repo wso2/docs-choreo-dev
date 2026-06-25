@@ -72,7 +72,7 @@ Once you successfully add the key, you will see a delete option next to it. Curr
 
 2. Once you publish data, your Moesif dashboard will receive events. Once Moesif receives events, you will see a notification on Moesif confirming that it received data. 
 
-    ![Data Recieved Moesif Notification](../../assets/img/monitoring-and-insights/data_recieved_moesif_notification.png)
+    ![Data Received Moesif Notification](../../assets/img/monitoring-and-insights/data_recieved_moesif_notification.png)
 
 3. Click **Next** on the notification. This will take you to the final step, where you can opt to add team members. In this guide, let's skip this step. 
 4. Click **Finish**.
