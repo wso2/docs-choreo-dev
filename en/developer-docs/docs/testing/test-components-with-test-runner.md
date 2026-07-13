@@ -1,4 +1,4 @@
-# Test Components with Test Runner
+# Test Components with Test Runner (Deprecated)
 
 Test Runner is a component type in {{ product_name }} that simplifies the process of running automated tests against your components deployed in {{ product_name }}. This capability helps developers evaluate applications in different setups and environments, leading to more confidence and improved visibility into the application's status.
 

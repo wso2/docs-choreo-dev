@@ -172,7 +172,7 @@ The {{ product_name }} CLI currently supports the following component types:
 
 - Service
 - Web Application
-- Webhook
+- Webhook (Deprecated)
 - Scheduled Task
 - Manual Task
 - API Proxy
@@ -386,7 +386,7 @@ The build configurations required for existing build presets are as follows:
          </td>
       </tr>
       <tr>
-         <td rowspan=9>Webhook</td>
+         <td rowspan=9>Webhook (Deprecated)</td>
          <td>Python</td>
          <td>
             <ul>
