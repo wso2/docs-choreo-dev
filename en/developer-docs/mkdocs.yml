@@ -122,8 +122,8 @@ nav:
       - Develop Web Applications:
           - Build and Deploy a Single-Page Web Application: develop-components/develop-web-applications/build-and-deploy-a-single-page-web-application.md
           - Develop Web Applications Locally with WSO2 Developer Platform’s Managed Authentication: develop-components/develop-web-applications/develop-web-applications-locally-with-managed-authentication.md
-      - Develop a Webhook: develop-components/develop-a-webhook.md
-      - Develop an External Consumer: develop-components/develop-an-external-consumer.md
+      - Develop a Webhook (Deprecated): develop-components/develop-a-webhook.md
+      - Develop an External Consumer (Deprecated): develop-components/develop-an-external-consumer.md
       - Develop Integrations:
           - Develop an WSO2 MI integration as an API Service: develop-components/develop-integrations/develop-an-integration-as-an-api-service.md
           - Develop an Event Handler: develop-components/develop-integrations/develop-an-event-handler.md
@@ -198,7 +198,7 @@ nav:
       - Test WebSocket Endpoints via the WebSocket Console: testing/test-websocket-endpoints-via-the-websocket-console.md
       - Test APIs with cURL: testing/test-apis-with-curl.md
       - Test APIs with WSO2 Developer Platform API Chat: testing/test-apis-with-choreo-apichat.md
-      - Test Components with Test Runner: testing/test-components-with-test-runner.md
+      - Test Components with Test Runner (Deprecated): testing/test-components-with-test-runner.md
   - Consuming Services:
       - Consume a Service: 
           - Consume a service secured with API key: consuming-services/consume-an-api-key-secured-service.md

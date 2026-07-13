@@ -1,4 +1,4 @@
-# Develop an External Consumer
+# Develop an External Consumer (Deprecated)
 
 An external consumer in {{ product_name }} is any client that can interact with services deployed in {{ product_name }}, as an entity hosted outside of the {{ product_name }} infrastructure. It is a generic component type that allows you to represent and manage any client, such as a mobile application, web application, server-to-server integration, bot, microservices, etc.
 

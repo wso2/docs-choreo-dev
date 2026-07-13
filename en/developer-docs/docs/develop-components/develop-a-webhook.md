@@ -1,4 +1,4 @@
-# Develop a Webhook
+# Develop a Webhook (Deprecated)
 
 {{ product_name }} allows developers to design high-quality webhooks. To explore this capability, let's consider a scenario where a team of software engineers in an organization should be notified via email whenever someone creates a GitHub issue with the `bug` label in a specific repository.
 
