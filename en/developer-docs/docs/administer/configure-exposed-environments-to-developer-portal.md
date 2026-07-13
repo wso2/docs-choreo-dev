@@ -15,4 +15,5 @@ Follow these steps to configure which environments are visible in the Developer 
 
 4. Expand the **Environments** section and configure the environments exposed to the Developer Portal.
 
-5. To show organization-level endpoints in the Developer Portal, enable the **Show organization visible endpoints** checkbox in the Environments section, and click **Save**.
+??? note "Optional: Show organization-level endpoints"
+    To show organization-level endpoints in the Developer Portal, enable the **Show organization visible endpoints** checkbox in the Environments section, and click **Save**.
