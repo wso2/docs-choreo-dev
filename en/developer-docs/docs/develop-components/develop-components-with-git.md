@@ -14,12 +14,26 @@ Once you connect your Git repository to {{ product_name }}, you can build, deplo
 
 ## Connect a Git repository to {{ product_name }}
 
+### Configure Git provider credentials
+
+To connect a Bitbucket, GitLab, or Azure DevOps repository, you must first add the credentials that {{ product_name }} uses to access your Git provider. You configure these once at the organization level, and they become available to all components in the organization.
+
+!!! note
+    This step applies only to Bitbucket, GitLab, and Azure DevOps. For GitHub, {{ product_name }} uses the GitHub app authorization flow instead. For more information, see [Authorize GitHub with {{ product_name }}](#authorize-github-with-wso2-developer-platform).
+
 1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the {{ product_name }} Console header, go to the **Organization** list and select your organization. 
 3. In the left navigation menu, click **Settings**. This opens the organization-level settings page. 
 4. Click the **Credentials** tab. 
 5. Click **+Add Credentials** to configure the Git repository connection.
 6. Enter a **Credential Name**, select the Git provider, and enter the **Credential** you obtained from the Git provider.
+
+    For details on the credential each provider requires and the permissions it grants, see:
+
+    - [Authorize Bitbucket with {{ product_name }}](#authorize-bitbucket-with-wso2-developer-platform)
+    - [Authorize self-managed GitLab with {{ product_name }}](#authorize-self-managed-gitlab-with-wso2-developer-platform)
+    - [Authorize Azure DevOps with {{ product_name }}](#authorize-azure-devops-with-wso2-developer-platform)
+
 7. Click **Save**.  
 
 ## Authorize GitHub with {{ product_name }} 
