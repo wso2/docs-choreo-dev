@@ -1646,6 +1646,19 @@ document.addEventListener('DOMContentLoaded', function() {
     Connect a Git repository to WSO2 Developer Platform
   </a>
   
+    <nav class="md-nav" aria-label="Connect a Git repository to WSO2 Developer Platform">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configure-git-provider-credentials" class="md-nav__link">
+    Configure Git provider credentials
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4137,6 +4150,19 @@ document.addEventListener('DOMContentLoaded', function() {
     Connect a Git repository to WSO2 Developer Platform
   </a>
   
+    <nav class="md-nav" aria-label="Connect a Git repository to WSO2 Developer Platform">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configure-git-provider-credentials" class="md-nav__link">
+    Configure Git provider credentials
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4208,14 +4234,30 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul>
 <p>Once you connect your Git repository to WSO2 Developer Platform, you can build, deploy, and manage your application easily. </p>
 <h2 id="connect-a-git-repository-to-wso2-developer-platform">Connect a Git repository to WSO2 Developer Platform<a class="headerlink" href="#connect-a-git-repository-to-wso2-developer-platform" title="Permanent link">&para;</a></h2>
+<h3 id="configure-git-provider-credentials">Configure Git provider credentials<a class="headerlink" href="#configure-git-provider-credentials" title="Permanent link">&para;</a></h3>
+<p>To connect a Bitbucket, GitLab, or Azure DevOps repository, you must first add the credentials that WSO2 Developer Platform uses to access your Git provider. You configure these once at the organization level, and they become available to all components in the organization.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This step applies only to Bitbucket, GitLab, and Azure DevOps. For GitHub, WSO2 Developer Platform uses the GitHub app authorization flow instead. For more information, see <a href="#authorize-github-with-wso2-developer-platform">Authorize GitHub with WSO2 Developer Platform</a>.</p>
+</div>
 <ol>
 <li>Sign in to the <a href="https://console.choreo.dev/">WSO2 Developer Platform Console</a>.</li>
 <li>In the WSO2 Developer Platform Console header, go to the <strong>Organization</strong> list and select your organization. </li>
 <li>In the left navigation menu, click <strong>Settings</strong>. This opens the organization-level settings page. </li>
 <li>Click the <strong>Credentials</strong> tab. </li>
 <li>Click <strong>+Add Credentials</strong> to configure the Git repository connection.</li>
-<li>Enter a <strong>Credential Name</strong>, select the Git provider, and enter the <strong>Credential</strong> you obtained from the Git provider.</li>
-<li>Click <strong>Save</strong>.  </li>
+<li>
+<p>Enter a <strong>Credential Name</strong>, select the Git provider, and enter the <strong>Credential</strong> you obtained from the Git provider.</p>
+<p>For details on the credential each provider requires and the permissions it grants, see:</p>
+<ul>
+<li><a href="#authorize-bitbucket-with-wso2-developer-platform">Authorize Bitbucket with WSO2 Developer Platform</a></li>
+<li><a href="#authorize-self-managed-gitlab-with-wso2-developer-platform">Authorize self-managed GitLab with WSO2 Developer Platform</a></li>
+<li><a href="#authorize-azure-devops-with-wso2-developer-platform">Authorize Azure DevOps with WSO2 Developer Platform</a></li>
+</ul>
+</li>
+<li>
+<p>Click <strong>Save</strong>.  </p>
+</li>
 </ol>
 <h2 id="authorize-github-with-wso2-developer-platform">Authorize GitHub with WSO2 Developer Platform<a class="headerlink" href="#authorize-github-with-wso2-developer-platform" title="Permanent link">&para;</a></h2>
 <p>Authorizing WSO2 Developer Platform as a GitHub application grants WSO2 Developer Platform the following permissions to perform the respective actions on your behalf within the repository:</p>
