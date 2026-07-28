@@ -191,6 +191,34 @@ To ensure a successful deployment to the Production environment, retrieve the UR
 
 Congratulations! You successfully deployed your web application in {{ product_name }} using the {{ product_name }} CLI. 
 
+## Configure command output
+
+All `list` and `describe` commands print output as a formatted table by default. If you want to process the output with other tools or scripts, you can get it as JSON instead.
+
+To set the format for a single command, use the global `--output` flag or its `-o` shorthand. The flag accepts `table` and `json` — no other formats, such as `xml` or `yaml`, are supported.
+
+``` sh
+{{ cli_root_name }} list organizations --output json
+```
+
+``` sh
+{{ cli_root_name }} describe component "my-web-app" --project="web-app-project" -o json
+```
+
+If you regularly work with JSON output, set the `OUTPUT_FORMAT` environment variable instead of passing the flag to every command:
+
+``` sh
+export OUTPUT_FORMAT=json
+```
+
+Every subsequent `list` and `describe` command returns JSON. The `--output` flag takes precedence over the environment variable, so running a command with `-o table` prints a table.
+
+To go back to the default table output, unset the environment variable:
+
+``` sh
+unset OUTPUT_FORMAT
+```
+
 ## View all CLI functions
 
 Discover other functionalities of {{ product_name }} by running the following command.
