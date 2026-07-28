@@ -3314,7 +3314,7 @@ Only the domain is applied automatically; the original context of each API remai
 </li>
 <li>TLS key file guidelines:<ul>
 <li>It should be in the PEM format.</li>
-<li>It must be encrypted using RSA encryption.</li>
+<li>It must use either RSA or elliptic curve cryptography (ECC). For ECC keys, use a supported curve, such as P-256 (prime256v1). The key algorithm must match that of the corresponding TLS certificate.</li>
 </ul>
 </li>
 <li>Certificate chain file guidelines:<ul>
