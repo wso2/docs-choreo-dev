@@ -3699,6 +3699,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
+  <a href="#configure-command-output" class="md-nav__link">
+    Configure command output
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#view-all-cli-functions" class="md-nav__link">
     View all CLI functions
   </a>
@@ -4310,6 +4317,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
+  <a href="#configure-command-output" class="md-nav__link">
+    Configure command output
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#view-all-cli-functions" class="md-nav__link">
     View all CLI functions
   </a>
@@ -4504,9 +4518,27 @@ This triggers a wizard prompting you to provide details for your Git repository 
 </code></pre></div>
 
 <p>Congratulations! You successfully deployed your web application in WSO2 Developer Platform using the WSO2 Developer Platform CLI. </p>
+<h2 id="configure-command-output">Configure command output<a class="headerlink" href="#configure-command-output" title="Permanent link">&para;</a></h2>
+<p>All <code>list</code> and <code>describe</code> commands print output as a formatted table by default. If you want to process the output with other tools or scripts, you can get it as JSON instead.</p>
+<p>To set the format for a single command, use the global <code>--output</code> flag or its <code>-o</code> shorthand. The flag accepts <code>table</code> and <code>json</code> — no other formats, such as <code>xml</code> or <code>yaml</code>, are supported.</p>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>wdp<span class="w"> </span>list<span class="w"> </span>organizations<span class="w"> </span>--output<span class="w"> </span>json
+</code></pre></div>
+
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>wdp<span class="w"> </span>describe<span class="w"> </span>component<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>-o<span class="w"> </span>json
+</code></pre></div>
+
+<p>If you regularly work with JSON output, set the <code>OUTPUT_FORMAT</code> environment variable instead of passing the flag to every command:</p>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OUTPUT_FORMAT</span><span class="o">=</span>json
+</code></pre></div>
+
+<p>Every subsequent <code>list</code> and <code>describe</code> command returns JSON. The <code>--output</code> flag takes precedence over the environment variable, so running a command with <code>-o table</code> prints a table.</p>
+<p>To go back to the default table output, unset the environment variable:</p>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nb">unset</span><span class="w"> </span>OUTPUT_FORMAT
+</code></pre></div>
+
 <h2 id="view-all-cli-functions">View all CLI functions<a class="headerlink" href="#view-all-cli-functions" title="Permanent link">&para;</a></h2>
 <p>Discover other functionalities of WSO2 Developer Platform by running the following command.</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>wdp<span class="w"> </span>--help
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>wdp<span class="w"> </span>--help
 </code></pre></div>
 
 
