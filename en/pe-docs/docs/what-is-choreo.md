@@ -25,7 +25,7 @@
 - **Flexible Deployments**: Run {{ product_name }} on your existing infrastructure with no vendor lock-in.
 
 ### Application Delivery
-- **Seamless Git Integration**: Native integration with GitHub, BitBucket, GitLab and Azure DevOps to support GitOps-based workflows.
+- **Seamless Git Integration**: Native integration with GitHub, Bitbucket, GitLab and Azure DevOps to support GitOps-based workflows.
 - **Automated CI/CD Pipelines**: Automates build and deployment pipelines with support for extensions using Argo Workflows.
 - **Secrets & Config Management**: Securely manage secrets, configurations, and configurations for API gateways natively within the platform.
 
