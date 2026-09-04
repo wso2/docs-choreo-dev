@@ -10,7 +10,10 @@ In {{ product_name }}, you can connect a Git repository that contains Ballerina 
  - A Dockerfile: Specifies the instructions to build the Docker image. 
  - A build context: A set of files in the specified path used to build the image.
 
-Once you connect your Git repository to {{ product_name }}, you can build, deploy, and manage your application easily. 
+Once you connect your Git repository to {{ product_name }}, you can build, deploy, and manage your application easily. {{ product_name }} binds each component to the repository you select when you create it.
+
+!!! note
+    You cannot change the source repository name after a component is created. If you rename the repository in your Git provider or want to point the component to a different repository, you must create a new component with the required repository.
 
 ## Connect a Git repository to {{ product_name }}
 
