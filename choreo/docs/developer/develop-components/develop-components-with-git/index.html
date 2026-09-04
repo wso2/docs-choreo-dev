@@ -4232,7 +4232,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>A Dockerfile: Specifies the instructions to build the Docker image. </li>
 <li>A build context: A set of files in the specified path used to build the image.</li>
 </ul>
-<p>Once you connect your Git repository to WSO2 Developer Platform, you can build, deploy, and manage your application easily. </p>
+<p>Once you connect your Git repository to WSO2 Developer Platform, you can build, deploy, and manage your application easily. WSO2 Developer Platform binds each component to the repository you select when you create it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You cannot change the source repository name after a component is created. If you rename the repository in your Git provider or want to point the component to a different repository, you must create a new component with the required repository.</p>
+</div>
 <h2 id="connect-a-git-repository-to-wso2-developer-platform">Connect a Git repository to WSO2 Developer Platform<a class="headerlink" href="#connect-a-git-repository-to-wso2-developer-platform" title="Permanent link">&para;</a></h2>
 <h3 id="configure-git-provider-credentials">Configure Git provider credentials<a class="headerlink" href="#configure-git-provider-credentials" title="Permanent link">&para;</a></h3>
 <p>To connect a Bitbucket, GitLab, or Azure DevOps repository, you must first add the credentials that WSO2 Developer Platform uses to access your Git provider. You configure these once at the organization level, and they become available to all components in the organization.</p>
