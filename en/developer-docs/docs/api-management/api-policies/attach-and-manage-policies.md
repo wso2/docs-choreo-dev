@@ -32,7 +32,7 @@ To attach a policy to the `Request`, `Response`, or `Error` flow of a REST API p
 4. From the list of resources, expand the resource to which you want to attach the policy. 
 5. Click **Attach Mediation Policy** in the respective flow for which you want to attach a policy.
 6. In the **Policy List** pane that opens, click on a required policy to view its details.
-7. If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and configure the parameters. To make a parameter a configurable variable, input the value in the `${<variableName>}` format. For example, you can use `${name}` as an example.
+7. If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and configure the parameters. To make a parameter a configurable variable, input the value in the `${<variableName>}` format. For example, `${name}`. This declares the variable only. You provide its actual value for each environment later, on the **Configure & Deploy** pane.
 
     ![Configure parameters](../../assets/img/api-management/api-policies/configure-parameters.png)
  
@@ -44,6 +44,9 @@ To deploy the API follow the steps below:
 9. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. {{ product_name }} performs the mediation application generation step and opens the **Configure & Deploy** pane.
 
 10. In the **Configure & Deploy** pane, if you have any configurable variables that require values, specify appropriate values for them.
+
+    !!! warning
+        Enter the actual value that the parameter should take in the selected environment. Do not re-enter the `${<variableName>}` placeholder here. The `${<variableName>}` format is only used on the **Develop** page to declare a parameter as a configurable variable. Any value you type on this pane is stored as a literal string, so entering `${<variableName>}` sets the configurable to that text rather than to a value. This applies when you promote the API to a higher environment as well, where you must enter the value for that environment.
 
      ![Save and deploy values](../../assets/img/api-management/api-policies/save-and-deploy.png)
 
