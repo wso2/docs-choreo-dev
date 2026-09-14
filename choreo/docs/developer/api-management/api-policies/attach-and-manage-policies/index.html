@@ -4287,7 +4287,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Click <strong>Attach Mediation Policy</strong> in the respective flow for which you want to attach a policy.</li>
 <li>In the <strong>Policy List</strong> pane that opens, click on a required policy to view its details.</li>
 <li>
-<p>If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and configure the parameters. To make a parameter a configurable variable, input the value in the <code>${&lt;variableName&gt;}</code> format. For example, you can use <code>${name}</code> as an example.</p>
+<p>If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and configure the parameters. To make a parameter a configurable variable, input the value in the <code>${&lt;variableName&gt;}</code> format. For example, <code>${name}</code>. This declares the variable only. You provide its actual value for each environment later, on the <strong>Configure &amp; Deploy</strong> pane.</p>
 <p><a class="glightbox" href="../../../assets/img/api-management/api-policies/configure-parameters.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Configure parameters" src="../../../assets/img/api-management/api-policies/configure-parameters.png" /></a></p>
 </li>
 <li>
@@ -4302,6 +4302,13 @@ To deploy the API follow the steps below: </p>
 </li>
 <li>
 <p>In the <strong>Configure &amp; Deploy</strong> pane, if you have any configurable variables that require values, specify appropriate values for them.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Enter the actual value that the parameter should use in the selected environment. Do not re-enter the <code>${&lt;variableName&gt;}</code> placeholder here.</p>
+<p>The <code>${&lt;variableName&gt;}</code> format is used on the <strong>Develop</strong> page to declare a parameter as a configurable variable. When configuring or promoting the API, enter the actual value that should be used for that environment.</p>
+<p>For example, if <code>${username}</code> was defined as a configurable variable on the <strong>Develop</strong> page, enter the actual username value when configuring or promoting the API. Re-entering <code>${username}</code> will store <code>${username}</code> itself as the value rather than the intended environment-specific value.</p>
+<p>This also applies when promoting the API to a higher environment: enter the actual value required for that environment instead of re-entering the <code>${&lt;variableName&gt;}</code> placeholder.</p>
+</div>
 <p><a class="glightbox" href="../../../assets/img/api-management/api-policies/save-and-deploy.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Save and deploy values" src="../../../assets/img/api-management/api-policies/save-and-deploy.png" /></a></p>
 </li>
 <li>
