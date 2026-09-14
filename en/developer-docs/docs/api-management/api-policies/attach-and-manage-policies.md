@@ -46,7 +46,13 @@ To deploy the API follow the steps below:
 10. In the **Configure & Deploy** pane, if you have any configurable variables that require values, specify appropriate values for them.
 
     !!! warning
-        Enter the actual value that the parameter should take in the selected environment. Do not re-enter the `${<variableName>}` placeholder here. The `${<variableName>}` format is only used on the **Develop** page to declare a parameter as a configurable variable. Any value you type on this pane is stored as a literal string, so entering `${<variableName>}` sets the configurable to that text rather than to a value. This applies when you promote the API to a higher environment as well, where you must enter the value for that environment.
+        Enter the actual value that the parameter should use in the selected environment. Do not re-enter the `${<variableName>}` placeholder here.
+
+        The `${<variableName>}` format is used on the **Develop** page to declare a parameter as a configurable variable. When configuring or promoting the API, enter the actual value that should be used for that environment.
+
+        For example, if `${username}` was defined as a configurable variable on the **Develop** page, enter the actual username value when configuring or promoting the API. Re-entering `${username}` will store `${username}` itself as the value rather than the intended environment-specific value.
+
+        This also applies when promoting the API to a higher environment: enter the actual value required for that environment instead of re-entering the `${<variableName>}` placeholder.
 
      ![Save and deploy values](../../assets/img/api-management/api-policies/save-and-deploy.png)
 
