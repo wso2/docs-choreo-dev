@@ -6,11 +6,13 @@ Now, let’s walk through a sample scenario for granting access to a specific en
 
 Assume you are overseeing the Engineering Project within your organization and you need to grant development access to specific users solely within this project. As they are developers, you further need to restrict their access to the Development environment of the project. Here's a step-by-step guide on how to achieve this:
 
-### Step 1: Create a project
+### Step 1: Create a project (optional)
 
-Follow the steps given below to create a project:
+{{ product_name }} creates a default project for you when you create an organization. If you want to apply access control to that project instead, skip this step and use the default project in place of `Engineering Project` throughout this guide.
 
-1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in. This opens the organization home page.
+Follow the steps given below to create a separate project:
+
+1. Go to [https://console.choreo.dev/](https://console.choreo.dev/) and sign in, then go to the organization home page.
 2. On the organization home page, click **+ Create Project**.
 3. Enter a display name, unique name, and description for the project. You can enter the values given below:
     
