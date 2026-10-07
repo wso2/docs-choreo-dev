@@ -78,7 +78,7 @@ If none of the above changes occur during deployment, {{ product_name }} skips t
 {{ product_name }} allows you to implement an API policy as a Ballerina project and attach it to an API proxy component. 
 
 !!! info
-    Supported Ballerina version: 2201.12.8. Policies built with a later distribution, such as 2201.13.x, cannot be resolved during mediation code generation, and the deployment fails.
+    Supported Ballerina version: 2201.12.8
 
 To implement a policy, follow the steps given below: 
 
