@@ -1,6 +1,6 @@
 # Create Automation Pipelines
 
-{{ product_name }} allows to define automation pipelines at organization level. Follow these steps to create an automation pipeline.
+{{ product_name }} allows you to define automation pipelines at organization level. Follow these steps to create an automation pipeline.
 
 1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. Open **Platform Operations** perspective.
