@@ -74,7 +74,7 @@ You can restrict users to the API as follows:
 4. Under **Manage**, select the **Users and groups** then select **+ Add user/group**.
 5. Select the users and groups and click **Select**.
 
-For more information, refer to the Azure documentation: [Assign the app to users and groups to restrict access](Assign the app to users and groups to restrict access)
+For more information, refer to the Azure documentation: [Assign the app to users and groups to restrict access](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/assign-user-or-group-access-portal)
 
 ## Step 3: Create a client application on Azure AD and invoke the Azure web API
 
