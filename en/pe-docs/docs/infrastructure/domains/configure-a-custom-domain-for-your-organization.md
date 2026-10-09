@@ -139,4 +139,4 @@ If you want to view the entity types that use a particular custom domain, click 
 
 When a platform engineer adds custom domains for specific environments, developers can use any available custom domain to configure a custom URL for a component in a specific environment.
 
-For better governance, you can configure an approval process for URL mappings using [{{ product_name }} Workflows](../governance/workflows.configure-approvals-for-choreo-workflows.md).
+For better governance, you can configure an approval process for URL mappings using [{{ product_name }} Workflows](../../governance/workflows/configure-approvals-for-choreo-workflows.md).
