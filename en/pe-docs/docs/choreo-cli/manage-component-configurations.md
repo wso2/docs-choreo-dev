@@ -2,7 +2,15 @@
 
 Component configurations are the deployment-time configurations that {{ product_name }} applies to a component in a specific environment. They include environment variables, file mounts, and configuration group mappings, which are the same configurations you set on the **Deploy** page of the {{ product_name }} Console.
 
-With the {{ product_name }} CLI, you declare component configurations in a file and apply them with a single command. Because the file is declarative and the command is safe to run repeatedly, you can store the file in version control and use it in scripts and CI/CD pipelines.
+With the {{ product_name }} CLI, you declare component configurations in a file and apply them with a single command. Because the file is declarative and the command is safe to run repeatedly, you can use it in scripts and CI/CD pipelines, and store files that contain no sensitive values in version control.
+
+!!! warning "Keep sensitive values out of version control"
+    The CLI reads the values in a component configuration file as plain text. Setting `secret: true` encrypts a value when {{ product_name }} stores it, but it doesn't encrypt the file on your machine. The CLI also doesn't expand environment variables in the file, so a value such as `${DB_PASSWORD}` is applied as that literal text.
+
+    Don't commit a file that contains sensitive values. Instead, use one of the following approaches:
+
+    - Store the sensitive values as sensitive keys in a [configuration group](./manage-configuration-groups.md), and map the configuration group in the file with the `configGroups` section or a `fromConfigGroup` block. The file then contains only the name of the configuration group and its keys.
+    - Generate the file at run time from a secret store, such as the secrets of your CI/CD system, apply it, and then delete it.
 
 This guide walks you through the following tasks:
 
@@ -172,13 +180,24 @@ The `--project`, `--component`, `--env`, and `--deployment-track` flags override
 {{ cli_root_name }} set component-config -f component-config.yaml --env="Production"
 ```
 
-To apply the same file to many components, run the command in a loop. For example, the following script uses `jq` to apply `shared-config.yaml` to every component in a project:
+To apply the same file to many components, run the command in a loop. For example, the following Bash script uses `jq` to apply `shared-config.yaml` to every component in a project:
 
 ``` sh
-for component in $({{ cli_root_name }} list components --project="web-app-project" -o json | jq -r '.[].component'); do
+set -euo pipefail
+
+components=$({{ cli_root_name }} list components --project="web-app-project" -o json | jq -r '.[].component')
+
+if [ -z "$components" ]; then
+  echo "No components found in the project." >&2
+  exit 1
+fi
+
+for component in $components; do
   {{ cli_root_name }} set component-config -f shared-config.yaml --project="web-app-project" --component="$component" --env="Development"
 done
 ```
+
+The script stops with a non-zero exit code if the `list` command or `jq` fails, if the project has no components, or if the `set` command fails for any component.
 
 ## Step 4: View the component configurations
 

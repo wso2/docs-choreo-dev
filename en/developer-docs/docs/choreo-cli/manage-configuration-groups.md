@@ -281,10 +281,11 @@ You can't delete a configuration group that a component consumes, because doing 
 
 1. To find the components that consume the configuration group, see [Step 5.2: Find the components that consume a configuration group](#step-52-find-the-components-that-consume-a-configuration-group).
 
-2. To unlink the configuration group from each component, run the `unset component-config` command with the file that you used to link it. Repeat the command for each environment in which the component uses the configuration group.
+2. To unlink the configuration group from each component, run the `unset component-config` command with the file that you used to link it. The file specifies a single environment, so run the command once for each environment in which the component uses the configuration group, and use the `--env` flag to select the environment:
 
     ``` sh
-    {{ cli_root_name }} unset component-config -f link-config-group.yaml
+    {{ cli_root_name }} unset component-config -f link-config-group.yaml --env="Development"
+    {{ cli_root_name }} unset component-config -f link-config-group.yaml --env="Production"
     ```
 
     For details, see [Remove component configurations](./manage-component-configurations.md#step-6-remove-component-configurations).

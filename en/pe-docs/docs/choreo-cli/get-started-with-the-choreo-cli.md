@@ -222,7 +222,7 @@ To get the definition along with its metadata in JSON format, add `-o json`.
 
 ## Configure command output
 
-All `list` and `describe` commands print output as a formatted table by default. If you want to process the output with other tools or scripts, you can get it as JSON instead.
+All `list` and `describe` commands, except `describe api-definition`, print output as a formatted table by default. If you want to process the output with other tools or scripts, you can get it as JSON instead.
 
 To set the format for a single command, use the global `--output` flag or its `-o` shorthand. The flag accepts `table` and `json` — no other formats, such as `xml` or `yaml`, are supported.
 
