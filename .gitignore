@@ -13,3 +13,5 @@ output.txt
 fil
 
 .venv/
+
+.idea/
