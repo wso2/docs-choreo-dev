@@ -242,6 +242,8 @@ nav:
       - WSO2 Developer Platform CLI Overview: choreo-cli/choreo-cli-overview.md
       - Get Started with the WSO2 Developer Platform CLI: choreo-cli/get-started-with-the-choreo-cli.md
       - Manage Authentication with Personal Access Tokens: choreo-cli/manage-authentication-with-personal-access-tokens.md
+      - Manage Configuration Groups with the WSO2 Developer Platform CLI: choreo-cli/manage-configuration-groups.md
+      - Manage Component Configurations with the WSO2 Developer Platform CLI: choreo-cli/manage-component-configurations.md
   - Administer:
       - Configure Access Control: administer/configure-access-control.md
       - Configure a Custom Domain for Your Organization: administer/configure-a-custom-domain-for-your-organization.md
