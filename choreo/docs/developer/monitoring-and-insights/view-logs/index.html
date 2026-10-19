@@ -4241,6 +4241,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><code>outOfMemory|OOM</code> : Find logs containing either "outOfMemory" or "OOM"</li>
 </ul>
 <p><a class="glightbox" href="../../assets/img/monitoring-and-insights/view-logs/search-regex.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Search and filter interface" src="../../assets/img/monitoring-and-insights/view-logs/search-regex.png" /></a></p>
+<h4>Filter gateway logs</h4>
+<p>You can narrow down gateway logs by the gateway code and the HTTP status code of the request, without writing regex patterns.</p>
+<ul>
+<li><strong>By gateway code</strong>: Click <strong>Type</strong> and select one or more gateway codes under <strong>Gateway Logs</strong>. For example, select <strong>Auth Failure</strong> to view only the requests that failed at the gateway due to authentication or authorization issues. Selecting <strong>Gateway Logs</strong> displays all gateway logs. For details on each gateway code, see <a href="#gateway-logs">Gateway logs</a>.</li>
+<li><strong>By HTTP status code</strong>: Type an HTTP status code (for example, <code>504</code>) or a status code class (for example, <code>5xx</code>) in the search box and select the <strong>Gateway Logs: HTTP Status</strong> option. HTTP status filters apply only to gateway logs. You can add multiple status codes and classes to view gateway logs that match any of them.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can combine these filters. For example, select <strong>Backend Response</strong> and add the <code>401</code> HTTP status to view the requests for which the backend application returned a 401 status code.</p>
+</div>
 <h3 id="understand-runtime-logs">Understand runtime logs<a class="headerlink" href="#understand-runtime-logs" title="Permanent link">&para;</a></h3>
 <p>When you view component-level logs on the <strong>Runtime Logs</strong> page, you will see application, gateway and system logs.</p>
 <h4>Application logs</h4>
@@ -4275,6 +4285,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><code>RESOURCE_NOT_FOUND</code>: Indicates a request failure at the gateway due to the absence of a matching API resource for the inbound request. This can be caused by a mismatch in the HTTP method, path, or host.</li>
 <li><code>BACKEND_TIMEOUT</code>: Indicates a request timeout when calling the backend application from the gateway.</li>
 <li><code>GATEWAY_ERROR</code>: Indicates a request failure due to an erroneous behavior in the gateway.</li>
+<li><code>CLIENT_DISCONNECTED</code>: Indicates that the client disconnected before the gateway completed the response. In this case, the status code is usually <code>0</code> because no response was sent to the client.</li>
+<li>Any other value: The gateway's own description of the request state (for example, <code>upgrade_failed</code>), shown when the state does not match any of the above. You can filter these logs by HTTP status code.</li>
 </ul>
 </li>
 <li><code>statusCode</code>: The HTTP status code returned to the client.</li>
