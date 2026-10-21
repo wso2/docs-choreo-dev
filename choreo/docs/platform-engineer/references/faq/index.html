@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://wso2.com/engineering-platform/developer-platform/docs/references/faq/">
       
       
-        <link rel="prev" href="../../choreo-cli/manage-authentication-with-personal-access-tokens/">
+        <link rel="prev" href="../../choreo-cli/manage-component-configurations/">
       
       
         <link rel="next" href="../choreo-limitations/">
@@ -2984,6 +2984,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-cli/manage-configuration-groups/" class="md-nav__link">
+        Manage Configuration Groups with the WSO2 Developer Platform CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../choreo-cli/manage-component-configurations/" class="md-nav__link">
+        Manage Component Configurations with the WSO2 Developer Platform CLI
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -4099,12 +4127,12 @@ home directory of your operating system.</p>
 </ul>
 <h3 id="q-how-do-i-get-help-with-a-specific-command-in-the-cli">Q: How do I get help with a specific command in the CLI?<a class="headerlink" href="#q-how-do-i-get-help-with-a-specific-command-in-the-cli" title="Permanent link">&para;</a></h3>
 <p>You can get help with a specific command by running the following command:
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>&lt;command&gt;<span class="w"> </span>--help
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>wdp<span class="w"> </span>&lt;command&gt;<span class="w"> </span>--help
 </code></pre></div></p>
 <h3 id="q-what-are-the-build-configurations-required-when-creating-components-using-the-cli">Q: What are the build configurations required when creating components using the CLI?<a class="headerlink" href="#q-what-are-the-build-configurations-required-when-creating-components-using-the-cli" title="Permanent link">&para;</a></h3>
 <p>You can configure the component build configurations depending on the component type as follows:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>create<span class="w"> </span>component<span class="w"> </span>&lt;name&gt;<span class="w"> </span>--project<span class="w"> </span>&lt;name&gt;<span class="w"> </span>--build-configs<span class="o">=</span><span class="s1">&#39;key1=value1,key2=value2&#39;</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>create<span class="w"> </span>component<span class="w"> </span>&lt;name&gt;<span class="w"> </span>--project<span class="w"> </span>&lt;name&gt;<span class="w"> </span>--build-configs<span class="o">=</span><span class="s1">&#39;key1=value1&#39;</span><span class="w"> </span>--build-configs<span class="o">=</span><span class="s1">&#39;key2=value2&#39;</span>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>wdp<span class="w"> </span>create<span class="w"> </span>component<span class="w"> </span>&lt;name&gt;<span class="w"> </span>--project<span class="w"> </span>&lt;name&gt;<span class="w"> </span>--build-configs<span class="o">=</span><span class="s1">&#39;key1=value1,key2=value2&#39;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>wdp<span class="w"> </span>create<span class="w"> </span>component<span class="w"> </span>&lt;name&gt;<span class="w"> </span>--project<span class="w"> </span>&lt;name&gt;<span class="w"> </span>--build-configs<span class="o">=</span><span class="s1">&#39;key1=value1&#39;</span><span class="w"> </span>--build-configs<span class="o">=</span><span class="s1">&#39;key2=value2&#39;</span>
 </code></pre></div>
 
 <p>The build configurations required for existing build presets are as follows:</p>
@@ -4565,7 +4593,7 @@ home directory of your operating system.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../choreo-cli/manage-authentication-with-personal-access-tokens/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Manage Authentication with Personal Access Tokens in WSO2 Developer Platform CLI" rel="prev">
+          <a href="../../choreo-cli/manage-component-configurations/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Manage Component Configurations with the WSO2 Developer Platform CLI" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -4574,7 +4602,7 @@ home directory of your operating system.</p>
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                Manage Authentication with Personal Access Tokens in WSO2 Developer Platform CLI
+                Manage Component Configurations with the WSO2 Developer Platform CLI
               </div>
             </div>
           </a>

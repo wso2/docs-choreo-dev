@@ -3112,8 +3112,22 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
+  <a href="#view-the-api-definition-of-a-component" class="md-nav__link">
+    View the API definition of a component
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configure-command-output" class="md-nav__link">
     Configure command output
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#view-cli-environment-variables" class="md-nav__link">
+    View CLI environment variables
   </a>
   
 </li>
@@ -3142,6 +3156,34 @@ document.addEventListener('DOMContentLoaded', function() {
     <li class="md-nav__item">
       <a href="../manage-authentication-with-personal-access-tokens/" class="md-nav__link">
         Manage Authentication with Personal Access Tokens in WSO2 Developer Platform CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manage-configuration-groups/" class="md-nav__link">
+        Manage Configuration Groups with the WSO2 Developer Platform CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manage-component-configurations/" class="md-nav__link">
+        Manage Component Configurations with the WSO2 Developer Platform CLI
       </a>
     </li>
   
@@ -3418,8 +3460,22 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
       
         <li class="md-nav__item">
+  <a href="#view-the-api-definition-of-a-component" class="md-nav__link">
+    View the API definition of a component
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configure-command-output" class="md-nav__link">
     Configure command output
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#view-cli-environment-variables" class="md-nav__link">
+    View CLI environment variables
   </a>
   
 </li>
@@ -3476,14 +3532,14 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 <li>
 <p>Verify the installation by running the following command:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>--version
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>wdp<span class="w"> </span>--version
 </code></pre></div>
 
 </li>
 </ol>
 <h2 id="step-1-login-to-wso2-developer-platform">Step 1: Login to WSO2 Developer Platform<a class="headerlink" href="#step-1-login-to-wso2-developer-platform" title="Permanent link">&para;</a></h2>
 <p>Run the following command to login to WSO2 Developer Platform:  </p>
-<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>login
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>wdp<span class="w"> </span>login
 </code></pre></div>
 
 <div class="admonition note">
@@ -3494,7 +3550,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 id="step-2-create-a-project">Step 2: Create a project<a class="headerlink" href="#step-2-create-a-project" title="Permanent link">&para;</a></h2>
 <p>A project in WSO2 Developer Platform is a logical group of related components that typically represent a single cloud-native application. A project consists of one or more components.</p>
 <p>Create a multi-repository project named ‘web-app-project’ by running the following command:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>create<span class="w"> </span>project<span class="w"> </span>web-app-project<span class="w"> </span>--type<span class="o">=</span>multi-repository
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>wdp<span class="w"> </span>create<span class="w"> </span>project<span class="w"> </span>web-app-project<span class="w"> </span>--type<span class="o">=</span>multi-repository
 </code></pre></div>
 
 <h2 id="step-3-create-a-web-application-component">Step 3: Create a Web Application component<a class="headerlink" href="#step-3-create-a-web-application-component" title="Permanent link">&para;</a></h2>
@@ -3577,21 +3633,21 @@ This triggers a wizard prompting you to provide details for your Git repository 
 </ol>
 <h2 id="step-4-list-components-inside-project">Step 4: List Components inside Project<a class="headerlink" href="#step-4-list-components-inside-project" title="Permanent link">&para;</a></h2>
 <p>To list down the components in the project, you can use the following command:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>list<span class="w"> </span>components<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>wdp<span class="w"> </span>list<span class="w"> </span>components<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span>
 </code></pre></div>
 
 <h2 id="step-5-view-component-details">Step 5: View component details<a class="headerlink" href="#step-5-view-component-details" title="Permanent link">&para;</a></h2>
 <p>To view comprehensive information about the component, including basic details and service endpoint URLs once the services are deployed, you can use the following command:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>describe<span class="w"> </span>component<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>wdp<span class="w"> </span>describe<span class="w"> </span>component<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span>
 </code></pre></div>
 
 <h2 id="step-6-build-the-component">Step 6: Build the component<a class="headerlink" href="#step-6-build-the-component" title="Permanent link">&para;</a></h2>
 <p>You must build the components before deploying them to a specific environment. Execute the following command to trigger the build:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>create<span class="w"> </span>build<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>wdp<span class="w"> </span>create<span class="w"> </span>build<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span>
 </code></pre></div>
 
 <p>To view the builds in Progres:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>list<span class="w"> </span>builds<span class="w">  </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--component<span class="o">=</span><span class="s2">&quot;my-web-app&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>wdp<span class="w"> </span>list<span class="w"> </span>builds<span class="w">  </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--component<span class="o">=</span><span class="s2">&quot;my-web-app&quot;</span>
 </code></pre></div>
 
 <h3 id="step-61-view-build-status">Step 6.1: View build status<a class="headerlink" href="#step-61-view-build-status" title="Permanent link">&para;</a></h3>
@@ -3600,27 +3656,36 @@ This triggers a wizard prompting you to provide details for your Git repository 
 <p class="admonition-title">Note</p>
 <p>Typically, a build takes approximately 2 to 5 minutes to complete.</p>
 </div>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>describe<span class="w"> </span>build<span class="w"> </span>&lt;build-id&gt;<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--component<span class="o">=</span><span class="s2">&quot;my-web-app&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>wdp<span class="w"> </span>describe<span class="w"> </span>build<span class="w"> </span>&lt;build-id&gt;<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--component<span class="o">=</span><span class="s2">&quot;my-web-app&quot;</span>
 </code></pre></div>
 
 <h3 id="step-62-view-build-logs">Step 6.2: View build logs<a class="headerlink" href="#step-62-view-build-logs" title="Permanent link">&para;</a></h3>
 <p>Once the build is complete, you can view the build logs for verification or debugging purposes. In the unlikely case, the build encounters any issues, the logs will help you troubleshoot.</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>logs<span class="w"> </span>build<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--component<span class="o">=</span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--deployment-track<span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="w"> </span>--build-id<span class="o">=</span>&lt;build_id&gt;
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>wdp<span class="w"> </span>logs<span class="w"> </span>build<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--component<span class="o">=</span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--deployment-track<span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="w"> </span>--build-id<span class="o">=</span>&lt;build_id&gt;
 </code></pre></div>
 
 <h2 id="step-7-deploy-to-the-development-environment">Step 7: Deploy to the Development environment<a class="headerlink" href="#step-7-deploy-to-the-development-environment" title="Permanent link">&para;</a></h2>
 <p>Once the build status indicates <code>successful</code> you can deploy the component in the Development environment by running the following command:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--env<span class="o">=</span>Development<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--build-id<span class="o">=</span>&lt;build-id&gt;
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>wdp<span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--env<span class="o">=</span>Development<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--build-id<span class="o">=</span>&lt;build-id&gt;
 </code></pre></div>
 
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To view the environments of a project, run <code>wdp list environments --project="web-app-project"</code>. In JSON output, each environment has the <code>name</code>, <code>id</code>, and <code>critical</code> fields. The <code>critical</code> field is <code>true</code> for production-like environments.</p>
+</div>
 <h3 id="step-71-verify-the-deployment-in-the-development-environment">Step 7.1: Verify the deployment in the Development environment<a class="headerlink" href="#step-71-verify-the-deployment-in-the-development-environment" title="Permanent link">&para;</a></h3>
 <p>After deploying the component, you can retrieve the URL of the deployed web application and open the publicly available web page to verify its behavior. Use the following command to retrieve the URL:</p>
-<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>describe<span class="w"> </span>component<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>wdp<span class="w"> </span>describe<span class="w"> </span>component<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span>
 </code></pre></div>
 
+<p>To view the status of the deployment in the Development environment, along with the deployed build and commit, run the following command:</p>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>wdp<span class="w"> </span>describe<span class="w"> </span>deployment<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--component<span class="o">=</span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--env<span class="o">=</span>Development<span class="w"> </span>-o<span class="w"> </span>json
+</code></pre></div>
+
+<p>The JSON output includes the <code>deploymentStatus</code>, <code>lastDeployed</code>, <code>buildId</code>, and <code>buildRunId</code> fields, and a <code>commit</code> object with the <code>sha</code>, <code>message</code>, <code>createdBy</code>, and <code>committed</code> details of the deployed commit.</p>
 <h3 id="step-72-view-runtime-logs">Step 7.2: View runtime logs<a class="headerlink" href="#step-72-view-runtime-logs" title="Permanent link">&para;</a></h3>
 <p>To observe runtime application logs of the web application in the Development environment, execute the following command:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>logs<span class="w"> </span>application<span class="w"> </span>--component<span class="w"> </span>my-web-app<span class="w"> </span>--project<span class="w"> </span>web-app-project<span class="w"> </span>--env<span class="w"> </span>Development<span class="w"> </span>--follow
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>wdp<span class="w"> </span>logs<span class="w"> </span>application<span class="w"> </span>--component<span class="w"> </span>my-web-app<span class="w"> </span>--project<span class="w"> </span>web-app-project<span class="w"> </span>--env<span class="w"> </span>Development<span class="w"> </span>--follow
 </code></pre></div>
 
 <h2 id="step-8-deploy-to-the-production-environment">Step 8: Deploy to the Production environment<a class="headerlink" href="#step-8-deploy-to-the-production-environment" title="Permanent link">&para;</a></h2>
@@ -3628,36 +3693,80 @@ This triggers a wizard prompting you to provide details for your Git repository 
 <ul>
 <li>Be sure to substitute <build-id> with the id obtained after triggering the build.</li>
 </ul>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--env<span class="o">=</span>Production<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--build-id<span class="o">=</span>&lt;build-id&gt;
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>wdp<span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--env<span class="o">=</span>Production<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>--build-id<span class="o">=</span>&lt;build-id&gt;
 </code></pre></div>
 
 <h3 id="step-81-verify-the-deployment-in-the-production-environment">Step 8.1: Verify the deployment in the Production environment<a class="headerlink" href="#step-81-verify-the-deployment-in-the-production-environment" title="Permanent link">&para;</a></h3>
 <p>To ensure a successful deployment to the Production environment, retrieve the URL of the deployed web application using the following command:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>describe<span class="w"> </span>component<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>wdp<span class="w"> </span>describe<span class="w"> </span>component<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span>
 </code></pre></div>
 
 <p>Congratulations! You successfully deployed your web application in WSO2 Developer Platform using the WSO2 Developer Platform CLI. </p>
-<h2 id="configure-command-output">Configure command output<a class="headerlink" href="#configure-command-output" title="Permanent link">&para;</a></h2>
-<p>All <code>list</code> and <code>describe</code> commands print output as a formatted table by default. If you want to process the output with other tools or scripts, you can get it as JSON instead.</p>
-<p>To set the format for a single command, use the global <code>--output</code> flag or its <code>-o</code> shorthand. The flag accepts <code>table</code> and <code>json</code> — no other formats, such as <code>xml</code> or <code>yaml</code>, are supported.</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>list<span class="w"> </span>organizations<span class="w"> </span>--output<span class="w"> </span>json
+<h2 id="view-the-api-definition-of-a-component">View the API definition of a component<a class="headerlink" href="#view-the-api-definition-of-a-component" title="Permanent link">&para;</a></h2>
+<p>For services and API proxies, you can view the API definition, such as an OpenAPI definition, a GraphQL SDL, or an AsyncAPI definition. Each deployment publishes the API definition for its environment, so the definition in one environment can differ from the definition in another environment until you promote the build.</p>
+<p>To view the API definition of a component in an environment, run the following command:</p>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>wdp<span class="w"> </span>describe<span class="w"> </span>api-definition<span class="w"> </span>--project<span class="o">=</span>&lt;project-name&gt;<span class="w"> </span>--component<span class="o">=</span>&lt;component-name&gt;<span class="w"> </span>--env<span class="o">=</span>Development
 </code></pre></div>
 
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>describe<span class="w"> </span>component<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>-o<span class="w"> </span>json
+<p>The CLI prints the definition to the standard output as it is, so you can save it to a file or pass it to another tool:</p>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>wdp<span class="w"> </span>describe<span class="w"> </span>api-definition<span class="w"> </span>--project<span class="o">=</span>&lt;project-name&gt;<span class="w"> </span>--component<span class="o">=</span>&lt;component-name&gt;<span class="w"> </span>--env<span class="o">=</span>Development<span class="w"> </span>&gt;<span class="w"> </span>openapi.yaml
+</code></pre></div>
+
+<p>To get the definition along with its metadata in JSON format, add <code>-o json</code>.</p>
+<h2 id="configure-command-output">Configure command output<a class="headerlink" href="#configure-command-output" title="Permanent link">&para;</a></h2>
+<p>All <code>list</code> and <code>describe</code> commands, except <code>describe api-definition</code>, print output as a formatted table by default. If you want to process the output with other tools or scripts, you can get it as JSON instead.</p>
+<p>To set the format for a single command, use the global <code>--output</code> flag or its <code>-o</code> shorthand. The flag accepts <code>table</code> and <code>json</code> — no other formats, such as <code>xml</code> or <code>yaml</code>, are supported.</p>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>wdp<span class="w"> </span>list<span class="w"> </span>organizations<span class="w"> </span>--output<span class="w"> </span>json
+</code></pre></div>
+
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>wdp<span class="w"> </span>describe<span class="w"> </span>component<span class="w"> </span><span class="s2">&quot;my-web-app&quot;</span><span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>-o<span class="w"> </span>json
 </code></pre></div>
 
 <p>If you regularly work with JSON output, set the <code>OUTPUT_FORMAT</code> environment variable instead of passing the flag to every command:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OUTPUT_FORMAT</span><span class="o">=</span>json
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OUTPUT_FORMAT</span><span class="o">=</span>json
 </code></pre></div>
 
 <p>Every subsequent <code>list</code> and <code>describe</code> command returns JSON. The <code>--output</code> flag takes precedence over the environment variable, so running a command with <code>-o table</code> prints a table.</p>
 <p>To go back to the default table output, unset the environment variable:</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nb">unset</span><span class="w"> </span>OUTPUT_FORMAT
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="nb">unset</span><span class="w"> </span>OUTPUT_FORMAT
 </code></pre></div>
 
+<p>When you use JSON output, the CLI writes only the JSON payload to the standard output (stdout) and writes hints and messages to the standard error (stderr). If a <code>list</code> command returns no results, the output is an empty JSON array (<code>[]</code>). This means you can safely pipe JSON output to tools such as <code>jq</code> or redirect it to a file.</p>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>wdp<span class="w"> </span>list<span class="w"> </span>components<span class="w"> </span>--project<span class="o">=</span><span class="s2">&quot;web-app-project&quot;</span><span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.[].component&#39;</span>
+</code></pre></div>
+
+<h2 id="view-cli-environment-variables">View CLI environment variables<a class="headerlink" href="#view-cli-environment-variables" title="Permanent link">&para;</a></h2>
+<p>The WSO2 Developer Platform CLI reads the following environment variables:</p>
+<table>
+<thead>
+<tr>
+<th>Environment variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OUTPUT_FORMAT</code></td>
+<td>The default output format for commands that support the <code>--output</code> flag. The supported values are <code>table</code> and <code>json</code>. The default is <code>table</code>.</td>
+</tr>
+<tr>
+<td><code>CHOREO_PAT</code></td>
+<td>A personal access token for non-interactive authentication. For details, see <a href="../manage-authentication-with-personal-access-tokens/">Manage Authentication with Personal Access Tokens</a>.</td>
+</tr>
+<tr>
+<td><code>CHOREO_REGION</code></td>
+<td>The deployment region. The supported values are <code>US</code> and <code>EU</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>To view these environment variables along with their current values and defaults, run the following command:</p>
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>wdp<span class="w"> </span>env
+</code></pre></div>
+
+<p>The CLI masks sensitive values, such as the value of <code>CHOREO_PAT</code>, and shows only whether they are set. To get the output in JSON format, add <code>-o json</code>.</p>
 <h2 id="view-all-cli-functions">View all CLI functions<a class="headerlink" href="#view-all-cli-functions" title="Permanent link">&para;</a></h2>
 <p>Discover other functionalities of WSO2 Developer Platform by running the following command.</p>
-<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="o">{{</span><span class="w"> </span>cli_root_name<span class="w"> </span><span class="o">}}</span><span class="w"> </span>--help
+<div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>wdp<span class="w"> </span>--help
 </code></pre></div>
 
 
