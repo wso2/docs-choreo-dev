@@ -192,6 +192,8 @@ nav:
       - WSO2 Developer Platform CLI Overview: choreo-cli/choreo-cli-overview.md
       - Get Started with the WSO2 Developer Platform CLI: choreo-cli/get-started-with-the-choreo-cli.md
       - Manage Authentication with Personal Access Tokens in WSO2 Developer Platform CLI: choreo-cli/manage-authentication-with-personal-access-tokens.md
+      - Manage Configuration Groups with the WSO2 Developer Platform CLI: choreo-cli/manage-configuration-groups.md
+      - Manage Component Configurations with the WSO2 Developer Platform CLI: choreo-cli/manage-component-configurations.md
   - References:
       - FAQ: references/faq.md
       - WSO2 Developer Platform Limitations: references/choreo-limitations.md
@@ -265,6 +267,7 @@ extra_javascript:
 extra:
   product_name: WSO2 Developer Platform
   short_name: Developer Platform
+  cli_root_name: wdp
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/wso2

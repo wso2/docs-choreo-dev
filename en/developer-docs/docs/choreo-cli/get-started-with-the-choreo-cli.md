@@ -134,6 +134,9 @@ Once the build status indicates `successful` you can deploy the component in the
 {{ cli_root_name }} create deployment "my-web-app" --env=Development --project="web-app-project" --build-id=<build-id>
 ```
 
+!!! tip
+    To view the environments of a project, run `{{ cli_root_name }} list environments --project="web-app-project"`. In JSON output, each environment has the `name`, `id`, and `critical` fields. The `critical` field is `true` for production-like environments.
+
 ### Step 6.1: Verify the deployment in the Development environment
 
 After deploying the component, you can retrieve the URL of the deployed web application and open the publicly available web page to verify its behavior. Use the following command to retrieve the URL:
@@ -141,6 +144,14 @@ After deploying the component, you can retrieve the URL of the deployed web appl
 ``` bash
 {{ cli_root_name }} describe component "my-web-app" --project="web-app-project"
 ```
+
+To view the status of the deployment in the Development environment, along with the deployed build and commit, run the following command:
+
+``` sh
+{{ cli_root_name }} describe deployment --project="web-app-project" --component="my-web-app" --env=Development -o json
+```
+
+The JSON output includes the `deploymentStatus`, `lastDeployed`, `buildId`, and `buildRunId` fields, and a `commit` object with the `sha`, `message`, `createdBy`, and `committed` details of the deployed commit.
 
 ### Step 6.2: View runtime logs
 
@@ -170,9 +181,27 @@ To ensure a successful deployment to the Production environment, retrieve the UR
 
 Congratulations! You successfully deployed your web application in {{ product_name }} using the {{ product_name }} CLI. 
 
+## View the API definition of a component
+
+For services and API proxies, you can view the API definition, such as an OpenAPI definition, a GraphQL SDL, or an AsyncAPI definition. Each deployment publishes the API definition for its environment, so the definition in one environment can differ from the definition in another environment until you promote the build.
+
+To view the API definition of a component in an environment, run the following command:
+
+``` sh
+{{ cli_root_name }} describe api-definition --project=<project-name> --component=<component-name> --env=Development
+```
+
+The CLI prints the definition to the standard output as it is, so you can save it to a file or pass it to another tool:
+
+``` sh
+{{ cli_root_name }} describe api-definition --project=<project-name> --component=<component-name> --env=Development > openapi.yaml
+```
+
+To get the definition along with its metadata in JSON format, add `-o json`.
+
 ## Configure command output
 
-All `list` and `describe` commands print output as a formatted table by default. If you want to process the output with other tools or scripts, you can get it as JSON instead.
+All `list` and `describe` commands, except `describe api-definition`, print output as a formatted table by default. If you want to process the output with other tools or scripts, you can get it as JSON instead.
 
 To set the format for a single command, use the global `--output` flag or its `-o` shorthand. The flag accepts `table` and `json` — no other formats, such as `xml` or `yaml`, are supported.
 
@@ -197,6 +226,30 @@ To go back to the default table output, unset the environment variable:
 ``` sh
 unset OUTPUT_FORMAT
 ```
+
+When you use JSON output, the CLI writes only the JSON payload to the standard output (stdout) and writes hints and messages to the standard error (stderr). If a `list` command returns no results, the output is an empty JSON array (`[]`). This means you can safely pipe JSON output to tools such as `jq` or redirect it to a file.
+
+``` sh
+{{ cli_root_name }} list components --project="web-app-project" -o json | jq -r '.[].component'
+```
+
+## View CLI environment variables
+
+The {{ product_name }} CLI reads the following environment variables:
+
+| Environment variable | Description |
+| -------------------- | ----------- |
+| `OUTPUT_FORMAT` | The default output format for commands that support the `--output` flag. The supported values are `table` and `json`. The default is `table`. |
+| `CHOREO_PAT` | A personal access token for non-interactive authentication. For details, see [Manage Authentication with Personal Access Tokens](./manage-authentication-with-personal-access-tokens.md). |
+| `CHOREO_REGION` | The deployment region. The supported values are `US` and `EU`. |
+
+To view these environment variables along with their current values and defaults, run the following command:
+
+``` sh
+{{ cli_root_name }} env
+```
+
+The CLI masks sensitive values, such as the value of `CHOREO_PAT`, and shows only whether they are set. To get the output in JSON format, add `-o json`.
 
 ## View all CLI functions
 
