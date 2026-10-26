@@ -195,7 +195,7 @@ You can enable managed authentication for your web application component at the 
 
 ## Step 3: Configure the identity provider for the web application
 
-You can configure your web application to work with the {{ product_name }} built-in identity provider, Asgardeo, or any external identity provider which supports OIDC/OAuth2.0 . 
+You can configure your web application to work with the {{ product_name }} built-in identity provider, Asgardeo, or any external identity provider which supports OIDC/OAuth2.0. 
 
 !!! note
     The identity provider configured in this step should contain the users for the web application.
