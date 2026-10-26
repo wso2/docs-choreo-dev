@@ -2,9 +2,9 @@
 
 {{ product_name }} allows you to configure approval processes for specific workflows within the platform. An approval process for a workflow ensures that critical or sensitive changes are properly managed and controlled.
 
-{{ product_name }} currently allows you to configure approvals for environment promotion, API subscription and URL customization workflows.
+{{ product_name }} currently allows you to configure approvals for environment promotion, API subscription, and URL customization workflows.
 
-Configuring approvals for environment promotion allows authorized users to control components being promoted to a critical/production environment.
+Configuring approvals for environment promotion allows authorized users to control the promotion of components to critical or production environments.
 
 Configuring approvals for the API subscription workflow allows you to create subscription plans that require approval before being activated. This feature allows you to control access to APIs by requiring administrative review and authorization of subscriptions before they become active.
 
@@ -63,7 +63,7 @@ To set up an approval process for a workflow, follow these steps:
     Both Roles and Assignees are optional configuration fields. If neither is specified, the system will not dispatch any notifications. However, users with the necessary permissions can still log in to the system and review approval requests through the interface.
 
     !!! info "Important"
-         Only roles having [relevant approval permission](#permissions-to-review-and-respond-to-approval-requests) can be selected to receive notifications, so that respective users can always review and respond to requests. However, users in Assignees field are there for notification purpose only, they may not have required priviledges to review and approve requests.
+         Only roles having [relevant approval permission](#permissions-to-review-and-respond-to-approval-requests) can be selected to receive notifications, so that respective users can always review and respond to requests. However, users in the Assignees field are there for notification purposes only, and they may not have the required privileges to review and approve requests.
 
 
 7. Click **Save**. This configures notifications and enables the approval process for the workflow.
