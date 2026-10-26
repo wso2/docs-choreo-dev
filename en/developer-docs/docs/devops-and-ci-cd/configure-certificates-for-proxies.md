@@ -15,7 +15,7 @@ To configure TLS certificates for a Proxy component's endpoints, follow the step
 3. Select a TLS/endpoint certificate from the dropdown. The dropdown lists certificates available at the organization level.
 4. Optionally, configure a separate certificate for the sandbox endpoint.
 
-## Deploy a proxy with endpoint certificate
+## Deploy a proxy with endpoint certificates
 
 To deploy a Proxy component with an endpoint certificate, follow the steps given below:
 
@@ -24,7 +24,7 @@ To deploy a Proxy component with an endpoint certificate, follow the steps given
 3. In the wizard, you can select or change TLS certificates for main endpoint and sandbox endpoint.
 4. Click **Save and Deploy** to deploy the component with the selected certificates.
 
-## Promote a proxy with certificate
+## Promote a proxy with certificates
 
 When promoting a Proxy component from a lower environment to a higher environment, you can change the certificates applied to the component:
 
