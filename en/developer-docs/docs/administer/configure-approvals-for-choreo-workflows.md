@@ -63,7 +63,7 @@ To set up an approval process for a workflow, follow these steps:
     Both Roles and Assignees are optional configuration fields. If neither is specified, the system will not dispatch any notifications. However, users with the necessary permissions can still log in to the system and review approval requests through the interface.
 
     !!! info "Important"
-         Only roles having [relevant approval permission](#permissions-to-review-and-respond-to-approval-requests) can be selected to receive notifications, so that respective users can always review and respond to requests. However, users in Assignees field are there for notification purpose only, they may not have required priviledges to review and approve requests.
+         Only roles having [relevant approval permission](#permissions-to-review-and-respond-to-approval-requests) can be selected to receive notifications, so that respective users can always review and respond to requests. However, users in Assignees field are there for notification purpose only, they may not have required privileges to review and approve requests.
 
 
 7. Click **Save**. This configures notifications and enables the approval process for the workflow.
