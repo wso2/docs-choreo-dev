@@ -115,7 +115,7 @@ Follow the guidelines below based on your language:
     For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
 
 === "PHP"
-    Supported Versions - 8.1.x, 8.2.x
+    Supported Versions - 8.2.x, 8.3.x, 8.4.x 
 
     Refer below examples for different component types. Follow the `readme.md` inside the example.
 
