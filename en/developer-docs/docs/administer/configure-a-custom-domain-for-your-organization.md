@@ -77,7 +77,7 @@ To add a custom domain for your organization, follow the steps given below:
                 - For wildcard entries, the SSL file should use a wildcard notation to cover all subdomains under the provided URL. For example, if the CNAME is `apis.hello.dev`, the SSL file should use `*.hello.dev`.
           - TLS key file guidelines:
              - It should be in the PEM format.
-             - It must be encrypted using RSA encryption.
+             - It must use either RSA or elliptic curve cryptography (ECC). For ECC keys, use a supported curve, such as P-256 (prime256v1). The key algorithm must match that of the corresponding TLS certificate.
           - Certificate chain file guidelines:
              - The chain file, which is essential for some clients to verify the authenticity of a server's SSL/TLS certificate, should contain your domain's SSL/TLS certificate (optional, as this can be provided via the certificate itself) and one or more intermediate certificates in the correct order, leading back to a root certificate. 
              - All certificates in the chain should be X509 certificates in PEM format.

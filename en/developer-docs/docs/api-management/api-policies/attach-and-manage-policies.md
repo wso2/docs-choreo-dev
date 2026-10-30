@@ -32,7 +32,7 @@ To attach a policy to the `Request`, `Response`, or `Error` flow of a REST API p
 4. From the list of resources, expand the resource to which you want to attach the policy. 
 5. Click **Attach Mediation Policy** in the respective flow for which you want to attach a policy.
 6. In the **Policy List** pane that opens, click on a required policy to view its details.
-7. If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and configure the parameters. To make a parameter a configurable variable, input the value in the `${<variableName>}` format. For example, you can use `${name}` as an example.
+7. If the attached policy requires parameter configuration, on the policy pane enter the appropriate values and configure the parameters. To make a parameter a configurable variable, input the value in the `${<variableName>}` format. For example, `${name}`. This declares the variable only. You provide its actual value for each environment later, on the **Configure & Deploy** pane.
 
     ![Configure parameters](../../assets/img/api-management/api-policies/configure-parameters.png)
  
@@ -44,6 +44,15 @@ To deploy the API follow the steps below:
 9. In the left navigation menu, click **Deploy** and then click **Configure & Deploy**. {{ product_name }} performs the mediation application generation step and opens the **Configure & Deploy** pane.
 
 10. In the **Configure & Deploy** pane, if you have any configurable variables that require values, specify appropriate values for them.
+
+    !!! warning
+        Enter the actual value that the parameter should use in the selected environment. Do not re-enter the `${<variableName>}` placeholder here.
+
+        The `${<variableName>}` format is used on the **Develop** page to declare a parameter as a configurable variable. When configuring or promoting the API, enter the actual value that should be used for that environment.
+
+        For example, if `${username}` was defined as a configurable variable on the **Develop** page, enter the actual username value when configuring or promoting the API. Re-entering `${username}` will store `${username}` itself as the value rather than the intended environment-specific value.
+
+        This also applies when promoting the API to a higher environment: enter the actual value required for that environment instead of re-entering the `${<variableName>}` placeholder.
 
      ![Save and deploy values](../../assets/img/api-management/api-policies/save-and-deploy.png)
 
@@ -69,13 +78,13 @@ If none of the above changes occur during deployment, {{ product_name }} skips t
 {{ product_name }} allows you to implement an API policy as a Ballerina project and attach it to an API proxy component. 
 
 !!! info
-    Supported Ballerina version: 2201.5.5 
+    Supported Ballerina version: 2201.12.8
 
 To implement a policy, follow the steps given below: 
 
 ### Prerequisites
 
-1. Set up [ Ballerina 2201.5.5](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.5.5).
+1. Set up [Ballerina 2201.12.8](https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.12.8/).
 2. Open the `~/.ballerina/settings.toml` file and ensure you have configured an access token to Ballerina Central. If you have not configured an access token, follow the steps given below to configure one: 
     1. Generate a token via [https://central.ballerina.io/dashboard?tab=token](https://central.ballerina.io/dashboard?tab=token).
     2. Download the generated `Settings.toml` file and copy it to your local `~/.ballerina` directory.
@@ -118,7 +127,7 @@ Depending on your requirement, you can modify the `Ballerina.toml` and the `Pack
         name = "validateHeader"
         version = "1.0.0"
         export = ["validateHeader"]
-        distribution = "2201.5.5"
+        distribution = "2201.12.8"
         keywords = ["{{ product_name }}-apim-mediation-policy","{{ product_name }}-apim-mediation-request-flow","{{ product_name }}-apim-mediation-response-flow","{{ product_name }}-apim-mediation-fault-flow"]
 ```
 
@@ -211,7 +220,7 @@ In this guide, you are not going to make any changes to the `Fault` flow. Theref
         name = "packageName"
         version = "1.0.2"
         export = ["packageName"]
-        distribution = "2201.5.5"
+        distribution = "2201.12.8"
         keywords = ["{{ product_name }}-apim-mediation-policy","{{ product_name }}-apim-mediation-request-flow","{{ product_name }}-apim-mediation-response-flow","{{ product_name }}-apim-mediation-fault-flow"]
         visibility = "private"
      ```

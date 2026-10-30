@@ -32,11 +32,13 @@ This guide walks you through the following steps:
     3. Read and accept the privacy policy and terms of use.
     4. Click **Create**.
 
-    This creates the organization and opens the organization home page.
+    This creates the organization and opens the **Project Home** page of the default project created for you.
 
-## Step 1: Create a project
+## Step 1: Create a project (optional)
 
-1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in. This opens the organization home page.
+{{ product_name }} creates a default project for you when you create an organization. You can use that project for this guide and go straight to step 2. Follow the steps below only if you want to create a separate project:
+
+1. Go to the [{{ product_name }} Console](https://console.choreo.dev/) and sign in, then go to the organization home page.
 2. On the organization home page, click **+ Create Project**.
 3. Enter the following details:
 

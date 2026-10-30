@@ -32,6 +32,16 @@ Pattern examples:
 
 ![Search and filter interface](../assets/img/monitoring-and-insights/view-logs/search-regex.png)
 
+#### Filter gateway logs
+
+You can narrow down gateway logs by the gateway code and the HTTP status code of the request, without writing regex patterns.
+
+  - **By gateway code**: Click **Type** and select one or more gateway codes under **Gateway Logs**. For example, select **Auth Failure** to view only the requests that failed at the gateway due to authentication or authorization issues. Selecting **Gateway Logs** displays all gateway logs. For details on each gateway code, see [Gateway logs](#gateway-logs).
+  - **By HTTP status code**: Type an HTTP status code (for example, `504`) or a status code class (for example, `5xx`) in the search box and select the **Gateway Logs: HTTP Status** option. HTTP status filters apply only to gateway logs. You can add multiple status codes and classes to view gateway logs that match any of them.
+
+!!! tip
+    You can combine these filters. For example, select **Backend Response** and add the `401` HTTP status to view the requests for which the backend application returned a 401 status code.
+
 ### Understand runtime logs
 
 When you view component-level logs on the **Runtime Logs** page, you will see both application and gateway logs.
@@ -68,6 +78,8 @@ Each gateway log entry displays the following details:
     - `RESOURCE_NOT_FOUND`: Indicates a request failure at the gateway due to the absence of a matching API resource for the inbound request. This can be caused by a mismatch in the HTTP method, path, or host.
     - `BACKEND_TIMEOUT`: Indicates a request timeout when calling the backend application from the gateway.
     - `GATEWAY_ERROR`: Indicates a request failure due to an erroneous behavior in the gateway.
+    - `CLIENT_DISCONNECTED`: Indicates that the client disconnected before the gateway completed the response. In this case, the status code is usually `0` because no response was sent to the client.
+    - Any other value: The gateway's own description of the request state (for example, `upgrade_failed`), shown when the state does not match any of the above. You can filter these logs by HTTP status code.
   - `statusCode`: The HTTP status code returned to the client.
   - `componentVersion`: The version of the invoked component.
   - `envName`: The environment of the inbound request. For example, Development, Production, etc.
