@@ -88,21 +88,6 @@ Once you have successfully deployed the service, you can test your server. You c
 
 ## Step 4: Test
 
-You can test the deployed MCP Server with an external client.
-
-As security is enabled for the server, a token must be generated to connect the external client to the server. Follow below steps to generate the token. Refer [develop an external consumer](../develop-an-external-consumer.md) for more details.
-
-1. Create an external consumer component from the component creation wizard
-2. Go to the **Connections** tab in left navigation menu and select **Service** type
-3. Create a connection by selecting the already deployed Mcp Server component
-4. Go to the component **Settings** page and click on **Generate Keys** button
-5. Use those credentials to generate the authorization token for the deployed MCP server. You can get the **Token Endpoint** from **Identity Provider Connection Data** section. To generate the token, use the following curl command.
-
-```
-curl -k -X POST <token-endpoint> -d "grant_type=client_credentials"
--H "Authorization: Basic Base64(consumer-key:consumer-secret)"
-```
-
 ### Test the MCP Server with Postman
 
 **Prerequisites** <br>

@@ -20,7 +20,6 @@ The {{ product_name }} command-line interface (CLI) is a command-line tool that 
 
           - Service
           - Web Application
-          - Webhook (Deprecated)
           - Scheduled Task
           - Manual Task
           - API Proxy

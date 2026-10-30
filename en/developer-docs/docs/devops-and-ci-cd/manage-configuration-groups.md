@@ -9,7 +9,7 @@ Configuration groups can be defined at organization level and link to components
     - All configuration group values are encrypted and stored in environment-specific key vaults.
     - Management of configuration groups is restricted to users with {{ product_name }} Admin, DevOps, and Platform Engineer roles.
     - Developers can discover configuration groups available within the organization via the **{{ product_name }} Internal Marketplace**.
-    - This feature is currently not supported for Web Applications or Test Runner components.
+    - This feature is currently not supported for Web Applications.
 
 ## Create a configuration group
 

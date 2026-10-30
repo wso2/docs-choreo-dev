@@ -172,7 +172,6 @@ The {{ product_name }} CLI currently supports the following component types:
 
 - Service
 - Web Application
-- Webhook (Deprecated)
 - Scheduled Task
 - Manual Task
 - API Proxy
@@ -383,79 +382,6 @@ The build configurations required for existing build presets are as follows:
                <li>outputDirectory: Output directory for the component build artifacts</li>
                <li>nodeVersion: Node.js version used</li>
             </ul>
-         </td>
-      </tr>
-      <tr>
-         <td rowspan=9>Webhook (Deprecated)</td>
-         <td>Python</td>
-         <td>
-            <ul>
-               <li>buildPackLangVersion: Language Version</li>
-            </ul>
-         </td>
-      </tr>
-      <tr>
-         <td>Node.js</td>
-         <td>
-            <ul>
-               <li>buildPackLangVersion: Language Version</li>
-            </ul>
-         </td>
-      </tr>
-      <tr>
-         <td>Java</td>
-         <td>
-            <ul>
-               <li>buildPackLangVersion: Language Version</li>
-            </ul>
-         </td>
-      </tr>
-      <tr>
-         <td>Go</td>
-         <td>
-            <ul>
-               <li>buildPackLangVersion: Language Version</li>
-            </ul>
-         </td>
-      </tr>
-      <tr>
-         <td>PHP</td>
-         <td>
-            <ul>
-               <li>buildPackLangVersion: Language Version</li>
-            </ul>
-         </td>
-      </tr>
-      <tr>
-         <td>Ruby</td>
-         <td>
-            <ul>
-               <li>buildPackLangVersion: Language Version</li>
-            </ul>
-         </td>
-      </tr>
-      <tr>
-         <td>Docker</td>
-         <td>
-            <ul>
-               <li>dockerFilePath: Path to the docker file</li>
-            </ul>
-         </td>
-      </tr>
-      <tr>
-         <td>Ballerina</td>
-         <td>
-            <ul style="list-style-type:none">
-               <li>Not Applicable</li>
-            <ul>
-         </td>
-      </tr>
-      <tr>
-         <td>WSO2 MI</td>
-         <td>
-            <ul style="list-style-type:none">
-               <li>Not Applicable</li>
-            <ul>
          </td>
       </tr>
       <tr>

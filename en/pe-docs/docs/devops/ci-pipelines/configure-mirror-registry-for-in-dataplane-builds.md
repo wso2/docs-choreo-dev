@@ -23,7 +23,7 @@ For every configuration key, the build script first looks for a build-strategy-s
 1. `<strategy>.<key>` — applies only to that build strategy (for example, `buildpack.pkg-npm-url`).
 2. `<key>` — applies to all build strategies (for example, `pkg-npm-url`).
 
-The build strategies recognized by the lookup are `buildpack`, `ballerina`, `mi`, `webapp`, `prism`, `test-runner`, and `byoc`.
+The build strategies recognized by the lookup are `buildpack`, `ballerina`, `mi`, `webapp`, `prism`, and `byoc`.
 
 ## Prerequisites
 
@@ -105,7 +105,7 @@ Use these keys when mirroring is not enough — for example, when your security 
 
 | Key | Replaces |
 |---|---|
-| `image-node-ref` | Node.js base image used by webapp and test-runner builds |
+| `image-node-ref` | Node.js base image used by webapp builds |
 | `image-nginx-ref` | Nginx image used to serve webapp builds |
 | `image-prism-ref` | Prism image used by Prism mock builds |
 | `image-golang-ref` | Go image used by Prism mock builds |
@@ -139,7 +139,6 @@ Not every build strategy consumes every key. The following table summarizes whic
 | MI | `oci-buildpacks-url` | `image-buildpacks-lifecycle-ref`, `image-buildpacks-builder-ref` | Maven |
 | Webapp | `oci-dockerhub-url`, `oci-choreo-url` | `image-node-ref`, `image-nginx-ref` | npm |
 | Prism mock | `oci-choreo-url` | `image-prism-ref`, `image-golang-ref` | — |
-| Test Runner | `oci-dockerhub-url` | `image-node-ref` | npm |
 | BYOC (Dockerfile) | `oci-dockerhub-url` | — | — |
 
 ## Domain allowlisting (alternative to a forward proxy)

@@ -60,7 +60,6 @@ In {{ product_name }}, a component within your project represents a singular uni
 
           - Service
           - Web Application
-          - Webhook
           - Scheduled Task
           - Manual Task
           - API Proxy
