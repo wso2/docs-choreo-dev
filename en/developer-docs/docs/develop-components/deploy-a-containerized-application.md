@@ -9,7 +9,6 @@ Using {{ product_name }}, you can easily deploy applications written in differen
 - Scheduled Task
 - Manual Task
 - Event Handler
-- Test Runner
 
 ## Connect your repository to {{ product_name }}
 

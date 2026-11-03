@@ -183,7 +183,6 @@ Every customizable CI pipeline must include the build step that produces the com
 | Web App | `choreo/webapp-build@v1` |
 | WSO2 MI | `choreo/build-preparation@v1`, `choreo/integration-project-build@v1` |
 | Prism Mock | `choreo/prism-build@v1` |
-| Test Runner | `choreo/test-runner-build@v1` |
 
 If a pipeline.yaml is missing the required step for the build preset it is attached to, the {{ product_name }} Console surfaces the missing step in the YAML editor and the build is not allowed to start. See [Built-in steps](built-in-steps.md) for the inputs and outputs each step expects.
 

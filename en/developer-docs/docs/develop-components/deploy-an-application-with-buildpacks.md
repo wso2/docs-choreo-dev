@@ -8,9 +8,7 @@ Using {{ product_name }}, you can easily deploy applications written in differen
 - Web Application
 - Scheduled Task
 - Manual Task
-- Webhook
 - Event Handler
-- Test Runner
 
 ## Build Presets
 Build presets are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With {{ product_name }}, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.
@@ -55,7 +53,6 @@ Follow the guidelines below based on your language:
     |---------------- |--------------------|
     | Service| [Echo Service](https://github.com/wso2/choreo-samples/tree/main/echo-service)|
     | Manual Task | [Covid19 Statistics To Email](https://github.com/wso2/choreo-samples/tree/main//covid19-statistics-to-email)|
-    | Webhook | [Salesforce New Case To Google Sheet](https://github.com/wso2/choreo-samples/tree/main/sfdc-new-case-to-gsheet)|
     | Scheduled Task | [Shopify New Customers to HubSpot Create/Update Contact](https://github.com/wso2/choreo-samples/tree/main/shopify-new-customers-to-hubspot-contact)|
 
     For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).

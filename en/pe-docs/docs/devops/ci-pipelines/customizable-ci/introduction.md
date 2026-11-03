@@ -79,7 +79,7 @@ steps:
           containerTemplate: choreo/trivy-scan@v1
 ```
 
-From here you can add your own steps — for example, a Snyk source scan before the build, or a Slack notification after the scan. See [Author pipeline.yaml](author-pipeline-yaml.md) for the full syntax and a complete worked example, or [Built-in steps](built-in-steps.md) for the equivalent identifiers for other Build Presets (BYOC, Web App, Ballerina, MI, Prism Mock, Test Runner).
+From here you can add your own steps — for example, a Snyk source scan before the build, or a Slack notification after the scan. See [Author pipeline.yaml](author-pipeline-yaml.md) for the full syntax and a complete worked example, or [Built-in steps](built-in-steps.md) for the equivalent identifiers for other Build Presets (BYOC, Web App, Ballerina, MI, Prism Mock).
 
 ## What's next
 

@@ -847,10 +847,6 @@ Ballerina.toml
 cInlineImage-small
  - docs/consuming-services/consuming-a-sevice.md
 choreo-examples
- - docs/develop-components/develop-a-webhook.md
-send-email-on-github-event-webhook
-toEmail
-webhookSecret
  - docs/resources/kubernetes-upgrade-notice.md
 jdk8u372
  - docs/develop-components/develop-integrations/develop-a-scheduled-integration.md
