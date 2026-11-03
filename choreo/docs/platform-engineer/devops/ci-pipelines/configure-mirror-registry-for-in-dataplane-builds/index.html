@@ -3454,7 +3454,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><code>&lt;strategy&gt;.&lt;key&gt;</code> — applies only to that build strategy (for example, <code>buildpack.pkg-npm-url</code>).</li>
 <li><code>&lt;key&gt;</code> — applies to all build strategies (for example, <code>pkg-npm-url</code>).</li>
 </ol>
-<p>The build strategies recognized by the lookup are <code>buildpack</code>, <code>ballerina</code>, <code>mi</code>, <code>webapp</code>, <code>prism</code>, <code>test-runner</code>, and <code>byoc</code>.</p>
+<p>The build strategies recognized by the lookup are <code>buildpack</code>, <code>ballerina</code>, <code>mi</code>, <code>webapp</code>, <code>prism</code>, and <code>byoc</code>.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>Before you configure the mirror registry, ensure the following:</p>
 <ul>
@@ -3548,7 +3548,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <tbody>
 <tr>
 <td><code>image-node-ref</code></td>
-<td>Node.js base image used by webapp and test-runner builds</td>
+<td>Node.js base image used by webapp builds</td>
 </tr>
 <tr>
 <td><code>image-nginx-ref</code></td>
@@ -3670,12 +3670,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <td><code>oci-choreo-url</code></td>
 <td><code>image-prism-ref</code>, <code>image-golang-ref</code></td>
 <td>—</td>
-</tr>
-<tr>
-<td>Test Runner</td>
-<td><code>oci-dockerhub-url</code></td>
-<td><code>image-node-ref</code></td>
-<td>npm</td>
 </tr>
 <tr>
 <td>BYOC (Dockerfile)</td>
