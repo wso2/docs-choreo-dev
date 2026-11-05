@@ -12,9 +12,9 @@ Below are key limitations when working with APIs in {{ product_name }}:
 | URL size                            |  2 KB                                                                                       |
 | Request header                      | <ul><li>Request Headers total: 40 KB</li><li>Max Single Request header: 10 KB</li></ul>     |
 | Total request duration              | <ul><li>Minimum: 10 seconds</li><li>Default: 1 minute</li><li>Maximum: 5 minutes</li></ul>  |
-| Maximum connection duration (WebSocket APIs)  |  15  minutes                                                                      |
+| Maximum connection duration (WebSocket APIs)  |  15 minutes                                                                       |
 | Connection idle timeout (WebSocket APIs)                            |  5 minutes                                                  |
-| Size for API definition (OpenAPI document)| 10 Mb                                                                                 |
+| Size for API definition (OpenAPI document)| 10 MB                                                                                 |
 | Number of APIs for PDP                 | 1000 API deployments                                                                     |
 | Number of APIs per organization (free tier)                 | 5 APIs for free users                                               |
 | Number of Developer Portal applications per organization (free tier)  | 10 applications for free users                            |
