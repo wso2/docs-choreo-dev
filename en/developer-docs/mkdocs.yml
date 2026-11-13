@@ -466,8 +466,8 @@ extra_javascript:
   - assets/js/choreotheme.js
   - assets/javascripts/region-selector.js
 extra:
-  product_name: WSO2 Developer Platform
-  short_name: Developer Platform
+  product_name: Choreo SaaS Internal Developer Platform
+  short_name: SaaS Internal Developer Platform
   cli_root_name: wdp
   social:
     - icon: fontawesome/brands/github
