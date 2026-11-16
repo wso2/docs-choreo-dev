@@ -13,7 +13,7 @@ Using {{ product_name }}, you can easily deploy applications written in differen
 ## Build Presets
 Build presets are a fundamental building block in modern application development. They convert your source code into a secure, efficient, production-ready container image without a Dockerfile. With {{ product_name }}, developers can take advantage of this powerful tool to effortlessly deploy their applications without the hassle of manual configuration.
 
-{{ product_name }} uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overview) as default build presets for Java, Go, NodeJS, Python, PHP, and Ruby. {{ product_name }} uses its own build presets for Ballerina and WSO2 MI.
+{{ product_name }} uses [Google Buildpacks](https://cloud.google.com/docs/buildpacks/overview) as default build presets for Java, Go, NodeJS, Python, PHP, and Ruby. {{ product_name }} uses its own build presets for Ballerina and Choreo MI.
 
 ## Develop a component
 
@@ -140,7 +140,7 @@ Follow the guidelines below based on your language:
 
     For more examples, see [{{ product_name }} samples](https://github.com/wso2/choreo-samples).
 
-=== "WSO2 MI"
+=== "Choreo MI"
     Supported Versions - 4.1.0.x, 4.2.0.x
 
     Refer below examples for different component types. Follow the `readme.md` inside the example.

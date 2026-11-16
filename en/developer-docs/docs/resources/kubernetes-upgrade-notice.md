@@ -13,7 +13,7 @@ This upgrade is geared towards enhancing the performance and capabilities of our
 The following {{ product_name }} component types could be affected:
 
 - Components created using the Ballerina preset (For example, Service, Webhook, Scheduled trigger, Manual Trigger components).
-- Integration components created using the WSO2 Micro Integrator preset (For example, Integration as an API, Event-triggered integration, Manually-triggered integration, and Scheduled integration components).
+- Integration components created using the Choreo Micro Integrator preset (For example, Integration as an API, Event-triggered integration, Manually-triggered integration, and Scheduled integration components).
 - REST API Proxies that include mediation policies.
 - Components created using the Dockerfile preset (Components created with containerized applications utilizing the Java Runtime).
 

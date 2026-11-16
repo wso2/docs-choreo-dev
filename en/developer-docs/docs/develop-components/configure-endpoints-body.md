@@ -15,7 +15,7 @@ Services and integrations are exposed to other services, integrations, or applic
 ## Configure endpoints
 The method of defining endpoints depends on the build preset.
 
-* For `Ballerina` and `WSO2 MI` build presets, {{ product_name }} automatically detects the endpoint details for REST APIs.
+* For `Ballerina` and `Choreo MI` build presets, {{ product_name }} automatically detects the endpoint details for REST APIs.
 * For all other build presets (Java, Python, NodeJS, Ruby, PHP, Go, Dockerfile, etc.), you can configure endpoints in one of the following ways:
   
     * **Using the {{ product_name }} Console**: If a `component.yaml` file is not present, you can define a basic endpoint configuration during component creation.

@@ -24,10 +24,10 @@ These steps produce the component image. Each customizable CI pipeline must incl
 | `choreo/ballerina-build@v1` | Ballerina Buildpack | Runs the Ballerina build and produces the component image. |
 | `choreo/webapp-build@v1` | Web App | Builds the web app (React, Angular, Vue, or static files) and produces the deployable image. |
 | `choreo/prism-build@v1` | Prism Mock | Builds a Prism mock service from the OpenAPI specification. |
-| `choreo/build-preparation@v1` | WSO2 MI | Prepares the WSO2 MI build workspace (downloads dependencies, validates the project). Pair with `choreo/integration-project-build@v1`. |
-| `choreo/integration-project-build@v1` | WSO2 MI | Builds the WSO2 MI integration project. |
-| `choreo/mi-unit-test-preparation@v1` | WSO2 MI | Optional MI unit test preparation step. Pair with `choreo/mi-unit-test@v1`. |
-| `choreo/mi-unit-test@v1` | WSO2 MI | Optional MI unit test execution step. |
+| `choreo/build-preparation@v1` | Choreo MI | Prepares the Choreo MI build workspace (downloads dependencies, validates the project). Pair with `choreo/integration-project-build@v1`. |
+| `choreo/integration-project-build@v1` | Choreo MI | Builds the Choreo MI integration project. |
+| `choreo/mi-unit-test-preparation@v1` | Choreo MI | Optional MI unit test preparation step. Pair with `choreo/mi-unit-test@v1`. |
+| `choreo/mi-unit-test@v1` | Choreo MI | Optional MI unit test execution step. |
 | `choreo/buildpack-unit-test@v1` | Buildpack | Optional buildpack unit test step. See [Integrate Unit Tests into the CI Pipeline](../integrate-unit-tests-into-the-build-pipeline.md). |
 | `choreo/ballerina-unit-test@v1` | Ballerina | Optional Ballerina unit test step. |
 

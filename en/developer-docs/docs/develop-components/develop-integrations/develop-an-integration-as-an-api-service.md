@@ -40,7 +40,7 @@ In this guide, you will:
     | **Name**   | This will be automatically generated based on the display name.       |
     | **Description**    | `MI Hello World REST API` |
 
-7. Select `WSO2 MI` as the **Build Preset**.
+7. Select `Choreo MI` as the **Build Preset**.
 
 8. Click **Create and Deploy**. {{ product_name }} initializes the component, builds it, and deploys it to the development environment.
 
@@ -73,4 +73,4 @@ In this guide, you will:
 3. Click **Publish**. This changes the lifecycle stage to **Published** and exposes the integration as an API in the {{ product_name }} Developer Portal.
    - To view the published API, click **Go to Devportal**. In the Developer Portal, you can manage subscriptions and generate access tokens for testing.
 
-Now you have successfully exposed a WSO2 MI integration as a REST API in {{ product_name }}!
+Now you have successfully exposed a Choreo MI integration as a REST API in {{ product_name }}!

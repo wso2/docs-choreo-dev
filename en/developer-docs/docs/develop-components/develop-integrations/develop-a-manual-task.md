@@ -62,7 +62,7 @@ In this guide, you will:
 8. Select **Ballerina** as the **Build Pack**.
 
     !!! tip
-        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on {{ product_name }} cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
+        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on {{ product_name }} cloud. If an integration is developed using [Choreo Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
         - **Component Directory** specifies the location of the project to build the component.
 
 4. Enter a unique name and description for the component. You can use the following values:
@@ -146,11 +146,11 @@ In this guide, you will:
                 - The **Run with Arguments** feature is not supported if a `Run Command` is defined or a `Procfile` is present in the project.
                 - The project root must contain the `package.json` file with the `main` attribute defined.
 
-        === "WSO2 MI"
-            To explore a WSO2 MI-based manual task with arguments, try out the [Weather to Logs Task](https://github.com/wso2/choreo-samples/tree/main/weather-to-logs-mi-manual-task) sample. For instructions, see the `readme.md` file in the sample repository.
+        === "Choreo MI"
+            To explore a Choreo MI-based manual task with arguments, try out the [Weather to Logs Task](https://github.com/wso2/choreo-samples/tree/main/weather-to-logs-mi-manual-task) sample. For instructions, see the `readme.md` file in the sample repository.
 
             !!! info
-                When working on WSO2 MI projects and deploying a WSO2 MI integration as a manual task in {{ product_name }}, use the WSO2 MI automation mode. For details, see [Running the Micro Integrator in Automation Mode](https://apim.docs.wso2.com/en/latest/install-and-setup/install/running-the-mi-in-automation-mode/).
+                When working on Choreo MI projects and deploying a Choreo MI integration as a manual task in {{ product_name }}, use the Choreo MI automation mode. For details, see [Running the Micro Integrator in Automation Mode](https://apim.docs.wso2.com/en/latest/install-and-setup/install/running-the-mi-in-automation-mode/).
 
         === "Ballerina"
             To explore a Ballerina manual task with arguments, try out the [Weather to Email Task](https://github.com/wso2/choreo-samples/tree/main/weather-to-email-integration) sample. For instructions, see the README.md file in the sample repository.

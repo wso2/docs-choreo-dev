@@ -267,7 +267,7 @@ The build configurations required for existing build presets are as follows:
          </td>
       </tr>
       <tr>
-         <td>WSO2 MI</td>
+         <td>Choreo MI</td>
                   <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
@@ -458,7 +458,7 @@ The build configurations required for existing build presets are as follows:
          </td>
       </tr>
       <tr>
-         <td>WSO2 MI</td>
+         <td>Choreo MI</td>
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
@@ -539,7 +539,7 @@ The build configurations required for existing build presets are as follows:
          </td>
       </tr>
       <tr>
-         <td>WSO2 MI</td>
+         <td>Choreo MI</td>
          <td>
             <ul >
                <li style="list-style-type:none; padding: 0;">Not Applicable</li>

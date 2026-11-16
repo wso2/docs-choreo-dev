@@ -1,4 +1,4 @@
-# {{ company_name }} Style Guidelines
+# Choreo Style Guidelines
 
 A set of guidelines focused on enforcing uniformity in API style, including naming conventions, formatting, and documentation to ensure clarity and maintainability across all APIs.
 ### ❌ operation-operationId-valid-in-url
