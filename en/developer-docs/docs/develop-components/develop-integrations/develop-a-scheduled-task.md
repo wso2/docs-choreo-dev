@@ -126,7 +126,7 @@ You can test the scheduled task when it runs at the configured time.
 
 ## Step 4: Test the scheduled task
 
-When the scheduled task runs at the configured time, an email with the subject `[WSO2 {{ product_name }} Demo] Next 24H Weather Forecast` is sent from `{{ product_name }}.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 3](#step-3-deploy-the-scheduled-task).
+When the scheduled task runs at the configured time, an email with the subject `[{{ product_name }} Demo] Next 24H Weather Forecast` is sent from `{{ product_name }}.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 3](#step-3-deploy-the-scheduled-task).
 
 If the scheduled task ran successfully, you should receive an email similar to the following:
 

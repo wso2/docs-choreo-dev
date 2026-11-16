@@ -21,7 +21,7 @@ If you are using the [Micro Integrator extension for VS Code](https://mi.docs.ws
 An integration project is structured as a Maven project with multiple sub-modules. The root `pom.xml` file holds the runtime version you configure when you create a new project. The version information is stored in the `<project.runtime.version>` element under the `<properties>` section in the `pom.xml` file. If there is a need to update the runtime version, you should modify the value in the `<project.runtime.version>` element to a valid runtime version.
 
 !!! info "Note"
-    If you have a valid WSO2 subscription, you can also access and download updates to set up an updated MI server locally. Use [WSO2 Update Tool](https://mi.docs.wso2.com/en/latest/install-and-setup/setup/updating-mi/) to get the latest updates that are available for a particular product release. 
+    If you have a valid Choreo Labs subscription, you can also access and download updates to set up an updated MI server locally. Use [WSO2 Update Tool](https://mi.docs.wso2.com/en/latest/install-and-setup/setup/updating-mi/) to get the latest updates that are available for a particular product release. 
 
 ## Troubleshoot errors
 

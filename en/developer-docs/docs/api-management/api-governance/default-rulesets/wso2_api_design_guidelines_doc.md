@@ -1,4 +1,4 @@
-# WSO2 API Design Guidelines
+# Choreo Labs API Design Guidelines
 
 A guide detailing best practices for creating robust, scalable, and secure APIs, ensuring alignment with industry standards for optimal design.
 ### ❌ path-casing

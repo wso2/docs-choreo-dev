@@ -160,7 +160,7 @@ In this guide, you will:
 
 ## Step 5: Test the manual task
 
-Once the task is triggered, an email with the subject `[WSO2 {{ product_name }} Demo] Next 24H Weather Forecast` is sent from `{{ product_name }}.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 3](#step-3-deploy-the-manual-task).
+Once the task is triggered, an email with the subject `[{{ product_name }} Demo] Next 24H Weather Forecast` is sent from `{{ product_name }}.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 3](#step-3-deploy-the-manual-task).
 
 If the manual task ran successfully, you should receive an email similar to the following:
 

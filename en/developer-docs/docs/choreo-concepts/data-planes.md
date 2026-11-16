@@ -143,10 +143,10 @@ For details on the private data plane security levels supported in {{ product_na
 
 ### Management models
 
-{{ product_name }} supports the following management models for private data planes (PDPs), fostering collaboration between WSO2 and customers across diverse scenarios:
+{{ product_name }} supports the following management models for private data planes (PDPs), fostering collaboration between Choreo Labs and customers across diverse scenarios:
 
-  - WSO2 fully managed (infrastructure and PDP in WSO2 subscription) model
-  - WSO2 fully managed (infrastructure and PDP in customer subscription) model
-  - Customer self-managed (WSO2 provides installation script and updates) model
+  - Choreo Labs fully managed (infrastructure and PDP in Choreo Labs subscription) model
+  - Choreo Labs fully managed (infrastructure and PDP in customer subscription) model
+  - Customer self-managed (Choreo Labs provides installation script and updates) model
 
 To explore each management model in detail so that you can make informed decisions depending on the supported cloud-based operations and security, see [Private Data Plane Management Models](../references/private-data-plane-management-models.md).
