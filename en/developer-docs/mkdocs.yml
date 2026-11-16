@@ -468,6 +468,7 @@ extra_javascript:
 extra:
   product_name: Choreo SaaS Internal Developer Platform
   short_name: SaaS Internal Developer Platform
+  company_name: Choreo Labs
   cli_root_name: wdp
   social:
     - icon: fontawesome/brands/github

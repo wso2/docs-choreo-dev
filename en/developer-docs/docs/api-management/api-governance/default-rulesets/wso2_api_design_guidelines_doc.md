@@ -1,4 +1,4 @@
-# Choreo Labs API Design Guidelines
+# {{ company_name }} API Design Guidelines
 
 A guide detailing best practices for creating robust, scalable, and secure APIs, ensuring alignment with industry standards for optimal design.
 ### ❌ path-casing

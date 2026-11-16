@@ -3,7 +3,7 @@
 A customizable CI pipeline lives at the organization level. Authoring and maintaining the pipeline YAML is a platform-engineer-only task. Making a pipeline take effect on a build is a two-step task that can be done by either a platform engineer or a developer: first attach the pipeline to the project (this makes it available in the project), then select it on the specific deployment track of a component that should use it. Defining the variables and secrets the pipeline expects at any scope, and reviewing build validation errors, can also be done by either role.
 
 !!! info
-    Customizable CI is available only on private data plane organizations and must be enabled by Choreo Labs on request.
+    Customizable CI is available only on private data plane organizations and must be enabled by {{ company_name }} on request.
 
 | Task | Who |
 |---|---|

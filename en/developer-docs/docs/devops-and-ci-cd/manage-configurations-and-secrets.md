@@ -3,7 +3,7 @@
 {{ product_name }} allows you to easily manage and version your component's configurations and secrets as **file mounts** or **environment variables**.
 
 !!! info "Note"
-    All configurations and secrets are stored in an encrypted secret vault in the cloud data plane managed by Choreo Labs.
+    All configurations and secrets are stored in an encrypted secret vault in the cloud data plane managed by {{ company_name }}.
     For private data planes, they are stored in your cloud environment's attached secret manager.
 
 ## The difference between configurations and secrets

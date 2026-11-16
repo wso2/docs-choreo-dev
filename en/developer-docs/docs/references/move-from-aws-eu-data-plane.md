@@ -6,7 +6,7 @@ robots: noindex, nofollow
 
 # Set Up Your Components on the {{ product_name }} US Console
 
-Choreo Labs is discontinuing the **EU Console** (`console.eu.choreo.dev`) on **December 15, 2026**. On that date, the cloud data plane managed by the EU Console will be decommissioned, and applications running on it will no longer be accessible. You'll still be able to sign in to the EU Console and create components, but you won't be able to build or deploy them on its cloud data plane. This does not affect private data planes.
+{{ company_name }} is discontinuing the **EU Console** (`console.eu.choreo.dev`) on **December 15, 2026**. On that date, the cloud data plane managed by the EU Console will be decommissioned, and applications running on it will no longer be accessible. You'll still be able to sign in to the EU Console and create components, but you won't be able to build or deploy them on its cloud data plane. This does not affect private data planes.
 
 If you use the cloud data plane on the EU Console, you need to recreate your components in a new organization on the **US Console** (`console.choreo.dev`) before December 15, 2026. When you create the new organization, select the **EU** region. This allows you to run your workloads on a different EU data plane managed through the US Console.
 

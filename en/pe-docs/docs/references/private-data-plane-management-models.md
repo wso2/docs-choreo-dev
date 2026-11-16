@@ -1,10 +1,10 @@
 # Private Data Plane Management Models
 
-{{ product_name }} supports various management models for private data planes (PDPs), fostering collaboration between Choreo Labs and customers across diverse scenarios. The following sections provide insights into Choreo Labs' fully managed solutions and shared responsibility models, allowing you to make informed decisions regarding cloud-based operations and security.
+{{ product_name }} supports various management models for private data planes (PDPs), fostering collaboration between {{ company_name }} and customers across diverse scenarios. The following sections provide insights into {{ company_name }}' fully managed solutions and shared responsibility models, allowing you to make informed decisions regarding cloud-based operations and security.
 
-## Choreo Labs fully managed (infrastructure and PDP in Choreo Labs subscription) model
+## {{ company_name }} fully managed (infrastructure and PDP in {{ company_name }} subscription) model
 
-Choreo Labs fully managed private data planes are supported only on Azure, AWS, and GCP cloud providers.
+{{ company_name }} fully managed private data planes are supported only on Azure, AWS, and GCP cloud providers.
 
 <table border=1>
 <thead>
@@ -23,33 +23,33 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>- Create subscriptions</br>
     - Check quota and service limits</br>
     - Run the {{ product_name }} compatibility prerequisite script</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>Customer (If required)</td>
 <td>Customer (If required)</td>
 </tr>
 <tr>
 <td>Remote access for installation</td>
 <td>Provide owner access</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 </tr>
 <tr>
 <td>Network management</td>
 <td>- Obtain customers backend CIDR in case of VPN/peering</br>
     - Check end-to-end connectivity (primary and failover)</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
 <td>Customer</td>
 <td>Customer</td>
 </tr>
 <tr>
 <td>Firewall rules/access control</td>
 <td>Set up firewall and required rules depending on the security tier</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>Customer</td>
 <td>Customer</td>
 </tr>
@@ -57,8 +57,8 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>Infrastructure provisioning</td>
 <td>- Provision Bastion</br>
     - Provision Kubernetes clusters</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 <td>Customer(If required)</td>
 </tr>
@@ -66,16 +66,16 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>Kubernetes cluster management</td>
 <td>- Manage Kubernetes versions</br>
     - Increase node pool size</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>Customer</td>
 <td>Customer</td>
 </tr>
 <tr>
 <td>Infrastructure monitoring</td>
 <td>Set up alerts</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 <td>Customer(If required)</td>
 </tr>
@@ -83,24 +83,24 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>DNS management for {{ product_name }} system</td>
 <td>- Manage DNS infrastructure</br>
     - Manage SSL certificates for {{ product_name }} system components</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
 <td>Customer</td>
 <td>Customer</td>
 </tr>
 <tr>
 <td>{{ product_name }} system components deployment</td>
 <td>Set up PDP agents via Helm</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 <td>-</td>
 </tr>
 <tr>
 <td>{{ product_name }} system components management</td>
 <td>Upgrade/patch/debug versions</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 <td>Customer(If required)</td>
 </tr>
@@ -108,8 +108,8 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>{{ product_name }} system components monitoring</td>
 <td>- Set up continuous monitoring 24x7</br>
     - Provide monthly uptime reports</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 <td>Customer</td>
 </tr>
@@ -128,10 +128,10 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
        - Monitor security incident and event management (SIEM) alerts</br>
        - Manage security incidents</br>
        - Adhere to compliance standards</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
 </tr>
 <tr>
 <td>{{ product_name }} application creation/deployment</td>
@@ -168,7 +168,7 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 </tbody>
 </table> 
 
-## Choreo Labs fully managed (infrastructure and PDP in customer subscription) model
+## {{ company_name }} fully managed (infrastructure and PDP in customer subscription) model
 
 <table border=1>
 <thead>
@@ -189,7 +189,7 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
     - Run the {{ product_name }} compatibility prerequisite script</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 </tr>
 <tr>
@@ -197,23 +197,23 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>Provide access</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 </tr>
 <tr>
 <td>Network management</td>
 <td>- Obtain customers backend CIDR in case of VPN/peering</br>
     - Check end-to-end connectivity (primary and failover)</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
 <td>Customer</td>
 <td>Customer</td>
 </tr>
 <tr>
 <td>Firewall rules/access control</td>
 <td>Set up firewall and required rules depending on the security tier</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
 <td>Customer</td>
 <td>Customer</td>
 </tr>
@@ -221,8 +221,8 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>Infrastructure provisioning</td>
 <td>- Provision Bastion</br>
     - Provision Kubernetes clusters</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>Customer</td>
 <td>Customer</td>
 </tr>
@@ -230,16 +230,16 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>Kubernetes cluster management</td>
 <td>- Manage Kubernetes versions</br>
     - Increase node pool size</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>Customer</td>
 <td>Customer</td>
 </tr>
 <tr>
 <td>Infrastructure monitoring</td>
 <td>Set up alerts</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 <td>Customer(If required)</td>
 </tr>
@@ -247,24 +247,24 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>DNS management for {{ product_name }} system</td>
 <td>- Manage DNS infrastructure</br>
     - Manage SSL certificates for {{ product_name }} system components</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
 <td>Customer</td>
 <td>Customer</td>
 </tr>
 <tr>
 <td>{{ product_name }} system components deployment</td>
 <td>Set up PDP agents via Helm</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>Customer</td>
 <td>-</td>
 </tr>
 <tr>
 <td>{{ product_name }} system components management</td>
 <td>Upgrade/patch/debug versions</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 <td>Customer(If required)</td>
 </tr>
@@ -272,8 +272,8 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>{{ product_name }} system components monitoring</td>
 <td>- Set up continuous monitoring 24x7</br>
     - Provide monthly uptime reports</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 <td>Customer</td>
 </tr>
@@ -292,10 +292,10 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
        - Monitor security incident and event management (SIEM) alerts</br>
        - Manage security incidents</br>
        - Adhere to compliance standards</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
 </tr>
 <tr>
 <td>{{ product_name }} application creation/deployment</td>
@@ -332,7 +332,7 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 </tbody>
 </table> 
 
-## Customer self-managed (Choreo Labs provides installation script and updates) model
+## Customer self-managed ({{ company_name }} provides installation script and updates) model
 
 <table border=1>
 <thead>
@@ -353,15 +353,15 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
     - Run the {{ product_name }} compatibility prerequisite script</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 </tr>
 <tr>
 <td>Remote access for installation</td>
 <td>Provide owner access</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 </tr>
 <tr>
@@ -370,16 +370,16 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
     - Check end-to-end connectivity (primary and failover)</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 </tr>
 <tr>
 <td>Firewall rules/access control</td>
 <td>Set up firewall and required rules depending on the security tier</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}</td>
 </tr>
 <tr>
 <td>Infrastructure provisioning</td>
@@ -387,8 +387,8 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
     - Provision Kubernetes clusters</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs(If required)</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}(If required)</td>
 </tr>
 <tr>
 <td>Kubernetes cluster management</td>
@@ -396,15 +396,15 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
     - Increase node pool size</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
-<td>Choreo Labs(If required)</td>
+<td>{{ company_name }}</td>
+<td>{{ company_name }}(If required)</td>
 </tr>
 <tr>
 <td>Infrastructure monitoring</td>
 <td>Set up alerts</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 </tr>
 <tr>
@@ -413,7 +413,7 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
     - Manage SSL certificates for {{ product_name }} system components</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 </tr>
 <tr>
@@ -421,7 +421,7 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>Set up PDP agents via Helm</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 </tr>
 <tr>
@@ -429,7 +429,7 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
 <td>Upgrade/patch/debug versions</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 </tr>
 <tr>
@@ -438,7 +438,7 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
     - Provide monthly uptime reports</td>
 <td>Customer</td>
 <td>Customer</td>
-<td>Choreo Labs</td>
+<td>{{ company_name }}</td>
 <td>-</td>
 </tr>
 <tr>
@@ -456,10 +456,10 @@ Choreo Labs fully managed private data planes are supported only on Azure, AWS, 
        - Monitor security incident and event management (SIEM) alerts</br>
        - Manage security incidents</br>
        - Adhere to compliance standards</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
-<td>Choreo Labs/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
+<td>{{ company_name }}/Customer</td>
 </tr>
 <tr>
 <td>{{ product_name }} application creation/deployment</td>
