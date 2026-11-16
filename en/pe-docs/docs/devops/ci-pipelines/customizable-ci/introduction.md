@@ -5,7 +5,7 @@
 **Customizable CI** lets you replace that default pipeline with one you author yourself in YAML. You decide which steps run, in what order, and what tools they use — for example, running a Snyk source scan and a SonarCloud quality gate before the build, running unit tests or other custom containers alongside the build step, scanning the built image with a third-party scanner like Snyk Container or Aqua in addition to (or instead of) the default Trivy scan, and posting a Slack notification on completion.
 
 !!! info
-    Customizable CI is available only on private data plane organizations and must be enabled by WSO2 on request.
+    Customizable CI is available only on private data plane organizations and must be enabled by {{ company_name }} on request.
 
 ## When to use Customizable CI
 

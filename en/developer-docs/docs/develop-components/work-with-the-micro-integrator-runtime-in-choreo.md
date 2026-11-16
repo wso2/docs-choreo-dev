@@ -1,23 +1,23 @@
 # Work with the Micro Integrator Runtime in {{ product_name }}
 
-[WSO2 Micro Integrator (WSO2 MI)](https://mi.docs.wso2.com/en/latest/) is a lightweight, high-performance integration runtime. It allows you to run integrations developed with WSO2 Synapse.
+[Choreo Micro Integrator (Choreo MI)](https://mi.docs.wso2.com/en/latest/) is a lightweight, high-performance integration runtime. It allows you to run integrations developed with Choreo Synapse.
 
-The topics on this page walk you through the key aspects you need to understand to use the WSO2 MI runtime effectively in {{ product_name }}.
+The topics on this page walk you through the key aspects you need to understand to use the Choreo MI runtime effectively in {{ product_name }}.
 
 ## Integration types
 
-{{ product_name }} supports creating the following component types using WSO2 MI integrations that cater to different use cases and requirements. Each integration type serves a specific purpose. Therefore, it is essential to understand their differences to easily choose the most appropriate integration for your use case.
+{{ product_name }} supports creating the following component types using Choreo MI integrations that cater to different use cases and requirements. Each integration type serves a specific purpose. Therefore, it is essential to understand their differences to easily choose the most appropriate integration for your use case.
 
 - **Service**: Exposes an integration as an API via HTTP, making it possible to create a RESTful interface for your integration service such as [data services](https://mi.docs.wso2.com/en/latest/develop/creating-artifacts/data-services/creating-data-services/). This type is ideal for scenarios where you need to provide an API for external systems or clients to interact with your integration.
 - **Event Handler**: Triggers an integration based on external events such as messages arriving on a queue or updates in a database. This type is well-suited for implementing event-driven architectures or responding to changes in your system's environment.
 - **Scheduled Task**: Runs an integration automatically at predefined time intervals, ensuring that specific integration tasks occur at regular intervals. This type is ideal for batch processing, data synchronization, or periodic maintenance tasks.
 - **Manual Task**: Initiates an integration via user action, giving you full control over when the integration executes. This type is useful for on-demand tasks, testing, or debugging purposes.
 
-## Develop integrations with the WSO2 Micro Integrator VS Code extension
+## Develop integrations with the Choreo Micro Integrator VS Code extension
 
-We recommend using the [WSO2 Micro Integrator VS Code Extension](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/mi-for-vscode-overview/) for developing your integration projects. This powerful extension offers an AI-powered, low-code development experience right within your familiar VS Code environment, significantly reducing setup time, boosting productivity, and enhancing your overall development workflow.
+We recommend using the [Choreo Micro Integrator VS Code Extension](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/mi-for-vscode-overview/) for developing your integration projects. This powerful extension offers an AI-powered, low-code development experience right within your familiar VS Code environment, significantly reducing setup time, boosting productivity, and enhancing your overall development workflow.
 
-Install the extension and start developing: [Install WSO2 MI for VS Code](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/install-wso2-mi-for-vscode/)
+Install the extension and start developing: [Install Choreo MI for VS Code](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/install-wso2-mi-for-vscode/)
 
 ### Key benefits of developing with the VS Code extension:
 - Familiar VS Code Ecosystem: Develop integrations in an environment you are already familiar with, reducing your learning curve.
@@ -151,11 +151,11 @@ Scanning third-party libraries for security vulnerabilities is crucial for ident
 
 If the scan finds critical vulnerabilities, {{ product_name }} will stop the build process. You can view the Trivy scan status and any security failures in the **Library (Trivy) vulnerability scan** and **Dropins (Trivy) vulnerability scan** steps within the **Build Details** pane. Once you've fixed the vulnerability, you can redeploy your component.
 
-## Customize WSO2 Micro Integrator pre-configured settings
+## Customize Choreo Micro Integrator pre-configured settings
 
-WSO2 Micro Integrator (MI) comes with general pre-configured settings, but your organization may need to customize them for advanced use cases.
+Choreo Micro Integrator (MI) comes with general pre-configured settings, but your organization may need to customize them for advanced use cases.
 
-To customize the pre-configured settings of WSO2 MI instances running on {{ product_name }}, create a `deployment.toml` file in the GitHub repository subpath of your Micro Integrator project:
+To customize the pre-configured settings of Choreo MI instances running on {{ product_name }}, create a `deployment.toml` file in the GitHub repository subpath of your Micro Integrator project:
 
 ![deployment.toml](../assets/img/develop-components/micro-integrator/config_file.png)
 
@@ -163,7 +163,7 @@ To customize the pre-configured settings of WSO2 MI instances running on {{ prod
     If you change critical configuration parameters such as port offset and hostname, it can break internal communication.
     Therefore, the recommended approach is to update only the necessary configuration parameters.
 
-Given below is a sample `deployment.toml` file that can be used to configure the JMS transport. For more information on WSO2 MI
+Given below is a sample `deployment.toml` file that can be used to configure the JMS transport. For more information on Choreo MI
 configuration parameters, see the [MI Configuration Catalog](https://mi.docs.wso2.com/en/latest/reference/config-catalog-mi/).
 
 ```
@@ -216,20 +216,20 @@ Once the environment variable is set, the logging level for the specified packag
 
 ## Connectors
 
-WSO2 Micro Integrator (MI) Connectors are prebuilt extensions that simplify integrating MI with various external systems. They enable seamless connections to databases, message brokers, REST APIs, and more, allowing you to perform actions such as sending messages, executing queries, or retrieving data within your integration flows.
+Choreo Micro Integrator (MI) Connectors are prebuilt extensions that simplify integrating MI with various external systems. They enable seamless connections to databases, message brokers, REST APIs, and more, allowing you to perform actions such as sending messages, executing queries, or retrieving data within your integration flows.
 
 These versatile connectors are easy to use and can be incorporated into diverse integration scenarios, including data, service-oriented architecture (SOA), and event-driven architecture (EDA) integrations.
 
-You can design and implement integration flows using these connectors within the WSO2 MI VS Code Extension. This environment allows you to build flows using either WSO2 MI's prebuilt connectors or custom connectors developed with the Connector Development Toolkit. The VS Code Extension provides a graphical user interface that simplifies the process of building and testing these integration flows.
+You can design and implement integration flows using these connectors within the Choreo MI VS Code Extension. This environment allows you to build flows using either Choreo MI's prebuilt connectors or custom connectors developed with the Connector Development Toolkit. The VS Code Extension provides a graphical user interface that simplifies the process of building and testing these integration flows.
 
-For more information, see the following topics in the WSO2 Micro Integrator documentation.
+For more information, see the following topics in the Choreo Micro Integrator documentation.
 
 - [Connectors Overview](https://mi.docs.wso2.com/en/latest/reference/connectors/connectors-overview/)
 - [Adding Connectors](https://mi.docs.wso2.com/en/latest/develop/creating-artifacts/adding-connectors/)
 
 ## Deploying integrations in {{ product_name }} 
 
-WSO2 MI build preset is where you can deploy integrations developed with WSO2 Micro Integrator as an API. In this preset, you have three different ways to define endpoints. {{ product_name }} gives priority to the definition of endpoints in the below-mentioned order. 
+Choreo MI build preset is where you can deploy integrations developed with Choreo Micro Integrator as an API. In this preset, you have three different ways to define endpoints. {{ product_name }} gives priority to the definition of endpoints in the below-mentioned order. 
 
 1. **Using component.yaml file**
 This is the most flexible method to define endpoints. You can configure the endpoint details with the `component.yaml` configuration file. Place this file in the `.choreo` directory in the project path of the component. 
@@ -248,4 +248,4 @@ If `component.yaml` is not provided and if the source Micro Integrator project d
 
 ## Explore {{ product_name }} examples on GitHub
 
-For a hands-on experience with MI-based integrations in {{ product_name }}, we recommend exploring our [{{ product_name }} Samples](../choreo-samples/samples-overview.md). You can filter out the samples based on the build preset `WSO2 MI`.
+For a hands-on experience with MI-based integrations in {{ product_name }}, we recommend exploring our [{{ product_name }} Samples](../choreo-samples/samples-overview.md). You can filter out the samples based on the build preset `Choreo MI`.

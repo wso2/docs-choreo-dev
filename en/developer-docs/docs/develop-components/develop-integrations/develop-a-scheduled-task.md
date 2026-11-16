@@ -63,7 +63,7 @@ In this guide, you will:
 6. Select **Ballerina** as the build preset.
 
     !!! tip
-        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on {{ product_name }} cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
+        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on {{ product_name }} cloud. If an integration is developed using [Choreo Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
         - **Component Directory** specifies the location of the project to build the component.
 
 7. Enter a unique name and description for the component. You can use the following values:
@@ -126,7 +126,7 @@ You can test the scheduled task when it runs at the configured time.
 
 ## Step 4: Test the scheduled task
 
-When the scheduled task runs at the configured time, an email with the subject `[WSO2 {{ product_name }} Demo] Next 24H Weather Forecast` is sent from `{{ product_name }}.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 3](#step-3-deploy-the-scheduled-task).
+When the scheduled task runs at the configured time, an email with the subject `[{{ product_name }} Demo] Next 24H Weather Forecast` is sent from `{{ product_name }}.demo@gmail.com` to the email address specified as the **email** configurable variable value in [Step 3](#step-3-deploy-the-scheduled-task).
 
 If the scheduled task ran successfully, you should receive an email similar to the following:
 

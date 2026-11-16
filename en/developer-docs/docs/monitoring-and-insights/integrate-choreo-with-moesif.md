@@ -31,7 +31,7 @@ If you are a new user, follow the steps below to register an organization and ge
 
      This opens the **Quick Install** page. As there is no data, you cannot proceed. Let's configure Moesif to receive data from {{ product_name }}.
 
- 6. Select a **WSO2 {{ product_name }}** as the **Server Integration**
+ 6. Select a **{{ product_name }}** as the **Server Integration**
  7. Copy the **Application Id**.
 
      ![First Time user API Key](../assets/img/monitoring-and-insights/first_time_key_moesif.png)

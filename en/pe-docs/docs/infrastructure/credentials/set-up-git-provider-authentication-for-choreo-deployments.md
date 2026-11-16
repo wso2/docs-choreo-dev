@@ -9,7 +9,7 @@ In {{ product_name }}, you can connect a Git repository that contains some sourc
 
 ## Connect a Git repository to {{ product_name }}
 
-You can connect Bitbucket, GitLab, Azure DevOps repositories to {{ product_name }} organization using access tokens (API tokens for Bitbucket, Personal access tokens for GitLab, Azure DevOps). For GitHub, the developers can install [WSO2 Cloud App](https://github.com/marketplace/choreo-apps) during component creation and get necessary permissions via GitHub itself.
+You can connect Bitbucket, GitLab, Azure DevOps repositories to {{ product_name }} organization using access tokens (API tokens for Bitbucket, Personal access tokens for GitLab, Azure DevOps). For GitHub, the developers can install [Choreo Cloud App](https://github.com/marketplace/choreo-apps) during component creation and get necessary permissions via GitHub itself.
 
 1. Sign in to the [{{ product_name }} Console](https://console.choreo.dev/).
 2. In the {{ product_name }} Console header, go to the **Organization** list and select your organization.

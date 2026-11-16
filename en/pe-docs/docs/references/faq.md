@@ -18,7 +18,7 @@ A component is a workload designed to run on {{ product_name }}. Examples of com
 In {{ product_name }}, you can publish an API as an internal or an external API. A user or an application can access an external API publicly over the internet, whereas an internal API is only accessible through other components within the same organization.
 
 ### Q: What is a connector in {{ product_name }} Marketplace?
-A connector is a reusable Ballerina package that simplifies connecting to external or internal systems and APIs, such as Salesforce, SAP, GitHub, and Twilio. You can use the connectors available in the {{ product_name }} marketplace to implement your integration use cases.  Connectors can be created and published by both WSO2 and {{ product_name }} users.
+A connector is a reusable Ballerina package that simplifies connecting to external or internal systems and APIs, such as Salesforce, SAP, GitHub, and Twilio. You can use the connectors available in the {{ product_name }} marketplace to implement your integration use cases.  Connectors can be created and published by both {{ company_name }} and {{ product_name }} users.
 
 ### Q: What is a trigger in {{ product_name }} Marketplace?
 A trigger is a construct that enables users to receive known event payloads from external systems, facilitating event-driven programming.
@@ -58,13 +58,13 @@ When an organization admin onboards a new organization in {{ product_name }}, th
 ## Security and data protection
 
 ### Q: How is data managed in {{ product_name }}?
-{{ product_name }} manages data using WSO2 containers and Kubernetes clusters, which provide scalability, resilience, and security. Find out more [here](https://wso2.cachefly.net/wso2/sites/all/trust/wso2-public-cloud-data-protection-faq.pdf).
+{{ product_name }} manages data using {{ company_name }} containers and Kubernetes clusters, which provide scalability, resilience, and security. Find out more [here](https://wso2.cachefly.net/wso2/sites/all/trust/wso2-public-cloud-data-protection-faq.pdf).
 
-### Q: What is the WSO2 Subprocessor list?
-This is a detailed list of all subprocessors used by WSO2, including their name, location, and purpose. This information is updated frequently to ensure compliance with data protection regulations and is found [here](https://wso2.cachefly.net/wso2/sites/all/trust/wso2-public-cloud-subprocessor-list.pdf).
+### Q: What is the {{ company_name }} Subprocessor list?
+This is a detailed list of all subprocessors used by {{ company_name }}, including their name, location, and purpose. This information is updated frequently to ensure compliance with data protection regulations and is found [here](https://wso2.cachefly.net/wso2/sites/all/trust/wso2-public-cloud-subprocessor-list.pdf).
 
-### Q: How do we secure WSO2 Private and Public Clouds?
-WSO2 uses a range of security controls and design patterns to protect against several threats, including internal attacks, software supply chain attacks, service and platform attacks, and more. For more details, see[Cloud Security Process](https://security.docs.wso2.com/en/latest/security-processes/cloud-security-process/).
+### Q: How do we secure {{ company_name }} Private and Public Clouds?
+{{ company_name }} uses a range of security controls and design patterns to protect against several threats, including internal attacks, software supply chain attacks, service and platform attacks, and more. For more details, see[Cloud Security Process](https://security.docs.wso2.com/en/latest/security-processes/cloud-security-process/).
 
 ### Q: How can I connect a {{ product_name }} component with a protected third-party application?
 To connect a {{ product_name }} component with a third-party application, it is necessary to establish seamless communication between the component and the protected third-party application, especially when connecting to external databases like MySQL, MSSQL, PGSQL, Oracle DB, etc.
@@ -85,10 +85,10 @@ To ensure this, the requests coming from the {{ product_name }} data plane must 
 The {{ product_name }} control plane is a centralized management component that oversees and coordinates the workloads deployed by customers. It provides a unified point of control and visibility for the organization, allowing administrators to manage, monitor, and orchestrate the organization’s resources efficiently.
 
 ### Q: What is a data plane?
-A data plane in {{ product_name }} is a computing environment designed for running customer workloads. These environments are hosted in either a dedicated cloud infrastructure owned by the customer (private data planes) or on public cloud infrastructure owned by WSO2, also known as the {{ product_name }} data plane.
+A data plane in {{ product_name }} is a computing environment designed for running customer workloads. These environments are hosted in either a dedicated cloud infrastructure owned by the customer (private data planes) or on public cloud infrastructure owned by {{ company_name }}, also known as the {{ product_name }} data plane.
 
 ### Q: Which regions support the {{ product_name }} data plane(CDP)?
-The {{ product_name }} data plane is currently supported in the US East 2 and North Europe. However, WSO2 is planning to add support for additional regions as needed.
+The {{ product_name }} data plane is currently supported in the US East 2 and North Europe. However, {{ company_name }} is planning to add support for additional regions as needed.
 
 ### Q: Which regions support private data planes(PDPs)?
 Private data planes can be deployed in any region where Azure and AWS are available and meet the requirements for PDPs.
@@ -97,7 +97,7 @@ Private data planes can be deployed in any region where Azure and AWS are availa
 We recommend using a minimum of two (2) workload nodes to ensure high availability.
 
 ### Q: Are the {{ product_name }} control plane and data planes highly available? Are they running on multiple clusters?
-The {{ product_name }} control plane and data plane are designed for high availability using Azure components like AKS, MSSQL, ACR, KV, Service Bus, and so on, with a high availability of 99.99%, which allows at least three workload nodes. In the event of a node failure or upgrade, this setup provides reliable failover. WSO2 also has a backup and recovery strategy in place, including continuous restore drills. If you require AKS cluster-level redundancy, we can consider multiple zones. In this case, the cost will include an additional infrastructure cost.
+The {{ product_name }} control plane and data plane are designed for high availability using Azure components like AKS, MSSQL, ACR, KV, Service Bus, and so on, with a high availability of 99.99%, which allows at least three workload nodes. In the event of a node failure or upgrade, this setup provides reliable failover. {{ company_name }} also has a backup and recovery strategy in place, including continuous restore drills. If you require AKS cluster-level redundancy, we can consider multiple zones. In this case, the cost will include an additional infrastructure cost.
 
 ## Environments
 
@@ -262,7 +262,7 @@ The build configurations required for existing build presets are as follows:
          </td>
       </tr>
       <tr>
-         <td>WSO2 MI</td>
+         <td>Choreo MI</td>
                   <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
@@ -453,7 +453,7 @@ The build configurations required for existing build presets are as follows:
          </td>
       </tr>
       <tr>
-         <td>WSO2 MI</td>
+         <td>Choreo MI</td>
          <td>
             <ul style="list-style-type:none">
                <li>Not Applicable</li>
@@ -534,7 +534,7 @@ The build configurations required for existing build presets are as follows:
          </td>
       </tr>
       <tr>
-         <td>WSO2 MI</td>
+         <td>Choreo MI</td>
          <td>
             <ul >
                <li style="list-style-type:none; padding: 0;">Not Applicable</li>

@@ -2,7 +2,7 @@
 
 An event handler executes predefined actions in response to specific events. {{ product_name }} simplifies the process of creating and deploying such integrations.
 
-This guide walks you through the steps to create and deploy an Event Handler using WSO2 MI and {{ product_name }}.
+This guide walks you through the steps to create and deploy an Event Handler using Choreo MI and {{ product_name }}.
 
 In this guide, you will build a simple event handler that monitors RabbitMQ for new messages and displays them once they become available.
 
@@ -47,10 +47,10 @@ In this guide, you will build a simple event handler that monitors RabbitMQ for 
     | **Branch**            | `main`                       |
     | **Component Directory** | `mi-rabbitmq-listener`       |
 
-6. Select **WSO2 MI** as the build preset. (since you are creating the REST API from a [WSO2 Integration Studio](https://wso2.com/micro-integrator/) project)
+6. Select **Choreo MI** as the build preset. (since you are creating the REST API from a [Choreo Integration Studio](https://wso2.com/micro-integrator/) project)
 
     !!! tip
-        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on {{ product_name }} cloud. If an integration is developed using [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
+        - **Build preset** specifies the type of build to run depending on the implementation of the component. It converts the integration code into a Docker image that can run on {{ product_name }} cloud. If an integration is developed using [Choreo Integration Studio](https://wso2.com/integration/integration-studio/), select **Micro Integrator** as the build preset. If an integration is developed using the [Ballerina language](https://ballerina.io), select **Ballerina** as the build preset.
         - **Component Directory** specifies the location of the project to build the component.
 
 7. Enter a unique name and description for the component. You can use the following values:

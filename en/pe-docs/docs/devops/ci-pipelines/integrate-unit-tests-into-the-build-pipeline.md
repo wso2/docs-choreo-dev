@@ -3,13 +3,13 @@
 {{ product_name }} allows you to integrate unit tests into the  CI pipeline, enabling code validation before deployment. This ensures early testing of code changes, reducing the risk of defects in production.
 
 !!! note
-        Currently, {{ product_name }} supports unit tests only for the `WSO2 MI` build preset.
+        Currently, {{ product_name }} supports unit tests only for the `Choreo MI` build preset.
 
 ## How it works
 
 ### Step 1: Write tests
 
-You can create unit tests in your source code using standard testing libraries. For step-by-step instructions on creating unit tests for WSO2 Micro Integrator projects, see [Creating a Unit Test Suite](https://mi.docs.wso2.com/en/latest/develop/creating-unit-test-suite/).
+You can create unit tests in your source code using standard testing libraries. For step-by-step instructions on creating unit tests for Choreo Micro Integrator projects, see [Creating a Unit Test Suite](https://mi.docs.wso2.com/en/latest/develop/creating-unit-test-suite/).
 
 ### Step 2: Enable unit tests
 
@@ -32,4 +32,4 @@ If a unit test fails during the build, you can view its detailed logs for troubl
 
 ## Explore a sample
 
-To see unit tests in action within the build pipeline, try out the [WSO2 MI helloworld](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi) sample.
+To see unit tests in action within the build pipeline, try out the [Choreo MI helloworld](https://github.com/wso2/choreo-samples/tree/main/hello-world-mi) sample.
