@@ -28,7 +28,7 @@ With Auto Build on Commit, you can configure the build pipeline to be triggered 
 
 In addition to these steps, some build presets support integrating unit tests into the build pipeline. For more details, see [Integrate Unit Tests into the {{ product_name }} CI Pipeline](../devops/ci-pipelines/integrate-unit-tests-into-the-build-pipeline.md).
 
-## Continuos Deployment
+## Continuous Deployment
 
 Once you build an image in {{ product_name }}, you can deploy it via the **CD Pipelines** page. To deploy an image, you can follow one of the approaches given below:
 
@@ -41,7 +41,7 @@ Once you build an image in {{ product_name }}, you can deploy it via the **CD Pi
 !!! note
     - You must trigger the first build in a Ballerina component manually to ensure that {{ product_name }} applies the required configurations to the development environment. You can enable automatic builds subsequently.
     - {{ product_name }} automatically checks the configurable defined in your source code against the configurable values applied in an environment. {{ product_name }} requests the configurable values on deployment and promotion. If you have changed the configurables in your Ballerina component, auto-build pipelines can fail as a precaution to avoid a component crash at runtime due to missing configurables.
-    - The configurable verifying capability is only available for Ballerina components. For Dockerfile-based components, ensure to manage and update the configurations and secrets in environments ahead of time. You must also ensure backward compatibility between at least one release if you change the configurations.
+    - The configurable verification capability is only available for Ballerina components. For Dockerfile-based components, ensure to manage and update the configurations and secrets in environments ahead of time. You must also ensure backward compatibility between at least one release if you change the configurations.
 
 ### Set up area and initial deployment
 
