@@ -27,10 +27,10 @@
 ### Application Delivery
 - **Seamless Git Integration**: Native integration with GitHub, BitBucket, GitLab and Azure DevOps to support GitOps-based workflows.
 - **Automated CI/CD Pipelines**: Automates build and deployment pipelines with support for extensions using Argo Workflows.
-- **Secrets & Config Management**: Securely manage secrets, configurations, and configurations for API gateways natively within the platform.
+- **Secrets & Config Management**: Securely manage secrets and configurations for API gateways natively within the platform.
 
 ### Observability
-- **Centralized Logging**: Aggregate and analyze logs seamlessly with Fluentbit and OpenSearch, enabling rapid root-cause analysis.
+- **Centralized Logging**: Aggregate and analyze logs seamlessly with Fluent Bit and OpenSearch, enabling rapid root-cause analysis.
 - **Granular Metrics**: Monitor system performance, optimize resource utilization, troubleshoot issues, and ensure reliability across deployments with Cilium and Prometheus.
 - **Proactive Alerts**: Set custom thresholds to detect anomalies, automate incident responses, and prevent downtime before it impacts users.
 
